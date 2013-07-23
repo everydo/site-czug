@@ -1,0 +1,943 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-7515f270e5a5fd3c400788d2e1f624ac47feff17">创建和使用wxPython菜单</a><ol><li><a href="#head-871a60bc9da57de7d207c4ada290f7cf3d579705">创建菜单</a><ol><li><a href="#head-03970325bb3baddb1d4228237c1ac2f99ba260bd">如何创建一个菜单栏并把它附加到一个框架？</a></li><li><a href="#head-17377c9f487d3c44ae49ff51c6aeb34150e84012">如何创建一个菜单并把它附加到菜单栏？</a></li><li><a href="#head-bf60ae47e5b17ed4c6f37ca783acfa226250802e">如何给下拉菜单填加项目？</a></li><li><a href="#head-e6834dd45322cb033aed6ec179d7a0c34c4779fc">如何响应一个菜单事件？</a></li></ol></li><li><a
+href="#head-a2efa656b0da09f31dd8b1061a319ff369ab2c82">使用菜单项工作</a><ol><li><a href="#head-0f25cbf1a74a2f1e264bba6718dc2f883b98162f">如何在一个菜单中找到一个特定的菜单项？</a></li><li><a href="#head-d7fb005bc718935d5bc4423cfac5f1aa12d39a66">如何使一个菜单项有效或无效？</a></li><li><a href="#head-1def0c1a6866ac7e2dd05af0209c88717e0cb3e9">如何将一个菜单项与一个快捷键关联起来？</a></li><li><a href="#head-5d4d0367238806a9e97f812982209d4801bffc54">如何创建一个复选或单选开关菜单项？</a></li></ol></li><li><a href="#head-b1edf2d4d39dc63e43c296524128f1ceb5ad5eec">进一步构建菜单</a><ol><li><a href="#head-e3da9310675909028b5f0c10c0453c49b8d55e48">如何创建一个子菜单？</a></li><li><a href="#head-7a7b8fe369d8e7cce4fef3231b8fa66ef646f72d">如何创建弹出式菜单？</a></li><li><a
+href="#head-b9a4a5db3560a17c065e5d076009e79cb4d6634b">如何创建自己个性的菜单？</a></li></ol></li><li><a href="#head-dd554eed8fd05b35cfdb7688ae3757aec1744808">菜单设计的适用性准则</a><ol><li><a href="#head-be4edd3edd22ffe9c8e07622fc807bd1fc880843">使菜单有均衡的长度</a></li><li><a href="#head-a0e93f5a5e91a0f95d221c6b841cba1f13c6c571">创建合理的项目组</a></li></ol></li><li><a href="#head-fbb8919381306259ba2c54c28c64092766977c7b">本章小结</a></li></ol></li></ol></div> <span id="line-2" class="anchor"/><span id="line-3" class="anchor"/><p class="line867">
+</p><h1 id="head-7515f270e5a5fd3c400788d2e1f624ac47feff17">1. 创建和使用wxPython菜单</h1>
+<span id="line-4" class="anchor"/><span id="line-5" class="anchor"/><span id="line-6" class="anchor"/><p class="line867"><strong>本章内容包括</strong>： <span id="line-7" class="anchor"/><span id="line-8" class="anchor"/></p><p class="line874">创建菜单 <span id="line-9" class="anchor"/>使用菜单项工作 <span id="line-10" class="anchor"/>添加子菜单、弹出菜单和自定义菜单 <span id="line-11" class="anchor"/>菜单的设计准则 <span id="line-12" class="anchor"/><span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></p><p
+class="line862">难以想象一个应用程序的顶部没有我们常见的以<tt>File</tt>和<tt>Edit</tt>开头，以<tt>Help</tt>结尾的栏目。这太糟糕了。菜单是那些隐藏在背后并不太重视绘制的标准界面工具的一个公共的部分，由于菜单使得用户能够快速而容易地访问所有的功能，所以它实实在在是一个革命。 <span id="line-15" class="anchor"/><span id="line-16" class="anchor"/></p><p class="line862">在<tt>wxPython</tt>中有三个主要的类，它们管理菜单的功能。类<tt>wx.MenuBar</tt>管理菜单栏自身，而<tt>wx.Menu</tt>管理一个单独的下拉或弹出菜单。当然，一个<tt>wx.MenuBar</tt>实例可以包含多个<tt>wx.Menu</tt>实例。类<tt>wx.MenuItem</tt>代表一个<tt>wx.Menu</tt>中的一个特定项目。 <span id="line-17" class="anchor"/><span id="line-18" class="anchor"/></p><p
+class="line862">在第二章中我们对菜单作了一个简要的介绍，在例5.5中我们提供了一个容易创建菜单项的机制，在第7章中我对特殊的菜单效果作了一些介绍。在这一章，我们将对<tt>wxPython</tt>菜单的创建和使用提供更多的细节。 <span id="line-19" class="anchor"/><span id="line-20" class="anchor"/><span id="line-21" class="anchor"/></p><p class="line867">
+</p><h2 id="head-871a60bc9da57de7d207c4ada290f7cf3d579705">1.1. 创建菜单</h2>
+<span id="line-22" class="anchor"/><span id="line-23" class="anchor"/><span id="line-24" class="anchor"/><p class="line874">首先，我们将讨论菜单栏。要使用一个菜单栏，就要执行下面这些行动： <span id="line-25" class="anchor"/><span id="line-26" class="anchor"/></p><p class="line874">·创建菜单栏 <span id="line-27" class="anchor"/>·把菜单栏附加给框架 <span id="line-28" class="anchor"/>·创建单个的菜单 <span id="line-29" class="anchor"/>·把菜单附加给菜单栏或一个父菜单 <span id="line-30" class="anchor"/>·创建单个的菜单项 <span id="line-31" class="anchor"/>·把这些菜单项附加给适当的菜单 <span id="line-32" class="anchor"/>·为每个菜单项创建一个事件绑定 <span id="line-33" class="anchor"/><span id="line-34" class="anchor"/></p><p
+class="line874">上面行动的执行顺序可以灵活点，只要你在使用之前创建所有项目，并且所有行动在框架的初始化方法中完成就可以了。在这个过程中你可以以后来处理菜单，但是在框架可见后，你的执行顺序将影响用户所见到的东西。例如，如果你在框架创建后将菜单栏附加给框架，或等到直到所有其它的过程完成了。考虑到可读性和维护的目的，我们推荐你将相关的部分分整理在一起。对于如何组织菜单的创建的建议，请看第5章的重构。在接下来的部分，我们将涉及基本的菜单任务。 <span id="line-35" class="anchor"/><span id="line-36" class="anchor"/><span id="line-37" class="anchor"/><span id="line-38" class="anchor"/></p><p class="line867">
+</p><h3 id="head-03970325bb3baddb1d4228237c1ac2f99ba260bd">1.1.1. 如何创建一个菜单栏并把它附加到一个框架？</h3>
+<span id="line-39" class="anchor"/><span id="line-40" class="anchor"/><span id="line-41" class="anchor"/><p class="line862">要创建一个菜单栏，使用<tt>wx.MenuBar</tt>构造函数，它没有参数： <span id="line-42" class="anchor"/><span id="line-43" class="anchor"/><span id="line-44" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-b85427d1d270fd7f9cf420e1234ecf70d7e4af44_000\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-b85427d1d270fd7f9cf420e1234ecf70d7e4af44_000', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-b85427d1d270fd7f9cf420e1234ecf70d7e4af44_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">MenuBar</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-45" class="anchor"/><p class="line862">一旦菜单栏被创建了，使用<tt>SetMenuBar()</tt>方法将它附加给一个<tt>wx.Frame</tt>（或其子类）。通常这些都在框架的<tt>__init__</tt>或<tt>OnInit()</tt>方法中实施： <span id="line-46" class="anchor"/><span id="line-47" class="anchor"/><span id="line-48" class="anchor"/><span id="line-49" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-1ff9e8583fe33b49cfcd2a11e475ded661a7ac83_001\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-1ff9e8583fe33b49cfcd2a11e475ded661a7ac83_001', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-1ff9e8583fe33b49cfcd2a11e475ded661a7ac83_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">menubar</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MenuBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">self</span><span class="Operator">.</span><span class="ID">SetMenuBar</span><span class="Text"/></span>
+</pre></div><span id="line-50" class="anchor"/><p class="line862">你不必为菜单栏维护一个临时变量，但是这样做将使得添加菜单到菜单栏多少更简单点。要掌握程序中的其它地方的菜单栏，使用<tt>wx.Frame.GetMenuBar()</tt>。 <span id="line-51" class="anchor"/><span id="line-52" class="anchor"/><span id="line-53" class="anchor"/></p><p class="line867">
+</p><h3 id="head-17377c9f487d3c44ae49ff51c6aeb34150e84012">1.1.2. 如何创建一个菜单并把它附加到菜单栏？</h3>
+<span id="line-54" class="anchor"/><span id="line-55" class="anchor"/><span id="line-56" class="anchor"/><p class="line867"><tt>wxPython</tt>菜单栏由一个个的菜单组成，其中的每个菜单都需要分别被创建。下面显示了<tt>wx.Menu</tt>的构造函数： <span id="line-57" class="anchor"/><span id="line-58" class="anchor"/><span id="line-59" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-58a7c32bd3f0b1a7caf2126f023a4dbed85826e6_002\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-58a7c32bd3f0b1a7caf2126f023a4dbed85826e6_002', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-58a7c32bd3f0b1a7caf2126f023a4dbed85826e6_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Menu</span><span class="Operator">(</span><span class="ID">title</span><span class="Operator">=</span><span class="String">""</span><span class="Operator">,</span> <span class="ID">style</span><span class="Operator">=</span><span class="Number">0</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-60" class="anchor"/><p class="line862">对于<tt>wx.Menu</tt>只有一个有效的样式。在<tt>GTK</tt>下，样式<tt>wx.MENU_TEAROFF</tt>使得菜单栏上的菜单能够被分开并作为独立的选择器。在其它平台下，这个样式没有作用。如果平台支持，那么菜单被创建时可以有一个标题。图10.1显示了一个带有三个菜单的空白窗口。例10.1显示了被添到一个菜单栏上的一系列菜单，这些菜单没有被添加菜单项。 <span id="line-61" class="anchor"/><span id="line-62" class="anchor"/><span id="line-63" class="anchor"/></p><p class="line867"><strong>图10.1</strong> <span id="line-64"
+class="anchor"/><span id="line-65" class="anchor"/></p><p class="line867"><img title="attachment:w10.1.gif" src="/moin/WxPythonInAction/ChapterTen?action=AttachFile&amp;do=get&amp;target=w10.1.gif" class="attachment"/> <span id="line-66" class="anchor"/><span id="line-67" class="anchor"/><span id="line-68" class="anchor"/><span id="line-69" class="anchor"/></p><p class="line867"><strong>例10.1 添加菜单到一个菜单栏</strong> <span id="line-70" class="anchor"/><span id="line-71" class="anchor"/><span id="line-72" class="anchor"/><span id="line-73" class="anchor"/><span
+id="line-74" class="anchor"/><span id="line-75" class="anchor"/><span id="line-76" class="anchor"/><span id="line-77" class="anchor"/><span id="line-78" class="anchor"/><span id="line-79" class="anchor"/><span id="line-80" class="anchor"/><span id="line-81" class="anchor"/><span id="line-82" class="anchor"/><span id="line-83" class="anchor"/><span id="line-84" class="anchor"/><span id="line-85" class="anchor"/><span id="line-86" class="anchor"/><span id="line-87" class="anchor"/><span id="line-88" class="anchor"/><span id="line-89" class="anchor"/><span id="line-90"
+class="anchor"/><span id="line-91" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-664ff2550fc4c707467d2b6fb0e67aeba339428c_003\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-664ff2550fc4c707467d2b6fb0e67aeba339428c_003', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-664ff2550fc4c707467d2b6fb0e67aeba339428c_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">MyFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Simple Menu Example"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ID">p</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Panel</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">menuBar</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MenuBar</span><span class="Operator">(</span><span class="Operator">)</span><span class="Comment"># 创建一个菜单栏</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">menu</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Menu</span><span class="Operator">(</span><span class="Operator">)</span><span class="Comment"># 创建一个菜单</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ID">menuBar</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="ID">menu</span><span class="Operator">,</span> <span class="String">"Left Menu"</span><span class="Operator">)</span><span class="Comment"># 添加菜单到菜单栏</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">menu2</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Menu</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">menuBar</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="ID">menu2</span><span class="Operator">,</span> <span class="String">"Middle Menu"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">menu3</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Menu</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">menuBar</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="ID">menu3</span><span class="Operator">,</span> <span class="String">"Right Menu"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetMenuBar</span><span class="Operator">(</span><span class="ID">menuBar</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span></span>
+<span class="line"><span class="LineNumber">  16 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">"__main__"</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  17 </span>    <span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span>    <span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">MyFrame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span>    <span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>    <span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-92" class="anchor"/><p class="line862">在<tt>wxPython</tt>的菜单<tt>API</tt>中，一个对象的大部分处理是由它的容器类来管理的。在本章的后面，我们将讨论<tt>wx.Menu</tt>的特定的方法，因为这些方法的大多数涉及到菜单中的菜单项的处理。在这一节的剩余部分，由于我们正在谈论处理<tt>wx.Menu</tt>对象，所以我们将列出<tt>wx.MenuBar</tt>的那些涉及到菜单的方法。表10.1显示了<tt>wx.MenuBar</tt>中的四个方法，它们处理菜单栏的内容。 <span id="line-93" class="anchor"/><span id="line-94" class="anchor"/><span id="line-95" class="anchor"/></p><p
+class="line867"><strong>表10.1</strong>  <span id="line-96" class="anchor"/><strong>在菜单栏处理菜单的<tt>wx.MenuBar</tt>的方法</strong> <span id="line-97" class="anchor"/><span id="line-98" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line891"><tt>Append(menu</tt>, <tt>title)</tt></p></td>
+<td><p class="line862">将<tt>menu</tt>参数添加到菜单栏的尾部（靠右显示）。<tt>title</tt>参数被用来显示新的菜单。如果成功返回<tt>True</tt>，否则返回<tt>False</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-99" class="anchor"/><p class="line891"><tt>Insert(pos</tt>, <tt>menu</tt>, <tt>title)</tt></p></td>
+<td><p class="line862">将给定的<tt>menu</tt>插入到指定的位置<tt>pos</tt>（调用这个函数之后，<tt>GetMenu(pos)</tt> == <tt>menu</tt>成立）。就像在列表中插入一样，所有后面的菜单将被右移。菜单的索引以0开始，所以<tt>pos</tt>为0等同于将菜单放置于菜单栏的左端。使用<tt>GetMenuCount()</tt>作为<tt>pos</tt>等同于使用<tt>Append</tt>。<tt>title</tt>被用于显示名字。函数如果成功则返回<tt>True</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-100" class="anchor"/><p class="line891"><tt>Remove(pos)</tt></p></td>
+<td><p class="line862">删除位于<tt>pos</tt>的菜单，之后的其它菜单左移。函数返回被删除的菜单。</p></td>
+</tr>
+<tr>  <td><span id="line-101" class="anchor"/><p class="line891"><tt>Replace(pos</tt>, <tt>menu</tt>, <tt>title)</tt></p></td>
+<td><p class="line862">使用给定的<tt>menu</tt>，和<tt>title</tt>替换位置<tt>pos</tt>处的菜单。菜单栏上的其它菜单不受影响。函数返回替换前的菜单。</p></td>
+</tr>
+</tbody></table></div><span id="line-102" class="anchor"/><span id="line-103" class="anchor"/><p class="line867"><tt>wx.MenuBar</tt>包含一些其它的方法。它们用另外的方式处理菜单栏中的菜单，如表10.2所示。 <span id="line-104" class="anchor"/><span id="line-105" class="anchor"/><span id="line-106" class="anchor"/></p><p class="line867"><strong>表10.2</strong>  <span id="line-107" class="anchor"/><strong><tt>wx.MenuBar</tt>的菜单属性方法</strong> <span id="line-108" class="anchor"/><span id="line-109" class="anchor"/></p><div><table><tbody><tr>
+<td><p class="line891"><tt>EnableTop(pos</tt>, <tt>enable)</tt></p></td>
+<td><p class="line862">设置位置<tt>pos</tt>处的菜单的可用/不可用状态。如果<tt>enable</tt>是<tt>True</tt>，那么该菜单是可用的，如果是<tt>False</tt>，那么它不可用。</p></td>
+</tr>
+<tr>  <td><span id="line-110" class="anchor"/><p class="line891"><tt>GetMenu(pos)</tt></p></td>
+<td><p class="line862">返回给定位置处的菜单对象。</p></td>
+</tr>
+<tr>  <td><span id="line-111" class="anchor"/><p class="line891"><tt>GetMenuCount()</tt></p></td>
+<td><p class="line862">返回菜单栏中的菜单的数量。</p></td>
+</tr>
+<tr>  <td><span id="line-112" class="anchor"/><p class="line891"><tt>FindMenu(title)</tt></p></td>
+<td><p class="line862">返回菜单栏有给定<tt>title</tt>的菜单的整数索引。如果没有这样的菜单，那么函数返回常量<tt>wx.NOT_FOUND</tt>。该方法将忽略快捷键，如果有的话。</p></td>
+</tr>
+<tr>  <td><span id="line-113" class="anchor"/><p class="line891"><tt>GetLabelTop(pos)</tt>,<tt>SetLabelTop(pos</tt>, <tt>label)</tt></p></td>
+<td><p class="line862">得到或设置给定位置的菜单的标签。</p></td>
+</tr>
+</tbody></table></div><span id="line-114" class="anchor"/><span id="line-115" class="anchor"/><span id="line-116" class="anchor"/><span id="line-117" class="anchor"/><p class="line867">
+</p><h3 id="head-bf60ae47e5b17ed4c6f37ca783acfa226250802e">1.1.3. 如何给下拉菜单填加项目？</h3>
+<span id="line-118" class="anchor"/><span id="line-119" class="anchor"/><span id="line-120" class="anchor"/><p class="line862">这里有一对机制用于将新的菜单项添加给一个下拉菜单。较容易的是使用<tt>wx.Menu</tt>的<tt>Append()</tt>方法： <span id="line-121" class="anchor"/><span id="line-122" class="anchor"/><span id="line-123" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-3a8af45ba77801cdd4120e58ad064f78bd35b280_004\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-3a8af45ba77801cdd4120e58ad064f78bd35b280_004', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-3a8af45ba77801cdd4120e58ad064f78bd35b280_004" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">Append</span><span class="Operator">(</span><span class="ID">id</span><span class="Operator">,</span> <span class="ID">string</span><span class="Operator">,</span> <span class="ID">helpStr</span><span class="Operator">=</span><span class="String">""</span><span class="Operator">,</span> <span class="ID">kind</span><span class="Operator">=</span><span
+class="ID">wx</span><span class="Operator">.</span><span class="ID">ITEM_NORMAL</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-124" class="anchor"/><p class="line862">参数<tt>id</tt>是一个<tt>wxPython</tt> <tt>ID</tt>。参数<tt>string</tt>是将被显示在菜单上的字符串。当某个菜单高亮时，如果设置了参数<tt>helpStr</tt>，那么该参数将被显示在框架的状态栏中。<tt>kind</tt>参数使你能够设置菜单项的类型，通过该参数可以将菜单项设置为开关类型。在这一章的后面，我们将讨论管理开关项的更好的方法。<tt>Append</tt>方法把新的项放到菜单的尾部。 <span id="line-125" class="anchor"/><span id="line-126" class="anchor"/></p><p
+class="line862">例10.2 显示了一个使用<tt>Append()</tt>方法来建立一个有两个项链和一个分隔符的菜单。 <span id="line-127" class="anchor"/><span id="line-128" class="anchor"/><span id="line-129" class="anchor"/></p><p class="line867"><strong>例10.2 添加项目到一个菜单的示例代码</strong> <span id="line-130" class="anchor"/><span id="line-131" class="anchor"/><span id="line-132" class="anchor"/><span id="line-133" class="anchor"/><span id="line-134" class="anchor"/><span id="line-135" class="anchor"/><span id="line-136"
+class="anchor"/><span id="line-137" class="anchor"/><span id="line-138" class="anchor"/><span id="line-139" class="anchor"/><span id="line-140" class="anchor"/><span id="line-141" class="anchor"/><span id="line-142" class="anchor"/><span id="line-143" class="anchor"/><span id="line-144" class="anchor"/><span id="line-145" class="anchor"/><span id="line-146" class="anchor"/><span id="line-147" class="anchor"/><span id="line-148" class="anchor"/><span id="line-149" class="anchor"/><span id="line-150" class="anchor"/><span
+id="line-151" class="anchor"/><span id="line-152" class="anchor"/><span id="line-153" class="anchor"/><span id="line-154" class="anchor"/><span id="line-155" class="anchor"/><span id="line-156" class="anchor"/><span id="line-157" class="anchor"/><span id="line-158" class="anchor"/><span id="line-159" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-eb7a8d6de0daf6d10ae7d952afb944b02d917f35_005\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-eb7a8d6de0daf6d10ae7d952afb944b02d917f35_005', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-eb7a8d6de0daf6d10ae7d952afb944b02d917f35_005" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">MyFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Simple Menu Example"</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ID">p</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Panel</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">CreateStatusBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">menu</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Menu</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ID">simple</span> <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Simple menu item"</span><span class="Operator">,</span> <span class="String">"This is some help text"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">menu</span><span class="Operator">.</span><span class="ID">AppendSeparator</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">exit</span> <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Exit"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnSimple</span><span class="Operator">,</span> <span class="ID">simple</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnExit</span><span class="Operator">,</span> <span class="ID">exit</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">menuBar</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MenuBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">menuBar</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="ID">menu</span><span class="Operator">,</span> <span class="String">"Simple Menu"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetMenuBar</span><span class="Operator">(</span><span class="ID">menuBar</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span></span>
+<span class="line"><span class="LineNumber">  18 </span>    <span class="ResWord">def</span> <span class="ID">OnSimple</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  19 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MessageBox</span><span class="Operator">(</span><span class="String">"You selected the simple menu item"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span></span>
+<span class="line"><span class="LineNumber">  21 </span>    <span class="ResWord">def</span> <span class="ID">OnExit</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  22 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Close</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  23 </span></span>
+<span class="line"><span class="LineNumber">  24 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">"__main__"</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  25 </span>    <span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  26 </span>    <span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">MyFrame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  27 </span>    <span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  28 </span>    <span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-160" class="anchor"/><p class="line874">图10.2 显示了一个带有分隔符和状态文本的菜单。 <span id="line-161" class="anchor"/><span id="line-162" class="anchor"/><span id="line-163" class="anchor"/></p><p class="line867"><strong>图10.2</strong> <span id="line-164" class="anchor"/><span id="line-165" class="anchor"/></p><p class="line867"><img title="attachment:w10.2.gif" src="/moin/WxPythonInAction/ChapterTen?action=AttachFile&amp;do=get&amp;target=w10.2.gif" class="attachment"/>
+<span id="line-166" class="anchor"/><span id="line-167" class="anchor"/><span id="line-168" class="anchor"/></p><p class="line862">连同<tt>Append()</tt>一起，这里还有两个另外的用于菜单项插入的方法。要把一个菜单项放在菜单的开头，使用下面两个方法之一： <span id="line-169" class="anchor"/><span id="line-170" class="anchor"/></p><p class="line862">·<tt>Prepend(id</tt>,  <tt>string</tt>,  <tt>helpStr</tt>="", <tt>kind</tt>=<tt>wx.ITEM_NORMAL)</tt> <span id="line-171"
+class="anchor"/>·<tt>PrependSeparator()</tt> <span id="line-172" class="anchor"/><span id="line-173" class="anchor"/></p><p class="line862">要把新的项放入菜单中的任一位置，使用这下面的<tt>insert</tt>方法之一： <span id="line-174" class="anchor"/><span id="line-175" class="anchor"/></p><p class="line862">·<tt>Insert(pos</tt>, <tt>id</tt>, <tt>string</tt>, <tt>helpStr</tt>="", <tt>kind</tt>=<tt>wx.ITEM_NORMAL)</tt> <span id="line-176" class="anchor"/>·<tt>InsertSeparator(pos)</tt> <span id="line-177"
+class="anchor"/><span id="line-178" class="anchor"/></p><p class="line862">参数<tt>pos</tt>是菜单项要插入的位置的索引，所以如果索引为0，则新的项被放置在开头，如果索引值为菜单的尺寸，那么新的项被放置在尾部。所以在插入点后的菜单项将被向下移动。 <span id="line-179" class="anchor"/><span id="line-180" class="anchor"/></p><p
+class="line862">所有的这些插入方法都隐含地创建一个<tt>wx.MenuItem</tt>类的实例。你也可以使用该类的构造函数显式地创建该类的一个实例，以便设置该菜单项的除了标签以外的其它的属性。比如你可以设置自定义的字体或颜色。<tt>wx.MenuItem</tt>的构造函数如下： <span id="line-181" class="anchor"/><span id="line-182" class="anchor"/></p><p class="line867"><tt>wx.MenuItem(parentMenu</tt>=<tt>None</tt>, <tt>id</tt>=<tt>ID_ANY</tt>, <tt>text</tt>="",  <span id="line-183" class="anchor"/></p><ul><li style="list-style-type:
+none;"><p class="line891"><tt>helpString</tt>="", <tt>kind</tt>=<tt>wx.ITEM_NORMAL</tt>, <tt>subMenu</tt>=<tt>None)</tt> <span id="line-184" class="anchor"/><span id="line-185" class="anchor"/></p></li></ul><p
+class="line862">参数<tt>parentMenu</tt>必须是一个<tt>wx.Menu</tt>实例（如果设置了的话）。当构造时，这个新的菜单项不是自动被添加到父菜单上显示的。你必须自己来实现。这个行为与<tt>wxPython</tt>窗口部件和它们的容器的通常的行为不同。参数<tt>id</tt>是新项的标识符。参数<tt>text</tt>是新项显示在菜单中的字符串，参数<tt>helpString</tt>是当该菜单项高亮时显示在状态栏中的字符串。<tt>kind</tt>是菜单项的类型，<tt>wx.ITEM_NORMAL</tt>代表纯菜单项；我们以后会看到开关菜单项有不同的类型值。如果参数<tt>subMenu</tt>的值不是<tt>null</tt>，那么这个新的菜单项实际上就是一个子菜单。我们不推荐你使用这个机制来创建子菜单；替而代之，可以使用在10.3节中说明的机制来装扮你的菜单。
+<span id="line-186" class="anchor"/><span id="line-187" class="anchor"/></p><p class="line862">不像大多数窗口部件，创建菜单项并不将它添加到指定的父菜单。要将新的菜单项添加到一个菜单中，使用下面的<tt>wx.Menu</tt>方法之一： <span id="line-188" class="anchor"/><span id="line-189" class="anchor"/></p><p class="line862">·<tt>AppendItem(aMenuItem)</tt> <span id="line-190" class="anchor"/>·<tt>InsertItem(pos</tt>, <tt>aMenuItem)</tt> <span id="line-191" class="anchor"/>·<tt>PrependItem(aMenuItem)</tt> <span
+id="line-192" class="anchor"/><span id="line-193" class="anchor"/></p><p class="line862">要从菜单中删除一个菜单项，使用方法<tt>Remove(id)</tt>，它要求一个<tt>wxPython</tt> <tt>ID</tt>，或<tt>RemoveItem(item)</tt>，它要求一个菜单项作为参数。删除一个菜单项后，后面的菜单项将上移。<tt>Remove()</tt>方法将返回所删除的实际的菜单项。这使你能够存储该菜单项以备后用。与菜单栏不同，菜单没有直接替换菜单项的方法。替换必须通过先删除再插入来实现。 <span id="line-194" class="anchor"/><span id="line-195"
+class="anchor"/></p><p class="line867"><tt>wx.Menu</tt>类也有两个用来获取它的菜单项的信息的<tt>get</tt>*方法。<tt>GetMenuItemCount()</tt>返回菜单中项目的数量，<tt>GetMenuItems()</tt>返回菜单中项目的一个列表，项目在列表中的顺序与菜单中的位置相一致。这个列表是菜单中实际列表的一个拷贝，意味着改变所返回的列表，不会改变菜单本身。 <span id="line-196" class="anchor"/><span id="line-197" class="anchor"/></p><p
+class="line862">对于有效的菜单，你可以在运行时继续添加或删除菜单项。例10.3显示了在运行时添加菜单的示例代码。当按钮被按下时，调用<tt>OnAddItem()</tt>的方法来插入一个新的项到菜单的尾部。 <span id="line-198" class="anchor"/><span id="line-199" class="anchor"/><span id="line-200" class="anchor"/></p><p class="line867"><strong>例10.3</strong>  <span id="line-201" class="anchor"/><strong>运行时添加菜单项</strong> <span id="line-202" class="anchor"/><span id="line-203" class="anchor"/><span id="line-204"
+class="anchor"/><span id="line-205" class="anchor"/><span id="line-206" class="anchor"/><span id="line-207" class="anchor"/><span id="line-208" class="anchor"/><span id="line-209" class="anchor"/><span id="line-210" class="anchor"/><span id="line-211" class="anchor"/><span id="line-212" class="anchor"/><span id="line-213" class="anchor"/><span id="line-214" class="anchor"/><span id="line-215" class="anchor"/><span id="line-216" class="anchor"/><span id="line-217" class="anchor"/><span id="line-218"
+class="anchor"/><span id="line-219" class="anchor"/><span id="line-220" class="anchor"/><span id="line-221" class="anchor"/><span id="line-222" class="anchor"/><span id="line-223" class="anchor"/><span id="line-224" class="anchor"/><span id="line-225" class="anchor"/><span id="line-226" class="anchor"/><span id="line-227" class="anchor"/><span id="line-228" class="anchor"/><span id="line-229" class="anchor"/><span id="line-230" class="anchor"/><span id="line-231" class="anchor"/><span id="line-232"
+class="anchor"/><span id="line-233" class="anchor"/><span id="line-234" class="anchor"/><span id="line-235" class="anchor"/><span id="line-236" class="anchor"/><span id="line-237" class="anchor"/><span id="line-238" class="anchor"/><span id="line-239" class="anchor"/><span id="line-240" class="anchor"/><span id="line-241" class="anchor"/><span id="line-242" class="anchor"/><span id="line-243" class="anchor"/><span id="line-244" class="anchor"/><span id="line-245" class="anchor"/><span id="line-246"
+class="anchor"/><span id="line-247" class="anchor"/><span id="line-248" class="anchor"/><span id="line-249" class="anchor"/><span id="line-250" class="anchor"/><span id="line-251" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-d98fabe55be3c8f4c1e0dc917fca3a013248c595_006\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-d98fabe55be3c8f4c1e0dc917fca3a013248c595_006', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-d98fabe55be3c8f4c1e0dc917fca3a013248c595_006" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">MyFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   6 </span>                          <span class="String">"Add Menu Items"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">p</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Panel</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">txt</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">TextCtrl</span><span class="Operator">(</span><span class="ID">p</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"new
+item"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ID">btn</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Button</span><span class="Operator">(</span><span class="ID">p</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Add Menu Item"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_BUTTON</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnAddItem</span><span class="Operator">,</span> <span class="ID">btn</span><span class="Operator">)</span><span
+class="Comment"># 绑定按钮的事件</span></span>
+<span class="line"><span class="LineNumber">  11 </span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">sizer</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">BoxSizer</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">HORIZONTAL</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">sizer</span><span class="Operator">.</span><span class="ID">Add</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">txt</span><span class="Operator">,</span> <span class="Number">0</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">ALL</span><span class="Operator">,</span> <span
+class="Number">20</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">sizer</span><span class="Operator">.</span><span class="ID">Add</span><span class="Operator">(</span><span class="ID">btn</span><span class="Operator">,</span> <span class="Number">0</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">TOP</span><span class="Operator">|</span><span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">RIGHT</span><span class="Operator">,</span> <span class="Number">20</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">p</span><span class="Operator">.</span><span class="ID">SetSizer</span><span class="Operator">(</span><span class="ID">sizer</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">menu</span> <span class="Operator">=</span> <span class="ID">menu</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Menu</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span>        <span class="ID">simple</span> <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Simple menu item"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span>        <span class="ID">menu</span><span class="Operator">.</span><span class="ID">AppendSeparator</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ID">exit</span> <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Exit"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnSimple</span><span class="Operator">,</span> <span class="ID">simple</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  22 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnExit</span><span class="Operator">,</span> <span class="ID">exit</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  23 </span></span>
+<span class="line"><span class="LineNumber">  24 </span>        <span class="ID">menuBar</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MenuBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  25 </span>        <span class="ID">menuBar</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="ID">menu</span><span class="Operator">,</span> <span class="String">"Menu"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  26 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetMenuBar</span><span class="Operator">(</span><span class="ID">menuBar</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  27 </span></span>
+<span class="line"><span class="LineNumber">  28 </span></span>
+<span class="line"><span class="LineNumber">  29 </span>    <span class="ResWord">def</span> <span class="ID">OnSimple</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  30 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MessageBox</span><span class="Operator">(</span><span class="String">"You selected the simple menu item"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  31 </span></span>
+<span class="line"><span class="LineNumber">  32 </span>    <span class="ResWord">def</span> <span class="ID">OnExit</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  33 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Close</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  34 </span></span>
+<span class="line"><span class="LineNumber">  35 </span>    <span class="ResWord">def</span> <span class="ID">OnAddItem</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  36 </span>        <span class="ID">item</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">txt</span><span
+class="Operator">.</span><span class="ID">GetValue</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span><span class="Comment"># 添加菜单项</span></span>
+<span class="line"><span class="LineNumber">  37 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnNewItemSelected</span><span class="Operator">,</span> <span class="ID">item</span><span
+class="Operator">)</span><span class="Comment"># 绑定一个菜单事件</span></span>
+<span class="line"><span class="LineNumber">  38 </span></span>
+<span class="line"><span class="LineNumber">  39 </span>    <span class="ResWord">def</span> <span class="ID">OnNewItemSelected</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  40 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MessageBox</span><span class="Operator">(</span><span class="String">"You selected a new item"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  41 </span></span>
+<span class="line"><span class="LineNumber">  42 </span></span>
+<span class="line"><span class="LineNumber">  43 </span></span>
+<span class="line"><span class="LineNumber">  44 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">"__main__"</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  45 </span>    <span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  46 </span>    <span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">MyFrame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  47 </span>    <span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  48 </span>    <span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-252" class="anchor"/><p class="line862">在这个例子中，<tt>OnAddItem()</tt>读取文本域中的文本，并使用<tt>Append()</tt>来添加一个新的项到菜单中。另外，它绑定了一个菜单事件，以便这个新的菜单项有相应的功能。在下一节，我们将讨论菜单事件。     <span id="line-253" class="anchor"/><span id="line-254" class="anchor"/><span id="line-255" class="anchor"/><span id="line-256" class="anchor"/></p><p class="line867">
+</p><h3 id="head-e6834dd45322cb033aed6ec179d7a0c34c4779fc">1.1.4. 如何响应一个菜单事件？</h3>
+<span id="line-257" class="anchor"/><span id="line-258" class="anchor"/><span id="line-259" class="anchor"/><p class="line862">在最后这一小节，我们展示两个响应菜单选择的例子代码。像我们在第8章见过的许多窗口部件一样，选择一个菜单项将触发一个特定类型的<tt>wx.CommandEvent</tt>的一个实例。在此处，该类型是<tt>wx.EVT_MENU</tt>。 <span id="line-260" class="anchor"/><span id="line-261" class="anchor"/></p><p
+class="line862">菜单项事件在两个方面与系统中其它的命令事件不同。首先，用于关联菜单项事件与特定回调函数的<tt>Bind()</tt>函数是在包含菜单栏的框架上的。第二，由于框架通常有多个与<tt>wx.EVT_MENU</tt>触发相对应的菜单项，所以<tt>Bind()</tt>方法需要第三个参数，它就是菜单项本身。这使得框架能区分不同的菜单项事件。 <span id="line-262" class="anchor"/><span id="line-263" class="anchor"/></p><p class="line874">一个典型的绑定一个菜单事件的调用如下所示： <span id="line-264" class="anchor"/><span
+id="line-265" class="anchor"/><span id="line-266" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-2eabdc94877c3cca823386fcf116d7d601f24fc3_007\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-2eabdc94877c3cca823386fcf116d7d601f24fc3_007', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-2eabdc94877c3cca823386fcf116d7d601f24fc3_007" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnExit</span><span
+class="Operator">,</span> <span class="ID">exit_menu_item</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-267" class="anchor"/><p class="line867"><tt>self</tt>是框架，<tt>self.OnExit</tt>是处理方法，<tt>exit_menu_item</tt>是菜单项自身。 <span id="line-268" class="anchor"/><span id="line-269" class="anchor"/></p><p class="line862">尽管通过框架绑定菜单事件的主意似乎有一点古怪，但是它是有原因的。通过框架绑定事件使你能够透明地绑定一个工具栏按钮到与菜单项相同的处理器。如果该工具栏按钮有与一个菜单项相同的<tt>wxPython</tt>
+<tt>ID</tt>的话，那么这个单个的对<tt>wx.EVT_MENU</tt>的<tt>Bind()</tt>调用将同时绑定该菜单选择和该工具栏按钮敲击。这是可行的，因为菜单项事件与工具事件都经由该框架得到。如果菜单项事件在菜单栏中被处理，那么菜单栏将不会看到工具栏事件。 <span id="line-270" class="anchor"/><span id="line-271" class="anchor"/></p><p
+class="line862">有时，你会有多个菜单项需要被绑定到同一个处理器。例如，一套单选按钮开关菜单（它们本质上作相同的事情）可能被绑定给同一处理器。如果菜单项有连续的标识符号的话，为了避免分别的一一绑定，可以使用<tt>wx.EVT_MENU_RANGE</tt>事件类型： <span id="line-272" class="anchor"/><span id="line-273" class="anchor"/><span id="line-274" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-4176148f0f4b8ab33456165c31cd9f771e9ae383_008\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-4176148f0f4b8ab33456165c31cd9f771e9ae383_008', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-4176148f0f4b8ab33456165c31cd9f771e9ae383_008" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU_RANGE</span><span class="Operator">,</span> <span class="ID">function</span><span class="Operator">,</span> <span
+class="ID">id</span><span class="Operator">=</span><span class="ID">menu1</span><span class="Operator">,</span> <span class="ID">id2</span><span class="Operator">=</span><span class="ID">menu2</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-275" class="anchor"/><p class="line862">在这种情况下，所有标识号位于[<tt>menu1</tt>,<tt>menu2</tt>]间菜单项都将绑定到给定的函数。 <span id="line-276" class="anchor"/><span id="line-277" class="anchor"/></p><p class="line862">尽管通常你只关心菜单项命令事件，但是这儿有你能够响应的另外的菜单事件。在<tt>wxPython</tt>中，类<tt>wx.MenuEvent</tt>管理菜单的绘制和高亮事件。表10.3说明了<tt>wx.MenuEvent</tt>的四个事件类型。 <span
+id="line-278" class="anchor"/><span id="line-279" class="anchor"/><span id="line-280" class="anchor"/></p><p class="line867"><strong>表10.3 <tt>wx.MenuEvent</tt>的事件类型</strong> <span id="line-281" class="anchor"/><span id="line-282" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line891"><tt>EVT_MENU_CLOSE</tt></p></td>
+<td><p class="line862">当一个菜单被关闭时触发。</p></td>
+</tr>
+<tr>  <td><span id="line-283" class="anchor"/><p class="line891"><tt>EVT_MENU_HIGHLIGHT</tt></p></td>
+<td><p class="line862">当一个菜单项高亮时触发。绑定到一个特定的菜单项的<tt>ID</tt>。默认情况下这将导致帮助文本被显示在框架的状态栏中。</p></td>
+</tr>
+<tr>  <td><span id="line-284" class="anchor"/><p class="line891"><tt>EVT_MENU_HIGHLIGHT_ALL</tt></p></td>
+<td><p class="line862">当一个菜单项高亮时触发，但是不绑定到一个特定的菜单项的<tt>ID</tt>——这意味对于整个菜单栏只有一个处理器。如果你希望任何菜单的高亮都触发一个动作，而不考虑是哪个菜单项被选择的话，你可以调用这个。</p></td>
+</tr>
+<tr>  <td><span id="line-285" class="anchor"/><p class="line891"><tt>EVT_MENU_OPEN</tt></p></td>
+<td><p class="line862">当一个菜单被打开时触发。</p></td>
+</tr>
+</tbody></table></div><span id="line-286" class="anchor"/><span id="line-287" class="anchor"/><p class="line874">现在我们已经讨论了创建菜单的基础知识，我们将开始说明如何使用菜单项来工作。 <span id="line-288" class="anchor"/><span id="line-289" class="anchor"/><span id="line-290" class="anchor"/><span id="line-291" class="anchor"/></p><p class="line867">
+</p><h2 id="head-a2efa656b0da09f31dd8b1061a319ff369ab2c82">1.2. 使用菜单项工作</h2>
+<span id="line-292" class="anchor"/><span id="line-293" class="anchor"/><span id="line-294" class="anchor"/><p class="line874">尽管菜单和菜单栏对于一个菜单系统很明显是至关重要的，但是你的大部分时间和工作将化在处理菜单项上。在下面的几节中，我们将谈论通常的菜单项函数，如查找一个项目，使一个菜单项有效或无效，创建开关菜单项和分配快捷键。 <span id="line-295" class="anchor"/><span id="line-296" class="anchor"/><span id="line-297" class="anchor"/></p><p
+class="line867">
+</p><h3 id="head-0f25cbf1a74a2f1e264bba6718dc2f883b98162f">1.2.1. 如何在一个菜单中找到一个特定的菜单项？</h3>
+<span id="line-298" class="anchor"/><span id="line-299" class="anchor"/><span id="line-300" class="anchor"/><p class="line862">在<tt>wxPython</tt>中有许多方法用于查找一个特定的菜单或给定了标签或标识符的菜单项。你经常在事件处理器中使用这些方法，尤其是当你想修改一个菜单项或在另一个位置显示它的标签文本时。例10.1对先前的动态菜单例子作了补充，它通过使用<tt>FindItemById()</tt>得到菜单项以显示。 <span id="line-301" class="anchor"/><span id="line-302"
+class="anchor"/><span id="line-303" class="anchor"/></p><p class="line867"><strong>例10.4</strong>  <span id="line-304" class="anchor"/><strong>发现一个特定的菜单项</strong> <span id="line-305" class="anchor"/><span id="line-306" class="anchor"/><span id="line-307" class="anchor"/><span id="line-308" class="anchor"/><span id="line-309" class="anchor"/><span id="line-310" class="anchor"/><span id="line-311" class="anchor"/><span id="line-312"
+class="anchor"/><span id="line-313" class="anchor"/><span id="line-314" class="anchor"/><span id="line-315" class="anchor"/><span id="line-316" class="anchor"/><span id="line-317" class="anchor"/><span id="line-318" class="anchor"/><span id="line-319" class="anchor"/><span id="line-320" class="anchor"/><span id="line-321" class="anchor"/><span id="line-322" class="anchor"/><span id="line-323" class="anchor"/><span id="line-324" class="anchor"/><span
+id="line-325" class="anchor"/><span id="line-326" class="anchor"/><span id="line-327" class="anchor"/><span id="line-328" class="anchor"/><span id="line-329" class="anchor"/><span id="line-330" class="anchor"/><span id="line-331" class="anchor"/><span id="line-332" class="anchor"/><span id="line-333" class="anchor"/><span id="line-334" class="anchor"/><span id="line-335" class="anchor"/><span id="line-336" class="anchor"/><span id="line-337"
+class="anchor"/><span id="line-338" class="anchor"/><span id="line-339" class="anchor"/><span id="line-340" class="anchor"/><span id="line-341" class="anchor"/><span id="line-342" class="anchor"/><span id="line-343" class="anchor"/><span id="line-344" class="anchor"/><span id="line-345" class="anchor"/><span id="line-346" class="anchor"/><span id="line-347" class="anchor"/><span id="line-348" class="anchor"/><span id="line-349" class="anchor"/><span
+id="line-350" class="anchor"/><span id="line-351" class="anchor"/><span id="line-352" class="anchor"/><span id="line-353" class="anchor"/><span id="line-354" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-69ee8e75da11ab702c90222e8bb10e979c172447_009\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-69ee8e75da11ab702c90222e8bb10e979c172447_009', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-69ee8e75da11ab702c90222e8bb10e979c172447_009" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">MyFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span
+class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   6 </span>                          <span class="String">"Find Item Example"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">p</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Panel</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">txt</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">TextCtrl</span><span class="Operator">(</span><span class="ID">p</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span
+class="Operator">,</span> <span class="String">"new item"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ID">btn</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Button</span><span class="Operator">(</span><span class="ID">p</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Add Menu
+Item"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_BUTTON</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnAddItem</span><span class="Operator">,</span> <span
+class="ID">btn</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">sizer</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">BoxSizer</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">HORIZONTAL</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">sizer</span><span class="Operator">.</span><span class="ID">Add</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">txt</span><span class="Operator">,</span> <span class="Number">0</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">ALL</span><span class="Operator">,</span> <span class="Number">20</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">sizer</span><span class="Operator">.</span><span class="ID">Add</span><span class="Operator">(</span><span class="ID">btn</span><span class="Operator">,</span> <span class="Number">0</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">TOP</span><span class="Operator">|</span><span
+class="ID">wx</span><span class="Operator">.</span><span class="ID">RIGHT</span><span class="Operator">,</span> <span class="Number">20</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">p</span><span class="Operator">.</span><span class="ID">SetSizer</span><span class="Operator">(</span><span class="ID">sizer</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">menu</span> <span class="Operator">=</span> <span class="ID">menu</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Menu</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span>        <span class="ID">simple</span> <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Simple menu item"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span>        <span class="ID">menu</span><span class="Operator">.</span><span class="ID">AppendSeparator</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ID">exit</span> <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Exit"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnSimple</span><span class="Operator">,</span> <span
+class="ID">simple</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  22 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnExit</span><span class="Operator">,</span> <span
+class="ID">exit</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  23 </span></span>
+<span class="line"><span class="LineNumber">  24 </span>        <span class="ID">menuBar</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MenuBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  25 </span>        <span class="ID">menuBar</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="ID">menu</span><span class="Operator">,</span> <span class="String">"Menu"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  26 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetMenuBar</span><span class="Operator">(</span><span class="ID">menuBar</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  27 </span></span>
+<span class="line"><span class="LineNumber">  28 </span>    <span class="ResWord">def</span> <span class="ID">OnSimple</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  29 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MessageBox</span><span class="Operator">(</span><span class="String">"You selected the simple menu item"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  30 </span></span>
+<span class="line"><span class="LineNumber">  31 </span>    <span class="ResWord">def</span> <span class="ID">OnExit</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  32 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Close</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  33 </span></span>
+<span class="line"><span class="LineNumber">  34 </span>    <span class="ResWord">def</span> <span class="ID">OnAddItem</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  35 </span>        <span class="ID">item</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="ID">self</span><span
+class="Operator">.</span><span class="ID">txt</span><span class="Operator">.</span><span class="ID">GetValue</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  36 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnNewItemSelected</span><span class="Operator">,</span>
+<span class="ID">item</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  37 </span></span>
+<span class="line"><span class="LineNumber">  38 </span>    <span class="ResWord">def</span> <span class="ID">OnNewItemSelected</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  39 </span>        <span class="ID">item</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">GetMenuBar</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">FindItemById</span><span class="Operator">(</span><span class="ID">event</span><span
+class="Operator">.</span><span class="ID">GetId</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span> <span class="Comment">#得到菜单项   </span></span>
+<span class="line"><span class="LineNumber">  40 </span>        <span class="ID">text</span> <span class="Operator">=</span> <span class="ID">item</span><span class="Operator">.</span><span class="ID">GetText</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  41 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MessageBox</span><span class="Operator">(</span><span class="String">"You selected the '%s' item"</span> <span class="Operator">%</span> <span class="ID">text</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  42 </span></span>
+<span class="line"><span class="LineNumber">  43 </span></span>
+<span class="line"><span class="LineNumber">  44 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">"__main__"</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  45 </span>    <span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  46 </span>    <span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">MyFrame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  47 </span>    <span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  48 </span>    <span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-355" class="anchor"/><p class="line862">在这个例子中，<tt>FindItemById()</tt>被用来得到一个菜单项的标签文本以便显示。 <span id="line-356" class="anchor"/><span id="line-357" class="anchor"/></p><p
+class="line867"><tt>wx.MenuBar</tt>和<tt>wx.Menu</tt>对于查找特定的菜单项有着本质上相同的方法。其主要的区别是，<tt>wx.MenuBar</tt>的方法将查找整个菜单栏上的菜单项，而<tt>wx.Menu</tt>只查找特定的菜单。大多数情况下，推荐使用<tt>wx.MenuBar</tt>的方法，因为菜单栏容易使用<tt>wx.Frame.GetMenuBar()</tt>方法来访问。 <span id="line-358" class="anchor"/><span id="line-359" class="anchor"/></p><p
+class="line862">要从一个菜单栏查找一个顶级的菜单，使用菜单栏方法<tt>FindMenu(title)</tt>。这个方法返回相应菜单的索引或常量<tt>wx.NOT_FOUND</tt>。要得到实际的菜单，使用<tt>GetMenu()</tt>： <span id="line-360" class="anchor"/><span id="line-361" class="anchor"/><span id="line-362" class="anchor"/><span id="line-363" class="anchor"/><span id="line-364" class="anchor"/><span id="line-365" class="anchor"/><span id="line-366"
+class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-0f0b7d4ed8f20d929d2369e1ed52fb446b2627c0_010\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-0f0b7d4ed8f20d929d2369e1ed52fb446b2627c0_010', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-0f0b7d4ed8f20d929d2369e1ed52fb446b2627c0_010" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">def</span> <span class="ID">FindMenuInMenuBar</span><span class="Operator">(</span><span class="ID">menuBar</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ID">pos</span> <span class="Operator">=</span> <span class="ID">menuBar</span><span class="Operator">.</span><span class="ID">FindMenu</span><span class="Operator">(</span><span class="ID">title</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ResWord">if</span> <span class="ID">pos</span> <span class="Operator">==</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">NOT_FOUND</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>        <span class="ResWord">return</span> <span class="ID">None</span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ResWord">return</span> <span class="ID">menuBar</span><span class="Operator">.</span><span class="ID">GetMenu</span><span class="Operator">(</span><span class="ID">pos</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-367" class="anchor"/><p class="line867"><tt>FindMenu</tt>方法的<tt>title</tt>参数匹配菜单的标题（不管菜单的标题有无修饰标签字符）。例如，即使菜单的标题是 ，<tt>FindMenu(</tt>"<tt>File</tt>")仍将匹配该菜单项。在菜单类中的所有基于标签字符串发现一个菜单项的方法都有这个功能。 <span id="line-368" class="anchor"/><span id="line-369" class="anchor"/></p><p
+class="line862">表10.4指出了<tt>wx.MenuBar</tt>的这些方法，它们能够被用于查找或处理一个特定的菜单项。 <span id="line-370" class="anchor"/><span id="line-371" class="anchor"/><span id="line-372" class="anchor"/></p><p class="line867"><strong>表10.4 <tt>wx.MenuBar</tt>的菜单项处理方法</strong> <span id="line-373" class="anchor"/><span id="line-374" class="anchor"/></p><div><table><tbody><tr>  <td><p
+class="line891"><tt>FindMenuItem(menuString</tt>,<tt>itemString)</tt></p></td>
+<td><p class="line862">在一个名为<tt>menuString</tt>的菜单中查找名为<tt>itemString</tt>的菜单项。返回找到的菜单项或<tt>wx.NOT_FOUND</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-375" class="anchor"/><p class="line891"><tt>FindItemById(id)</tt></p></td>
+<td><p class="line862">返回与给定的<tt>wxPython</tt>标识符相关联的菜单项。如果没有，返回<tt>None</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-376" class="anchor"/><p class="line891"><tt>GetHelpString(id)</tt>,<tt>SetHelpString(id</tt>,<tt>helpString)</tt></p></td>
+<td><p class="line862">用于给定<tt>id</tt>的菜单项的帮助字符串的获取或设置。如果没有这样的菜单项，那么<tt>get</tt>*方法返回""，<tt>set</tt>*方法不起作用。</p></td>
+</tr>
+<tr>  <td><span id="line-377" class="anchor"/><p class="line891"><tt>GetLabel(id)</tt>,<tt>SetLabel(id</tt>, <tt>label)</tt></p></td>
+<td><p class="line862">用于给定<tt>id</tt>的菜单项的标签的获取或设置。如果没有这样的菜单项，那么<tt>get</tt>*方法返回""，<tt>set</tt>*方法不起作用。这些方法只能用在菜单栏已附加到一个框架后。</p></td>
+</tr>
+</tbody></table></div><span id="line-378" class="anchor"/><span id="line-379" class="anchor"/><p class="line862">表10.5 显示了用于<tt>wx.Menu</tt>的菜单项处理方法。它们分别与菜单栏中的方法相类似，除了所返回的菜单项必须在所调用的菜单实例中。 <span id="line-380" class="anchor"/><span id="line-381" class="anchor"/></p><p
+class="line874">在菜单项返回后，你可能想做些有用的事情，如使该菜单项有效或无效。在下一节，我们将讨论使用菜单项有效或无效。 <span id="line-382" class="anchor"/><span id="line-383" class="anchor"/><span id="line-384" class="anchor"/></p><p class="line867"><strong>表10.5 <tt>wx.Menu</tt>的菜单项方法</strong> <span id="line-385" class="anchor"/><span id="line-386" class="anchor"/></p><div><table><tbody><tr>  <td><p
+class="line891"><tt>FindItem(itemString)</tt></p></td>
+<td><p class="line862">返回与给定的<tt>itemString</tt>相关的菜单项或<tt>wx.NOT_FOUND</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-387" class="anchor"/><p class="line891"><tt>FindItemById(id)</tt></p></td>
+<td><p class="line862">返回与给定的<tt>wxPython</tt>标识符相关联的菜单项。如果没有，返回<tt>None</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-388" class="anchor"/><p class="line891"><tt>FindItemByPosition(pos)</tt></p></td>
+<td><p class="line862">返回菜单中给定位置的菜单项</p></td>
+</tr>
+<tr>  <td><span id="line-389" class="anchor"/><p class="line891"><tt>GetHelpString(id)</tt>,<tt>SetHelpString(id</tt>,<tt>helpString)</tt></p></td>
+<td><p class="line862">与菜单栏的对应方法相同。</p></td>
+</tr>
+<tr>  <td><span id="line-390" class="anchor"/><p class="line891"><tt>GetLabel(id)</tt>,<tt>SetLabel(id</tt>, <tt>label)</tt></p></td>
+<td><p class="line862">与菜单栏的对应方法相同。</p></td>
+</tr>
+</tbody></table></div><span id="line-391" class="anchor"/><span id="line-392" class="anchor"/><span id="line-393" class="anchor"/><span id="line-394" class="anchor"/><p class="line867">
+</p><h3 id="head-d7fb005bc718935d5bc4423cfac5f1aa12d39a66">1.2.2. 如何使一个菜单项有效或无效？</h3>
+<span id="line-395" class="anchor"/><span id="line-396" class="anchor"/><span id="line-397" class="anchor"/><p class="line874">类似于其它的窗口部件，菜单和菜单项也可以有有效或无效状态。一个无效的菜单或菜单项通常显示为灰色文本，而非黑色。无效的菜单或菜单项不触发高亮或选择事件，它对于系统来说是不可见的。 <span id="line-398" class="anchor"/><span id="line-399" class="anchor"/></p><p
+class="line862">例10.5显示了开关菜单项的有效状态的示例代码，其中在按钮的事件处理器中使用了菜单栏的<tt>IsEnabled()</tt>和<tt>Enable()</tt>方法。 <span id="line-400" class="anchor"/><span id="line-401" class="anchor"/><span id="line-402" class="anchor"/></p><p class="line867"><strong>例10.5</strong> <span id="line-403" class="anchor"/><span id="line-404" class="anchor"/><span id="line-405"
+class="anchor"/><span id="line-406" class="anchor"/><span id="line-407" class="anchor"/><span id="line-408" class="anchor"/><span id="line-409" class="anchor"/><span id="line-410" class="anchor"/><span id="line-411" class="anchor"/><span id="line-412" class="anchor"/><span id="line-413" class="anchor"/><span id="line-414" class="anchor"/><span id="line-415" class="anchor"/><span id="line-416"
+class="anchor"/><span id="line-417" class="anchor"/><span id="line-418" class="anchor"/><span id="line-419" class="anchor"/><span id="line-420" class="anchor"/><span id="line-421" class="anchor"/><span id="line-422" class="anchor"/><span id="line-423" class="anchor"/><span id="line-424" class="anchor"/><span id="line-425" class="anchor"/><span id="line-426" class="anchor"/><span id="line-427"
+class="anchor"/><span id="line-428" class="anchor"/><span id="line-429" class="anchor"/><span id="line-430" class="anchor"/><span id="line-431" class="anchor"/><span id="line-432" class="anchor"/><span id="line-433" class="anchor"/><span id="line-434" class="anchor"/><span id="line-435" class="anchor"/><span id="line-436" class="anchor"/><span id="line-437" class="anchor"/><span id="line-438"
+class="anchor"/><span id="line-439" class="anchor"/><span id="line-440" class="anchor"/><span id="line-441" class="anchor"/><span id="line-442" class="anchor"/><span id="line-443" class="anchor"/><span id="line-444" class="anchor"/><span id="line-445" class="anchor"/><span id="line-446" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-952ee3ca8bb7840ed7fb89b8daeb3a1e9e429c18_011\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-952ee3ca8bb7840ed7fb89b8daeb3a1e9e429c18_011', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-952ee3ca8bb7840ed7fb89b8daeb3a1e9e429c18_011" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">ID_SIMPLE</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">NewId</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">class</span> <span class="ID">MyFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span class="Operator">,</span> <span
+class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   8 </span>                          <span class="String">"Enable/Disable Menu Example"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ID">p</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Panel</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">btn</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Button</span><span class="Operator">(</span><span class="ID">p</span><span class="Operator">,</span> <span
+class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Disable Item"</span><span class="Operator">,</span> <span class="Operator">(</span><span class="Number">20</span><span class="Operator">,</span><span class="Number">20</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_BUTTON</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">OnToggleItem</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">btn</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">menu</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Menu</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="ID">ID_SIMPLE</span><span class="Operator">,</span> <span class="String">"Simple menu item"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">OnSimple</span><span class="Operator">,</span> <span class="ID">id</span><span class="Operator">=</span><span class="ID">ID_SIMPLE</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">menu</span><span class="Operator">.</span><span class="ID">AppendSeparator</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span>        <span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">ID_EXIT</span><span class="Operator">,</span> <span class="String">"Exit"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">OnExit</span><span class="Operator">,</span> <span class="ID">id</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">ID_EXIT</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span></span>
+<span class="line"><span class="LineNumber">  21 </span>        <span class="ID">menuBar</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MenuBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  22 </span>        <span class="ID">menuBar</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="ID">menu</span><span class="Operator">,</span> <span class="String">"Menu"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  23 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetMenuBar</span><span class="Operator">(</span><span class="ID">menuBar</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  24 </span></span>
+<span class="line"><span class="LineNumber">  25 </span>    <span class="ResWord">def</span> <span class="ID">OnSimple</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  26 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MessageBox</span><span class="Operator">(</span><span class="String">"You selected the simple menu item"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  27 </span></span>
+<span class="line"><span class="LineNumber">  28 </span>    <span class="ResWord">def</span> <span class="ID">OnExit</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  29 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Close</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  30 </span></span>
+<span class="line"><span class="LineNumber">  31 </span>    <span class="ResWord">def</span> <span class="ID">OnToggleItem</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  32 </span>        <span class="ID">menubar</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">GetMenuBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  33 </span>        <span class="ID">enabled</span> <span class="Operator">=</span> <span class="ID">menubar</span><span class="Operator">.</span><span class="ID">IsEnabled</span><span class="Operator">(</span><span class="ID">ID_SIMPLE</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  34 </span>        <span class="ID">menubar</span><span class="Operator">.</span><span class="ID">Enable</span><span class="Operator">(</span><span class="ID">ID_SIMPLE</span><span class="Operator">,</span> <span class="ResWord">not</span> <span class="ID">enabled</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  35 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">btn</span><span class="Operator">.</span><span class="ID">SetLabel</span><span class="Operator">(</span></span>
+<span class="line"><span class="LineNumber">  36 </span>            <span class="Operator">(</span><span class="ID">enabled</span> <span class="ResWord">and</span> <span class="String">"Enable"</span> <span class="ID">o</span> <span class="String">"Disable"</span><span class="Operator">)</span> <span class="Operator">+</span> <span class="String">" Item"</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  37 </span></span>
+<span class="line"><span class="LineNumber">  38 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">"__main__"</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  39 </span>    <span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  40 </span>    <span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">MyFrame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  41 </span>    <span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  42 </span>    <span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-447" class="anchor"/><p class="line862">要查看或改变菜单项自身或菜单栏上的，或特定菜单上的一个菜单项的有效状态，调用
+<tt>wx.MenuItem.IsEnabled()</tt>、<tt>wx.MenuBar.IsEnabled(id)</tt>或<tt>wx.Menu.IsEnabled(id)</tt>方法。菜单栏和菜单方法都要求一个菜单项的<tt>wxPython</tt>标识符。如果该菜单项存在且有效，那么这两个方法都返回<tt>True</tt>，如果该菜单项不存在或无效，那么这两个方法都返回<tt>False</tt>。唯一的区别是<tt>wx.Menu</tt>的方法只在特定的菜单中搜索，而菜单栏方法搜索整个菜单栏。<tt>wx.MenuItem</tt>方法不要求参数，它返回特定菜单项的状态。
+<span id="line-448" class="anchor"/><span id="line-449" class="anchor"/></p><p class="line862">要改变有效状态，使用<tt>wx.MenuBar.Enable(id</tt>, <tt>enable)</tt>, <tt>wx.Menu.Enable(id</tt>,<tt>enable)</tt>, 或
+<tt>wx.MenuItem.Enable(enable)</tt>。<tt>enable</tt>参数是布尔值。如果为<tt>True</tt>，相关菜单项有效，如果为<tt>False</tt>，相关菜单项无效。<tt>Enable()</tt>方法的作用域和<tt>IsEnabled()</tt>方法相同。你也可以使用<tt>wx.MenuBarEnableTop(pos</tt>,<tt>enable)</tt>方法来让整个顶级菜单有效或无效。在这里，<tt>pos</tt>参数是菜单栏中菜单的整数位置，<tt>enable</tt>参数是个布尔值。 <span
+id="line-450" class="anchor"/><span id="line-451" class="anchor"/><span id="line-452" class="anchor"/><span id="line-453" class="anchor"/></p><p class="line867">
+</p><h3 id="head-1def0c1a6866ac7e2dd05af0209c88717e0cb3e9">1.2.3. 如何将一个菜单项与一个快捷键关联起来？</h3>
+<span id="line-454" class="anchor"/><span id="line-455" class="anchor"/><span id="line-456" class="anchor"/><p class="line862">图10.3显示了一个示例菜单。注意该菜单的菜单名中有一个带下划线的字符，其中的标签为<tt>Accelerated</tt>的菜单项的快捷键是<tt>Ctrl</tt>-A。 <span id="line-457" class="anchor"/><span id="line-458" class="anchor"/><span id="line-459" class="anchor"/></p><p
+class="line867"><strong>图10.3</strong> <span id="line-460" class="anchor"/><span id="line-461" class="anchor"/></p><p class="line867"><img title="attachment:w10.3.gif" src="/moin/WxPythonInAction/ChapterTen?action=AttachFile&amp;do=get&amp;target=w10.3.gif" class="attachment"/> <span id="line-462" class="anchor"/><span id="line-463" class="anchor"/><span id="line-464"
+class="anchor"/></p><p class="line874">研究表明快捷键并不总是能够节省时间。但是它们是标准的界面元素，并且你的用户也希望它们的存在。 <span id="line-465" class="anchor"/>例10.6显示了给菜单项添加快捷键的代码。 <span id="line-466" class="anchor"/><span id="line-467" class="anchor"/><span id="line-468" class="anchor"/></p><p class="line867"><strong>例10.6</strong> <span id="line-469"
+class="anchor"/><span id="line-470" class="anchor"/><span id="line-471" class="anchor"/><span id="line-472" class="anchor"/><span id="line-473" class="anchor"/><span id="line-474" class="anchor"/><span id="line-475" class="anchor"/><span id="line-476" class="anchor"/><span id="line-477" class="anchor"/><span id="line-478" class="anchor"/><span id="line-479" class="anchor"/><span
+id="line-480" class="anchor"/><span id="line-481" class="anchor"/><span id="line-482" class="anchor"/><span id="line-483" class="anchor"/><span id="line-484" class="anchor"/><span id="line-485" class="anchor"/><span id="line-486" class="anchor"/><span id="line-487" class="anchor"/><span id="line-488" class="anchor"/><span id="line-489" class="anchor"/><span id="line-490"
+class="anchor"/><span id="line-491" class="anchor"/><span id="line-492" class="anchor"/><span id="line-493" class="anchor"/><span id="line-494" class="anchor"/><span id="line-495" class="anchor"/><span id="line-496" class="anchor"/><span id="line-497" class="anchor"/><span id="line-498" class="anchor"/><span id="line-499" class="anchor"/><span id="line-500" class="anchor"/><span
+id="line-501" class="anchor"/><span id="line-502" class="anchor"/><span id="line-503" class="anchor"/><span id="line-504" class="anchor"/><span id="line-505" class="anchor"/><span id="line-506" class="anchor"/><span id="line-507" class="anchor"/><span id="line-508" class="anchor"/><span id="line-509" class="anchor"/><span id="line-510" class="anchor"/><span id="line-511"
+class="anchor"/><span id="line-512" class="anchor"/><span id="line-513" class="anchor"/><span id="line-514" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-8cecae07f0166995d9e1212f1229263f7d2b8c6c_012\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-8cecae07f0166995d9e1212f1229263f7d2b8c6c_012', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-8cecae07f0166995d9e1212f1229263f7d2b8c6c_012" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">MyFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span class="Operator">,</span> <span
+class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   6 </span>                          <span class="String">"Accelerator Example"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">p</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Panel</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">menu</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Menu</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ID">simple</span> <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Simple
+item"</span><span class="Operator">)</span>    <span class="Comment"># Creating a mnemonic</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">accel</span>  <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"
+\tCtrl-A"</span><span class="Operator">)</span> <span class="Comment"># Creating an accelerator</span></span>
+<span class="line"><span class="LineNumber">  11 </span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">menu</span><span class="Operator">.</span><span class="ID">AppendSeparator</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">exit</span> <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"E
+"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">OnSimple</span><span class="Operator">,</span> <span class="ID">simple</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">OnAccelerated</span><span class="Operator">,</span> <span class="ID">accel</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">OnExit</span><span class="Operator">,</span> <span class="ID">exit</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span></span>
+<span class="line"><span class="LineNumber">  19 </span>        <span class="ID">menuBar</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MenuBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ID">menuBar</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="ID">menu</span><span class="Operator">,</span> <span class="String">" "</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetMenuBar</span><span class="Operator">(</span><span class="ID">menuBar</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  22 </span></span>
+<span class="line"><span class="LineNumber">  23 </span>        <span class="ID">acceltbl</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">AcceleratorTable</span><span class="Operator">(</span> <span class="Operator">[</span> <span class="Comment">#Using an accelerator table</span></span>
+<span class="line"><span class="LineNumber">  24 </span>                <span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">ACCEL_CTRL</span><span class="Operator">,</span> <span class="ID">od</span><span class="Operator">(</span><span class="String">'Q'</span><span class="Operator">)</span><span
+class="Operator">,</span> <span class="ID">exit</span><span class="Operator">.</span><span class="ID">GetId</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  25 </span>            <span class="Operator">]</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  26 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetAcceleratorTable</span><span class="Operator">(</span><span class="ID">acceltbl</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  27 </span></span>
+<span class="line"><span class="LineNumber">  28 </span></span>
+<span class="line"><span class="LineNumber">  29 </span>    <span class="ResWord">def</span> <span class="ID">OnSimple</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  30 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MessageBox</span><span class="Operator">(</span><span class="String">"You selected the simple menu item"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  31 </span></span>
+<span class="line"><span class="LineNumber">  32 </span>    <span class="ResWord">def</span> <span class="ID">OnAccelerated</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  33 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MessageBox</span><span class="Operator">(</span><span class="String">"You selected the accelerated menu item"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  34 </span></span>
+<span class="line"><span class="LineNumber">  35 </span></span>
+<span class="line"><span class="LineNumber">  36 </span>    <span class="ResWord">def</span> <span class="ID">OnExit</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  37 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Close</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  38 </span></span>
+<span class="line"><span class="LineNumber">  39 </span></span>
+<span class="line"><span class="LineNumber">  40 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">"__main__"</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  41 </span>    <span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  42 </span>    <span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">MyFrame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  43 </span>    <span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  44 </span>    <span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-515" class="anchor"/><p class="line862">在<tt>wxPython</tt>中有两种快捷键；<tt>mnemonics</tt>（助记符）和<tt>accelerator</tt>（加速器）。下面，我们将讨论这两种的区别。 <span id="line-516" class="anchor"/><span id="line-517" class="anchor"/><span id="line-518" class="anchor"/></p><p class="line867"><strong>使用助记符快捷方式</strong> <span
+id="line-519" class="anchor"/><span id="line-520" class="anchor"/></p><p class="line862">助记符是一个用来访问菜单项的单个字符，以一个带有下划线的字母表示。助记符可以通过为菜单或菜单项指定显示的文本来创建，并在你想用来作为助记符的字符前面放置一个&符号，例如 ,  或<tt>Ma</tt> 。如果你希望在你的菜单文本中有一个&符号，那么你必须输入两个&&符号，例如&&。 <span id="line-521"
+class="anchor"/><span id="line-522" class="anchor"/></p><p
+class="line862">助记符是作为在菜单树中选择的一个备用的方法。它仅在被用户显式地调用时被激活；在微软<tt>Windows</tt>下，通过按下<tt>alt</tt>键来激活它。一旦助记符被激活，下一步按下顶级菜单的助记符来打开顶级菜单。这样一步打开菜单，直到一个菜单项被选择，此时一个菜单事件被触发。助记符在菜单中必须是独一无二的，但在整个菜单栏中可以不是独一无二。通常菜单文本的第一个字符被用作助记符。如果你有多个菜单项有相同的开头字母，那么就没有特定的准则来决定那个字符用作助记符（最常用的选择是第二个和最后一个，这要看哪个更合理）。菜单文本清晰的含义比有一个好的助记符更重要。
+<span id="line-523" class="anchor"/><span id="line-524" class="anchor"/><span id="line-525" class="anchor"/></p><p class="line867"><strong>使用加速器快捷方式</strong> <span id="line-526" class="anchor"/><span id="line-527" class="anchor"/></p><p
+class="line862">在<tt>wxPython</tt>中加速器是一个更加典型的键盘快捷方式，它意味能够随时调用的按键组合，这些按键组合直接触发菜单项。加速器可以用两种方法创建。最简单的方法是，在菜单或菜单项的显示文本中包括加速器按键组合（当菜单或菜单项被添加到其父中时）。实现的方法是，在你的菜单项的文本后放置一个\t。在\t之后定义组合键。组合键的第一部分是一个或多个<tt>Alt</tt>,
+<tt>Ctrl</tt>, 或<tt>Shift</tt>，由一个+或一个-分隔，随后是实际的加速器按键。例如：<tt>New</tt>\<tt>tctrl</tt>-n, <tt>SaveAs</tt>\<tt>tctrl</tt>-<tt>shift</tt>-s。即使在第一部分你只有一个专用的键，你仍可使用+或-来将该部分与实际的按键分隔。这不区分按键组合的大小写。 <span id="line-528" class="anchor"/><span id="line-529" class="anchor"/></p><p
+class="line862">实际的键可以是任何数字、字母或功能键（如<tt>F1</tt>~<tt>F12</tt>），还有表10.6所列出的专用词。 <span id="line-530" class="anchor"/><span id="line-531" class="anchor"/></p><p class="line867"><tt>wxPython</tt>的方法在通过名字查找一个菜单或菜单项时忽略助记符和加速器。换句话说，对<tt>menubar.FindMenuItem(</tt>"<tt>File</tt>",
+"<tt>SaveAs</tt>")的调用将仍匹配<tt>Save</tt> <tt>as</tt>菜单项，即使菜单项的显示名是以<tt>Save</tt>  \<tt>tctrl</tt>-<tt>shift</tt>-s形式输入的。 <span id="line-532" class="anchor"/><span id="line-533" class="anchor"/></p><p
+class="line862">加速器也可能使用加速器表被直接创建，加速器表是类<tt>wx.AccleratorTable</tt>的一个实例。一个加速器表由<tt>wx.AccelratorEntry</tt>对象的一个列表组成。<tt>wx.AcceleratorTable</tt>的构造函数要求一个加速器项的列表，或不带参数。在例10.6中，我们利用了<tt>wxPython</tt>将隐式使用参数(<tt>wx.ACCEL_CTRL</tt>,
+<tt>od(</tt>'Q')，<tt>exit.GetId())</tt>调用<tt>wx.AcceleratorEntry</tt>构造函数的事实。<tt>wx.AcceleratorEntry</tt>的构造函数如下： <span id="line-534" class="anchor"/><span id="line-535" class="anchor"/></p><p class="line867"><tt>wx.AcceleratorEntry(flags</tt>, <tt>keyCode</tt>, <tt>cmd)</tt> <span id="line-536" class="anchor"/><span id="line-537"
+class="anchor"/></p><p class="line867"><tt>flags</tt>参数是一个使用了一个或多个下列常量的位掩码：<tt>wx.ACCEL_ALT</tt>, <tt>wx.ACCEL_CTRL</tt>, <tt>wxACCEL_NORMAL</tt> <span id="line-538" class="anchor"/>,
+或<tt>wx.ACCEL_SHIFT</tt>。该参数表明哪个控制键需要被按下来触发该加速器。<tt>keyCode</tt>参数代表按下来触发加速器的常规键，它是对应于一个字符的<tt>ASCII</tt>数字，或在<tt>wxWidgets</tt>文本中的<tt>Keycodes</tt>下的一个专用字符。<tt>cmd</tt>参数是菜单项的<tt>wxPython</tt>标识符，该菜单项当加速器被调用时触发其命令事件。正如你从例10.6所能看到的，使用这种方法声明一个加速器，不会在这个带菜单项显示名的菜单上列出组合键。你仍需要单独实现它。
+<span id="line-539" class="anchor"/><span id="line-540" class="anchor"/><span id="line-541" class="anchor"/></p><p class="line867"><strong>表10.6 非字母顺序的加速器键</strong> <span id="line-542" class="anchor"/><span id="line-543" class="anchor"/><span id="line-544" class="anchor"/></p><p class="line867"><strong>加速器</strong> <span id="line-545"
+class="anchor"/><strong>键</strong> <span id="line-546" class="anchor"/><span id="line-547" class="anchor"/></p><p class="line867"><tt>delDelete</tt> <span id="line-548" class="anchor"/><tt>deleteDelete</tt> <span id="line-549" class="anchor"/><tt>downDown</tt> <tt>arrow</tt> <span id="line-550" class="anchor"/><tt>endEnd</tt> <span id="line-551"
+class="anchor"/><tt>enterEnter</tt> <span id="line-552" class="anchor"/><tt>escEscape</tt> <span id="line-553" class="anchor"/><tt>escapeEscape</tt> <span id="line-554" class="anchor"/><tt>homeHome</tt> <span id="line-555" class="anchor"/><tt>insInsert</tt> <span id="line-556" class="anchor"/><tt>insertInsert</tt> <span id="line-557" class="anchor"/><tt>leftLeft</tt>
+<tt>arrow</tt> <span id="line-558" class="anchor"/><tt>pgdnPage</tt> <tt>down</tt> <span id="line-559" class="anchor"/><tt>pgupPage</tt> <tt>Up</tt> <span id="line-560" class="anchor"/><tt>returnEnter</tt> <span id="line-561" class="anchor"/><tt>rightRight</tt> <tt>arrow</tt> <span id="line-562" class="anchor"/><tt>spaceSpace</tt> <tt>bar</tt> <span id="line-563"
+class="anchor"/><tt>tabTab</tt> <span id="line-564" class="anchor"/><tt>upUp</tt> <tt>arrow</tt> <span id="line-565" class="anchor"/><span id="line-566" class="anchor"/><span id="line-567" class="anchor"/><span id="line-568" class="anchor"/></p><p class="line867">
+</p><h3 id="head-5d4d0367238806a9e97f812982209d4801bffc54">1.2.4. 如何创建一个复选或单选开关菜单项？</h3>
+<span id="line-569" class="anchor"/><span id="line-570" class="anchor"/><span id="line-571" class="anchor"/><p class="line874">菜单项不仅用于从选择表单中得到用户的输入，它们也被用于显示应用程序的状态。经由菜单项来显示状 <span id="line-572" class="anchor"/>态的最常用的机制是开关菜单项的使用，开关菜单项仿效一个复选框或单选按钮（你只能够通过改变该菜 <span id="line-573"
+class="anchor"/>单项的文本或使用有效或无效状态来反映应用程序的状态）。图10.4显示了复选和单选菜单项的例子。 <span id="line-574" class="anchor"/><span id="line-575" class="anchor"/><span id="line-576" class="anchor"/></p><p class="line867"><strong>图10.4</strong> <span id="line-577" class="anchor"/><span id="line-578" class="anchor"/></p><p class="line867"><img
+title="attachment:w10.4.gif" src="/moin/WxPythonInAction/ChapterTen?action=AttachFile&amp;do=get&amp;target=w10.4.gif" class="attachment"/> <span id="line-579" class="anchor"/><span id="line-580" class="anchor"/><span id="line-581" class="anchor"/></p><p class="line874">顾名思义，一个复选开关菜单项在它每次被选择时，它在开和关状态间转换。在一个组中，一次只允许一 <span
+id="line-582" class="anchor"/>个单选菜单项处于开的状态。当同一组中的另一个菜单项被选择时，先前的菜单项改变为关状态。例10.7 <span id="line-583" class="anchor"/>显示了如何创建复选和单选菜单项。 <span id="line-584" class="anchor"/><span id="line-585" class="anchor"/><span id="line-586" class="anchor"/></p><p class="line867"><strong>例10.7</strong>  <span id="line-587"
+class="anchor"/><strong>建造开关菜单项</strong> <span id="line-588" class="anchor"/><span id="line-589" class="anchor"/><span id="line-590" class="anchor"/><span id="line-591" class="anchor"/><span id="line-592" class="anchor"/><span id="line-593" class="anchor"/><span id="line-594" class="anchor"/><span id="line-595" class="anchor"/><span id="line-596"
+class="anchor"/><span id="line-597" class="anchor"/><span id="line-598" class="anchor"/><span id="line-599" class="anchor"/><span id="line-600" class="anchor"/><span id="line-601" class="anchor"/><span id="line-602" class="anchor"/><span id="line-603" class="anchor"/><span id="line-604" class="anchor"/><span id="line-605" class="anchor"/><span id="line-606"
+class="anchor"/><span id="line-607" class="anchor"/><span id="line-608" class="anchor"/><span id="line-609" class="anchor"/><span id="line-610" class="anchor"/><span id="line-611" class="anchor"/><span id="line-612" class="anchor"/><span id="line-613" class="anchor"/><span id="line-614" class="anchor"/><span id="line-615" class="anchor"/><span id="line-616"
+class="anchor"/><span id="line-617" class="anchor"/><span id="line-618" class="anchor"/><span id="line-619" class="anchor"/><span id="line-620" class="anchor"/><span id="line-621" class="anchor"/><span id="line-622" class="anchor"/><span id="line-623" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-743f86388e8634dada55880c4aa65c01f6ca7171_013\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-743f86388e8634dada55880c4aa65c01f6ca7171_013', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-743f86388e8634dada55880c4aa65c01f6ca7171_013" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">MyFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span
+class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   6 </span>                          <span class="String">"Toggle Items Example"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">p</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Panel</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">menuBar</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MenuBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ID">menu</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Menu</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">exit</span> <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span
+class="String">"Exit"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span
+class="Operator">.</span><span class="ID">OnExit</span><span class="Operator">,</span> <span class="ID">exit</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">menuBar</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="ID">menu</span><span class="Operator">,</span> <span class="String">"Menu"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">menu</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Menu</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">menu</span><span class="Operator">.</span><span class="ID">AppendCheckItem</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Check Item 1"</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ID">menu</span><span class="Operator">.</span><span class="ID">AppendCheckItem</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Check Item 2"</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">menu</span><span class="Operator">.</span><span class="ID">AppendCheckItem</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Check Item 3"</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span>        <span class="ID">menu</span><span class="Operator">.</span><span class="ID">AppendSeparator</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span>        <span class="ID">menu</span><span class="Operator">.</span><span class="ID">AppendRadioItem</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Radio Item 1"</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ID">menu</span><span class="Operator">.</span><span class="ID">AppendRadioItem</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Radio Item 2"</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span>        <span class="ID">menu</span><span class="Operator">.</span><span class="ID">AppendRadioItem</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Radio Item 3"</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  22 </span>        <span class="ID">menuBar</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="ID">menu</span><span class="Operator">,</span> <span class="String">"Toggle Items"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  23 </span></span>
+<span class="line"><span class="LineNumber">  24 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetMenuBar</span><span class="Operator">(</span><span class="ID">menuBar</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  25 </span></span>
+<span class="line"><span class="LineNumber">  26 </span>    <span class="ResWord">def</span> <span class="ID">OnExit</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  27 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Close</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  28 </span></span>
+<span class="line"><span class="LineNumber">  29 </span></span>
+<span class="line"><span class="LineNumber">  30 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">"__main__"</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  31 </span>    <span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  32 </span>    <span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">MyFrame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  33 </span>    <span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  34 </span>    <span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-624" class="anchor"/><p class="line862">正如你从例子所见到的，通过使用方法<tt>AppendCheckItem(id</tt>, <tt>item</tt>, <tt>helpString</tt>="")来添加一个复选框菜 <span id="line-625" class="anchor"/>单项，该方法类似于<tt>Append()</tt>。该方法的参数是<tt>wxPython</tt>标识符、显示在菜单中的名字、显示在状态栏听 <span id="line-626"
+class="anchor"/>帮助字符串。同样，你可以使用<tt>PrependCheckItem(id</tt>,<tt>item</tt>, <tt>helpString</tt>="")和<tt>InsertCheckItem(pos</tt>, <tt>id</tt>, <tt>item</tt>, <tt>helpString</tt>="")，这两个方法的行为与它们的无复选框的版本相同。 <span id="line-627" class="anchor"/><span id="line-628" class="anchor"/></p><p
+class="line862">单选按钮菜单项可以使用<tt>AppendRadioItem(id</tt>,<tt>item</tt>,<tt>helpString</tt>="")方法来添加，你也可以使用 <span id="line-629" class="anchor"/><tt>PrependRadioItem(id</tt>,<tt>item</tt>,  <tt>helpString</tt>="")和<tt>InsertRadioItem(pos</tt>,  <tt>id</tt>,  <tt>item</tt>,  <tt>helpString</tt>="") <span id="line-630"
+class="anchor"/>方法。一系列连续的单选菜单项被作为一组，一组中一次只能有一个成员被触发。组以第一个非单选菜单 <span id="line-631" class="anchor"/>项或菜单分隔符为界。默认情况下，当单选组被创建时，该组中的第一个成员处于选中状态。 <span id="line-632" class="anchor"/><span id="line-633" class="anchor"/></p><p
+class="line862">开关菜单项可以通过使用<tt>Append()</tt>来创建。<tt>Append()</tt>的<tt>kind</tt>参数要求下列常量值之一：<tt>wx.ITEM_CHECK</tt>, <tt>wx.ITEM_NORMAL</tt>,
+<tt>wx.ITEM_RADIO</tt>或<tt>wx.ITEM_SEPARATOR</tt>，其中的每个值创建一个适当类型的菜单项。这是有用的，如果你正在使用某种数据驱动过程自动创建这些菜单项的话。所有类型的菜单项都可以使用这同种方法来创建，尽管指定<tt>kind</tt>为<tt>wx.ITEM_SEPARATOR</tt>来生成一个分隔符必须给<tt>id</tt>参数传递<tt>wx.ID_SEPARATOR</tt>。 <span id="line-634"
+class="anchor"/><span id="line-635" class="anchor"/></p><p class="line862">当你使用<tt>wx.MenuItem</tt>构造函数时你也可以创建一个开关菜单项（给参数<tt>kind</tt>一个相应的常量值）。所得 <span id="line-636" class="anchor"/>的菜单项可以使用<tt>AppendItem()</tt>, <tt>PrependItem()</tt>, <tt>InsertItem()</tt>之一的方法被添加到一个菜单。 <span id="line-637"
+class="anchor"/><span id="line-638" class="anchor"/></p><p class="line862">要确定一个菜单项的开关状态，使用<tt>IsCheckable()</tt>，如果该项是一个复选或单选项，函数返回<tt>True</tt>，使 <span id="line-639" class="anchor"/>用<tt>IsChecked()</tt>，如果该项是可开关的且处于选中状态，那么返回<tt>True</tt>。你也可以使用<tt>Check(check)</tt>方法 <span
+id="line-640" class="anchor"/>来设置一个菜单项的开关状态，<tt>check</tt>是一个布尔参数。使用<tt>Check(check)</tt>方法设置时，被设置的菜单项 <span id="line-641" class="anchor"/>是单选的，那么将影响同一组别的项。 <span id="line-642" class="anchor"/><span id="line-643" class="anchor"/></p><p
+class="line862">你也可以使用<tt>IsChecked(id)</tt>从菜单或菜单栏得到一个菜单项的开关状态，它要求相应菜单项的<tt>id</tt>。你也 <span id="line-644" class="anchor"/>可以使用<tt>Check(id</tt>, <tt>check)</tt>来设置菜单栏或菜单中的菜单项，参数<tt>check</tt>是布尔值。 <span id="line-645" class="anchor"/><span id="line-646" class="anchor"/><span id="line-647"
+class="anchor"/></p><p class="line867">
+</p><h2 id="head-b1edf2d4d39dc63e43c296524128f1ceb5ad5eec">1.3. 进一步构建菜单</h2>
+<span id="line-648" class="anchor"/><span id="line-649" class="anchor"/><span id="line-650" class="anchor"/><p class="line874">在接下来的几节，我们将通过使你的菜单更杂化来让它更有用。首先我们将讨论嵌套的子菜单，然后是在你的程序中加入弹出菜单。最后是构建喜爱样式的菜单项。 <span id="line-651" class="anchor"/><span id="line-652" class="anchor"/><span
+id="line-653" class="anchor"/></p><p class="line867">
+</p><h3 id="head-e3da9310675909028b5f0c10c0453c49b8d55e48">1.3.1. 如何创建一个子菜单？</h3>
+<span id="line-654" class="anchor"/><span id="line-655" class="anchor"/><span id="line-656" class="anchor"/><p
+class="line874">如果你的应用程序变得太复杂，你可以在顶级菜单中创建子菜单，这使你能够在一个项级菜单中嵌套菜单项且装入更多的项目。对于将一系列的属于同一逻辑的选项组成一组，子菜单是十分有用的，尤其是要将太多的选项地放入顶级菜单的时候。图10.5显示了一个使用子菜单的示例。 <span id="line-657" class="anchor"/><span id="line-658" class="anchor"/><span
+id="line-659" class="anchor"/></p><p class="line867"><strong>图10.5</strong> <span id="line-660" class="anchor"/><span id="line-661" class="anchor"/></p><p class="line867"><img title="attachment:w10.5.gif" src="/moin/WxPythonInAction/ChapterTen?action=AttachFile&amp;do=get&amp;target=w10.5.gif" class="attachment"/> <span id="line-662"
+class="anchor"/><span id="line-663" class="anchor"/><span id="line-664" class="anchor"/></p><p class="line874">例10.8显示了产生图10.5的代码。 <span id="line-665" class="anchor"/><span id="line-666" class="anchor"/><span id="line-667" class="anchor"/></p><p class="line867"><strong>例10.8</strong>  <span id="line-668"
+class="anchor"/><strong>建造一个嵌套的子菜单</strong> <span id="line-669" class="anchor"/><span id="line-670" class="anchor"/><span id="line-671" class="anchor"/><span id="line-672" class="anchor"/><span id="line-673" class="anchor"/><span id="line-674" class="anchor"/><span id="line-675" class="anchor"/><span id="line-676" class="anchor"/><span
+id="line-677" class="anchor"/><span id="line-678" class="anchor"/><span id="line-679" class="anchor"/><span id="line-680" class="anchor"/><span id="line-681" class="anchor"/><span id="line-682" class="anchor"/><span id="line-683" class="anchor"/><span id="line-684" class="anchor"/><span id="line-685" class="anchor"/><span id="line-686"
+class="anchor"/><span id="line-687" class="anchor"/><span id="line-688" class="anchor"/><span id="line-689" class="anchor"/><span id="line-690" class="anchor"/><span id="line-691" class="anchor"/><span id="line-692" class="anchor"/><span id="line-693" class="anchor"/><span id="line-694" class="anchor"/><span id="line-695" class="anchor"/><span
+id="line-696" class="anchor"/><span id="line-697" class="anchor"/><span id="line-698" class="anchor"/><span id="line-699" class="anchor"/><span id="line-700" class="anchor"/><span id="line-701" class="anchor"/><span id="line-702" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-bd1faa2c64bfd42c843c252395584ed18c195388_014\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-bd1faa2c64bfd42c843c252395584ed18c195388_014', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-bd1faa2c64bfd42c843c252395584ed18c195388_014" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">MyFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span
+class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   6 </span>                          <span class="String">"Sub-menu Example"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">p</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Panel</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">menu</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Menu</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">submenu</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Menu</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">submenu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Sub-item 1"</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">submenu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Sub-item 2"</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">menu</span><span class="Operator">.</span><span class="ID">AppendMenu</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Sub-menu"</span><span
+class="Operator">,</span> <span class="ID">submenu</span><span class="Operator">)</span><span class="Comment">#添加子菜单</span></span>
+<span class="line"><span class="LineNumber">  14 </span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">menu</span><span class="Operator">.</span><span class="ID">AppendSeparator</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ID">exit</span> <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span>
+<span class="String">"Exit"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span
+class="Operator">.</span><span class="ID">OnExit</span><span class="Operator">,</span> <span class="ID">exit</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span></span>
+<span class="line"><span class="LineNumber">  19 </span>        <span class="ID">menuBar</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MenuBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ID">menuBar</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="ID">menu</span><span class="Operator">,</span> <span class="String">"Menu"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetMenuBar</span><span class="Operator">(</span><span class="ID">menuBar</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  22 </span></span>
+<span class="line"><span class="LineNumber">  23 </span></span>
+<span class="line"><span class="LineNumber">  24 </span>    <span class="ResWord">def</span> <span class="ID">OnExit</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  25 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Close</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  26 </span></span>
+<span class="line"><span class="LineNumber">  27 </span></span>
+<span class="line"><span class="LineNumber">  28 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">"__main__"</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  29 </span>    <span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  30 </span>    <span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">MyFrame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  31 </span>    <span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  32 </span>    <span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-703" class="anchor"/><p class="line862">你从例10.8会注意到，子菜单的创建方法与顶级菜单的相同。你创建类<tt>wx.Menu</tt>的一个实例，然后以相同的方法给子菜单增加菜单项。不同的是子菜单没有被添加到顶级菜单栏，而是使用<tt>AppendMenu(id</tt>, <span id="line-704" class="anchor"/></p><ul><li style="list-style-type:
+none;"><p class="line891"><tt>text</tt>, <tt>submenu</tt>,
+<tt>helpStr)</tt>把它添加给另一个菜单。该函数的参数类似于<tt>Append()</tt>的。参数<tt>id</tt>是要添加到的菜单的<tt>wxPython</tt>标识符。参数<tt>text</tt>是子菜单显示在父菜单中的字符串。参数<tt>submenu</tt>是子菜单自身，<tt>helpStr</tt>是显示在状态栏中的文本。另外还有子菜单的插入方法：<tt>PrependMenu(id</tt>,<tt>text</tt>,
+<tt>submenu</tt>, <tt>helpStr)</tt>和<tt>InsertMenu(pos</tt>, <tt>text</tt>, <tt>submenu</tt>, <tt>helpStr)</tt>。这些方法的行为与这章前面我们所讨论的菜单项的插入方法的行为类似。 <span id="line-705" class="anchor"/><span id="line-706" class="anchor"/></p></li></ul><p
+class="line862">记住，子菜单创建的步骤的顺序相对于单纯的菜单项来说是较为重要的，我们推荐你先将项目添加给子菜单，然后将子菜单附加给父菜单。这使得<tt>wxPython</tt>能够正确地为菜单注册快捷键。你可以嵌套子菜单到任意深度，这通过给已有的子菜单添加子菜单来实现，而非将子菜单添加到顶级菜单，在添加新的子菜单之前，你仍需要创建创建它。 <span
+id="line-707" class="anchor"/><span id="line-708" class="anchor"/><span id="line-709" class="anchor"/></p><p class="line867">
+</p><h3 id="head-7a7b8fe369d8e7cce4fef3231b8fa66ef646f72d">1.3.2. 如何创建弹出式菜单？</h3>
+<span id="line-710" class="anchor"/><span id="line-711" class="anchor"/><span id="line-712" class="anchor"/><p class="line874">菜单不仅能够从框架顶部的菜单栏向下拉，而且它们也可以在框架的任一处弹出。多数情况下，一个弹出菜单用于根据上下文和用户所敲击位置的对象来提供相应的行为。图10.6显示了一个弹出式菜单的例子。 <span id="line-713"
+class="anchor"/><span id="line-714" class="anchor"/><span id="line-715" class="anchor"/></p><p class="line867"><strong>图10.6</strong> <span id="line-716" class="anchor"/><span id="line-717" class="anchor"/></p><p class="line867"><img title="attachment:w10.6.gif"
+src="/moin/WxPythonInAction/ChapterTen?action=AttachFile&amp;do=get&amp;target=w10.6.gif" class="attachment"/> <span id="line-718" class="anchor"/><span id="line-719" class="anchor"/><span id="line-720" class="anchor"/></p><p class="line874">弹出菜单的创建是非常类似于标准菜单的，但是它们不附加到菜单栏。例10.9显示了一个弹出菜单的示例代码。
+<span id="line-721" class="anchor"/><span id="line-722" class="anchor"/><span id="line-723" class="anchor"/></p><p class="line867"><strong>例10.9</strong>  <span id="line-724" class="anchor"/><strong>在任意一个窗口部件中创建一个弹出式菜单</strong> <span id="line-725" class="anchor"/><span id="line-726" class="anchor"/><span id="line-727"
+class="anchor"/><span id="line-728" class="anchor"/><span id="line-729" class="anchor"/><span id="line-730" class="anchor"/><span id="line-731" class="anchor"/><span id="line-732" class="anchor"/><span id="line-733" class="anchor"/><span id="line-734" class="anchor"/><span id="line-735" class="anchor"/><span id="line-736"
+class="anchor"/><span id="line-737" class="anchor"/><span id="line-738" class="anchor"/><span id="line-739" class="anchor"/><span id="line-740" class="anchor"/><span id="line-741" class="anchor"/><span id="line-742" class="anchor"/><span id="line-743" class="anchor"/><span id="line-744" class="anchor"/><span id="line-745"
+class="anchor"/><span id="line-746" class="anchor"/><span id="line-747" class="anchor"/><span id="line-748" class="anchor"/><span id="line-749" class="anchor"/><span id="line-750" class="anchor"/><span id="line-751" class="anchor"/><span id="line-752" class="anchor"/><span id="line-753" class="anchor"/><span id="line-754"
+class="anchor"/><span id="line-755" class="anchor"/><span id="line-756" class="anchor"/><span id="line-757" class="anchor"/><span id="line-758" class="anchor"/><span id="line-759" class="anchor"/><span id="line-760" class="anchor"/><span id="line-761" class="anchor"/><span id="line-762" class="anchor"/><span id="line-763"
+class="anchor"/><span id="line-764" class="anchor"/><span id="line-765" class="anchor"/><span id="line-766" class="anchor"/><span id="line-767" class="anchor"/><span id="line-768" class="anchor"/><span id="line-769" class="anchor"/><span id="line-770" class="anchor"/><span id="line-771" class="anchor"/><span id="line-772"
+class="anchor"/><span id="line-773" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-97c08c02db5d147533c2ff403e2765367721d126_015\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-97c08c02db5d147533c2ff403e2765367721d126_015', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-97c08c02db5d147533c2ff403e2765367721d126_015" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">MyFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span
+class="ID">None</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   6 </span>                          <span class="String">"Popup Menu Example"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">panel</span> <span class="Operator">=</span> <span class="ID">p</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">Panel</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">menu</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Menu</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ID">exit</span> <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span
+class="Operator">,</span> <span class="String">"Exit"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span
+class="ID">self</span><span class="Operator">.</span><span class="ID">OnExit</span><span class="Operator">,</span> <span class="ID">exit</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">menuBar</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MenuBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">menuBar</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="ID">menu</span><span class="Operator">,</span> <span class="String">"Menu"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetMenuBar</span><span class="Operator">(</span><span class="ID">menuBar</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">StaticText</span><span class="Operator">(</span><span class="ID">p</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span
+class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  17 </span>            <span class="String">"Right-click on the panel to show a popup menu"</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  18 </span>            <span class="Operator">(</span><span class="Number">25</span><span class="Operator">,</span><span class="Number">25</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">popupmenu</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Menu</span><span class="Operator">(</span><span
+class="Operator">)</span><span class="Comment">#创建一个菜单</span></span>
+<span class="line"><span class="LineNumber">  21 </span>        <span class="ResWord">for</span> <span class="ID">text</span> <span class="ResWord">in</span> <span class="String">"one two three four five"</span><span class="Operator">.</span><span class="ID">split</span><span class="Operator">(</span><span
+class="Operator">)</span><span class="Operator">:</span><span class="Comment">#填充菜单</span></span>
+<span class="line"><span class="LineNumber">  22 </span>            <span class="ID">item</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">popupmenu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span
+class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="ID">text</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  23 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span
+class="ID">self</span><span class="Operator">.</span><span class="ID">OnPopupItemSelected</span><span class="Operator">,</span> <span class="ID">item</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  24 </span>        <span class="ID">p</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_CONTEXT_MENU</span><span class="Operator">,</span> <span
+class="ID">self</span><span class="Operator">.</span><span class="ID">OnShowPopup</span><span class="Operator">)</span><span class="Comment">#绑定一个显示菜单事件</span></span>
+<span class="line"><span class="LineNumber">  25 </span></span>
+<span class="line"><span class="LineNumber">  26 </span></span>
+<span class="line"><span class="LineNumber">  27 </span>    <span class="ResWord">def</span> <span class="ID">OnShowPopup</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span><span
+class="Comment">#弹出显示</span></span>
+<span class="line"><span class="LineNumber">  28 </span>        <span class="ID">pos</span> <span class="Operator">=</span> <span class="ID">event</span><span class="Operator">.</span><span class="ID">GetPosition</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  29 </span>        <span class="ID">pos</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">panel</span><span class="Operator">.</span><span class="ID">ScreenToClient</span><span class="Operator">(</span><span
+class="ID">pos</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  30 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">panel</span><span class="Operator">.</span><span class="ID">PopupMenu</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span
+class="ID">popupmenu</span><span class="Operator">,</span> <span class="ID">pos</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  31 </span></span>
+<span class="line"><span class="LineNumber">  32 </span></span>
+<span class="line"><span class="LineNumber">  33 </span>    <span class="ResWord">def</span> <span class="ID">OnPopupItemSelected</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span
+class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  34 </span>        <span class="ID">item</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">popupmenu</span><span class="Operator">.</span><span class="ID">FindItemById</span><span class="Operator">(</span><span
+class="ID">event</span><span class="Operator">.</span><span class="ID">GetId</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  35 </span>        <span class="ID">text</span> <span class="Operator">=</span> <span class="ID">item</span><span class="Operator">.</span><span class="ID">GetText</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  36 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MessageBox</span><span class="Operator">(</span><span class="String">"You selected item '%s'"</span> <span class="Operator">%</span> <span class="ID">text</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  37 </span></span>
+<span class="line"><span class="LineNumber">  38 </span></span>
+<span class="line"><span class="LineNumber">  39 </span>    <span class="ResWord">def</span> <span class="ID">OnExit</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  40 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Close</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  41 </span></span>
+<span class="line"><span class="LineNumber">  42 </span></span>
+<span class="line"><span class="LineNumber">  43 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">"__main__"</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  44 </span>    <span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  45 </span>    <span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">MyFrame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  46 </span>    <span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  47 </span>    <span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-774" class="anchor"/><p
+class="line862">弹出菜单像任一其它菜单一样被创建（注意<tt>for</tt>循环对于快速创建菜单项的用法）。它没有被添加到菜单栏，它被存储在实例变量<tt>self.popupmenu</tt>中。然后，框架将方法<tt>OnShowPopup()</tt>绑定到事件<tt>wx.EVT_CONTEXT_MENU</tt>。该事件被操作系统的触发弹出菜单的标准机制所触发。在微软<tt>Windows</tt>和<tt>GTK</tt>下，这个机制是鼠标右键敲击，在<tt>Mac</tt>
+<tt>OS</tt>下，它是一个<tt>control</tt>敲击。 <span id="line-775" class="anchor"/><span id="line-776" class="anchor"/></p><p
+class="line862">当用户在框架上执行一个弹出触发敲击的时候，处理器<tt>OnShowPopup()</tt>被调用。该方法所做的第一件事是确定显示菜单的位置。传递给该方法的事件的位置（在<tt>wx.EVT_CONTEXT_MENU</tt>的实例中）是以屏幕的绝对坐标存储的，所以我们需要将位置坐标转换为相对于包含弹出菜单的面板的坐标，我们使用方法<tt>ScreenToClient()</tt>。
+<span id="line-777" class="anchor"/><span id="line-778" class="anchor"/></p><p class="line862">此后，使用方法<tt>PopupMenu(menu</tt>, <tt>pos)</tt>调用弹出菜单，你也可以使用相关的方法<tt>PopupMenuXY(menu</tt>, x,
+<tt>y)</tt>。<tt>PopupMenu</tt>函数不返回，直到一个菜单项被选择或通过按下<tt>Esc</tt>或在该弹出菜单之外敲击使该弹出菜单消失。如果一个菜单项被选择，那么它的事件被正常处理（这意味它必须有一个方法与事件<tt>EVT_MENU</tt>绑定），并且在<tt>PopupMenu</tt>方法返回前该事件也被完成。<tt>PopupMenu</tt>的返回值是布尔值，没什么意思。
+<span id="line-779" class="anchor"/><span id="line-780" class="anchor"/></p><p class="line862">弹出菜单可以有一个标题，当弹出菜单被激活时它显示在弹出菜单的顶部。这个标题使用属性<tt>wx.Menu.SetTitle(title)</tt>和<tt>wx.Menu.GetTitle()</tt>来处理。 <span id="line-781" class="anchor"/><span id="line-782"
+class="anchor"/><span id="line-783" class="anchor"/><span id="line-784" class="anchor"/><span id="line-785" class="anchor"/></p><p class="line867">
+</p><h3 id="head-b9a4a5db3560a17c065e5d076009e79cb4d6634b">1.3.3. 如何创建自己个性的菜单？</h3>
+<span id="line-786" class="anchor"/><span id="line-787" class="anchor"/><span id="line-788" class="anchor"/><p class="line862">如果普通的菜单项引不起你足够的兴趣，你可以添加自定义的位图到菜单项的旁边（或用作自定义的检查符号）。在微软<tt>Windows</tt>下，你也可以调整菜单项的字体和颜色。图10.7显示了一个个性菜单的例子。 <span
+id="line-789" class="anchor"/><span id="line-790" class="anchor"/><span id="line-791" class="anchor"/></p><p class="line867"><strong>图10.7</strong> <span id="line-792" class="anchor"/><span id="line-793" class="anchor"/></p><p class="line867"><img title="attachment:w10.7.gif"
+src="/moin/WxPythonInAction/ChapterTen?action=AttachFile&amp;do=get&amp;target=w10.7.gif" class="attachment"/> <span id="line-794" class="anchor"/><span id="line-795" class="anchor"/><span id="line-796" class="anchor"/></p><p
+class="line862">例10.10显示了产生这种菜单的代码。要确定程序是否运行在<tt>Windows</tt>下，你可以检查‘<tt>wxMSW</tt>’是否在<tt>wx.PlatformInfo</tt>元组中。 <span id="line-797" class="anchor"/><span id="line-798" class="anchor"/><span id="line-799" class="anchor"/></p><p class="line867"><strong>例10.10</strong>  <span
+id="line-800" class="anchor"/><strong>个性菜单项的示例代码</strong> <span id="line-801" class="anchor"/><span id="line-802" class="anchor"/><span id="line-803" class="anchor"/><span id="line-804" class="anchor"/><span id="line-805" class="anchor"/><span id="line-806" class="anchor"/><span id="line-807"
+class="anchor"/><span id="line-808" class="anchor"/><span id="line-809" class="anchor"/><span id="line-810" class="anchor"/><span id="line-811" class="anchor"/><span id="line-812" class="anchor"/><span id="line-813" class="anchor"/><span id="line-814" class="anchor"/><span id="line-815" class="anchor"/><span id="line-816"
+class="anchor"/><span id="line-817" class="anchor"/><span id="line-818" class="anchor"/><span id="line-819" class="anchor"/><span id="line-820" class="anchor"/><span id="line-821" class="anchor"/><span id="line-822" class="anchor"/><span id="line-823" class="anchor"/><span id="line-824" class="anchor"/><span id="line-825"
+class="anchor"/><span id="line-826" class="anchor"/><span id="line-827" class="anchor"/><span id="line-828" class="anchor"/><span id="line-829" class="anchor"/><span id="line-830" class="anchor"/><span id="line-831" class="anchor"/><span id="line-832" class="anchor"/><span id="line-833" class="anchor"/><span id="line-834"
+class="anchor"/><span id="line-835" class="anchor"/><span id="line-836" class="anchor"/><span id="line-837" class="anchor"/><span id="line-838" class="anchor"/><span id="line-839" class="anchor"/><span id="line-840" class="anchor"/><span id="line-841" class="anchor"/><span id="line-842" class="anchor"/><span id="line-843"
+class="anchor"/><span id="line-844" class="anchor"/><span id="line-845" class="anchor"/><span id="line-846" class="anchor"/><span id="line-847" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-370e1e1248e7e38f4647fc03e061a2a98f22d92f_016\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-370e1e1248e7e38f4647fc03e061a2a98f22d92f_016', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-370e1e1248e7e38f4647fc03e061a2a98f22d92f_016" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">MyFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span>
+<span class="ID">None</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   6 </span>                          <span class="String">"Fancier Menu Example"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">p</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Panel</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">menu</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Menu</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">bmp</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Bitmap</span><span class="Operator">(</span><span class="String">"open.png"</span><span
+class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">BITMAP_TYPE_PNG</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">item</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MenuItem</span><span class="Operator">(</span><span class="ID">menu</span><span class="Operator">,</span>
+<span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Has Open Bitmap"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">item</span><span class="Operator">.</span><span class="ID">SetBitmap</span><span class="Operator">(</span><span class="ID">bmp</span><span class="Operator">)</span><span class="Comment">#增加一个自定义的位图</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">menu</span><span class="Operator">.</span><span class="ID">AppendItem</span><span class="Operator">(</span><span class="ID">item</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ResWord">if</span> <span class="ID">True</span> <span class="ID">o</span> <span class="String">'wxMSW'</span> <span class="ResWord">in</span> <span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">PlatformInfo</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  16 </span>            <span class="ID">font</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">SystemSettings</span><span class="Operator">.</span><span class="ID">GetFont</span><span
+class="Operator">(</span></span>
+<span class="line"><span class="LineNumber">  17 </span>                <span class="ID">wx</span><span class="Operator">.</span><span class="ID">SYS_DEFAULT_GUI_FONT</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span>            <span class="ID">font</span><span class="Operator">.</span><span class="ID">SetWeight</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">BOLD</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span>            <span class="ID">item</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MenuItem</span><span class="Operator">(</span><span class="ID">menu</span><span class="Operator">,</span>
+<span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Has Bold Font"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>            <span class="ID">item</span><span class="Operator">.</span><span class="ID">SetFont</span><span class="Operator">(</span><span class="ID">font</span><span class="Operator">)</span><span class="Comment">#改变字体</span></span>
+<span class="line"><span class="LineNumber">  21 </span>            <span class="ID">menu</span><span class="Operator">.</span><span class="ID">AppendItem</span><span class="Operator">(</span><span class="ID">item</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  22 </span></span>
+<span class="line"><span class="LineNumber">  23 </span>            <span class="ID">item</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MenuItem</span><span class="Operator">(</span><span class="ID">menu</span><span class="Operator">,</span>
+<span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Has Red Text"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  24 </span>            <span class="ID">item</span><span class="Operator">.</span><span class="ID">SetTextColour</span><span class="Operator">(</span><span class="String">"red"</span><span class="Operator">)</span><span class="Comment">#改变文本颜色</span></span>
+<span class="line"><span class="LineNumber">  25 </span>            <span class="ID">menu</span><span class="Operator">.</span><span class="ID">AppendItem</span><span class="Operator">(</span><span class="ID">item</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  26 </span></span>
+<span class="line"><span class="LineNumber">  27 </span></span>
+<span class="line"><span class="LineNumber">  28 </span>        <span class="ID">menu</span><span class="Operator">.</span><span class="ID">AppendSeparator</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  29 </span>        <span class="ID">exit</span> <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span
+class="Number">1</span><span class="Operator">,</span> <span class="String">"Exit"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  30 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span
+class="ID">self</span><span class="Operator">.</span><span class="ID">OnExit</span><span class="Operator">,</span> <span class="ID">exit</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  31 </span></span>
+<span class="line"><span class="LineNumber">  32 </span>        <span class="ID">menuBar</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MenuBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  33 </span>        <span class="ID">menuBar</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="ID">menu</span><span class="Operator">,</span> <span class="String">"Menu"</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  34 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetMenuBar</span><span class="Operator">(</span><span class="ID">menuBar</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  35 </span></span>
+<span class="line"><span class="LineNumber">  36 </span></span>
+<span class="line"><span class="LineNumber">  37 </span>    <span class="ResWord">def</span> <span class="ID">OnExit</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span
+class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  38 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Close</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  39 </span></span>
+<span class="line"><span class="LineNumber">  40 </span></span>
+<span class="line"><span class="LineNumber">  41 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">"__main__"</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  42 </span>    <span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  43 </span>    <span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">MyFrame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  44 </span>    <span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  45 </span>    <span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-848" class="anchor"/><p
+class="line862">处理控制显示属性的主要的内容是给一个菜单项添加颜色或样式。适合除了<tt>Windows</tt>外（包括<tt>Windows)</tt>的平台的唯一的属性是<tt>bitmap</tt>，由<tt>GetBitmap()</tt>管理，该函数返回一个<tt>wx.Bitmap</tt>类型的项。这儿有两个<tt>set</tt>*方法。第一个是<tt>SetBitmap(bmp)</tt>，它工作于所有的平台上。它总是在菜单项的旁边设置一个显示的位图。如果你是在微软<tt>Windows</tt>上，并且你想为一个开关菜单设置一个自定义的位图，你可以使用<tt>SetBitmaps(checked</tt>,
+<tt>unchecked</tt>=<tt>wx.NullBitmap)</tt>，它使得当该项被选中时显示一个位图，该项未选中时显示另一个位图。如果该菜单项不是一个开关菜单项，那么<tt>checked</tt>参数是没有用的。 <span id="line-849" class="anchor"/><span id="line-850" class="anchor"/></p><p
+class="line862">在微软<tt>Windws</tt>下，有三个另外的属性，你可以用来改变菜单项的外观，如表10.7所示。我们建议你谨慎地使用它们，并且仅在它们能够明显地增强用户的体验的情况下。 <span id="line-851" class="anchor"/><span id="line-852" class="anchor"/><span id="line-853" class="anchor"/></p><p
+class="line867"><strong>表10.7 菜单项的外观属性</strong> <span id="line-854" class="anchor"/><span id="line-855" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line891"><tt>GetBackgroundColour()</tt></p></td>
+<td style="text-align: center;" rowspan="2" colspan="1"><p class="line862">属性类型是<tt>wx.Colour</tt>，该<tt>set</tt>*方法的参数也可以是一个<tt>wxPython</tt>颜色的名称字符串。管理项目的背景色。</p></td>
+</tr>
+<tr>  <td><span id="line-856" class="anchor"/><p class="line891"><tt>SetBackgroundColour(colour)</tt></p></td>
+</tr>
+<tr>  <td><span id="line-857" class="anchor"/><p class="line891"><tt>GetFont()</tt></p></td>
+<td style="text-align: center;" rowspan="2" colspan="1"><p class="line862">项目的显示字体。类型是<tt>wx.Font</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-858" class="anchor"/><p class="line891"><tt>SetFont(font)</tt></p></td>
+</tr>
+<tr>  <td><span id="line-859" class="anchor"/><p class="line891"><tt>GetTextColour()</tt></p></td>
+<td style="text-align: center;" rowspan="2" colspan="1"><p class="line862">管理显示在项目中的文本的颜色。类型和背景色的相同。</p></td>
+</tr>
+<tr>  <td><span id="line-860" class="anchor"/><p class="line891"><tt>SetTextColour(colour)</tt></p></td>
+</tr>
+</tbody></table></div><span id="line-861" class="anchor"/><span id="line-862" class="anchor"/><p class="line874">目前我们已经讨论了使用菜单功能方面的内容，接下来我们将对如何更好的使用菜单以及如何使你的应用程序对用户来说更容易使用的问题作一个纲要性的说明，以结束本章。 <span id="line-863"
+class="anchor"/><span id="line-864" class="anchor"/><span id="line-865" class="anchor"/><span id="line-866" class="anchor"/><span id="line-867" class="anchor"/></p><p class="line867">
+</p><h2 id="head-dd554eed8fd05b35cfdb7688ae3757aec1744808">1.4. 菜单设计的适用性准则</h2>
+<span id="line-868" class="anchor"/><span id="line-869" class="anchor"/><span id="line-870" class="anchor"/><p class="line874">对于大多数复杂的应用程序，菜单栏是用户访问应用程序功能的主要入口。正确的设计菜单对你的程序的易用性有很大的帮助。本着这一想法，我们提供了一些关于菜单设计的适用性准则。 <span
+id="line-871" class="anchor"/><span id="line-872" class="anchor"/><span id="line-873" class="anchor"/></p><p class="line867">
+</p><h3 id="head-be4edd3edd22ffe9c8e07622fc807bd1fc880843">1.4.1. 使菜单有均衡的长度</h3>
+<span id="line-874" class="anchor"/><span id="line-875" class="anchor"/><span id="line-876" class="anchor"/><p class="line874">建议菜单所包含的项目的最大数量在10到15之间。超过这个最大长度的菜单将会看不全。你应该学习创建长度基本一致的菜单，记住，这有时是不可能或不必要的。 <span id="line-877"
+class="anchor"/><span id="line-878" class="anchor"/><span id="line-879" class="anchor"/></p><p class="line867">
+</p><h3 id="head-a0e93f5a5e91a0f95d221c6b841cba1f13c6c571">1.4.2. 创建合理的项目组</h3>
+<span id="line-880" class="anchor"/><span id="line-881" class="anchor"/><span id="line-882" class="anchor"/><p
+class="line874">你不应该创建一个没有分隔符的多于五个项目的组，除非你有非常合理的理由这样做——如一个历史列表，或一个插件列表。多于五个项目的组，用户处理起来非常困难。要有一个更大的组，项目需要被强有力地联系在一起并且要有用户期望长于五个项目的列表的原因。 <span id="line-883" class="anchor"/><span
+id="line-884" class="anchor"/><span id="line-885" class="anchor"/></p><p class="line867"><strong>菜单的顺序要遵循标准</strong> <span id="line-886" class="anchor"/><span id="line-887" class="anchor"/></p><p
+class="line862">对于菜单的顺序，你应该遵循公认的标准。最左边的菜单应该是<tt>FILE</tt>（文件），并且它包含<tt>new</tt>（新建），<tt>open</tt>（打开），<tt>save</tt>（保存），<tt>print</tt>（打印）和<tt>quit</tt>（退出）功能，所包含的功能的顺也是这样，另外的一些功能通常添加在打印和退出之间。几乎每个应用程序都要使用到这些功能。下一个菜单是<tt>EDIT</tt>（编辑），它包含<tt>undo</tt>（撤消），<tt>cut</tt>（剪切），<tt>copy</tt>（拷贝），<tt>paste</tt>（粘贴）和常用的<tt>find</tt>（查找），这些依赖于你的程序的应用范围。<tt>HELP</tt>（帮助）菜单总是在最右边，并且<tt>windows</tt>（窗口）菜单经常是挨着它的。中间的其它菜单通常由你自己来决定。
+<span id="line-888" class="anchor"/><span id="line-889" class="anchor"/><span id="line-890" class="anchor"/></p><p class="line867"><strong>对通常使用的项目提供方便的访问</strong> <span id="line-891" class="anchor"/><span id="line-892" class="anchor"/></p><p
+class="line874">用户总是会更先访问到菜单中更上面的项目。这就说明了更常用的选项应放在顶部。有一个例外就是多数研究显示，第二项先于第一项。 <span id="line-893" class="anchor"/><span id="line-894" class="anchor"/><span id="line-895" class="anchor"/></p><p
+class="line867"><strong>使用有含义的菜单名称</strong> <span id="line-896" class="anchor"/><span id="line-897" class="anchor"/></p><p
+class="line874">记住，位于菜单栏上的菜单的宽度是与它的名称成正比的，并且当菜单打开时它的宽度与它所包含的项目的最长的名字成正比。尽量避免使顶级菜单的名字少于四个字母。除了通常的名称外，我们建议只要有可能，名字再长点，但意义要清楚。不要害怕给一个菜单项较长的文本，尽管30~40个字符可能难读。 <span
+id="line-898" class="anchor"/><span id="line-899" class="anchor"/><span id="line-900" class="anchor"/></p><p class="line867"><strong>当一个项目会调用一个对话框时，记住带有省略号</strong> <span id="line-901" class="anchor"/><span id="line-902" class="anchor"/></p><p
+class="line874">任何会导致一个对话框被显示的菜单项，都应该有一个以省略号（...）结尾的标签。 <span id="line-903" class="anchor"/><span id="line-904" class="anchor"/><span id="line-905" class="anchor"/></p><p class="line867"><strong>使用标准的快捷键</strong> <span id="line-906" class="anchor"/><span
+id="line-907" class="anchor"/></p><p class="line874">对快捷键，使用通常功能的公认的标准，如表10.8所示。 <span id="line-908" class="anchor"/><span id="line-909" class="anchor"/><span id="line-910" class="anchor"/></p><p class="line867"><strong>表10.8 快捷键功能</strong> <span id="line-911"
+class="anchor"/><span id="line-912" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line891"><tt>Ctrl</tt>-a</p></td>
+<td><p class="line862">全选</p></td>
+</tr>
+<tr>  <td><span id="line-913" class="anchor"/><p class="line891"><tt>Ctrl</tt>-c</p></td>
+<td><p class="line862">拷贝</p></td>
+</tr>
+<tr>  <td><span id="line-914" class="anchor"/><p class="line891"><tt>Ctrl</tt>-f</p></td>
+<td><p class="line862">查找</p></td>
+</tr>
+<tr>  <td><span id="line-915" class="anchor"/><p class="line891"><tt>Ctrl</tt>-g</p></td>
+<td><p class="line862">查找下一个</p></td>
+</tr>
+<tr>  <td><span id="line-916" class="anchor"/><p class="line891"><tt>Ctrl</tt>-n</p></td>
+<td><p class="line862">新建</p></td>
+</tr>
+<tr>  <td><span id="line-917" class="anchor"/><p class="line891"><tt>Ctrl</tt>-o</p></td>
+<td><p class="line862">打开</p></td>
+</tr>
+<tr>  <td><span id="line-918" class="anchor"/><p class="line891"><tt>Ctrl</tt>-p</p></td>
+<td><p class="line862">打印</p></td>
+</tr>
+<tr>  <td><span id="line-919" class="anchor"/><p class="line891"><tt>Ctrl</tt>-q</p></td>
+<td><p class="line862">退出</p></td>
+</tr>
+<tr>  <td><span id="line-920" class="anchor"/><p class="line891"><tt>Ctrl</tt>-s</p></td>
+<td><p class="line862">保存</p></td>
+</tr>
+<tr>  <td><span id="line-921" class="anchor"/><p class="line891"><tt>Ctrl</tt>-v</p></td>
+<td><p class="line862">粘贴</p></td>
+</tr>
+<tr>  <td><span id="line-922" class="anchor"/><p class="line891"><tt>Ctrl</tt>-w</p></td>
+<td><p class="line862">关闭</p></td>
+</tr>
+<tr>  <td><span id="line-923" class="anchor"/><p class="line891"><tt>Ctrl</tt>-x</p></td>
+<td><p class="line862">剪切</p></td>
+</tr>
+<tr>  <td><span id="line-924" class="anchor"/><p class="line891"><tt>Ctrl</tt>-z</p></td>
+<td><p class="line862">撤消</p></td>
+</tr>
+</tbody></table></div><span id="line-925" class="anchor"/><span id="line-926" class="anchor"/><p
+class="line862">这里没有列出<tt>Redo</tt>（重做）的公认的快捷键，你有时会看到用于它的<tt>Ctrl</tt>-y，<tt>Alt</tt>-z或其它的组合。如果你给通常功能提供了更多的快捷键，那么建议你给用户提供一个方案来改变它们。快捷键在用户做大量的输入工作时是很有用的，例如一个文本编辑器。但是对于大部分用鼠标完成的工作，它们的作用就很少了。
+<span id="line-927" class="anchor"/><span id="line-928" class="anchor"/><span id="line-929" class="anchor"/></p><p class="line867"><strong>反映出开关状态</strong> <span id="line-930" class="anchor"/><span id="line-931" class="anchor"/></p><p
+class="line862">当创建一个开关菜单时，有两个事情需要注意。第一，记住，一个未选中的复选菜单项看起来与一个通常的菜单项相同。如果该菜单项的文本如<tt>fancy</tt> <tt>mode</tt>
+<tt>on</tt>的话，那么用户就有可能不知道选择这个菜单项会改变样式。另一个要注意的是，菜单项文本要反映出当前不是被激活的状态，而非激活状态。比如菜单文本说明如果选择它会执行什么动作。例如，如果<tt>fancy</tt>样式是打开的，那么文本使用<tt>Turn</tt> <tt>fancy</tt> <tt>mode</tt>
+<tt>off</tt>。菜单中没有语句表明<tt>fancy</tt>样式实际是什么样的，这可以引起混淆。要避免这个问题，对于一个未被选择的菜单，使用一个自定义的位图以视觉的方式说明这个菜单是一个开关菜单，是一个好的主意（平台允许的话）。如果你的平台不支的话，使用像 <tt>toggle</tt> <tt>fancy</tt>
+<tt>mode</tt>或<tt>switch</tt> <tt>fancy</tt> <tt>mode</tt> (<tt>now</tt> <tt>on)</tt>这样的文本意思会更清楚。 <span id="line-932" class="anchor"/><span id="line-933" class="anchor"/><span id="line-934" class="anchor"/></p><p class="line867"><strong>慎重地使用嵌套</strong>
+<span id="line-935" class="anchor"/><span id="line-936" class="anchor"/></p><p class="line874">嵌套层次的菜单对于浏览来说不方便。 <span id="line-937" class="anchor"/><span id="line-938" class="anchor"/><span id="line-939" class="anchor"/></p><p
+class="line867"><strong>避免使用字体和颜色</strong> <span id="line-940" class="anchor"/><span id="line-941" class="anchor"/></p><p
+class="line874">你记得有哪一个应用程序在它的菜单项中使用了字体和颜色的。我们也不这要使用（但是用于选择字体或颜色的菜单是例外）。很明显，这种使用非常少见。 <span id="line-942" class="anchor"/><span id="line-943" class="anchor"/><span id="line-944" class="anchor"/></p><p
+class="line867">
+</p><h2 id="head-fbb8919381306259ba2c54c28c64092766977c7b">1.5. 本章小结</h2>
+<span id="line-945" class="anchor"/><span id="line-946" class="anchor"/><span id="line-947" class="anchor"/><p
+class="line862">·在图形用户界面中，菜单是最常用来让用户触发命令的机制。在<tt>wxPython</tt>中，创建菜单使用三个主要的类：<tt>wx.MenuBar</tt>，它表示菜单栏并包含菜单，菜单使用<tt>wx.Menu</tt>。菜单由菜单项组成，菜单项使用<tt>wx.MenuItem</tt>。对于菜单部分的创建，首先创建菜单栏并将它附加到框架。然后分别创建个个菜单，并添加菜单项。再将菜单添加到菜单栏。菜单项可以被添加到菜单的任意位置。一个菜单项也可以是一个菜单分隔符，而非普通的菜单项。当菜单项被添加到其父菜单时，菜单项对象可以被显式地或隐含地创建。
+<span id="line-948" class="anchor"/><span id="line-949" class="anchor"/></p><p
+class="line862">·选择一个菜单将触发一个<tt>wx.EVT_MENU</tt>类型的命令事件。菜单事件经由框架绑定，而非菜单项，菜单或菜单栏。这让工具栏按钮可以触发与一个菜单项相同的<tt>wx.EVT_MENU</tt>事件。如果你有多个有着连续标识符的菜单项，它们有相同的处理器的话，那么它们可以使用<tt>wx.EVT_MENU_RANGE</tt>事件类型被绑定在一起调用。
+<span id="line-950" class="anchor"/><span id="line-951" class="anchor"/></p><p class="line862">·菜单项能够从包含它们的菜单或菜单栏使用<tt>ID</tt>或标签来查找。也可以被设置成有效或无效。 <span id="line-952" class="anchor"/><span id="line-953" class="anchor"/></p><p
+class="line862">·一个菜单可以被附加给另一个菜单，而非菜单栏，从而形成一个嵌套的子菜单。<tt>wx.Menu</tt>有特定的方法使你能够添加子菜单，同样也能够添加一个菜单项。 <span id="line-954" class="anchor"/><span id="line-955" class="anchor"/></p><p
+class="line874">·菜单可以用两种方法与按键关联。助记符和加速器。 <span id="line-956" class="anchor"/><span id="line-957" class="anchor"/></p><p
+class="line874">·一个菜单项可以有一个开关状态。它可以是一个复选菜单项，也可以是一个单选菜单项。菜单项的选择状态可以经由包含它的菜单或菜单来查询或改变。 <span id="line-958" class="anchor"/><span id="line-959" class="anchor"/></p><p
+class="line862">·可以创建弹出式菜单。这通过捕获<tt>wx.EVT_CONTEXT_MENU</tt>类型事件，并使用<tt>PopupMenu()</tt>方法来显示弹出。在弹出中的菜单项事件被正常地处理。 <span id="line-960" class="anchor"/><span id="line-961" class="anchor"/></p><p
+class="line862">·你可以为一个菜单项创建一个自定义的位图，并且在<tt>Windows</tt>操作系统下，你可以改变一个菜单项的颜色和字体。 <span id="line-962" class="anchor"/><span id="bottom" class="anchor"/></p></div>

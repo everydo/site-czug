@@ -1,0 +1,4 @@
+<p><a href="http://news.netcraft.com/">netcraft.com</a> 是比较权威的网络信息收集和数据统计服务器商。</p>
+<p>这里有<a href="http://www.netcraft.com/Survey/Reports/0501/">2005年1月</a>和<a href="http://www.netcraft.com/Survey/Reports/0502/">2005年2月</a>的统计报告，以及<a href="http://news.netcraft.com/archives/2005/02/01/february_2005_web_server_survey_finds_40_million_sites_on_apache.html">新闻评述</a></p>
+<p>在调查的59,100,880个网站中，Zope服务器的数量有50067个，比去年11月的数量增加了50％，排名第16位。由于很多Zope服务器位于Apache和ISS的后面，因此，Zope服务器的实际数量应该更多。在zope邮件列表上的一则新闻中说，应该至少每1000台服务器中，就有1台是在运行zope。</p>
+<p>另外Apache的数量持续增长，拥有了70％的市场。</p>

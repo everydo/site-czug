@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "News_Item.2003-08-11.2358"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Archetypes是zope/CMF/Plone上非常有价值的一个产品了。使用它，能非常轻松的编写内容。", 
+        "modified": "2003-08-11 02:32:47", 
+        "title": "Archetypes1.0发布！"
+    }
+}

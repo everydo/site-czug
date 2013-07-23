@@ -1,0 +1,16 @@
+{
+    "main": {
+       "left_col":".. include:: index_left_col.rst",
+        "mimetype": "text/x-rst", 
+        "contenttype": "Document", 
+        "id": "contact-info"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "", 
+        "modified": "2008-01-23 20:23:20", 
+        "title": "contact us"
+    }
+}

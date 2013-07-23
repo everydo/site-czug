@@ -1,0 +1,498 @@
+(译者说明： “新结构化文本”(ReStructuredText)是针对[结构化文本]<a class="new" href="http://members.czug.org/plone/plonebook/X_e6_96_b0_e7_bb_93_e6_9e_84_e5_8c_96_e6_96_87_e6_9c_ac/createform?page=%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%87%E6%9C%AC" title="create this page">?</a>存在的问题， `在zope2.7中开始正式引入`__ 。reStructuredText的历史已经很长，是一个标准的文档方法，有标准的规范和强大的操作工具。他得到的广泛的支持。他是python项目的主要文档工具。从Zope 2.7开始，在ZMI中有一个'ReStructuredText Document'的对象可供使用。本文参考 `A ReStructuredText Primer`__ 。)
+
+__ <a href="http://dev.zope.org/Wikis/DevSite/Proposals/ReStructuredTextIntegration">http://dev.zope.org/Wikis/DevSite/Proposals/ReStructuredTextIntegration</a>
+__ <a href="http://docutils.sourceforge.net/docs/rst/quickstart.html">http://docutils.sourceforge.net/docs/rst/quickstart.html</a>
+
+`完整的指令参考`__
+
+__ <a href="http://dolphin.upenn.edu/~joemyers/docutils-0.3/spec/rst/directives.html">http://dolphin.upenn.edu/~joemyers/docutils-0.3/spec/rst/directives.html</a>
+
+新结构化文本初步
+================================
+
+:作者: Richard Jones
+:翻译: 潘俊勇
+:版本: $Revision: 1.11 $
+:版权: This document has been placed in the public domain.
+
+.. contents:: 章节目录
+
+本文包括一些类似于"(快参__)"的链接.  他们是指向 `新结构化文本快速参考`_ 的相对链接.  如果这些链接不指向不正确, 请参考 `快速参考的官方文档`_ .
+
+__
+.. _新结构化文本快速参考: quickref.html
+.. _快速参考的官方文档:
+   <a href="http://docutils.sourceforge.net/docs/rst/quickref.html">http://docutils.sourceforge.net/docs/rst/quickref.html</a>
+
+结构
+---
+
+首先，"结构化文本"可能有点用词不当。他更象使用了某一些统一规则的"松散文本"。
+这些规则可以被一个HTML转换器翻译成“非常结构化的文本”，这些文本可以使用web浏览器浏览。
+
+最基本的规则被认为是一个被称做 **段落** (快参__).
+那是一大段使用空行隔开的文本(一行就够了).  各段落必须使用相同的缩进 -- 也就是说，
+段落的左上角对齐.  缩进的段落将导致缩进的引用段落。例如::
+
+  这是一个段落。他非常
+  短。
+
+     这个段落将导致一个文本缩进块，
+     通常用于引用其他的文本。
+
+  这是另外一个段落。
+
+结果是:
+
+这是一个段落。他非常
+短。
+
+   这个段落将导致一个文本缩进块，
+   通常用于引用其他的文本。
+
+这是另外一个段落。
+
+__ quickref.html#paragraphs
+
+文本样式
+-------
+
+(快参__)
+
+__ quickref.html#inline-markup
+
+段落和其他正文的内部，你可对文字添加附加的标记，
+如 "``*斜体*``" -> *斜体* 或 "``**粗体**``" -> **粗体**.
+
+如果你希望使用“固定空格”的文字, 可使用"````两个反引号````"，如"````两个  空格````"。
+注意，在两个反引号直接的内容不再做任何的转换 -- 因此星号"``*``"等会保持原样。
+
+如果你发现你想在文本中使用其中一个"特殊"字符，
+这完全可以 -- 新结构化文本非常聪明。
+例如，这个 * 星号能够正常处理.  如果你实际上希望
+文本 \*被星号包围* 而**不是**变成斜体, 
+那么你需要指明那个星号不是特殊字符。你可以通过在前面放置一个反斜杠实现，如"``\*``" (快参__), 或使用两个反引号包含起来(inline文本), 象下面这样::
+
+    ``\*``
+
+__ quickref.html#escaping
+
+列表
+---
+
+项目列表有三种风格: **枚举型**, **要点型** 和 **定义型**.  
+所有的列表类型种, 他可以有任意多的子段落、子列表等，
+直至段落或者其他的左边和列表项中文本的第一行对齐。
+
+列表必须从一个新的段落开始 -- 也就是说，必须在一个空行后出现.
+
+**枚举型** 列表(数字, 字母或者罗马数字; 快参__)
+  __ quickref.html#enumerated-lists
+
+  以数字和字母开始，其后紧跟一个"."、右括号")"或者被括号包围"( )" -- 不论喜欢哪种都有。
+  下面所有的的形式都可被识别::
+
+    1. 数字
+
+    A. 大写字母
+       而且使用多行
+
+       并且同时有两个段落!
+
+    a. 小写字母
+
+       3. 有一个使用不同数字的子清单
+       4. 可是要确保数字使用正确的顺序!
+
+    I. 大小的罗马数字
+
+    i. 小写的罗马数字
+
+    (1) 又是数字
+
+    1) 还是数字
+
+  结果是(注意: 这些不同的枚举型列表并不是总被每个浏览器支持，
+  因此你可能不能在这里得到最理想的效果):
+
+  1. 数字
+
+  A. 大写字母
+     而且使用多行
+
+     并且同时有两个段落!
+
+  a. 小写字母
+
+     3. 有一个使用不同数字的子列表
+     4. 可是要确保数字使用正确的顺序!
+
+  I. 大小的罗马数字
+
+  i. 小写的罗马数字
+
+  (1) 又是数字
+
+  1) 还是数字
+
+**要点型** 列表 (快参__)
+  __ quickref.html#bullet-lists
+
+  就像枚举型列表一样，他使用一个符号开始 - "-", "+" 或 "*"之一::
+
+    * 使用要点符 "*"
+
+      - 使用"-"的子列表
+
+        + 也是一个子列表
+
+      - 另外一项
+
+  结果是
+
+  * 使用要点符 "*"
+
+    - 使用"-"的子列表
+
+      + 也是一个子列表
+
+    - 另外一项
+
+**定义型** 列表 (快参__)
+  __ quickref.html#definition-lists
+
+  不象前面两个, 定义型列表包括一个术语, 和术语的定义。
+  定义型的格式是::
+
+    是什么
+      定义型的列表把术语和其定义关联。
+
+    *怎么做*
+      这个术语是一个单行的词组, 定义是一个或者多个相对术语缩进的段落或者正文元素。
+      术语和定义直接不允许有空行.
+
+  结果是:
+
+  是什么
+    定义型的列表把术语和其定义关联。
+
+  *怎么做*
+    这个术语是一个单行的词组, 定义是一个或者多个相对术语缩进的段落或者正文元素。
+    术语和定义直接不允许有空行.
+
+原始格式 (编码示例)
+----------------------------
+(快参__)
+
+__ quickref.html#literal-blocks
+
+要包含一大短原始格式的, 完全不更改的文本, 可让前面的段落以"``::``"结尾.  
+原始块在文本达到到其前一段落相同的缩进后结束。例如::
+
+  一个示例::
+
+      空格, 新行, 空行, 和各种标记(如 *这个* 或 \这个) 
+         都在文本块种保留.
+    看这里, 我把缩进降级了
+    (但还不够远)
+
+  例子结束
+
+结果是:
+
+  一个示例::
+
+      空格, 新行, 空行, 和各种标记(如 *这个* 或 \这个) 
+         都在文本块种保留.
+    看这里, 我把缩进降级了
+    (但还不够远)
+
+  例子结束
+
+注意，如果一个段落仅仅包括"``::``", 他就会从结果种去除::
+
+  ::
+
+      这是一个原始文本, 上面
+      的"::" 段落将被去除
+
+结果是:
+
+::
+
+    这是一个原始文本, 上面
+    的"::" 段落将被去除
+
+章节
+---
+
+(快参__)
+
+__ quickref.html#section-structure
+
+你可以使用**章节标题**把很长文本断开为多个章节。
+他们是一个单行文本（一个或者多个词），但是附带了修饰: 
+只有一个下标线、或同时有一个下标线和上标线；他们可使用
+破折号"``-----``", 等号"``======``", 波浪号"``~~~~~~``" 
+或者任何其他你喜欢的非字母的字符``= - ` : ' " ~ ^ _ * + # < >``。
+一个下标线修饰和使用相同字符的上/下标线修饰区别很明显。
+上标线和下标线至少要和文本的长度相同。
+他们是一致的，因为所有使用相同修饰风格的章节被认为处于相同的级别(译者：如果出现新的修饰风格，则表示降低一级标题)::
+
+  第一章 标题
+  ==========
+
+  第1.1节 标题
+  -----------
+
+  第1.1.1子节 标题
+  ~~~~~~~~~~~~~~~
+
+  第1.2节 标题
+  -----------
+
+  第二章 标题
+  ===========
+
+结果是下面使用简单的伪XML表示的结构::
+
+    <章>
+        <标题>
+            第一章 标题
+        <节>
+            <标题>
+                第1.1节 标题
+            <节>
+                <标题>
+                    第1.1.1子节 标题
+        <节>
+            <标题>
+                第1.2节 标题
+    <章>
+        <标题>
+            第二章 标题
+
+(伪XML使用缩进来表示嵌套，没有结束标签。这里不可能显示象前面例子中实际处理后的结果，
+因为段落不能在块引用中存在。做为一个正确的例子，可比较本源代码的章节结构和处理后的输出.)
+
+注意单列标题只需要使用他们的资料，就可实现目标链接。
+如，要链接到 列表_ 节, 我可以写"``列表_``".  
+如果标题中有一个空格如 `文本样式`_ （中文翻译后没有空格，sorry）, 
+我们需要使用把标题加引号"```文本样式`_``".
+
+为了指示文档的标题，可以在文档的开始使用一个独特的修饰风格。
+为了支持文档的子标题，可在文档标题后面紧接着使用另外一个位于的修饰风格。
+例如::
+
+    ================
+     文档标题
+    ================
+    ----------
+     子标题
+    ----------
+
+    章节标题
+    =============
+
+    ...
+
+注意"文档标题"和"章节标题"都是使用等号标记，
+但是他们是不同的和无关的风格.  使用上下标的标题（不是只做下标的）的文本
+可据美观的需要插入.
+
+
+图片
+---
+
+(quickref__)
+
+__ quickref.html#directives
+
+要在文档种包含一个图片, 你应该使用 ``图片`` 指令__.
+例如::
+
+  .. image:: <a href="http://plone.org/logo.jpg">http://plone.org/logo.jpg</a>
+
+结果是:
+
+.. image:: <a href="http://plone.org/logo.jpg">http://plone.org/logo.jpg</a>
+
+``<a href="http://plone.org/logo.jpg">http://plone.org/logo.jpg</a>`` 部分指示了希望在文档中显示的图片的文件名。
+这里对放置的图片没有做限制(格式、大小等). 如果图片要在HTML中显示，
+你希望提供一些附加的信息，你可以::
+
+  .. image:: <a href="http://plone.org/logo.jpg">http://plone.org/logo.jpg</a>
+     :height: 100
+     :width: 200
+     :scale: 50
+     :alt: 替换文本
+
+欲知更多信息，请查看图片指令的 完整文档__ .
+
+__ ../../spec/rst/directives.html
+__ ../../spec/rst/directives.html#images
+
+
+后续是什么?
+----------
+
+这里对新结构化文本的最常用功能进行了简单的介绍，但是仍然还有很多功能需要探索。
+`新结构化文本快速参考`_ 用户参考是一个下面很好的一个去处。
+要得到更加完整的详细信息， `新结构化文本标记规范`_ 是应该去的地方 [#]<a class="new" href="http://members.czug.org/plone/plonebook/X_e6_96_b0_e7_bb_93_e6_9e_84_e5_8c_96_e6_96_87_e6_9c_ac/createform?page=%23" title="create this page">?</a>_.
+
+有问题的用户，或者在Docutils和新结构化文本方面需要帮助的用户，
+可以 `发送一个消息`_ 到 `Docutils用户邮件列表`_.  
+`Docutils项目网站`_ 有更多的信息.
+
+.. [#]<a class="new" href="http://members.czug.org/plone/plonebook/X_e6_96_b0_e7_bb_93_e6_9e_84_e5_8c_96_e6_96_87_e6_9c_ac/createform?page=%23" title="create this page">?</a> 如果这个相对链接无法工作, 使用这个官方文档:
+   <a href="http://docutils.sourceforge.net/spec/rst/reStructuredText.html.">http://docutils.sourceforge.net/spec/rst/reStructuredText.html.</a>
+
+.. _新结构化文本标记规范:
+   ../../spec/rst/reStructuredText.html
+.. _发送一个消息: <a href="mailto:docutils-users@lists.sourceforge.net">mailto:docutils-users@lists.sourceforge.net</a>
+.. _Docutils用户邮件列表:
+   <a href="http://lists.sourceforge.net/lists/listinfo/docutils-users">http://lists.sourceforge.net/lists/listinfo/docutils-users</a>
+.. _Docutils项目网站: <a href="http://docutils.sourceforge.net/">http://docutils.sourceforge.net/</a>
+
+
+译者补充
+--------------
+链接的处理
+`````````````````
+外部链接，如 Python_. Python_ 的链接可再次使用。也可以不声名代号的，比如 `新浪网`__
+
+.. _Python: <a href="http://www.python.org/">http://www.python.org/</a> 
+__ <a href="http://www.sina.com.cn">http://www.sina.com.cn</a>
+
+原始文本::
+
+ 外部链接，如 Python_. Python_ 的链接可再次使用。也可以不声名代号的，比如 `新浪网`__
+
+ .. _Python: <a href="http://www.python.org/">http://www.python.org/</a> 
+ __ <a href="http://www.sina.com.cn">http://www.sina.com.cn</a>
+
+表格的处理
+``````````````````
+
+复杂的网格表:
+
++------------+------------+-----------+
+|  表  头    1 | 表 头    2   | 表 头    3  |
++============+============+===========+
+| body row 1 | column 2   | column 3  |
++------------+------------+-----------+
+| body row 2 | Cells may span columns.|
++------------+------------+-----------+
+| body row 3 | Cells may  | - Cells   |
++------------+ span rows. | - contain |
+| body row 4 |            | - blocks. |
++------------+------------+-----------+
+
+原始文本::
+
+ +------------+------------+-----------+
+ |  表  头    1 | 表 头    2   | 表 头    3  |
+ +============+============+===========+
+ | body row 1 | column 2   | column 3  |
+ +------------+------------+-----------+
+ | body row 2 | Cells may span columns.|
+ +------------+------------+-----------+
+ | body row 3 | Cells may  | - Cells   |
+ +------------+ span rows. | - contain |
+ | body row 4 |            | - blocks. |
+ +------------+------------+-----------+
+
+简单表:
+
+=====  =====  ======
+   输入         输出 
+------------  ------
+  A      B    A or B
+=====  =====  ======
+False  False  False
+True   False  True
+False  True   True
+True   True   True
+=====  =====  ======
+
+原始文本::
+
+ =====  =====  ======
+    输入         输出 
+ ------------  ------
+   A      B    A or B
+ =====  =====  ======
+ False  False  False
+ True   False  True
+ False  True   True
+ True   True   True
+ =====  =====  ======
+
+
+表格的处理对中文支持还有些问题。主要是由于在视觉上中文字符的宽度和英文不同。
+一种解决方法是，使用全角格式字符．
+
+From tomzy Fri Feb 20 00:26:58 +0800 2004
+From: tomzy
+Date: Fri, 20 Feb 2004 00:26:58 +0800
+Subject: 
+Message-ID: <20040220162658+0800@www.czug.org>
+
+不如moinmoin和usemode的规则简洁。但比st进步了些，在也不用麻烦的缩进了。
+
+From panjy Fri Feb 20 08:47:23 +0800 2004
+From: panjy
+Date: Fri, 20 Feb 2004 08:47:23 +0800
+Subject: 但是功能更应该更强
+Message-ID: <20040221004723+0800@www.czug.org>
+
+有整套的文档操作库，支持直接转换到各种格式，包括转换为PDF文件。ReStructuredText应该更标准，支持也更广泛。
+
+
+From panjy Fri Feb 20 10:13:21 +0800 2004
+From: panjy
+Date: Fri, 20 Feb 2004 10:13:21 +0800
+Subject: 翻译完这个文档的感受
+Message-ID: <20040221021321+0800@www.czug.org>
+
+这个的确比 结构化文本 要强很多（其他的格式我不知道）。缩进的问题解决了，
+
+目前我感觉链接的定义更加科学，可以避免相同的链接在一个文章中重复定义，这个很好。可定义链接变量，而且定义的变量有作用域的概念，全局和局部之分，局部可重载全局的。
+
+
+From tomzy Sun Feb 22 12:12:25 +0800 2004
+From: tomzy
+Date: Sun, 22 Feb 2004 12:12:25 +0800
+Subject: 
+Message-ID: <20040223041225+0800@www.czug.org>
+
+usemodewiki是wiki格式的标准，ReST不和usemodewiki格式兼容，令人费解。我还是坚持使用usemodewiki的格式，顶多用sed转换到ReST。能够生成PDF是个好事。象变量等功能，就把ST复杂化了，不容易被其它网站工具兼容，当然也有好处。我只是指出它的一方面。应该ReST还是不错的。
+
+
+From Zoomq Tue Mar 9 17:33:24 +0800 2004
+From: Zoomq
+Date: Tue, 09 Mar 2004 17:33:24 +0800
+Subject: 更强的功能??
+Message-ID: <20040310093324+0800@www.czug.org>
+
+定义链接变量?好象没有翻译出来哪?
+Wiki 的标准格式对 WikiName<a class="new" href="http://members.czug.org/plone/plonebook/X_e6_96_b0_e7_bb_93_e6_9e_84_e5_8c_96_e6_96_87_e6_9c_ac/createform?page=WikiName" title="create this page">?</a> 太西方化了,以至于总是有非期待的"?"出现, 还是MoinMoin 的格式用的须手,<a href="http://members.czug.org/plone/plonebook/ZWiki" title="" style="background-color:;">ZWiki</a> 中,我得反复几次才能调整好...
+
+更强的功能--一般来说等于更加复杂的规范哪!??
+
+From panjy Wed Mar 10 20:09:22 +0800 2004
+From: panjy
+Date: Wed, 10 Mar 2004 20:09:22 +0800
+Subject: 
+Message-ID: <20040311120922+0800@www.czug.org>
+
+习惯成自然;-) 这个文档中是没有对链接定义的说明，所以没有翻译，这是个入门性的文档。
+
+如果你只用最基本的功能（没有链接和图片），则很简单的。可能比StructuredText的还简单。stx的缩进比较讨厌，你得不停的数空格 ;-)
+
+From nixe0n Sun Oct 31 18:24:19 -0800 2004
+From: nixe0n
+Date: Sun, 31 Oct 2004 18:24:19 -0800
+Subject: 中文粗体或者斜体需要加空格，星号才能起作用，显示真是别扭
+Message-ID: <20041031022419-0800@nocache.czug.org>
+

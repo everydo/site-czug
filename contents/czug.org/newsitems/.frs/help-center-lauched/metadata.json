@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "help-center-lauched"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Plone帮助中心使用PloneHelpCenter搭建，用于Plone的中文文档系统", 
+        "modified": "2004-08-26 00:41:43", 
+        "title": "Plone帮助中心启用"
+    }
+}

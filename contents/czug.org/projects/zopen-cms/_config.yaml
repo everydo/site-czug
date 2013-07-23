@@ -1,0 +1,4 @@
+description: 一个开源的CMS系统，简单，对程序员友好，内容存储开放
+exclude: [include.rst]
+order: [index.rst, install.rst, deploy.rst, frs.rst, theme.rst, czug.rst, export.rst]
+title: 易度网站

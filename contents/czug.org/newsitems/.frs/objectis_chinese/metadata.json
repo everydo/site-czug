@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "objectis_chinese"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Objectis是一个免费的zope/plone空间，由Pilot Systems和BlueDynamics联合建立，得到了Plone.org和zope欧洲联盟的支持，中文翻译由润普公司完成。", 
+        "modified": "2004-03-09 14:51:13", 
+        "title": "Objectis的中文翻译正式上线"
+    }
+}

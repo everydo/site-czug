@@ -1,0 +1,12 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "05.html"
+    }, 
+    "dublin": {
+        "creators": [
+            "Benky"
+        ], 
+        "title": "第五章：与数据库交互:模型 "
+    }
+}

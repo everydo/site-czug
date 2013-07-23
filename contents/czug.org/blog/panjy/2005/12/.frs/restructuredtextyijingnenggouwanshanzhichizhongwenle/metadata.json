@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "restructuredtextyijingnenggouwanshanzhichizhongwenle"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "reStrcuturedText 是我们公司文档编写的主要格式，也是我非常看好的一个所想即所想即所得的文本格式", 
+        "modified": "2005-12-27 14:36:36", 
+        "title": "reStructuredText中文支持基本完善"
+    }
+}

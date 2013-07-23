@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Image", 
+        "id": "zope-logo.gif"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "", 
+        "modified": "2006-11-01 03:03:49", 
+        "title": "zope-logo.gif"
+    }
+}

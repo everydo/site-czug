@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "welcome"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "这里是开放源代码web应用服务器Zope和Plone内容管理系统的中文技术社区", 
+        "modified": "2006-11-24 17:38:48", 
+        "title": "欢迎来到中文Zope/Plone用户组！"
+    }
+}

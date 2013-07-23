@@ -1,0 +1,12 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "ch12.html"
+    }, 
+    "dublin": {
+        "creators": [
+            "Benky"
+        ], 
+        "title": "输入/输出"
+    }
+}

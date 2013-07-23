@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "cmf-1_5-out"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "CMF是zope上的一个内容管理框架，Plone是基于CMF构建的。", 
+        "modified": "2004-10-29 10:32:33", 
+        "title": "CMF 1.5.0 发布！"
+    }
+}

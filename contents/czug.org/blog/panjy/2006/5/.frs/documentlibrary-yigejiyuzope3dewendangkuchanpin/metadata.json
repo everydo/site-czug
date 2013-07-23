@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "documentlibrary-yigejiyuzope3dewendangkuchanpin"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "看到 Infra_ 发布了一个基于Zope3的文档库产品documentlibrary:", 
+        "modified": "2006-05-04 00:45:22", 
+        "title": "documentlibrary：一个基于zope3的文档库产品"
+    }
+}

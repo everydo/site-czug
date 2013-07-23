@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Image", 
+        "id": "plone-plaid.jpg"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "", 
+        "modified": "2005-12-14 19:37:22", 
+        "title": "Plone 2.1"
+    }
+}

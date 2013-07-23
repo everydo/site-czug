@@ -1,0 +1,782 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-1" class="anchor"/><p class="line867"><a href="/moin/PythonEssentialRef3">Python精要参考第三章</a> <span id="line-2" class="anchor"/></p><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-9af01b759c6572d5aed60e32c376dd63aa1bb75a">第三章 类型和对象</a><ol><li><a href="#head-e425797d5b9e0cb996ec14465b96c2fb0dac015d">术语</a></li><li><a href="#head-3d085974fd43054cf40530848446fd2e689d4ebb">对象的标识与类型</a></li><li><a href="#head-f8bb078bc3832b815dd3fb780eda9d2d6321ce6c">引用计数与垃圾收集</a></li><li><a href="#head-4c41db81485cff97c26dd3aaf435a95787143f2b">引用与副本</a></li><li><a href="#head-835021e08b8f05e832d44a682d9db83c327ddc20">内建类型</a><ol><li><a
+href="#head-74e7a80864d415c28d60fba4508bec800f729ac3">None类型</a></li><li><a href="#head-82041e9ed7d501135a53349abaa8ca343d705017">数值类型</a></li><li><a href="#head-72a78ed842c1d01441dcce922d2d27572fb4e39b">序列类型</a></li><li><a href="#head-4ca84d33cef867c040a476e022aea9e33da6198c">字符串类型</a></li><li><a href="#head-67d62c48439591054d0e823d7a90e612a6f77433">XRangeType 类型</a></li><li><a href="#head-5fa42eff16372c3cf0ef868f557b16a5e4242f4e">缓冲区类型</a></li><li><a href="#head-bd58364f27f4a7bce6d69413e50765f74e3f240a">映射类型</a></li><li><a href="#head-5f69ac311c395f3971b257b8f7d7746914d59972">可调用类型</a><ol><li><a href="#head-7e25b37df05e5f98d480a548f28c69b24c97d4e2">用户定义函数</a></li><li><a
+href="#head-e85f6cf42a090e5abe51a35972c57f0bdb2124e2">用户定义方法</a></li><li><a href="#head-15d74e6532db081dfb3ae98a7739220ee6b6e365">类和可调用的类实例</a></li><li><a href="#head-094dda790b55b5cee7b8ac6c5abb56944a4eb6aa">内建函数及内建方法</a></li></ol></li><li><a href="#head-2b5d1a4c91779afa84da7ffbfe272825afd71546">模块类型</a></li><li><a href="#head-cdb963b0513c0d892eb4fa246742b5ce92f4ce9b">类 类型</a></li><li><a href="#head-8c64f3faaee4714eaea3ad7dc6a3fb5dc9846777">类实例 类型</a></li><li><a href="#head-473fb8a2dfc4602aa524c949ec963c56080b463d">文件类型</a></li><li><a href="#head-2ab4ba197c5b6ad825a0e41e4143dfaed21ad731">内部类型</a><ol><li><a href="#head-4ff1145b48e3266c9c4ceff8b3681dca3830aa5e">代码对象</a></li><li><a
+href="#head-2e25498c63bc7ceecec9fb981b2965b500802bb6">Frame 对象</a></li><li><a href="#head-d1f51c25d46c5f3dda39a23111bb88ce93c51880">traceback 对象</a></li><li><a href="#head-c2eb9911d189c4d4bff56bd22c562a3326be894d">切片对象</a></li><li><a href="#head-471315ea05d5a3deaaa51be2239513cf45fdb60c">省略对象</a></li></ol></li></ol></li><li><a href="#head-90b3e0cc990eba65d33c3a957c1757a1e93ce756">特殊方法</a><ol><li><a href="#head-554305b2b2962fc3e0404cfbdd41523560162475">对象创建、销毁及表示</a></li><li><a href="#head-624c92df412b8f5260e02365d077b77801b94f75">属性访问</a></li><li><a href="#head-592486fab32709f3877349a3e093c551ad7c4dfe">序列和映射的方法</a></li><li><a href="#head-2ff8b7daeec98aa361e7058e6a8fa2e7f9bf1365">数学操作</a></li><li><a
+href="#head-e8d2dde7c5938b17aaa7cdefe4d01a3dd2897c96">比较操作</a></li><li><a href="#head-6e846ae5085b3aa96f590bedc4a33dfbba2bd48f">可调用对象</a></li></ol></li><li><a href="#head-5d6f6d9e3065ce69c7a48025da022c3273cea8fa">性能及内存占用</a></li></ol></li></ol></div> <span id="line-3" class="anchor"/>
+<h1 id="head-9af01b759c6572d5aed60e32c376dd63aa1bb75a">1. 第三章 类型和对象</h1>
+<span id="line-4" class="anchor"/><span id="line-5" class="anchor"/><p class="line874">Python 程序中的一切数据都是对象。对象包括自定义对象及基本的数据类型如数值、字符串、列表、字典等。你能够以类或扩展类型的方式创建自定义对象。本章主要描述 Python对象模型及第四章--运算符与表达式中要用到的一些预备知识。 <span id="line-6" class="anchor"/><span id="line-7" class="anchor"/></p><p class="line867">
+</p><h2 id="head-e425797d5b9e0cb996ec14465b96c2fb0dac015d">1.1. 术语</h2>
+<span id="line-8" class="anchor"/><span id="line-9" class="anchor"/><p class="line874">程序中的一切数据都是对象，每个对象都有三个基本属性，即标识(类似人的标识证号)、类型和值。 <span id="line-10" class="anchor"/><span id="line-11" class="anchor"/></p><p class="line862">例如，当你写下 <tt class="backtick">a = 42</tt> 这行代码，你就创建了一个值为 42 的整数对象。 <tt class="backtick">type()</tt>和<tt class="backtick">id()</tt>函数用来查看对象的类型标识。<tt class="backtick">id(a)</tt>可以查看该对象的标识(当前的实现是该对象在内存中的位置)。在这个例子中，a就是这个位置的引用。 <span id="line-12" class="anchor"/><span id="line-13" class="anchor"/></p><p
+class="line862">一个对象的类别决定了可以对该对象进行何种操作(如，这个对象有长度吗?)。当一个特定类型的对象被创建时，这个对象被称为该类型的一个实例(注意：不要将类型的的实例和用户自定义类的实例混淆)。在一个对象被创建之后，它的标识和类型就再不能被改变。某些对象的值是可变的，这些对象就被称为可变对象(mutable);另一些对象的值是不可变的，那就被称为不变对象<tt class="backtick">(immutable)</tt>。某类对象可以包含其它对象的引用，我们称这类对象为容器。 <span id="line-14" class="anchor"/><span id="line-15" class="anchor"/></p><pre>注1:关于类型的不可改变
+<span id="line-16" class="anchor"/>从python2.2开始，Python开发小组开始有步骤的合并某些类别和类，因此书中的某些结论可能不是百分之百精确和完整。在某些特定条件下，有可能允许改变一个对象的类型。但是，在本手册扩展修订之前，我们就应该一如既往的认为这些经典类型是不可改变的。考虑到兼容性，python2.2和2.3也是这样默认处理的。
+<span id="line-17" class="anchor"/>
+<span id="line-18" class="anchor"/>注2:不变对象的不可变并不是绝对的，当一个不变容器对象包含一个可变对象的引用时，可变对象的值变化会引起该不变容器对象的值发生变化。这种情况下，我们仍然认为该容器对象为不变对象，因为该容器所包含并不是引用对象的值，而仅仅是该对象的引用，这里的引用可以理解为该对象的内存地址。不管被包含对象的值如何变化，被包含对象的引用确实是始终不变的)。一个对象是否可变取决于它的类型，举例来说，数字、字符串、tuple类型是不可变类型，字典与列表是可变类型。
+<span id="line-19" class="anchor"/>
+<span id="line-20" class="anchor"/>--WeiZhong
+<span id="line-21" class="anchor"/></pre><span id="line-22" class="anchor"/><span id="line-23" class="anchor"/><p class="line862">除了保存值以外，许多对象还拥有一系列的属性<tt class="backtick">(attribute)</tt>。广义的属性是指对象的相关数据或者该对象能够具有的行为（如狗对象拥有颜色体重等相关数据，还拥有叫、吃、跑等行为，这些都是对象的广义的属性），狭义的属性只包含对象的相关数据，对于对象的行为，更常用的叫法是方法<tt class="backtick">(method)</tt>。方法是对象可调用的属性，一个对象有多少个方法<tt class="backtick">(method)</tt>，它就具有多少种行为。要访问一个对象的属性或者调用一个对象方法，使用点(.)操作符： <span id="line-24" class="anchor"/><span id="line-25" class="anchor"/></p><pre>a = 3 + 4j              # 创建一个复数
+<span id="line-26" class="anchor"/>r = a.real              # 取得一个复数的实部，访问该对象的一个属性
+<span id="line-27" class="anchor"/>
+<span id="line-28" class="anchor"/>b = [1, 2, 3]           # 创建一个列表)
+<span id="line-29" class="anchor"/>b.append(7)             # 使用 append 方法为列表加入新的元素
+<span id="line-30" class="anchor"/></pre><span id="line-31" class="anchor"/><span id="line-32" class="anchor"/><p class="line867">
+</p><h2 id="head-3d085974fd43054cf40530848446fd2e689d4ebb">1.2. 对象的标识与类型</h2>
+<span id="line-33" class="anchor"/><span id="line-34" class="anchor"/><p class="line874">内建函数id()返回一个对象的标识。该返回值是一个整数，目前的实现该整数通常就是对象在内存中的位置。is 运算符用来比较两个对象的标识。内建函数type()返回一个对象的类型: <span id="line-35" class="anchor"/><span id="line-36" class="anchor"/><span id="line-37" class="anchor"/><span id="line-38" class="anchor"/><span id="line-39" class="anchor"/><span id="line-40" class="anchor"/><span id="line-41" class="anchor"/><span id="line-42" class="anchor"/><span id="line-43" class="anchor"/><span id="line-44" class="anchor"/><span id="line-45" class="anchor"/><span id="line-46" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-9f2dae8116b909ee86d23ed6f0f075cd853db1ea_000\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-9f2dae8116b909ee86d23ed6f0f075cd853db1ea_000', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-9f2dae8116b909ee86d23ed6f0f075cd853db1ea_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment"># 比较两个对象</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="ResWord">def</span> <span class="ID">compare</span><span class="Operator">(</span><span class="ID">a</span><span class="Operator">,</span><span class="ID">b</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ResWord">print</span> <span class="String">'The identity of a is '</span><span class="Operator">,</span> <span class="ID">id</span><span class="Operator">(</span><span class="ID">a</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">print</span> <span class="String">'The identity of b is '</span><span class="Operator">,</span> <span class="ID">id</span><span class="Operator">(</span><span class="ID">b</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ResWord">if</span> <span class="ID">a</span> <span class="ResWord">is</span> <span class="ID">b</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ResWord">print</span> <span class="String">'a and b are the same object'</span></span>
+<span class="line"><span class="LineNumber">   7 </span>    <span class="ResWord">if</span> <span class="ID">a</span> <span class="Operator">==</span> <span class="ID">b</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ResWord">print</span> <span class="String">'a and b have the same value'</span></span>
+<span class="line"><span class="LineNumber">   9 </span>    <span class="ResWord">if</span> <span class="ID">type</span><span class="Operator">(</span><span class="ID">a</span><span class="Operator">)</span> <span class="ResWord">is</span> <span class="ID">type</span><span class="Operator">(</span><span class="ID">b</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ResWord">print</span> <span class="String">'a and b have the same type'</span><span class="Text"/></span>
+</pre></div><span id="line-47" class="anchor"/><p class="line862">对象的类型也是对象，这个对象具有唯一性。对同一类型的所有实例应用<tt class="backtick">type()</tt>函数总是会返回同一个类型对象。因此，类型之间可以使用 <tt class="backtick">is</tt> 运算符来进行比较。标准模块 types 内包含所有内建类型对象，我们可以通过它来完成类型检查工作: <span id="line-48" class="anchor"/><span id="line-49" class="anchor"/><span id="line-50" class="anchor"/><span id="line-51" class="anchor"/><span id="line-52" class="anchor"/><span id="line-53" class="anchor"/><span id="line-54" class="anchor"/></p><div lang="en"
+dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-aa49392ec13f66b241580ffd2ca548c745b31d3e_001\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-aa49392ec13f66b241580ffd2ca548c745b31d3e_001', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-aa49392ec13f66b241580ffd2ca548c745b31d3e_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">types</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">if</span> <span class="ID">type</span><span class="Operator">(</span><span class="ID">s</span><span class="Operator">)</span> <span class="ResWord">is</span> <span class="ID">types</span><span class="Operator">.</span><span class="ID">ListType</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ResWord">print</span> <span class="String">'Is a list'</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">else</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ResWord">print</span> <span class="String">'Is not a list'</span><span class="Text"/></span>
+</pre></div><span id="line-55" class="anchor"/><p class="line862">若要比较两个自定义类实例对象的类型，最好是使用<tt class="backtick">isinstance()</tt>函数。 函数 <tt class="backtick">isinstance(s,C)</tt>用于测试 s 是否是 C 或 C 的子类的实例。详细内容请参阅第七章--类和面向对象的编程。 <span id="line-56" class="anchor"/><span id="line-57" class="anchor"/></p><p class="line867">
+</p><h2 id="head-f8bb078bc3832b815dd3fb780eda9d2d6321ce6c">1.3. 引用计数与垃圾收集</h2>
+<span id="line-58" class="anchor"/><span id="line-59" class="anchor"/><p class="line874">一切对象都是引用计数的。当分配一个新的名字给一个对象，或者其将放入到一个容器比如列表、元组、或者字典中，该对象的引用计数就会增加1次。如: <span id="line-60" class="anchor"/><span id="line-61" class="anchor"/></p><p class="line867"><span id="line-62" class="anchor"/><span id="line-63" class="anchor"/><span id="line-64" class="anchor"/><span id="line-65" class="anchor"/><span id="line-66" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-05b59926a07e43ce0da1a2978d2818dd402c95c9_002\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-05b59926a07e43ce0da1a2978d2818dd402c95c9_002', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-05b59926a07e43ce0da1a2978d2818dd402c95c9_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="Number">3.4</span>      <span class="Comment"># 创建一个对象 '3.4'，引用计数为 1</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="ID">a</span>        <span class="Comment"># 对象 '3.4' 引用计数增加 1，此时对象 '3.4' 的引用计数为 2</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">c</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">c</span><span class="Operator">.</span><span class="ID">append</span><span class="Operator">(</span><span class="ID">b</span><span class="Operator">)</span>  <span class="Comment"># 对象 '3.4' 引用计数增加 1，此时对象 '3.4' 的引用计数为 3</span><span class="Text"/></span>
+</pre></div><span id="line-67" class="anchor"/><p class="line874">例子中创建了一个包含值3.4的一个对象。变量 a 是一个指向该对象的名字。当用 a 来为 b 赋值时，b 成为同一个对象新的名称，此时对象的引用计数就会增1。同样地， 当你把 b 放入一个列表中时，对象的引用计数再次增1。在例子中，自始至终只有一个值为 3.4 的整数对象，b 与 c[0] 都仅仅是该对象的引用。 <span id="line-68" class="anchor"/><span id="line-69" class="anchor"/></p><p class="line874">del语句、脱离变量作用域或者变量被重新定义，都会使对象的引用计数减少。 <span id="line-70" class="anchor"/><span id="line-71"
+class="anchor"/><span id="line-72" class="anchor"/><span id="line-73" class="anchor"/><span id="line-74" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-e54f8fc9261a5e12e332d0b3b6697a91dcf2fe28_003\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-e54f8fc9261a5e12e332d0b3b6697a91dcf2fe28_003', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-e54f8fc9261a5e12e332d0b3b6697a91dcf2fe28_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">del</span> <span class="ID">a</span>           <span class="Comment"># 直接删除一个引用，对象 3.4 引用减1</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="Number">7.8</span>         <span class="Comment"># 某个引用被赋新值，对象 3.4 引用减1</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">c</span><span class="Operator">[</span><span class="Number">0</span><span class="Operator">]</span><span class="Operator">=</span><span class="Number">2.0</span>        <span class="Comment"># 某个引用被赋新值，对象 3.4 引用减1</span><span class="Text"/></span>
+</pre></div><span id="line-75" class="anchor"/><p class="line874">当一个对象的引用计数减少至零时，它就会在适当时机被垃圾回收车拉走。然而，特定情况(循环引用)会阻止垃圾回收车销毁不再使用的对象，看下面的例子： <span id="line-76" class="anchor"/><span id="line-77" class="anchor"/><span id="line-78" class="anchor"/><span id="line-79" class="anchor"/><span id="line-80" class="anchor"/><span id="line-81" class="anchor"/><span id="line-82" class="anchor"/><span id="line-83" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-2824a2d03b78a7abe7fffd69c4ce5e0e8cd0e309_004\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-2824a2d03b78a7abe7fffd69c4ce5e0e8cd0e309_004', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-2824a2d03b78a7abe7fffd69c4ce5e0e8cd0e309_004" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="Operator">{</span> <span class="Operator">}</span>         <span class="Comment"># a 的引用为 1</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="Operator">{</span> <span class="Operator">}</span>         <span class="Comment"># b 的引用为 1</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">a</span><span class="Operator">[</span><span class="String">'b'</span><span class="Operator">]</span> <span class="Operator">=</span> <span class="ID">b</span>              <span class="Comment"># b 的引用增 1，b的引用为2</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">b</span><span class="Operator">[</span><span class="String">'a'</span><span class="Operator">]</span> <span class="Operator">=</span> <span class="ID">a</span>              <span class="Comment"># a 的引用增 1，a的引用为 2</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">del</span> <span class="ID">a</span>           <span class="Comment"># a 的引用减 1，a的引用为 1</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">del</span> <span class="ID">b</span>           <span class="Comment"># b 的引用减 1,  b的引用为 1</span><span class="Text"/></span>
+</pre></div><span id="line-84" class="anchor"/><p class="line874">在这个例子中,del语句减少了 a 和 b 的引用计数并删除了用于引用的变量名，可是由于两个对象各包含一个对方对象的引用，虽然最后两个对象都无法通过名字访问了，但引用计数并没有减少到零。因此这个对象不会被销毁，它会一直驻留在内存中，这就造成了内存泄漏。为解决这个问题，Python解释器会定期的运行一个搜索器，若发现一个对象已经无法被访问，不论该对象引用计数是否为 0 ，都销毁它。这个搜索器的算法可以通过 gc 模块的函数来进行调整和控制。具体内容参阅附录A：Python 库。 <span id="line-85"
+class="anchor"/><span id="line-86" class="anchor"/></p><p class="line867">
+</p><h2 id="head-4c41db81485cff97c26dd3aaf435a95787143f2b">1.4. 引用与副本</h2>
+<span id="line-87" class="anchor"/><span id="line-88" class="anchor"/><p class="line862">当运行语句 <tt class="backtick">a = b</tt> 时，就创建了对象 b 的一个新引用a。对于不可变对象(数字或字符串等)，改变对象的一个引用就会创建一个新对象。 <span id="line-89" class="anchor"/><span id="line-90" class="anchor"/><span id="line-91" class="anchor"/><span id="line-92" class="anchor"/><span id="line-93" class="anchor"/><span id="line-94" class="anchor"/><span id="line-95" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-64be608211d06fc0629399ebca70f7f08e74823b_005\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-64be608211d06fc0629399ebca70f7f08e74823b_005', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-64be608211d06fc0629399ebca70f7f08e74823b_005" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span><span class="Operator">=</span><span class="Number">100</span>                   <span class="Comment">#创建一个新对象 100</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">b</span><span class="Operator">=</span><span class="ID">a</span>                     <span class="Comment">#对象 100 增加了一个新的引用 b</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">print</span> <span class="ID">id</span><span class="Operator">(</span><span class="ID">a</span><span class="Operator">)</span><span class="Operator">,</span><span class="ID">id</span><span class="Operator">(</span><span class="ID">b</span><span class="Operator">)</span>       <span class="Comment">#打印 a 和 b 的标识，你会发现两个标识是相同的</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">b</span><span class="Operator">=</span><span class="Number">20</span>                    <span class="Comment">#现在 b 不再是 a 的引用，变成新对象 20 的一个引用了</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">print</span> <span class="ID">id</span><span class="Operator">(</span><span class="ID">a</span><span class="Operator">)</span><span class="Operator">,</span><span class="ID">id</span><span class="Operator">(</span><span class="ID">b</span><span class="Operator">)</span>       <span class="Comment">#现在 a 和 b 的标识不再相同</span><span class="Text"/></span>
+</pre></div><span id="line-96" class="anchor"/><p class="line874">对于可变对象(列表或字典等)，改变对象的一个引用就等于改变了该对象所有的引用，见下例: <span id="line-97" class="anchor"/><span id="line-98" class="anchor"/><span id="line-99" class="anchor"/><span id="line-100" class="anchor"/><span id="line-101" class="anchor"/><span id="line-102" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-dd80e40638d5639c6c4a1fe27abb110df982c653_006\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-dd80e40638d5639c6c4a1fe27abb110df982c653_006', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-dd80e40638d5639c6c4a1fe27abb110df982c653_006" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="Number">1</span><span class="Operator">,</span><span class="Number">2</span><span class="Operator">,</span><span class="Number">3</span><span class="Operator">,</span><span class="Number">4</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="ID">b</span>                   <span class="Comment"># a 是 b 的一个引用</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">a</span><span class="Operator">[</span><span class="Number">2</span><span class="Operator">]</span> <span class="Operator">=</span> <span class="Operator">-</span><span class="Number">100</span>             <span class="Comment"># 改变 a 中的一个元素</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">print</span> <span class="ID">b</span>                 <span class="Comment"># b的值也随之改变为 '[1, 2, -100, 4]'</span><span class="Text"/></span>
+</pre></div><span id="line-103" class="anchor"/><p class="line874">因为 a 和 b 指向相同的对象，所以改变了 a 就等于改变了 b 。为了避免这种情况，你应该创建一个可变对象的副本，然后对该副本进行操作。这样就不会影响到原始对象了。 <span id="line-104" class="anchor"/><span id="line-105" class="anchor"/></p><p class="line862">有两种方法用来创建可变对象的副本：浅复制<tt class="backtick">(shallow copy)</tt>和深复制<tt class="backtick">(deep copy)</tt>。浅复制创建一个新对象，但它包含的子元素仍然是原来对象子元素的引用:
+<span id="line-106" class="anchor"/><span id="line-107" class="anchor"/><span id="line-108" class="anchor"/><span id="line-109" class="anchor"/><span id="line-110" class="anchor"/><span id="line-111" class="anchor"/><span id="line-112" class="anchor"/><span id="line-113" class="anchor"/><span id="line-114" class="anchor"/><span id="line-115" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-690ee503c7500d46421a0ce3cba4e0098d47465a_007\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-690ee503c7500d46421a0ce3cba4e0098d47465a_007', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-690ee503c7500d46421a0ce3cba4e0098d47465a_007" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="Operator">[</span> <span class="Number">1</span><span class="Operator">,</span> <span class="Number">2</span><span class="Operator">,</span> <span class="Operator">[</span><span class="Number">3</span><span class="Operator">,</span><span class="Number">4</span><span
+class="Operator">]</span> <span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="ID">b</span><span class="Operator">[</span><span class="Operator">:</span><span class="Operator">]</span>                <span class="Comment"># 创建b的一个 浅拷贝 a</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">a</span><span class="Operator">.</span><span class="ID">append</span><span class="Operator">(</span><span class="Number">100</span><span class="Operator">)</span>           <span class="Comment"># a 对象添加一个新元素</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">print</span> <span class="ID">b</span>                 <span class="Comment"># 打印 b 的值，得到 '[1,2, [3,4]]'， b 没有改变</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ID">a</span><span class="Operator">[</span><span class="Number">0</span><span class="Operator">]</span><span class="Operator">=</span><span class="Operator">-</span><span class="Number">100</span>               <span class="Comment"># 改变 a 的一个不可变子对象</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">print</span> <span class="ID">b</span>                 <span class="Comment"># 打印 b 的值，得到 '[1,2, [3,4]]'， b 没有改变</span></span>
+<span class="line"><span class="LineNumber">   7 </span><span class="ID">a</span><span class="Operator">[</span><span class="Number">2</span><span class="Operator">]</span><span class="Operator">[</span><span class="Number">0</span><span class="Operator">]</span> <span class="Operator">=</span> <span class="Operator">-</span><span class="Number">100</span>          <span class="Comment"># 改变 a 的一个可变子对象</span></span>
+<span class="line"><span class="LineNumber">   8 </span><span class="ResWord">print</span> <span class="ID">b</span>                 <span class="Comment"># 打印 b 得到 '[1,2, [-100,4]]'，b 被改变了</span><span class="Text"/></span>
+</pre></div><span id="line-116" class="anchor"/><span id="line-117" class="anchor"/><p class="line874">a 和 b 虽然是彼此独立的对象，但他们包含的元素却是共享的。这样，修改 a 中的一个可变元素也会影响 b 中的这个可变元素。 <span id="line-118" class="anchor"/><span id="line-119" class="anchor"/></p><p class="line874">深复制创建一个新对象，并递归复制所有子对象。python并没有内建的深复制函数，不过在标准库中提供有一个copy模块，该模块有一个deepcopy()函数可以漂亮的干这件事： <span id="line-120"
+class="anchor"/><span id="line-121" class="anchor"/><span id="line-122" class="anchor"/><span id="line-123" class="anchor"/><span id="line-124" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-69341aa698f9c7990e95766b67c2df18f28f9322_008\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-69341aa698f9c7990e95766b67c2df18f28f9322_008', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-69341aa698f9c7990e95766b67c2df18f28f9322_008" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">copy</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="Number">1</span><span class="Operator">,</span> <span class="Number">2</span><span class="Operator">,</span> <span class="Operator">[</span><span class="Number">3</span><span class="Operator">,</span> <span class="Number">4</span><span class="Operator">]</span> <span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="ID">copy</span><span class="Operator">.</span><span class="ID">deepcopy</span><span class="Operator">(</span><span class="ID">b</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-125" class="anchor"/><span id="line-126" class="anchor"/><p class="line867">
+</p><h2 id="head-835021e08b8f05e832d44a682d9db83c327ddc20">1.5. 内建类型</h2>
+<span id="line-127" class="anchor"/><p class="line874">Python的解释器内建数个大类，共二十几种数据类型，表 3.1列出了全部内建类型。一些类别包含最常见的对象类型，如数值、序列等，其它类型则较少使用。后面几节将详细描述这些最常用的类型。 <span id="line-128" class="anchor"/><span id="line-129" class="anchor"/></p><pre>表 3.1 Python内建类型
+<span id="line-130" class="anchor"/>分类                            类型名称                        描述
+<span id="line-131" class="anchor"/>None                            NoneType                        null 对象
+<span id="line-132" class="anchor"/>数值                            IntType                         整数
+<span id="line-133" class="anchor"/>                                LongType                        任意精度整数
+<span id="line-134" class="anchor"/>                                FloatType                       浮点数
+<span id="line-135" class="anchor"/>                                ComplexType                     复数
+<span id="line-136" class="anchor"/>序列                            StringType                      字符串
+<span id="line-137" class="anchor"/>                                UnicodeType                     Unicode字符串
+<span id="line-138" class="anchor"/>                                ListType                        列表
+<span id="line-139" class="anchor"/>                                TupleType                       元组
+<span id="line-140" class="anchor"/>                                XRangeType                      xrange()函数返回的对象
+<span id="line-141" class="anchor"/>                                BufferType                      buffer()函数返回的对象
+<span id="line-142" class="anchor"/>映射                            DictType                        字典
+<span id="line-143" class="anchor"/>可调用类型                      BuiltinFunctionType             内建函数
+<span id="line-144" class="anchor"/>                                BuiltinMethodType               内建方法
+<span id="line-145" class="anchor"/>                                ClassType                       类
+<span id="line-146" class="anchor"/>                                FunctionType                    用户定义函数
+<span id="line-147" class="anchor"/>                                InstanceType                    类实例
+<span id="line-148" class="anchor"/>                                MethodType                      Bound class method
+<span id="line-149" class="anchor"/>                                UnboundMethodType               Unbound class method
+<span id="line-150" class="anchor"/>模块                            ModuleType                      模块
+<span id="line-151" class="anchor"/>类                              ClassType                       类定义
+<span id="line-152" class="anchor"/>类实例                          InstanceType                    类实例
+<span id="line-153" class="anchor"/>文件                            FileType                        文件对象
+<span id="line-154" class="anchor"/>内部类型                        CodeType                        字节编译码
+<span id="line-155" class="anchor"/>                                FrameType                       执行框架
+<span id="line-156" class="anchor"/>                                TracebackType                   异常的堆栈跟踪
+<span id="line-157" class="anchor"/>                                SliceType                       由扩展切片操作产生
+<span id="line-158" class="anchor"/>                                EllipsisType                    在扩展切片中使用
+<span id="line-159" class="anchor"/></pre><span id="line-160" class="anchor"/><p class="line862">注意:     <a href="/moin/ClassType" class="nonexistent">ClassType</a>和<a href="/moin/InstanceType" class="nonexistent">InstanceType</a>在表中之所以出现两次，是因为在特定环境下类及类实例都能被调用。 <span id="line-161" class="anchor"/>
+</p><h3 id="head-74e7a80864d415c28d60fba4508bec800f729ac3">1.5.1. None类型</h3>
+<span id="line-162" class="anchor"/><p class="line874">None表示空对象。如果一个函数没有显式的返回一个值，None就被返回。None经常被用做函数中可选参数的默认值。None对象没有任何属性。None的布尔值为假。 <span id="line-163" class="anchor"/>
+</p><h3 id="head-82041e9ed7d501135a53349abaa8ca343d705017">1.5.2. 数值类型</h3>
+<span id="line-164" class="anchor"/><p class="line874">Python拥有四种数值类型:整型,长整型,浮点类型,以及复数类型。所有数值类型都是不可变类型。 <span id="line-165" class="anchor"/><span id="line-166" class="anchor"/></p><p class="line862">整数类型用来表示从-2147483648 到
+2147483647之间的任意整数(在某些电脑系统上这个范围可能会更大，但绝不会比这个更小)。在系统内部，一个整数以一个32位或者更多位的二进制补码形式储存。如果某次整数运算的结果超出了这个表示范围，一般情况下Python会自动将运算结果由整型升级为长整型返回，不过在有些情况下会引发一个溢出异常，我们正在努力彻底消灭这个异常<tt class="backtick">(OverflowError)</tt>。 <span id="line-167" class="anchor"/><span id="line-168" class="anchor"/></p><p
+class="line874">长整数可以表示任意范围的整数(只要你的内存足够大就行)。 <span id="line-169" class="anchor"/><span id="line-170" class="anchor"/></p><p class="line862">Python中只有双精度浮点数(64位)，它提供大约17个数字的精确度和-308到308的指数，这与C中的double类型相同。Python不支持32位单精度的浮点数。如果你的程序很关心精确度和存储空间，推荐你使用<tt class="backtick">Numerical Python (</tt><a href="http://numpy.sourceforge.net" class="http">http://numpy.sourceforge.net</a><tt
+class="backtick">)</tt>。 <span id="line-171" class="anchor"/><span id="line-172" class="anchor"/></p><p class="line874">复数使用一对浮点数表示，虚数 z 的实部和虚部分别用 z.real 和 z.imag 访问。 <span id="line-173" class="anchor"/><span id="line-174" class="anchor"/></p><p class="line867">
+</p><h3 id="head-72a78ed842c1d01441dcce922d2d27572fb4e39b">1.5.3. 序列类型</h3>
+<span id="line-175" class="anchor"/><span id="line-176" class="anchor"/><p class="line874">序列是由非负整数索引的对象的有序集合。它包括字符串、Unicode字符串、列表、元组、xrange对象以及缓冲区对象。字符串和缓冲区对象是字符序列，xrange对象是整数的序列，列表和元组是任意Python对象的序列。字符串、Unicode字符串及元组是不可变序列，列表是可变序列，允许插入，删除，替换元素等操作。缓冲区对象将在本节后面详细描述。 <span id="line-177" class="anchor"/><span id="line-178"
+class="anchor"/></p><p class="line862">Table 3.2列出所有序列对象均支持的操作及方法。序列 s 中的元素 i 使用索引运算符 s[i] 来访问，通过切片运算符 s[i:j] 可以得到一个序列的子序列(这些运算符在第四章有详细介绍)。内建函数 <tt class="backtick">len(s) 可以返回任意序列 s 的长度。你还能使用内建函数 min(s) 和 max(s) </tt>来获得一个序列的最大值和最小值。不过，这两个函数必须使用在元素可排序的序列中(典型的可排序序列是数值和字符串)。 <span id="line-179" class="anchor"/><span
+id="line-180" class="anchor"/></p><p class="line874">Table 3.3介绍了可变序列(如列表)支持的其它操作 <span id="line-181" class="anchor"/><span id="line-182" class="anchor"/></p><p class="line867"><strong>Table 3.2. 所有序列类型都支持的操作和方法</strong> <span id="line-183" class="anchor"/><span id="line-184" class="anchor"/></p><pre>项目            描述
+<span id="line-185" class="anchor"/>s [i ]          返回序列s的元素i
+<span id="line-186" class="anchor"/>s [i :j ]       返回一个切片
+<span id="line-187" class="anchor"/>len(s )         序列中元素的个数
+<span id="line-188" class="anchor"/>min(s)          s 中的最小值
+<span id="line-189" class="anchor"/>max(s)          s 中的最大值
+<span id="line-190" class="anchor"/></pre><span id="line-191" class="anchor"/><p class="line867"><strong>Table 3.3. 可变序列适用的操作</strong> <span id="line-192" class="anchor"/><span id="line-193" class="anchor"/></p><pre>项目            描述
+<span id="line-194" class="anchor"/>s [i] = v       给某个元素赋新值
+<span id="line-195" class="anchor"/>s [i:j] = t     用 序列 t 中的所有元素替换掉 s 序列中的索引从 i 至 j 的元素。
+<span id="line-196" class="anchor"/>del s[i]        删除序列 s 中索引为 i 的元素。
+<span id="line-197" class="anchor"/>del s [i :j ]   删除序列 s 中的索引从 i 至 j 的元素
+<span id="line-198" class="anchor"/></pre><span id="line-199" class="anchor"/><p class="line862">除此之外，列表还支持Table 3.4中的方法。内建函数<tt class="backtick"> list(s) </tt>把可以把任意一个序列对象转换为一个列表。如果 s 本身是一个列表，这个函数就创建一个 s 的浅拷贝。 <tt class="backtick">s.append(x) </tt>方法可以在列表的末尾加入一个元素 <tt class="backtick">x</tt>。 <tt class="backtick">s.index(x)</tt> 方法在列表中查找值 <tt class="backtick">x</tt>
+第一次出现时的索引，若没有找到就引发一个<tt class="backtick">ValueError</tt>异常。同样地，<tt class="backtick">s.remove(x)</tt>方法删除第一次出现的值 <tt class="backtick">x</tt>。<tt class="backtick"> s.extend(t)</tt>方法通过将链表 t 的所有元素添加到 s 的末尾来扩充列表s。<tt class="backtick"> s.sort()</tt>方法会将列表中的元素进行排序，该方法接受自定义比较函数，自定义比较函数必须有两个参数，若参数1小于参数2，则返回-1，若参数1等于参数2，返回0，否则就返回1。<tt
+class="backtick"> s.reverse()</tt>方法反转列表中的所有元素。<tt class="backtick">sort()和reverse()</tt>方法都是直接操作列表中元素并返回None。 <span id="line-200" class="anchor"/><span id="line-201" class="anchor"/></p><p class="line867"><strong>Table 3.4. 列表的方法</strong> <span id="line-202" class="anchor"/><span id="line-203" class="anchor"/></p><pre>方法                    描述
+<span id="line-204" class="anchor"/>list(s )                把序列s转换为一个列表
+<span id="line-205" class="anchor"/>s.append(x)             把一个元素添加到列表的结尾,相当于` s[len(s):] = [x]`
+<span id="line-206" class="anchor"/>s.extend(t)             将链表 t 的所有元素添加到 s 的末尾来扩充列表 s，相当于 `s[len(s):] = t`
+<span id="line-207" class="anchor"/>s.count(x)              返回值 x 在列表 s 中出现的次数
+<span id="line-208" class="anchor"/>s.index(x)              返回列表s中第一个值为 x 的元素的索引值
+<span id="line-209" class="anchor"/>s.insert(i,x)           在 s[i] 前插入一个元素 x
+<span id="line-210" class="anchor"/>s.pop([i])              返回 s[i] 的值并将 s[i] 元素从列表中删除。如果 i 被省略，` s.pop()` 就对最后一个元素进行操作。
+<span id="line-211" class="anchor"/>s.remove(x )            删除列表中值为 x 的第一个元素
+<span id="line-212" class="anchor"/>s.reverse()             翻转 s 中的全部元素
+<span id="line-213" class="anchor"/>s.sort([cmpfunc ])      对列表 s 中的元素进行排序，cmpfunc 是一个可选的比较函数
+<span id="line-214" class="anchor"/></pre><span id="line-215" class="anchor"/><p class="line867">
+</p><h3 id="head-4ca84d33cef867c040a476e022aea9e33da6198c">1.5.4. 字符串类型</h3>
+<span id="line-216" class="anchor"/><p class="line874">Python拥有两种字符串类型。标准字符串是单字节字符序列，允许包含二进制数据和嵌入的null字符。 <span id="line-217" class="anchor"/>Unicode 字符串是双字节字符序列，一个字符使用两个字节来保存，因此可以有最多65536种不同的unicode字符。尽管最新的Unicode标准支持最多100万个不同的字符，Python现在尚未支持这个最新的标准。  <span id="line-218" class="anchor"/><span id="line-219" class="anchor"/></p><p
+class="line862">标准字符串和Unicode字符串都支持表 3.5中的方法。虽然这些方法都是用于操作一个字符串实例，但所有的字符串方法都不会改变原始字符串。它们有的返回一个新得字符串，如<tt class="backtick"> s.capitalize(), s.center(), s.expandtabs()</tt>。有的返回True或者False,如特征测试方法 <tt class="backtick">s .isalnum() 和 s .isupper()</tt>，值得一提的是，这些方法当字符串长度为零时返回False。<tt class="backtick"> s .find()、 s .rfind()、s .index()、 s .rindex()</tt> 方法被用来在 s
+中寻找一个子串，如果找到子串，这些函数都返回s的整数索引值。 当找不到子串时,find()方法返回-1，而index()方法则引发一个 <tt class="backtick">ValueError</tt> 异常。有很多数字符串方法接受两个可选的参数：<tt class="backtick">start 和</tt> end<tt class="backtick"> ，用于指定 s 中开始位置和结束位置的索引。</tt>s.translate()<tt class="backtick">方法根据一个字典来转换原始字符串，该函数在附录A中的</tt> string<tt class="backtick">模块中有详细描述。</tt> s.encode()`
+方法用来将字符串转换为指定的字符集，如'ascii'、 'utf-8' 或 'utf-16'等。这个方法主要用于将 Unicode字符串转换为适合输入输出的字符编码，关于此方法的的详细介绍在第九章--输入和输出。要了解更多关于字符串方法的细节请参阅附录A中的 string 模块。 <span id="line-220" class="anchor"/><span id="line-221" class="anchor"/></p><p class="line867"><strong>Table 3.5. 字符串方法</strong> <span id="line-222" class="anchor"/><span id="line-223" class="anchor"/></p><pre>方法
+描述
+<span id="line-224" class="anchor"/>s.capitalize()                          第一个字母变大写
+<span id="line-225" class="anchor"/>s.count(sub [,start [,end ]])           子串sub出现的次数
+<span id="line-226" class="anchor"/>s.encode([encoding [,errors ]])         改变字符串的编码
+<span id="line-227" class="anchor"/>s.startswith(prefix [,start [,end ]])   检查字符串的开头是否为prefix
+<span id="line-228" class="anchor"/>s.endswith(suffix [,start [,end ]])     检查字符串的结尾是否是suffix
+<span id="line-229" class="anchor"/>s.expandtabs([tabsize ])                将制表符转换为一定数量的空格
+<span id="line-230" class="anchor"/>s.find(sub [,start [,end ]])            返回子串 sub 首次出现的位置或者 -1
+<span id="line-231" class="anchor"/>s.rfind(sub [,start [,end ]])           返回子串 sub 末次出现的位置或者 -1
+<span id="line-232" class="anchor"/>s.index(sub [,start [,end ]])           返回子串 sub 首次出现的位置或者引起异常
+<span id="line-233" class="anchor"/>s.rindex(sub [,start [,end ]])          返回子串 sub 末次出现的位置或者引发异常
+<span id="line-234" class="anchor"/>s.isalnum()                             字符是否都为字母或数字
+<span id="line-235" class="anchor"/>s.isalpha()                             字符是否都为字母
+<span id="line-236" class="anchor"/>s.isdigit()                             字符是否都为数字
+<span id="line-237" class="anchor"/>s.islower()                             字符是否都为小写
+<span id="line-238" class="anchor"/>s.isspace()                             字符是否都为空白
+<span id="line-239" class="anchor"/>s.istitle()                             检查字符是否为标题格式(每个单词的第一个字母大写)
+<span id="line-240" class="anchor"/>s.isupper()                             字符是否都为大写
+<span id="line-241" class="anchor"/>s.join(t)                               用 s 连接 t 中的所有字符串
+<span id="line-242" class="anchor"/>s.center(width)                         在长度为 width 范围内将字符串置中
+<span id="line-243" class="anchor"/>s.ljust(width )                         在宽度为 width 内左对齐
+<span id="line-244" class="anchor"/>s.rjust(width )                         在宽度为 width 内右对齐
+<span id="line-245" class="anchor"/>s.lower()                               s 中所有字符小写
+<span id="line-246" class="anchor"/>s.upper()                               s 中所有字符大写
+<span id="line-247" class="anchor"/>s.replace(old , new [,maxreplace ])     将子串 old 替换为 new
+<span id="line-248" class="anchor"/>s.lstrip()                              删去字符串s开头的空白
+<span id="line-249" class="anchor"/>s.rstrip()                              删去字符串s末尾的空白
+<span id="line-250" class="anchor"/>s.strip()                               删去字符串s开头和末尾的空白
+<span id="line-251" class="anchor"/>s.split([sep [,maxsplit ]])             将字符串 s 分割成一个字符串列表，其中 sep 为分隔符，maxsplit是最大分割次数
+<span id="line-252" class="anchor"/>s.splitlines([keepends ])               将字符串按行分割为一个字符串列表，若keepends为1，则保留换行符'\n'
+<span id="line-253" class="anchor"/>s.swapcase()                            串内字符大写变小写，小写变大写，没有大小写的不变
+<span id="line-254" class="anchor"/>s.title()                               s 转换为标题格式(每个单词的第一个字母大写)
+<span id="line-255" class="anchor"/>s.translate(table [,deletechars ])      使用字符转换表转换一个字符串
+<span id="line-256" class="anchor"/></pre><span id="line-257" class="anchor"/><p class="line867">
+</p><h3 id="head-67d62c48439591054d0e823d7a90e612a6f77433">1.5.5. XRangeType 类型</h3>
+<span id="line-258" class="anchor"/><p class="line862">内建函数<tt class="backtick">range([i,]j[,stride])</tt>建立一个整数列表，列表内容为<tt class="backtick">k(i <= k < j)</tt>。第一个参数i和第三个参数stride是可选的，默认值分别为 0 和 1 。内建函数<tt class="backtick">xrange([i,]j[,stride])</tt>与 <tt class="backtick">range</tt> 有相似之处，但<tt class="backtick">xrange</tt>返回的是一个不可改变的<tt
+class="backtick">XRangeType</tt>对象。这是一个迭代器，也就是只有用到那个数时才临时通过计算提供值。当 j 值很大时，xrange能更有效地利用内存。<tt class="backtick">XRangeType</tt>提供一个方法 <tt class="backtick">s.tolist()</tt>，它可以将自己转换为一个列表对象返回。 <span id="line-259" class="anchor"/>
+</p><h3 id="head-5fa42eff16372c3cf0ef868f557b16a5e4242f4e">1.5.6. 缓冲区类型</h3>
+<span id="line-260" class="anchor"/><p class="line862">缓冲区对象将内存的一个连续区域模拟为一个单字节字符序列。Python没有直接创建缓冲区对象的语句，你可以使用内建函数<tt class="backtick">buffer(obj[,offset[,size]])</tt>来创建此类对象。 缓冲区对象与对象 obj 共享相同的内存，对于字符串切片操作或者其他字节数据操作来说，这样会有非常高的效率。另外， 缓冲区对象还可以用来访问其他Python类型储存的原始数据，比如<tt class="backtick">array</tt>模块中的数组、 <tt
+class="backtick">Unicode</tt>字符串等。缓冲器对象是否可变，取决于 obj 对象。 <span id="line-261" class="anchor"/>
+</p><h3 id="head-bd58364f27f4a7bce6d69413e50765f74e3f240a">1.5.7. 映射类型</h3>
+<span id="line-262" class="anchor"/><span id="line-263" class="anchor"/><p class="line874">映射类型用来表示通过关键字索引的任意对象的集合。和序列不同， 映射类型是无序的。映射类型可以使用数字、字符串、或其他不可变对象来索引。映射类型是可变类型。 <span id="line-264" class="anchor"/><span id="line-265" class="anchor"/></p><p
+class="line874">字典是唯一的内建的映射类型。可以使用任何不可变的对象作为字典的关键字(如字符串、数字、元组等)。列表、字典、及包含可变对象的元组不可以作为关键字。(字典类型需要关键字的值保持不变) <span id="line-266" class="anchor"/><span id="line-267" class="anchor"/></p><p class="line862">使用索引运算符m[k](k为关键字)可以访问映射对象 m 中索引为 k 的元素。如果映射对象中没有 k 这个关键字，则引发<tt class="backtick">KeyError</tt>异常。 len(m)函数返回一个映射对象的元素个数。表
+3.6列出了映射对象可用的方法及操作。 <span id="line-268" class="anchor"/><span id="line-269" class="anchor"/></p><p class="line867"><strong>Table 3.6. 映射对象的方法和操作</strong> <span id="line-270" class="anchor"/><span id="line-271" class="anchor"/></p><pre>项目                    描述
+<span id="line-272" class="anchor"/>len(m)                  返回m中的条目个数
+<span id="line-273" class="anchor"/>m[k]                    返回关键字k索引的元素
+<span id="line-274" class="anchor"/>m[k] = x                设置关键字k索引的值为x
+<span id="line-275" class="anchor"/>del m[k]                删除一个元素
+<span id="line-276" class="anchor"/>m.clear()               删除所有元素
+<span id="line-277" class="anchor"/>m.copy()                返回m的一个浅拷贝
+<span id="line-278" class="anchor"/>m.has_key(k)            若 m 中存在 key k 返回True,否则返回False
+<span id="line-279" class="anchor"/>m.items()               返回包含所有关键字和对应值(key ,value )的列表
+<span id="line-280" class="anchor"/>m.keys()                返回由所有关键字组成的列表
+<span id="line-281" class="anchor"/>m.update(b)             将字典b中的所有对象加入m
+<span id="line-282" class="anchor"/>m.values()              返回一个包含m中所有对应值的列表
+<span id="line-283" class="anchor"/>m.get(k[,v])            返回m[k]，若m[k]不存在时，返回 v
+<span id="line-284" class="anchor"/>m.setdefault(k[,v])     返回m[k]，若m[k]不存在时，返回 v 并设置m[k] = v
+<span id="line-285" class="anchor"/>m.popitem()             从 m 中随机删除一个元素，并以元组的形式返回其关键字和值
+<span id="line-286" class="anchor"/></pre><span id="line-287" class="anchor"/><span id="line-288" class="anchor"/><p class="line867">
+</p><h3 id="head-5f69ac311c395f3971b257b8f7d7746914d59972">1.5.8. 可调用类型</h3>
+<span id="line-289" class="anchor"/><p class="line874">可调用类型表示所有允许以函数方式调用的对象。它包括用户定义函数、用户定义方法，内建函数、内建方法、classic类及其实例、new-style 类及其实例。 <span id="line-290" class="anchor"/>
+</p><h4 id="head-7e25b37df05e5f98d480a548f28c69b24c97d4e2">1.5.8.1. 用户定义函数</h4>
+<span id="line-291" class="anchor"/><span id="line-292" class="anchor"/><p class="line874">用户定义函数是在module 层使用 def 语句或者 lambda 操作符创建的可调用对象(在类层次定义的函数有专门的名字叫做方法)。函数是一类对象，用法和其它内建对象相似，允许将函数赋值给变量，也可以把函数放入列表、元组和字典中。看下面的例子: <span id="line-293" class="anchor"/><span id="line-294" class="anchor"/><span id="line-295" class="anchor"/><span id="line-296" class="anchor"/><span
+id="line-297" class="anchor"/><span id="line-298" class="anchor"/><span id="line-299" class="anchor"/><span id="line-300" class="anchor"/><span id="line-301" class="anchor"/><span id="line-302" class="anchor"/><span id="line-303" class="anchor"/><span id="line-304" class="anchor"/><span id="line-305" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-84ec224ef2b1f59136d123b6494c8dfaf92978ba_009\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-84ec224ef2b1f59136d123b6494c8dfaf92978ba_009', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-84ec224ef2b1f59136d123b6494c8dfaf92978ba_009" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">def</span> <span class="ID">foo</span><span class="Operator">(</span><span class="ID">x</span><span class="Operator">,</span><span class="ID">y</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">print</span> <span class="String">'%s + %s is %s'</span> <span class="Operator">%</span> <span class="Operator">(</span><span class="ID">str</span><span class="Operator">(</span><span class="ID">x</span><span class="Operator">)</span><span class="Operator">,</span> <span class="ID">str</span><span class="Operator">(</span><span class="ID">y</span><span
+class="Operator">)</span><span class="Operator">,</span> <span class="ID">str</span><span class="Operator">(</span><span class="ID">x</span><span class="Operator">+</span><span class="ID">y</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="Comment"># 指定为一个新的变量</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="Comment"/><span class="ID">bar</span> <span class="Operator">=</span> <span class="ID">foo</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ID">bar</span><span class="Operator">(</span><span class="Number">3</span><span class="Operator">,</span><span class="Number">4</span><span class="Operator">)</span>            <span class="Comment"># 调用上边定义好的foo</span></span>
+<span class="line"><span class="LineNumber">   7 </span></span>
+<span class="line"><span class="LineNumber">   8 </span><span class="Comment"># 放入一个字典中</span></span>
+<span class="line"><span class="LineNumber">   9 </span><span class="Comment"/><span class="ID">d</span> <span class="Operator">=</span> <span class="Operator">{</span> <span class="Operator">}</span></span>
+<span class="line"><span class="LineNumber">  10 </span><span class="ID">d</span><span class="Operator">[</span><span class="String">'callback'</span><span class="Operator">]</span> <span class="Operator">=</span> <span class="ID">foo</span></span>
+<span class="line"><span class="LineNumber">  11 </span><span class="ID">d</span><span class="Operator">[</span><span class="String">'callback'</span><span class="Operator">]</span><span class="Operator">(</span><span class="Number">3</span><span class="Operator">,</span><span class="Number">4</span><span class="Operator">)</span>  <span class="Comment"># 调用foo</span><span class="Text"/></span>
+</pre></div><span id="line-306" class="anchor"/><p class="line867"><strong>用户定义函数 f 有如下属性:</strong> <span id="line-307" class="anchor"/></p><ul><li style="list-style-type: none;"><span id="line-308" class="anchor"/><pre>属性                                    描述
+<span id="line-309" class="anchor"/>f.__module__                            函数定义所在的模块名
+<span id="line-310" class="anchor"/>f.__doc__ 或 f.func_doc                 文档字符串
+<span id="line-311" class="anchor"/>f.__name__ 或 f.func_name               函数名 (从2.4版开始该属性由只读变为可写)
+<span id="line-312" class="anchor"/>f.__dict__ 或 f.func_dict               支持任意函数属性的函数名字空间
+<span id="line-313" class="anchor"/>f.func_code                             (函数编译后产生的)字节码
+<span id="line-314" class="anchor"/>f.func_defaults                         包含所有默认参数的元组
+<span id="line-315" class="anchor"/>f.func_globals                          函数所在模块的全局名称空间的字典(只读)
+<span id="line-316" class="anchor"/>f.func_closure                          None or a tuple of cells that contain bindings for the function's free variables. Read-only
+<span id="line-317" class="anchor"/> </pre><span id="line-318" class="anchor"/></li></ul><p class="line862">用户定义函数对象也支持任意属性(设定值或取出值)，举个例子来说，它可以用来夹带函数的元数据。用<tt class="backtick">(.)</tt>操作符来存取这类属性。注意目前只有用户定义函数支持任意属性，内建函数是不支持任意属性这个特性的。(也许将来我们会考虑让内建函数也支持这个特性，也许....) <span id="line-319" class="anchor"/><span id="line-320" class="anchor"/></p><p
+class="line867"><strong>用户自定义函数任意属性示例</strong> <span id="line-321" class="anchor"/><span id="line-322" class="anchor"/></p><pre>>>> def abc(x,y):
+<span id="line-323" class="anchor"/>...     print x,y
+<span id="line-324" class="anchor"/>...
+<span id="line-325" class="anchor"/>>>> abc.a=100
+<span id="line-326" class="anchor"/>>>> abc.a
+<span id="line-327" class="anchor"/>100
+<span id="line-328" class="anchor"/></pre><span id="line-329" class="anchor"/><p class="line867">
+</p><h4 id="head-e85f6cf42a090e5abe51a35972c57f0bdb2124e2">1.5.8.2. 用户定义方法</h4>
+<span id="line-330" class="anchor"/><span id="line-331" class="anchor"/><p class="line874">用户定义方法是仅作用于对象实例的函数。通常方法在一个类定义中定义，如Listing 3.1: <span id="line-332" class="anchor"/><span id="line-333" class="anchor"/></p><p class="line867"><strong>Listing 3.1 定义一个方法</strong> <span id="line-334" class="anchor"/><span id="line-335" class="anchor"/><span id="line-336" class="anchor"/><span id="line-337" class="anchor"/><span
+id="line-338" class="anchor"/><span id="line-339" class="anchor"/><span id="line-340" class="anchor"/><span id="line-341" class="anchor"/><span id="line-342" class="anchor"/><span id="line-343" class="anchor"/><span id="line-344" class="anchor"/><span id="line-345" class="anchor"/><span id="line-346" class="anchor"/><span id="line-347" class="anchor"/><span id="line-348" class="anchor"/><span id="line-349" class="anchor"/><span id="line-350"
+class="anchor"/><span id="line-351" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-c2c1b9a260ea261c71c0a91a74ef9db21aa81091_010\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-c2c1b9a260ea261c71c0a91a74ef9db21aa81091_010', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-c2c1b9a260ea261c71c0a91a74ef9db21aa81091_010" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment"># 按优先级排序的队列</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="ResWord">class</span> <span class="ID">PriorityQueue</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>          <span class="ID">self</span><span class="Operator">.</span><span class="ID">items</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="Operator">]</span>           <span class="Comment"># 包含(priority, item)的列表</span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ResWord">def</span> <span class="ID">insert</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span><span class="ID">priority</span><span class="Operator">,</span><span class="ID">item</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>          <span class="ResWord">for</span> <span class="ID">i</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="ID">len</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">items</span><span class="Operator">)</span><span class="Operator">)</span><span
+class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   7 </span>                <span class="ResWord">if</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">items</span><span class="Operator">[</span><span class="ID">i</span><span class="Operator">]</span><span class="Operator">[</span><span class="Number">0</span><span class="Operator">]</span> <span class="Operator">></span> <span class="ID">priority</span><span
+class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   8 </span>                        <span class="ID">self</span><span class="Operator">.</span><span class="ID">items</span><span class="Operator">.</span><span class="ID">insert</span><span class="Operator">(</span><span class="ID">i</span><span class="Operator">,</span><span class="Operator">(</span><span class="ID">priority</span><span class="Operator">,</span><span class="ID">item</span><span
+class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>                        <span class="ResWord">break</span></span>
+<span class="line"><span class="LineNumber">  10 </span>          <span class="ResWord">else</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  11 </span>                <span class="ID">self</span><span class="Operator">.</span><span class="ID">items</span><span class="Operator">.</span><span class="ID">append</span><span class="Operator">(</span><span class="Operator">(</span><span class="ID">priority</span><span class="Operator">,</span><span class="ID">item</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>    <span class="ResWord">def</span> <span class="ID">remove</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  13 </span>          <span class="ResWord">try</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  14 </span>                <span class="ResWord">return</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">items</span><span class="Operator">.</span><span class="ID">pop</span><span class="Operator">(</span><span class="Number">0</span><span class="Operator">)</span><span class="Operator">[</span><span class="Number">1</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">  15 </span>          <span class="ResWord">except</span> <span class="ID">IndexError</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  16 </span>                <span class="ResWord">raise</span> <span class="ID">RuntimeError</span><span class="Operator">,</span> <span class="String">'Queue is empty'</span><span class="Text"/></span>
+</pre></div><span id="line-352" class="anchor"/><span id="line-353" class="anchor"/><p class="line874">非绑定方法(unbound method)是类中定义方法的引用，它没有被绑定到具体的类实例。 <span id="line-354" class="anchor"/><span id="line-355" class="anchor"/></p><pre>m = PriorityQueue.insert        # m是一个非绑定方法
+<span id="line-356" class="anchor"/></pre><span id="line-357" class="anchor"/><p class="line874">要调用一个非绑定方法，需要将一个类实例做为该方法的第一个参数来调用： <span id="line-358" class="anchor"/><span id="line-359" class="anchor"/><span id="line-360" class="anchor"/><span id="line-361" class="anchor"/><span id="line-362" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-c7b9470e594b4478e247d2d5e28865d80fb341ee_011\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-c7b9470e594b4478e247d2d5e28865d80fb341ee_011', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-c7b9470e594b4478e247d2d5e28865d80fb341ee_011" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">pq</span> <span class="Operator">=</span> <span class="ID">PriorityQueue</span><span class="Operator">(</span><span class="Operator">)</span>            <span class="Comment">#pq 是一个类实例</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">m</span> <span class="Operator">=</span> <span class="ID">PriorityQueue</span><span class="Operator">.</span><span class="ID">insert</span>        <span class="Comment">#m 是一个非绑定方法</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">m</span><span class="Operator">(</span><span class="ID">pq</span><span class="Operator">,</span><span class="Number">5</span><span class="Operator">,</span><span class="String">"Python"</span><span class="Operator">)</span>                <span class="Comment">#等于调用 pq.insert(5,"Python")</span><span class="Text"/></span>
+</pre></div><span id="line-363" class="anchor"/><p class="line874">绑定方法(bound method)就是实例方法的别名。 <span id="line-364" class="anchor"/><span id="line-365" class="anchor"/><span id="line-366" class="anchor"/><span id="line-367" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-07b584e9d8d31831bd30d4f3408bb9491b187fe0_012\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-07b584e9d8d31831bd30d4f3408bb9491b187fe0_012', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-07b584e9d8d31831bd30d4f3408bb9491b187fe0_012" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">pq</span> <span class="Operator">=</span> <span class="ID">PriorityQueue</span><span class="Operator">(</span><span class="Operator">)</span>    <span class="Comment"># 创建 PriorityQueue 实例</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">n</span> <span class="Operator">=</span> <span class="ID">pq</span><span class="Operator">.</span><span class="ID">insert</span>           <span class="Comment"># n 是一个绑定到 pq 实例的方法</span><span class="Text"/></span>
+</pre></div><span id="line-368" class="anchor"/><p class="line874">绑定方法暗含了实例的引用，所以调用绑定方法时要象下面这样调用: <span id="line-369" class="anchor"/><span id="line-370" class="anchor"/></p><pre>n(5,"Python")           # 等于调用 pq.insert(5,"Python")
+<span id="line-371" class="anchor"/></pre><span id="line-372" class="anchor"/><p class="line874">绑定和非绑定方法无非是略略封装了一下常规函数，下表列出了方法对象的属性: <span id="line-373" class="anchor"/><span id="line-374" class="anchor"/></p><pre>属性                      描述
+<span id="line-375" class="anchor"/>m.im_self               引用类实例对象，如果是非绑定方法，im_self通常为 None(见下面小注)
+<span id="line-376" class="anchor"/>m.im_func               引用类中定义的方法对象
+<span id="line-377" class="anchor"/>m im_class              引用定义该方法的类
+<span id="line-378" class="anchor"/>m.__doc__               等于 m.im_func.__doc__
+<span id="line-379" class="anchor"/>m.__name__              等于 m.im_func.__name__
+<span id="line-380" class="anchor"/>m.__module__            等于 m.im_func.__module__
+<span id="line-381" class="anchor"/>
+<span id="line-382" class="anchor"/>小注: 当一个用户定义方法引用的是一个类方法时，不论是否绑定到类实例，它的 im_self属性都等于其 im_class 属性。 --WeiZhong
+<span id="line-383" class="anchor"/></pre><span id="line-384" class="anchor"/><p class="line867"><span id="line-385" class="anchor"/></p><pre>注意：
+每次访问一个类或类实例的属性时都会有一次从函数对象到方法对象的转换。这个转换要占用CPU时间。在某些情况(对效率要求比较高的情况下)下，一个很有效的优化手段就是，用一个局部变量引用这个经常用到的类属性，然后调用这个局部变量。还要注意的是，只有类中的用户定义方法才会发生这种转换，其它可调用对象或不可调用对象不存在这种转换。另外需要注意的一点就是类实例的私有方法不需要这种转换。
+<span id="line-386" class="anchor"/></pre><span id="line-387" class="anchor"/><p class="line867">
+</p><h4 id="head-15d74e6532db081dfb3ae98a7739220ee6b6e365">1.5.8.3. 类和可调用的类实例</h4>
+<span id="line-388" class="anchor"/><p class="line862">到现在为止，我们集中讨论了函数和方法。类和类实例也是可调用对象。当一个类被调用时,，就生成该类的一个实例。如果该类定义了一个<tt class="backtick">__init__()</tt>方法，则这个方法就用来初始化新建的实例。上边例子中的<tt class="backtick">PriorityQueue</tt>的创建就演示了这个行为。 <span id="line-389" class="anchor"/><span id="line-390" class="anchor"/></p><p
+class="line862">如果一个类定义有一个特殊的方法<tt class="backtick">__call__()</tt>，那么该类的实例也可以被调用。假设 x 是一个可调用的类实例，<tt class="backtick">x(args)</tt>调用就等同于调用<tt class="backtick">x.__call__(args)</tt>。 <span id="line-391" class="anchor"/><span id="line-392" class="anchor"/></p><p class="line867">
+</p><h4 id="head-094dda790b55b5cee7b8ac6c5abb56944a4eb6aa">1.5.8.4. 内建函数及内建方法</h4>
+<span id="line-393" class="anchor"/><p class="line874">可调用类型还有内建函数和内建方法。内建函数和内建方法的代码一般位于用C或C++写的扩展模块中。下表列出了内建方法可用的属性: <span id="line-394" class="anchor"/><span id="line-395" class="anchor"/></p><pre>属性            方法
+<span id="line-396" class="anchor"/>b.__doc__       文档字符串
+<span id="line-397" class="anchor"/>b.__name__      函数/方法名
+<span id="line-398" class="anchor"/>b.__self__      方法所绑定的实例(未绑定时，返回None)
+<span id="line-399" class="anchor"/>b.__members__   方法的属性名(返回列表)
+<span id="line-400" class="anchor"/></pre><span id="line-401" class="anchor"/><p class="line862">对于内建函数比如len()，它的<tt class="backtick">__self__是None</tt>。这表示这个函数并没有绑定给任何特殊对象。而对于内建函数 <tt class="backtick">x.append()</tt> 来说( x 是一个列表)，<tt class="backtick">__self__返回 x</tt>。 <span id="line-402" class="anchor"/>
+</p><h3 id="head-2b5d1a4c91779afa84da7ffbfe272825afd71546">1.5.9. 模块类型</h3>
+<span id="line-403" class="anchor"/><p class="line862">模块是容器对象。import语句用来将其它模块中包含的对象导入当前模块。举例来说，语句 import foo 中的 foo 就是一个模块对象。模块拥有自己的名字空间，这是通过模块的一个字典属性来实现的。这个名字空间可以通过模块对象的<span class="u">dict</span>属性来访问。当一个模块的属性被访问(使用点操作符)时，比如访问 <tt class="backtick">m.x，Python 会自动的去访问
+m.__dict__["x"]</tt>。同样的，赋值操作 <tt class="backtick">m[x]=y 在内部被执行的其实是 m.__dict__[x]=y</tt>。 <span id="line-404" class="anchor"/>模块对象拥有以下属性： <span id="line-405" class="anchor"/><span id="line-406" class="anchor"/></p><pre>属性            描述
+<span id="line-407" class="anchor"/>m.__dict__      保存模块名字空间的字典
+<span id="line-408" class="anchor"/>m.__doc__       模块的文档字符串
+<span id="line-409" class="anchor"/>m.__name__      模块名字
+<span id="line-410" class="anchor"/>m.__file__      模块的文件名
+<span id="line-411" class="anchor"/>m.__path__      当一个模块通过一个包被引用时，__path__是包的名字
+<span id="line-412" class="anchor"/></pre><p class="line867"><span id="line-413" class="anchor"/></p><pre>注1:所有内建模块拥有没有__file__ 属性的特权。
+<span id="line-414" class="anchor"/>注2:如果一个模块拥有 __path__ 属性，import 语句就会认为它是一个包(package)。当从一个包中 import 一个子模块时，将使用包的__path__属性而不是sys.path。
+<span id="line-415" class="anchor"/>        --WeiZhong
+<span id="line-416" class="anchor"/></pre><span id="line-417" class="anchor"/><p class="line867">
+</p><h3 id="head-cdb963b0513c0d892eb4fa246742b5ce92f4ce9b">1.5.10. 类 类型</h3>
+<span id="line-418" class="anchor"/><p class="line862">class语句用来创建类，第七章详细介绍了类。和模块类似，类也使用一个字典属性来维护自己的名称空间。访问类的属性时，比如 c.x 在执行行将被翻译成<tt class="backtick"> c.__dict__["x"]</tt>。如果在类的 <tt class="backtick">__dict__</tt>里没有找到属性x，那么就会到该类的父类中寻找。如果有多个父类，则搜索按照父类<tt class="backtick">(base
+class)</tt>在类定义中顺序从左至右，深度优先。属性赋值如 <tt class="backtick">c.y = 5，则总是更新 c 的__dict__</tt>属性，而不会更新某个父类的字典。 <span id="line-419" class="anchor"/><span id="line-420" class="anchor"/></p><p class="line867"><strong>class对象定义的属性:</strong> <span id="line-421" class="anchor"/><span id="line-422" class="anchor"/></p><pre>属性            描述
+<span id="line-423" class="anchor"/>c.__dict__      类 c 的名字空间
+<span id="line-424" class="anchor"/>c.__doc__       类 c 的文档字符串
+<span id="line-425" class="anchor"/>c.__name__      类 c 的名字
+<span id="line-426" class="anchor"/>c.__module__    类 c 的定义所在的模块
+<span id="line-427" class="anchor"/>c.__bases__     类 c 的所有父类（这是一个元组）
+<span id="line-428" class="anchor"/></pre><span id="line-429" class="anchor"/><p class="line867">
+</p><h3 id="head-8c64f3faaee4714eaea3ad7dc6a3fb5dc9846777">1.5.11. 类实例 类型</h3>
+<span id="line-430" class="anchor"/><p class="line862">调用一个类就会生成该类的一个实例。每个实例也有独立的名字空间(也是<span class="u">dict</span>字典，注意不要与类的名字空间混淆)。类实例有以下属性: <span id="line-431" class="anchor"/><span id="line-432" class="anchor"/></p><pre>属性            描述
+<span id="line-433" class="anchor"/>x.__dict__      实例 x 的名字空间
+<span id="line-434" class="anchor"/>x.__class__     实例 x 所属的类
+<span id="line-435" class="anchor"/></pre><span id="line-436" class="anchor"/><p class="line862">访问一个类实例 x 的属性时，比如 x.a，解释器会先查找 <tt class="backtick">x.__dict__["a"]，若没有找到，则接着查询 x.__class__.__dict__["a"]</tt>，如果还没找到，则按照上面提到的搜索顺序继续查询该类的父类们的名字空间，如果还是没有找到，就要查看该类是否定义了<tt
+class="backtick">__getattr__()</tt>方法，如果有这个方法就使用这个方法继续查找。如果经过以上种种手段仍然没有找到这个属性，就引发<tt class="backtick">AttributeError</tt>异常。属性赋值如 <tt class="backtick">x.y = 5</tt>，则总是更新实例  x 的<tt class="backtick">__dict__</tt>属性，而不会更新其所属的类或其某个父类的<tt class="backtick">__dict__</tt>字典。 <span id="line-437" class="anchor"/>
+</p><h3 id="head-473fb8a2dfc4602aa524c949ec963c56080b463d">1.5.12. 文件类型</h3>
+<span id="line-438" class="anchor"/><p class="line874">一个文件对象就是一个打开的文件，调用内建函数open()成功则返回一个文件对象。更多关于文件类型的细节在第九章。 <span id="line-439" class="anchor"/>
+</p><h3 id="head-2ab4ba197c5b6ad825a0e41e4143dfaed21ad731">1.5.13. 内部类型</h3>
+<span id="line-440" class="anchor"/><p class="line862">解释器内部使用的一系列对象，它们属于内部类型（用户通常不会遇到它们，不过必要时使用它们会解决一些棘手问题）。内部使用对象包括调试对象<tt class="backtick">(traceback objects)</tt>，代码对象 <tt class="backtick">(code objects)</tt>，<tt class="backtick">frame objects</tt>，切片对象<tt class="backtick">(slice objects)</tt>及 省略对象<tt
+class="backtick">(Ellipsis object)</tt>。 <span id="line-441" class="anchor"/>
+</p><h4 id="head-4ff1145b48e3266c9c4ceff8b3681dca3830aa5e">1.5.13.1. 代码对象</h4>
+<span id="line-442" class="anchor"/><p class="line862">调用内建函数<tt class="backtick">compile()</tt>返回一个代码对象。它表示原始字节编译码或称为字节码。代码对象和函数对象相似，但它不保存被编译代码的上下文信息（被编译代码所在的名称空间及参数的默认值等)。代码对象是不可变对象，而函数对象是可变对象。一个代码对象 c 拥有如下只读属性: <span id="line-443" class="anchor"/><span id="line-444"
+class="anchor"/></p><pre>属性                    描述
+<span id="line-445" class="anchor"/>c.co_argcount           参数的个数(不包括 * 或 ** 参数)
+<span id="line-446" class="anchor"/>c.co_code               原始字节码字符串
+<span id="line-447" class="anchor"/>c.co_consts             字节代码用到的常量
+<span id="line-448" class="anchor"/>c.co_filename           对象 c 所在的文件
+<span id="line-449" class="anchor"/>c.co_firstlineno        被编译源代码第一行行号
+<span id="line-450" class="anchor"/>c.co_flags              解释器标志: 1=优化 | 2=newlocals | 4=*arg | 8=**arg
+<span id="line-451" class="anchor"/>c.co_lnotab             源代码行号=>字节码偏移量 这是一个映射字典
+<span id="line-452" class="anchor"/>c.co_name               该代码对象的名字
+<span id="line-453" class="anchor"/>c.co_names              字节代码用到的局部变量名 这是一个元组
+<span id="line-454" class="anchor"/>c.co_nlocals            字节代码用到的局部变量个数
+<span id="line-455" class="anchor"/>c.co_stacksize          需要的虚拟机堆践大小(包含内部变量)
+<span id="line-456" class="anchor"/>c.co_varnames           一个元组，包括全部的局部变量名和参数名
+<span id="line-457" class="anchor"/></pre><span id="line-458" class="anchor"/><p class="line867">
+</p><h4 id="head-2e25498c63bc7ceecec9fb981b2965b500802bb6">1.5.13.2. Frame 对象</h4>
+<span id="line-459" class="anchor"/><p class="line874">Frame 对象表示执行 frame。通常在 traceback对象中会遇到这个对象。 它拥有以下只读属性： <span id="line-460" class="anchor"/><span id="line-461" class="anchor"/></p><pre>属性                    描述
+<span id="line-462" class="anchor"/>f.f_back                下一个外部frame对象(对当前frame的调用者来说) 如果已到栈底的话 它的值就是 None
+<span id="line-463" class="anchor"/>f.f_code                当前frame中正在执行的代码对象
+<span id="line-464" class="anchor"/>f.f_locals              当前frame可见的局部变量的字典
+<span id="line-465" class="anchor"/>f.f_globals             当前frame可见的全局变量的字典
+<span id="line-466" class="anchor"/>f.f_builtins            当前frame可见的内建名字的字典
+<span id="line-467" class="anchor"/>f.f_restricted          是否在受限模式下运行 0:不受限 | 1:受限
+<span id="line-468" class="anchor"/>f.f_lineno              源代码当前行号
+<span id="line-469" class="anchor"/>f.f_lasti               字节码当前指令索引
+<span id="line-470" class="anchor"/></pre><span id="line-471" class="anchor"/><span id="line-472" class="anchor"/><p class="line874">下边是frame对象的可写属性(通过调试器或其他工具可以改变下面属性的值)： <span id="line-473" class="anchor"/><span id="line-474" class="anchor"/></p><pre>f.f_trace               当前frame的跟踪函数(供调试器使用) 或 None
+<span id="line-475" class="anchor"/>f.f_exc_type            当前frame发生的异常类型 或 None
+<span id="line-476" class="anchor"/>f.f_exc_value           当前frame发生的异常的值 或 None
+<span id="line-477" class="anchor"/>f.f_exc_traceback       当前framev发生的 traceback 或 None
+<span id="line-478" class="anchor"/></pre><span id="line-479" class="anchor"/><p class="line867">
+</p><h4 id="head-d1f51c25d46c5f3dda39a23111bb88ce93c51880">1.5.13.3. traceback 对象</h4>
+<span id="line-480" class="anchor"/><p class="line862">traceback 对象保存异常的栈追踪信息。只要发生异常就会创建 traceback对象。当一个异常被处理时，可以通过 <tt class="backtick">sys.exc_info()</tt> 函数输出异常的堆栈追踪信息。traceback 对象 t 有以下只读属性: <span id="line-481" class="anchor"/><span id="line-482" class="anchor"/></p><pre>属性                    描述
+<span id="line-483" class="anchor"/>t.tb_next               栈追踪的下一级 (对发生异常的 frame 来说) 或 None
+<span id="line-484" class="anchor"/>t.tb_frame              当前级正在执行的 frame 对象
+<span id="line-485" class="anchor"/>t.tb_lineno             引发异常的源代码行号
+<span id="line-486" class="anchor"/>t.tb_lasti              正在执行的指令索引
+<span id="line-487" class="anchor"/></pre><span id="line-488" class="anchor"/><p class="line867">
+</p><h4 id="head-c2eb9911d189c4d4bff56bd22c562a3326be894d">1.5.13.4. 切片对象</h4>
+<span id="line-489" class="anchor"/><p class="line862">切片对象用于表示在扩展切片语法中的切片。如<tt class="backtick">a [i :j :stride ], a [i :j , n :m ], 或者 a […, i :j ]。切片对象也可以使用内建函数slice([i,] j [,stride])</tt>创建。切片对象有下列只读属性: <span id="line-490" class="anchor"/>属性                    描述 <span id="line-491" class="anchor"/>s.start                 切片的下边界,省略时返回None <span
+id="line-492" class="anchor"/>s.stop                  切片的上边界,省略时返回None <span id="line-493" class="anchor"/>s.step                  切片的步进值,省略时返回None <span id="line-494" class="anchor"/><span id="line-495" class="anchor"/></p><p class="line867">
+</p><h4 id="head-471315ea05d5a3deaaa51be2239513cf45fdb60c">1.5.13.5. 省略对象</h4>
+<span id="line-496" class="anchor"/><p class="line874">省略对象用于表示在一个切片中出现了省略(...)。这个类型只有一个对象，通过内建名称Ellipsis来访问这个对象。它没有任何属性。它的布尔值为 True。 <span id="line-497" class="anchor"/>
+</p><h2 id="head-90b3e0cc990eba65d33c3a957c1757a1e93ce756">1.6. 特殊方法</h2>
+<span id="line-498" class="anchor"/><p class="line862">所有内建的数据类型都拥有一些特殊方法。特殊方法的名字总是由两个下划线<tt class="backtick">(__)</tt>开头和结尾。在程序运行时解释器会根据你的代码隐式调用这些方法来完成你想要的功能。例如运行<tt class="backtick">z = x + y</tt> 这个代码，解释器内部执行的就是<tt class="backtick"> z= x.__add__(y)。b=x[k] </tt>语句解释器就会执行 <tt class="backtick">b =
+x.__getitem__(k)</tt>。每个数据类型的行为完全依赖于这些特殊方法的具体实现。 <span id="line-499" class="anchor"/><span id="line-500" class="anchor"/></p><p class="line874">内建类型的特殊方法都是只读的，所以我们无法改变内建类型的行为。虽然如此，我们还是能够使用类定义新的类型，并让它具有象内建类型那样的行为。要做到这一点也不难，只要你能实现本章介绍的这些特殊方法就可以喽！ <span id="line-501" class="anchor"/><span
+id="line-502" class="anchor"/></p><p class="line867">
+</p><h3 id="head-554305b2b2962fc3e0404cfbdd41523560162475">1.6.1. 对象创建、销毁及表示</h3>
+<span id="line-503" class="anchor"/><span id="line-504" class="anchor"/><p class="line862">表 3.7 中列出的方法用于初始化、销毁及表示对象。<tt class="backtick"> __init__()</tt>方法初始化一个对象，它在一个对象创建后立即执行。 <tt class="backtick">__del__()</tt>方法在对象即将被销毁时调用，也就是该对象完成它的使命不再需要时调用。需要注意的是语句<tt class="backtick"> del x </tt>只是减少对象 x
+的引用计数，并不调用这个函数。 <span id="line-505" class="anchor"/><span id="line-506" class="anchor"/></p><p class="line867"><strong>Table 3.7. 对象创建,删除,表示使用的特殊方法</strong> <span id="line-507" class="anchor"/><span id="line-508" class="anchor"/></p><pre>方法                               描述
+<span id="line-509" class="anchor"/>__init__(self[,args])              初始化self
+<span id="line-510" class="anchor"/>__del__(self)                      删除self
+<span id="line-511" class="anchor"/>__repr__(self)                     创建self的规范字符串表示
+<span id="line-512" class="anchor"/>__str__ (self)                     创建self的信息字符串表示
+<span id="line-513" class="anchor"/>__cmp__(self,other)                比较两个对象,返回负数,零或者正数
+<span id="line-514" class="anchor"/>__hash__(self)                     计算self的32位哈希索引
+<span id="line-515" class="anchor"/>__nonzero__(self)                  真值测试,返回0或者1
+<span id="line-516" class="anchor"/></pre><span id="line-517" class="anchor"/><p class="line867"><tt class="backtick">__repr__()和__str__()方法都返回一个字符串来表示 self 对象。通常情况，__repr__()</tt>方法会返回的这样一个字符串：通过对该字符串取值(eval)操作将会重新得到这个对象。如果一个对象拥有<tt
+class="backtick">__repr__方法，当对该对象使用repr()</tt>函数或后引号(<tt>`</tt>)操作时，就会调用这个函数做为返回值。例如: <span id="line-518" class="anchor"/><span id="line-519" class="anchor"/><span id="line-520" class="anchor"/><span id="line-521" class="anchor"/><span id="line-522" class="anchor"/><span id="line-523" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-1695c2b627e9a962e25017f0dcad6a6dddde7758_013\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-1695c2b627e9a962e25017f0dcad6a6dddde7758_013', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-1695c2b627e9a962e25017f0dcad6a6dddde7758_013" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="Number">2</span><span class="Operator">,</span><span class="Number">3</span><span class="Operator">,</span><span class="Number">4</span><span
+class="Operator">,</span><span class="Number">5</span><span class="Operator">]</span>           <span class="Comment"># 创建一个列表</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">s</span> <span class="Operator">=</span> <span class="ID">repr</span><span class="Operator">(</span><span class="ID">a</span><span class="Operator">)</span>             <span class="Comment"># s = '[2, 3, 4, 5]'</span></span>
+<span class="line"><span class="LineNumber">   3 </span>                        <span class="Comment"># 注: 也可以使用 s = `a`</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="Comment"/><span class="ID">b</span> <span class="Operator">=</span> <span class="ID">eval</span><span class="Operator">(</span><span class="ID">s</span><span class="Operator">)</span>             <span class="Comment"># 再转换为一个列表</span><span class="Text"/></span>
+</pre></div><span id="line-524" class="anchor"/><p class="line862">如果`<span class="u">re[r</span>()不能返回这样一个字符串，那它应该返回一个格式为<...message...>的字符串，例如: <span id="line-525" class="anchor"/><span id="line-526" class="anchor"/><span id="line-527" class="anchor"/><span id="line-528" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-d67343be43e24c2a79a7f5750e336c9d7b221ffa_014\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-d67343be43e24c2a79a7f5750e336c9d7b221ffa_014', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-d67343be43e24c2a79a7f5750e336c9d7b221ffa_014" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">f</span> <span class="Operator">=</span> <span class="ID">open</span><span class="Operator">(</span><span class="String">"foo"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="ID">repr</span><span class="Operator">(</span><span class="ID">f</span><span class="Operator">)</span>             <span class="Comment"># a = "<open file 'foo', mode 'r' at dc030>"</span><span class="Text"/></span>
+</pre></div><span id="line-529" class="anchor"/><p class="line862">当调用str()函数或执行print语句时，python会自动调用被操作(或打印)对象的<tt class="backtick">__str__()</tt>方法。与<tt class="backtick">__repr__()</tt>相比，<tt class="backtick">__str__()</tt>方法返回的字符快通常更简洁易读，内容一般是该对象的描述性信息。如果一个对象没有被定义该函数，Python就会调用<tt
+class="backtick">__repr__()</tt>方法。 <span id="line-530" class="anchor"/><span id="line-531" class="anchor"/></p><p class="line867"><tt class="backtick">__cmp__(self,other)</tt>方法用于与另一对象进行比较操作。如果 self < other ，它返回一个负值;若self == other，返回零;若self >
+other，返回一个正数。如果一个对象没有定义该函数，对象就改用对象的标识进行比较。另外，一个对象可以给每个相关操作定义两个比较函数(正向反向)，这通常被称为rich comparisons。<tt class="backtick">__nonzero__()</tt>方法用于对自身对象进行真值测试，应该返回0或1，如果这个方法没有被定义，Python将调用<tt class="backtick">__len__()</tt>方法来取得该对象的真值。最后<tt
+class="backtick">__hash__()</tt>方法计算出一个整数哈希值以便用于字典操作。(内建函数<tt class="backtick">hash()</tt>也可以用来计算一个对象的哈希值)。相同对象的返回值是相等的。注意，可变对象不能定义这个方法，因为对象的变化会改变其哈希值，这会造成它不能被定位和查询。一个对象在未定义 <span class="u">cmp</span>() 方法的情况下也不能定义 <span class="u">hash</span>()。 <span
+id="line-532" class="anchor"/><span id="line-533" class="anchor"/></p><p class="line867">
+</p><h3 id="head-624c92df412b8f5260e02365d077b77801b94f75">1.6.2. 属性访问</h3>
+<span id="line-534" class="anchor"/><span id="line-535" class="anchor"/><p class="line874">表 3.8列出了读取、写入、或者删除一个对象的属性的方法. <span id="line-536" class="anchor"/><span id="line-537" class="anchor"/></p><p class="line867"><strong>Table 3.8. 访问属性的方法</strong> <span id="line-538" class="anchor"/><span id="line-539" class="anchor"/></p><pre>方法
+描述
+<span id="line-540" class="anchor"/>__getattr__(self , name)                返回属性 self.name
+<span id="line-541" class="anchor"/>__setattr__(self , name , value)        设置属性 self.name = value
+<span id="line-542" class="anchor"/>__delattr__(self , name)                删除属性 self .name
+<span id="line-543" class="anchor"/>例如:
+<span id="line-544" class="anchor"/>
+<span id="line-545" class="anchor"/>a = x.s       # 调用 __getattr__(x,"s")
+<span id="line-546" class="anchor"/>x.s = b       # 调用 __setattr__(x,"s", b)
+<span id="line-547" class="anchor"/>del x.s       # 调用 __delattr__(x,"s")
+<span id="line-548" class="anchor"/></pre><p class="line874"> <span id="line-549" class="anchor"/>对于类实例，<tt class="backtick">__getattr__()</tt>方法只在类例字典及相关类字典内搜索属性失败时才被调用。这个方法会返回属性值或者在失败时引发<tt class="backtick">AttributeError</tt>异常。 <span id="line-550" class="anchor"/><span id="line-551" class="anchor"/></p><p class="line867">
+</p><h3 id="head-592486fab32709f3877349a3e093c551ad7c4dfe">1.6.3. 序列和映射的方法</h3>
+<span id="line-552" class="anchor"/><span id="line-553" class="anchor"/><p class="line874">表 3.9中介绍了序列和映射对象可以使用的方法。 <span id="line-554" class="anchor"/><span id="line-555" class="anchor"/></p><p class="line867"><strong>Table 3.9. 序列和映射的方法</strong> <span id="line-556" class="anchor"/><span id="line-557" class="anchor"/></p><pre>方法
+描述
+<span id="line-558" class="anchor"/>__len__(self)                               返回self的长度 len(someObject) 会自动调用 someObject的__len__()
+<span id="line-559" class="anchor"/>__getitem__(self , key)                     返回self[key]
+<span id="line-560" class="anchor"/>__setitem__(self , key , value)             设置self[key] = value
+<span id="line-561" class="anchor"/>__delitem__(self , key)                     删除self[key]
+<span id="line-562" class="anchor"/>__getslice__(self ,i ,j)                    返回self[i:j]
+<span id="line-563" class="anchor"/>__setslice__(self ,i ,j ,s)                 设置self[i:j] = s
+<span id="line-564" class="anchor"/>__delslice__(self ,i ,j)                    删除self[i:j]
+<span id="line-565" class="anchor"/>__contains__(self ,obj)                     返回 obj 是否在 self 中
+<span id="line-566" class="anchor"/>
+<span id="line-567" class="anchor"/>例如:
+<span id="line-568" class="anchor"/>a = [1,2,3,4,5,6]
+<span id="line-569" class="anchor"/>len(a)               # __len__(a)
+<span id="line-570" class="anchor"/>x = a[2]             # __getitem__(a,2)
+<span id="line-571" class="anchor"/>a[1] == 7            # __setitem__(a,1,7)
+<span id="line-572" class="anchor"/>del a[2]             # __delitem__(a,2)
+<span id="line-573" class="anchor"/>x = a[1:5]           # __getslice__(a,1,5)
+<span id="line-574" class="anchor"/>a[1:3] = [10,11,12]  # __setslice__(a,1,3,[10,11,12])
+<span id="line-575" class="anchor"/>del a[1:4]           # __delslice__(a,1,4)
+<span id="line-576" class="anchor"/></pre><p class="line874"> <span id="line-577" class="anchor"/><tt class="backtick">内建函数len(x)调用对象 x 的__len__()方法得到一个非负整数。如果一个对象没有定义__nonzero__()方法，就由 __len__()这个函数来决定其真值。</tt> <span id="line-578" class="anchor"/><tt
+class="backtick">__getitem__(key)</tt>方法用来访问个体元素。对序列类型，key只能是非负整数，对映射类型，关键字可以是任意Python不变对象。 <span id="line-579" class="anchor"/><tt class="backtick">__setitem__()</tt>方法给一个元素设定新值。<tt class="backtick">__delitem__()</tt>方法和<tt class="backtick">__delslice__()</tt>方法在使用del语句时被自动调用。 <span id="line-580"
+class="anchor"/>切片方法用来支持切片操作符 s[i:j]。<tt class="backtick">__getslice__(self,i,j)</tt>方法返回一个self类型的切片，索引 i 和 j 必须是整数，索引的含义由<tt class="backtick">__getslice__()</tt>方法的具体实现决定。如果省略 i，i就默认为 0，如果省略 j，j 就默认为 sys.maxint。 <tt class="backtick">__setslice__()</tt>方法给为一个切片设定新值。<tt
+class="backtick">__delslice__()</tt>删除一个切片中的所有元素。<tt class="backtick">__contains__()</tt>方法用来实现 in 操作符。 <span id="line-581" class="anchor"/><span id="line-582" class="anchor"/></p><p class="line862">除了刚才描述过的方法之外，序列以及映射还实现了一些数学方法，包括<tt class="backtick">__add__(), __radd__(), __mul__(), 和
+__rmul__(),</tt>用于对象连接或复制等操作。下面会对这些方法略作介绍。 <span id="line-583" class="anchor"/><span id="line-584" class="anchor"/></p><p class="line874">Python还支持扩展切片操作，这对于操作多维数据结构(如矩阵和数组)会很方便。你可以这样使用扩展切片: <span id="line-585" class="anchor"/><span id="line-586" class="anchor"/><span id="line-587" class="anchor"/><span
+id="line-588" class="anchor"/><span id="line-589" class="anchor"/><span id="line-590" class="anchor"/><span id="line-591" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-9ce64a52ba99250cc35eabdfa998bfec2c9ab18e_015\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-9ce64a52ba99250cc35eabdfa998bfec2c9ab18e_015', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-9ce64a52ba99250cc35eabdfa998bfec2c9ab18e_015" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="ID">m</span><span class="Operator">[</span><span class="Number">0</span><span class="Operator">:</span><span class="Number">100</span><span
+class="Operator">:</span><span class="Number">10</span><span class="Operator">]</span>          <span class="Comment"># 步进切片 (stride=10)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="ID">m</span><span class="Operator">[</span><span class="Number">1</span><span class="Operator">:</span><span class="Number">10</span><span class="Operator">,</span> <span class="Number">3</span><span class="Operator">:</span><span
+class="Number">20</span><span class="Operator">]</span>        <span class="Comment"># 多维切片</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">c</span> <span class="Operator">=</span> <span class="ID">m</span><span class="Operator">[</span><span class="Number">0</span><span class="Operator">:</span><span class="Number">100</span><span class="Operator">:</span><span class="Number">10</span><span class="Operator">,</span> <span
+class="Number">50</span><span class="Operator">:</span><span class="Number">75</span><span class="Operator">:</span><span class="Number">5</span><span class="Operator">]</span> <span class="Comment"># 多维步进切片</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">m</span><span class="Operator">[</span><span class="Number">0</span><span class="Operator">:</span><span class="Number">5</span><span class="Operator">,</span> <span class="Number">5</span><span class="Operator">:</span><span class="Number">10</span><span class="Operator">]</span> <span
+class="Operator">=</span> <span class="ID">n</span>         <span class="Comment"># 扩展切片分配</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">del</span> <span class="ID">m</span><span class="Operator">[</span><span class="Operator">:</span><span class="Number">10</span><span class="Operator">,</span> <span class="Number">15</span><span class="Operator">:</span><span class="Operator">]</span>          <span class="Comment">#
+扩展切片删除</span><span class="Text"/></span>
+</pre></div><span id="line-592" class="anchor"/><p class="line862">扩展切片的一般格式是i:j <a href="/moin/stride" class="nonexistent">stride</a>, srtide是可选的。和普通切片一样，你可以省略每个切片的开始或者结束的值。另外还有一个特殊的对象--省略对象。写做 <tt class="backtick">(...)</tt>，用于扩展切片中表示任何数字： <span id="line-593" class="anchor"/><span
+id="line-594" class="anchor"/><span id="line-595" class="anchor"/><span id="line-596" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-e6c37794da6b00739a9d48f1d81cf6aff08a039d_016\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-e6c37794da6b00739a9d48f1d81cf6aff08a039d_016', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-e6c37794da6b00739a9d48f1d81cf6aff08a039d_016" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="ID">m</span><span class="Operator">[</span><span class="Operator">.</span><span class="Operator">.</span><span class="Operator">.</span><span
+class="Operator">,</span> <span class="Number">10</span><span class="Operator">:</span><span class="Number">20</span><span class="Operator">]</span>        <span class="Comment"># 利用省略进行的扩展切片操作</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">m</span><span class="Operator">[</span><span class="Number">10</span><span class="Operator">:</span><span class="Number">20</span><span class="Operator">,</span> <span class="Operator">.</span><span class="Operator">.</span><span class="Operator">.</span><span
+class="Operator">]</span> <span class="Operator">=</span> <span class="ID">n</span><span class="Text"/></span>
+</pre></div><span id="line-597" class="anchor"/><p class="line862">当进行扩展切片操作时，<tt class="backtick">__getitem__(), __setitem__(), 和 __delitem__()</tt>方法分别用于实现访问、修改、删除操作。然而在扩展切片操作中，传递给这些方法的参数不是一个整数，而是一个包含切片对象的元组(有时还会包括一个省略对象)。例如: <span id="line-598"
+class="anchor"/><span id="line-599" class="anchor"/></p><pre>a = m[0:10, 0:100:5, ...]
+<span id="line-600" class="anchor"/>
+<span id="line-601" class="anchor"/>上面的语句会以下面形式调用__getitem__():
+<span id="line-602" class="anchor"/>
+<span id="line-603" class="anchor"/>a = __getitem__(m, (slice(0,10,None), slice(0,100,5), Ellipsis))
+<span id="line-604" class="anchor"/></pre><span id="line-605" class="anchor"/><p class="line867"><span id="line-606" class="anchor"/></p><pre>        注意：在Python1.4版开始，就一直有扩展切片的语法，却没有任何一个内建类型支持扩展切片操作。
+<span id="line-607" class="anchor"/>              Python 2.3改变了这个现状。从Python 2.3开始，内建类型终于支持扩展切片操作了，这要感谢 Michael Hudson。
+<span id="line-608" class="anchor"/></pre><p class="line874">  <span id="line-609" class="anchor"/><span id="line-610" class="anchor"/></p><p class="line867">
+</p><h3 id="head-2ff8b7daeec98aa361e7058e6a8fa2e7f9bf1365">1.6.4. 数学操作</h3>
+<span id="line-611" class="anchor"/><span id="line-612" class="anchor"/><p class="line862">表3.10 列出了与数学运算相关的特殊方法。数学运算从左至右进行，执行表达式 x + y 时，解释器会试着调用 x.<span class="u">add</span>(y)。以 r 开头的特殊方法名支持以反转的操作数进行运算。它们在左运算对象未实现相应特殊方法时被调用，例如 x + y 中的 x 若未提供 <tt
+class="backtick">__add__()</tt> 方法，解释器就会试着调用函数 <tt class="backtick">y.__radd__(x)</tt>。 <span id="line-613" class="anchor"/><span id="line-614" class="anchor"/></p><p class="line867"><strong>表 3.10. 数学操作的方法</strong> <span id="line-615" class="anchor"/><span id="line-616" class="anchor"/></p><pre>Method
+Result
+<span id="line-617" class="anchor"/>__add__(self ,other)            self + other
+<span id="line-618" class="anchor"/>__sub__(self ,other)            self - other
+<span id="line-619" class="anchor"/>__mul__(self ,other)            self * other
+<span id="line-620" class="anchor"/>__div__(self ,other)            self / other
+<span id="line-621" class="anchor"/>__mod__(self ,other)            self % other
+<span id="line-622" class="anchor"/>__divmod__(self ,other)         divmod(self ,other)
+<span id="line-623" class="anchor"/>__pow__(self ,other [,modulo]) self ** other , pow(self , other , modulo)
+<span id="line-624" class="anchor"/>__lshift__(self ,other)         self << other
+<span id="line-625" class="anchor"/>__rshift__(self ,other)         self >> other
+<span id="line-626" class="anchor"/>__and__(self ,other)            self & other
+<span id="line-627" class="anchor"/>__or__(self ,other)             self | other
+<span id="line-628" class="anchor"/>__xor__(self ,other)            self ^ other
+<span id="line-629" class="anchor"/>__radd__(self ,other)           other + self
+<span id="line-630" class="anchor"/>__rsub__(self ,other)           other - self
+<span id="line-631" class="anchor"/>__rmul__(self ,other)           other * self
+<span id="line-632" class="anchor"/>__rdiv__(self ,other)           other / self
+<span id="line-633" class="anchor"/>__rmod__(self ,other)           other % self
+<span id="line-634" class="anchor"/>__rdivmod__(self ,other)        divmod(other ,self)
+<span id="line-635" class="anchor"/>__rpow__(self ,other)           other ** self
+<span id="line-636" class="anchor"/>__rlshift__(self ,other)        other << self
+<span id="line-637" class="anchor"/>__rrshift__(self ,other)        other >> self
+<span id="line-638" class="anchor"/>__rand__(self ,other)           other & self
+<span id="line-639" class="anchor"/>__ror__(self ,other)            other | self
+<span id="line-640" class="anchor"/>__rxor__(self ,other)           other ^ self
+<span id="line-641" class="anchor"/>__iadd__(self ,other)           self += other
+<span id="line-642" class="anchor"/>__isub__(self ,other)           self -= other
+<span id="line-643" class="anchor"/>__imul__(self ,other)           self *= other
+<span id="line-644" class="anchor"/>__idiv__(self ,other)           self /= other
+<span id="line-645" class="anchor"/>__imod__(self ,other)           self %= other
+<span id="line-646" class="anchor"/>__ipow__(self ,other)           self **= other
+<span id="line-647" class="anchor"/>__iand__(self ,other)           self &= other
+<span id="line-648" class="anchor"/>__ior__(self ,other)            self |= other
+<span id="line-649" class="anchor"/>__ixor__(self ,other)           self ^= other
+<span id="line-650" class="anchor"/>__ilshift__(self ,other)        self <<= other
+<span id="line-651" class="anchor"/>__irshift__(self ,other)        self >>= other
+<span id="line-652" class="anchor"/>__neg__(self)                   -self
+<span id="line-653" class="anchor"/>__pos__(self)                   +self
+<span id="line-654" class="anchor"/>__abs__(self)                   abs(self)
+<span id="line-655" class="anchor"/>__invert__(self)                ~self
+<span id="line-656" class="anchor"/>__int__(self)                   int(self)
+<span id="line-657" class="anchor"/>__long__(self)                  long(self)
+<span id="line-658" class="anchor"/>__float__(self)                 float(self)
+<span id="line-659" class="anchor"/>__complex__(self)               complex(self)
+<span id="line-660" class="anchor"/>__oct__(self)                   oct(self)
+<span id="line-661" class="anchor"/>__hex__(self)                   hex(self)
+<span id="line-662" class="anchor"/>__coerce__(self ,other)         Type coercion
+<span id="line-663" class="anchor"/></pre><span id="line-664" class="anchor"/><p class="line867"><tt class="backtick">__iadd__(), __isub__()</tt>方法用于实现原地运算<tt class="backtick">(in-place arithmetic)</tt>，如 a+=b 和 a-=b (称为增量赋值)。原地运算与标准运算的差别在于原地运算的实现会尽可能的进行性能优化。举例来说，如果 self
+参数是非共享的，就可以原地修改 self 的值而不必为计算结果重新创建一个对象。 <span id="line-665" class="anchor"/><span id="line-666" class="anchor"/></p><p class="line867"><span class="u">int</span>(), <span class="u">long</span>(), <span class="u">float</span>()和<span class="u">complex</span>() 返回一个相应类型的新对象，<span class="u">oct</span>()
+和 <span class="u">hex</span>()方法分别返回相应对象的八进制和十六进制的字符串表示。 <span id="line-667" class="anchor"/><span id="line-668" class="anchor"/></p><p class="line862">x.<span class="u">coerce</span>(self,y) 用于实现混合模式数学计算。这个方法在需要时对参数 self (也就是x) 和 y
+进行适当的类型转换，以满足运算的需要。如果转换成功，它返回一个元组，其元素为转换后的 x 和 y ，若无法转换则返回 None。在计算x op y时(op是运算符)，使用以下规则: <span id="line-669" class="anchor"/><span id="line-670" class="anchor"/></p><pre>        1.若 x 有__coerce__()方法,使用x.__coerce__(y)返回的值替换 x 和 y, 若返回None,转到第 3 步。
+<span id="line-671" class="anchor"/>        2.若 x 有__op __()方法,返回 x.__op __(y)。否则恢复 x 和 y 的原始值，然后进行下一步。
+<span id="line-672" class="anchor"/>        3.若 y 有__coerce__()方法,使用y.__coerce__(x)返回的值替换 x 和 y。若返回None,则引发异常。
+<span id="line-673" class="anchor"/>        4.若 y 有__rop __()方法,返回y.__op __(x)，否则引发异常.
+<span id="line-674" class="anchor"/></pre><span id="line-675" class="anchor"/><span id="line-676" class="anchor"/><p class="line862">虽然字符串定义了一些运算操作，但 ASCII字符串和Unicode字符串之间的运算并不使用 <span class="u">coerce</span>()方法。 <span id="line-677" class="anchor"/><span id="line-678" class="anchor"/></p><p
+class="line874">在内建类型中，解释器只支持少数几种类型进行混合模式运算。常见的有如下几种： <span id="line-679" class="anchor"/><span id="line-680" class="anchor"/></p><pre>·如果 x 是一个字符串, x % y 调用字符串格式化操作,与 y 的类型无关
+<span id="line-681" class="anchor"/>·如果 x 是一个序列, x + y 调用序列连结
+<span id="line-682" class="anchor"/>·如果 x 和 y 中一个是序列,另个是整数, x * y调用序列重复
+<span id="line-683" class="anchor"/></pre><span id="line-684" class="anchor"/><p class="line867">
+</p><h3 id="head-e8d2dde7c5938b17aaa7cdefe4d01a3dd2897c96">1.6.5. 比较操作</h3>
+<span id="line-685" class="anchor"/><p class="line862">表 3.11 列出了实现分别各种比较操作<tt class="backtick">(<, >, <=, >=, ==, !=)</tt>的对象特殊方法，这也就是 rich comparisons。这个概念在Python
+2.1中被第一次引入。这些方法都使用两个参数，根据操作数返回适当类型对象(布尔型,列表或其他Python内建类型)。举例来说，两个矩阵对象可以使用这些方法进行元素智能比较，并返顺一个结果矩阵。若比较操作无法进行，则引发异常. <span id="line-686" class="anchor"/><span id="line-687" class="anchor"/></p><p class="line867"><strong> 表 3.11. 比较方法 </strong> <span
+id="line-688" class="anchor"/><span id="line-689" class="anchor"/></p><pre>方法                            操作
+<span id="line-690" class="anchor"/>__lt__(self ,other )            self < other
+<span id="line-691" class="anchor"/>__le__(self ,other )            self <= other
+<span id="line-692" class="anchor"/>__gt__(self ,other )            self > other
+<span id="line-693" class="anchor"/>__ge__(self ,other )            self >= other
+<span id="line-694" class="anchor"/>__eq__(self ,other )            self == other
+<span id="line-695" class="anchor"/>__ne__(self ,other )            self != other
+<span id="line-696" class="anchor"/></pre><span id="line-697" class="anchor"/><span id="line-698" class="anchor"/><p class="line867">
+</p><h3 id="head-6e846ae5085b3aa96f590bedc4a33dfbba2bd48f">1.6.6. 可调用对象</h3>
+<span id="line-699" class="anchor"/><span id="line-700" class="anchor"/><p class="line862">最后，一个对象只要提供 <tt class="backtick">__call__(self[,args])</tt> 特殊方法，就可以象一个函数一样被调用。举例来说，如果对象 x 提供这个方法，它就可以这样调用：<tt class="backtick">x(arg1 , arg2 , ...)</tt>。解释器内部执行的则是 <tt class="backtick">x
+.__call__(self , arg1 , arg2 , ...)</tt>。 <span id="line-701" class="anchor"/><span id="line-702" class="anchor"/></p><p class="line867">
+</p><h2 id="head-5d6f6d9e3065ce69c7a48025da022c3273cea8fa">1.7. 性能及内存占用</h2>
+<span id="line-703" class="anchor"/><span id="line-704" class="anchor"/><p class="line874">所有的Python对象至少拥有一个整型引用记数、一个类型定义描述符及真实数据的表示这三部分。对于在32位计算机上运行的C语言实现的Python 2.0，表 3.12
+列出了常用内建对象占用内存的估计大小，对于解释器的其它实现或者不同的机器配置，内存占用的准确值可能会有不同。你可能从来不考虑内存占用问题，不过当Python在要求高性能及内存紧张的环境下运行时，就必须考虑这个问题。下边这个表可以有效的帮助程序员更好地规划内存的使用： <span id="line-705" class="anchor"/><span id="line-706" class="anchor"/></p><p
+class="line867"><strong>表 3.12. 内建数据类型使用的内存大小</strong> <span id="line-707" class="anchor"/><span id="line-708" class="anchor"/></p><pre>类型              大小
+<span id="line-709" class="anchor"/>
+<span id="line-710" class="anchor"/>Integer                 12 bytes
+<span id="line-711" class="anchor"/>Long integer            12 bytes + (nbits/16 + 1)*2 bytes
+<span id="line-712" class="anchor"/>Floats                  16 bytes
+<span id="line-713" class="anchor"/>Complex                 24 bytes
+<span id="line-714" class="anchor"/>List                    16 bytes + 4 bytes(每个元素)
+<span id="line-715" class="anchor"/>Tuple                   16 bytes + 4 bytes(每个条目)
+<span id="line-716" class="anchor"/>String                  20 bytes + 1 byte(每个字符)
+<span id="line-717" class="anchor"/>Unicode string          24 bytes + 2 bytes(每个字符)
+<span id="line-718" class="anchor"/>Dictionary              24 bytes + 12*2n bytes, n = log2(nitems)+1
+<span id="line-719" class="anchor"/>Class instance          16 bytes 加一个字典对象
+<span id="line-720" class="anchor"/>Xrange object           24 bytes
+<span id="line-721" class="anchor"/></pre><span id="line-722" class="anchor"/><p class="line874">由于字符串类型太常用了，所以解释器会特别优化它们。可以使用内建函数intern(s)来暂存一个频繁使用的字符串 s。这个函数首先在内部哈希表中寻找字符串 s
+的哈希值，如果找到，就创建一个到该字符串的引用，如果找不到，就创建该字符串对象并将其哈希值加入内部哈希表。只要不退出解释器，被暂存的字符串就会一直存在。如果你关心内存占用，那你就一定不要暂存极少使用的字符串。为了使字典查询更有效率，字符串会缓存它们最后的哈希值。 <span id="line-723" class="anchor"/><span id="line-724" class="anchor"/></p><p
+class="line874">一个字典其实就是一个开放索引的哈希表。The number of entries allocated to a dictionary is equal to twice the smallest power of 2 that’s greater than the number of objects stored in the dictionary. When a dictionary expands, its size doubles. On average, about half of the entries allocated to a dictionary are unused. <span id="line-725"
+class="anchor"/><span id="line-726" class="anchor"/></p><p class="line874">一个Python程序的执行首先是一系列的函数调用(包括前面讲到的特殊方法)，之后再选择最高效的算法。搞懂 Python 的对象模型并尽量减少特殊方法的调用次数，可以有效提高你的程序的性能。特别是改良类及模块的名字查询方式效果卓著。看下面的代码: <span id="line-727" class="anchor"/><span
+id="line-728" class="anchor"/><span id="line-729" class="anchor"/><span id="line-730" class="anchor"/><span id="line-731" class="anchor"/><span id="line-732" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-2994ad9af95ceebc4ea20d041c692fcde396e64b_017\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-2994ad9af95ceebc4ea20d041c692fcde396e64b_017', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-2994ad9af95ceebc4ea20d041c692fcde396e64b_017" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">math</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">d</span> <span class="Operator">=</span> <span class="Number">0.0</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">for</span> <span class="ID">i</span> <span class="ResWord">in</span> <span class="ID">xrange</span><span class="Operator">(</span><span class="Number">1000000</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>     <span class="ID">d</span> <span class="Operator">=</span> <span class="ID">d</span> <span class="Operator">+</span> <span class="ID">math</span><span class="Operator">.</span><span class="ID">sqrt</span><span class="Operator">(</span><span class="ID">i</span><span
+class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-733" class="anchor"/><p class="line874">在上面的代码中，每次循环调用都要进行两次名称查询。第一次在全局名称空间中定位math模块，第二次是搜寻一个名称是sqrt的函数对象。 <span id="line-734" class="anchor"/>我们将代码改成下面这样: <span id="line-735" class="anchor"/><span id="line-736" class="anchor"/><span
+id="line-737" class="anchor"/><span id="line-738" class="anchor"/><span id="line-739" class="anchor"/><span id="line-740" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-dfe34c4e4a5d23d70e32b4c37f4b03034bf37510_018\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-dfe34c4e4a5d23d70e32b4c37f4b03034bf37510_018', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-dfe34c4e4a5d23d70e32b4c37f4b03034bf37510_018" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">from</span> <span class="ID">math</span> <span class="ResWord">import</span> <span class="ID">sqrt</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">d</span> <span class="Operator">=</span> <span class="Number">0.0</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">for</span> <span class="ID">i</span> <span class="ResWord">in</span> <span class="ID">xrange</span><span class="Operator">(</span><span class="Number">1000000</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>     <span class="ID">d</span> <span class="Operator">=</span> <span class="ID">d</span> <span class="Operator">+</span> <span class="ID">sqrt</span><span class="Operator">(</span><span class="ID">i</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-741" class="anchor"/><p class="line874">这个代码每次循环只需要进行一次名称查询。就这样一个简单的调整，在作者的 200 MHz PC上运行时,这个简单的变化会使代码运行速度提高一倍多。 <span id="line-742" class="anchor"/><span id="line-743" class="anchor"/></p><pre>注:      200
+MHz的机器我没有，但在我的2000 MHz机器上效果没有这么明显，不过仍然有10%以上的提高  --Feather
+<span id="line-744" class="anchor"/>         那时作者用的是 Python 2.0，现在你用的是 2.4。 Python一直在不断进步嘛! --WeiZhong
+<span id="line-745" class="anchor"/></pre><span id="line-746" class="anchor"/><span id="line-747" class="anchor"/><p class="line874">在Python程序设计中，应该仅在必要时使用临时变量，尽可能的避免非必要的序列或字典查询。下面我们看看 Listing 3.2中的这两个类: <span id="line-748" class="anchor"/><span id="line-749"
+class="anchor"/></p><p class="line867"><strong>Listing 3.2 计算一个平面多边形的周长</strong> <span id="line-750" class="anchor"/><span id="line-751" class="anchor"/></p><p class="line867"><span id="line-752" class="anchor"/><span id="line-753" class="anchor"/><span id="line-754" class="anchor"/><span id="line-755"
+class="anchor"/><span id="line-756" class="anchor"/><span id="line-757" class="anchor"/><span id="line-758" class="anchor"/><span id="line-759" class="anchor"/><span id="line-760" class="anchor"/><span id="line-761" class="anchor"/><span id="line-762" class="anchor"/><span id="line-763" class="anchor"/><span
+id="line-764" class="anchor"/><span id="line-765" class="anchor"/><span id="line-766" class="anchor"/><span id="line-767" class="anchor"/><span id="line-768" class="anchor"/><span id="line-769" class="anchor"/><span id="line-770" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-e321d217911a0f9e0e06090e3cad395754e2bece_019\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-e321d217911a0f9e0e06090e3cad395754e2bece_019', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-e321d217911a0f9e0e06090e3cad395754e2bece_019" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">class</span> <span class="ID">Point</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span><span class="ID">x</span><span class="Operator">,</span><span class="ID">y</span><span
+class="Operator">,</span><span class="ID">z</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>          <span class="ID">self</span><span class="Operator">.</span><span class="ID">x</span> <span class="Operator">=</span> <span class="ID">x</span></span>
+<span class="line"><span class="LineNumber">   4 </span>          <span class="ID">self</span><span class="Operator">.</span><span class="ID">y</span> <span class="Operator">=</span> <span class="ID">y</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="Comment">#低效率的示例</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="Comment"/><span class="ResWord">class</span> <span class="ID">Poly</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   7 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   8 </span>          <span class="ID">self</span><span class="Operator">.</span><span class="ID">pts</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   9 </span>    <span class="ResWord">def</span> <span class="ID">addpoint</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span><span class="ID">pt</span><span class="Operator">)</span><span
+class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  10 </span>          <span class="ID">self</span><span class="Operator">.</span><span class="ID">pts</span><span class="Operator">.</span><span class="ID">append</span><span class="Operator">(</span><span class="ID">pt</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span>    <span class="ResWord">def</span> <span class="ID">perimeter</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span>                   <span
+class="Comment">#计算周长</span></span>
+<span class="line"><span class="LineNumber">  12 </span>          <span class="ID">d</span> <span class="Operator">=</span> <span class="Number">0.0</span></span>
+<span class="line"><span class="LineNumber">  13 </span>          <span class="ID">self</span><span class="Operator">.</span><span class="ID">pts</span><span class="Operator">.</span><span class="ID">append</span><span class="Operator">(</span><span class="ID">self</span><span
+class="Operator">.</span><span class="ID">pts</span><span class="Operator">[</span><span class="Number">0</span><span class="Operator">]</span><span class="Operator">)</span>     <span class="Comment"># 暂时封闭这个多边形</span></span>
+<span class="line"><span class="LineNumber">  14 </span>          <span class="ResWord">for</span> <span class="ID">i</span> <span class="ResWord">in</span> <span class="ID">xrange</span><span class="Operator">(</span><span class="ID">len</span><span class="Operator">(</span><span
+class="ID">self</span><span class="Operator">.</span><span class="ID">pts</span><span class="Operator">)</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  15 </span>               <span class="ID">d2</span> <span class="Operator">=</span> <span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">pts</span><span class="Operator">[</span><span
+class="ID">i</span><span class="Operator">+</span><span class="Number">1</span><span class="Operator">]</span><span class="Operator">.</span><span class="ID">x</span> <span class="Operator">-</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">pts</span><span
+class="Operator">[</span><span class="ID">i</span><span class="Operator">]</span><span class="Operator">.</span><span class="ID">x</span><span class="Operator">)</span><span class="Operator">**</span><span class="Number">2</span> <span class="Operator">+</span> <span class="Operator">(</span><span
+class="ID">self</span><span class="Operator">.</span><span class="ID">pts</span><span class="Operator">[</span><span class="ID">i</span><span class="Operator">+</span><span class="Number">1</span><span class="Operator">]</span><span class="Operator">.</span><span class="ID">y</span> <span
+class="Operator">-</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">pts</span><span class="Operator">[</span><span class="ID">i</span><span class="Operator">]</span><span class="Operator">.</span><span class="ID">y</span><span class="Operator">)</span><span
+class="Operator">**</span><span class="Number">2</span></span>
+<span class="line"><span class="LineNumber">  16 </span>               <span class="ID">d</span> <span class="Operator">=</span> <span class="ID">d</span> <span class="Operator">+</span> <span class="ID">math</span><span class="Operator">.</span><span class="ID">sqrt</span><span
+class="Operator">(</span><span class="ID">d2</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span>          <span class="ID">self</span><span class="Operator">.</span><span class="ID">pts</span><span class="Operator">.</span><span class="ID">pop</span><span class="Operator">(</span><span class="Operator">)</span>                   <span
+class="Comment"># 恢复原来的列表</span></span>
+<span class="line"><span class="LineNumber">  18 </span>          <span class="ResWord">return</span> <span class="ID">d</span><span class="Text"/></span>
+</pre></div><span id="line-771" class="anchor"/><p class="line874">Poly类中的 perimeter() 方法，每次访问 self.pts[i]都会产生两次查询--一次查询名字空间字典,另一次查询 pts 序列。 <span id="line-772" class="anchor"/><span id="line-773" class="anchor"/></p><p class="line874">下面我们改写一下代码，请看
+Listing 3.3: <span id="line-774" class="anchor"/><span id="line-775" class="anchor"/></p><p class="line867"><strong>Listing 3.3 Listing 3.2的改良版本</strong> <span id="line-776" class="anchor"/><span id="line-777" class="anchor"/><span id="line-778" class="anchor"/><span id="line-779"
+class="anchor"/><span id="line-780" class="anchor"/><span id="line-781" class="anchor"/><span id="line-782" class="anchor"/><span id="line-783" class="anchor"/><span id="line-784" class="anchor"/><span id="line-785" class="anchor"/><span id="line-786" class="anchor"/><span id="line-787"
+class="anchor"/><span id="line-788" class="anchor"/><span id="line-789" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-a07189867fe0d554154679c42a007681105b6cf0_020\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-a07189867fe0d554154679c42a007681105b6cf0_020', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-a07189867fe0d554154679c42a007681105b6cf0_020" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">class</span> <span class="ID">Poly</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>      <span class="Operator">.</span><span class="Operator">.</span><span class="Operator">.</span></span>
+<span class="line"><span class="LineNumber">   3 </span>      <span class="ResWord">def</span> <span class="ID">perimeter</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>          <span class="ID">d</span> <span class="Operator">=</span> <span class="Number">0.0</span></span>
+<span class="line"><span class="LineNumber">   5 </span>          <span class="ID">pts</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">pts</span>                <span class="Comment">#提高效率的关键代码</span></span>
+<span class="line"><span class="LineNumber">   6 </span>          <span class="ID">pts</span><span class="Operator">.</span><span class="ID">append</span><span class="Operator">(</span><span class="ID">pts</span><span class="Operator">[</span><span class="Number">0</span><span
+class="Operator">]</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>          <span class="ResWord">for</span> <span class="ID">i</span> <span class="ResWord">in</span> <span class="ID">xrange</span><span class="Operator">(</span><span class="ID">len</span><span class="Operator">(</span><span
+class="ID">pts</span><span class="Operator">)</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   8 </span>                <span class="ID">p1</span> <span class="Operator">=</span> <span class="ID">pts</span><span class="Operator">[</span><span class="ID">i</span><span class="Operator">+</span><span class="Number">1</span><span
+class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   9 </span>                <span class="ID">p2</span> <span class="Operator">=</span> <span class="ID">pts</span><span class="Operator">[</span><span class="ID">i</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">  10 </span>                <span class="ID">d</span> <span class="Operator">+=</span> <span class="ID">sqrt</span><span class="Operator">(</span><span class="Operator">(</span><span class="ID">p1</span><span class="Operator">.</span><span
+class="ID">x</span> <span class="Operator">-</span> <span class="ID">p2</span><span class="Operator">.</span><span class="ID">x</span><span class="Operator">)</span><span class="Operator">**</span><span class="Number">2</span> <span class="Operator">+</span> <span
+class="Operator">(</span><span class="ID">p1</span><span class="Operator">.</span><span class="ID">y</span> <span class="Operator">-</span> <span class="ID">p2</span><span class="Operator">.</span><span class="ID">y</span><span class="Operator">)</span><span
+class="Operator">**</span><span class="Number">2</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span>          <span class="ID">pts</span><span class="Operator">.</span><span class="ID">pop</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>          <span class="ResWord">return</span> <span class="ID">d</span><span class="Text"/></span>
+</pre></div><span id="line-790" class="anchor"/><p class="line874">这个代码的关键之处在于用一个局部变量引用了一个类属性，尽管这样的修正对效率提高的并不是很多(15-20%)，了解这些并在你的常规代码中留意这些细节就能够帮助你写出高效的代码。当然，如果对性能要求极高，你也可以 C 语言编写 Python
+扩展。 <span id="line-791" class="anchor"/><span id="bottom" class="anchor"/></p></div>

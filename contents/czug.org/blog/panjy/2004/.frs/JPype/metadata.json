@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "JPype"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Python程序使用JPype，可访问全部的java类库。", 
+        "modified": "2004-12-22 17:21:11", 
+        "title": "JPype - Java和Python的集成"
+    }
+}

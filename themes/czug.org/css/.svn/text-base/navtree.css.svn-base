@@ -1,0 +1,104 @@
+.portletNavigationTree {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; LIST-STYLE-IMAGE: none! important; PADDING-BOTTOM: 0px; LINE-HEIGHT: 1em; PADDING-TOP: 0px; LIST-STYLE-TYPE: none! important
+}
+.navTree {
+	MARGIN-TOP: 1px; LIST-STYLE-IMAGE: none; LIST-STYLE-TYPE: none
+}
+.navTree LI {
+	MARGIN-BOTTOM: 1px
+}
+.navTreeItem {
+	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+.navTreeItem A {
+	DISPLAY: block; PADDING-BOTTOM: 0.25em; COLOR: #333333; PADDING-TOP: 0.2em; TEXT-DECORATION: none
+}
+DD.portletItem .navTreeItem A {
+	DISPLAY: block; PADDING-BOTTOM: 0.25em; COLOR: #333333; PADDING-TOP: 0.2em; TEXT-DECORATION: none
+}
+.navTreeItem A:hover {
+	
+}
+DD.portletItem .navTreeItem A:hover {
+	
+}
+.navTreeCurrentItem {
+	
+}
+LI.navTreeCurrentItem {
+	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 1px; PADDING-BOTTOM: 0px; MARGIN: 0px 0px 2px -1px; PADDING-TOP: 0px
+}
+LI.navTreeCurrentItem A {
+	DISPLAY: block; MIN-HEIGHT: 1.6em; LINE-HEIGHT: 1.6em; HEIGHT: auto
+}
+LI.navTreeCurrentItem A:hover {
+	DISPLAY: block; MIN-HEIGHT: 1.6em; LINE-HEIGHT: 1.6em; HEIGHT: auto
+}
+ HTML LI.navTreeCurrentItem A {
+	HEIGHT: 1.6em
+}
+ HTML LI.navTreeCurrentItem A:hover {
+	HEIGHT: 1.6em
+}
+.navTreeLevel0 {
+	MARGIN: 0px
+}
+.navTreeLevel1 {
+	MARGIN-LEFT: 1em
+}
+.navTreeLevel2 {
+	MARGIN-LEFT: 0.75em
+}
+.navTreeLevel3 {
+	MARGIN-LEFT: 0.75em
+}
+.navTreeLevel4 {
+	MARGIN-LEFT: 0.75em
+}
+.navTreeLevel5 {
+	MARGIN-LEFT: 0.75em
+}
+
+
+.expandFlag {
+     display: none
+}
+.collapsed .expandFlag {
+     display: inline
+}
+
+.collapsed .navTree,
+.collapsed .collapseFlag {
+     display: none
+}
+
+li.navTreeItem div.contenttype-folder a img {
+    height: 20px;
+    width: 20px;
+}
+
+.navTreeItem a:hover,
+dd.portletItem .navTreeItem a:hover {
+background-color: #EDF3FE;
+color: #436976;
+border: 1px solid #B9D0FB;
+}
+
+.navTreeItem a, dd.portletItem .navTreeItem a {
+border:1px solid White;
+display:block;
+padding-bottom:0.25em;
+padding-top:0.2em;
+text-decoration:none;
+}
+/* navtree */
+li.selected div a.navTreeCurrentItem {
+background-color:#EDF3FE;
+border:1px solid #CCCCCC !important;
+color:#436976;
+}
+.float-right {
+float: right;
+margin: 0.5em 1em 0.5em 1em;
+}
+

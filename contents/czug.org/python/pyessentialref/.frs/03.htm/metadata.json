@@ -1,0 +1,12 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "03.htm"
+    }, 
+    "dublin": {
+        "creators": [
+            "Benky"
+        ], 
+        "title": "第三章 类型及对象"
+    }
+}

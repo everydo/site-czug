@@ -1,0 +1,28 @@
+
+ <h1>什么是CJKSplitter</h1>
+
+ <p><br />
+ CJKSplitter是zope上的一个中文全文检索支持模块，她支持中文断字，是由<a href="http://www.zopechina.com">润普公司</a>以GPL授权发布的。<br />
+ <br />
+ 如果希望zope/plone支持中文检索，应该安装这个产品。</p>
+
+ <h1>新特性</h1>
+
+ <p><br />
+ 支持中文单字查询，这是CJKSplitter从前的一个缺陷。<br />
+ 另外，对代码进行了少量优化。</p>
+
+ <h1>相关链接</h1>
+
+ <p><br />
+ <br />
+ <a href="../projects/CJKSplitter">czug中文产品页面</a>&nbsp; |
+ <a href="http://zope.org/Members/panjunyong/CJKSplitter">zope.org英文产品页面</a>
+ | <a href="http://plone.org/Members/panjunyong/cjksplitter-0_6.tgz">下载</a></p>
+
+ <h1>鸣谢</h1>
+
+ <p><br />
+ 张燕生 先生， 感谢您给我一些支持单字查询的启发<br />
+ <br />
+ Bjorn Stabell bjorn at exoweb.net , 二元断字算法的英文文档由他提供</p>

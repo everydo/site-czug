@@ -1,0 +1,129 @@
+
+<div class="stx">
+<p>在我们看来Zope 3 完全达到了产品级的成熟度.
+我们也将继续在Zope 2 和 Zope 3
+的尽量平滑迁移方面展开工作。作为第一步, Zope 2.8
+使用Five包括了Zope 3 的特性. 这是一个长期的工作.
+我们还未达到. <strong>你不能在Zope 3上运行Zope
+2的产品.</strong></p>
+
+<h1>下载<br />
+</h1>
+
+<p><a href="http://zope.org/Products/Zope3" target="_self">http://zope.org/Products/Zope3</a></p>
+
+<p>
+Windows/Un*x/Linux下的安装说明可在发布版本顶层文件夹中的README.txt中得到.
+windows平台中推荐使用二进制的安装程序.</p>
+
+<p>Zope 3.2 需要 Python 2.4.2 来运行.
+你必须在你的系统中同时安装了zlib .</p>
+
+<h1>自3.1以来的重要更新</h1>
+
+<ul>
+<li>使用Twisted代替了ZServer . Twisted
+服务器支持所有ZServer
+特性，另外还直接提供了基于SSL加密的HTTP、SFTP
+(目前因为错误处理的问题暂时屏蔽了).
+同时，将来可能支持其他的非HTTP
+相关的协议，以用于Zope3, 比如SMTP收信和IMAP.
+
+<p>
+如果你在运行mkzopeinstance的时候使用--zerver将继续使用,
+将仍然使用ZServer。</p>
+</li>
+
+<li>添加了一个测试浏览器.
+测试浏览器使用python对象尽量模拟了真实的web浏览器.
+这允许我们在用户体验的角度，编写一些功能测试。这大大简化的了功能测试,
+让文档更好，而且可帮助分析可用性.
+当然，它能够用于功能文档测试（doctests）.</li>
+
+<li>改变了返回大文件的处理方式. 不在支持response.write
+方法.
+应用现在能简单的返回文件到发布器(publisher).</li>
+
+<li>实现了口令管理器建议.
+这个建议的主要想法是采用标准的方法来实现口令的加密器/检查器,
+参看zope.app.authentication.interfaces.IPasswordManager
+，以获得详细信息.
+
+<ul>
+<li>添加了基本的口令管理器: Plain Text, MD5, SHA1.</li>
+
+<li>support for password managers added for ZCML principals and
+principals saved in local PrincipalFolers.</li>
+
+<li>添加了 bin/zpasswd 命令脚本，可帮助创建ZCML
+principals.</li>
+
+<li>
+口令管理器的支持，集成到了bin/mkzopeinstance命令.</li>
+
+<li>New database generation created for convert local principals to new
+format.</li>
+</ul>
+</li>
+
+<li>实现了语言名字空间的建议.
+现在你能够通过URL来覆盖浏览器的偏好语言, 如:
+
+<p>http://site.org/++lang++ru/path</p>
+
+<p>Note: If you want to use a custom IUserPreferredLanguages adapter
+and the <code>++lang++</code> feature together you should use
+zope.app.publisher.browser.CacheableBrowserLanguages adapter as a base
+class or at least as example.</p>
+</li>
+
+<li>实现了新的对象自省器（introspector）.
+新的自省器不再是仅仅提供对象类的信息,也提供了实例相关的信息,
+如果直接提供的接口和数据,
+如属性数据和注解值（annotation）.</li>
+
+<li>在`zope.conf`配置文件中实现了 `devmode` 开关.
+当打开后，ZCML 的`devmode` 特性就能使用了.
+包可使用这个特性来注册一些功能. 在Zope 3 自身itself,
+devmode 只用于加载API文档;
+关闭后，可避免潜在的安全漏洞，和提升启动速度.</li>
+
+<li>addMenuItem 指令支持`layer` 属性.</li>
+
+<li>添加了一个重新实现的i18n 消息ID
+(现在简称为``Message``) ，它不可写，可被对待为unicode
+字符串，以避免安全问题.<br />
+</li>
+
+<li>添加了"test" 消息目录，用于测试i18n.
+如果在URL中指定了++lang++test,
+那么所有的翻译字符串将被翻译为[<a href="http://www.zope.org/Products/Zope3/3.2.0final/Zope320Released/#refdomain">
+[domain]</a>[message_id], 如"[<a href="http://www.zope.org/Products/Zope3/3.2.0final/Zope320Released/#refzope">
+[zope]</a><a href="http://www.zope.org/Products/Zope3/3.2.0final/Zope320Released/#refPreview">
+[Preview]</a>]". 没有domain 的文本将不会翻译.</li>
+</ul>
+
+<p>完整的更改清单，参看 <code>CHANGES.txt</code> 文件.</p>
+
+<h1>资源</h1>
+
+<ul>
+<li><a href="http://dev.zope.org/Zope3">Zope 3 开发网站</a></li>
+
+<li><a href="http://mail.zope.org/mailman/listinfo/zope3-dev">Zope 3
+开发邮件列表</a></li>
+
+<li><a href="http://mail.zope.org/mailman/listinfo/zope3-users">Zope 3
+用户邮件列表</a></li>
+
+<li>IRC Channel: #zope3-dev at irc.freenode.net</li>
+</ul>
+
+<h1>致谢</h1>
+
+<p>Thanks goes to everyone that contributed.</p>
+
+<p>Enjoy!</p>
+
+<p>The Zope 3 Development Team</p>
+</div>

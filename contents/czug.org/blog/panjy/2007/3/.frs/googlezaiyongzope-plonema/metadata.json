@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "googlezaiyongzope-plonema"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Guido和Limi都在google工作，Google在用Zope/Plone吗？", 
+        "modified": "2007-03-16 08:19:56", 
+        "title": "Google在用Zope/Plone吗？"
+    }
+}

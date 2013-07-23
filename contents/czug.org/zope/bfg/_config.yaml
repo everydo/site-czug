@@ -1,0 +1,6 @@
+description: Zope的一个分支轻量级框架，基于WSGI，类似pylons/django
+exclude: [include.rst, left_col.rst, MyProject]
+order: [introduction.rst, install.rst, project.rst, startup.rst, urlmapping.rst, traversal.rst,
+  urldispatch.rst, views.rst, templates.rst, models.rst, security.rst, events.rst,
+  environment.rst, unittesting.rst]
+title: bfg框架

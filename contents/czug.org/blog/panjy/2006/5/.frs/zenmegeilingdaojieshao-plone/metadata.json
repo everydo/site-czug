@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zenmegeilingdaojieshao-plone"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "收集一些资料，可能对那些需要给领导推广Plone的兄弟有用处。", 
+        "modified": "2006-05-11 16:26:45", 
+        "title": "怎么给领导介绍 Plone?"
+    }
+}

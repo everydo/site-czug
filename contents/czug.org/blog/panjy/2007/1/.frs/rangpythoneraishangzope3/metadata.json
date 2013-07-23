@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "rangpythoneraishangzope3"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Zope3的崇拜者不少，但是很多Pythoner却不爱Zope3", 
+        "modified": "2007-01-12 18:35:30", 
+        "title": "让pythoner爱上Zope3"
+    }
+}

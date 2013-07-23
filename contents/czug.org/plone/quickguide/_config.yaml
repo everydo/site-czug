@@ -1,0 +1,4 @@
+description: 一個由無到有的典型安型中文plone的例子，希望這會幫到用者快速進入實戰階段, 不用花時間在起手階段。
+exclude: ['*.exe', '*.png', '*.jpg', '*.gif']
+order: []
+title: Plone从无到有教程

@@ -1,0 +1,358 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-4" class="anchor"/><p class="line867"><strong> Introduction to <a href="/moin/PyQt4" class="nonexistent">PyQt4</a> toolkit </strong> <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/></p><p class="line867"><strong> PyQT4工具包介绍 </strong> <span id="line-7" class="anchor"/><span id="line-8" class="anchor"/></p><p class="line862">::-- <a href="/moin/zhuyj">zhuyj</a> [2008-06-06 01:07:27] </p><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-29511335e086bc53fb8046a522ba865148185cc5">About this tutorial</a></li><li><a href="#head-6cb5b54bde41573189da452df2f0e85db4073b52">About PyQt</a></li><li><a href="#head-7fdfeed58da2f192fc619953e76a359e514836e7">Python</a></li><li><a
+href="#head-2bda123b1c3c3aa7d56a973976372bbd181b1a9d">Python toolkits</a></li></ol></div> <span id="line-9" class="anchor"/><span id="line-10" class="anchor"/><p class="line867">
+</p><h1 id="head-29511335e086bc53fb8046a522ba865148185cc5">1. About this tutorial</h1>
+<span id="line-11" class="anchor"/><p class="line867"><strong>关于这篇教程</strong> <span id="line-12" class="anchor"/><span id="line-13" class="anchor"/></p><p class="line867"><em>This is an introductory <a href="/moin/PyQt4" class="nonexistent">PyQt4</a> tutorial. The purpose of this tutorial is to get you started with the <a href="/moin/PyQt4" class="nonexistent">PyQt4</a> toolkit. The tutorial has been created and tested on Linux. </em> <span id="line-14" class="anchor"/><span id="line-15" class="anchor"/></p><ul><li style="list-style-type: none;">这是一篇关于 PyQT4教程的介绍。这篇教程的目的介绍PyQT4的工具包。 <span id="line-16" class="anchor"/><span id="line-17" class="anchor"/></li></ul><p class="line867">
+</p><h1 id="head-6cb5b54bde41573189da452df2f0e85db4073b52">2. About PyQt</h1>
+<span id="line-18" class="anchor"/><p class="line867"><strong>关于<a href="/moin/PyQt">PyQt</a></strong> <span id="line-19" class="anchor"/><span id="line-20" class="anchor"/></p><p class="line867"><em><a href="/moin/PyQt">PyQt</a> is a toolkit for creating GUI applications. It is a blending of python programming language and the successfull Qt library. Qt library is one of the most powerful libraries on this planet. If not the most powerful. The official home site for <a href="/moin/PyQt">PyQt</a> is on www.riverbankcomputing.co.uk It was developed by Phil Thompson.  </em> <span id="line-21" class="anchor"/><span id="line-22" class="anchor"/></p><ul><li style="list-style-type: none;"><p
+class="line862">PyQT是一个生成图形应用程序的工具包。是python语言和成功的Qt库的绑定。Qt库是这个世界上最强大的库之一。官方的<a href="/moin/PyQt">PyQt</a>网站在www.riverbankcomputing.co.uk，由Phil Thompson开发。 <span id="line-23" class="anchor"/><span id="line-24" class="anchor"/></p></li></ul><p class="line867"><em><a href="/moin/PyQt">PyQt</a> is implemented as a set of python modules. It has over 300 classes and almost 6000 functions and methods. It is a multiplatform toolkit. It runs on all major operating systems. Including Unix, Windows and Mac. <a href="/moin/PyQt">PyQt</a> is dual licenced. Developers can choose between GPL and commercial licence. Previously, GPL version was available only on Unix. Starting from <a href="/moin/PyQt">PyQt</a> version 4, GPL licence is
+available on all supported platforms. </em> <span id="line-25" class="anchor"/><span id="line-26" class="anchor"/></p><ul><li style="list-style-type: none;">PyQT作为一组python的模块来实现。它包含了超过300个类，将近6000个函数和方法。它是一个多平台的工具包，可以在所有的主流操作系统上运行，包括Unic，Windows和Mac。PyQT采用双协议，开发者可以在GPL和商业授权中选择。以前的版本中，GPL版本只存在于Unic上。从PyQT4开始，GPL协议支持所有的平台。 <span id="line-27" class="anchor"/><span id="line-28" class="anchor"/></li></ul><p class="line867"><em>Because there are a lot of classes available, they have been divided into several modules.  </em> <span id="line-29" class="anchor"/><span id="line-30" class="anchor"/></p><ul><li style="list-style-type: none;">因为存在很多的类，他们被分成了几个模块
+<span id="line-31" class="anchor"/><span id="line-32" class="anchor"/></li></ul><p class="line867"><img title="attachment:modules.jpg" src="/moin/Introduction_%E7%AE%80%E4%BB%8B?action=AttachFile&amp;do=get&amp;target=modules.jpg" class="attachment"/> <span id="line-33" class="anchor"/><span id="line-34" class="anchor"/></p><p class="line862">Figure: <a href="/moin/PyQt4" class="nonexistent">PyQt4</a> Modules <span id="line-35" class="anchor"/><span id="line-36" class="anchor"/><span id="line-37" class="anchor"/></p><p class="line867"><em>The <a href="/moin/QtCore" class="nonexistent">QtCore</a> module contains the core non-gui functionality. This module is used for working with time, files and directories, various data types, streams, urls, mime types, threads or processes.
+The <a href="/moin/QtGui" class="nonexistent">QtGui</a> module contains the graphical components and related classes. These include for example buttons, windows, status bars, toolbars, sliders, bitmaps, colors, fonts etc. The <a href="/moin/QtNetwork" class="nonexistent">QtNetwork</a> module contains the classes for network programming. These classes allow to write TCP/IP and UDP clients and servers. They make the network programming easier and more portable. The <a href="/moin/QtXml" class="nonexistent">QtXml</a> contains classes for working with xml files. This module provides implementation for both SAX and DOM APIs. The <a href="/moin/QtSvg" class="nonexistent">QtSvg</a> module provides classes for displaying the contents of SVG files. Scalable Vector Graphics (SVG) is a
+language for describing two-dimensional graphics and graphical applications in XML. The QtOpenGL module is used for rendering 3D and 2D graphics using the OpenGL library. The module enables seamless integration of the Qt GUI libary and the OpenGL library. The <a href="/moin/QtSql" class="nonexistent">QtSql</a> module provides classes for working with databases.</em> <span id="line-38" class="anchor"/><span id="line-39" class="anchor"/></p><ul><li style="list-style-type: none;"><p class="line891"><a href="/moin/QtCore" class="nonexistent">QtCore</a>模块包含了核心的非图形功能，这个模块被用来实现时间，文件和目录，不同的数据格式，流，互联网地址，mime类型，线程或进程等等。<a href="/moin/QtGui"
+class="nonexistent">QtGui</a>模块包含了图形组件和类的描述，包括例如按钮，窗口，状态栏，滑块，位图，颜色，字体等等。<a href="/moin/QtNetwork" class="nonexistent">QtNetwork</a>模块包含了网络编程所需的类，这些类可以用来实现TCP/IP和UDP的客户端/服务器程序，使得网络编程更加简单更加可移植。The <a href="/moin/QtXml" class="nonexistent">QtXml</a>模块提供了处理xml文件的类，这个模块包含了SAX和DOM APIs的实现。The <a href="/moin/QtSvg" class="nonexistent">QtSvg</a>模块包含了显示SVG文件目录的类。Scalable Vector Graphics (SVG)是一种利用XML来描述二维图形和图形应用的的语言。QtOpenGL 模块用来通过OpenGL库来渲染3D和2D图形，这个模块实现了Qt GUI库和OpenGL库的无缝集合。<a href="/moin/QtSql" class="nonexistent">QtSql</a>模块提供了处理数据库的类。 <span id="line-40" class="anchor"/><span id="line-41"
+class="anchor"/></p></li></ul><p class="line867">
+</p><h1 id="head-7fdfeed58da2f192fc619953e76a359e514836e7">3. Python</h1>
+<span id="line-42" class="anchor"/><span id="line-43" class="anchor"/><p class="line867"><em>Python is a successful scripting language. It was initially developed by Guido van Rossum. It was first released in 1991. Python was inspired by ABC and Haskell programming languages. Python is a high level, general purpose, multiplatform, interpreted language. Some prefer to call it a dynamic language. It is easy to learn. Python is a minimalistic language. One of it's most visible features is that it does not use semicolons nor brackets. Python uses intendation instead. The most recent version of python is 2.5, which was released in September 2006. Today, Python is maintained by a large group of volunteers worldwide. </em> <span id="line-44" class="anchor"/><span id="line-45"
+class="anchor"/></p><ul><li style="list-style-type: none;">Python是一门很成功的脚本语言。最初由Guido van Rossum 发展。第一版于1991年发布。Python从ABC和Haskell编程语言获得灵感，Python是一种高阶的、常规用途的、多平台的解释语言。有些人更愿意称之为动态语言。它很容易入门。Python是一种简介的语言，它的最显著的特性之一就是不用使用分号或括号，而是使用回车和空格分隔语句和函数。 最新版本的Python是2.5，于2006年9月发布。今天,python由遍布全世界的一大群志愿者维护。 <span id="line-46" class="anchor"/><span id="line-47" class="anchor"/></li></ul><p class="line867"><em>The TIOBE Programming Community Index gives us a theoretical usage of various programming languages. Java rules. The C++ language is detroned. But C++ will continue to be used in it's footholds for the coming decades and ther
+seems to be no real threat for it. We can clearly see specialization among programming languages. Java is used mainly in enterprise projects and portables, C is the king in system programming (OS, device drivers, small apps), PHP rules among small to medium size web sites, Javasript is used on the client site of a web application.</em> <span id="line-48" class="anchor"/><span id="line-49" class="anchor"/></p><ul><li style="list-style-type: none;">TIOBE编程社区索引显示了各种不同编程语言理论上的使用情况。java是桂冠，C＋＋语言在降，但是C＋＋会在立足于将来的十年一直被应用并且看起来没有对它的真正威胁。我们可以清楚的看到编程语言中特殊性。Java主要用在企业项目和可携带项目。C是系统编程之王(OS,设备驱动，小的应用)，PHP统治小到中尺寸的网站，Javascript应用在网络应用的客户端。 <span
+id="line-50" class="anchor"/><span id="line-51" class="anchor"/></li></ul><p class="line867"><em> <span id="line-52" class="anchor"/></em></p><div><table style="text-align: center; width: 45%;"><tbody><tr>  <td><p class="line862">Position</p></td>
+<td><p class="line862">Language</p></td>
+<td><p class="line862">Ratings</p></td>
+</tr>
+<tr>  <td><span id="line-53" class="anchor"/><p class="line862">1</p></td>
+<td><p class="line862">Java</p></td>
+<td><p class="line862">21.7%</p></td>
+</tr>
+<tr>  <td><span id="line-54" class="anchor"/><p class="line862">2</p></td>
+<td><p class="line862">C</p></td>
+<td><p class="line862">14.9%</p></td>
+</tr>
+<tr>  <td><span id="line-55" class="anchor"/><p class="line862">3</p></td>
+<td><p class="line862">Visual Basic</p></td>
+<td><p class="line862">10.7%</p></td>
+</tr>
+<tr>  <td><span id="line-56" class="anchor"/><p class="line862">4</p></td>
+<td><p class="line862">PHP</p></td>
+<td><p class="line862">10.2%</p></td>
+</tr>
+<tr>  <td><span id="line-57" class="anchor"/><p class="line862">5</p></td>
+<td><p class="line862">C++</p></td>
+<td><p class="line862">9.9%</p></td>
+</tr>
+<tr>  <td><span id="line-58" class="anchor"/><p class="line862">6</p></td>
+<td><p class="line862">Perl</p></td>
+<td><p class="line862">5.4%</p></td>
+</tr>
+<tr>  <td><span id="line-59" class="anchor"/><p class="line862">7</p></td>
+<td><p class="line862">C#</p></td>
+<td><p class="line862">3.4%</p></td>
+</tr>
+<tr>  <td><span id="line-60" class="anchor"/><p class="line862">8</p></td>
+<td><p class="line862">Python</p></td>
+<td><p class="line862">3.0%</p></td>
+</tr>
+<tr>  <td><span id="line-61" class="anchor"/><p class="line862">9</p></td>
+<td><p class="line891"><a href="/moin/JavaScript">JavaScript</a></p></td>
+<td><p class="line862">2.7%</p></td>
+</tr>
+<tr>  <td><span id="line-62" class="anchor"/><p class="line862">10</p></td>
+<td><p class="line862">Ruby</p></td>
+<td><p class="line862">2.0%</p></td>
+</tr>
+</tbody></table></div><span id="line-63" class="anchor"/><p class="line867"> <span id="line-64" class="anchor"/><span id="line-65" class="anchor"/></p><p class="line867"><em>Python is currently number 8. The Ruby language has made into the toplist. The closest competitors to Python are Ruby and Perl.</em> <span id="line-66" class="anchor"/><span id="line-67" class="anchor"/></p><ul><li style="list-style-type: none;">Python目前位于第8位。Ruby语言刚进入前十。Python最接近的竞争者是Ruby和Perl。 <span id="line-68" class="anchor"/><span id="line-69" class="anchor"/></li></ul><p class="line867">
+</p><h1 id="head-2bda123b1c3c3aa7d56a973976372bbd181b1a9d">4. Python toolkits</h1>
+<span id="line-70" class="anchor"/><span id="line-71" class="anchor"/><p class="line867"><em>For creating graphical user interfaces, python programmers can choose among three decent options. PyGTK, wxPython and <a href="/moin/PyQt">PyQt</a>. Which toolkit to choose, depends on the circumstances. There is also another "option", called <a href="/moin/TkInter" class="nonexistent">TkInter</a>. Avoid.</em> <span id="line-72" class="anchor"/><span id="line-73" class="anchor"/></p><ul><li style="list-style-type: none;"><p class="line862">为了创建图形用户界面，python程序员可以在三个选项中选择，PyGTK,wxPython和<a href="/moin/PyQt">PyQt</a>。选择那种工具依赖于细节。并且还有另一种选择，叫做<a href="/moin/TkInter" class="nonexistent">TkInter</a>.
+<span id="line-74" class="anchor"/><span id="line-75" class="anchor"/></p></li></ul><p class="line867"/><div id="pagecomment">
+<a name="pagecomment1"/>
+<table border="0" class="pagecomment">
+<tbody><tr><td colspan="5" style="border-width: 1px; margin: 10px 0pt;">
+
+<script language="javascript">
+<!--
+function setCookie(name, value) {
+var today = new Date();
+var expire = new Date(today.getTime() + 60*60*24*365*1000);
+document.cookie = name + "=" + encodeURIComponent(value) + "; expires=" + expire.toGMTString() + "; path=/moin";
+}
+//-->
+</script>
+<form onsubmit="setCookie('PG2AUTHOR', this.comauthor.value);" method="post" name="comment" action="Introduction_%E7%AE%80%E4%BB%8B#pagecomment1">
+<table class="addcommentform">
+<tbody><tr>
+<td style="border-width: 0px; vertical-align: middle; font-size: 0.9em;"><textarea onblur="if (this.value=='') {this.value='Add your comment';};" onfocus="if (this.value=='Add your comment') {this.value='';};" style="font-size: 9pt;" cols="60" rows="4" name="comtext">Add your comment</textarea></td>
+<td style="border-width: 0px; font-size: 0.9em; vertical-align: bottom;"><input type="submit" style="font-size: 9pt; width: 6em; height: 3em;" value="保存" name="button_save"/></td>
+</tr>
+<tr><td style="border-width: 0px; vertical-align: middle; font-size: 0.9em;">
+Name<input type="text" onblur="if (this.value=='') {this.value='58';};" onfocus="if (this.value=='58') {this.value='';};" value="58" name="comauthor" maxlength="20" size="6" style="font-size: 9pt;"/>
+Password4deL<input type="password" onblur="if (this.value=='') {this.value='mof4';};" onfocus="if (this.value=='mof4') {this.value='';};" value="mof4" name="compasswd" maxlength="10" size="4" style="font-size: 9pt;"/>
+<input type="hidden" name="autopasswd" value="mof4"/>
+<input type="radio" value=";)" name="comicon"/><img width="15" height="15" title=";)" src="/htdocs/woodpecker/img/smile4.png" alt=";)"/>
+<input type="radio" value="=D" name="comicon"/>
+<input type="radio" value="=)" name="comicon"/>
+<input type="radio" value=":P" name="comicon"/>
+<input type="radio" value=":(|)" name="comicon"/>
+<input type="radio" value=":-|" name="comicon"/>
+<input type="radio" value=":(" name="comicon"/><img width="15" height="15" title=":(" src="/htdocs/woodpecker/img/sad.png" alt=":("/>
+<input type="radio" value="X-(" name="comicon"/><img width="15" height="15" title="X-(" src="/htdocs/woodpecker/img/angry.png" alt="X-("/>
+<input type="radio" value="B-)" name="comicon"/><img width="15" height="15" title="B-)" src="/htdocs/woodpecker/img/smile2.png" alt="B-)"/>
+
+</td>
+<td style="border-width: 0px; vertical-align: middle; text-align: right; font-size: 9pt;"/>
+</tr>
+</tbody></table>
+<input type="hidden" value="show" name="action"/>
+<input type="hidden" value="50" name="comrev"/>
+<input type="hidden" value="addcomment1" name="commentaction"/>
+</form>
+</td></tr>
+<tr><td style="border-width: 0px; height: 20px;" class="commentblankline" colspan="5"/></tr>
+<script language="javascript">
+<!--
+function requesttodeleteadmin1(delform, comkey) {
+if (confirm("Really delete this comment?")) {;
+delform.delkey.value = comkey;
+delform.delpasswd.value = "****";
+delform.submit();
+}
+}
+function requesttodelete1(delform, comkey) {
+var passwd = prompt("请输入一个密码!:", "");
+if(!(passwd == "" || passwd == null)) {
+delform.delkey.value = comkey;
+delform.delpasswd.value = passwd;
+delform.submit();
+}
+}
+//-->
+</script>
+<form method="post" action="Introduction_%E7%AE%80%E4%BB%8B#pagecomment1" name="delform1"/>
+<input type="hidden" name="action" value="show"/>
+<input type="hidden" value="****" name="delpasswd"/>
+<input type="hidden" value="" name="delkey"/>
+<input type="hidden" value="delcomment1" name="commentaction"/>
+
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acquistare levitra s</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">mhdnuvea, <a href="http://www.carputer.it/member.php?u=11880">cialis su internet</a>, [url="http://www.carputer.it/member.php?u=11880"]cialis su internet[/url], http://www.carputer.it/member.php?u=11880 cialis su internet,  wrpyqhbs, <a href="http://www.sportal.it/forum/member.php?u=1065">Ordina levitra</a>, [url="http://www.sportal.it/forum/member.php?u=1065"]Ordina levitra[/url], http://www.sportal.it/forum/member.php?u=1065 Ordina levitra,  lcmrgewz, <a href="http://www.gamesforum.it/board/member.php?u=64018">levitra italia</a>,
+[url="http://www.gamesforum.it/board/member.php?u=64018"]levitra italia[/url], http://www.gamesforum.it/board/member.php?u=64018 levitra italia,  pmggboxf, <a href="http://www.sportal.it/forum/member.php?u=1068">kamagra farmaco generico</a>, [url="http://www.sportal.it/forum/member.php?u=1068"]kamagra farmaco generico[/url], http://www.sportal.it/forum/member.php?u=1068 kamagra farmaco generico,  ryudsagk, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 00:21:40 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">levitra 20 anni</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">vavdrjyr, <a href="http://www.carputer.it/member.php?u=11864">viagra generico</a>, [url="http://www.carputer.it/member.php?u=11864"]viagra generico[/url], http://www.carputer.it/member.php?u=11864 viagra generico,  xahxlcla, <a href="http://www.sportal.it/forum/member.php?u=1065">levitra</a>, [url="http://www.sportal.it/forum/member.php?u=1065"]levitra[/url], http://www.sportal.it/forum/member.php?u=1065 levitra,  zovmyvum, <a href="http://www.gamesforum.it/board/member.php?u=64019">farmaco kamagra</a>,
+[url="http://www.gamesforum.it/board/member.php?u=64019"]farmaco kamagra[/url], http://www.gamesforum.it/board/member.php?u=64019 farmaco kamagra,  xfdmxrjz, <a href="http://www.gamesforum.it/board/member.php?u=64018">levitra costo</a>, [url="http://www.gamesforum.it/board/member.php?u=64018"]levitra costo[/url], http://www.gamesforum.it/board/member.php?u=64018 levitra costo,  elkvtvip, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 02:41:57 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acquisto viagra in f</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">bpighgno, <a href="http://www.carputer.it/member.php?u=11864">viagra</a>, [url="http://www.carputer.it/member.php?u=11864"]viagra[/url], http://www.carputer.it/member.php?u=11864 viagra,  gshniilq, <a href="http://www.gamesforum.it/board/member.php?u=64036">viagra da 25 mg</a>, [url="http://www.gamesforum.it/board/member.php?u=64036"]viagra da 25 mg[/url], http://www.gamesforum.it/board/member.php?u=64036 viagra da 25 mg,  qhhbcvmz, <a href="http://www.sportal.it/forum/member.php?u=1067">comprare kamagra</a>,
+[url="http://www.sportal.it/forum/member.php?u=1067"]comprare kamagra[/url], http://www.sportal.it/forum/member.php?u=1067 comprare kamagra,  xfdenzwc, <a href="http://www.sportal.it/forum/member.php?u=1068">kamagra generico vendita</a>, [url="http://www.sportal.it/forum/member.php?u=1068"]kamagra generico vendita[/url], http://www.sportal.it/forum/member.php?u=1068 kamagra generico vendita,  ixsvzmit, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 05:01:21 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis 5 mg</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">ygduabeb ugyjomss hexhetux<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 07:16:50 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acquisto viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">kreafkxr badmrquk lbyrfmfq<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 09:33:46 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">levitra medicina</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">aqxlzqnt ifjxmuvp ltqhegsm<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 14:13:10 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">compra cialis in ita</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">mmvzieco pdgciohs kkhddxsx<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 16:35:28 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">comprare levitra onl</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">abutqoya rprpxtue epfywmpt<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 19:00:33 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">levitra comprare</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">lsowppbj kovdvciv gbylaasg<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 21:23:54 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">kamagra online store</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">pmmphqmp gwpmgsax csgaljap<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 23:45:02 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra nel ciclismo</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">chjppmka aclyzoqw iqvspnjk<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-08 02:06:29 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">levitra in erboriste</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">ruwnygta qqbrboqy kcmcnapq<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-08 04:28:30 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">achat Levitra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">unsloypp, <a href="http://fr.lutece.paris.fr/forums/user/profile/860.page">viagra</a>, [url="http://fr.lutece.paris.fr/forums/user/profile/860.page"]viagra[/url], http://fr.lutece.paris.fr/forums/user/profile/860.page viagra,  bozgegjw, <a href="http://www.feal.fr/index.php?topic=359">Levitra</a>, [url="http://www.feal.fr/index.php?topic=359"]Levitra[/url], http://www.feal.fr/index.php?topic=359 Levitra,  suluuaxc, <a href="http://www.feal.fr/index.php?topic=362">viagra</a>,
+[url="http://www.feal.fr/index.php?topic=362"]viagra[/url], http://www.feal.fr/index.php?topic=362 viagra,  mikhjmsr, <a href="http://forum.skins.be/members/325449-dincolobergstromlyhefe/">viagra</a>, [url="http://forum.skins.be/members/325449-dincolobergstromlyhefe/"]viagra[/url], http://forum.skins.be/members/325449-dincolobergstromlyhefe/ viagra,  bmwebqkx, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-09 11:50:30 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acheter viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">oxvbiiwg, <a href="http://www.feal.fr/index.php?topic=360">cialis</a>, [url="http://www.feal.fr/index.php?topic=360"]cialis[/url], http://www.feal.fr/index.php?topic=360 cialis,  tiracdcm, <a href="http://www.feal.fr/index.php?topic=356">kamagra</a>, [url="http://www.feal.fr/index.php?topic=356"]kamagra[/url], http://www.feal.fr/index.php?topic=356 kamagra,  fwhdtduv, <a href="http://forum.canardpc.com/member.php?u=21926">viagra</a>, [url="http://forum.canardpc.com/member.php?u=21926"]viagra[/url],
+http://forum.canardpc.com/member.php?u=21926 viagra,  bwgjqklu, <a href="http://www.feal.fr/index.php?topic=361">cialis</a>, [url="http://www.feal.fr/index.php?topic=361"]cialis[/url], http://www.feal.fr/index.php?topic=361 cialis,  eujbfnrz, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-09 14:18:56 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acheter viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">lgqvosmk, <a href="http://www.feal.fr/index.php?topic=362">viagra</a>, [url="http://www.feal.fr/index.php?topic=362"]viagra[/url], http://www.feal.fr/index.php?topic=362 viagra,  bztqfyzh, <a href="http://www.feal.fr/index.php?topic=360">cialis prix</a>, [url="http://www.feal.fr/index.php?topic=360"]cialis prix[/url], http://www.feal.fr/index.php?topic=360 cialis prix,  vtxbiphb, <a href="http://www.feal.fr/index.php?topic=363">acheter viagra</a>, [url="http://www.feal.fr/index.php?topic=363"]acheter viagra[/url],
+http://www.feal.fr/index.php?topic=363 acheter viagra,  sgchbecs, <a href="http://www.feal.fr/index.php?topic=358">Levitra</a>, [url="http://www.feal.fr/index.php?topic=358"]Levitra[/url], http://www.feal.fr/index.php?topic=358 Levitra,  nzzvfyfu, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-09 16:46:13 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">oeimnppz, <a href="http://www.franconaute.org/forum/member.php?u=6951">viagra prix</a>, [url="http://www.franconaute.org/forum/member.php?u=6951"]viagra prix[/url], http://www.franconaute.org/forum/member.php?u=6951 viagra prix,  wmifkgtn, <a href="http://jm.bea.free.fr/forum/member.php?u=691">generique viagra</a>, [url="http://jm.bea.free.fr/forum/member.php?u=691"]generique viagra[/url], http://jm.bea.free.fr/forum/member.php?u=691 generique viagra,  sgbtmcuh, <a href="http://www.geologue.setif.org/vb/member.php?u=1006">generique
+cialis</a>, [url="http://www.geologue.setif.org/vb/member.php?u=1006"]generique cialis[/url], http://www.geologue.setif.org/vb/member.php?u=1006 generique cialis,  vyaapral, <a href="http://www.ducros.info/372/member.php?u=268">cialis</a>, [url="http://www.ducros.info/372/member.php?u=268"]cialis[/url], http://www.ducros.info/372/member.php?u=268 cialis,  lconxwqj, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-14 06:09:22 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">prix viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">cyqxjcld, <a href="http://www.geologue.setif.org/vb/member.php?u=1003">viagra</a>, [url="http://www.geologue.setif.org/vb/member.php?u=1003"]viagra[/url], http://www.geologue.setif.org/vb/member.php?u=1003 viagra,  lnllmuuv, <a href="http://www.commentdraguerunefille.com/forums/member.php?u=1428">generique viagra</a>, [url="http://www.commentdraguerunefille.com/forums/member.php?u=1428"]generique viagra[/url], http://www.commentdraguerunefille.com/forums/member.php?u=1428 generique viagra,  nxauorgm, <a
+href="http://www.commentdraguerunefille.com/forums/member.php?u=1431">vente cialis</a>, [url="http://www.commentdraguerunefille.com/forums/member.php?u=1431"]vente cialis[/url], http://www.commentdraguerunefille.com/forums/member.php?u=1431 vente cialis,  wvkvtepw, <a href="http://forum.muc72.fr/member.php?u=3996">cialis</a>, [url="http://forum.muc72.fr/member.php?u=3996"]cialis[/url], http://forum.muc72.fr/member.php?u=3996 cialis,  dmgjoqih, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-14 08:33:31 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">poqshxjj, <a href="http://extjs.com/forum/member.php?u=85739">cialis kaufen rezeptfrei</a>, [url="http://extjs.com/forum/member.php?u=85739"]cialis kaufen rezeptfrei[/url], http://extjs.com/forum/member.php?u=85739 cialis kaufen rezeptfrei,  iuvsdojz, <a href="http://extjs.com/forum/member.php?u=85645">viagra</a>, [url="http://extjs.com/forum/member.php?u=85645"]viagra[/url], http://extjs.com/forum/member.php?u=85645 viagra,  jacniluc, <a href="http://forum.outdoorseiten.net/member.php?u=12493">cialis bestellen</a>,
+[url="http://forum.outdoorseiten.net/member.php?u=12493"]cialis bestellen[/url], http://forum.outdoorseiten.net/member.php?u=12493 cialis bestellen,  egrowshe, <a href="http://forum.wog.ch/member.php?u=10259">viagra</a>, [url="http://forum.wog.ch/member.php?u=10259"]viagra[/url], http://forum.wog.ch/member.php?u=10259 viagra,  gcglbiim, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-18 10:46:14 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis pas cher</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">bfypqjut, <a href="http://www.wolfdog.org/forum/member.php?u=6477cialis">acheter cialis en pharmacie</a>, [url="http://www.wolfdog.org/forum/member.php?u=6477cialis"]acheter cialis en pharmacie[/url], http://www.wolfdog.org/forum/member.php?u=6477cialis acheter cialis en pharmacie,  srhsfnnq, <a href="http://forum.lostpedia.com/member.php?u=33455cialis">acheter cialis france</a>, [url="http://forum.lostpedia.com/member.php?u=33455cialis"]acheter cialis france[/url], http://forum.lostpedia.com/member.php?u=33455cialis acheter cialis
+france,  qidoavuw, <a href="http://www.elaborare.info/forum/vbulletin/member.php?u=65646cialis">achat cialis generique</a>, [url="http://www.elaborare.info/forum/vbulletin/member.php?u=65646cialis"]achat cialis generique[/url], http://www.elaborare.info/forum/vbulletin/member.php?u=65646cialis achat cialis generique,  fjuwdoqt, <a href="http://www.hwupgrade.it/forum/member.php?u=335789viagra">achat viagra en france</a>, [url="http://www.hwupgrade.it/forum/member.php?u=335789viagra"]achat viagra en france[/url], http://www.hwupgrade.it/forum/member.php?u=335789viagra achat viagra en france,  hhkiofas, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-19 10:04:41 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">emvjnfip, <a href="http://www.elaborare.info/forum/vbulletin/member.php?u=65645viagra">achat viagra en ligne</a>, [url="http://www.elaborare.info/forum/vbulletin/member.php?u=65645viagra"]achat viagra en ligne[/url], http://www.elaborare.info/forum/vbulletin/member.php?u=65645viagra achat viagra en ligne,  cozglgfh, <a href="http://www.wolfdog.org/forum/member.php?u=6476viagra">achat viagra en france</a>, [url="http://www.wolfdog.org/forum/member.php?u=6476viagra"]achat viagra en france[/url],
+http://www.wolfdog.org/forum/member.php?u=6476viagra achat viagra en france,  pwzdjmhk, <a href="http://www.hwupgrade.it/forum/member.php?u=335789viagra">achat de viagra en france</a>, [url="http://www.hwupgrade.it/forum/member.php?u=335789viagra"]achat de viagra en france[/url], http://www.hwupgrade.it/forum/member.php?u=335789viagra achat de viagra en france,  qaxxtrml, <a href="http://forum.slysoft.com/member.php?u=49339cialis">cialis pas cher</a>, [url="http://forum.slysoft.com/member.php?u=49339cialis"]cialis pas cher[/url], http://forum.slysoft.com/member.php?u=49339cialis cialis pas cher,  jlxujqaw, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-19 14:50:43 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acquistare viagra on</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">itrappkr, <a href="http://gaming.ngi.it/member.php?u=69545cialis">acquistare cialis online</a>, [url="http://gaming.ngi.it/member.php?u=69545cialis"]acquistare cialis online[/url], http://gaming.ngi.it/member.php?u=69545cialis acquistare cialis online,  fhbjmies, <a href="http://www.euronics.it/forum/user/profile/14486.page">viagra cialis</a>, [url="http://www.euronics.it/forum/user/profile/14486.page"]viagra cialis[/url], http://www.euronics.it/forum/user/profile/14486.page viagra cialis,  zjsepocl, <a
+href="http://www.elaborare.info/forum/vbulletin/member.php?u=65666">acquisto cialis</a>, [url="http://www.elaborare.info/forum/vbulletin/member.php?u=65666"]acquisto cialis[/url], http://www.elaborare.info/forum/vbulletin/member.php?u=65666 acquisto cialis,  htqwxkoi, <a href="http://teamsystemrocks.com/members/Alarico-De-Luca/default.aspx">acquisto cialis</a>, [url="http://teamsystemrocks.com/members/Alarico-De-Luca/default.aspx"]acquisto cialis[/url], http://teamsystemrocks.com/members/Alarico-De-Luca/default.aspx acquisto cialis,  biuskqqv, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-21 06:21:22 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">wppzdtnt, <a href="http://elearning.econ.univpm.it/user/view.php?id=3297">compra cialis online</a>, [url="http://elearning.econ.univpm.it/user/view.php?id=3297"]compra cialis online[/url], http://elearning.econ.univpm.it/user/view.php?id=3297 compra cialis online,  yjxwxezs, <a href="http://gaming.ngi.it/member.php?u=69544viagra">viagra</a>, [url="http://gaming.ngi.it/member.php?u=69544viagra"]viagra[/url], http://gaming.ngi.it/member.php?u=69544viagra viagra,  nalkbqml, <a
+href="http://www.gamesforum.it/board/member.php?u=64495">cialis viagra</a>, [url="http://www.gamesforum.it/board/member.php?u=64495"]cialis viagra[/url], http://www.gamesforum.it/board/member.php?u=64495 cialis viagra,  rkkntxcy, <a href="http://www.cittaeducativa.roma.it/moodle/user/view.php?id=4516">cialis generico</a>, [url="http://www.cittaeducativa.roma.it/moodle/user/view.php?id=4516"]cialis generico[/url], http://www.cittaeducativa.roma.it/moodle/user/view.php?id=4516 cialis generico,  jcdryigg, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-21 12:19:18 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">compra cialis generi</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">rglijfnu, <a href="http://gaming.ngi.it/member.php?u=69544viagra">comprare viagra generico</a>, [url="http://gaming.ngi.it/member.php?u=69544viagra"]comprare viagra generico[/url], http://gaming.ngi.it/member.php?u=69544viagra comprare viagra generico,  ddiuvyng, <a href="http://teamsystemrocks.com/members/Alarico-De-Luca/default.aspx">acquisto cialis in farmacia</a>, [url="http://teamsystemrocks.com/members/Alarico-De-Luca/default.aspx"]acquisto cialis in farmacia[/url],
+http://teamsystemrocks.com/members/Alarico-De-Luca/default.aspx acquisto cialis in farmacia,  bagomvwz, <a href="http://www.hwupgrade.it/forum/member.php?u=335914">viagra senza ricetta</a>, [url="http://www.hwupgrade.it/forum/member.php?u=335914"]viagra senza ricetta[/url], http://www.hwupgrade.it/forum/member.php?u=335914 viagra senza ricetta,  yurmpqqc, <a href="http://www.sportal.it/forum/member.php?u=1084">acquisto viagra</a>, [url="http://www.sportal.it/forum/member.php?u=1084"]acquisto viagra[/url], http://www.sportal.it/forum/member.php?u=1084 acquisto viagra,  izaquxgl, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-21 18:15:11 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acquisto viagra senz</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">xbviqpsr, <a href="http://www.hwupgrade.it/forum/member.php?u=336008">compra cialis in italia</a>, [url="http://www.hwupgrade.it/forum/member.php?u=336008"]compra cialis in italia[/url], http://www.hwupgrade.it/forum/member.php?u=336008 compra cialis in italia,  ppostnxt, <a href="http://www.lwita.com/vb/member.php?u=891cialis">acquisto cialis generico</a>, [url="http://www.lwita.com/vb/member.php?u=891cialis"]acquisto cialis generico[/url], http://www.lwita.com/vb/member.php?u=891cialis acquisto cialis generico,  mkmacieh, <a
+href="http://forum.slysoft.com/member.php?u=49343cialis">comprare cialis</a>, [url="http://forum.slysoft.com/member.php?u=49343cialis"]comprare cialis[/url], http://forum.slysoft.com/member.php?u=49343cialis comprare cialis,  diyxumxs, <a href="http://www.elaborare.info/forum/vbulletin/member.php?u=65645viagra">acquisto viagra</a>, [url="http://www.elaborare.info/forum/vbulletin/member.php?u=65645viagra"]acquisto viagra[/url], http://www.elaborare.info/forum/vbulletin/member.php?u=65645viagra acquisto viagra,  xryhvwaf, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-22 00:13:06 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acquistare cialis on</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">dcrrfiti, <a href="http://elearning.econ.univpm.it/user/view.php?id=3297">comprare cialis in italia</a>, [url="http://elearning.econ.univpm.it/user/view.php?id=3297"]comprare cialis in italia[/url], http://elearning.econ.univpm.it/user/view.php?id=3297 comprare cialis in italia,  ygoqewkx, <a href="http://www.hwupgrade.it/forum/member.php?u=336008">acquistare cialis online</a>, [url="http://www.hwupgrade.it/forum/member.php?u=336008"]acquistare cialis online[/url], http://www.hwupgrade.it/forum/member.php?u=336008 acquistare cialis
+online,  wpvrupim, <a href="http://www.gamesforum.it/board/member.php?u=64495">cialis</a>, [url="http://www.gamesforum.it/board/member.php?u=64495"]cialis[/url], http://www.gamesforum.it/board/member.php?u=64495 cialis,  qhtcfqdn, <a href="http://forum.pcworld.it/member.php?u=33172viagra">acquistare viagra</a>, [url="http://forum.pcworld.it/member.php?u=33172viagra"]acquistare viagra[/url], http://forum.pcworld.it/member.php?u=33172viagra acquistare viagra,  hwuxxsir, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-22 09:13:42 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis vendita</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">zwcvzigu, <a href="http://forum.ffonline.it/member.php?u=22782">comprare viagra in farmacia</a>, [url="http://forum.ffonline.it/member.php?u=22782"]comprare viagra in farmacia[/url], http://forum.ffonline.it/member.php?u=22782 comprare viagra in farmacia,  oeiyjxmm, <a href="http://www.carputer.it/member.php?u=12103">acquistare cialis senza ricetta</a>, [url="http://www.carputer.it/member.php?u=12103"]acquistare cialis senza ricetta[/url], http://www.carputer.it/member.php?u=12103 acquistare cialis senza ricetta,  qeyxyquy, <a
+href="http://www.lwita.com/vb/member.php?u=890viagra">viagra</a>, [url="http://www.lwita.com/vb/member.php?u=890viagra"]viagra[/url], http://www.lwita.com/vb/member.php?u=890viagra viagra,  xzkakvhj, <a href="http://www.elaborare.info/forum/vbulletin/member.php?u=65666">cialis viagra</a>, [url="http://www.elaborare.info/forum/vbulletin/member.php?u=65666"]cialis viagra[/url], http://www.elaborare.info/forum/vbulletin/member.php?u=65666 cialis viagra,  tmpkicgk, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-22 15:15:22 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">achat de viagra en f</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">sueowpsb, <a href="http://board.muse.mu/member.php?u=123012">acheter viagra en ligne</a>, [url="http://board.muse.mu/member.php?u=123012"]acheter viagra en ligne[/url], http://board.muse.mu/member.php?u=123012 acheter viagra en ligne,  ttbeklfn, <a href="http://www.feal.fr/index.php?topic=958">achat de viagra en france</a>, [url="http://www.feal.fr/index.php?topic=958"]achat de viagra en france[/url], http://www.feal.fr/index.php?topic=958 achat de viagra en france,  lbvyyvgx, <a
+href="http://www.geologue.setif.org/vb/member.php?u=1051">cialis</a>, [url="http://www.geologue.setif.org/vb/member.php?u=1051"]cialis[/url], http://www.geologue.setif.org/vb/member.php?u=1051 cialis,  hhkznpbe, <a href="http://www.heidelbergrepair.com/forums/member.php?u=725">achat cialis sur internet</a>, [url="http://www.heidelbergrepair.com/forums/member.php?u=725"]achat cialis sur internet[/url], http://www.heidelbergrepair.com/forums/member.php?u=725 achat cialis sur internet,  anfnxmbt, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-22 18:12:53 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acheter viagra en li</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">rmpwkowh, <a href="http://www.coldwire.net/members/Emanuele-Marino.aspx">acheter cialis moins cher</a>, [url="http://www.coldwire.net/members/Emanuele-Marino.aspx"]acheter cialis moins cher[/url], http://www.coldwire.net/members/Emanuele-Marino.aspx acheter cialis moins cher,  ilfzmpro, <a href="http://board.muse.mu/member.php?u=123020">acheter cialis generique</a>, [url="http://board.muse.mu/member.php?u=123020"]acheter cialis generique[/url], http://board.muse.mu/member.php?u=123020 acheter cialis generique,  jiahcego, <a
+href="http://www.feal.fr/index.php?topic=959">cialis 10mg</a>, [url="http://www.feal.fr/index.php?topic=959"]cialis 10mg[/url], http://www.feal.fr/index.php?topic=959 cialis 10mg,  esjmvwjn, <a href="http://www.feal.fr/index.php?topic=958">achat viagra</a>, [url="http://www.feal.fr/index.php?topic=958"]achat viagra[/url], http://www.feal.fr/index.php?topic=958 achat viagra,  vwtjwjte, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-22 21:17:11 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">achat cialis generiq</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">ewlxdhrq, <a href="http://forums.montrealracing.com/members/frontino-caya-57029.html">cialis prix</a>, [url="http://forums.montrealracing.com/members/frontino-caya-57029.html"]cialis prix[/url], http://forums.montrealracing.com/members/frontino-caya-57029.html cialis prix,  ptpbujjp, <a href="http://www.gamesforum.it/board/member.php?u=64751">viagra</a>, [url="http://www.gamesforum.it/board/member.php?u=64751"]viagra[/url], http://www.gamesforum.it/board/member.php?u=64751 viagra,  yqeiiayd, <a
+href="http://www.customxp.net/forum/member.php?u=34963">acheter viagra generique</a>, [url="http://www.customxp.net/forum/member.php?u=34963"]acheter viagra generique[/url], http://www.customxp.net/forum/member.php?u=34963 acheter viagra generique,  ylzpfzoz, <a href="http://www.stade.fr/forum/member.php?u=31578">cialis</a>, [url="http://www.stade.fr/forum/member.php?u=31578"]cialis[/url], http://www.stade.fr/forum/member.php?u=31578 cialis,  kybmysog, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-28 10:19:50 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acheter viagra en li</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">kcnjpdcg, <a href="http://www.gametronik.com/forum/index.php?showuser=54375">cialis</a>, [url="http://www.gametronik.com/forum/index.php?showuser=54375"]cialis[/url], http://www.gametronik.com/forum/index.php?showuser=54375 cialis,  twwpckro, <a href="http://forum.zebulon.fr/index.php?showuser=213343">achat viagra en france</a>, [url="http://forum.zebulon.fr/index.php?showuser=213343"]achat viagra en france[/url], http://forum.zebulon.fr/index.php?showuser=213343 achat viagra en france,  pdizwtuf, <a
+href="http://www.studiorientali.it/forum/index.php?showuser=4934">viagra senza ricetta</a>, [url="http://www.studiorientali.it/forum/index.php?showuser=4934"]viagra senza ricetta[/url], http://www.studiorientali.it/forum/index.php?showuser=4934 viagra senza ricetta,  hllysrgw, <a href="http://www.arte-arezzo.it/moodle/user/view.php?id=1177&ampcourse=1">acquisto cialis</a>, [url="http://www.arte-arezzo.it/moodle/user/view.php?id=1177&ampcourse=1"]acquisto cialis[/url], http://www.arte-arezzo.it/moodle/user/view.php?id=1177&ampcourse=1 acquisto cialis,  xuywksmf, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-28 13:21:55 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acquisto viagra in f</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">cnnleixz, <a href="http://www.mangaitalia.it/invision/index.php?showuser=29736">acquisto cialis senza ricetta</a>, [url="http://www.mangaitalia.it/invision/index.php?showuser=29736"]acquisto cialis senza ricetta[/url], http://www.mangaitalia.it/invision/index.php?showuser=29736 acquisto cialis senza ricetta,  lzrxrkmb, <a href="http://forum.ffonline.it/member.php?u=22841">compra cialis</a>, [url="http://forum.ffonline.it/member.php?u=22841"]compra cialis[/url], http://forum.ffonline.it/member.php?u=22841 compra cialis,  nfkndxmx, <a
+href="http://www.crazymoto.net/index.php?showuser=110519">viagra online</a>, [url="http://www.crazymoto.net/index.php?showuser=110519"]viagra online[/url], http://www.crazymoto.net/index.php?showuser=110519 viagra online,  cidwfigr, <a href="http://www.arte-arezzo.it/moodle/user/view.php?id=1177&ampcourse=1">cialis</a>, [url="http://www.arte-arezzo.it/moodle/user/view.php?id=1177&ampcourse=1"]cialis[/url], http://www.arte-arezzo.it/moodle/user/view.php?id=1177&ampcourse=1 cialis,  pjjyyoif, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-28 16:22:03 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">compra cialis online</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">rqmstysr, <a href="http://www.gamesforum.it/board/member.php?u=64799">cialis</a>, [url="http://www.gamesforum.it/board/member.php?u=64799"]cialis[/url], http://www.gamesforum.it/board/member.php?u=64799 cialis,  xcbxovyf, <a href="http://www.numerama.com/forum/user/75802-terrenehunsbergeruy/">viagra sur le net</a>, [url="http://www.numerama.com/forum/user/75802-terrenehunsbergeruy/"]viagra sur le net[/url], http://www.numerama.com/forum/user/75802-terrenehunsbergeruy/ viagra sur le net,  fsefpihf, <a
+href="http://www.stade.fr/forum/member.php?u=31578">acheter cialis en france</a>, [url="http://www.stade.fr/forum/member.php?u=31578"]acheter cialis en france[/url], http://www.stade.fr/forum/member.php?u=31578 acheter cialis en france,  wqlidcek, <a href="http://www.crazymoto.net/index.php?showuser=110546">acheter cialis 20mg</a>, [url="http://www.crazymoto.net/index.php?showuser=110546"]acheter cialis 20mg[/url], http://www.crazymoto.net/index.php?showuser=110546 acheter cialis 20mg,  whjsndfl, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-28 19:22:28 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">compra cialis generi</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">srszrowt, <a href="http://www.gametronik.com/forum/index.php?showuser=54375">achat cialis pas cher</a>, [url="http://www.gametronik.com/forum/index.php?showuser=54375"]achat cialis pas cher[/url], http://www.gametronik.com/forum/index.php?showuser=54375 achat cialis pas cher,  jspwkxmw, <a href="http://www.studiorientali.it/forum/index.php?showuser=4937">acquisto cialis in italia</a>, [url="http://www.studiorientali.it/forum/index.php?showuser=4937"]acquisto cialis in italia[/url],
+http://www.studiorientali.it/forum/index.php?showuser=4937 acquisto cialis in italia,  hjguvipc, <a href="http://www.mangaitalia.it/invision/index.php?showuser=29736">cialis</a>, [url="http://www.mangaitalia.it/invision/index.php?showuser=29736"]cialis[/url], http://www.mangaitalia.it/invision/index.php?showuser=29736 cialis,  eomnbmbn, <a href="http://www.stade.fr/forum/member.php?u=31563">viagra</a>, [url="http://www.stade.fr/forum/member.php?u=31563"]viagra[/url], http://www.stade.fr/forum/member.php?u=31563 viagra,  zemqcuvt, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-28 22:24:58 <font style="font-size: 8pt;">
+</font></td></tr>
+</tbody></table>
+</div> <span id="line-76" class="anchor"/><span id="bottom" class="anchor"/></div>

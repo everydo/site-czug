@@ -1,0 +1,4 @@
+description: CZUG的Blog区域，构建专业的python/zope/plone的博客群。如想申请，请联系：webmaster (at) czug.org
+exclude: [left_col.rst, index.rst]
+order: [panjy, zhangbingkai, zoomq, eishn, patanka, sj, woo]
+title: 博客群

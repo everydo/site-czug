@@ -1,0 +1,379 @@
+<p>出处： <a href="http://www.javaeye.com/wiki/Django-book/731-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E5%85%AB%E7%AB%A0%EF%BC%9A%E9%AB%98%E7%BA%A7%E8%A7%86%E5%9B%BE%E5%92%8CURL%E9%85%8D%E7%BD%AE">http://www.javaeye.com/wiki/Django-book/731-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E5%85%AB%E7%AB%A0%EF%BC%9A%E9%AB%98%E7%BA%A7%E8%A7%86%E5%9B%BE%E5%92%8CURL%E9%85%8D%E7%BD%AE</a></p>
+  
+  <h1 style="margin:25px 0 10px 10px">翻译www.djangobook.com之第八章：高级视图和URL配置 
+    
+  </h1>
+  <div class="content">
+    <span style="color: red"><strong>The Django Book：第8章 高级视图和URL配置</strong></span><br /><br />第3章我们解释了Django视图方法和URL配置基础，本章将对这两部分进行详述<br /><br /><span style="color: red"><strong>URL配置技巧</strong></span><br /><strong>使方法import流化</strong><br />看看下面的URL配置，基于第3章的例子：<br /><pre name="code" class="java">
+from django.conf.urls.defaults import *
+from mysite.views import current_datetime, hours_ahead, hours_behind, now_in_chicago, now_in_london
+
+urlpatterns = patterns('',
+    (r'^now/$', current_datetime),
+    (r'^now/plus(\d{1,2})hours/$', hours_ahead),
+    (r'^now/minus(\d{1,2})hours/$', hours_behind),
+    (r'^now/in_chicago/$', now_in_chicago),
+    (r'^now/in_london/$', now_in_london),
+)
+</pre><br />前面第3章解释到，URL配置里每行都包含了它相关的视图方法，直接作为一个方法对象传递<br />这意味着有必要在模块最上面import视图方法<br />但是随着Django程序越来越复杂，它的URL配置也随之增加，维护这些imports将十分麻烦<br />对于每个新的视图方法，你都要记得import它，并且使用这个方法的话import语句会变得很长<br />可以通过import views模块本身来避免这种复杂，下面的URL配置的例子和上面的是相等的：<br /><pre name="code" class="java">
+from django.conf.urls.defaults import *
+from mysite import views
+
+urlpatterns = patterns('',
+    (r'^now/$', views.current_datetime),
+    (r'^now/plus(\d{1,2})hours/$', views.hours_ahead),
+    (r'^now/minus(\d{1,2})hours/$', views.hours_behind),
+    (r'^now/in_chicago/$', views.now_in_chicago),
+    (r'^now/in_london/$', views.now_in_london),
+)
+</pre><br />Django提供另一种方式来在URL配置中指定视图方法：你可以传递一个包含模块名字和方法名字的字符串<br />而不是方法对象本身，继续上面的例子：<br /><pre name="code" class="java">
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('',
+    (r'^now/$', 'mysite.views.current_datetime'),
+    (r'^now/plus(\d{1,2})hours/$', 'mysite.views.hours_ahead'),
+    (r'^now/minus(\d{1,2})hours/$', 'mysite.views.hours_behind'),
+    (r'^now/in_chicago/$', 'mysite.views.now_in_chicago'),
+    (r'^now/in_london/$', 'mysite.views.now_in_london'),
+)
+</pre><br />使用这种技术，没有必要再import视图方法，Django根据字符串描述的视图方法的名字和路径自动<br />在第一次访问时import合适的视图方法<br />另一种捷径是当使用字符创技术时可以把通用的视图前缀提取出来，我们的例子中，每个视图字符串<br />都以'mysite.views'开始，它们是冗余的，我们可以把它作为第一个参数传递给patterns()：<br /><pre name="code" class="java">
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('mysite.views',
+    (r'^now/$', 'current_datetime'),
+    (r'^now/plus(\d{1,2})hours/$', 'hours_ahead'),
+    (r'^now/minus(\d{1,2})hours/$', 'hours_behind'),
+    (r'^now/in_chicago/$', 'now_in_chicago'),
+    (r'^now/in_london/$', 'now_in_london'),
+)
+</pre><br />注意你不需在前缀末尾加上"."，也不需在视图字符串前面加"."，Django会自动加上去<br />这两种方式哪种更好？这取决于你的个人编码风格和需求<br />使用字符串方式的优点：<br />1，更紧凑，因为不需要import视图方法<br />2，如果你的视图方法分布在几个不同的Python模块，这种方式更可读和更易管理<br />使用方法对象方式的优点：<br />1，可以轻松包装视图方法，参考本章后面的“包装视图方法”<br />2，更“Pythonic”，更贴近Python传统，如传递方法对象<br />两种方式都是合法的，你甚至可以在同一URL配置里混用它们，选择权在你手中<br /><br /><strong>多种视图前缀</strong><br />实践中如果你使用字符串技术，你很可能混合视图，因为视图没有通用的前缀<br />尽管如此，你可以利用视图前缀捷径来减少冗余，只需将多个patterns()加到一起<br />旧的：<br /><pre name="code" class="java">
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('',
+    (r'^/?$', 'mysite.views.archive_index'),
+    (r'^(\d{4})/([a-z]{3})/$', 'mysite.views.archive_month'),
+    (r'^tag/(\w+)/$', 'weblog.views.tag'),
+)
+</pre><br />新的：<br /><pre name="code" class="java">
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('mysite.views',
+    (r'^/?$', 'archive_index'),
+    (r'^(\d{4})/([a-z]{3})/$','archive_month'),
+)
+
+urlpatterns += patterns('weblog.views',
+    (r'^tag/(\w+)/$', 'tag'),
+)
+</pre><br />Django只关心是否有一个模块级的变量urlpatterns，而这个变量可以被动态构建，像上面的例子一样<br /><br /><strong>命名组</strong><br />到目前为止在我们所有的URL配置的例子中，我们使用了简单的，未命名的正则表达式组<br />即我们用括号包括我们想捕获的部分URL，Django像传递位置参数一样把这些捕获的文本传递给视图方法<br />在更高级的使用中，可以使用命名的正则表达式组来捕获URL并且传递关键字参数给视图<br />关键字参数与位置参数<br />一个Python方法可以使用关键字参数或者位置参数来调用，它们是一样的<br />在关键字参数调用中，你指定你想传递的参数名和值<br />在位置参数调用中，你简单的传递参数而不指定哪个参数匹配哪个值，关联在参数顺序中隐含<br />看看下面这个简单的方法：<br /><pre name="code" class="java">
+def sell(item, price, quantity):
+    print "Selling %s unit(s) of %s at %s" % (quantity, item, price)
+</pre><br />你可以按方法定义的参数顺序传递参数来使用位置参数调用：sell('Socks', '$2.50', 6)<br />你也可以指定参数名和参数值来使用关键字参数调用，下面的语句是相等的：<br /><pre name="code" class="java">
+sell(item='Socks', price='$2.50', quantity=6)
+sell(item='Socks', quantity=6, price='$2.50')
+sell(price='$2.50', item='Socks', quantity=6)
+sell(price='$2.50', quantity=6, item='Socks')
+sell(quantity=6, item='Socks', price='$2.50')
+sell(quantity=6, price='$2.50', item='Socks')
+</pre><br />在Python正则表达式中，命名组的语法是(?P&lt;name&gt;pattern)，其中name是组的名字，pattern是要匹配的模式<br />下面是URL配置的使用未命名组的例子：<br /><pre name="code" class="java">
+from django.conf.urls.defaults import *
+from mysite import views
+
+urlpatterns = patterns('',
+    (r'^articles/(\d{4})/$', views.year_archive),
+    (r'^articles/(\d{4})/(\d{2})/$', views.month_archive),
+)
+</pre><br />这里我们使用同样的URL配置，但是使用命名组来重写：<br /><pre name="code" class="java">
+from django.conf.urls.defaults import *
+from mysite import views
+
+urlpatterns = patterns('',
+    (r'^articles/(?P&lt;year&gt;\d{4})/$', views.year_archive),
+    (r'^articles/(?P&lt;year&gt;\d{4})/(?P&lt;month&gt;\d{2})/$', views.month_archive),
+)
+</pre><br />下面的例子和上面的例子达到的是同样的目的，但是有一个微小的差别，它捕获的值传递给视图方法时<br />使用的是关键字参数而不是位置参数<br />例如，使用未命名组，对/articles/2006/03的访问将导致下面的方法调用：<br />month_archive(request, '2006', '03')<br />使用命名组，同样的请求则会导致下面的方法调用：<br />month_archive(request, year='2006', month='03')<br />实践中使用命名组会让你的URL配置更清晰和带来更少的参数顺序bugs，而且你可以重排视图方法中<br />定义的参数的顺序<br />按照上面的例子，如果你想改变URL使month在year的前面，并且我们使用未命名组，我们必须记得去改<br />month_archive视图的参数顺序，而如果我们使用命名组，在URL中改变捕获的参数的顺序不会对视图造成影响<br />当然，命名组的好处也带来一些简洁上的代价，一些开发人员认为命名组的语法丑陋而且冗长<br /><br /><strong>匹配和组算法</strong><br />如果你同时命名组和未命名组使用两种方式来处理相同的URL模式，你应该清楚Django怎样处理这种特殊情况<br />下面是URL配置解析器的算法：<br />1，如果有命名的参数，Django将使用它，并且忽略未命名的参数<br />2，否则，Django视所有的未命名参数为位置参数传递<br />3，两种参数都有的情况下，Django将传递一些额外的关键字参数作为关键字参数<br />参考下面的“向视图方法传递额外选项”<br /><br /><strong>向视图方法传递额外选项</strong><br />有时候你发现你些的视图方法很相似，只有一些很少的差别<br />例如，你有两个视图，它们的内容除了使用的模板不同其它都一样：<br /><pre name="code" class="java">
+# urls.py
+
+from django.conf.urls.defaults import *
+from mysite import views
+
+urlpatterns = patterns('',
+    (r'^foo/$', views.foo_view),
+    (r'^bar/$', views.bar_view),
+)
+
+# views.py
+
+from django.shortcuts import render_to_response
+from mysite.models import MyModel
+
+def foo_view(request):
+    m_list = MyModel.objects.filter(is_new=True)
+    return render_to_response('template1.html', {'m_list': m_list})
+
+def bar_view(request):
+    m_list = MyModel.objects.filter(is_new=True)
+    return render_to_response('template2.html', {'m_list': m_list})
+</pre><br />我们在重复我们自己，这是不优雅的<br />首先你可能想通过使用同样的视图处理两种URL来减少冗余，用括号括住URL来捕获它，并且在视图里<br />通过URL检查来决定模板：<br /><pre name="code" class="java">
+# urls.py
+
+from django.conf.urls.defaults import *
+from mysite import views
+
+urlpatterns = patterns('',
+    (r'^(foo)/$', views.foobar_view),
+    (r'^(bar)/$', views.foobar_view),
+)
+
+# views.py
+
+from django.shortcuts import render_to_response
+from mysite.models import MyModel
+
+def foobar_view(request, url):
+    m_list = MyModel.objects.filter(is_new=True)
+    if url == 'foo':
+        template_name = 'template1.html'
+    elif url == 'bar':
+        template_name = 'template2.html'
+    return render_to_response(template_name, {'m_list': m_list})
+</pre><br />这种方案的问题是它吧URL和你的代码耦合在了一起，如果你想把/foo/改名为/fooey/，你必须记得去<br />更改视图代码<br />优雅的方式涉及到一个交额外URL配置选项的特性，URL配置中每个模式可能包含了另外一项：一个关键字<br />参数的字典，它将被传递到视图方法中<br />我们可以像下面这样重写我们的例子：<br /><pre name="code" class="java">
+# urls.py
+
+from django.conf.urls.defaults import *
+from mysite import views
+
+urlpatterns = patterns('',
+    (r'^foo/$', views.foobar_view, {'template_name': 'template1.html'}),
+    (r'^bar/$', views.foobar_view, {'template_name': 'template2.html'}),
+)
+
+# views.py
+
+from django.shortcuts import render_to_response
+from mysite.models import MyModel
+
+def foobar_view(request, template_name):
+    m_list = MyModel.objects.filter(is_new=True)
+    return render_to_response(template_name, {'m_list': m_list})
+</pre><br />你可以看到，例子中URL配置指定了template_name，视图方法只是把它当作另一个参数<br />额外URL配置选项技术是向视图方法传递额外的信息的很好的方式，它在Django绑定的一些<br />程序中用到，尤其是我们将在第9章碰到的generic views系统<br />下面是关于怎样使用额外URL配置选项技术的一些方法<br /><br /><strong>伪造捕获的URL配置值</strong><br />假设你已经有一些匹配模式的视图，但是还有一个URL使用同样的视图逻辑却和模式不匹配<br />这种情况下你可以通过额外URL配置选项伪造捕获的URL值来处理具有相同视图的额外的URL<br />例如，你可能有一个从特殊日期显示数据的程序，像下面的URL：<br /><pre name="code" class="java">
+/mydata/jan/01/
+/mydata/jan/02/
+/mydata/jan/03/
+# ...
+/mydata/dec/30/
+/mydata/dec/31/
+</pre><br />这很简单就可以处理，你可以像下面这样捕获URL(使用命名组语法)：<br /><pre name="code" class="java">
+urlpatterns = patterns('',
+    (r'^mydata/(?P&lt;month&gt;\w{3})/(?P&lt;day&gt;\d\d)/$', views.my_view),
+)
+</pre><br />视图方法可能是这样：<br /><pre name="code" class="java">
+def my_view(request, month, day):
+    # ....
+</pre><br />这非常直接，没有我们没遇到过的，当你像增加另一个使用my_view的URL并且这个URL不包括month<br />或day的时候，技巧就出现了<br />例如你想增加另一个URL /mydata/birthday/，而它应该等同与/mydata/jan/06，我们可以像下面这样<br />利用额外URL配置选项：<br /><pre name="code" class="java">
+urlpatterns = patterns('',
+    (r'^mydata/birthday/$', views.my_view, {'month': 'jan', 'day': '06'}),
+    (r'^mydata/(?P&lt;month&gt;\w{3})/(?P&lt;day&gt;\d\d)/$', views.my_view),
+)
+</pre><br />这里很酷的地方是，我们根本不需要改变我们的视图方法，视图方法仅仅关心它可以得到month和day参数<br />它不关心这些参数是否来自于URL捕获本身或者额外参数<br /><br /><strong>让视图一般化</strong><br />在代码中提取公共部分是很好的编程实践，例如我们有下面两个Python方法：<br /><pre name="code" class="java">
+def say_hello(person_name):
+    print 'Hello, %s' % person_name
+
+def say_goodbye(person_name):
+    print 'Goodbye, %s' % person_name
+</pre><br />我们可以把问候语提取出来让它成为一个参数：<br /><pre name="code" class="java">
+def greet(person_name, greeting):
+    print '%s, %s' % (greeting, person_name)
+</pre><br />你可以通过使用额外URL配置参数把这个哲学应用到你的Django视图中去<br />这样你就可以创建高级抽象视图，例如：<br /><pre name="code" class="java">
+# urls.py
+
+from django.conf.urls.defaults import *
+from mysite import views
+
+urlpatterns = patterns('',
+    (r'^events/$', views.event_list),
+    (r'^blog/entries/$', views.entry_list),
+)
+
+# views.py
+
+from django.shortcuts import render_to_response
+from mysite.models import Event, BlogEntry
+
+def event_list(request):
+    obj_list = Event.objects.all()
+    return render_to_response('mysite/event_list.html', {'event_list': obj_list})
+
+def entry_list(request):
+    obj_list = BlogEntry.objects.all()
+    return render_to_response('mysite/blogentry_list.html', {'entry_list': obj_list})
+</pre><br />两个视图做的是同一件事情，它们都负责显示对象列表，因此让我们把要显示的对象的类型抽象出来：<br /><pre name="code" class="java">
+# urls.py
+
+from django.conf.urls.defaults import *
+from mysite import models, views
+
+urlpatterns = patterns('',
+    (r'^events/$', views.object_list, {'model': models.Event}),
+    (r'^blog/entries/$', views.object_list, {'model': models.BlogEntry}),
+)
+
+# views.py
+
+from django.shortcuts import render_to_response
+
+def object_list(request, model):
+    obj_list = model.objects.all()
+    template_name = 'mysite/%s_list.html' % model.__name__.lower()
+    return render_to_response(template_name, {'object_list': obj_list})
+</pre><br />通过这些小改动，我们突然就有了一个可重用的，模型不可知的视图!<br />从现在开始，任何时候我们需要一个对象列表的视图，我们都可以简单的重用object_list视图<br />而不是写视图代码，下面是关于我们做的事情的注意：<br />1，我们直接传递模型类作为model参数，额外URL配置选项字典可以传递任何类型的Python对象<br />2，model.objects.all()这一行是一个鸭子类型：“如果它走起来像鸭子，说话像鸭子，我们就认为<br />它是一只鸭子”，注意代码并不知道model是什么类型，唯一的前提是model有一个objects属性<br />并且objects有一个all()方法<br />3，我们使用model.__name__.lower()来决定模板名，每个Python类都有__name__属性，它返回类名<br />这个特性对于现在的情形特别有用，我们直到运行时才知道类的类型<br />4，这个例子和上一个例子的一点不同是，我们传递通用的变量名object_list到模板中<br />我们可以很容易改变这个变量名为blogentry_list或者event_list，我们把这个工作留给读者作为练习<br />因为数据库驱动的Web站点有许多通用的模式，Django带来了使用额外技术的“generic views”来为你<br />节省时间，我们将在下一章讲到Django内建的generic views<br /><br /><strong>给予视图配置选项</strong><br />如果你发布一个Django程序，你的用户可能想拥有一定程度上的配置<br />这种情况下，向你的视图添加钩子来应对人们可能需要一些配置选项是个好注意<br />你可以使用额外URL配置参数来达到这个目的<br />程序中一个常见的配置是模板名：<br /><pre name="code" class="java">
+def my_view(request, template_name):
+    var = do_something()
+    return render_to_response(template_name, {'var': var})
+</pre><br /><br /><strong>捕获值的优先级与额外选项</strong><br />当有冲突时，额外URL配置参数要比捕获的参数优先级高<br />换句话说，如果你的URL配置捕获了一个命名组变量和一个额外URL配置参数，而它们的变量名相同<br />则额外URL配置参数值将被使用，例如下面的URL配置：<br /><pre name="code" class="java">
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('',
+    (r'^mydata/(?P&lt;id&gt;\d+)/$', views.my_view, {'id': 3}),
+)
+</pre><br />在这里正则表达式和额外的字典都包含id参数，此时硬编码的id具有更高的优先级<br />这意味着/mydata/2/或者/mydata/432432/将被当成id设为3看待，而不管URL所捕获的值<br />敏锐的读者可能注意到这种情况下，在正则表达式里面捕获id是纯粹在浪费时间<br />因为它的值一直会被字典的值覆盖<br />这些敏锐的读者是正确的，我们讲这些内容只是想帮助你避免错误<br /><br /><strong>使用默认视图参数</strong><br />另外一个方便的技巧是指定视图的默认参数，它告诉视图如果一个参数值是none则使用默认值，例如：<br /><pre name="code" class="java">
+# urls.py
+
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('',
+    (r'^blog/$', views.page),
+    (r'^blog/page(?P&lt;num&gt;\d+)/$', views.page),
+)
+
+# views.py
+
+def page(request, num="1"):
+    # Output the appropriate page of blog entries, according to num.
+    # ...
+</pre><br />这里两个URL模式指向了同一个视图views.page，但是第一个模式不会从URL捕获任何东西<br />如果第一个模式匹配了，page()方法讲使用num的默认参数“1”，如果第二个模式匹配了<br />page()讲使用正则表达式捕获的num值<br />和配置选项一起使用这个技术很常见，下面的例子对给予视图配置选项的例子做了小小改进：<br /><pre name="code" class="java">
+def my_view(request, template_name='mysite/my_view.html'):
+    var = do_something()
+    return render_to_response(template_name, {'var': var})
+</pre><br /><br /><strong>特殊情况下的视图</strong><br />有时候你在URL配置里有一个处理很多URL的模式但是你需要特别指出其中一个<br />这种情况下，使用URL配置中把特殊情况放在首位的线性处理方式<br />例如，Django的admin站点中“添加对象”页面是如下配置的：<br /><pre name="code" class="java">
+urlpatterns = patterns('',
+    # ...
+    ('^([^/]+)/([^/]+)/add/$', 'django.contrib.admin.views.main.add_stage'),
+    # ...
+)
+</pre><br />这将匹配像/myblog/entries/add/和/auth/groups/add/这样的URL<br />尽管如此，对于用户对象的添加页面/auth/user/add/是个特殊情况，例如它不会显示所有的表单域，<br />它显示两个密码域等等，我们可以通过在视图中特别指出来以解决这个问题：<br /><pre name="code" class="java">
+def add_stage(request, app_label, model_name):
+    if app_label == 'auth' and model_name == 'user':
+        # do special-case code
+    else:
+        # do normal code
+</pre><br />但是它并不优雅，因为它把URL逻辑放在视图中，更优雅的方式是我们利用URL配置是从顶向下解析的方案：<br /><pre name="code" class="java">
+urlpatterns = patterns('',
+    # ...
+    ('^auth/user/add/$', 'django.contrib.admin.views.auth.user_add_stage'),
+    ('^([^/]+)/([^/]+)/add/$', 'django.contrib.admin.views.main.add_stage'),
+    # ...
+)
+</pre><br />这样的话对于/auth/user/add/的请求将会被user_add_stage视图处理，尽管URL也匹配第二种模式<br />它会先匹配上面的模式(这是短路逻辑)<br /><br /><strong>从URL捕获文本的注意点</strong><br />每个被捕获的参数像普通的Python字符串一样被传递给视图，而不管正则表达式匹配的类型<br />例如，下面的URL配置：<br /><pre name="code" class="java">
+    (r'^articles/(?P&lt;year&gt;\d{4})/$', views.year_archive),
+</pre><br />year参数传给views.year_archive()时将是一个字符串而不是整数，尽管\d{4}只匹配整数字符串<br />当你些视图代码时记住这点很重要，许多Python内建的方法对于接受的对象的类型很讲究<br />很常见的错误时用字符串值而不是整数值来创建datetime.date对象：<br /><pre name="code" class="java">
+&gt;&gt;&gt; import datetime
+&gt;&gt;&gt; datetime.date('1993', '7', '9')
+Traceback (most recent call last):
+    ...
+TypeError: an integer is required
+&gt;&gt;&gt; datetime.date(1993, 7, 9)
+datetime.date(1993, 7, 9)
+</pre><br />回到URL配置和视图，错误可能像这样：<br /><pre name="code" class="java">
+# urls.py
+
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('',
+    (r'^articles/(\d{4})/(\d{2})/(\d{2})/$', views.day_archive),
+)
+
+# views.py
+
+import datetime
+
+def day_archive(request, year, month, day)
+    # The following statement raises a TypeError!
+    date = datetime.date(year, month, day)
+</pre><br />相反，day_archive()可以这样正确的来写：<br /><pre name="code" class="java">
+def day_archive(request, year, month, day)
+    date = datetime.date(int(year), int(month), int(day))
+</pre><br />注意int()自己会当你传递一个不是数字的字符串时触发ValueError，但是我们已经避免了这种错误<br />因为URL配置中的正则表达式已经确保了只有包含数字的字符串才会传递给这个视图方法<br /><br /><strong>URL配置搜索什么</strong><br />当一个请求过来，Django试图把URL当作普通的Python字符串而不是Unicode字符串来和URL配置模式匹配<br />这不包括GET或POST参数，或者域名，它也不包括第一个斜线，因为每个URL都以斜线开头<br />例如，对http://www.example.com/myapp/的请求，Django将试图匹配myapp/<br />对http://www.example.com/myapp/?page=3，Django将试图匹配myapp/<br />在解析URL配置时请求方法，如POST，GET，HEAD不会给予考虑，换句话说，对于一个URL的所有的请求<br />方法将被路由到同一方法，根据请求方法处理分支是视图方法的责任<br /><br /><strong>引入其它URL配置</strong><br />你的URL配置可以引入其它的URL配置模块，例如：<br /><pre name="code" class="java">
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('',
+    (r'^weblog/', include('mysite.blog.urls')),
+    (r'^photos/', include('mysite.photos.urls')),
+    (r'^about/$', 'mysite.views.about'),
+)
+</pre><br />这里有一点很重要：这个例子中指向inclue()的正则表达式不包含$(字符串结尾匹配符)，但是包含一个<br />末尾的斜线<br />每当Django遇到include()时，它将截断匹配的URL并将剩下的部分转交给include的URL配置继续处理<br />继续这个例子，下面时mysite.blog.urls:<br /><pre name="code" class="java">
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('',
+    (r'^(\d\d\d\d)/$', 'mysite.blog.views.year_detail'),
+    (r'^(\d\d\d\d)/(\d\d)/$', 'mysite.blog.views.month_detail'),
+)
+</pre><br />通过这两个URL配置，下面是一些将被处理的请求的例子：<br />1，/weblob/2007/，在第一个URL配置里，模式r'^weblog/'会匹配，因为它是一个include()，Django会<br />截取所有匹配的文本，即这里是'weblob/'，然后剩下部分是2007/，它将匹配mysite.blog.urls的第一行<br />2，/weblog//2007，同样第一个URL配置匹配，截取，剩下的/2007/不会和mysite.blog.urls中的任何<br />一行匹配<br />3，/about/，在第一个URL配置中和mysite.views.about匹配，这表明你可以混用include()和<br />非include()模式<br /><br /><strong>捕获的参数怎样与inclue()工作</strong><br />include的URL配置从父URL配置接受捕获的参数，例如：<br /><pre name="code" class="java">
+# root urls.py
+
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('',
+    (r'^(?P&lt;username&gt;\w+)/blog/', include('foo.urls.blog')),
+)
+
+# foo/urls/blog.py
+
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('',
+    (r'^$', 'foo.views.blog_index'),
+    (r'^archive/$', 'foo.views.blog_archive'),
+)
+</pre><br />这个例子中，被捕获的username变量传递到include的URL配置，然后传递到匹配的每个视图方法里<br />注意捕获的参数将一直被传递到include的URL配置的每一行，不管那一行的视图是否认为是合法的参数<br />由于这个原因，这项技术仅仅当你确认在include的URL配置里每个视图接受你传递的参数时才是有用的<br /><br /><strong>额外URL配置选项怎样与include()工作</strong><br />同样的，你可以传递额外URL配置选项到include()，就像你可以传递额外URL配置选项到普通视图一样<br />当你这样做的时候，include的URL配置的每一行都将接受额外选项，例如下面的两种配置是一样的：<br />配置1：<br /><pre name="code" class="java">
+# urls.py
+
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('',
+    (r'^blog/', include('inner'), {'blogid': 3}),
+)
+
+# inner.py
+
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('',
+    (r'^archive/$', 'mysite.views.archive'),
+    (r'^about/$', 'mysite.views.about'),
+    (r'^rss/$', 'mysite.views.rss'),
+)
+</pre><br />配置2：<br /><pre name="code" class="java">
+# urls.py
+
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('',
+    (r'^blog/', include('inner')),
+)
+
+# inner.py
+
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('',
+    (r'^archive/$', 'mysite.views.archive', {'blogid': 3}),
+    (r'^about/$', 'mysite.views.about', {'blogid': 3}),
+    (r'^rss/$', 'mysite.views.rss', {'blogid': 3}),
+)
+</pre><br />注意额外选项将一直传递给include的URL配置的每一行，而不管那一行的视图是否认为是合法的选项<br />由于这个原因，这项技术仅仅当你确认在include的URL配置里每个视图接受你传递的选项时才是有用的<br /><br /><span style="color: red"><strong>视图技巧</strong></span><br /><span style="color: red"><strong>This Chapter is not yet finished on <a href="http://www.djangobook.com" target="_blank">http://www.djangobook.com</a></strong></span>
+  </div>
+
+  
+
+  

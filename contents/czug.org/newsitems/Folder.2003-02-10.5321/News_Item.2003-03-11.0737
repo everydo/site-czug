@@ -1,0 +1,4 @@
+<p>在Zope.org上，看到了白熊先生发布的新版本，在<a href="http://www.zope.org/Members/bjorn/cjksplitter-0.2-news">这里</a></p>
+<p>我还没有细看，只是感到代码干净很多了！英文文档也更加清晰。这适合亚洲其他国家的同志继续修改。</p>
+<p>不过现在使用直接的unicode的方案解决（非UTF-8），可能和Plone以及目前广大的开源产品不太兼容。</p>
+<p>但在此，还是表示欢迎和感谢！</p>

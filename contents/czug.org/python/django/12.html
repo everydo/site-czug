@@ -1,0 +1,360 @@
+<p>出处： <a href="http://www.javaeye.com/wiki/Django-book/727-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%EF%BC%9A%E4%BC%9A%E8%AF%9D%EF%BC%8C%E7%94%A8%E6%88%B7%E5%92%8C%E6%B3%A8%E5%86%8C">http://www.javaeye.com/wiki/Django-book/727-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%EF%BC%9A%E4%BC%9A%E8%AF%9D%EF%BC%8C%E7%94%A8%E6%88%B7%E5%92%8C%E6%B3%A8%E5%86%8C</a></p>
+  
+  <h1 style="margin:25px 0 10px 10px">翻译www.djangobook.com之第十二章：会话，用户和注册 
+    
+  </h1>
+  <div class="content">
+    <span style="color: red"><strong>The Django Book：第12章 会话，用户和注册</strong></span><br /><br />是时候承认了:我们故意忽略了一个web开发极端重要的方面，到目前为止，我们考虑了大量未露面的匿名用户访问我们<br />站点页面的流量情况，这当然不正确，访问我们站点的浏览器后面是真实的人(至少有些时候是这样)，这是被忽略的一个<br />大问题:当Internet服务于人而不是机器时是工作的最好的，如果我们开发真正引人注目的站点时，最终我们将不得不与<br />浏览器后面的人打交道<br />不幸的是，这并不容易，HTTP被设计为无状态，即每个请求发生在一个空间里，两个请求之间没有持久化，并且我们不能<br />计算一个请求的每个方面(IP地址，用户代理等等)来一致的显示同一个人的连续请求<br />浏览器开发人员很久之前就意识到HTTP的无状态导致了web开发人员很大的麻烦，就这样cookies诞生了<br />cookie是一个小信息片段，浏览器存储它来代表web服务器，每次浏览器从某一服务器请求一个页面时都会把它起初接受<br />的cookie回传过去<br /><br /><strong>Cookies</strong><br />让我们看看它可能怎样工作，当你开启浏览器并键入google.com，你的浏览器像这样开始来发送一个HTTP请求到Google:<br />GET / HTTP/1.1<br />Host: google.com<br />...<br />当Google回复时，HTTP应答看起来像这样:<br />HTTP/1.1 200 OK<br />Content-Type: text/html<br />Set-Cookie: PREF=ID=5b14f22bdaf1e81c:TM=1167000671:LM=1167000671;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; expires=Sun, 17-Jan-2038 19:14:07 GMT;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; path=/; domain=.google.com<br />Server: GWS/2.1<br />注意Set-Cookie头部，你的浏览器将存储这个cookie值(PREF=ID=5b14f22bdaf1e81c:TM=1167000671:LM=1167000671)并在<br />每次你访问这个站点时回传给Google，所以下一次你访问Google时你的浏览器将传递像这样的请求:<br />GET / HTTP/1.1<br />Host: google.com<br />Cookie: PREF=ID=5b14f22bdaf1e81c:TM=1167000671:LM=1167000671<br />...<br />然后Google可以使用这个Cookie值来知道你是早些时候访问这个站点的同一个人<br />例如，这个值可能是数据库存储用户信息的键，Google可以(也确实)使用它来在页面上显示你的名字<br /><br /><strong>得到和设置cookies</strong><br />当在Django中处理持久化时，大部分时候你想使用稍后讨论的高级session和/或用户框架，尽管如此，我们将停下来先<br />看看在Django中怎样读和写cookies，它将帮助你理解本章其它部分事实上怎样工作，并且如果你需要直接操作cookies<br />的话它将触手可得<br />读取已经设置的cookies是非常简单的:每个request对象都有一个类似字典的COOKIES对象，你可以使用它来读浏览器发送<br />到视图的任何cookies:<br /><pre name="code" class="java">
+def show_color(request):
+    if "favorite_color" in request.COOKIES:
+        return HttpResponse("Your favorite color is %s" % \
+            request.COOKIES["favorite_color"])
+    else:
+        return HttpResponse("You don't have a favorite color.")
+</pre><br />写cookies更复杂一点，你需要使用HttpResponse对象的set_cookie()方法，这里是一个基于GET参数设置favorite_color<br />cookie的例子:<br /><pre name="code" class="java">
+def set_color(request):
+    if "favorite_color" in request.GET:
+
+        # Create an HttpResponse object...
+        response = HttpResponse("Your favorite color is now %s" % \
+            request.GET["favorite_color"])
+
+        # ... and set a cookie on the response
+        response.set_cookie("favorite_color",
+                            request.GET["favorite_color"])
+
+    else:
+        return HttpResponse("You didn't give a favorite color.")
+</pre><br />你也可以传递一些可选参数到request.set_cookie()来控制cookie的一些方面:<br />Parameter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Default&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Description<br />max_age&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; None&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cookie持续的时间(秒)，如果为None，cookie将只持续到浏览器关闭<br />expires&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; None&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cookie过期的准确日期/时间，格式应为"Wdy, DD-Mth-YY HH:MM:SS GMT"<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 如果给定值，它将覆盖max_age参数<br />path&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "/"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cookie的合法的路径前缀，浏览器将只把cookie传递回该路径前缀下，所以你可以<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 使用它来防止cookies被传递给你的站点的其它部分，当你不控制你的站点域名的<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 顶级部分时这非常有用<br />domain&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; None&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cookie的合法域名，你可以使用它来设置跨域名的cookie，例如，domain=".examp<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; le.com"将设置一个可以被www.example.com，www2.example.com和an.other.sub.<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; domain.example.com读取的cookie<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 如果设置为None，cookie将只能被设置它的域名读取<br />secure&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; False&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 如果设置为True，它将指示浏览器只当通过HTTPS访问页面时返回这个cookie<br /><br /><strong>cookies的混合祝福</strong><br />你可能注意到cookies工作的一些潜在的问题，让我们看看一些重要的:<br />1，Cookies本质上是自发的，浏览器不保证cookies的存储，事实上，这个行星上的每个浏览器都让你控制你的浏览器的<br />接受cookies的策略，如果你想看重要的cookies怎样到达web，尝试打开浏览器的"接受每个cookie"选项，甚至一个巨大<br />的蓝色怪物都将填充所有这些cookies!<br />当然，这意味着cookies上不可信任的定义，开发人员应该检查用户在信赖它们之前接受了cookies<br />更重要的是，你应该从不在cookies里面存储重要数据，web充满了开发人员为了某些原因在浏览器cookies里存储不可重<br />获的信息来使浏览器方便的恐怖故事<br />2，Cookies不是安全的，因为HTTP数据传输的是明文，cookies非常容易受窃听攻击，即攻击者在线上窃听可以截取<br />cookie并读取它，这意味着你应该从不在cookie里存储敏感信息<br />还有更阴险的"中间人"攻击，其中一个攻击者截取cookie并使用它来假装为另一个用户，第20章深入讨论了这种攻击现象<br />并给出了预防的办法<br />3，Cookies甚至对预定的接受者都不安全，大多数浏览器提供简易方式来编辑单独cookies的内容，并且足智多谋的用户<br />可以使用像mechanize的工具来手动构建HTTP请求<br />所以你不能在cookies里存储可窜改的敏感数据，这种情形下的标准错误是当用户登录后在cookie里存储像IsLoggedIn=1<br />的东西，你会对大量的站点犯这种错误而感到惊奇，只需花一秒钟就可以愚弄这些站点的"安全"系统<br /><br /><strong>Django的session框架</strong><br />由于这些限制和潜在的安全漏洞，很显然cookies和持久化sessions是另一个web开发里头疼的地方，当然Django的目标是<br />做高效的头疼杀手，所以Django带来一个为你扫平这些困难的session框架<br />这个session框架让你基于一个站点访问者存储和得到任意数据，它在服务器端存储数据并抽象发送和接受cookies<br />Cookies只使用一个哈希session ID而不是数据本身，这样可以防止大部分通常的cookie问题<br /><br /><strong>允许sessions</strong><br />Sessions通过一个中间件(参考第16章)和一个Django模型实现，你需要做如下事情来允许sessions:<br />1，编辑你的MIDDLEWARE_CLASSES设置并确认MIDDLEWARE_CLASSES包含'django.contrib.sessions.middleware.Session<br />Middleware'<br />2，确认'django.contrib.sessions'在你的INSTALLED_APPS设置里(如果你需要添加它还要允许manage.py syncdb)<br />通过startproject创建的默认骨架设置已经安装了这两项，所以除非你已经删除了它们，你很可能不需要改变任何东西<br />就可以让sessions工作<br />如果你不想使用sessions，你可能想从MIDDLEWARE_CLASSES删除SessionMiddleware行和从INSTALLED_APPS删除<br />'django.contrib.sessions'，它将只保存一个很小的过度，但是这很小的部分起作用<br /><br /><strong>在视图里使用sessions</strong><br />当SessionMiddleware激活后，每个HttpRequest对象--每个Django视图方法的第一个参数--将有一个session属性，它是<br />一个类似字典的对象，你可以像使用普通的字典一样读写它，例如，你可以在视图中做这样的事情:<br /><pre name="code" class="java">
+# Set a session value:
+request.session["fav_color"] = "blue"
+
+# Get a session value -- this could be called in a different view,
+# or many requests later (or both):
+fav_color = request.session["fav_color"]
+
+# Clear an item from the session:
+del request.session["fav_color"]
+
+# Check if the session has a given key:
+if "fav_color" in request.session:
+    ...
+</pre><br />你也可以在request.session使用像keys()和items()的其它映射方法<br />有一些高效使用Django的sessions的简单规则:<br />1，在request.session使用普通的Python字符串作为字典的键(而不是integers，objects等等)，这是一个惯例，但是值<br />得遵循<br />2，以下划线开始的session字典键被Django保留作内部使用，实践中框架只使用非常少的下划线前缀的session变量，但<br />是除非你知道它们都是些什么(并且想跟上Django本身的更改)，最好远离它们以防Django妨碍你的app<br />3，不要用新的对象覆盖request.session，并且不要访问或者设置它的属性，像Python字典一样使用它<br />让我们看看一些快速的例子，简单的视图在用户提交一个comment后设置一个has_commented变量为True，它不让一个用户<br />提交一个comment多于一次:<br /><pre name="code" class="java">
+def post_comment(request, new_comment):
+    if request.session.get('has_commented', False):
+        return HttpResponse("You've already commented.")
+    c = comments.Comment(comment=new_comment)
+    c.save()
+    request.session['has_commented'] = True
+    return HttpResponse('Thanks for your comment!')
+</pre><br />简单的视图在站点登录一个"成员":<br /><pre name="code" class="java">
+def login(request):
+    m = members.get_object(username__exact=request.POST['username'])
+    if m.password == request.POST['password']:
+        request.session['member_id'] = m.id
+        return HttpResponse("You're logged in.")
+    else:
+        return HttpResponse("Your username and password didn't match.")
+</pre><br />这个例子根据上面的login()注销一个成员:<br /><pre name="code" class="java">
+def logout(request):
+    try:
+        del request.session['member_id']
+    except KeyError:
+        pass
+    return HttpResponse("You're logged out.")
+</pre><br />注意，实践中这是登录用户的恶心的方式，下面讨论的认证框架以更健壮和有用的方式为你处理这些，这些内容只是提供<br />容易理解的例子<br /><br /><strong>设置测试cookies</strong><br />上面提到，你不能依赖每个浏览器接受cookies，所以，为了方便起见，Django提供了一个简单的方式来测试用户的浏览器<br />是否接受cookies，你只需在视图中调用request.session.set_test_cookie()并在后面的视图中检查requet.session.test<br />_cookie_worked()，而不是在同一个视图中调用<br />由于cookies的工作方式，这样笨拙的分离set_test_cookie()和test_cookie_worked()很必要，当你设置一个cookie，你<br />事实上不能分辨浏览器是否接受它，直到浏览器下一次请求<br />你自己使用delete_test_cookie()来清除测试cookie是良好的实践，在你验证测试cookie工作后做这件事<br />这里是一个典型的使用例子:<br /><pre name="code" class="java">
+def login(request):
+
+    # If we submitted the form...
+    if request.method == 'POST':
+
+        # Check that the test cookie worked (we set it below):
+        if request.session.test_cookie_worked():
+
+            # The test cookie worked, so delete it.
+            request.session.delete_test_cookie()
+
+            # In practice, we'd need some logic to check username/password
+            # here, but since this is an example...
+            return HttpResponse("You're logged in.")
+
+        # The test cookie failed, so display an error message. If this
+        # was a real site we'd want to display a more friendly message.
+        else:
+            return HttpResponse("Please enable cookies and try again.")
+
+    # If we didn't post, send the test cookie along with the login form.
+    request.session.set_test_cookie()
+    return render_to_response('foo/login_form.html')
+</pre><br />注意，内建的登录和注销方法为你处理了这些<br /><br /><strong>在视图外使用sessions</strong><br />内部每个session只是在django.contrib.sessions.models定义的普通的Django模型，因为它是一个普通模型，你可以使用<br />普通的Django数据库API访问sessions:<br /><pre name="code" class="java">
+&gt;&gt;&gt; from django.contrib.sessions.models import Session
+&gt;&gt;&gt; s = Session.objects.get_object(pk='2b1189a188b44ad18c35e113ac6ceead')
+&gt;&gt;&gt; s.expire_date
+datetime.datetime(2005, 8, 20, 13, 35, 12)
+</pre><br />你将需要调用get_decoded()来得到准确的session数据，这是必需的，因为字典存储为一个编码的格式:<br /><pre name="code" class="java">
+&gt;&gt;&gt; s.session_data
+'KGRwMQpTJ19hdXRoX3VzZXJfaWQnCnAyCkkxCnMuMTExY2ZjODI2Yj...'
+&gt;&gt;&gt; s.get_decoded()
+{'user_id': 42}
+</pre><br /><br /><strong>当sessions保存时</strong><br />当session修改后Django默认只保存到session数据库，即当它的字典值被赋值或删除时:<br /><pre name="code" class="java">
+# Session is modified.
+request.session['foo'] = 'bar'
+
+# Session is modified.
+del request.session['foo']
+
+# Session is modified.
+request.session['foo'] = {}
+
+# Gotcha: Session is NOT modified, because this alters
+# request.session['foo'] instead of request.session.
+request.session['foo']['bar'] = 'baz'
+</pre><br />为了更改这个默认的行为，需要设置SESSION_SAVE_EVERY_REQUEST设置为True，如果SESSION_SAVE_EVERY_REQUEST为True<br />Django将在每个单独的请求保存session到数据库，设置当它没有改变时<br />注意只有当session被创建或修改时session cookie才被发送，如果SESSION_SAVE_EVERY_REQUEST为True，session<br />cookie将对每次请求发送<br />同样，session cookie的expires部分在每次session cookie发送时更新<br /><br /><strong>浏览器长度的sessions与持久化sessions</strong><br />你可能已经注意到Google发送的cookie包含expires=Sun, 17-Jan-2038 19:14:07 GMT; Cookies可以可选的包含一个过期<br />日期，该日期告诉浏览器什么时候删除cookie，如果一个cookie不包含过期值，浏览器将在用户关闭浏览器窗口时过期<br />你可以通过SESSION_EXPIRE_AT_BROWSER_CLOSE设置来控制session框架在这点上的行为<br />SESSION_EXPIRE_AT_BROWSER_CLOSE默认设置为False，这意味着session cookies将存储在用户的浏览器中持续<br />SESSION_COOKIE_AGE秒(默认为两星期，即1209600秒)，如果你不想人们每次打开浏览器时都不得不登录的话可以使用它<br />如果SESSION_EXPIRE_AT_BROWSER_CLOSE设置为True，Django将使用浏览器长度的cookies<br /><br /><strong>其它session设置</strong><br />除了已经提到的设置，还有一些其它影响Django的session框架使用cookies的设置:<br />Setting&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Default&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Explanation<br />SESSION_COOKIE_DOMAIN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; None&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; session cookies使用的域名，设置它为一个字符串，如".lawrence.com"<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 来使用跨域名的cookies，或者设置None来使用标准cookie<br />SESSION_COOKIE_NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "sessionid"&nbsp;&nbsp;&nbsp; 使用sessions 的cookie名，可以是任意字符串<br />SESSION_COOKIE_SECURE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; False&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; session cookie是否使用"安全"cookie，如果设置为True，cookie将被<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 标记为"安全"，这意味着浏览器将保证cookie只通过HTTPS传送<br />技术细节<br />出于好奇，这里有一些关于session框架内部工作的技术注解:<br />1，session字典接受任意pickleable Python对象，参考Python内建的pickle模块文档得到更多关于这怎样工作的信息<br />2，Session数据存储在名为django_session的数据库表中<br />3，Session数据是"lazily":如果你从不访问request.session，Django不会接触那个数据库表<br />4，Django只在需要时传送cookie，如果你不设置任何session数据，它将不会发送session cookie(除非SESSION_SAVE_<br />EVERY_REQUEST设置为True)<br />5，Django的sessions框架是完整的，单独的和基于cookie的，它不像其它工具(PHP，JSP)一样求诸于把session IDs放在<br />URLs中<br />如果你仍然很好奇，源代码是非常直接的，你可以查看django.contrib.sessions<br /><br /><strong>用户和认证</strong><br />现在我们将浏览器和真实的人连接起来已经完成了一半，Sessions提供我们在多浏览器请求之间存储数据的一种方式，第<br />二个因素是使用这些sessions来让用户登录，当然，我们不能只信任用户所说的他们是谁，所以我们将需要认证它们<br />自然，Django提供工具来处理这个通常的任务(以及许多其它的)，Django的用户认证系统处理用户，组，权限和基于<br />cookie的用户sessions，这个系统通常称为"认证/授权"系统，这个名字解释了用户通常分两个步骤处理:<br />1，验证(认证)用户是她宣称的人(通常通过对数据库检查用户名和密码)<br />2，验证用户授权处理一些操作(通常检查权限表)<br />遵循这些需要，Django的认证/授权系统由一些部分组成:<br />1，Users<br />2，Permissions:二元(yes/no)标记来指示用户是否可以处理某一任务<br />3，Groups:把标签和权限赋予超过一个用户的通常的方式<br />4，Messages:排入队列和显示用户的系统消息的简单方式<br />5，Profiles:用自定义域扩展用户对象的机制<br />如果你已经使用了admin工具(第6章)，你已经看到许多这些工具，并且如果你在admin中编辑了用户或组你事实上已经在<br />编辑认证系统的数据库表<br /><br /><strong>安装</strong><br />类似于session工具，认证支持在django.contrib中绑定为Django程序，它需要安装，像session系统一样它默认已经被<br />安装，但是如果你删除了它，你将需要遵循这些步骤来安装它:<br />1，确认session框架安装了(参考上面的内容)，跟踪用户显然需要cookies，并且构建在session框架之上<br />2，把'django.contrib.auth'放到你的INSTALLED_APPS设置中并运行manage.py syncdb<br />3，确认'django.contrib.auth.middleware.AuthenticationMiddleware'在你的MIDDLEWARE_CLASSES设置中，并且它在<br />SessionMiddleware之后<br />拥有了这些安装，我们已经可以在视图方法中处理用户，你将在视图中使用来访问用户的主要接口是request.user，它是<br />一个表示当前登录的用户的对象，如果用户没有登录，它将被替代为一个AnonymousUser对象(参考下面更多细节)<br />你可以使用is_authenticated()方法很轻松的分辨用户是否登录:<br /><pre name="code" class="java">
+if request.user.is_authenticated():
+    # Do something for authenticated users.
+else:
+    # Do something for anonymous users.
+</pre><br /><br /><strong>使用用户</strong><br />一旦你拥有一个用户--通常从request.user得到，但也可能通过下面讨论的一个其它方法得到--你已经得到该对象的一些<br />域和方法，AnonymousUser对象仿效其中一些域和方法，但是不全，所以你应该在你确认处理的是真实的用户对象之前一<br />直检查user.is_authenticated()<br />User对象的域<br />Field&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Description<br />username&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 必需的，30个字符或更少，只允许文字和数字字符(字母，数字和下划线)<br />first_name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 可选，30个字符或更少<br />last_name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 可选，30个字符或更少<br />email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 可选，E-mail地址<br />password&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 必需的，哈希的元数据秘密(Django不存储原始密码)，参看下面的"密码"部分得到更多关于这个值<br />is_staff&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 布尔值，指示用户是否可以访问admin站点<br />is_active&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 布尔值，指示用户是否可以登录，把这个标记设置为False而不是删除用户<br />is_superuser&nbsp;&nbsp;&nbsp;&nbsp; 布尔值，指示用户是否拥有所有的权限而不用显示的赋予它们<br />last_login&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 用户最后登录的datetime，默认设置为当前date/time<br />date_joined&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 当用户创建时的datetime，当用户创建时默认设置为当前date/time<br />User对象的方法<br />Method&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Description<br />is_authenticated()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 对"真实的"User对象一直返回True，这是分辨用户是否认证的方式，它不暗示任何权限，并且<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 不检查用户是否active，它只指示用户成功认证<br />is_anonymous()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 只对AnonymousUser对象返回True(对"真实"User对象返回False)，通常你应该选择使用<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; is_authenticated()方法而不是这个方法<br />get_full_name()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 返回first_name加上last_name，使用一个空格间隔<br />set_password(passwd)&nbsp;&nbsp;&nbsp;&nbsp; 设置用户的密码为给定的原始密码，它会处理密码哈希，这事实上不会保存User对象<br />check_password(passwd)&nbsp;&nbsp; 如果给定的原始密码是该用户的正确的密码则返回True，这会在比较时处理密码哈希<br />get_group_permissions()&nbsp; 从用户所属的组返回用户拥有的权限字符串的列表<br />get_all_permissions()&nbsp;&nbsp;&nbsp; 从用户所属的组和用户的权限返回用户拥有的全息字符串的列表<br />has_perm(perm)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 如果用户拥有该特殊权限则返回True，perm的格式为"package.codename"，如果用户inactive<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 该方法将一直返回False<br />has_perms(perm_list)&nbsp;&nbsp;&nbsp;&nbsp; 如果用户拥有这些特殊权限则返回True，如果用户为inactive，该方法将一直返回False<br />has_module_perms(appname)如果用户拥有给定appname的任一权限则返回True，如果用户inactive则一直返回False<br />get_and_delete_messages()返回用户的队列中的Message对象列表并从队列中删除消息<br />email_user(subj, msg)&nbsp;&nbsp;&nbsp; 发送一个e-mail给用户，这个email从DEFAULT_FROM_EMAIL设置发送，你也可以传递第3个参数<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; from_email来覆盖email的发送地址<br />get_profile()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 返回站点特有的用户的轮廓，参考下面的轮廓部分得到更多关于此方法<br />最后，User对象由两个多对多域，groups和permissions，User对象可以像其它多对多域一样访问它们相关的对象:<br /><pre name="code" class="java">
+# Set a users groups:
+myuser.groups = group_list
+
+# Add a user to some groups:
+myuser.groups.add(group1, group2,...)
+
+# Remove a user from some groups:
+myuser.groups.remove(group1, group2,...)
+
+# Remove a user from all groups:
+myuser.groups.clear()
+
+# Permissions work the same way
+myuser.permissions = permission_list
+myuser.permissions.add(permission1, permission2, ...)
+myuser.permissions.remove(permission1, permission2, ...)
+myuser.permissions.clear()
+</pre><br /><br /><strong>登录和注销</strong><br />Django提供内建的视图方法来处理登录和注销(以及一些其它的好技巧)，但现在先让我们看看怎样"手动"登录和注销用户<br />Django在django.contrib.auth中提供两个方法来处理这些动作:authenticate()和login()<br />使用authenticate()来认证给定的用户名和密码，它有两个关键字参数，username和password，并且如果密码是合法的则<br />它返回一个User对象，如果密码不合法，authenticate()返回None:<br /><pre name="code" class="java">
+&gt;&gt;&gt; from django.contrib import auth authenticate
+&gt;&gt;&gt; user = auth.authenticate(username='john', password='secret')
+&gt;&gt;&gt; if user is not None:
+...     print "Correct!"
+... else:
+...     print "Oops, that's wrong!"
+Oops, that's wrong!
+</pre><br />在视图中使用login()来登录用户，它使用一个HttpRequest对象和一个User对象并使用Django的session框架在session中<br />保存用户的ID<br />这个例子展示了你怎样在视图方法中使用authenticate()和login():<br /><pre name="code" class="java">
+from django.contrib import auth
+
+def login(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = auth.authenticate(username=username, password=password)
+    if user is not None and user.is_active:
+        # Correct password, and the user is marked "active"
+        auth.login(request, user)
+        # Redirect to a success page.
+        return HttpResponseRedirect("/account/loggedin/")
+    else:
+        # Show an error page
+        return HttpResponseRedirect("/account/invalid/")
+</pre><br />在你的视图中使用django.contrib.auth.logout()来注销登录的用户，它使用一个HttpRequest对象并且没有返回值:<br /><pre name="code" class="java">
+from django.contrib import auth
+
+def logout(request):
+    auth.logout(request)
+    # Redirect to a success page.
+    return HttpResponseRedirect("/account/loggedout/")
+</pre><br />注意如果用户没有登录的话logout()不会抛出任何异常<br />简单方式的登录和注销<br />实践中，你通常不需要写你自己的登录/注销方法，auth系统带有一套视图来处理登录和注销<br />使用认证视图的第一步是修改你的URL配置，你将需要添加这些内容:<br /><pre name="code" class="java">
+from django.contrib.auth.views import login, logout
+
+urlpatterns = patterns('',
+    # existing patterns here...
+    (r'^accounts/login/$',  login)
+    (r'^accounts/logout/$', logout)
+)
+</pre><br />/accounts/login/和/accounts/logout/是Django默认为这些视图使用的URLs，但是你做出一点努力就可以把它们放在任<br />何你想要的位置，login视图默认渲染registration/login.html视图(你可以通过传递一个额外的视图参数template_na<br />me更改这个模板名)，这个表单需要包含一个用户名和密码域，一个简单的模板可能看起来像这样:<br /><pre name="code" class="java">
+{% extends "base.html" %}
+
+{% block content %}
+
+  {% if form.errors %}
+    &lt;p class="error"&gt;Sorry, that's not a valid username or password&lt;/p&gt;
+  {% endif %}
+
+  &lt;form action='.' method='post'&gt;
+    &lt;label for="username"&gt;User name:&lt;/label&gt;
+    &lt;input type="text" name="username" value="" id="username"&gt;
+    &lt;label for="password"&gt;Password:&lt;/label&gt;
+    &lt;input type="password" name="password" value="" id="password"&gt;
+
+    &lt;input type="submit" value="login" /&gt;
+    &lt;input type="hidden" name="next" value="{{ next }}" /&gt;
+  &lt;form action='.' method='post'&gt;
+
+{% endblock %}
+</pre><br />如果用户成功登录，她将默认被重定向到/accounts/profile/，你可以通过提供一个叫next的在登录之后重定向的URL值<br />的hidden域来覆盖它，你也可以使用GET参数传递这个值到login视图，它将作为叫next的变量被自动添加到context中<br />注销视图工作起来有一点不同，默认它渲染registration/logged_out.html模板(它通常包含一个"你已经成功注销"的信<br />息)，尽管如此，你可以通过一个额外参数next_page来调用视图，它将告诉视图在注销后重定向<br /><br /><strong>限制登录的用户访问</strong><br />当然，我们经历这些麻烦是为了使我们可以限制访问我们站点的一部分<br />最简单最原始的限制访问页面的方式是检查request.user.is_authenticated()并重定向到登录页面:<br /><pre name="code" class="java">
+from django.http import HttpResponseRedirect
+
+def my_view(request):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/?next=%s' % request.path)
+    # ...
+</pre><br />或者显示一条出错信息:<br /><pre name="code" class="java">
+def my_view(request):
+    if not request.user.is_authenticated():
+        return render_to_response('myapp/login_error.html')
+    # ...
+</pre><br />作为捷径，你可以使用很方便的login_required装饰器:<br /><pre name="code" class="java">
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def my_view(request):
+    # ...
+</pre><br />login_required做下面的事情:<br />1，如果用户没有登录，重定向到/accounts/login/，并传递当前的查询字符串的绝对URL作为next<br />例如/accounts/login?next=/polls/3/<br />2，如果用户登录了，则正常执行视图，这样视图代码就认为用户已经登录<br />注意，如果你了解编程模式，这个装饰器以及下面讨论的都是"守卫"模式的例子，不是模式爱好者?<br /><br /><strong>限制用户访问的测试</strong><br />限制访问基于某一权限或一些其它的测试，或者为登录视图提供一个不同的位置本质上以同一方式工作<br />原始方式是在视图中request.user上直接运行你的测试，例如，这个视图检查用户是否登录并拥有polls.can_vote权限<br />(参考下面关于权限怎样工作的更多信息):<br /><pre name="code" class="java">
+def vote(request):
+    if request.user.is_authenticated() and request.user.has_perm('polls.can_vote')):
+        # vote here
+    else:
+        return HttpResponse("You can't vote in this poll.")
+</pre><br />再一次的，Django提供一个捷径，它叫做user_passes_test，它事实上是一个装饰器工厂，它使用参数并为你的特殊的<br />情形生成特殊的装饰器，例如:<br /><pre name="code" class="java">
+def user_can_vote(user):
+    return user.is_authenticated() and user.has_perm("polls.can_vote")
+
+@user_passes_test(user_can_vote, login_url="/login/")
+def vote(request):
+    # Code here can assume a logged in user with the correct permission.
+    ...
+</pre><br />user_passes_test使用一个必需的参数:一个可调用的方法，它使用一个User对象并当用户允许查看该页面时返回True<br />注意user_passes_test不会自动检查User是否认证，你应该自己做这件事<br />例子中我们也展示了第二个可选的参数login_url，它让你指定你的登录页面的URL(默认为/accounts/login/)<br />既然检查用户是否有一个特殊权限是相对常见的任务，Django为这种情形提供了一个捷径:permission_required()装饰器<br />使用这个装饰器，前面的例子可以这样写:<br /><pre name="code" class="java">
+from django.contrib.auth.decorators import permission_required
+
+@permission_required('polls.can_vote', login_url="/login/")
+def vote(request):
+    # ...
+</pre><br />数以permission_required()也使用一个可选的login_url参数，它默认也为'/accounts/login/'<br />限制访问generic views<br />Django用户列表最常问的一个问题是如何处理限制访问generic view，为了达到这个目的，你需要对视图做一个简单的封<br />装，并在你的URL配置里指定你的封装而不是generic view本身:<br /><pre name="code" class="java">
+from dango.contrib.auth.decorators import login_required
+from django.views.generic.date_based import object_detail
+
+@login_required
+def limited_object_detail(*args, **kwargs):
+    return object_detail(*args, **kwargs)
+</pre><br />当然，你可以用其它限制装饰器代替login_required<br /><br /><strong>管理用户，权限和组</strong><br />目前管理认证系统的最简单的方式是通过admin，第6章讨论了怎样使用Django的admin来编辑用户并控制他们的权限和访问<br />大多数时候你将只使用这个界面，尽管如此，当你需要绝对控制时有一些低级APIs来供你深入进去<br />创建用户<br />创建用户的基本方式是使用create_user辅助方法:<br /><pre name="code" class="java">
+&gt;&gt;&gt; from django.contrib.auth.models import User
+&gt;&gt;&gt; user = User.objects.create_user(username='john',
+...                                 email='jlennon@beatles.com',
+...                                 password='glass onion')
+</pre><br />这里user是一个准备保存到数据库的User对象，你也可以在保存之前继续更改它的属性:<br /><pre name="code" class="java">
+&gt;&gt;&gt; user.is_staff = True
+&gt;&gt;&gt; user.save()
+</pre><br />更改密码<br />你可以使用set_password()更改密码:<br /><pre name="code" class="java">
+&gt;&gt;&gt; user = User.objects.get(username='john')
+&gt;&gt;&gt; user.set_password('goo goo goo joob')
+&gt;&gt;&gt; user.save()
+</pre><br />不要直接设置password属性，除非你知道你在做什么，password事实上存储为加密的哈希并且这样不能直接编辑<br />更正式的，User对象的password属性是下面格式的字符串:<br />hashtype$salt$hash<br />这是哈希类型，salt和哈希本身，用美元符号分隔<br />hashtype是sha1(默认)或者md5，它是用来处理单向密码哈希的算法，Salt是一个用来加密原始密码来创建哈希的随机字符<br />串，例如:<br />sha1$a1976$a36cc8cbf81742a8fb52e221aaeab48ed7f58ab4<br />User.set_password()和User.check_password()方法在幕后处理了设置和检查这些值<br />这是某种毒品吗?<br />不是的，加密的哈希与大麻毫无关系，它事实上是安全存储密码的通常方式，哈希是单向方法，即你可以很容易计算给定<br />值的哈希，但几乎不可能用一个哈希重新构造原始值<br />如果我们存储普通文本的密码，任何可以访问密码数据库的人都将立即知道每个人的密码，把密码存为哈希减少了危及安<br />全的数据值<br />尽管如此，可以访问密码数据库的攻击者仍然可以运行强力攻击，哈希上百万的密码并与存储值比较，这可能耗费一些时<br />间，但是比你想象中的要少，计算机难以置信的快<br />更糟糕的是，有一些公众可得到的彩虹表，即已经计算了上百万密码的哈希的数据库，使用彩虹表，攻击者可以在几秒钟<br />之内攻破大部分密码<br />添加一个salt--基本上是一个初始的随机值--到存储的哈希里面添加了另一层困难，既然salt对每个密码不同，salts也<br />防止了使用彩虹表，这样强迫攻击者退却--它本身通过额外的通过salt添加到哈希的熵产生更多的困难<br />虽然加密的哈希不是绝对的最安全的存储密码的方式，他们是安全和方便之间很好的折衷方案<br />处理注册<br />我们可以使用这些低级工具来创建允许用户注册的视图，几乎每个开发人员都希望实现不同的注册，所以Django把写注册<br />视图留给你自己，幸运的是，它非常简单<br />最简单的情况下，我们可以提供一个提示必需的用户信息和创建那些用户的小视图，Django提供一个你可以使用来满足此<br />目的的内建表单，我们在这个例子中使用它:<br /><pre name="code" class="java">
+from django import oldforms as forms
+from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
+from django.contrib.auth.forms import UserCreationForm
+
+def register(request):
+    form = UserCreationForm()
+
+    if request.method == 'POST':
+        data = request.POST.copy()
+        errors = form.get_validation_errors(data)
+        if not errors:
+            new_user = form.save()
+            return HttpResponseRedirect("/accounts/created/")
+    else:
+        data, errors = {}, {}
+
+    return render_to_response("registration/register.html", {
+        'form' : forms.FormWrapper(form, data, errors)
+    })
+</pre><br />这假设有一个名为registration/register.html的模板，这里是模板可能的例子:<br /><pre name="code" class="java">
+{% extends "base.html" %}
+
+{% block title %}Create an account{% endblock %}
+
+{% block content %}
+      &lt;h1&gt;Create an account&lt;/h1&gt;
+      &lt;form action="." method="post"&gt;
+        {% if form.error_dict %}
+          &lt;p class="error"&gt;Please correct the errors below.&lt;/p&gt;
+        {% endif %}
+
+        {% if form.username.errors %}
+          {{ form.username.html_error_list }}
+        {% endif %}
+        &lt;label for="id_username"&gt;Username:&lt;/label&gt; {{ form.username }}
+
+        {% if form.password1.errors %}
+          {{ form.password1.html_error_list }}
+        {% endif %}
+        &lt;label for="id_password1"&gt;Password: {{ form.password1 }}
+
+        {% if form.password2.errors %}
+          {{ form.password2.html_error_list }}
+        {% endif %}
+        &lt;label for="id_password2"&gt;Password (again): {{ form.password2 }}
+
+        &lt;input type="submit" value="Create the account" /&gt;
+      &lt;/label&gt;
+{% endblock %}
+</pre><br /><br /><strong>在模板里使用认证数据</strong><br />当你使用RequestContext(参考第10章)时当前登录用户和她的权限可以在模板context得到<br />注意，技术上如果你使用RequestContext并且你的TEMPLATE_CONTEXT_PROCESSORS设置包含"django.core.context_proces<br />sors.auth"的话这些变量可以在模板context得到，而这是默认的，再一次，参考第10章得到完整的信息<br />当使用RequestContext时，当前用户--User实例或者AnonymousUser实例存储为模板变量{{ user }}:<br /><pre name="code" class="java">
+{% if user.is_authenticated %}
+  &lt;p&gt;Welcome, {{ user.username }}. Thanks for logging in.&lt;/p&gt;
+{% else %}
+  &lt;p&gt;Welcome, new user. Please log in.&lt;/p&gt;
+{% endif %}
+</pre><br />用户的权限存储为模板变量{{ perms }}，这是一个模板友好的一些权限方法的代理，参考下面的权限部分得到更多关于<br />这些方法映射的内容<br />有两种你可以使用这个perms对象的方法，你可以使用像{{ perms.polls }}的东西来检查用户是否拥有一些给定app的权<br />限，或者你可以使用像{{ perms.polls.can_vote }}的东西来检查用户是否有一个特殊的权限<br />这样，你可以使用模板的{% if %}语句检查权限:<br /><pre name="code" class="java">
+{% if perms.polls %}
+  &lt;p&gt;You have permission to do something in the polls app.&lt;/p&gt;
+  {% if perms.polls.can_vote %}
+    &lt;p&gt;You can vote!&lt;/p&gt;
+  {% endif %}
+{% else %}
+  &lt;p&gt;You don't have permission to do anything in the polls app.&lt;/p&gt;
+{% endif %}
+</pre><br /><br /><strong>其它点:权限，组，信息和轮廓</strong><br />认证框架有一些其它我们打交道的东西，让我们亲密接触来看看:<br /><br /><strong>权限</strong><br />权限是"标记"用户和组可以执行一些动作的简单方式，它通常被Django的admin站点使用，但是你可以在你自己的代码中<br />轻松的使用它，Django的admin站点使用下面的权限:<br />1，访问查看"添加"表单和添加对象被限制为具有该类型对象"add"权限的用户<br />2，访问查看更改列表，查看"更改"表单和更改对象被限制为具有该类型对象"change"权限的用户<br />3，访问删除对象被限制为具有该类型对象"delete"权限的用户<br />权限对每个类型的对象全局设定，而不是对每个对象实例，例如，可以说"Mary可以更改新闻故事"，但是当前不能说"Mary<br />可以更改新闻故事，但只是那些她自己创建的故事"或者"Mary只可以更改有某一状态，发表日期或ID的新闻故事"<br />这三个基本权限--add，create和delete--为每个有class Admin的Django模型自动创建，在幕后，当你运行manage.py sy<br />ncdb时这些权限添加到auth_permission数据库表<br />这些权限格式为"&lt;app&gt;.&lt;action&gt;_&lt;object_name&gt;"，即如果你有一个polls app和一个Choice模型，你将得到名为"polls.<br />add_choice"，"polls.change_choice"和"polls.delete_choice"的权限<br />注意如果你的模型没有class Admin设置，当你运行syncdb时，权限不会被创建，如果你初始化你的数据库并添加class A<br />dmin到模型中，你将需要再运行syncdb一次来为你安装的apps创建缺少的权限<br />你也可以为给定模型对象创建自定义权限，在Meta上使用permissions属性，这个例子模型创建了3个自定义权限:<br /><pre name="code" class="java">
+class USCitizen(models.Model):
+    # ...
+    class Meta:
+        permissions = (
+            # Permission identifier     human-readable permission name
+            ("can_drive",               "Can drive"),
+            ("can_vote",                "Can vote in elections"),
+            ("can_drink",               "Can drink alcohol"),
+        )
+</pre><br />当你运行syncdb时这只创建那些额外的权限，在你的视图中检查这些权限由你决定(参考上面的内容)<br />类似于用户，权限在Django模型中实现并位于django.contrib.auth.models，这意味着如果你需要你可以使用Django的数<br />据库API来直接和权限交互<br /><br /><strong>组</strong><br />组是对用户分类的通常方式，你可以赋予权限或者一些其它的标签到那些用户，一个用户可以属于任意多个组<br />在组中的用户自动具有赋予该组的权限，例如，Site editors组有can_edit_home_page权限，则任何在该组的用户都将拥<br />有该权限<br />除了权限，组是分类用户来给他们一些标签或者扩展功能的方便的方式，例如，你可以创建一个'Special users'组，并且<br />你可以写给他们访问你站点中只允许成员访问的权限的代码，或者给他们发送只有成员有的e-mail信息<br />类似于用户，管理组的最简单的方式是通过admin，尽管如此，组也只是位于django.contrib.auth.models的Django模型<br />所以再一次，你可以一直用底层Django数据库APIs来处理组<br /><br /><strong>信息</strong><br />信息系统是为给定用户将信息排入队列的轻量的方式，一个信息与一个User相关联，没有过期或时间戳的概念<br />信息在成功的动作之后被Django的admin使用，例如，当你创建了一个对象，你将在admin页面的顶端注意到一个"对象成功<br />创建"的信息，你可以使用同样的API在你自己的app里排入队列或显示信息，API很简单:<br />1，为了创建一个新信息，使用user.message_set.create(message='message_text')<br />2，为了得到/删除信息，使用user_obj.get_and_delete_messages()，它返回一个用户的队列(如果有)中的Message对象<br />列表并从队列中删除信息<br />在这个例子视图中，系统在创建一个playlist后为用户保存一条信息:<br /><pre name="code" class="java">
+def create_playlist(request, songs):
+    # Create the playlist with the given songs.
+    # ...
+    request.user.message_set.create(
+        message="Your playlist was added successfully."
+    )
+    return render_to_response("playlists/create.html",
+        context_instance=RequestContext(request))
+</pre><br />当你使用RequestContext时，当前登录的用户和她的信息可以在模板context中作为模板变量{{ messages }}得到，这里<br />是一个显示信息的模板代码的例子:<br /><pre name="code" class="java">
+{% if messages %}
+&lt;ul&gt;
+    {% for message in messages %}
+    &lt;li&gt;{{ message }}&lt;/li&gt;
+    {% endfor %}
+&lt;/ul&gt;
+{% endif %}
+</pre><br />注意RequestContext在幕后调用get_and_delete_messages，所以任何信息都会被删除，甚至你不显示它们<br />最后，注意这个信息框架只与用户数据库里的用户工作，直接使用session框架来向匿名用户发送信息<br /><br /><strong>轮廓</strong><br />最后一个难题是轮廓系统，为了理解轮廓是什么东西，让我们先看看问题:<br />简单的，许多站点需要存储比标准的User对象更多的用户信息，为了混合这个问题，大多数站点将有不同的"额外"域<br />这样，Django提供了一个定义链接到给定用户的"轮廓"对象的轻量方式，这个轮廓对象可以对每个项目不同，并且甚至<br />可以为同一数据库服务的不同的站点处理不同的轮廓<br />创建一个轮廓的第一步是定义存储轮廓信息的模型，Django对该模型的唯一需求是它有一个唯一的ForeignKey到User模型<br />这个域必须命名为user，除了这个，你可以使用其它任何你想要的域，这里是一个任意的轮廓模型:<br /><pre name="code" class="java">
+from django.db import models
+from django.contrib.auth.models import User
+
+class MySiteProfile(models.Model):
+    # This is the only required field
+    user = models.ForeignKey(User, unique=True)
+
+    # The rest is completely up to you...
+    favorite_band = models.CharField(maxlength=100, blank=True)
+    favorite_cheese = models.CharField(maxlength=100, blank=True)
+    lucky_number = models.IntegerField()
+</pre><br />下一步，你将需要告诉Django到哪里查找这个轮廓对象，你可以通过设置AUTH_PROFILE_MODULE为你的模型的标识符来做<br />这件事，所以，如果你的模型位于叫myapp的app，你需要将下面的内容放入你的settings文件:<br />AUTH_PROFILE_MODULE = "myapp.mysiteprofile"<br />一点完成这些，你可以通过调用user.get_profile()来访问用户的轮廓，如果AUTH_PROFILE_MODULE没定义的话这个方法<br />将触发SiteProfileNotAvailable异常，而且如果用户没有一个轮廓它将触发DoesNotExist异常(这时你通常将捕获这个异<br />常并创建一个新的轮廓)<br /><br /><strong>总结</strong><br />是的，session和认证系统有很多内容需要吸收，大多数时候你不需要本章描述的所有特性，但是当你需要允许用户间复<br />杂的交互时，所有的能力都具备就很好了<br />下一章我们将看看Django构建在session/user系统上的一部分:comments app，它允许你很轻松的附加注释--从匿名用户<br />或者认证的用户--到任意的对象<br /><br />前进!向上!
+  </div>
+
+  
+
+  

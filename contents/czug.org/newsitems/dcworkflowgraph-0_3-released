@@ -1,0 +1,16 @@
+<p>此版本支持<a href="http://www.zope.org/Members/anahide/News_Item.2005-06-16.4640">CPSWorkflow</a>, 它是DCWorkflow的一个扩展.</p>
+<p>感谢来自Encolpe Degoute  和
+Anahide Tchertchian  的贡献.</p>
+<p><a href="http://www.zope.org/Members/panjunyong/DCWorkflowGraph/dcworkflowgraph-0_3/dcworkflowgraph-0_3.tgz">下载</a>
+|
+<a href="http://www.zope.org/Members/panjunyong/DCWorkflowGraph">英文产品页面</a>
+|
+<a href="http://www.zopechina.com/products/DCWorkflowGraph">中文产品页面</a></p>
+<p>更改：</p>
+
+<ul>
+<li>支持没有初始状态的变迁</li>
+<li>处理 <code>保持状态</code> 的变迁</li>
+<li>使用变迁的标题而不是操作链接的名字</li>
+
+</ul>

@@ -1,0 +1,164 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-ab122a1a45e56130649598a3cf01ec964989ef66">第十章 执行环境</a><ol><li><a href="#head-2b4ef42d4b5486bbce65439088258f6e5c538ea4">解释器选项及运行环境</a></li><li><a href="#head-4f6678c28667837a86d94979a938021b27fd8ee9">交互模式</a></li><li><a href="#head-26c6537c0c14b75e2e6e0609f4bf73f9413f7287">运行Python程序</a></li><li><a href="#head-566e4eb621baa6f212160f20da72e692f43e091a">Site配置文件</a></li><li><a href="#head-b1b04d68fe3e81d7c040e1e2f4b05d06acf88ce9">启用 Future 特性</a></li><li><a href="#head-de9cfcc1ae23f132f4015ef2a5afce22c303b24d">程序终止</a></li></ol></li></ol></div> <span id="line-2" class="anchor"/>
+<h1 id="head-ab122a1a45e56130649598a3cf01ec964989ef66">1. 第十章 执行环境</h1>
+<span id="line-3" class="anchor"/><p class="line874">本章的主题是Python程序的运行环境，目标是阐述解释器的运行时行为：包括程序启动、站点配置及程序终止。 <span id="line-4" class="anchor"/><span id="line-5" class="anchor"/></p><p class="line867">
+</p><h2 id="head-2b4ef42d4b5486bbce65439088258f6e5c538ea4">1.1. 解释器选项及运行环境</h2>
+<span id="line-6" class="anchor"/><span id="line-7" class="anchor"/><p class="line874">解释器有许多选项控制它的运行时行为和及运行环境。在UNIX和Windows下,选项以命令行选项的形式传递给解释器: <span id="line-8" class="anchor"/><span id="line-9" class="anchor"/></p><pre>python [option] ... [-c cmd | -m mod | file | -] [arg] ...
+<span id="line-10" class="anchor"/></pre><span id="line-11" class="anchor"/><p class="line862">在Macintosh下,需要使用一个独立程序<a href="/moin/EditPythonPrefs" class="nonexistent">EditPythonPrefs</a>来修改Python解释器的执行参数。 <span id="line-12" class="anchor"/><span id="line-13" class="anchor"/></p><p class="line874">当前版本共支持以下命令行选项(Python2.4): <span id="line-14" class="anchor"/><span id="line-15" class="anchor"/></p><pre>选项                              描述
+<span id="line-16" class="anchor"/>-d 或 PYTHONDEBUG=x             生成解析器调试信息
+<span id="line-17" class="anchor"/>-h                              打印帮助信息，然后退出
+<span id="line-18" class="anchor"/>-i 或 PYTHONINSPECT=x           程序运行后进入交互模式(程序中的对象会继续存在)
+<span id="line-19" class="anchor"/>-O 或 PYTHONOPTIMIZE=x          优化生成的字节码
+<span id="line-20" class="anchor"/>-OO                             在-O的基础之上删除文档字符串
+<span id="line-21" class="anchor"/>-S                              阻止包含 site 定义的模块
+<span id="line-22" class="anchor"/>-t                              若发现制表符空格混合缩进给出警告信息
+<span id="line-23" class="anchor"/>-tt                             若发现制表符空格混合缩进引发 TabError 异常
+<span id="line-24" class="anchor"/>-u 或 PYTHONUNBUFFERED=x        非缓冲二进制标准输出及标准错误
+<span id="line-25" class="anchor"/>-U                              Unicode模式,所有字符都被转换为Unicode
+<span id="line-26" class="anchor"/>-v 或 PYTHONVERBOSE=x           冗余模式(跟踪 import 语句).
+<span id="line-27" class="anchor"/>-V                              显示版本信息后退出
+<span id="line-28" class="anchor"/>-x                              忽略程序的第一行
+<span id="line-29" class="anchor"/>-c cmd                          运行字符串 cmd
+<span id="line-30" class="anchor"/>-W arg                          警告控制(arg是行为:message:category:module:lineno)
+<span id="line-31" class="anchor"/>-E                              忽略环境变量(such as PYTHONPATH)
+<span id="line-32" class="anchor"/>-m mod                          mod: 模块名 将模块象脚本一样运行
+<span id="line-33" class="anchor"/>-Q arg                          division options: -Qold (default), -Qwarn, -Qwarnall, -Qnew
+<span id="line-34" class="anchor"/>file                            脚本文件
+<span id="line-35" class="anchor"/>-                               从标准输入读取程序代码 (这是默认参数)
+<span id="line-36" class="anchor"/>arg ...                         脚本参数(保存在 sys.argv[1:])
+<span id="line-37" class="anchor"/></pre><span id="line-38" class="anchor"/><span id="line-39" class="anchor"/><p class="line874">选项 -d 用来调试解释器,普通程序员几乎不会用到这个选项(Python开发团队用的会比较多) <span id="line-40" class="anchor"/><span id="line-41" class="anchor"/></p><p class="line874">选项 -i 会在程序结束的时候进入交互模式,通常用于调试用户代码。  <span id="line-42" class="anchor"/><span id="line-43" class="anchor"/></p><p class="line874">选项-O 和 -OO 使用最佳化模式,产生较优化的字节码(在第八章中有介绍). <span id="line-44" class="anchor"/><span id="line-45" class="anchor"/></p><p class="line874">选项 -S 忽略site 初始化模块(参见后边的 "Site 配置文件" 小节). <span id="line-46" class="anchor"/><span id="line-47" class="anchor"/></p><p class="line874">选项 -t
+,-tt,和-v会产生额外的警告和调试信息 <span id="line-48" class="anchor"/><span id="line-49" class="anchor"/></p><p class="line874">选项 -x 会忽略程序的第一行(例如,当第一行是启动Python解释器的脚本时). <span id="line-50" class="anchor"/><span id="line-51" class="anchor"/></p><p class="line874">选项 -U 强迫解释器将所有字符转化为Unicode.选项 -W 用于过滤警告信息(参阅附录A). <span id="line-52" class="anchor"/><span id="line-53" class="anchor"/></p><p class="line862">脚本名字在所有选项后出现。如果未提供文件名，或者提供了一个连字号(<tt class="backtick">-</tt>)作为文件名，解释器就从标准输入读入程序。如果标准输入是一个交互的终端,一个信息条和提示符就会出现.否则解释器就打开指定文件并运行它直到文件结束. <span id="line-54" class="anchor"/><span id="line-55" class="anchor"/></p><p
+class="line874">选项 -c cmd 用于以命令行选项的形式运行一个小脚本cmd。 <span id="line-56" class="anchor"/><span id="line-57" class="anchor"/></p><p class="line874">在程序名或hyphen()后的命令行参数会被传递给程序中的sys.argv (第九章中的 "读取参数和环境变量" 中介绍) <span id="line-58" class="anchor"/><span id="line-59" class="anchor"/></p><p class="line874">此外,解释器还读取以下的环境变量: <span id="line-60" class="anchor"/><span id="line-61" class="anchor"/></p><pre>变量                              描述
+<span id="line-62" class="anchor"/>PYTHONPATH              冒号分隔的模块搜索路径
+<span id="line-63" class="anchor"/>PYTHONSTARTUP           交互模式启动时自动运行的脚本
+<span id="line-64" class="anchor"/>PYTHONHOME              Python的安装位置
+<span id="line-65" class="anchor"/>PYTHONINSPECT           表示 -i 选项
+<span id="line-66" class="anchor"/>PYTHONUNBUFFERED        表示 -u 选项
+<span id="line-67" class="anchor"/>PYTHONCASEOK            import 语句 模块名大小写不敏感 (windows)
+<span id="line-68" class="anchor"/></pre><span id="line-69" class="anchor"/><p class="line874">PYTHONPATH指定一系列模块搜索路径,它将被插入到sys.path列表的前面。PYTHONSTARTUP指定一个脚本文件，当解释器交互方式启动时该脚本会自动运行.PYTHONHOME变量用于配置Python的安装位置,因为Python自己可以找到它的库以及包的地址,所以这个变量极少用到。如果这个变量包括一个目录,如/usr/local,则解释器就试图在这个目录查找所有文件。如果包括两个目录,例如/usr/local:/usr/local/sparc-solaris-2.6 ,解释器会在第一个目录中查找跨平台的文件,在第二个目录查找依赖平台的文件。 若指定目录没有有效的Python安装，则PYTHONHOME环境变量将被忽略。 <span id="line-70" class="anchor"/><span id="line-71" class="anchor"/></p><p
+class="line862">在Windows下,有些环境变量，比如PYTHONPATH等等,是从注册表的HKEY_LOCAL_MACHINE/Software/Python 中读入的。在Macintosh下, 使用<a href="/moin/EditPythonPrefs" class="nonexistent">EditPythonPrefs</a>程序可以改变这些环境变量。 <span id="line-72" class="anchor"/><span id="line-73" class="anchor"/></p><p class="line867">
+</p><h2 id="head-4f6678c28667837a86d94979a938021b27fd8ee9">1.2. 交互模式</h2>
+<span id="line-74" class="anchor"/><span id="line-75" class="anchor"/><p class="line862">在命令行下运行Python而不提供执行脚本,就自动进入Python的交互模式。Python会首先显示版本信息,如果PYTHONSTARTUP环境变量设置了有效的脚本，Python就会运行这个脚本，最后显示交互提示符 >>>。这个脚本会被当成用户输入程序的一部分被执行。(也就是说，它并不是以import语句导入的方式被执行的)该脚本的一个典型应用就是读取用户的配置文件(比如.pythonrc)。 <span id="line-76" class="anchor"/><span id="line-77" class="anchor"/></p><p class="line862">当接受一个交互输入时,会有两种用户提示。 >>>提示符你输入新的语句, ...提示输入你正处于一个缩进块。例如: <span id="line-78" class="anchor"/><span id="line-79" class="anchor"/></p><pre>Python 2.4.2 (#67, Sep 28 2005, 12:41:11) [MSC v.1310 32 bit (Intel)] on win32
+<span id="line-80" class="anchor"/>Type "copyright", "credits" or "license()" for more information.
+<span id="line-81" class="anchor"/>>>> for i in range(0,4):
+<span id="line-82" class="anchor"/>...     print i
+<span id="line-83" class="anchor"/>...
+<span id="line-84" class="anchor"/>0
+<span id="line-85" class="anchor"/>1
+<span id="line-86" class="anchor"/>2
+<span id="line-87" class="anchor"/>3
+<span id="line-88" class="anchor"/>>>>
+<span id="line-89" class="anchor"/></pre><span id="line-90" class="anchor"/><p class="line874">如果需要，修改sys.ps1和sys.ps2这两个变量你就可以自定义这两个提示。 <span id="line-91" class="anchor"/><span id="line-92" class="anchor"/></p><p class="line874">某些系统里, Python可能被编译为使用GNU readline库。如果该特性启用的话,该库就会提供命令历史,自动完成等其它特性。特殊关键字绑定由readline库提供(参见附录A readline模块)。 <span id="line-93" class="anchor"/><span id="line-94" class="anchor"/></p><p class="line874">默认情况下,如果你在交互模式输入一个表达式，则解释器会调用 print repr(你的表达式)来生成输出结果。从Python 2.1开始，你可以通过设置变量sys.displayhook来改变表达式的输出格式。例如: <span id="line-95" class="anchor"/><span id="line-96" class="anchor"/></p><pre>>>> def
+my_display(x):
+<span id="line-97" class="anchor"/>...     print "result = %s" % repr(x)
+<span id="line-98" class="anchor"/>...
+<span id="line-99" class="anchor"/>>>> sys.displayhook = my_display
+<span id="line-100" class="anchor"/>>>> 3+4
+<span id="line-101" class="anchor"/>result = 7
+<span id="line-102" class="anchor"/>>>>
+<span id="line-103" class="anchor"/></pre><p class="line874"> <span id="line-104" class="anchor"/><span id="line-105" class="anchor"/></p><p class="line867">
+</p><h2 id="head-26c6537c0c14b75e2e6e0609f4bf73f9413f7287">1.3. 运行Python程序</h2>
+<span id="line-106" class="anchor"/><span id="line-107" class="anchor"/><p class="line874">在多数情况下,你希望程序能自动启动解释器,而不是每次手动启动解释器。在UNIX下,你可以在程序的第一行使用魔术字符串告诉系统由哪个解释器来运行这个脚本: <span id="line-108" class="anchor"/><span id="line-109" class="anchor"/><span id="line-110" class="anchor"/><span id="line-111" class="anchor"/><span id="line-112" class="anchor"/><span id="line-113" class="anchor"/><span id="line-114" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-1e875827daf809cc60cae94c0d4eadd41ecdf4de_000\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-1e875827daf809cc60cae94c0d4eadd41ecdf4de_000', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-1e875827daf809cc60cae94c0d4eadd41ecdf4de_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#!/usr/local/bin/python</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="Comment"># Python code from this point on...</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"/><span class="ResWord">import</span> <span class="ID">string</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">print</span> <span class="String">"Hello world"</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="Operator">.</span><span class="Operator">.</span><span class="Operator">.</span><span class="Text"/></span>
+</pre></div><span id="line-115" class="anchor"/><p class="line874">在Windows 下,双击一个.py, .pyw, .wpy, .pyc 或者.pyo文件都会自动运行解释器。除 .pyw 后缀文件外(静默运行),其他的文件都会在一个控制台窗口中运行。如果必须给解释器提供启动选项, Python程序也可以由.bat文件启动运行。 <span id="line-116" class="anchor"/><span id="line-117" class="anchor"/></p><p class="line862">在Macintosh 下,点击一个.py文件通常会打开创建该脚本的编辑器。不过Macintosh发行版有两个特殊的程序用来创建应用程序。将一个 .py 拖到 <a href="/moin/BuildApplet" class="nonexistent">BuildApplet</a>
+程序就会将该脚本转换为一个应用程序(打开该文件即自动调用解释器)。 <a href="/moin/BuildApplication" class="nonexistent">BuildApplication</a> 程序则可以转换一个 Python 脚本成为一个独立运行的应用程序(不需要Python解释器就可以运行的应用程序)。 <span id="line-118" class="anchor"/><span id="line-119" class="anchor"/></p><p class="line867">
+</p><h2 id="head-566e4eb621baa6f212160f20da72e692f43e091a">1.4. Site配置文件</h2>
+<span id="line-120" class="anchor"/><span id="line-121" class="anchor"/><p class="line874">一个典型的Python安装可能会包括很多第三方模块和包，要配置这些包, 解释器首先导入site模块. site模块的任务就是搜索包文件,必要时向sys.path添加搜索目录。另外, site模块也设置Unicode字符串转换的默认编码。更多细节参阅附录A -- site模块. <span id="line-122" class="anchor"/><span id="line-123" class="anchor"/></p><p class="line867">
+</p><h2 id="head-b1b04d68fe3e81d7c040e1e2f4b05d06acf88ce9">1.5. 启用 Future 特性</h2>
+<span id="line-124" class="anchor"/><span id="line-125" class="anchor"/><p class="line862">从Python 2.1开始，当一个新的语言特性首次出现在发行版中时，如果该特性与旧版Python不兼容，则该特性将被默认禁用。要启用这些特性，使用语句<tt class="backtick">from __future__ import * </tt> 。举例来说： <span id="line-126" class="anchor"/><span id="line-127" class="anchor"/></p><pre># Enable nested scopes in Python 2.1
+<span id="line-128" class="anchor"/>from __future__ import nested_scopes
+<span id="line-129" class="anchor"/></pre><span id="line-130" class="anchor"/><p class="line862">如果使用这个语句，则该语句必须是模块或程序的第一个语句。此外，<tt class="backtick">__ future__</tt> 模块中存在的特性最终将成为Python语言标准的一部分。到那时，将不再需要使用<tt class="backtick">__future__</tt>模块。 <span id="line-131" class="anchor"/><span id="line-132" class="anchor"/></p><p class="line867">
+</p><h2 id="head-de9cfcc1ae23f132f4015ef2a5afce22c303b24d">1.6. 程序终止</h2>
+<span id="line-133" class="anchor"/><span id="line-134" class="anchor"/><p class="line862">当一个程序正常运行到最后一条语句,或者出现一个未捕获的<a href="/moin/SystemExit" class="nonexistent">SystemExit</a>异常(由sys.exit()产生)，或者解释器收到一个SIGTERM或者SIGHUP(在 UNIX下)信号时,程序就会终止。解释器会将所有已知名称空间下的所有对象对象的引用记数清为0(并同时删除所有的名称空间)。当一个对象的引用记数变为零,就会自动调用它的<tt class="backtick">__del__()</tt>来销毁该对象。*注意*
+当两个对象存在互相引用时，在程序结束时，这两个对象就无法被销毁(这会造成内存泄漏)。尽管Python的垃圾回收机制能在运行时删除这些对象,在程序结束时该机制不会被自动调用。 <span id="line-135" class="anchor"/><span id="line-136" class="anchor"/></p><p class="line862">由于不能保证对象的<tt class="backtick">__del__()</tt>方法在程序结束时一定会执行,一个比较好的办法就是在程序结束时显式的清除某些对象。例如打开的文件以及网络连接等。你可以给一个自定义对象写一个专门的销毁方法(例如close())，也可以写一个终止函数,并通过 atexit 模块将其注册到系统中: <span id="line-137" class="anchor"/><span id="line-138"
+class="anchor"/><span id="line-139" class="anchor"/><span id="line-140" class="anchor"/><span id="line-141" class="anchor"/><span id="line-142" class="anchor"/><span id="line-143" class="anchor"/><span id="line-144" class="anchor"/><span id="line-145" class="anchor"/><span id="line-146" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-d814f0cd0ecfca9ae3e8cea8540c70ce9498f69f_001\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-d814f0cd0ecfca9ae3e8cea8540c70ce9498f69f_001', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-d814f0cd0ecfca9ae3e8cea8540c70ce9498f69f_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">atexit</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">connection</span> <span class="Operator">=</span> <span class="ID">open_connection</span><span class="Operator">(</span><span class="String">"deaddot.com"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">def</span> <span class="ID">cleanup</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ResWord">print</span> <span class="String">"Going away..."</span></span>
+<span class="line"><span class="LineNumber">   6 </span>    <span class="ID">close_connection</span><span class="Operator">(</span><span class="ID">connection</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span></span>
+<span class="line"><span class="LineNumber">   8 </span><span class="ID">atexit</span><span class="Operator">.</span><span class="ID">register</span><span class="Operator">(</span><span class="ID">cleanup</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-147" class="anchor"/><p class="line874">也可以以这种方式来调用垃圾回收器: <span id="line-148" class="anchor"/><span id="line-149" class="anchor"/><span id="line-150" class="anchor"/><span id="line-151" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-868479be2df0f444768c8b7f155abb99b36424b9_002\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-868479be2df0f444768c8b7f155abb99b36424b9_002', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-868479be2df0f444768c8b7f155abb99b36424b9_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">atexit</span><span class="Operator">,</span> <span class="ID">gc</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">atexit</span><span class="Operator">.</span><span class="ID">register</span><span class="Operator">(</span><span class="ID">gc</span><span class="Operator">.</span><span class="ID">collect</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-152" class="anchor"/><p class="line862">当程序结束时，有些对象的 <tt class="backtick">__del__</tt> 方法会访问全局数据或者其他模块中的方法定义。由于这些对象可能已经被删除, <tt class="backtick">__del__</tt>方法就有可能引发<a href="/moin/NameError" class="nonexistent">NameError</a>异常。你有可能见到类似下边这样的出错信息: <span id="line-153" class="anchor"/><span id="line-154" class="anchor"/></p><pre>Exception exceptions.NameError: 'c' in <method Bar.__ del__ of Bar instance at c0310>
+<span id="line-155" class="anchor"/>...
+<span id="line-156" class="anchor"/></pre><span id="line-157" class="anchor"/><p class="line862">如果看到这个信息,说明某个对象的 <tt class="backtick">__del__</tt>方法执行失败，这通常意味着有一项重要操作没有完成(例如关闭一个服务器连接)。最好在代码中显式的执行清理操作,而不是依赖解释器来自动做这件事。通过在<tt class="backtick"> __del__()</tt>定义时使用默认参数能够避免这个罕见的 <a href="/moin/NameError" class="nonexistent">NameError</a> 异常,例如: <span id="line-158" class="anchor"/><span id="line-159" class="anchor"/><span id="line-160" class="anchor"/><span
+id="line-161" class="anchor"/><span id="line-162" class="anchor"/><span id="line-163" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-f60fc4b246c97421abe8738641194d748d318157_003\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-f60fc4b246c97421abe8738641194d748d318157_003', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-f60fc4b246c97421abe8738641194d748d318157_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">foo</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">class</span> <span class="ID">Bar</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>   <span class="ResWord">def</span> <span class="ID">__</span> <span class="ID">del__</span> <span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">foo</span><span class="Operator">=</span><span class="ID">foo</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>      <span class="ID">foo</span><span class="Operator">.</span><span class="ID">bar</span><span class="Operator">(</span><span class="Operator">)</span>        <span class="Comment"># 在模块foo中使用某些东西</span><span class="Text"/></span>
+</pre></div><span id="line-164" class="anchor"/><p class="line874">有时（罕见）必须立刻终止程序,不需要做任何清理操作。这时调用 os._exit(status)即可。这个函数提供一个低层次exit()系统调用接口,当调用它时,程序会立即停止。 <span id="line-165" class="anchor"/><span id="bottom" class="anchor"/></p></div>

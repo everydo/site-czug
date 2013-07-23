@@ -1,0 +1,21 @@
+
+ <p>这是来自Plone的网站的热门书籍：</p><br />
+
+ <div class="portletBody">
+  <div class="portletContent odd" align="center">
+   <a href="http://plone.org/books/definitive_guide" title="The Definitive Guide to Plone"><img alt="" src="http://images.amazon.com/images/P/1590593294.01.THUMBZZZ.jpg" /><br />
+   The Definitive Guide to Plone</a><br />
+   <span>Andy McKay</span><br />
+   <img src="http://g-images.amazon.com/images/G/01/detail/stars-4-5.gif" alt="4.5 stars" />
+  </div>
+ </div>
+
+ <p><br />
+ 这本书共有14章，可喜的是，目前前9章已经使用Creative Commons
+ Attribution-NonCommercial-ShareAlike的授权开放了出来，重新命名为《New PloneBook》。<br />
+ <br />
+ 因此我辛苦了一下，把这本书从cvs中扒下来了，并<a href="/docs/plone/newplonebook/FrontPage">放入到了wiki中</a>，便于大家阅读，也同时想组织一下中文翻译，让初学者能够坐上这个直通车。<br />
+
+ <br />
+ 其他关于这本书的链接包括 <a href="http://blog.tcchou.org/Members/tcchou/misc/plone_guide">tcchou的介绍</a>，和<a href="http://www.zope.org.tw/Members/joeysj/folder.2004-08-08.3675135973/NewPloneBookNews">
+ zope.org.tw的介绍</a>。</p>

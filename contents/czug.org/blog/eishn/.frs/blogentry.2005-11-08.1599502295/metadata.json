@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "blogentry.2005-11-08.1599502295"
+    }, 
+    "dublin": {
+        "creators": [
+            "eishn"
+        ], 
+        "description": "通常，我们能够清醒地知道我们是否真正需要一个使用 Python 来编制的服务。其中最简单的一个场合是: 当所有应用逻辑都是使用 Python 来完成的时候，也许我们将不得不继续使用 Python 来完成整个服务架构……", 
+        "modified": "2005-11-08 11:27:49", 
+        "title": "使用 Zope3 技术建立 Python 服务 (Unix 版本)"
+    }
+}

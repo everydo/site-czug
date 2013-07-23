@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "X_e5_a6_82_e4_bd_95_e5_ae_9a_e5_88_b6Plone_e7_9a_84_e9_a1_b5_e9_a6_96_e6_a0_87_e7_ad_be"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "", 
+        "modified": "2005-12-14 14:34:25", 
+        "title": "如何定制Plone的页首标签"
+    }
+}

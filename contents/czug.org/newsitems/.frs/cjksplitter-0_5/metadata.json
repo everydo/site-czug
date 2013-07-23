@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "cjksplitter-0_5"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "一年多的酝酿CJKSplitter 0.5出炉了！他使得zope能够更好的支持中文搜索。", 
+        "modified": "2004-02-07 04:04:59", 
+        "title": "CJKSplitter 0.5发布！"
+    }
+}

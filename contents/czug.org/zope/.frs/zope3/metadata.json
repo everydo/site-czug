@@ -1,0 +1,11 @@
+{
+    "main": {
+        "keys": ["preface.rst", "introduction", "ca", "bfg", "deliverance","model", "view", "view2", "kss", "event", "i18n", "security", "deploy", "test", "components", "debug", "ref" ],
+        "left_col": ".. navtree:: \n   :root_depth: 3",
+        "contenttype": "Folder"
+    }, 
+    "dublin": {
+        "description": "在线的zope3书籍", 
+        "title": "Zope 3"
+    }
+}

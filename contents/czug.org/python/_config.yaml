@@ -1,0 +1,5 @@
+description: ''
+exclude: []
+order: [kepu.rst, tutorial, articles, faq, abyteofpython, pyessentialref, diveintopython,
+  wxpythoninaction, pyqt4, startprogramming, django]
+title: Python

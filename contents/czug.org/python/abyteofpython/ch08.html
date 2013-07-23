@@ -1,0 +1,211 @@
+<p>出处： <a href="http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch08.html">http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch08.html</a></p>
+
+<h1>第8章 模块</h1>
+<p><strong>目录表</strong></p>
+<dl>
+<dt><a href="#s01">简介</a></dt>
+<dd><a href="#ch08.html#using">使用sys模块</a></dd>
+<dt><a href="#ch08s02.html">字节编译的.pyc文件</a></dt>
+<dt><a href="#ch08s03.html">from..import语句</a></dt>
+<dt><a href="#ch08s04.html">模块的__name__</a></dt>
+<dd><a href="#ch08s04.html#using">使用模块的__name__</a></dd>
+<dt><a href="#ch08s05.html">制造你自己的模块</a></dt>
+<dd><a href="#ch08s05.html#creating">创建你自己的模块</a></dd>
+<dd><a href="#ch08s05.html#from">from..import</a></dd>
+<dt><a href="#ch08s06.html">dir()函数</a></dt>
+<dd><a href="#ch08s06.html#using">使用dir函数</a></dd>
+<dt><a href="#ch08s07.html">概括</a></dt>
+</dl>
+
+<h1><a name="s01">简介</a></h1>
+<p>你已经学习了如何在你的程序中定义一次函数而重用代码。如果你想要在其他程序中重用很多函数，那么你该如何编写程序呢？你可能已经猜到了，答案是使用模块。模块基本上就是一个包含了所有你定义的函数和变量的文件。为了在其他程序中重用模块，模块的文件名<strong>必须</strong>以<code>.py</code>为扩展名。</p>
+<p>模块可以从其他程序 <dfn>输入</dfn> 以便利用它的功能。这也是我们使用Python标准库的方法。首先，我们将学习如何使用标准库模块。</p>
+
+<h2><a name="using">使用sys模块</a></h2>
+<p class="exampletitle"><a name="e81">例8.1 使用sys模块</a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: using_sys.py</code><br>
+<br>
+<code class="key">import </code><code class="func">sys</code><br>
+<br>
+<code class="key">print </code><code class="cite">'The command line arguments are:'</code><br>
+<code class="key">for </code><code>i </code><code class="key">in </code><code class="func">sys</code><code>.argv:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code>i</code><br>
+<br>
+<code class="key">print </code><code class="cite">'\n\nThe PYTHONPATH is'</code><code>, </code><code class="func">sys</code><code>.path, </code><code class="cite">'\n'</code>
+</p>
+<p>（源文件：<a href="code/using_sys.py">code/using_sys.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python using_sys.py we are arguments<br>
+The command line arguments are:<br>
+using_sys.py<br>
+we<br>
+are<br>
+arguments<br>
+<br>
+<br>
+The PYTHONPATH is ['/home/swaroop/byte/code', '/usr/lib/python23.zip',<br>
+'/usr/lib/python2.3', '/usr/lib/python2.3/plat-linux2',<br>
+'/usr/lib/python2.3/lib-tk', '/usr/lib/python2.3/lib-dynload',<br>
+'/usr/lib/python2.3/site-packages', '/usr/lib/python2.3/site-packages/gtk-2.0']</code></p>
+
+<h2>它如何工作</h2>
+<p>首先，我们利用<code>import</code>语句 <dfn>输入</dfn> <code>sys</code>模块。基本上，这句语句告诉Python，我们想要使用这个模块。<code>sys</code>模块包含了与Python解释器和它的环境有关的函数。</p>
+<p>当Python执行<code>import sys</code>语句的时候，它在<code>sys.path</code>变量中所列目录中寻找<code>sys.py</code>模块。如果找到了这个文件，这个模块的主块中的语句将被运行，然后这个模块将能够被你 <dfn>使用</dfn> 。注意，初始化过程仅在我们 <dfn>第一次</dfn> 输入模块的时候进行。另外，“sys”是“system”的缩写。</p>
+<p><code>sys</code>模块中的<code>argv</code>变量通过使用点号指明——<code>sys.argv</code>——这种方法的一个优势是这个名称不会与任何在你的程序中使用的<code>argv</code>变量冲突。另外，它也清晰地表明了这个名称是<code>sys</code>模块的一部分。</p>
+<p><code>sys.argv</code>变量是一个字符串的 <dfn>列表</dfn> （列表会在后面的<a href="#ch09s02.html">章节</a>详细解释）。特别地，<code>sys.argv</code>包含了 <dfn>命令行参数</dfn> 的列表，即使用命令行传递给你的程序的参数。</p>
+<p>如果你使用IDE编写运行这些程序，请在菜单里寻找一个指定程序的命令行参数的方法。</p>
+<p>这里，当我们执行<code>python using_sys.py we are arguments</code>的时候，我们使用<strong>python</strong>命令运行<code>using_sys.py</code>模块，后面跟着的内容被作为参数传递给程序。Python为我们把它存储在<code>sys.argv</code>变量中。</p>
+<p>记住，脚本的名称总是<code>sys.argv</code>列表的第一个参数。所以，在这里，<code>'using_sys.py'</code>是<code>sys.argv[0]</code>、<code>'we'</code>是<code>sys.argv[1]</code>、<code>'are'</code>是<code>sys.argv[2]</code>以及<code>'arguments'</code>是<code>sys.argv[3]</code>。注意，Python从0开始计数，而非从1开始。</p>
+<p><code>sys.path</code>包含输入模块的目录名列表。我们可以观察到<code>sys.path</code>的第一个字符串是空的——这个空的字符串表示当前目录也是<code>sys.path</code>的一部分，这与<code>PYTHONPATH</code>环境变量是相同的。这意味着你可以直接输入位于当前目录的模块。否则，你得把你的模块放在<code>sys.path</code>所列的目录之一。</p>
+
+
+<h1><a name="ch08s02.html">字节编译的.pyc文件</a></h1>
+<p>输入一个模块相对来说是一个比较费时的事情，所以Python做了一些技巧，以便使输入模块更加快一些。一种方法是创建 <dfn>字节编译的文件</dfn> ，这些文件以<code>.pyc</code>作为扩展名。字节编译的文件与Python变换程序的中间状态有关（是否还记得<a href="ch01s02.html#intermediate">Python如何工作的介绍</a>？）。当你在下次从别的程序输入这个模块的时候，<code>.pyc</code>文件是十分有用的——它会快得多，因为一部分输入模块所需的处理已经完成了。另外，这些字节编译的文件也是与平台无关的。所以，现在你知道了那些<code>.pyc</code>文件事实上是什么了。</p>
+
+
+<h1><a name="ch08s03.html">from..import语句</a></h1>
+<p>如果你想要直接输入<code>argv</code>变量到你的程序中（避免在每次使用它时打<code>sys.</code>），那么你可以使用<code>from sys import argv</code>语句。如果你想要输入所有<code>sys</code>模块使用的名字，那么你可以使用<code>from sys import *</code>语句。这对于所有模块都适用。一般说来，应该避免使用<code>from..import</code>而使用<code>import</code>语句，因为这样可以使你的程序更加易读，也可以避免名称的冲突。</p>
+
+
+<h1><a name="ch08s04.html">模块的__name__</a></h1>
+<p>每个模块都有一个名称，在模块中可以通过语句来找出模块的名称。这在一个场合特别有用——就如前面所提到的，当一个模块被第一次输入的时候，这个模块的主块将被运行。假如我们只想在程序本身被使用的时候运行主块，而在它被别的模块输入的时候不运行主块，我们该怎么做呢？这可以通过<a name="ch08s04.html">模块的__name__</a>属性完成。</p>
+
+<h2><a name="using">使用<a name="ch08s04.html">模块的__name__</a></a></h2>
+<p class="exampletitle"><a name="e82">例8.2 使用<a name="ch08s04.html">模块的__name__</a></a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: using_name.py</code><br>
+<br>
+<code class="key">if </code><code>__name__ == </code><code class="cite">'__main__'</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'This program is being run by itself'</code><br>
+<code class="key">else</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'I am being imported from another module'</code>
+</p>
+<p>（源文件：<a href="code/using_name.py">code/using_name.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python using_name.py<br>
+This program is being run by itself<br>
+<br>
+$ python<br>
+&gt;&gt;&gt; import using_name<br>
+I am being imported from another module<br>
+&gt;&gt;&gt;
+</code></p>
+
+<h2>它如何工作</h2>
+<p>每个Python模块都有它的<code>__name__</code>，如果它是<code>'__main__'</code>，这说明这个模块被用户单独运行，我们可以进行相应的恰当操作。</p>
+
+
+<h1><a name="ch08s05.html">制造你自己的模块</a></h1>
+<p>创建你自己的模块是十分简单的，你一直在这样做！每个Python程序也是一个模块。你已经确保它具有<code>.py</code>扩展名了。下面这个例子将会使它更加清晰。</p>
+
+<h2><a name="creating">创建你自己的模块</a></h2>
+<p class="exampletitle"><a name="e83">例8.3 如何创建你自己的模块</a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: mymodule.py</code><br>
+<br>
+<code class="key">def </code><code class="func">sayhi</code><code>():</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Hi, this is mymodule speaking.'</code><br>
+<br>
+<code>version = </code><code class="cite">'0.1'</code><br>
+<br>
+<code class="comment"># End of mymodule.py</code>
+</p>
+<p>（源文件：<a href="code/mymodule.py">code/mymodule.py</a>）</p>
+
+<p>上面是一个 <dfn>模块</dfn> 的例子。你已经看到，它与我们普通的Python程序相比并没有什么特别之处。我们接下来将看看如何在我们别的Python程序中使用这个模块。</p>
+<p>记住这个模块应该被放置在我们输入它的程序的同一个目录中，或者在<code>sys.path</code>所列目录之一。</p>
+
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: mymodule_demo.py</code><br>
+<br>
+<code class="key">import </code><code>mymodule</code><br>
+<br>
+<code>mymodule.sayhi()</code><br>
+<code class="key">print </code><code class="cite">'Version'</code><code>, mymodule.version</code>
+</p>
+<p>（源文件：<a href="code/mymodule_demo.py">code/mymodule_demo.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python mymodule_demo.py<br>
+Hi, this is mymodule speaking.<br>
+Version 0.1
+</code></p>
+
+<h2>它如何工作</h2>
+<p>注意我们使用了相同的点号来使用模块的成员。Python很好地重用了相同的记号来，使我们这些Python程序员不需要不断地学习新的方法。</p>
+
+<h2><a name="from">from..import</a></h2>
+<p>下面是一个使用<code>from..import</code>语法的版本。</p>
+
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: mymodule_demo2.py</code><br>
+<br>
+<code class="key">from </code><code>mymodule </code><code class="key">import </code><code>sayhi, version</code><br>
+<code class="comment"># Alternative:<br>
+# from mymodule import *</code><br>
+<br>
+<code>sayhi()</code><br>
+<code class="key">print </code><code class="cite">'Version'</code><code>, version</code>
+</p>
+<p>（源文件：<a href="code/mymodule_demo2.py">code/mymodule_demo2.py</a>）</p>
+
+<p><code>mymodule_demo2.py</code>的输出与<code>mymodule_demo.py</code>完全相同。</p>
+
+
+<h1><a name="ch08s06.html">dir()函数</a></h1>
+<p>你可以使用内建的<code>dir</code>函数来列出模块定义的标识符。标识符有函数、类和变量。</p>
+<p>当你为<code>dir()</code>提供一个模块名的时候，它返回模块定义的名称列表。如果不提供参数，它返回当前模块中定义的名称列表。</p>
+
+<h2><a name="using">使用dir函数</a></h2>
+<p class="exampletitle"><a name="e84">例8.4 使用dir函数</a></p>
+<p class="codebox"><code>
+$ python<br>
+&gt;&gt;&gt; import sys<br>
+&gt;&gt;&gt; dir(sys) # get list of attributes for sys module<br>
+['__displayhook__', '__doc__', '__excepthook__', '__name__', '__stderr__',<br>
+'__stdin__', '__stdout__', '_getframe', 'api_version', 'argv',<br>
+'builtin_module_names', 'byteorder', 'call_tracing', 'callstats',<br>
+'copyright', 'displayhook', 'exc_clear', 'exc_info', 'exc_type',<br>
+'excepthook', 'exec_prefix', 'executable', 'exit', 'getcheckinterval',<br>
+'getdefaultencoding', 'getdlopenflags', 'getfilesystemencoding',<br>
+'getrecursionlimit', 'getrefcount', 'hexversion', 'maxint', 'maxunicode',<br>
+'meta_path','modules', 'path', 'path_hooks', 'path_importer_cache',<br>
+'platform', 'prefix', 'ps1', 'ps2', 'setcheckinterval', 'setdlopenflags',<br>
+'setprofile', 'setrecursionlimit', 'settrace', 'stderr', 'stdin', 'stdout',<br>
+'version', 'version_info', 'warnoptions']<br>
+&gt;&gt;&gt; dir() # get list of attributes for current module<br>
+['__builtins__', '__doc__', '__name__', 'sys']<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; a = 5 # create a new variable 'a'<br>
+&gt;&gt;&gt; dir()<br>
+['__builtins__', '__doc__', '__name__', 'a', 'sys']<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; del a # delete/remove a name<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; dir()<br>
+['__builtins__', '__doc__', '__name__', 'sys']<br>
+&gt;&gt;&gt;
+</code></p>
+
+<h2>它如何工作</h2>
+<p>首先，我们来看一下在输入的<code>sys</code>模块上使用<code>dir</code>。我们看到它包含一个庞大的属性列表。</p>
+<p>接下来，我们不给<code>dir</code>函数传递参数而使用它——默认地，它返回当前模块的属性列表。注意，输入的模块同样是列表的一部分。</p>
+<p>为了观察<code>dir</code>的作用，我们定义一个新的变量<code>a</code>并且给它赋一个值，然后检验<code>dir</code>，我们观察到在列表中增加了以上相同的值。我们使用<code>del</code>语句删除当前模块中的变量/属性，这个变化再一次反映在<code>dir</code>的输出中。</p>
+<p>关于<code>del</code>的一点注释——这个语句在运行后被用来 <dfn>删除</dfn> 一个变量/名称。在这个例子中，<code>del a</code>，你将无法再使用变量<code>a</code>——它就好像从来没有存在过一样。</p>
+
+
+<h1><a name="ch08s07.html">概括</a></h1>
+<p>模块的用处在于它能为你在别的程序中重用它提供的服务和功能。Python附带的标准库就是这样一组模块的例子。我们已经学习了如何使用这些模块以及如何创造我们自己的模块。</p>
+<p>接下来，我们将学习一些有趣的概念，它们称为数据结构。</p>
+

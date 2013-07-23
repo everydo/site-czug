@@ -1,0 +1,76 @@
+<p>出处： <a href="http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch01.html">http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch01.html</a></p>
+
+<h1>第1章 介绍</h1>
+
+<p><strong>目录表</strong></p>
+<dl>
+<dt><a href="#s01">简介</a></dt>
+<dt><a href="#ch01s02.html">Python的特色</a></dt>
+<dd><a href="#ch01s02.html#summary">概括</a></dd>
+<dt><a href="#ch01s03.html">为什么不使用Perl？</a></dt>
+<dt><a href="#ch01s04.html">程序员的话</a></dt>
+</dl>
+
+<h1><a name="s01">简介</a></h1>
+<p>Python语言是少有的一种可以称得上即<strong>简单</strong>又<strong>功能强大</strong>的编程语言。你将惊喜地发现Python语言是多么地简单，它注重的是如何解决问题而不是编程语言的语法和结构。</p>
+<p>Python的官方介绍是：</p>
+<blockquote>
+<p>Python是一种简单易学，功能强大的编程语言，它有高效率的高层数据结构，简单而有效地实现面向对象编程。Python简洁的语法和对动态输入的支持，再加上解释性语言的本质，使得它在大多数平台上的许多领域都是一个理想的脚本语言，特别适用于快速的应用程序开发。</p>
+</blockquote>
+<p>我会在下一节里详细地讨论Python的这些特点。</p>
+
+<p class="notebox">
+<span class="boxtitle">注释</span><br>
+Python语言的创造者Guido van Rossum是根据英国广播公司的节目“蟒蛇飞行马戏”命名这个语言的，并非他本人特别喜欢蛇缠起它们的长身躯碾死动物觅食。
+</p>
+
+
+<h1><a name="ch01s02.html">Python的特色</a></h1>
+<dl>
+<dt>简单</dt>
+<dd><p>Python是一种代表简单主义思想的语言。阅读一个良好的Python程序就感觉像是在读英语一样，尽管这个英语的要求非常严格！Python的这种伪代码本质是它最大的优点之一。它使你能够专注于解决问题而不是去搞明白语言本身。</p></dd>
+<dt>易学</dt>
+<dd><p>就如同你即将看到的一样，Python极其容易上手。前面已经提到了，Python有极其简单的语法。</p></dd>
+<dt>免费、开源</dt>
+<dd><p>Python是FLOSS（自由/开放源码软件）之一。简单地说，你可以自由地发布这个软件的拷贝、阅读它的源代码、对它做改动、把它的一部分用于新的自由软件中。FLOSS是基于一个团体分享知识的概念。这是为什么Python如此优秀的原因之一——它是由一群希望看到一个更加优秀的Python的人创造并经常改进着的。</p></dd>
+<dt>高层语言</dt>
+<dd><p>当你用Python语言编写程序的时候，你无需考虑诸如如何管理你的程序使用的内存一类的底层细节。</p></dd>
+<dt>可移植性</dt>
+<dd><p>由于它的开源本质，Python已经被移植在许多平台上（经过改动使它能够工作在不同平台上）。如果你小心地避免使用依赖于系统的特性，那么你的所有Python程序无需修改就可以在下述任何平台上面运行。</p>
+<p>这些平台包括Linux、Windows、FreeBSD、Macintosh、Solaris、OS/2、Amiga、AROS、AS/400、BeOS、OS/390、z/OS、Palm OS、QNX、VMS、Psion、Acom RISC OS、VxWorks、PlayStation、Sharp Zaurus、Windows CE甚至还有PocketPC！</p></dd>
+<dt>解释性</dt>
+<dd><p>这一点需要一些解释。</p>
+<p>一个用编译性语言比如C或C++写的程序可以从源文件（即C或C++语言）转换到一个你的计算机使用的语言（二进制代码，即0和1）。这个过程通过编译器和不同的标记、选项完成。当你运行你的程序的时候，连接/转载器软件把你的程序从硬盘复制到内存中并且运行。</p>
+<p><a name="intermediate"></a>而Python语言写的程序不需要编译成二进制代码。你可以直接从源代码 <dfn>运行</dfn> 程序。在计算机内部，Python解释器把源代码转换成称为字节码的中间形式，然后再把它翻译成计算机使用的机器语言并运行。事实上，由于你不再需要担心如何编译程序，如何确保连接转载正确的库等等，所有这一切使得使用Python更加简单。由于你只需要把你的Python程序拷贝到另外一台计算机上，它就可以工作了，这也使得你的Python程序更加易于移植。</p></dd>
+<dt>面向对象</dt>
+<dd><p>Python即支持面向过程的编程也支持面向对象的编程。在 <dfn>面向过程</dfn> 的语言中，程序是由过程或仅仅是可重用代码的函数构建起来的。在 <dfn>面向对象</dfn> 的语言中，程序是由数据和功能组合而成的对象构建起来的。与其他主要的语言如C++和Java相比，Python以一种非常强大又简单的方式实现面向对象编程。</p></dd>
+<dt>可扩展性</dt>
+<dd><p>如果你需要你的一段关键代码运行得更快或者希望某些算法不公开，你可以把你的部分程序用C或C++编写，然后在你的Python程序中使用它们。</p></dd>
+<dt>可嵌入性</dt>
+<dd><p>你可以把Python嵌入你的C/C++程序，从而向你的程序用户提供脚本功能。</p></dd>
+<dt>丰富的库</dt>
+<dd><p>Python标准库确实很庞大。它可以帮助你处理各种工作，包括正则表达式、文档生成、单元测试、线程、数据库、网页浏览器、CGI、FTP、电子邮件、XML、XML-RPC、HTML、WAV文件、密码系统、GUI（图形用户界面）、Tk和其他与系统有关的操作。记住，只要安装了Python，所有这些功能都是可用的。这被称作Python的“功能齐全”理念。</p>
+<p>除了标准库以外，还有许多其他高质量的库，如<a href="http://www.wxpython.org">wxPython</a>、<a href="http://www.twistedmatrix.com/products/twisted">Twisted</a>和<a href="http://www.pythonware.com/products/pil/index.htm">Python图像库</a>等等。</p></dd>
+</dl>
+
+<h2><a name="summary">概括</a></h2>
+<p>Python确实是一种十分精彩又强大的语言。它合理地结合了高性能与使得编写程序简单有趣的特色。</p>
+
+
+<h1><a name="ch01s03.html">为什么不使用Perl？</a></h1>
+<p>也许你以前并不知道，Perl是另外一种极其流行的开源解释性编程语言。</p>
+<p>如果你曾经尝试过用Perl语言编写一个大程序，你一定会自己回答这个问题。在规模较小的时候，Perl程序是简单的。它可以胜任于小型的应用程序和脚本，“使工作完成”。然而，当你想开始写一些大一点的程序的时候，Perl程序就变得不实用了。我是通过为Yahoo编写大型Perl程序的经验得出这样的总结的！</p>
+<p>与Perl相比，Python程序一定会更简单、更清晰、更易于编写，从而也更加易懂、易维护。我确实也很喜欢Perl，用它来做一些日常的各种事情。不过当我要写一个程序的时候，我总是想到使用Python，这对我来说已经成了十分自然的事。Perl已经经历了多次大的修正和改变，遗憾的是，即将发布的Perl 6似乎仍然没有在这个方面做什么改进。</p>
+<p>我感到Perl唯一也是十分重要的优势是它庞大的<a href="http://cpan.perl.org">CPAN</a>库——综合Perl存档网络。就如同这个名字所指的意思一样，这是一个巨大的Perl模块集，它大得让人难以置信——你几乎用这些模块在计算机上做任何事情。Perl的模块比Python多的原因之一是Perl拥有更加悠久的历史。或许我会在<a href="http://groups.google.com/groups?q=comp.lang.python">comp.lang.python</a>上建议把Perl模块移植到Python上的计划。</p>
+<p>另外，新的<a href="http://www.parrotcode.org">Parrot虚拟机</a>按设计可以运行完全重新设计的Perl 6也可以运行Python和其他解释性语言如Ruby、PHP和Tcl等等。这意味着你将来 <dfn>或许</dfn> 可以在Python上使用所有Perl的模块。这将成为两全其美的事——强大的CPAN库与强大的Python语言结合在一起。我们将拭目以待。</p>
+
+
+<h1><a name="ch01s04.html">程序员的话</a></h1>
+<p>读一下像ESR这样的超级电脑高手谈Python的话，你会感到十分有意思：</p>
+<ul>
+<li><p><strong>Eric S. Raymond</strong>是《The Cathedral and the Bazaar》的作者、“开放源码”一词的提出人。他说<a href="http://linuxjournal.com/article.php?sid=3882">Python已经成为了他最喜爱的编程语言</a>。这篇文章也是促使我第一次接触Python的真正原动力。</p></li>
+<li><p><strong>Bruce Eckel</strong>著名的《Thinking in Java》和《Thinking in C++》的作者。他说没有一种语言比得上Python使他的工作效率如此之高。同时他说Python可能是唯一一种旨在帮助程序员把事情弄得更加简单的语言。请阅读<a href="http://www.artima.com/inv/aboutme.html">完整的采访</a>以获得更详细的内容。</p></li>
+<li><p><strong>Peter Norvig</strong>是著名的Lisp语言书籍的作者和Google公司的搜索质量主任（感谢Guido van Rossum告诉我这一点）。他说Python始终是Google的主要部分。事实上你看一下<a href="http://www.google.com/jobs/index.html">Google招聘</a>的网页就可以验证这一点。在那个网页上，Python知识是对软件工程师的一个必需要求。</p></li>
+<li><p><strong>Bruce Perens</strong>是OpenSource.org和UserLinux项目的一位共同创始人。UserLinux旨在创造一个可以被多家发行商支持标准的Linux发行版。Python击败了其它竞争对手如Perl和Ruby成为UserLinux支持的主要编程语言。</p></li>
+</ul>
+

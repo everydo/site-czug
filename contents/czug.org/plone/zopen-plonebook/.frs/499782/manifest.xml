@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<manifest xmlns="http://zopechina.com/ns/frs"
+           xmlns:tal="http://xml.zope.org/namespaces/tal"
+           contenttype="Document"
+           uid="11530606f24b340f83b9ad60cf6ddf8d">
+
+
+    <entry type="primary_field"
+           name="text"
+           mimetype="text/x-rst"
+           filename=""
+           fullpath=""/>
+
+
+    <entry type="xns"
+           name=""
+           mimetype="text/xml"
+           filename="499782.xml"
+           fullpath="xns.xml"/>
+
+
+</manifest>

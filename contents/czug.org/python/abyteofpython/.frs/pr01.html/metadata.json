@@ -1,0 +1,12 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "pr01.html"
+    }, 
+    "dublin": {
+        "creators": [
+            "Benky"
+        ], 
+        "title": "前言"
+    }
+}

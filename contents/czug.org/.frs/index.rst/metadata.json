@@ -1,0 +1,12 @@
+{
+      "main": {
+        "left_col":".. include:: index_left_col.rst",
+        "contenttype": "Document",
+        "hidden_keys": "img"
+          },
+      "dublin": {
+          "description": "这里是Zope开源web应用服务器和Plone开源内容管理系统的中文技术社区。",
+           "title": "首页"
+      }
+}
+

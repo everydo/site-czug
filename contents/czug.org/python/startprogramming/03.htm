@@ -1,0 +1,739 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-3" class="anchor"/><p class="line867"><strong> <span id="line-4" class="anchor"/><a href="/moin/StartProgramming"> （首页）开始编程之旅</a> <span id="line-5" class="anchor"/>翻译自Lee Harr的<a href="http://staff.easthighschool.net/lee/computers/book/Start_Programming.html" class="http">Start Programming</a> <span id="line-6" class="anchor"/><span id="line-7" class="anchor"/></strong></p><p class="line862"><strong>本文是使用<a href="http://www.nongnu.org/pygsear/" class="http">pygsear</a>+<a href="http://pygame.org" class="http">pygame</a>作为开发环境，以初级用户角度来分步分阶段学习<a href="http://www.python.org"
+class="http">PYTHON</a>基本概念，并以小游戏开发项目为具体案例，介绍的十分详细。编写风格清新朴实，没有象一般教科书那样枯燥，极其适合初级用户来激发兴趣时使用。 <span id="line-8" class="anchor"/></strong> <span id="line-9" class="anchor"/></p>
+
+<div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-22a1e8616c89911242c7c0ec191254e56929929a">StartProgramming-2-1 引入Import</a></li>
+<li><a href="#head-29a3e5e9a0355f4253963a099a4c3060619fdce0">StartProgramming-2-2 随机Random</a><ol><li><a href="#head-adf0e4b47d1aae5cc8a7f328545e8ff631c9c52a">randrange</a></li><li><a href="#head-6b3f0193028f429827293bb638a33f01ba24154b">shuffle</a></li><li><a href="#head-871831d7d5b076521dde898e86f37ddcb88bf94d">choice</a></li><li><a href="#head-f6d48a619e87197f7e30a6fd4f74a7ae9ca36464">uniform</a></li></ol></li>
+<li><a href="#head-899c27e35f8307588276aff67ab0c435f006eec7">StartProgramming-2-3 命名空间Namespaces</a><ol><li><a href="#head-b7972900c39042329be32f5b46db7facc75de80e">from</a></li><li><a href="#head-fd86b82a42b87f4006fdcf0af868ab45c74fc122">locals, globals, builtins</a></li>
+<div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-0f56a68f3e7d328d0533e34902f4fd50d7f33b50">StartProgramming-2-4 Functions</a><ol><li><a href="#head-9d39556111fa7594eef55a0ffc4019b477ba2a87">import导入</a></li><li><a href="#head-ccae7a9c512cdadaf8baf1e76ae882e1c2e71660">global全局</a></li></ol></li>
+<li><a href="#head-b7c14c9237fc6a0cb59b5ff318d0ba54970a9b54">StartProgramming-2-5 类Classes</a><ol><li><a href="#head-603941ab6c3b7f8143d29deffc4f62f60b583b65">class Ball球类</a></li><li><a href="#head-26582e40ac7b6131605fe0608dc25c4803c77bde">reload重载</a></li><li><a href="#head-fee9e81d6e42cf94dde06cd2121bec79f3725400">color颜色</a></li><li><a href="#head-80a98fe7e3bb552f1b5193547ca214f0debebc14">get and set获取和设置</a></li><li><a
+href="#head-5f025afb295c8fee3d9bad9f08da7e3f5a6ab291">bounce弹起</a></li><li><a href="#head-57150c8e1542ff940cf2766e841ac1420ca82db5">__init__</a></li><li><a href="#head-7f13ad02c49419832a7a74f3b027be7ba04bf94e">Inheritance继承</a></li><li><a href="#head-989dd4e722d86405dc57ec0876ad28002150faa5">Add, Override, Extend加入，替换，扩展</a></li></ol></li>
+<li><a href="#head-64c3845316ec37d4b6495f7200f3ac8b8930c87a">StartProgramming-2-6 Exercises</a></li></ol></div>
+
+
+<span id="line-10" class="anchor"/>
+<h1 id="head-22a1e8616c89911242c7c0ec191254e56929929a">1. StartProgramming-2-1 引入Import</h1>
+<span id="line-11" class="anchor"/><span id="line-12" class="anchor"/><p class="line874">At the top of most Python programs, you will see import statements like this: <span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></p><p class="line867"><strong>在大部分的Python程序的开头，你都会看到 import 语句：</strong> <span id="line-15" class="anchor"/><span id="line-16" class="anchor"/></p><p class="line867"><span id="line-17" class="anchor"/><span id="line-18" class="anchor"/><span id="line-19" class="anchor"/><span id="line-20" class="anchor"/><span id="line-21" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-6fcb52862eaa4624b4497fe2ab8538675d4b6f4b_000\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-6fcb52862eaa4624b4497fe2ab8538675d4b6f4b_000', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-6fcb52862eaa4624b4497fe2ab8538675d4b6f4b_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">random</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">import</span> <span class="ID">os</span><span class="Operator">.</span><span class="ID">path</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">from</span> <span class="ID">math</span> <span class="ResWord">import</span> <span class="ID">sqrt</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">from</span> <span class="ID">penguin</span> <span class="ResWord">import</span> <span class="Operator">*</span><span class="Text"/></span>
+</pre></div><span id="line-22" class="anchor"/><span id="line-23" class="anchor"/><p class="line874">The import statement lets you quickly and easily load in python modules. <span id="line-24" class="anchor"/><span id="line-25" class="anchor"/></p><p class="line867"><strong>import 语句可以使我们快速并且简单在python中的加载组件.</strong> <span id="line-26" class="anchor"/><span id="line-27" class="anchor"/></p><p class="line874">Modules are useful code that is already written -- either code which someone else wrote or your own code. Before starting any programming project, it is a good idea to look
+around and see if there is already a module which will do what you need. <span id="line-28" class="anchor"/><span id="line-29" class="anchor"/></p><p class="line867"><strong>组件是已经写过的有用的代码 -- 在别人写的代码和你的代码之间。在开始一个编程项目之前，看一看有没有你需要用的已经写过的组件是一个不错的主意。</strong> <span id="line-30" class="anchor"/><span id="line-31" class="anchor"/></p><p class="line874">Why would you want to import a module? <span id="line-32" class="anchor"/><span id="line-33" class="anchor"/></p><p class="line867"><strong>你为什么想要导入一个组件？</strong> <span
+id="line-34" class="anchor"/><span id="line-35" class="anchor"/></p><p class="line874">If you need to make your game behave randomly, you might want to choose from different attack strategies: <span id="line-36" class="anchor"/><span id="line-37" class="anchor"/></p><p class="line867"><strong>如果你想要你的游戏表现的很随机，你可能想要选择不同的攻击策略：</strong> <span id="line-38" class="anchor"/><span id="line-39" class="anchor"/></p><p class="line867"><span id="line-40" class="anchor"/><span id="line-41" class="anchor"/><span id="line-42" class="anchor"/><span id="line-43" class="anchor"/></p><div
+lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-2fc4c22739f96e265feb84d63b9ba99e9b36388f_001\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-2fc4c22739f96e265feb84d63b9ba99e9b36388f_001', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-2fc4c22739f96e265feb84d63b9ba99e9b36388f_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">random</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">strategies</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="String">'aggressive'</span><span class="Operator">,</span> <span class="String">'cautious'</span><span class="Operator">,</span> <span class="String">'defensive'</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">strategy</span> <span class="Operator">=</span> <span class="ID">random</span><span class="Operator">.</span><span class="ID">choice</span><span class="Operator">(</span><span class="ID">strategies</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-44" class="anchor"/><span id="line-45" class="anchor"/><p class="line874">Or, if your game needs to know the size of a file: <span id="line-46" class="anchor"/><span id="line-47" class="anchor"/></p><p class="line867"><strong>或者，假如你的游戏需要知道文件的大小：</strong> <span id="line-48" class="anchor"/><span id="line-49" class="anchor"/></p><p class="line867"><span id="line-50" class="anchor"/><span id="line-51" class="anchor"/><span id="line-52" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-c2e8f5a8d9ffdec73bb3e0f3f5eb71e36bd1e42a_002\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-c2e8f5a8d9ffdec73bb3e0f3f5eb71e36bd1e42a_002', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-c2e8f5a8d9ffdec73bb3e0f3f5eb71e36bd1e42a_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">os</span><span class="Operator">.</span><span class="ID">path</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">os</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">getsize</span><span class="Operator">(</span><span class="String">'.'</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-53" class="anchor"/><span id="line-54" class="anchor"/><p class="line874">Or, if you need to know the distance between two objects: <span id="line-55" class="anchor"/><span id="line-56" class="anchor"/></p><p class="line867"><strong>或者，假如你想要知道两个物体之间的距离：</strong> <span id="line-57" class="anchor"/><span id="line-58" class="anchor"/></p><p class="line867"><span id="line-59" class="anchor"/><span id="line-60" class="anchor"/><span id="line-61" class="anchor"/><span id="line-62" class="anchor"/><span id="line-63"
+class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-045bff8a8d5f082ab97f52297f066dbf58a8a80b_003\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-045bff8a8d5f082ab97f52297f066dbf58a8a80b_003', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-045bff8a8d5f082ab97f52297f066dbf58a8a80b_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">from</span> <span class="ID">math</span> <span class="ResWord">import</span> <span class="ID">sqrt</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">x0</span><span class="Operator">,</span> <span class="ID">y0</span> <span class="Operator">=</span> <span class="Operator">(</span><span class="Number">150</span><span class="Operator">,</span> <span class="Number">75</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">x1</span><span class="Operator">,</span> <span class="ID">y1</span> <span class="Operator">=</span> <span class="Operator">(</span><span class="Number">275</span><span class="Operator">,</span> <span class="Number">300</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">distance</span> <span class="Operator">=</span> <span class="ID">sqrt</span><span class="Operator">(</span><span class="Operator">(</span><span class="ID">x0</span> <span class="Operator">-</span> <span class="ID">x1</span><span class="Operator">)</span><span class="Operator">**</span><span class="Number">2</span> <span class="Operator">+</span> <span class="Operator">(</span><span class="ID">y0</span> <span class="Operator">-</span> <span class="ID">y1</span><span
+class="Operator">)</span><span class="Operator">**</span><span class="Number">2</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-64" class="anchor"/><span id="line-65" class="anchor"/><p class="line874">This distance formula (the Pythagorean Theorem) is so useful that it is included in the math module: <span id="line-66" class="anchor"/><span id="line-67" class="anchor"/></p><p class="line867"><strong>这个距离运算（毕达格拉斯定理）是如此的有用，所以它已经被收录到 math 组件当中了：</strong> <span id="line-68" class="anchor"/><span id="line-69" class="anchor"/></p><p class="line867"><span id="line-70" class="anchor"/><span id="line-71"
+class="anchor"/><span id="line-72" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-79289398b6c52ba6bd63b465ecea5c390bd24dce_004\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-79289398b6c52ba6bd63b465ecea5c390bd24dce_004', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-79289398b6c52ba6bd63b465ecea5c390bd24dce_004" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">math</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">distance2</span> <span class="Operator">=</span> <span class="ID">math</span><span class="Operator">.</span><span class="ID">hypot</span><span class="Operator">(</span><span class="Operator">(</span><span class="ID">x0</span> <span class="Operator">-</span> <span class="ID">x1</span><span class="Operator">)</span><span class="Operator">,</span> <span class="Operator">(</span><span class="ID">y0</span> <span class="Operator">-</span> <span class="ID">y1</span><span
+class="Operator">)</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-73" class="anchor"/><span id="line-74" class="anchor"/><p class="line874">You can see the values, and check if they are the same: <span id="line-75" class="anchor"/><span id="line-76" class="anchor"/></p><p class="line867"><strong>你能够看到变量的值，并且检查它们是否相等：</strong> <span id="line-77" class="anchor"/><span id="line-78" class="anchor"/></p><p class="line867"><span id="line-79" class="anchor"/><span id="line-80" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-ec745accd5464cb93e64667fb60ce2795d345c57_005\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-ec745accd5464cb93e64667fb60ce2795d345c57_005', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-ec745accd5464cb93e64667fb60ce2795d345c57_005" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">print</span> <span class="ID">distance</span><span class="Operator">,</span> <span class="ID">distance2</span><span class="Operator">,</span> <span class="ID">distance</span> <span class="Operator">==</span> <span class="ID">distance2</span><span class="Text"/></span>
+</pre></div><span id="line-81" class="anchor"/><span id="line-82" class="anchor"/><p class="line874">Or, if you just want to use the penguin graphics module: <span id="line-83" class="anchor"/><span id="line-84" class="anchor"/></p><p class="line867"><strong>或者，假如你正想使用企鹅绘图组件：</strong> <span id="line-85" class="anchor"/><span id="line-86" class="anchor"/></p><p class="line867"><span id="line-87" class="anchor"/><span id="line-88" class="anchor"/><span id="line-89" class="anchor"/></p><div lang="en"
+dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-fc5750e1a9ee0df3a958514d35d43e8770f0c58f_006\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-fc5750e1a9ee0df3a958514d35d43e8770f0c58f_006', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-fc5750e1a9ee0df3a958514d35d43e8770f0c58f_006" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">from</span> <span class="ID">penguin</span> <span class="ResWord">import</span> <span class="Operator">*</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">pete</span><span class="Operator">.</span><span class="ID">star</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-90" class="anchor"/><span id="bottom" class="anchor"/></div>
+
+
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-3" class="anchor"/><p class="line867"><strong> <span id="line-4" class="anchor"/><a href="/moin/StartProgramming"> （首页）开始编程之旅</a> <span id="line-5" class="anchor"/>翻译自Lee Harr的<a href="http://staff.easthighschool.net/lee/computers/book/Start_Programming.html" class="http">Start Programming</a> <span id="line-6" class="anchor"/><span id="line-7" class="anchor"/></strong></p><p class="line862"><strong>本文是使用<a href="http://www.nongnu.org/pygsear/" class="http">pygsear</a>+<a href="http://pygame.org" class="http">pygame</a>作为开发环境，以初级用户角度来分步分阶段学习<a href="http://www.python.org"
+class="http">PYTHON</a>基本概念，并以小游戏开发项目为具体案例，介绍的十分详细。编写风格清新朴实，没有象一般教科书那样枯燥，极其适合初级用户来激发兴趣时使用。 <span id="line-8" class="anchor"/></strong> <span id="line-9" class="anchor"/></p>
+
+
+
+<span id="line-10" class="anchor"/>
+<h1 id="head-29a3e5e9a0355f4253963a099a4c3060619fdce0">1. StartProgramming-2-2 随机Random</h1>
+<span id="line-11" class="anchor"/><span id="line-12" class="anchor"/><span id="line-13" class="anchor"/><span id="line-14" class="anchor"/><p class="line874">The random module is one which is used frequently in game code. The most common uses are random.randrange(), random.uniform(), random.choice() and random.shuffle(). <span id="line-15" class="anchor"/><span id="line-16" class="anchor"/></p><p class="line867"><strong>random 组件是游戏代码中经常用到的。最常用的是random.randrange()， random.uniform()， random.choice() 和 random.shuffle()。</strong> <span id="line-17" class="anchor"/><span id="line-18" class="anchor"/></p><p class="line874">I will summarize the use of these common functions here, but remember that you can also use the help() function to read more: <span
+id="line-19" class="anchor"/><span id="line-20" class="anchor"/></p><p class="line867"><strong>我将要在这里总结这些公共函数的用法，但是记住你同样可以用 help() 函数来阅读更多的内容：</strong> <span id="line-21" class="anchor"/><span id="line-22" class="anchor"/></p><p class="line867"><span id="line-23" class="anchor"/><span id="line-24" class="anchor"/><span id="line-25" class="anchor"/><span id="line-26" class="anchor"/><span id="line-27" class="anchor"/><span id="line-28" class="anchor"/><span id="line-29" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-bbf9fd4f74c550c6ca259d1735ee7392d268d7b1_000\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-bbf9fd4f74c550c6ca259d1735ee7392d268d7b1_000', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-bbf9fd4f74c550c6ca259d1735ee7392d268d7b1_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">random</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">from</span> <span class="ID">random</span> <span class="ResWord">import</span> <span class="ID">choice</span><span class="Operator">,</span> <span class="ID">shuffle</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">help</span><span class="Operator">(</span><span class="ID">random</span><span class="Operator">.</span><span class="ID">randrange</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">help</span><span class="Operator">(</span><span class="ID">random</span><span class="Operator">.</span><span class="ID">uniform</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ID">help</span><span class="Operator">(</span><span class="ID">choice</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ID">help</span><span class="Operator">(</span><span class="ID">shuffle</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-30" class="anchor"/><span id="line-31" class="anchor"/><p class="line867">
+</p><h2 id="head-adf0e4b47d1aae5cc8a7f328545e8ff631c9c52a">1.1. randrange</h2>
+<span id="line-32" class="anchor"/><span id="line-33" class="anchor"/><p class="line874">randrange() works somewhat like the range() function. It is used to return random integers. <span id="line-34" class="anchor"/><span id="line-35" class="anchor"/></p><p class="line867"><strong>randrange() 工作有点像 range() 函数。它通常用来返回一个随机的整数。</strong> <span id="line-36" class="anchor"/><span id="line-37" class="anchor"/></p><p class="line874">To generate 5 random integers from 1 to 10, try this: <span id="line-38" class="anchor"/><span id="line-39" class="anchor"/></p><p
+class="line867"><strong>要从1到10产生5个机数，试试这个：</strong> <span id="line-40" class="anchor"/><span id="line-41" class="anchor"/></p><p class="line867"><span id="line-42" class="anchor"/><span id="line-43" class="anchor"/><span id="line-44" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-bdc22bb7143d8ed4d9ac4633d25c9f31f25f0278_001\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-bdc22bb7143d8ed4d9ac4633d25c9f31f25f0278_001', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-bdc22bb7143d8ed4d9ac4633d25c9f31f25f0278_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">for</span> <span class="ID">loop</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="Number">5</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">print</span> <span class="ID">loop</span><span class="Operator">,</span> <span class="ID">random</span><span class="Operator">.</span><span class="ID">randrange</span><span class="Operator">(</span><span class="Number">1</span><span class="Operator">,</span> <span class="Number">11</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-45" class="anchor"/><span id="line-46" class="anchor"/><p class="line874">Remember that range(5) is [0, 1, 2, 3, 4]. There are five elements in the list, but starting with 0. randrange() is the same way. It could return the first number, but never the last one. So, randrange(1, 11) will return one of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] <span id="line-47" class="anchor"/><span id="line-48" class="anchor"/></p><p class="line867"><strong>还记得range(5) 是 [0, 1, 2, 3, 4]. 这里有5个元素在列表里，但是以0开始的。randrange()
+是同样的方法。它会返回第一个数字，但是从不返回最后一个。所以，randrange(1, 11) 将会返回 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]其中的一个。</strong> <span id="line-49" class="anchor"/><span id="line-50" class="anchor"/></p><p class="line867">
+</p><h2 id="head-6b3f0193028f429827293bb638a33f01ba24154b">1.2. shuffle</h2>
+<span id="line-51" class="anchor"/><span id="line-52" class="anchor"/><p class="line874">shuffle() will put the elements of a list in random order. <span id="line-53" class="anchor"/><span id="line-54" class="anchor"/></p><p class="line867"><strong>shuffle() 将会把一个列表中的元素随机排序。</strong> <span id="line-55" class="anchor"/><span id="line-56" class="anchor"/></p><p class="line867"><span id="line-57" class="anchor"/><span id="line-58" class="anchor"/><span id="line-59" class="anchor"/><span id="line-60" class="anchor"/><span id="line-61" class="anchor"/><span id="line-62"
+class="anchor"/><span id="line-63" class="anchor"/><span id="line-64" class="anchor"/><span id="line-65" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-5805cb0eb8d808546cf19c3ee605a148c7aeebb0_002\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-5805cb0eb8d808546cf19c3ee605a148c7aeebb0_002', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-5805cb0eb8d808546cf19c3ee605a148c7aeebb0_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">bears</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="String">'polar'</span><span class="Operator">,</span> <span class="String">'grizzly'</span><span class="Operator">,</span> <span class="String">'black'</span><span class="Operator">,</span> <span class="String">'koala'</span><span class="Operator">,</span> <span class="String">'panda'</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">print</span> <span class="ID">bears</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">random</span><span class="Operator">.</span><span class="ID">shuffle</span><span class="Operator">(</span><span class="ID">bears</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">print</span> <span class="ID">bears</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ID">random</span><span class="Operator">.</span><span class="ID">shuffle</span><span class="Operator">(</span><span class="ID">bears</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">print</span> <span class="ID">bears</span></span>
+<span class="line"><span class="LineNumber">   7 </span><span class="ID">random</span><span class="Operator">.</span><span class="ID">shuffle</span><span class="Operator">(</span><span class="ID">bears</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span><span class="ResWord">print</span> <span class="ID">bears</span><span class="Text"/></span>
+</pre></div><span id="line-66" class="anchor"/><span id="line-67" class="anchor"/><p class="line867">
+</p><h2 id="head-871831d7d5b076521dde898e86f37ddcb88bf94d">1.3. choice</h2>
+<span id="line-68" class="anchor"/><span id="line-69" class="anchor"/><p class="line874">choice() will return a randomly selected element of any list. So random.randrange(1, 11) would be equivalent to random.choice(range(1, 11)) <span id="line-70" class="anchor"/><span id="line-71" class="anchor"/></p><p class="line867"><strong>choice() 将会从任何列表中返回一个随机选择的元素。所以random.randrange(1, 11)就相当于random.choice(range(1, 11))</strong> <span id="line-72" class="anchor"/><span id="line-73" class="anchor"/></p><p class="line874">Also, choice() can work on
+lists of anything, like lists of strings: <span id="line-74" class="anchor"/><span id="line-75" class="anchor"/></p><p class="line867"><strong>而且，choice()能够作用于任何的列表，比如字符串列表：</strong> <span id="line-76" class="anchor"/><span id="line-77" class="anchor"/></p><p class="line867"><span id="line-78" class="anchor"/><span id="line-79" class="anchor"/><span id="line-80" class="anchor"/><span id="line-81" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-0ca9700fe04e4c95303861e3529526615f91bea1_003\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-0ca9700fe04e4c95303861e3529526615f91bea1_003', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-0ca9700fe04e4c95303861e3529526615f91bea1_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">for</span> <span class="ID">choice_number</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="Number">5</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ID">bear</span> <span class="Operator">=</span> <span class="ID">random</span><span class="Operator">.</span><span class="ID">choice</span><span class="Operator">(</span><span class="ID">bears</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ResWord">print</span> <span class="String">'number'</span><span class="Operator">,</span> <span class="ID">choice_number</span><span class="Operator">,</span> <span class="String">'is a'</span><span class="Operator">,</span> <span class="ID">bear</span><span class="Operator">,</span> <span class="String">'bear'</span><span class="Text"/></span>
+</pre></div><span id="line-82" class="anchor"/><span id="line-83" class="anchor"/><p class="line874">Or it can even work on lists of penguins: <span id="line-84" class="anchor"/><span id="line-85" class="anchor"/></p><p class="line867"><strong>或者他甚至能够用在企鹅的列表上：</strong> <span id="line-86" class="anchor"/><span id="line-87" class="anchor"/></p><p class="line867"><span id="line-88" class="anchor"/><span id="line-89" class="anchor"/><span id="line-90" class="anchor"/><span id="line-91" class="anchor"/><span id="line-92" class="anchor"/><span
+id="line-93" class="anchor"/><span id="line-94" class="anchor"/><span id="line-95" class="anchor"/><span id="line-96" class="anchor"/><span id="line-97" class="anchor"/><span id="line-98" class="anchor"/><span id="line-99" class="anchor"/><span id="line-100" class="anchor"/><span id="line-101" class="anchor"/><span id="line-102" class="anchor"/><span id="line-103" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-6adf84c09ce891cbaac3349e749e67835f052b3d_004\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-6adf84c09ce891cbaac3349e749e67835f052b3d_004', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-6adf84c09ce891cbaac3349e749e67835f052b3d_004" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">from</span> <span class="ID">penguin</span> <span class="ResWord">import</span> <span class="ID">Penguin</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"># First, make an empty list</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="Comment"/><span class="Comment"># and fill it with 10 penguins</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="Comment"/><span class="ID">penguins</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">for</span> <span class="ID">count</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="Number">1</span><span class="Operator">,</span> <span class="Number">11</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   7 </span>    <span class="ResWord">print</span> <span class="String">'creating penguin number'</span><span class="Operator">,</span> <span class="ID">count</span></span>
+<span class="line"><span class="LineNumber">   8 </span>    <span class="ID">p</span> <span class="Operator">=</span> <span class="ID">Penguin</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>    <span class="ID">p</span><span class="Operator">.</span><span class="ID">moveTo</span><span class="Operator">(</span><span class="String">'random'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span>    <span class="ID">penguins</span><span class="Operator">.</span><span class="ID">append</span><span class="Operator">(</span><span class="ID">p</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span></span>
+<span class="line"><span class="LineNumber">  12 </span><span class="Comment"># Then make them explode randomly</span></span>
+<span class="line"><span class="LineNumber">  13 </span><span class="Comment"/><span class="ResWord">for</span> <span class="ID">explosion</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="Number">50</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  14 </span>    <span class="ID">penguin</span> <span class="Operator">=</span> <span class="ID">random</span><span class="Operator">.</span><span class="ID">choice</span><span class="Operator">(</span><span class="ID">penguins</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span>    <span class="ID">penguin</span><span class="Operator">.</span><span class="ID">blast</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-104" class="anchor"/><span id="line-105" class="anchor"/><p class="line867">
+</p><h2 id="head-f6d48a619e87197f7e30a6fd4f74a7ae9ca36464">1.4. uniform</h2>
+<span id="line-106" class="anchor"/><span id="line-107" class="anchor"/><p class="line874">uniform() is for random numbers that are not integers: <span id="line-108" class="anchor"/><span id="line-109" class="anchor"/></p><p class="line867"><strong>uniform() is for random numbers that are not integers:</strong> <span id="line-110" class="anchor"/><span id="line-111" class="anchor"/></p><p class="line867"><span id="line-112" class="anchor"/><span id="line-113" class="anchor"/><span id="line-114" class="anchor"/><span id="line-115"
+class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-35b85b436d2dff8bb497e90325d3219b17539b32_005\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-35b85b436d2dff8bb497e90325d3219b17539b32_005', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-35b85b436d2dff8bb497e90325d3219b17539b32_005" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">for</span> <span class="ID">loop</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="Number">5</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">print</span> <span class="ID">random</span><span class="Operator">.</span><span class="ID">uniform</span><span class="Operator">(</span><span class="Number">0</span><span class="Operator">,</span> <span class="Number">10</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ResWord">print</span> <span class="ID">random</span><span class="Operator">.</span><span class="ID">uniform</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">10</span><span class="Operator">,</span> <span class="Number">0</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-116" class="anchor"/><span id="line-117" class="anchor"/><p class="line874">Similar to randrange() the result returned could be the first number, but it will never be the second number. <span id="line-118" class="anchor"/><span id="line-119" class="anchor"/></p><p class="line867"><strong>Similar to randrange() the result returned could be the first number, but it will never be the second number.</strong> <span id="line-120" class="anchor"/><span id="bottom" class="anchor"/></p></div>
+
+
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-3" class="anchor"/><p class="line867"><strong> <span id="line-4" class="anchor"/><a href="/moin/StartProgramming"> （首页）开始编程之旅</a> <span id="line-5" class="anchor"/>翻译自Lee Harr的<a href="http://staff.easthighschool.net/lee/computers/book/Start_Programming.html" class="http">Start Programming</a> <span id="line-6" class="anchor"/><span id="line-7" class="anchor"/></strong></p><p class="line862"><strong>本文是使用<a href="http://www.nongnu.org/pygsear/" class="http">pygsear</a>+<a href="http://pygame.org" class="http">pygame</a>作为开发环境，以初级用户角度来分步分阶段学习<a href="http://www.python.org"
+class="http">PYTHON</a>基本概念，并以小游戏开发项目为具体案例，介绍的十分详细。编写风格清新朴实，没有象一般教科书那样枯燥，极其适合初级用户来激发兴趣时使用。 <span id="line-8" class="anchor"/></strong> <span id="line-9" class="anchor"/></p>
+
+
+<span id="line-10" class="anchor"/>
+<h1 id="head-899c27e35f8307588276aff67ab0c435f006eec7">1. StartProgramming-2-3 命名空间Namespaces</h1>
+<span id="line-11" class="anchor"/><span id="line-12" class="anchor"/><p class="line874">Notice that when you use <span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></p><p class="line867"><strong>注意当你用这个时</strong> <span id="line-15" class="anchor"/><span id="line-16" class="anchor"/></p><p class="line867"><span id="line-17" class="anchor"/><span id="line-18" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-1c43fbda09497801a7f2a6e0d43b8be801c5f4f6_000\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-1c43fbda09497801a7f2a6e0d43b8be801c5f4f6_000', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-1c43fbda09497801a7f2a6e0d43b8be801c5f4f6_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">random</span><span class="Text"/></span>
+</pre></div><span id="line-19" class="anchor"/><span id="line-20" class="anchor"/><p class="line874">You must access the functions in random by the full name: <span id="line-21" class="anchor"/><span id="line-22" class="anchor"/></p><p class="line867"><strong>你必须用全名访问函数random：</strong> <span id="line-23" class="anchor"/><span id="line-24" class="anchor"/></p><p class="line867"><span id="line-25" class="anchor"/><span id="line-26" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-4ebf8c0c27553cc5b153e6fd2948841373465e2e_001\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-4ebf8c0c27553cc5b153e6fd2948841373465e2e_001', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-4ebf8c0c27553cc5b153e6fd2948841373465e2e_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">random</span><span class="Operator">.</span><span class="ID">randrange</span><span class="Operator">(</span><span class="Number">1</span><span class="Operator">,</span> <span class="Number">11</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-27" class="anchor"/><span id="line-28" class="anchor"/><p class="line874">The modules are said to have their own namespaces. This allows you to call on a particular piece of the module with no chance for any confusion. It is kind of like in a classroom where a teacher may need to call on "Joe Smith" or on "Joe Brown" in order to specify which Joe is being called. <span id="line-29" class="anchor"/><span id="line-30" class="anchor"/></p><p class="line867"><strong>这个组件表明他们拥有自己的
+命名空间。这就允许你在组件中调用一个详细的部分并且不会造成任何混乱。这就像在一个教室中一个老师可以叫"Joe Smith"或者"Joe Brown"来代替叫的是哪个"Joe"。</strong> <span id="line-31" class="anchor"/><span id="line-32" class="anchor"/></p><p class="line867">
+</p><h2 id="head-b7972900c39042329be32f5b46db7facc75de80e">1.1. from</h2>
+<span id="line-33" class="anchor"/><span id="line-34" class="anchor"/><p class="line874">If you only need one particular function from a module, you can import that function directly: <span id="line-35" class="anchor"/><span id="line-36" class="anchor"/></p><p class="line867"><strong>如果你在组件中只需要一个具体的函数，你可以直接导入这个函数：</strong> <span id="line-37" class="anchor"/><span id="line-38" class="anchor"/></p><p class="line867"><span id="line-39" class="anchor"/><span id="line-40" class="anchor"/><span id="line-41" class="anchor"/></p><div lang="en" dir="ltr"
+class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-53c1bd0ef02581fef1ad4dd052ee0b78778b5b40_002\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-53c1bd0ef02581fef1ad4dd052ee0b78778b5b40_002', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-53c1bd0ef02581fef1ad4dd052ee0b78778b5b40_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">from</span> <span class="ID">random</span> <span class="ResWord">import</span> <span class="ID">randrange</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">randrange</span><span class="Operator">(</span><span class="Number">1</span><span class="Operator">,</span> <span class="Number">11</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-42" class="anchor"/><span id="line-43" class="anchor"/><p class="line874">It is sort of like the kid in the class named "Ferdinand" who almost certainly will not have a classmate named Ferdinand, or just calling on "Joe" when Joe Smith is out sick for the day. <span id="line-44" class="anchor"/><span id="line-45" class="anchor"/></p><p class="line867"><strong>这就好比是在班级中，没有和"Ferdinand"同名的同学，或者今天当"Joe Smith"生病不在时正好叫到"Joe"。</strong> <span id="line-46" class="anchor"/><span id="line-47" class="anchor"/></p><p
+class="line874">You probably noticed that we do something like this all the time to start up the penguin graphics mode: <span id="line-48" class="anchor"/><span id="line-49" class="anchor"/></p><p class="line867"><strong>你大概注意到我们启动企鹅图形方式时总是做像这样的事情：</strong> <span id="line-50" class="anchor"/><span id="line-51" class="anchor"/></p><p class="line867"><span id="line-52" class="anchor"/><span id="line-53" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-938df4c68f16b54a041244509190ea9355042e25_003\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-938df4c68f16b54a041244509190ea9355042e25_003', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-938df4c68f16b54a041244509190ea9355042e25_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">from</span> <span class="ID">penguin</span> <span class="ResWord">import</span> <span class="Operator">*</span><span class="Text"/></span>
+</pre></div><span id="line-54" class="anchor"/><span id="line-55" class="anchor"/><p class="line874">The * says to import everything from the penguin module. <span id="line-56" class="anchor"/><span id="line-57" class="anchor"/></p><p class="line867"><strong>这个*意思是从企鹅组件中导入所有的东西。</strong> <span id="line-58" class="anchor"/><span id="line-59" class="anchor"/></p><p class="line874">To see exactly what is being imported, try this: <span id="line-60" class="anchor"/><span id="line-61" class="anchor"/></p><p
+class="line867"><strong>要准确地看到导入了什么，试试这个：</strong> <span id="line-62" class="anchor"/><span id="line-63" class="anchor"/></p><p class="line874">Restart Python, to get a fresh start, then: <span id="line-64" class="anchor"/><span id="line-65" class="anchor"/></p><p class="line867"><strong>重新启动Python，获得一个新鲜的开始，然后：</strong> <span id="line-66" class="anchor"/><span id="line-67" class="anchor"/></p><p class="line867"><span id="line-68" class="anchor"/><span id="line-69" class="anchor"/><span id="line-70"
+class="anchor"/><span id="line-71" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-825b8df53febdba3d4e6624cfa1495ea60457c73_004\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-825b8df53febdba3d4e6624cfa1495ea60457c73_004', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-825b8df53febdba3d4e6624cfa1495ea60457c73_004" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">dir</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">from</span> <span class="ID">penguin</span> <span class="ResWord">import</span> <span class="Operator">*</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">dir</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-72" class="anchor"/><span id="line-73" class="anchor"/><p class="line874">Normally, it is considered bad style to import everything from a module. As you can see it may introduce a huge number of names in to the local namespace, but in this case the module is meant to be used on its own, and there is a definite advantage to being able to type "forward(50)" instead of "pete.forward(50)" <span id="line-74" class="anchor"/><span id="line-75" class="anchor"/></p><p
+class="line867"><strong>一般情况下，从一个组件中导入所有的东西不是一个好的方式。这样你就会看到在当前的命名空间中插入了大量的名字，但在这种情况下组件只打算被用在自身上，并且用"pete.forward(50)"代替"forward(50)"可以使初学者取得更加明确的优势。</strong> <span id="line-76" class="anchor"/><span id="line-77" class="anchor"/></p><p class="line867">
+</p><h2 id="head-fd86b82a42b87f4006fdcf0af868ab45c74fc122">1.2. locals, globals, builtins</h2>
+<span id="line-78" class="anchor"/><span id="line-79" class="anchor"/><p class="line874">Python has 3 namespaces. The local namespace is inside of a function and is the first place checked to find a particular name. The global namespace is inside of a module, and is next in line for name resolution. Finally, the builtin namespace holds things which should be available everywhere, and is the last place searched for names.  <span id="line-80" class="anchor"/><span id="line-81" class="anchor"/></p><p
+class="line867"><strong>Python有3个命名空间。局部命名空间是在函数的内部并且首先会在这里查找一个指定的名字。全局命名空间在一个组件内部，并且这是接下来要查找名字的地方。最后，内置命名空间在任何时候都会保持一些事物，并且这里是查找名字最后的地方。</strong> <span id="line-82" class="anchor"/><span id="bottom" class="anchor"/></p></div>
+
+
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-3" class="anchor"/><p class="line867"><strong> <span id="line-4" class="anchor"/><a href="/moin/StartProgramming"> （首页）开始编程之旅</a> <span id="line-5" class="anchor"/>翻译自Lee Harr的<a href="http://staff.easthighschool.net/lee/computers/book/Start_Programming.html" class="http">Start Programming</a> <span id="line-6" class="anchor"/><span id="line-7" class="anchor"/></strong></p><p class="line862"><strong>本文是使用<a href="http://www.nongnu.org/pygsear/" class="http">pygsear</a>+<a href="http://pygame.org" class="http">pygame</a>作为开发环境，以初级用户角度来分步分阶段学习<a href="http://www.python.org"
+class="http">PYTHON</a>基本概念，并以小游戏开发项目为具体案例，介绍的十分详细。编写风格清新朴实，没有象一般教科书那样枯燥，极其适合初级用户来激发兴趣时使用。 <span id="line-8" class="anchor"/></strong> <span id="line-9" class="anchor"/></p>
+
+
+<span id="line-10" class="anchor"/>
+<h2 id="head-0f56a68f3e7d328d0533e34902f4fd50d7f33b50">1. StartProgramming-2-4 Functions</h2>
+<span id="line-11" class="anchor"/><span id="line-12" class="anchor"/><p class="line874">The interactive python interpreter is very useful if you are testing and typing just a few lines, but anything more than that and you are going to want to save your code in a file. <span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></p><p class="line867"><strong>当你测试并键入少数几行代码时，交互式解释器是非常有用的，但是超过那些你想保存你的代码到文件中。</strong> <span id="line-15" class="anchor"/><span id="line-16" class="anchor"/></p><p class="line874">Saving your code in a file that ends in .py makes it a Python module. Once you have a module, your code can be used from the interpreter, or by code in other files and programs. <span id="line-17" class="anchor"/><span
+id="line-18" class="anchor"/></p><p class="line867"><strong>把你的文件用以 .py 结尾的文件名保存可以使他成为Python的组件。一旦你拥有了一个组件，你的代码就可以在解释器被用到，或者被别的文件和程序用到。</strong> <span id="line-19" class="anchor"/><span id="line-20" class="anchor"/></p><p class="line874">The Python code that you save to a file will look much like the code you typed directly in to the interpreter. Try it now. <span id="line-21" class="anchor"/><span id="line-22" class="anchor"/></p><p class="line867"><strong>你保存在文件中的Python代码，将会非常像你直接在解释器中键入的一样。现在就试试吧。</strong> <span id="line-23" class="anchor"/><span id="line-24" class="anchor"/></p><p class="line874">Create a new, blank file in your text editor. In that file, type these lines:
+<span id="line-25" class="anchor"/><span id="line-26" class="anchor"/></p><p class="line867"><strong>在你的文本编辑器中创建一个新的空文件，然后键入下面这些语句：</strong> <span id="line-27" class="anchor"/><span id="line-28" class="anchor"/></p><p class="line867"><span id="line-29" class="anchor"/><span id="line-30" class="anchor"/><span id="line-31" class="anchor"/><span id="line-32" class="anchor"/><span id="line-33" class="anchor"/><span id="line-34" class="anchor"/><span id="line-35" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-241edeb25e53da367fbb74919af01692b524f401_000\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-241edeb25e53da367fbb74919af01692b524f401_000', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-241edeb25e53da367fbb74919af01692b524f401_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">from</span> <span class="ID">pygsear</span><span class="Operator">.</span><span class="ID">Drawable</span> <span class="ResWord">import</span> <span class="ID">String</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">def</span> <span class="ID">send</span><span class="Operator">(</span><span class="ID">new_msg</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ID">m</span> <span class="Operator">=</span> <span class="ID">String</span><span class="Operator">(</span><span class="ID">message</span><span class="Operator">=</span><span class="ID">new_msg</span><span class="Operator">,</span> <span class="ID">fontSize</span><span class="Operator">=</span><span class="Number">80</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ID">m</span><span class="Operator">.</span><span class="ID">center</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   6 </span>    <span class="ID">m</span><span class="Operator">.</span><span class="ID">udraw</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-36" class="anchor"/><span id="line-37" class="anchor"/><p class="line874">Save the file in the examples/ directory and call it message.py <span id="line-38" class="anchor"/><span id="line-39" class="anchor"/></p><p class="line867"><strong>把这个文件保存在 examples/ 目录下，并且起名叫 message.py</strong> <span id="line-40" class="anchor"/><span id="line-41" class="anchor"/></p><p class="line867">
+</p><h3 id="head-9d39556111fa7594eef55a0ffc4019b477ba2a87">1.1. import导入</h3>
+<span id="line-42" class="anchor"/><span id="line-43" class="anchor"/><p class="line874">When you try to import a module, Python will look first in the current directory. It looks for a file with the name of the module plus a .py ending. <span id="line-44" class="anchor"/><span id="line-45" class="anchor"/></p><p class="line867"><strong>当你尝试导入一个组件时，Python将首先从你的当前目录找起。它查找文件名是组件名的文件还有以.py结尾。</strong> <span id="line-46" class="anchor"/><span id="line-47" class="anchor"/></p><p class="line874">Start Python in the examples/ directory, and import your new module:
+<span id="line-48" class="anchor"/><span id="line-49" class="anchor"/></p><p class="line867"><strong>在examples/目录运行Python，并且导入你的新组件：</strong> <span id="line-50" class="anchor"/><span id="line-51" class="anchor"/></p><p class="line867"><span id="line-52" class="anchor"/><span id="line-53" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-e53bda5065e8e62700fc45b3e76cfcd8bd2984fa_001\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-e53bda5065e8e62700fc45b3e76cfcd8bd2984fa_001', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-e53bda5065e8e62700fc45b3e76cfcd8bd2984fa_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">message</span><span class="Text"/></span>
+</pre></div><span id="line-54" class="anchor"/><span id="line-55" class="anchor"/><p class="line874">To use your new module, call the send() function with a text message: <span id="line-56" class="anchor"/><span id="line-57" class="anchor"/></p><p class="line867"><strong>要用你的新组件，用文本信息调用send()函数：</strong> <span id="line-58" class="anchor"/><span id="line-59" class="anchor"/></p><p class="line867"><span id="line-60" class="anchor"/><span id="line-61" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-1eb1b7ce8ce59a7dbe2bc31d31af973d43c56cc1_002\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-1eb1b7ce8ce59a7dbe2bc31d31af973d43c56cc1_002', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-1eb1b7ce8ce59a7dbe2bc31d31af973d43c56cc1_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">message</span><span class="Operator">.</span><span class="ID">send</span><span class="Operator">(</span><span class="String">'Penguin Patrol!'</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-62" class="anchor"/><span id="line-63" class="anchor"/><p class="line874">But there is a problem with this. What happens if you call the function again? <span id="line-64" class="anchor"/><span id="line-65" class="anchor"/></p><p class="line867"><strong>但是这儿有一些问题。如果你再次调用这个函数会发生什么？</strong> <span id="line-66" class="anchor"/><span id="line-67" class="anchor"/></p><p class="line867"><span id="line-68" class="anchor"/><span id="line-69" class="anchor"/><span id="line-70" class="anchor"/></p><div lang="en" dir="ltr"
+class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-413368a3fec5ec0eef2fb042c53863927dba5003_003\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-413368a3fec5ec0eef2fb042c53863927dba5003_003', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-413368a3fec5ec0eef2fb042c53863927dba5003_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">message</span><span class="Operator">.</span><span class="ID">send</span><span class="Operator">(</span><span class="String">'Python & Pygame. Oh yea!'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">message</span><span class="Operator">.</span><span class="ID">send</span><span class="Operator">(</span><span class="String">'Take me to your leader'</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-71" class="anchor"/><span id="line-72" class="anchor"/><p class="line867">
+</p><h3 id="head-ccae7a9c512cdadaf8baf1e76ae882e1c2e71660">1.2. global全局</h3>
+<span id="line-73" class="anchor"/><span id="line-74" class="anchor"/><p class="line874">One way to fix the problem of the new message writing over the previous one is to keep a handle on the old String object. That way when the function is called again, we can erase the old message and make a new one. <span id="line-75" class="anchor"/><span id="line-76" class="anchor"/></p><p class="line867"><strong>修复这个问题（让新消息覆盖旧消息）的一个方法是保持一个旧文本对象的句柄。用这种方法使得当函数被再次调用，我们能够擦掉旧消息并产生一个新消息。</strong>
+<span id="line-77" class="anchor"/><span id="line-78" class="anchor"/></p><p class="line874">Add the highlighted lines to your message.py so it matches this: <span id="line-79" class="anchor"/><span id="line-80" class="anchor"/></p><p class="line867"><strong>添加这些髙亮的行到 message.py 中以匹配这些：</strong> <span id="line-81" class="anchor"/><span id="line-82" class="anchor"/></p><p class="line867"><span id="line-83" class="anchor"/><span id="line-84" class="anchor"/><span id="line-85" class="anchor"/><span id="line-86" class="anchor"/><span
+id="line-87" class="anchor"/><span id="line-88" class="anchor"/><span id="line-89" class="anchor"/><span id="line-90" class="anchor"/><span id="line-91" class="anchor"/><span id="line-92" class="anchor"/><span id="line-93" class="anchor"/><span id="line-94" class="anchor"/><span id="line-95" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-20b3555efa3c8ba6c2f061a743fb136157f5267c_004\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-20b3555efa3c8ba6c2f061a743fb136157f5267c_004', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-20b3555efa3c8ba6c2f061a743fb136157f5267c_004" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">from</span> <span class="ID">pygsear</span><span class="Operator">.</span><span class="ID">Drawable</span> <span class="ResWord">import</span> <span class="ID">String</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">msg</span> <span class="Operator">=</span> <span class="ID">None</span></span>
+<span class="line"><span class="LineNumber">   4 </span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">def</span> <span class="ID">send</span><span class="Operator">(</span><span class="ID">new_msg</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>    <span class="ResWord">global</span> <span class="ID">msg</span></span>
+<span class="line"><span class="LineNumber">   7 </span>    <span class="ResWord">if</span> <span class="ID">msg</span> <span class="ResWord">is</span> <span class="ResWord">not</span> <span class="ID">None</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">msg</span><span class="Operator">.</span><span class="ID">uclear</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>    <span class="ID">m</span> <span class="Operator">=</span> <span class="ID">String</span><span class="Operator">(</span><span class="ID">message</span><span class="Operator">=</span><span class="ID">new_msg</span><span class="Operator">,</span> <span class="ID">fontSize</span><span class="Operator">=</span><span class="Number">80</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span>    <span class="ID">m</span><span class="Operator">.</span><span class="ID">center</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span>    <span class="ID">m</span><span class="Operator">.</span><span class="ID">udraw</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>    <span class="ID">msg</span> <span class="Operator">=</span> <span class="ID">m</span><span class="Text"/></span>
+</pre></div><span id="line-96" class="anchor"/><span id="line-97" class="anchor"/><p class="line874">The variable msg is a module level or global variable. The first time through the function, msg will be None and we will skip the call to uclear() <span id="line-98" class="anchor"/><span id="line-99" class="anchor"/></p><p class="line867"><strong>变量 msg 是组件级别或者全局变量。当第一次运行函数时，msg是空的并且程序会跳过调用uclear()</strong> <span id="line-100" class="anchor"/><span id="line-101" class="anchor"/></p><p class="line874">On
+any other call, we first clear out the old message, then draw the new one and save it as msg <span id="line-102" class="anchor"/><span id="line-103" class="anchor"/></p><p class="line867"><strong>当其他的调用时，我们首先清除旧消息，然后画上新的并且用msg来保存它。</strong> <span id="line-104" class="anchor"/><span id="line-105" class="anchor"/></p><p class="line874">Using global variables, sort of like from foo import *, is usually considered bad form. <span id="line-106" class="anchor"/><span id="line-107" class="anchor"/></p><p
+class="line867"><strong>使用全局变量，类似于from foo import *，通常被看作是不好的形式。</strong> <span id="line-108" class="anchor"/><span id="line-109" class="anchor"/></p><p class="line874">A much better solution is to use a class which we will work on next. <span id="line-110" class="anchor"/><span id="line-111" class="anchor"/></p><p class="line867"><strong>一个好的多得解决方法是用一个类，这将在下一课学到。</strong> <span id="line-112" class="anchor"/><span id="bottom" class="anchor"/></p></div>
+
+
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-3" class="anchor"/><p class="line867"><strong> <span id="line-4" class="anchor"/><a href="/moin/StartProgramming"> （首页）开始编程之旅</a> <span id="line-5" class="anchor"/>翻译自Lee Harr的<a href="http://staff.easthighschool.net/lee/computers/book/Start_Programming.html" class="http">Start Programming</a> <span id="line-6" class="anchor"/><span id="line-7" class="anchor"/></strong></p><p class="line862"><strong>本文是使用<a href="http://www.nongnu.org/pygsear/" class="http">pygsear</a>+<a href="http://pygame.org" class="http">pygame</a>作为开发环境，以初级用户角度来分步分阶段学习<a href="http://www.python.org"
+class="http">PYTHON</a>基本概念，并以小游戏开发项目为具体案例，介绍的十分详细。编写风格清新朴实，没有象一般教科书那样枯燥，极其适合初级用户来激发兴趣时使用。 <span id="line-8" class="anchor"/></strong> <span id="line-9" class="anchor"/></p>
+
+<span id="line-10" class="anchor"/>
+<h2 id="head-b7c14c9237fc6a0cb59b5ff318d0ba54970a9b54">1. StartProgramming-2-5 类Classes</h2>
+<span id="line-11" class="anchor"/><span id="line-12" class="anchor"/><p class="line874">classes can also be loaded from modules. <span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></p><p class="line867"><strong>类也能够被从组件中调用。</strong> <span id="line-15" class="anchor"/><span id="line-16" class="anchor"/></p><p class="line874">A class defines a type of object. <span id="line-17" class="anchor"/><span id="line-18" class="anchor"/></p><p class="line867"><strong>一个类定义了一个对象类型。</strong> <span id="line-19" class="anchor"/><span id="line-20" class="anchor"/></p><p class="line874">Penguin, for example, is a class in the penguin module which we have already used extensively. To make a new instance of a Penguin, we first import the class, and
+then call it: <span id="line-21" class="anchor"/><span id="line-22" class="anchor"/></p><p class="line867"><strong>比如，Penguin就是一个在penguin组件中我们早已经常用过的一个类。要产生一个新实例，我们要首先导入这个类，然后调用它：</strong> <span id="line-23" class="anchor"/><span id="line-24" class="anchor"/></p><p class="line867"><span id="line-25" class="anchor"/><span id="line-26" class="anchor"/><span id="line-27" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-b629777ea6f8d699ba754a2bd4e59d5c94be0b06_000\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-b629777ea6f8d699ba754a2bd4e59d5c94be0b06_000', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-b629777ea6f8d699ba754a2bd4e59d5c94be0b06_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">from</span> <span class="ID">penguin</span> <span class="ResWord">import</span> <span class="ID">Penguin</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">pete</span> <span class="Operator">=</span> <span class="ID">Penguin</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-28" class="anchor"/><span id="line-29" class="anchor"/><p class="line867"><img title="attachment:box_class_penguin.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-2-5?action=AttachFile&amp;do=get&amp;target=box_class_penguin.png" class="attachment"/> <span id="line-30" class="anchor"/><span id="line-31" class="anchor"/></p><p class="line874">A class is sort of like a function which acts as a factory for creating objects. Each time you call the class, it returns an object of that class. <span id="line-32" class="anchor"/><span id="line-33" class="anchor"/></p><p
+class="line867"><strong>一个类类似于一个能够生产对象的工厂的函数。当你每次调用这个类，它都能返回一个这个类的对象。</strong> <span id="line-34" class="anchor"/><span id="line-35" class="anchor"/></p><p class="line867">
+</p><h3 id="head-603941ab6c3b7f8143d29deffc4f62f60b583b65">1.1. class Ball球类</h3>
+<span id="line-36" class="anchor"/><span id="line-37" class="anchor"/><p class="line874">Classes define data and methods which describe the different objects you want to use in your programs. <span id="line-38" class="anchor"/><span id="line-39" class="anchor"/></p><p class="line867"><strong>类定义了你想在程序中描述不同对象的数据和方法。</strong> <span id="line-40" class="anchor"/><span id="line-41" class="anchor"/></p><p class="line874">Let's start out with a very basic object, a ball. <span id="line-42" class="anchor"/><span id="line-43" class="anchor"/></p><p
+class="line867"><strong>让我们以一个非常基本的对象开始，一个ball（球）。</strong> <span id="line-44" class="anchor"/><span id="line-45" class="anchor"/></p><p class="line867"><span id="line-46" class="anchor"/><span id="line-47" class="anchor"/><span id="line-48" class="anchor"/><span id="line-49" class="anchor"/><span id="line-50" class="anchor"/><span id="line-51" class="anchor"/><span id="line-52" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-a4eeef2fa6f9112956dd60ff654b555e1132e04c_001\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-a4eeef2fa6f9112956dd60ff654b555e1132e04c_001', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-a4eeef2fa6f9112956dd60ff654b555e1132e04c_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">class</span> <span class="ID">Ball</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">def</span> <span class="ID">set_color</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">color</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">color</span> <span class="Operator">=</span> <span class="ID">color</span></span>
+<span class="line"><span class="LineNumber">   4 </span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ResWord">def</span> <span class="ID">bounce</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ResWord">print</span> <span class="String">'boing!'</span><span class="Text"/></span>
+</pre></div><span id="line-53" class="anchor"/><span id="line-54" class="anchor"/><p class="line874">Put that code in to a file. Call it Ball.py <span id="line-55" class="anchor"/><span id="line-56" class="anchor"/></p><p class="line867"><strong>将这些代码放到一个文件中。文件名为Ball.py</strong> <span id="line-57" class="anchor"/><span id="line-58" class="anchor"/></p><p class="line874">To create a ball, simply call your new class: <span id="line-59" class="anchor"/><span id="line-60" class="anchor"/></p><p class="line867"><strong>要创建一个ball，简单的调用你的新类：</strong> <span
+id="line-61" class="anchor"/><span id="line-62" class="anchor"/></p><p class="line867"><span id="line-63" class="anchor"/><span id="line-64" class="anchor"/><span id="line-65" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-2ae74cad02d8237dfca80fff9a42c7610d8a05f6_002\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-2ae74cad02d8237dfca80fff9a42c7610d8a05f6_002', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-2ae74cad02d8237dfca80fff9a42c7610d8a05f6_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">Ball</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">rb</span> <span class="Operator">=</span> <span class="ID">Ball</span><span class="Operator">.</span><span class="ID">Ball</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-66" class="anchor"/><span id="line-67" class="anchor"/><p class="line874">Keep in mind that this is all very abstract at this point, and this code is not going to show you a picture of a ball. This is just the idea of a ball. It is more beautiful, really, if you think about it. <span id="line-68" class="anchor"/><span id="line-69" class="anchor"/></p><p class="line867"><strong>牢记这些，这个知识点非常的抽象，并且这些代码不会让你看到一个球的画面。这只是一个球的计划。它非常的漂亮，真实，如果你那样想它的话。</strong> <span id="line-70"
+class="anchor"/><span id="line-71" class="anchor"/></p><p class="line874">If you really need to see a ball right now, here is a red one I made with the GIMP: <span id="line-72" class="anchor"/><span id="line-73" class="anchor"/></p><p class="line867"><strong>如果你现在确实需要看到一个球，这里有一个我用GIMP画的红球。</strong> <span id="line-74" class="anchor"/><span id="line-75" class="anchor"/></p><p class="line867"><img title="attachment:ball_red.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-2-5?action=AttachFile&amp;do=get&amp;target=ball_red.png" class="attachment"/> <span
+id="line-76" class="anchor"/><span id="line-77" class="anchor"/></p><p class="line867">
+</p><h3 id="head-26582e40ac7b6131605fe0608dc25c4803c77bde">1.2. reload重载</h3>
+<span id="line-78" class="anchor"/><span id="line-79" class="anchor"/><p class="line874">Notice that we did not import your new class directly. It is import Ball and not from Ball import Ball. This makes it easier to change your module and see the changes. <span id="line-80" class="anchor"/><span id="line-81" class="anchor"/></p><p class="line867"><strong>注意我们没有直接导入你的新类。是导入Ball组件而不是从组件Ball中导入Ball类。这可以让你容易的改变你的组件并且看到改变。</strong> <span id="line-82" class="anchor"/><span id="line-83" class="anchor"/></p><p
+class="line874">If you want to make a change to your class -- like if you made a typing error -- you can just do this: <span id="line-84" class="anchor"/><span id="line-85" class="anchor"/></p><p class="line867"><strong>如果你希望更改你的类——比如你输入错了——你可以这样做：</strong> <span id="line-86" class="anchor"/><span id="line-87" class="anchor"/></p><p class="line867"><span id="line-88" class="anchor"/><span id="line-89" class="anchor"/><span id="line-90" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-d04b5801e33ba4eb4488761bb39f81bb90962951_003\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-d04b5801e33ba4eb4488761bb39f81bb90962951_003', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-d04b5801e33ba4eb4488761bb39f81bb90962951_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">reload</span><span class="Operator">(</span><span class="ID">Ball</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">rb</span> <span class="Operator">=</span> <span class="ID">Ball</span><span class="Operator">.</span><span class="ID">Ball</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-91" class="anchor"/><span id="line-92" class="anchor"/><p class="line867">
+</p><h3 id="head-fee9e81d6e42cf94dde06cd2121bec79f3725400">1.3. color颜色</h3>
+<span id="line-93" class="anchor"/><span id="line-94" class="anchor"/><p class="line874">The Ball class defines two methods: set_color() and bounce() <span id="line-95" class="anchor"/><span id="line-96" class="anchor"/></p><p class="line867"><strong>这个Ball类定义了两个方法：set_color() 和 bounce()</strong> <span id="line-97" class="anchor"/><span id="line-98" class="anchor"/></p><p class="line874">Methods are like functions, but they are bound to particular objects. <span id="line-99" class="anchor"/><span id="line-100" class="anchor"/></p><p
+class="line867"><strong>方法就像过程一样，但是方法绑定在特定的对象上。</strong> <span id="line-101" class="anchor"/><span id="line-102" class="anchor"/></p><p class="line874">Once you create a ball, you can change its color: <span id="line-103" class="anchor"/><span id="line-104" class="anchor"/></p><p class="line867"><strong>一旦你创建了一个球，你就能够改变它的颜色：</strong> <span id="line-105" class="anchor"/><span id="line-106" class="anchor"/></p><p class="line867"><span id="line-107" class="anchor"/><span id="line-108" class="anchor"/></p><div
+lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-9c4c46da15fc2a2de4049a22e281b18920fd537f_004\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-9c4c46da15fc2a2de4049a22e281b18920fd537f_004', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-9c4c46da15fc2a2de4049a22e281b18920fd537f_004" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">rb</span><span class="Operator">.</span><span class="ID">set_color</span><span class="Operator">(</span><span class="String">'bright red'</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-109" class="anchor"/><span id="line-110" class="anchor"/><p class="line874">Notice that with methods, unlike with functions, you do not pass in the first parameter (usually called self). The object itself is passed in automatically as the first parameter when the method is called from a class instance. <span id="line-111" class="anchor"/><span id="line-112" class="anchor"/></p><p
+class="line867"><strong>注意这是用方法，不等同于用函数，你不能使用第一个参数（通常叫做self）。当从类的实例中调用方法时，对象自身会自动被当作第一个参数来调用。</strong> <span id="line-113" class="anchor"/><span id="line-114" class="anchor"/></p><p class="line874">Also notice the difference between color and self.color in the set_color() method. <span id="line-115" class="anchor"/><span id="line-116" class="anchor"/></p><p class="line867"><strong>所以注意在方法set_color()中color和self.color的区别。</strong> <span id="line-117"
+class="anchor"/><span id="line-118" class="anchor"/></p><p class="line874">When you call rb.set_color('red') the variable self is bound to the same Ball instance that rb is bound to. <span id="line-119" class="anchor"/><span id="line-120" class="anchor"/></p><p class="line867"><strong>当你调用 rb.set_color('read') 时，变量self被绑定在同样是Ball的实例rb上。</strong> <span id="line-121" class="anchor"/><span id="line-122" class="anchor"/></p><p class="line874">At the same time, the variable color is bound to the string 'red'. <span
+id="line-123" class="anchor"/><span id="line-124" class="anchor"/></p><p class="line867"><strong>同时，变量color被绑定到字符串'red'上。</strong> <span id="line-125" class="anchor"/><span id="line-126" class="anchor"/></p><p class="line874">Then with the code self.color = color the data attribute self.color is bound to that same string. <span id="line-127" class="anchor"/><span id="line-128" class="anchor"/></p><p class="line867"><strong>然后随着代码self.color=color的运行，数据属性self.color绑定到相同的字符串上。</strong> <span
+id="line-129" class="anchor"/><span id="line-130" class="anchor"/></p><p class="line874">The set_color() method will create the attribute self.color if it does not exist, or if self.color already exists, it will just set it to the new value. <span id="line-131" class="anchor"/><span id="line-132" class="anchor"/></p><p class="line867"><strong>方法set_color()将会创建一个属性self.color如果它不存在的话，或者如果self.color已经存在，那就会为它设置新值。</strong> <span id="line-133" class="anchor"/><span id="line-134" class="anchor"/></p><p
+class="line874">You can see what color the ball is by examining the attribute: <span id="line-135" class="anchor"/><span id="line-136" class="anchor"/></p><p class="line867"><strong>你可以检查属性看看ball是什么颜色：</strong> <span id="line-137" class="anchor"/><span id="line-138" class="anchor"/></p><p class="line867"><span id="line-139" class="anchor"/><span id="line-140" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-8251e5ed5b8743ae31fb24c630bec01003316748_005\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-8251e5ed5b8743ae31fb24c630bec01003316748_005', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-8251e5ed5b8743ae31fb24c630bec01003316748_005" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">rb</span><span class="Operator">.</span><span class="ID">color</span><span class="Text"/></span>
+</pre></div><span id="line-141" class="anchor"/><span id="line-142" class="anchor"/><p class="line867">
+</p><h3 id="head-80a98fe7e3bb552f1b5193547ca214f0debebc14">1.4. get and set获取和设置</h3>
+<span id="line-143" class="anchor"/><span id="line-144" class="anchor"/><p class="line874">It is a good idea to access data attributes through "getter" and "setter" methods, so we should create a get_color() method which just returns self.color <span id="line-145" class="anchor"/><span id="line-146" class="anchor"/></p><p class="line867"><strong>通过方法"getter"和"setter"访问数据属性是一种好方法，所以我们我们需要创建方法get_color()来返回self.color</strong> <span id="line-147" class="anchor"/><span id="line-148"
+class="anchor"/></p><p class="line874">Using methods to access your object attributes allows you to keep the interfaces to the attributes the same, even if later the underlying implementation changes. <span id="line-149" class="anchor"/><span id="line-150" class="anchor"/></p><p class="line867"><strong>通过方法访问你的对象变量使得你用相同的接口访问变量，即使后面用工具引发变化。</strong> <span id="line-151" class="anchor"/><span id="line-152" class="anchor"/></p><p class="line867"><span id="line-153" class="anchor"/><span
+id="line-154" class="anchor"/><span id="line-155" class="anchor"/><span id="line-156" class="anchor"/><span id="line-157" class="anchor"/><span id="line-158" class="anchor"/><span id="line-159" class="anchor"/><span id="line-160" class="anchor"/><span id="line-161" class="anchor"/><span id="line-162" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-969ae9b937f5ddf2a5c826d2a83f06a1f3893e32_006\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-969ae9b937f5ddf2a5c826d2a83f06a1f3893e32_006', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-969ae9b937f5ddf2a5c826d2a83f06a1f3893e32_006" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">class</span> <span class="ID">Ball</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">def</span> <span class="ID">set_color</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">color</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">color</span> <span class="Operator">=</span> <span class="ID">color</span></span>
+<span class="line"><span class="LineNumber">   4 </span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ResWord">def</span> <span class="ID">get_color</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ResWord">return</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">color</span></span>
+<span class="line"><span class="LineNumber">   7 </span></span>
+<span class="line"><span class="LineNumber">   8 </span>    <span class="ResWord">def</span> <span class="ID">bounce</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ResWord">print</span> <span class="String">'boing!'</span><span class="Text"/></span>
+</pre></div><span id="line-163" class="anchor"/><span id="line-164" class="anchor"/><p class="line874">In other words, set_color() might have side effects other than just setting self.color -- it might check first to make sure that you do not try to set the color to orange, or you might decide later that the color would actually be better stored in a different way. <span id="line-165" class="anchor"/><span id="line-166" class="anchor"/></p><p
+class="line867"><strong>换句话说，set_color()能够比直接设置self.color多一些附加效果——它能够先检查确认你不想设置color为orange，或者你能够稍后决定从不同的途径为color设置一个更改好的值。</strong> <span id="line-167" class="anchor"/><span id="line-168" class="anchor"/></p><p class="line867">
+</p><h3 id="head-5f025afb295c8fee3d9bad9f08da7e3f5a6ab291">1.5. bounce弹起</h3>
+<span id="line-169" class="anchor"/><span id="line-170" class="anchor"/><p class="line874">The other method in this class so far is bounce(). You can make the ball bounce by calling that method: <span id="line-171" class="anchor"/><span id="line-172" class="anchor"/></p><p class="line867"><strong>到目前为止类的另外一个方法是bounce()。你可以调用那个方法让球跳起来：</strong> <span id="line-173" class="anchor"/><span id="line-174" class="anchor"/></p><p class="line867"><span id="line-175" class="anchor"/><span
+id="line-176" class="anchor"/><span id="line-177" class="anchor"/><span id="line-178" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-fcd2b17aaaf0d5fa7f194b707fc7b4a944e69581_007\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-fcd2b17aaaf0d5fa7f194b707fc7b4a944e69581_007', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-fcd2b17aaaf0d5fa7f194b707fc7b4a944e69581_007" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">rb</span><span class="Operator">.</span><span class="ID">bounce</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">rb</span><span class="Operator">.</span><span class="ID">bounce</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">rb</span><span class="Operator">.</span><span class="ID">bounce</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-179" class="anchor"/><span id="line-180" class="anchor"/><p class="line867"><img title="attachment:boing_boing.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-2-5?action=AttachFile&amp;do=get&amp;target=boing_boing.png" class="attachment"/> <span id="line-181" class="anchor"/><span id="line-182" class="anchor"/></p><p class="line874">All bounce() does is print a message to the console. <span id="line-183" class="anchor"/><span id="line-184" class="anchor"/></p><p
+class="line867"><strong>所有的bounce()会打印一条信息到控制台上。</strong> <span id="line-185" class="anchor"/><span id="line-186" class="anchor"/></p><p class="line874">Using print statements like this can be a simple way to debug your class methods. You can print out various values at different times and see if they match up to what you think they should be. <span id="line-187" class="anchor"/><span id="line-188" class="anchor"/></p><p
+class="line867"><strong>像这样利用print（打印）语句能够简单的调试你的类组件。你可以在不同的时间打印出不同的变量值，并且观察他们是否符合你当初的设想。</strong> <span id="line-189" class="anchor"/><span id="line-190" class="anchor"/></p><p class="line874">Often you will get an error message or a weird value from the print, and you can start your investigation there. <span id="line-191" class="anchor"/><span id="line-192" class="anchor"/></p><p
+class="line867"><strong>在你得到一个错误的消息或是打印出一个怪异的变量时，你就可以从这开始你的调查了。</strong> <span id="line-193" class="anchor"/><span id="line-194" class="anchor"/></p><p class="line867">
+</p><h3 id="head-57150c8e1542ff940cf2766e841ac1420ca82db5">1.6. __init__</h3>
+<span id="line-195" class="anchor"/><span id="line-196" class="anchor"/><p class="line874">One problem with the Ball class the way we have the code now is that if you try to check the color before you set it, you will get an error: <span id="line-197" class="anchor"/><span id="line-198" class="anchor"/></p><p class="line867"><strong>用我们现在的Ball类代码时有一个问题，如果你尝试在设置color前察看它的值，这将发生错误：</strong> <span id="line-199" class="anchor"/><span id="line-200"
+class="anchor"/></p><p class="line867"><span id="line-201" class="anchor"/><span id="line-202" class="anchor"/><span id="line-203" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-ea99e37b3d2da7098f99d26c595e52dbd34bcb17_008\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-ea99e37b3d2da7098f99d26c595e52dbd34bcb17_008', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-ea99e37b3d2da7098f99d26c595e52dbd34bcb17_008" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">gb</span> <span class="Operator">=</span> <span class="ID">Ball</span><span class="Operator">.</span><span class="ID">Ball</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">gb</span><span class="Operator">.</span><span class="ID">get_color</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-204" class="anchor"/><span id="line-205" class="anchor"/><p class="line862">To make sure that the Ball always has a color, we should include the special method <span class="u">init</span>() to initialize the objects to a known state when they are created. <span id="line-206" class="anchor"/><span id="line-207" class="anchor"/></p><p class="line867"><strong>为保证Ball总是拥有一个color，我们需要包含一个特殊的方法 <span class="u">init</span>()
+当对象创建时能够预置对象到已知状态。</strong> <span id="line-208" class="anchor"/><span id="line-209" class="anchor"/></p><p class="line862">Adding <span class="u">init</span>(), the class will now look like this: <span id="line-210" class="anchor"/><span id="line-211" class="anchor"/></p><p class="line867"><strong>添加 <span class="u">init</span>()，这个类现在看起来像这样：</strong> <span id="line-212" class="anchor"/><span id="line-213" class="anchor"/></p><p
+class="line867"><span id="line-214" class="anchor"/><span id="line-215" class="anchor"/><span id="line-216" class="anchor"/><span id="line-217" class="anchor"/><span id="line-218" class="anchor"/><span id="line-219" class="anchor"/><span id="line-220" class="anchor"/><span id="line-221" class="anchor"/><span id="line-222" class="anchor"/><span id="line-223" class="anchor"/><span id="line-224" class="anchor"/><span id="line-225" class="anchor"/><span id="line-226"
+class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-4105d9ff2c6dd70392fe8fa54c2256deb9a74b7d_009\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-4105d9ff2c6dd70392fe8fa54c2256deb9a74b7d_009', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-4105d9ff2c6dd70392fe8fa54c2256deb9a74b7d_009" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">class</span> <span class="ID">Ball</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">color</span><span class="Operator">=</span><span class="String">'white'</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">set_color</span><span class="Operator">(</span><span class="ID">color</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ResWord">def</span> <span class="ID">set_color</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">color</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">color</span> <span class="Operator">=</span> <span class="ID">color</span></span>
+<span class="line"><span class="LineNumber">   7 </span></span>
+<span class="line"><span class="LineNumber">   8 </span>    <span class="ResWord">def</span> <span class="ID">get_color</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ResWord">return</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">color</span></span>
+<span class="line"><span class="LineNumber">  10 </span></span>
+<span class="line"><span class="LineNumber">  11 </span>    <span class="ResWord">def</span> <span class="ID">bounce</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ResWord">print</span> <span class="String">'boing!'</span><span class="Text"/></span>
+</pre></div><span id="line-227" class="anchor"/><span id="line-228" class="anchor"/><p class="line862">The <span class="u">init</span>() method is called automatically when you instantiate your class, and it can take parameters like any other function. <span id="line-229" class="anchor"/><span id="line-230" class="anchor"/></p><p class="line867"><strong>当你实例化你的类时，方法 <span class="u">init</span>()
+被自动的调用，并且它能够像其他函数一样附带参数。</strong> <span id="line-231" class="anchor"/><span id="line-232" class="anchor"/></p><p class="line874">Remember that any time you make changes to your module you will need to either re-start the interpreter or else reload() the module. <span id="line-233" class="anchor"/><span id="line-234" class="anchor"/></p><p
+class="line867"><strong>记得任何时候，你改动了你的组件，只需要重新开始交互解释器或者reload()这个组件。</strong> <span id="line-235" class="anchor"/><span id="line-236" class="anchor"/></p><p class="line867"><span id="line-237" class="anchor"/><span id="line-238" class="anchor"/><span id="line-239" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-a4922c73724a7e17203dc9888042bd91091f1797_010\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-a4922c73724a7e17203dc9888042bd91091f1797_010', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-a4922c73724a7e17203dc9888042bd91091f1797_010" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">reload</span><span class="Operator">(</span><span class="ID">Ball</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">wb</span> <span class="Operator">=</span> <span class="ID">Ball</span><span class="Operator">.</span><span class="ID">Ball</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-240" class="anchor"/><span id="line-241" class="anchor"/><p class="line874">will create a ball with its color set to the default 'white', and <span id="line-242" class="anchor"/><span id="line-243" class="anchor"/></p><p class="line867"><strong>将会创建一个ball并且带有缺省值'white'（白）的color，并且</strong> <span id="line-244" class="anchor"/><span id="line-245" class="anchor"/></p><p class="line867"><span
+id="line-246" class="anchor"/><span id="line-247" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-02f23ab02303a7a231653da1c34775b928596542_011\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-02f23ab02303a7a231653da1c34775b928596542_011', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-02f23ab02303a7a231653da1c34775b928596542_011" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">yb</span> <span class="Operator">=</span> <span class="ID">Ball</span><span class="Operator">.</span><span class="ID">Ball</span><span class="Operator">(</span><span class="String">'yellow'</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-248" class="anchor"/><span id="line-249" class="anchor"/><p class="line874">will make a 'yellow' ball. <span id="line-250" class="anchor"/><span id="line-251" class="anchor"/></p><p class="line867"><strong>将会产生一个'yellow'（黄）球。</strong> <span id="line-252" class="anchor"/><span id="line-253" class="anchor"/></p><p class="line867">
+</p><h3 id="head-7f13ad02c49419832a7a74f3b027be7ba04bf94e">1.7. Inheritance继承</h3>
+<span id="line-254" class="anchor"/><span id="line-255" class="anchor"/><p class="line874">The real power of classes emerges when you understand inheritance. <span id="line-256" class="anchor"/><span id="line-257" class="anchor"/></p><p class="line867"><strong>当你明白继承时，类的真正能量才会浮现出来。</strong> <span id="line-258" class="anchor"/><span id="line-259" class="anchor"/></p><p class="line874">Inheritance means that
+a class can define a new object which is a type of another object. <span id="line-260" class="anchor"/><span id="line-261" class="anchor"/></p><p class="line867"><strong>继承的意思是一个类能够定义一个类似于其他对象的新对象。</strong> <span id="line-262" class="anchor"/><span id="line-263" class="anchor"/></p><p class="line862">For example, we might create a new object <a href="/moin/SuperBall" class="nonexistent">SuperBall</a>
+which is a type of Ball: <span id="line-264" class="anchor"/><span id="line-265" class="anchor"/></p><p class="line867"><strong>例如，我们能够创建一个新对象<a href="/moin/SuperBall" class="nonexistent">SuperBall</a>类似于Ball：</strong> <span id="line-266" class="anchor"/><span id="line-267" class="anchor"/></p><p class="line867"><span id="line-268" class="anchor"/><span id="line-269" class="anchor"/><span id="line-270"
+class="anchor"/><span id="line-271" class="anchor"/><span id="line-272" class="anchor"/><span id="line-273" class="anchor"/><span id="line-274" class="anchor"/><span id="line-275" class="anchor"/><span id="line-276" class="anchor"/><span id="line-277" class="anchor"/><span id="line-278" class="anchor"/><span id="line-279" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-ed1b54ea6713e67562b01514eddb9a315b82052f_012\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-ed1b54ea6713e67562b01514eddb9a315b82052f_012', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-ed1b54ea6713e67562b01514eddb9a315b82052f_012" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">class</span> <span class="ID">SuperBall</span><span class="Operator">(</span><span class="ID">Ball</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>        <span class="ID">Ball</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="String">'swirled'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span>        <span class="ResWord">print</span> <span class="String">'SuperBall created!'</span></span>
+<span class="line"><span class="LineNumber">   5 </span></span>
+<span class="line"><span class="LineNumber">   6 </span>    <span class="ResWord">def</span> <span class="ID">bounce</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ResWord">print</span> <span class="String">'boing, boing, boing'</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">superbounce</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span></span>
+<span class="line"><span class="LineNumber">  10 </span>    <span class="ResWord">def</span> <span class="ID">superbounce</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ResWord">print</span> <span class="String">'BOING!'</span><span class="Text"/></span>
+</pre></div><span id="line-280" class="anchor"/><span id="line-281" class="anchor"/><p class="line867">
+</p><h3 id="head-989dd4e722d86405dc57ec0876ad28002150faa5">1.8. Add, Override, Extend加入，替换，扩展</h3>
+<span id="line-282" class="anchor"/><span id="line-283" class="anchor"/><p class="line862">If <a href="/moin/SuperBall" class="nonexistent">SuperBall</a> defined no methods at all, it would be just like Ball. What we want, though, is something that is like a Ball, but with some changes. <span id="line-284" class="anchor"/><span id="line-285" class="anchor"/></p><p class="line867"><strong>如果<a
+href="/moin/SuperBall" class="nonexistent">SuperBall</a>没有定义任何方法，它就像一个Ball一样。可是我们想做什么，虽然，这有几分像一个Ball，但是也有一些改变。</strong> <span id="line-286" class="anchor"/><span id="line-287" class="anchor"/></p><p class="line874">One thing we can do is add completely new methods. <span id="line-288" class="anchor"/><span id="line-289" class="anchor"/></p><p
+class="line867"><strong>一件事是我们完整地添加了一个新方法。</strong> <span id="line-290" class="anchor"/><span id="line-291" class="anchor"/></p><p class="line874">The superbounce() method adds a capability which a normal Ball just does not have. <span id="line-292" class="anchor"/><span id="line-293" class="anchor"/></p><p
+class="line867"><strong>这个superbounce()方法添加了一种能力，这是普通的Ball类所没有的。</strong> <span id="line-294" class="anchor"/><span id="line-295" class="anchor"/></p><p class="line862">If your class defines a method which is also in its parent class, the new method will be called instead of the parent class method -- the new method overrides the parent method. In this case, The bounce() method is one which
+both Ball and <a href="/moin/SuperBall" class="nonexistent">SuperBall</a> have. <span id="line-296" class="anchor"/><span id="line-297" class="anchor"/></p><p class="line867"><strong>如果你的类定义了一个在父类中已经存在的方法，新的方法将会代替父类的方法被调用——新的方法覆盖了父类的方法。这种情况下，bounce()是唯一一个Ball和<a href="/moin/SuperBall" class="nonexistent">SuperBall</a>同时拥有的方法。</strong> <span
+id="line-298" class="anchor"/><span id="line-299" class="anchor"/></p><p class="line862">Calling bounce() on a <a href="/moin/SuperBall" class="nonexistent">SuperBall</a> overrides the normal Ball.bounce(). In this case, it prints out a message, and then calls the superbounce() method too. <span id="line-300" class="anchor"/><span id="line-301" class="anchor"/></p><p class="line867"><strong>调用在<a
+href="/moin/SuperBall" class="nonexistent">SuperBall</a>上调用bounce()，不理会普通的Ball.bounce()。在这种情况下，它打印出消息，然后再调用superbounce()。</strong> <span id="line-302" class="anchor"/><span id="line-303" class="anchor"/></p><p class="line874">Sometimes what you want is the parent class's behavior, plus something more. <span id="line-304" class="anchor"/><span id="line-305" class="anchor"/></p><p
+class="line867"><strong>有时你想父类有什么的表现，加上一些更多的。</strong> <span id="line-306" class="anchor"/><span id="line-307" class="anchor"/></p><p class="line862">The <a href="/moin/SuperBall" class="nonexistent">SuperBall</a>.<span class="u">init</span>() method starts out by calling Ball.<span class="u">init</span>() to get the normal Ball initialization. <span id="line-308" class="anchor"/><span
+id="line-309" class="anchor"/></p><p class="line867"><strong>方法<a href="/moin/SuperBall" class="nonexistent">SuperBall</a>.<span class="u">init</span>()开始于调用Ball.<span class="u">init</span>()的Ball的初始化。</strong> <span id="line-310" class="anchor"/><span id="line-311" class="anchor"/></p><p class="line874">This is a common idiom in subclasses, and you should probably do it just like this until you have
+a better understanding of how classes and inheritance work. <span id="line-312" class="anchor"/><span id="line-313" class="anchor"/></p><p class="line867"><strong>在子类中这是一种通用的方言，并且直到你更好的理解类和继承的工作方式之后也许你才会像这样来用。</strong> <span id="line-314" class="anchor"/><span id="line-315" class="anchor"/></p><p class="line862">Notice that since Ball.<span class="u">init</span>() is
+called against the class Ball and not against an instance of class Ball you need to explicitly pass in the Ball instance (self) as the first parameter. <span id="line-316" class="anchor"/><span id="line-317" class="anchor"/></p><p class="line867"><strong>注意，自从Ball.<span class="u">init</span>()再次被调用，类Ball便不再是一个类的实例，你需要清楚地通过Ball实例的第一个参数。</strong>(self)。 <span id="line-318"
+class="anchor"/><span id="line-319" class="anchor"/></p><p class="line862">After that, <a href="/moin/SuperBall" class="nonexistent">SuperBall</a>.<span class="u">init</span>() also prints out an informative message. At this point, it could also set up any additional attributes which a <a href="/moin/SuperBall" class="nonexistent">SuperBall</a> has, but which a Ball does not. <span id="line-320"
+class="anchor"/><span id="line-321" class="anchor"/></p><p class="line867"><strong>在那之后，<a href="/moin/SuperBall" class="nonexistent">SuperBall</a>.<span class="u">init</span>()也打印出一个消息信息。在这个时候，它同样能够设置任何<a href="/moin/SuperBall" class="nonexistent">SuperBall</a>拥有的附加属性而在Ball中没有的。</strong> <span id="line-322" class="anchor"/><span id="bottom" class="anchor"/></p></div>
+
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-3" class="anchor"/><p class="line867"><strong> <span id="line-4" class="anchor"/><a href="/moin/StartProgramming"> （首页）开始编程之旅</a> <span id="line-5" class="anchor"/>翻译自Lee Harr的<a href="http://staff.easthighschool.net/lee/computers/book/Start_Programming.html" class="http">Start Programming</a> <span id="line-6" class="anchor"/><span id="line-7" class="anchor"/></strong></p><p class="line862"><strong>本文是使用<a href="http://www.nongnu.org/pygsear/" class="http">pygsear</a>+<a href="http://pygame.org" class="http">pygame</a>作为开发环境，以初级用户角度来分步分阶段学习<a href="http://www.python.org"
+class="http">PYTHON</a>基本概念，并以小游戏开发项目为具体案例，介绍的十分详细。编写风格清新朴实，没有象一般教科书那样枯燥，极其适合初级用户来激发兴趣时使用。 <span id="line-8" class="anchor"/></strong> <span id="line-9" class="anchor"/></p>
+
+<span id="line-10" class="anchor"/>
+<h1 id="head-64c3845316ec37d4b6495f7200f3ac8b8930c87a">1. StartProgramming-2-6 Exercises</h1>
+<span id="line-11" class="anchor"/><span id="line-12" class="anchor"/><ol type="1"><li>Make a function to have pete draw a line from one random point to another 100 times. (Hint) <span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></li><li class="gap">Now, instead of drawing a line each time he moves, give the function a parameter for how many lines to skip between lines that he draws. (Hint) <span id="line-15" class="anchor"/><span id="line-16" class="anchor"/></li><li class="gap">Create a function that makes a list of the points on a polygon, then have pete draw lines among them randomly for a while. (Hint) <span id="line-17" class="anchor"/><span id="line-18" class="anchor"/></li><li class="gap">Put all of the functions you wrote in chapter 1 in to a file
+called firstFunctions.py so that you can easily load them and access them. (Hint)  <span id="line-19" class="anchor"/></li></ol><span id="bottom" class="anchor"/></div>

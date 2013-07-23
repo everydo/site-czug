@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "News_Item.2003-02-21.3537"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "这则新闻好像已经有点过时了，但CZUG不能缺少这则新闻，CZUG也要庆贺！", 
+        "modified": "2003-02-21 17:42:48", 
+        "title": "Plone1.0正式发布！"
+    }
+}

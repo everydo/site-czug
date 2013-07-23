@@ -1,0 +1,12 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "08.html"
+    }, 
+    "dublin": {
+        "creators": [
+            "Benky"
+        ], 
+        "title": "第八章：高级视图和URL配置"
+    }
+}

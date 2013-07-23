@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Image", 
+        "id": "plone_workflow.png"
+    }, 
+    "dublin": {
+        "creators": [
+            "zhangbingkai"
+        ], 
+        "description": "plone_workflow状态图", 
+        "modified": "2007-01-19 12:16:08", 
+        "title": "plone_workflow.png"
+    }
+}

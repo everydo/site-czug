@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "id": "website"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "网站的功能介绍、更改历史、发展规划等", 
+        "modified": "2004-01-10 09:25:56", 
+        "title": "CZUG网站"
+    }
+}

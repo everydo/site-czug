@@ -1,0 +1,63 @@
+
+ <p><br />
+ 英文新闻稿：<a href="http://plone.org/foundation/newsitems/conservancy-vote-results">Foundation:
+ Results from the vote on Conservancy</a></p>
+ <div class="stx">
+ <p><b>背景:</b> 今年年初成立Plone 基金,
+ 她是一个力图保护和提升Plone的非盈利组织。随后，在基金成员中开展了针对这个建议的投票.</p>
+ <p>简单的说, conservancy的核心是：谁拥有Plone代码的版权. 当前, 所有的代码由Alexander Limi 和Alan
+ Runyan这两个Plone的创始人拥有；但随这基金的创立, 他们希望把所有权转移到社区.</p>
+ <p>因此创建了一个将版权转移到Plone 基金的建议, 董事会在咨询了<span class="link-external"><a href="http://www.fsf.org/">Free Software Foundation</a></span>和 <span class="link-external"><a href="http://en.wikipedia.org/wiki/Eben_Moglen">Eben
+ Moglen</a>后，</span>提交了推荐稿.</p>
+ <p>随后，这个建议在基金成员种进行投票. 更多的背景信息可在<a href="http://plone.org/foundation/proposals">Plone 基金建议区</a>找到。</p>
+ <p><b>过程:</b> 基金用了2周的时间，<span class="link-external"><a href="http://lists.plone.org/pipermail/membership">在基金成员邮件列表上讨论</a></span>,
+ 相关的问题得到了回答, 人们可以表达他们自己的观点. 讨论期结束后，开始了电子投票.</p>
+ <p><b>投票结果:</b> 在下面的表格中，你可以看到投票结果:</p>
+ <table border="1" cellpadding="2">
+ <tbody>
+ <tr>
+ <th colspan="1" align="left" valign="middle">
+ <p>赞成票</p>
+ </th>
+ <th colspan="1" align="left" valign="middle">
+ <p><b>79</b></p>
+ </th>
+ </tr>
+ <tr>
+ <th colspan="1" align="left" valign="middle">
+ <p>反对票</p>
+ </th>
+ <th colspan="1" align="left" valign="middle">
+ <p><i>1</i></p>
+ </th>
+ </tr>
+ <tr>
+ <th colspan="1" align="left" valign="middle">弃权</th>
+ <th colspan="1" align="left" valign="middle">
+ <p><i>4</i></p>
+ </th>
+ </tr>
+ <tr>
+ <td colspan="1" align="left" valign="middle">
+ <p>总共的投票人数</p>
+ </td>
+ <td colspan="1" align="left" valign="middle">
+ <p><i>84</i></p>
+ </td>
+ </tr>
+ <tr>
+ <td colspan="1" align="left" valign="middle">
+ <p>未投票人数</p>
+ </td>
+ <td colspan="1" align="left" valign="middle">
+ <p><i>14</i></p>
+ </td>
+ </tr>
+ </tbody>
+ </table>
+ <p><b>结论:</b> 根据成员的表决, 以79比1通过了该决议, Plone 基金董事会将开始着手将Plone的知识产权转移到基金.</p>
+ <p><b>感谢:</b> 我们十分感谢Free Software Foundation, Eben Moglen, Ron Chichester,
+ 我们的执行总裁(也是投票计数人;) Paul Everitt — 和所有的Plone 基金成员.</p>
+ <p>以Plone董事会的名义,</p>
+ <p>Alexander Limi （Plone基金 副总裁）</p>
+ </div>

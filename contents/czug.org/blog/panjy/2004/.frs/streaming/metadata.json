@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "streaming"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "收集一些流媒体服务器的资源", 
+        "modified": "2005-01-27 19:54:51", 
+        "title": "流媒体服务器"
+    }
+}

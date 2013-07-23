@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Image", 
+        "id": "plone_actions"
+    }, 
+    "dublin": {
+        "creators": [
+            "blueszhao"
+        ], 
+        "description": "", 
+        "modified": "2004-03-11 02:06:21", 
+        "title": "操作actions定义"
+    }
+}

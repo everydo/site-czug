@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<metadata xmlns="http://plone.org/ns/archetypes/" xmlns:cmf="http://cmf.zope.org/namespaces/default/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xmp="adobe:ns:meta">
+    <dc:title>
+国际化
+	</dc:title>
+	<dc:description>
+让zope3支持多种语言
+	</dc:description>
+</metadata>

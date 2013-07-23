@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "News_Item.2004-01-15.1506583999"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Plone2.x已经到RC3（第三个候选版本），据反映性能不佳，最近社区的大佬进行了优化", 
+        "modified": "2004-01-15 05:28:06", 
+        "title": "Plone2慢吗？"
+    }
+}

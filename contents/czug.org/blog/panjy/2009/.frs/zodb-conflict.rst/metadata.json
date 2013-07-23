@@ -1,0 +1,13 @@
+{
+    "main": {
+        "contenttype": "Document"
+    },
+    "dublin": {
+        "title": "ZODB的冲突解决",
+        "description": "",
+        "creators": [
+            "潘俊勇"
+        ],
+        "created": "2009-12-12 16:58:12.353801"
+    }
+}

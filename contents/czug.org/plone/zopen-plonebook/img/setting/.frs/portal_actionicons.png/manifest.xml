@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<manifest xmlns="http://zopechina.com/ns/frs"
+           xmlns:tal="http://xml.zope.org/namespaces/tal"
+           contenttype="<bound method ATImage.getPortalTypeName of <ATImage at /58080_1/default.czug.edo/projects/341196/files/setting/portal_actionicons.png>>"
+           uid="f7d57c85b91361be1618267958ca1c55">
+
+
+    <entry type="primary_field"
+           name="image"
+           mimetype="image/png"
+           filename=""
+           fullpath=""/>
+
+
+    <entry type="xns"
+           name=""
+           mimetype="text/xml"
+           filename="portal_actionicons.png.xml"
+           fullpath="xns.xml"/>
+
+
+</manifest>

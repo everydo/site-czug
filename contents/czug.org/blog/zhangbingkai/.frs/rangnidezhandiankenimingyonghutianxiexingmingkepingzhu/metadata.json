@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "rangnidezhandiankenimingyonghutianxiexingmingkepingzhu"
+    }, 
+    "dublin": {
+        "creators": [
+            "zhangbingkai"
+        ], 
+        "description": "Plone在默认情况下，开启评论的内容，用户需要登录才能发表评注。下面将讲述如何让匿名用户便可评注；然后做简单定制，实现让匿名用户填写姓名即可评注。", 
+        "modified": "2007-09-16 18:26:58", 
+        "title": "让你的站点可匿名用户填写姓名可评注"
+    }
+}

@@ -1,0 +1,5 @@
+description: ''
+exclude: ['*.exe', '*.png', '*.jpg', '*.gif', left_col.rst]
+order: [index.rst, quickguide, spread-plone, zopen-plonebook, faq, howto, tutorial,
+  newplonebook, presentations, plonebook]
+title: Plone

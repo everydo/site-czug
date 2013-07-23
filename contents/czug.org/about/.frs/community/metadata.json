@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "id": "community"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "社区的发展模式、管理、文化、制度等方面的内容，这是CZUG长久生存的根基", 
+        "modified": "2004-01-10 09:25:56", 
+        "title": "CZUG社区"
+    }
+}

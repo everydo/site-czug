@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zope-poxydeshiyong"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "zope.proxy是zope3的一个包，能够实现对象的透明代理。", 
+        "modified": "2006-05-01 14:40:43", 
+        "title": "zope.poxy的使用"
+    }
+}

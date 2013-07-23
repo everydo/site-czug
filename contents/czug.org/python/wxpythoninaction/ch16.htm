@@ -1,0 +1,424 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-1" class="anchor"/><p class="line867"><strong>16 在你的应用程序中加入<tt>HTML</tt></strong> <span id="line-2" class="anchor"/><span id="line-3" class="anchor"/><span id="line-4" class="anchor"/></p><p class="line867"><strong>本章内容：</strong> <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/></p><ul><li><p class="line862">在<tt>wxPython</tt>窗口中显示<tt>HTML</tt> <span id="line-7" class="anchor"/><span id="line-8" class="anchor"/></p></li><li class="gap"><p class="line862">处理和打印<tt>HTML</tt>窗口 <span id="line-9" class="anchor"/><span id="line-10" class="anchor"/></p></li><li class="gap"><p class="line862">使用<tt>HTML</tt>分析器(<tt>parser)</tt> <span id="line-11" class="anchor"/><span id="line-12" class="anchor"/></p></li><li
+class="gap">支持新的标记和其它的文件格式 <span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></li><li class="gap"><p class="line862">在<tt>HTML</tt>中使用控件 <span id="line-15" class="anchor"/><span id="line-16" class="anchor"/><span id="line-17" class="anchor"/></p></li></ul><p
+class="line867"><tt>HTML</tt>最初是打算被作为超文本系统使用的一个简单的语义标记来使用的。迄今为止，<tt>HTML</tt>已经变得更加的复杂和被广泛使用。<tt>HTML</tt>文档标记已经被证明在网页浏览器之外也是有用的。目前<tt>HTML</tt>文档标记通常被用于文本标记（如在文本控件中），或用于管理一系列的超链接页面（帮助系统中）。在<tt>wxPython</tt>中，有许多专用于处理你的<tt>HTML</tt>需求的特性。你可以在一个窗口中显示简单的<tt>HTML</tt>，并用超链接创建你自己的帮助页面，如果你需要的话，甚至你还可以嵌入一个功能更全的浏览器。 <span id="line-18" class="anchor"/><span id="line-19" class="anchor"/></p><p class="line862">下一节内容提示：如何在<tt>wxPython</tt>窗口中显示<tt>HTML</tt>？ <span id="line-20" class="anchor"/><span id="line-21" class="anchor"/><span id="line-22" class="anchor"/></p><p
+class="line867">
+</p><h2 id="head-d38018b35b6de336d395f613fa0f00de9ccc7196">1. 显示HTML</h2>
+<span id="line-23" class="anchor"/><span id="line-24" class="anchor"/><span id="line-25" class="anchor"/><p class="line862">在<tt>wxPython</tt>中，你对<tt>HTML</tt>能做的最重要的事情就是将它显示在一个窗口中。下面的两节，我们将讨论<tt>HTML</tt>窗口对象，以及给你展示如何对本地的文本或远程的<tt>URL</tt>使用它。 <span id="line-26" class="anchor"/><span id="line-27" class="anchor"/><span id="line-28" class="anchor"/></p><p class="line867">
+</p><h3 id="head-37115770612a27ccc5d95f3a228871fb996780ff">1.1. 如何在一个wxPython窗口中显示HTML？</h3>
+<span id="line-29" class="anchor"/><span id="line-30" class="anchor"/><span id="line-31" class="anchor"/><p class="line862">正如我们在第六章中讨论的，对于使用样式文本或简单的网格来快速地描述文本的布局，<tt>wxPython</tt>中的<tt>HTML</tt>是一个有用的机制。<tt>wxPython</tt>的<tt>wx.html.HtmlWindow</tt>类就是用于此目的的。图16.1显示了一个例子。 <span id="line-32" class="anchor"/><span id="line-33" class="anchor"/><span id="line-34" class="anchor"/></p><p class="line867"><strong>图16.1</strong> <span id="line-35" class="anchor"/><span id="line-36" class="anchor"/></p><p class="line867"><img title="attachment:w16.1.gif" src="/moin/WxPythonInAction/ChapterSixteen?action=AttachFile&amp;do=get&amp;target=w16.1.gif" class="attachment"/> <span id="line-37" class="anchor"/><span
+id="line-38" class="anchor"/><span id="line-39" class="anchor"/></p><p class="line874">例16.1显示了用于产生图16.1的代码。 <span id="line-40" class="anchor"/><span id="line-41" class="anchor"/><span id="line-42" class="anchor"/></p><p class="line867"><strong>例16.1</strong>  <span id="line-43" class="anchor"/><strong>显示简单地<tt>HtmlWindow</tt></strong> <span id="line-44" class="anchor"/><span id="line-45" class="anchor"/></p><p class="line867"><tt>import wx</tt> <span id="line-46" class="anchor"/><span id="line-47" class="anchor"/><span id="line-48" class="anchor"/><span id="line-49" class="anchor"/><span id="line-50" class="anchor"/><span id="line-51" class="anchor"/><span id="line-52" class="anchor"/><span id="line-53" class="anchor"/><span id="line-54"
+class="anchor"/><span id="line-55" class="anchor"/><span id="line-56" class="anchor"/><span id="line-57" class="anchor"/><span id="line-58" class="anchor"/><span id="line-59" class="anchor"/><span id="line-60" class="anchor"/><span id="line-61" class="anchor"/><span id="line-62" class="anchor"/><span id="line-63" class="anchor"/><span id="line-64" class="anchor"/><span id="line-65" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-3cd31fb9352dd8f2321cf3b00f163d23ce539e31_000\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-3cd31fb9352dd8f2321cf3b00f163d23ce539e31_000', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-3cd31fb9352dd8f2321cf3b00f163d23ce539e31_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">html</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">MyHtmlFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ID">html</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">html</span><span class="Operator">.</span><span class="ID">HtmlWindow</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ResWord">if</span> <span class="String">"gtk2"</span> <span class="ResWord">in</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PlatformInfo</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   8 </span>            <span class="ID">html</span><span class="Operator">.</span><span class="ID">SetStandardFonts</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">html</span><span class="Operator">.</span><span class="ID">SetPage</span><span class="Operator">(</span></span>
+<span class="line"><span class="LineNumber">  11 </span>            <span class="String">"Here is some  b formatted /b   i  u text /u  /i  "</span></span>
+<span class="line"><span class="LineNumber">  12 </span>            <span class="String">"loaded from a  font color=\"red\" string /font ."</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span></span>
+<span class="line"><span class="LineNumber">  14 </span></span>
+<span class="line"><span class="LineNumber">  15 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span><span class="ID">frm</span> <span class="Operator">=</span> <span class="ID">MyHtmlFrame</span><span class="Operator">(</span><span class="ID">None</span><span class="Operator">,</span> <span class="String">"Simple HTML"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span><span class="ID">frm</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-66" class="anchor"/><p class="line867"><tt>wx.html.HtmlWindow</tt>的构造函数基本上是与<tt>wx.ScrolledWindow</tt>相同的，如下所示： <span id="line-67" class="anchor"/><span id="line-68" class="anchor"/></p><p class="line867"><span id="line-69" class="anchor"/><span id="line-70" class="anchor"/><span id="line-71" class="anchor"/><span id="line-72" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-b166066f17044af71ca98f1b1515534fec0eb07a_001\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-b166066f17044af71ca98f1b1515534fec0eb07a_001', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-b166066f17044af71ca98f1b1515534fec0eb07a_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">html</span><span class="Operator">.</span><span class="ID">HtmlWindow</span><span class="Operator">(</span><span class="ID">parent</span><span class="Operator">,</span> <span class="ID">id</span><span class="Operator">=</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="ID">pos</span><span class="Operator">=</span><span
+class="ID">wx</span><span class="Operator">.</span><span class="ID">DefaultPosition</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   2 </span>        <span class="ID">size</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">DefaultSize</span><span class="Operator">,</span> <span class="ID">style</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">html</span><span class="Operator">.</span><span class="ID">HW_SCROLLBAR_AUTO</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   3 </span>        <span class="ID">name</span><span class="Operator">=</span><span class="String">"htmlWindow"</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-73" class="anchor"/><p class="line862">上面的这些参数现在看着应该比熟悉。这最重要的不同点是默认样式<tt>wx.html.HW_SCROLLBAR_AUTO</tt>，它将告诉<tt>HTML</tt>窗口在需要的时候自动增加滚动条。与之相反的样式是<tt>wx.html.HW_SCROLLBAR_NEVER</tt>，使用该样式将不会显示滚动条。还有一个<tt>HTML</tt>窗口样式是<tt>wx.html.HW_NO_SelectION</tt>，它使得用户不能选择窗口中的文本。 <span id="line-74" class="anchor"/><span id="line-75" class="anchor"/></p><p
+class="line862">当在<tt>HTML</tt>窗口中写要显示的<tt>HTML</tt>时，记住所写的<tt>HTML</tt>要是简单的。因为<tt>wx.html.HtmlWindow</tt>控件仅设计用于简单样式文本显示，而非用于全功能的多媒体超文本系统。它只支持最基本的文本标记，更高级的特性如层叠样式表(<tt>css)</tt>和<tt>JavaScript</tt>不被支持。表16.1包含了官方支持的<tt>HTML</tt>标记。通常，这里的标记和它的属性的行为和<tt>web</tt>浏览器中的一样，但是由于它不是一个完全成熟的浏览器，所以有时会出现一些奇怪行为的情况。表16.1中列出了后跟有属性的标记。 <span id="line-76" class="anchor"/><span id="line-77" class="anchor"/><span id="line-78"
+class="anchor"/></p><p class="line867"><strong>表16.1</strong>  <span id="line-79" class="anchor"/><strong>用于<tt>HTML</tt>窗口控件的有效的标记</strong> <span id="line-80" class="anchor"/><span id="line-81" class="anchor"/></p><div><table><tbody><tr>  <td style="text-align: center;" rowspan="2" colspan="1"><p class="line862">文档结构标记</p></td>
+<td><p class="line862"> <tt>a href name target   body alignment bgcolor </tt></p></td>
+</tr>
+<tr>  <td><span id="line-82" class="anchor"/><p class="line891"><tt>link text   meta content http-equiv  title </tt></p></td>
+</tr>
+<tr>  <td><span id="line-83" class="anchor"/><p class="line862">文本结构标记</p></td>
+<td><p class="line862"> <tt>br   div align   hr align noshade size width   p  </tt></p></td>
+</tr>
+<tr>  <td style="text-align: center;" rowspan="3" colspan="1"><span id="line-84" class="anchor"/><p class="line862">文本显示标记</p></td>
+<td><p class="line862"> <tt>address   b   big   blockquote   center   cite</tt></p></td>
+</tr>
+<tr>  <td><span id="line-85" class="anchor"/><p class="line891"><tt>code   em   font color face size  h1   h2   h3   h4   h5   h6 </tt></p></td>
+</tr>
+<tr>  <td><span id="line-86" class="anchor"/><p class="line891"><tt>i   kbd   pre   samp   small   strike   string   tt   u </tt></p></td>
+</tr>
+<tr>  <td><span id="line-87" class="anchor"/><p class="line862">列表标记</p></td>
+<td><p class="line862"> <tt>dd   dl   dt   li   ol   ul </tt></p></td>
+</tr>
+<tr>  <td style="text-align: center;" rowspan="2" colspan="1"><span id="line-88" class="anchor"/><p class="line862">图像和地图标记</p></td>
+<td><p class="line862"> <tt>area coords href shape   img align </tt></p></td>
+</tr>
+<tr>  <td><span id="line-89" class="anchor"/><p class="line891"><tt>height src width usemap   map name </tt></p></td>
+</tr>
+<tr>  <td style="text-align: center;" rowspan="4" colspan="1"><span id="line-90" class="anchor"/><p class="line862">表格标记</p></td>
+<td><p class="line862"> <tt>table align bgcolor border cellpadding </tt></p></td>
+</tr>
+<tr>  <td><span id="line-91" class="anchor"/><p class="line891"><tt>cellspacing valign width  td align bgcolor colspan</tt></p></td>
+</tr>
+<tr>  <td><span id="line-92" class="anchor"/><p class="line891"><tt>rowspan valign width nowrap   th align bgcolor colspan</tt></p></td>
+</tr>
+<tr>  <td><span id="line-93" class="anchor"/><p class="line891"><tt>valign width rowspan   tr align bgcolor valign  </tt></p></td>
+</tr>
+</tbody></table></div><span id="line-94" class="anchor"/><span id="line-95" class="anchor"/><p class="line867"><tt>HTML</tt>窗口使用<tt>wx.Image</tt>来装载和显示图像，所以它可以支持所有<tt>wx.Image</tt>支持的图像文件格式。 <span id="line-96" class="anchor"/><span id="line-97" class="anchor"/><span id="line-98" class="anchor"/></p><p class="line867">
+</p><h3 id="head-f9c932d6836d746f78a67fb861cd75bc03884565">1.2. 如何显示来自一个文件或URL的HTML？</h3>
+<span id="line-99" class="anchor"/><span id="line-100" class="anchor"/><span id="line-101" class="anchor"/><p class="line862">一旦你创建了一个<tt>HTML</tt>窗口，接下来就是在这个窗口中显示<tt>HTML</tt>文本。下面的四个方法用于在窗口中得到<tt>HTML</tt>文本。 <span id="line-102" class="anchor"/><span id="line-103" class="anchor"/></p><ul><li><p class="line891"><tt>SetPage(source)</tt> <span id="line-104" class="anchor"/></p></li><li><p class="line891"><tt>AppendToPage(source)</tt> <span id="line-105" class="anchor"/></p></li><li><p class="line891"><tt>LoadFile(filename)</tt>
+<span id="line-106" class="anchor"/></p></li><li><p class="line891"><tt>LoadPage(location)</tt> <span id="line-107" class="anchor"/><span id="line-108" class="anchor"/></p></li></ul><p class="line862">其中最直接的方法是<tt>SetPage(source)</tt>，参数<tt>source</tt>是一个字符串，它包含你想显示在窗口中的<tt>HTML</tt>资源。 <span id="line-109" class="anchor"/><span id="line-110" class="anchor"/></p><p
+class="line862">你可以使用方法<tt>AppendToPage(source)</tt>添加<tt>HTML</tt>到窗口中的文本的后面。至于<tt>SetPage()</tt>和<tt>AppendToPage()</tt>方法，其中的参数<tt>source</tt>被假设是<tt>HTML</tt>，这意味着，如果你传递的是纯文本，那么其中的间距将被忽略，以符合<tt>HTML</tt>标准。 <span id="line-111" class="anchor"/><span id="line-112" class="anchor"/></p><p
+class="line862">如果你想让你的窗口在浏览外部的资源时更像一个浏览器，那么你有两种方法。方法<tt>LoadFile(filename)</tt>读取本地文件的内容并将它们显示在窗口中。在这种情况中，窗口利用<tt>MIME</tt>文件类型来装载一个图像文件或一个<tt>HTML</tt>文件。如果它不能确定文件是何种类型，那么它将以纯文本的方式装载该文件。如果被装载的文档包含有相关图像或其它文档的链接，那么被用于解析那些链接的位置是原文件的位置。 <span id="line-113" class="anchor"/><span id="line-114" class="anchor"/></p><p
+class="line862">当然，一个实际的浏览器不会只局限于本地文件。你可以使用方法<tt>LoadPage(location)</tt>来装载一个远程的<tt>URL</tt>，其中参数<tt>location</tt>是一个<tt>URL</tt>，但是对于本地文件，它是一个路径名。<tt>MIME</tt>类型的<tt>URL</tt>被用来决定页面如何被装载。本章的稍后部分，我们将讨论如何增加对新文件类型的支持。 <span id="line-115" class="anchor"/><span id="line-116" class="anchor"/></p><p class="line862">图16.2显示了被装载入<tt>HTML</tt>窗口中的一个页面。 <span id="line-117" class="anchor"/><span id="line-118" class="anchor"/></p><p
+class="line867"><strong>图16.2</strong> <span id="line-119" class="anchor"/><span id="line-120" class="anchor"/></p><p class="line867"><img title="attachment:w16.2.gif" src="/moin/WxPythonInAction/ChapterSixteen?action=AttachFile&amp;do=get&amp;target=w16.2.gif" class="attachment"/> <span id="line-121" class="anchor"/><span id="line-122" class="anchor"/><span id="line-123" class="anchor"/></p><p class="line874">例16.2显示了产生图16.2的代码 <span id="line-124" class="anchor"/><span id="line-125" class="anchor"/><span id="line-126" class="anchor"/></p><p
+class="line867"><strong>例16.2</strong>  <span id="line-127" class="anchor"/><strong>从一个<tt>web</tt>页装载<tt>HTML</tt>窗口的内容</strong> <span id="line-128" class="anchor"/><span id="line-129" class="anchor"/></p><p class="line867"><span id="line-130" class="anchor"/><span id="line-131" class="anchor"/><span id="line-132" class="anchor"/><span id="line-133" class="anchor"/><span id="line-134" class="anchor"/><span id="line-135" class="anchor"/><span id="line-136" class="anchor"/><span id="line-137" class="anchor"/><span id="line-138" class="anchor"/><span id="line-139"
+class="anchor"/><span id="line-140" class="anchor"/><span id="line-141" class="anchor"/><span id="line-142" class="anchor"/><span id="line-143" class="anchor"/><span id="line-144" class="anchor"/><span id="line-145" class="anchor"/><span id="line-146" class="anchor"/><span id="line-147" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-e6d806f34a350bb34985a1f106b406156772443a_002\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-e6d806f34a350bb34985a1f106b406156772443a_002', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-e6d806f34a350bb34985a1f106b406156772443a_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">import</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">html</span></span>
+<span class="line"><span class="LineNumber">   3 </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">class</span> <span class="ID">MyHtmlFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">,</span> <span class="ID">size</span><span
+class="Operator">=</span><span class="Operator">(</span><span class="Number">600</span><span class="Operator">,</span><span class="Number">400</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">html</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">html</span><span class="Operator">.</span><span class="ID">HtmlWindow</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ResWord">if</span> <span class="String">"gtk2"</span> <span class="ResWord">in</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PlatformInfo</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   9 </span>            <span class="ID">html</span><span class="Operator">.</span><span class="ID">SetStandardFonts</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">CallAfter</span><span class="Operator">(</span></span>
+<span class="line"><span class="LineNumber">  12 </span>            <span class="ID">html</span><span class="Operator">.</span><span class="ID">LoadPage</span><span class="Operator">,</span> <span class="String">"http://www.wxpython.org"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span></span>
+<span class="line"><span class="LineNumber">  14 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span><span class="ID">frm</span> <span class="Operator">=</span> <span class="ID">MyHtmlFrame</span><span class="Operator">(</span><span class="ID">None</span><span class="Operator">,</span> <span class="String">"Simple HTML Browser"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span><span class="ID">frm</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-148" class="anchor"/><span id="line-149" class="anchor"/><p class="line862">例16.2中关键的地方是方法<tt>LoadPage()</tt>。拥有更完整特性的浏览器窗口还应有显示<tt>URL</tt>的文本框，并在当用户键入一个新的<tt>URL</tt>后，可以改变窗口中的内容。 <span id="line-150" class="anchor"/><span id="line-151" class="anchor"/></p><p class="line867">
+</p><h2 id="head-b5adac4a81fe0649e1a5ac5a9780b632077fc180">2. 管理HTML窗口</h2>
+<span id="line-152" class="anchor"/><span id="line-153" class="anchor"/><span id="line-154" class="anchor"/><p class="line862">一旦你有了一个<tt>HTML</tt>窗口，你就可以通过不同的方法来管理它。你可以根据用户的输入来触发相应的动作，处理窗口的内容，自动显示有关窗口的信息和打印页面等。在随后的几节中，我们将讨论如何实现这些。 <span id="line-155" class="anchor"/><span id="line-156" class="anchor"/><span id="line-157" class="anchor"/></p><p class="line867">
+</p><h3 id="head-e6ae851e7c81b4b505d8a90bc54bc08ae95932fe">2.1. 如何响应用户在一个链接上的敲击？</h3>
+<span id="line-158" class="anchor"/><span id="line-159" class="anchor"/><span id="line-160" class="anchor"/><p class="line867"><tt>wx.html.HtmlWindow</tt>的用处不只限于显示。还可以用于响应用户的输入。在这种情况下，你不需要定义你自己的处理器，你可以在你的<tt>wx.html.HtmlWindow</tt>的子类中覆盖一些处理函数。 <span id="line-161" class="anchor"/><span id="line-162" class="anchor"/></p><p class="line862">表16.2说明了已定义的处理函数。<tt>wx.html.HtmlWindow</tt>类没有使用事件系统定义事件，所以你必须使用这些重载的成员函数来处理相关的事件，而非绑定事件类型。 <span
+id="line-163" class="anchor"/><span id="line-164" class="anchor"/></p><p class="line862">另外，如果你想让一个<tt>HTML</tt>窗口响应用户的输入，你必须创建你自己的子类并覆盖这些方法。 <span id="line-165" class="anchor"/><span id="line-166" class="anchor"/><span id="line-167" class="anchor"/></p><p class="line867"><strong>表16.2</strong>  <span id="line-168" class="anchor"/><strong><tt>wx.html.HtmlWindow</tt>的事件处理函数</strong> <span id="line-169" class="anchor"/><span id="line-170" class="anchor"/></p><div><table><tbody><tr>  <td><p
+class="line891"><tt>OnCellClicked(cell, x, y, event)</tt></p></td>
+<td><p class="line862">当用户在<tt>HTML</tt>文档中敲击时调用。参数<tt>cell</tt>是一个<tt>wx.html.HtmlCell</tt>对象，该对象代表所显示的文档的一部分，诸如文本、单元格或图像等。<tt>wx.html.HtmlCell</tt>类被<tt>HTML</tt>解析器创建，这将在本章后部分讨论。参数<tt>x,y</tt>是鼠标敲击的准确位置（像素单位），参数<tt>event</tt>是相关的鼠标敲击事件。如果<tt>cell</tt>包含一个链接，那么这个方法的默认版本将简单地委托给<tt>OnLinkClicked()</tt>，否则它什么也不做。</p></td>
+</tr>
+<tr>  <td><span id="line-171" class="anchor"/><p class="line891"><tt>OnCellMouseHover(cell, x, y)</tt></p></td>
+<td><p class="line862">当鼠标经过一个<tt>HTML</tt>单元时调用。参数同<tt>OnCellClicked()</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-172" class="anchor"/><p class="line891"><tt>OnLinkClicked(link)</tt></p></td>
+<td><p class="line862">当用户在一个超链接上敲击时调用。该方法的默认版对链接的<tt>URL</tt>调用<tt>LoadPage</tt>。覆盖该方法通常用于使用<tt>HtmlWindow</tt>来为应用程序制作一个关于框。在那种情况下，你可以改变行为以便用户通过敲击其中的主页来使用<tt>Python</tt>的<tt>webbrowser</tt>模块去运行系统默认的浏览器。</p></td>
+</tr>
+<tr>  <td><span id="line-173" class="anchor"/><p class="line891"><tt>OnOpeningURL(type, url)</tt></p></td>
+<td><p class="line862">当用户请求打开一个<tt>URL</tt>时调用，不管打开页面或页面中的一个图像。参数<tt>type</tt>可以是<tt>wx.html.HTML_URL_PAGE, wx.html.HTML_URL_IMAGE, </tt>或<tt>wx.html.HTML_URL_OTHER</tt>。该方法返回下列值之一——<tt>wx.html.HTML_OPEN</tt>允许资源装载,<tt>wx.html.HTML_BLOCK</tt>;阻止载入资源;或用于<tt>URL</tt>重定向的一个字符串，并且在重定向后该方法再一次被调用。该方法的默认版总是返回<tt>wx.html.HTML_OPEN</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-174" class="anchor"/><p class="line891"><tt>OnSetTitle(title)</tt></p></td>
+<td><p class="line862">当<tt>HTML</tt>源文件中有 <tt>title </tt>标记时调用。通常用于在应用程序中显示标题。</p></td>
+</tr>
+</tbody></table></div><span id="line-175" class="anchor"/><span id="line-176" class="anchor"/><p class="line867">
+</p><h3 id="head-7dbf39cf2ed4f764834aa36166cdd71c1ce59474">2.2. 如何使用编程的方式改变一个HTML窗口？</h3>
+<span id="line-177" class="anchor"/><span id="line-178" class="anchor"/><span id="line-179" class="anchor"/><p class="line862">当你正显示一个<tt>HTML</tt>页时，你还可以改变你的窗口像浏览器样去显示其它的内容，如一另一个<tt>Web</tt>页，或帮助文件或其它类型的数据，以响应用户的需要。 <span id="line-180" class="anchor"/><span id="line-181" class="anchor"/></p><p
+class="line862">有两个方法来当<tt>HTML</tt>窗口在运行时，访问和改变<tt>HTML</tt>窗口中的信息。首先，你可以使用<tt>GetOpenedPage()</tt>方法来得到当前打开的页面的<tt>URL</tt>。该方法只在当前页是被<tt>LoadPage()</tt>方法装载的才工作。如果是这样的，那么方法的返回值是当前页的<tt>URL</tt>。否则，或当前没有打开的页面，该方法返回一个空字符串。另一个相关的方法是<tt>GetOpenedAnchor()</tt>，它返回当前打开页面中的锚点（<tt>anchor</tt>）。如果页面不是被<tt>LoadPage()</tt>打开的，你将得到一个空的字符串。 <span id="line-182" class="anchor"/><span id="line-183"
+class="anchor"/></p><p class="line862">要得到当前页的<tt>HTML</tt>标题，可以使用方法<tt>GetOpenedPageTitle()</tt>，这将返回当前页的 <tt>title </tt>标记中的值。如果当前页没有一个 <tt>title </tt>标记，你将得到一个空的字符串。 <span id="line-184" class="anchor"/><span id="line-185" class="anchor"/></p><p
+class="line862">这儿有几个关于改变窗口中文本的选择的方法。方法<tt>SelectAll()</tt>选择当前打开的页面中的所有文本。你可以使用<tt>SelectLine(pos)</tt>或<tt>SelectWord(pos)</tt>做更有针对性的选择。其中<tt>pos</tt>是鼠标的位置<tt>wx.Point</tt>，这两个方法分别选择一行或一个词。要取得当前选择中的纯文本内容，可以使用方法<tt>SelectionToText()</tt>，而方法<tt>ToText()</tt>返回整个文档的纯文本内容。 <span id="line-186" class="anchor"/><span id="line-187" class="anchor"/></p><p
+class="line867"><tt>wx.html.HtmlWindow</tt>维护着历史页面的一个列表。使用下表16.3中的方法，可以如通常的浏览器一样浏览这个历史列表。 <span id="line-188" class="anchor"/><span id="line-189" class="anchor"/><span id="line-190" class="anchor"/></p><p class="line867"><strong>表16.3</strong> <span id="line-191" class="anchor"/><span id="line-192" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line891"><tt>HistoryBack()</tt></p></td>
+<td><p class="line862">装载历史列表中的前一项。如果不存在则返回<tt>False</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-193" class="anchor"/><p class="line891"><tt>HistoryCanBack()</tt></p></td>
+<td><p class="line862">如果历史列表中存在前一项，则返回<tt>True</tt>，否则返回<tt>False</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-194" class="anchor"/><p class="line891"><tt>HistoryCanForward()</tt></p></td>
+<td><p class="line862">如果历史列表中存在下一项，则返回<tt>True</tt>，否则返回<tt>False</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-195" class="anchor"/><p class="line891"><tt>HistoryClear()</tt></p></td>
+<td><p class="line862">清空历史列表。</p></td>
+</tr>
+<tr>  <td><span id="line-196" class="anchor"/><p class="line891"><tt>HistoryForward()</tt></p></td>
+<td><p class="line862">装载历史列表中的下一项。如果不存在则返回<tt>False</tt>。</p></td>
+</tr>
+</tbody></table></div><span id="line-197" class="anchor"/><span id="line-198" class="anchor"/><span id="line-199" class="anchor"/><p class="line862">要改变正在使用的字体，可以使用方法<tt>SetFonts(normal_face, fixed_face, sizes=None)</tt>。参数<tt>normal_face</tt>是你想用在窗口显示中的字体的名字字符串。如果<tt>normal_face</tt>是一个空字符串，则使用系统默认字体。参数<tt>fixed_face</tt>指定固定宽度的文本，类似于 <tt>pre
+</tt>标记的作用。如果指定了<tt>fixed_face</tt>参数，那么参数<tt>sizes</tt>则应是一个代表字体的绝对尺寸的包含7个整数的列表，它对应于<tt>HTML</tt>逻辑字体尺寸（如 <tt>font
+</tt>标记所使用的）－2<big>4之间。如果该参数没有指定或是<tt>None</tt>，则使用默认的。关于默认常量<tt>wx.html.HTML_FONT_SIZE_n</tt>，n位于1~7之间。这些默认常量指定了对应于<tt>HTML</tt>逻辑字体尺寸所使用的默认字体。准确的值可能因不同的底层系统而不同。要选择一套基于用户的系统的字体和尺寸，可以调用<tt>SetStandardFonts()</tt>。这在<tt>GTK2</tt>下运行<tt>wxPython</tt>时是特别有用的，它能够提供一套更好的字体。 <span id="line-200" class="anchor"/><span id="line-201" class="anchor"/></big></p><p
+class="line862"><big>如果由于某种原因，你需要改变窗口中文本边缘与窗口边缘之间的间隔的话，<tt>HTML</tt>窗口定义了<tt>SetBorders(b)</tt>方法。参数b是间隔的像素宽度（整数值）。 <span id="line-202" class="anchor"/><span id="line-203" class="anchor"/><span id="line-204" class="anchor"/></big></p><p class="line867">
+</p><h3 id="head-a40ea9549fa56dba377da8cb45ef093596867964"><big _moz-rs-heading="">2.3. 如何在窗口的标题栏中显示页面的标题？</big></h3>
+<span id="line-205" class="anchor"/><span id="line-206" class="anchor"/><span id="line-207" class="anchor"/><p class="line862">在你的<tt>web</tt>浏览器中，你可能也注意到了一件事，那就是浏览器中不光只有显示窗口，还有标题栏和状态栏。通常，标题栏显示打开页面的标题，状态栏在鼠标位于链接上时显示链接信息。在<tt>wxPython</tt>中有两个便捷的方法来实现这些。图16.3对此作了展示。窗口显示的标题是基于<tt>web</tt>页面的标题的，状态栏文本也来自<tt>Html</tt>窗口。 <span id="line-208" class="anchor"/><span id="line-209" class="anchor"/></p><p
+class="line874">例16.3是产生图16.3的代码。 <span id="line-210" class="anchor"/><span id="line-211" class="anchor"/><span id="line-212" class="anchor"/></p><p class="line867"><strong>图16.3</strong>  <span id="line-213" class="anchor"/><strong>带有状态栏和标题栏的<tt>HTML</tt>窗口</strong> <span id="line-214" class="anchor"/><span id="line-215" class="anchor"/></p><p class="line867"><img title="attachment:w16.3.gif" src="/moin/WxPythonInAction/ChapterSixteen?action=AttachFile&amp;do=get&amp;target=w16.3.gif" class="attachment"/> <span
+id="line-216" class="anchor"/><span id="line-217" class="anchor"/><span id="line-218" class="anchor"/><span id="line-219" class="anchor"/></p><p class="line867"><strong>例16.3</strong>  <span id="line-220" class="anchor"/><strong>从一个<tt>web</tt>页载入<tt>HTMLWindow</tt>的内容</strong> <span id="line-221" class="anchor"/><span id="line-222" class="anchor"/></p><p class="line867"><span id="line-223" class="anchor"/><span id="line-224" class="anchor"/><span id="line-225" class="anchor"/><span id="line-226" class="anchor"/><span
+id="line-227" class="anchor"/><span id="line-228" class="anchor"/><span id="line-229" class="anchor"/><span id="line-230" class="anchor"/><span id="line-231" class="anchor"/><span id="line-232" class="anchor"/><span id="line-233" class="anchor"/><span id="line-234" class="anchor"/><span id="line-235" class="anchor"/><span id="line-236" class="anchor"/><span id="line-237" class="anchor"/><span id="line-238" class="anchor"/><span id="line-239" class="anchor"/><span id="line-240" class="anchor"/><span id="line-241" class="anchor"/><span
+id="line-242" class="anchor"/><span id="line-243" class="anchor"/><span id="line-244" class="anchor"/><span id="line-245" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-9698f792d1c29c82751c20e35f144e8209e10772_003\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-9698f792d1c29c82751c20e35f144e8209e10772_003', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-9698f792d1c29c82751c20e35f144e8209e10772_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#-*- encoding:UTF-8 -*- </span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">import</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">html</span></span>
+<span class="line"><span class="LineNumber">   4 </span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">class</span> <span class="ID">MyHtmlFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">,</span> <span
+class="ID">size</span><span class="Operator">=</span><span class="Operator">(</span><span class="Number">600</span><span class="Operator">,</span><span class="Number">400</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">CreateStatusBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">html</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">html</span><span class="Operator">.</span><span class="ID">HtmlWindow</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ResWord">if</span> <span class="String">"gtk2"</span> <span class="ResWord">in</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PlatformInfo</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  12 </span>            <span class="ID">html</span><span class="Operator">.</span><span class="ID">SetStandardFonts</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">html</span><span class="Operator">.</span><span class="ID">SetRelatedFrame</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">GetTitle</span><span class="Operator">(</span><span class="Operator">)</span> <span class="Operator">+</span> <span class="String">" -- %s"</span><span class="Operator">)</span> <span
+class="Comment">#关联HTML到框架</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">html</span><span class="Operator">.</span><span class="ID">SetRelatedStatusBar</span><span class="Operator">(</span><span class="Number">0</span><span class="Operator">)</span> <span class="Comment">#关联HTML到状态栏</span></span>
+<span class="line"><span class="LineNumber">  15 </span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">CallAfter</span><span class="Operator">(</span></span>
+<span class="line"><span class="LineNumber">  17 </span>            <span class="ID">html</span><span class="Operator">.</span><span class="ID">LoadPage</span><span class="Operator">,</span> <span class="String">"http://www.wxpython.org"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span></span>
+<span class="line"><span class="LineNumber">  19 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span><span class="ID">frm</span> <span class="Operator">=</span> <span class="ID">MyHtmlFrame</span><span class="Operator">(</span><span class="ID">None</span><span class="Operator">,</span> <span class="String">"Simple HTML Browser"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span><span class="ID">frm</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  22 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-246" class="anchor"/><span id="line-247" class="anchor"/><p class="line862">要设置标题栏的关联，使用方法<tt>SetRelatedFrame(frame, format)</tt>。参数<tt>frame</tt>你想显示页面标题的框架。参数<tt>format</tt>是你想在框架的标题栏中显示的字符串。通常的格式是这样：“<tt>My wxPython Browser: </tt>%s”。:%s前面的字符串可以是你想要的任何字符串，%s将会被<tt>HTML</tt>页面的标题所取代。在窗口中，一个页面被载入时，框架的标题自动被新的页面的信息取代。 <span id="line-248" class="anchor"/><span id="line-249"
+class="anchor"/></p><p class="line862">要设置状态栏，使用方法<tt>SetRelatedStatusBar(bar)</tt>。该方法必须在<tt>SetRelatedFrame()</tt>之后调用。参数<tt>bar</tt>是状态栏中用于显示状态信息的位置。通常它是0，但是如果状态栏中存在多个显示区域，那么<tt>bar</tt>可以有其它的值。如果<tt>bar</tt>的取值为－1,那么不显示任何信息。一旦与状态栏的关联被创建，那么当鼠标移动到显示的页面的链接上时，相关链接的<tt>URL</tt>将显示在状态栏中。 <span id="line-250" class="anchor"/><span id="line-251" class="anchor"/><span id="line-252"
+class="anchor"/></p><p class="line867">
+</p><h3 id="head-839f08cfa74b047aa5e3031dba5e811803498482">2.4. 如何打印一个HTML页面？</h3>
+<span id="line-253" class="anchor"/><span id="line-254" class="anchor"/><span id="line-255" class="anchor"/><p class="line862">一旦<tt>HTML</tt>被显示在屏幕上，接下来可能做的事就是打印该<tt>HTML</tt>。类<tt>wx.html.HtmlEasyPrinting</tt>就是用于此目的的。你可以使用下面的构造函数来创建<tt>wx.html.HtmlEasyPrinting</tt>的一个实例： <span id="line-256" class="anchor"/><span id="line-257" class="anchor"/></p><pre>wx.html.HtmlEasyPrinting(name="Printing", parentWindow=None)
+<span id="line-258" class="anchor"/></pre><span id="line-259" class="anchor"/><p class="line862">参数<tt>name</tt>只是一个用于显示在打印对话框中的字符串。参数<tt>parentWindow</tt>如果被指定了，那么<tt>parentWindow</tt>就是这些打印对话框的父窗口。如果<tt>parentWindow</tt>为<tt>None</tt>，那么对话框为顶级对话框。你只应该创建<tt>wx.html.HtmlEasyPrinting</tt>的一个实例。尽管<tt>wxPython</tt>系统没有强制要这样做，但是该类是被设计为独自存的。 <span id="line-260" class="anchor"/><span id="line-261" class="anchor"/><span
+id="line-262" class="anchor"/></p><p class="line867"><strong>使用<tt>wx.html.HtmlEasyPrinting</tt>的实例</strong> <span id="line-263" class="anchor"/><span id="line-264" class="anchor"/></p><p
+class="line862">从该类的名字可以看出，它应该是容易使用的。首先，通过使用<tt>PrinterSetup()</tt>和<tt>PageSetup()</tt>方法，你能够给用户显示用于打印设置的对话框。调用这些方法将导致相应的对话框显示给用户。实例将存储用户所做的设置，以备后用。如果你想访问这些设置数据，以用于你自己特定的处理，你可以使用方法<tt>GetPrintData()</tt>和<tt>GetPageSetupData()</tt>。<tt>GetPrintData()</tt>方法返回一个<tt>wx.PrintData</tt>对象，<tt>GetPageSetupData()</tt>方法返回一<tt>wx.PageSetupDialogData</tt>对象，我们将在第17章中更详细地讨论。
+<span id="line-265" class="anchor"/><span id="line-266" class="anchor"/><span id="line-267" class="anchor"/></p><p class="line867"><strong>设置字体</strong> <span id="line-268" class="anchor"/><span id="line-269" class="anchor"/></p><p class="line862">你可以使用方法<tt>SetFonts(normal_face, fixed_face, sizes)</tt>来设置打印所使用的字体。这个方法的行为同用于<tt>HTML</tt>窗口的<tt>SetFonts()</tt>相同（在打印对象中的设置不会影响到<tt>HTML</tt>窗口中的设置）。你可以使用方法<tt>SetHeader(header,
+pg)</tt>和<tt>SetFooter(footer, pg)</tt>来页眉和页脚。参数<tt>header</tt>和<tt>footer</tt>是要显示的字符串。字符串中你可以使用点位符@<tt>PAGENUM</tt>@，占位符在执行时被打印的页号替代。你也可以使用@<tt>PAGENUM</tt>@占位符，它是打印的页面总数。参数<tt>pg</tt>的取值可以是这三个：<tt>wx.PAGE_ALL</tt>、<tt>wx.PAGE_EVEN</tt>或<tt>wx.PAGE_ODD</tt>。它控制页眉和页脚显示在哪个页上。通过对不同的<tt>pg</tt>参数多次调用该方法，可以为奇数页和偶数页设置单独的页眉和页脚。 <span id="line-270" class="anchor"/><span id="line-271"
+class="anchor"/><span id="line-272" class="anchor"/></p><p class="line867"><strong>输出预览</strong> <span id="line-273" class="anchor"/><span id="line-274" class="anchor"/></p><p class="line862">如果在打印前，你想预览一下输出的结果，你可以使用<tt>PreviewFile(htmlfile)</tt>方法。在这种情况下，参数<tt>htmlfile</tt>是你本地的包含<tt>HTML</tt>的文件的文件名。另一是<tt>PreviewText(htmlText,
+basepath=</tt>"")。参数<tt>htmlText</tt>是你实际想打印的<tt>HTML</tt>。<tt>basepath</tt>文件的路径或<tt>URL</tt>。如预览成功，这两个方法均返回<tt>True</tt>，否则返回<tt>False</tt>。如果出现了错误，那么全局方法<tt>wx.Printer.GetLastError()</tt>将得到更多的错误信息。关于该方法的更详细的信息将在第17章中讨论。 <span id="line-275" class="anchor"/><span id="line-276" class="anchor"/><span id="line-277" class="anchor"/></p><p class="line867"><strong>打印</strong> <span id="line-278" class="anchor"/><span id="line-279"
+class="anchor"/></p><p class="line862">现在你可能想知道如何简单地打印一个<tt>HTML</tt>页面。方法就是<tt>PrintFile(htmlfile)</tt>和<tt>PrintText(htmlText, basepath)</tt>。其中的参数同预览方法。所不同的是，这两个方法使用对话框中的设置直接让打印机打印。打印成功，则返回<tt>True</tt>。 <span id="line-280" class="anchor"/><span id="line-281" class="anchor"/><span id="line-282" class="anchor"/></p><p class="line867">
+</p><h2 id="head-7aaf5075f8ac70a04931cd0273ff2b1546d61bf5">3. 拓展HTML窗口</h2>
+<span id="line-283" class="anchor"/><span id="line-284" class="anchor"/><span id="line-285" class="anchor"/><p class="line862">在这一节，我们将给你展示如何处理<tt>HTML</tt>窗口中的<tt>HTML</tt>标记，如何创造你自己的标记，如何在<tt>HTML</tt>中嵌入<tt>wxPython</tt>控件，如何处理其它的文件格式，以及如何在你的应用程序中创建一个真实的<tt>HTML</tt>浏览器。 <span id="line-286" class="anchor"/><span id="line-287" class="anchor"/><span id="line-288" class="anchor"/></p><p class="line867">
+</p><h3 id="head-44bfa8b65733da5972c8efa489ebb29801e9d69b">3.1. HTML解析器(parser)是如何工作的？</h3>
+<span id="line-289" class="anchor"/><span id="line-290" class="anchor"/><span id="line-291" class="anchor"/><p
+class="line862">在<tt>wxPython</tt>中，<tt>HTML</tt>窗口有它自己内在的解析器。实际上，这里有两个解析器类，但是其中的一个是另一个的改进。通常，使用解析器工作仅在你想扩展<tt>wx.html.HtmlWindow</tt>自身的功能时有用。如果你正在使用<tt>Python</tt>编程，并基于其它的目的想使用一个<tt>HTML</tt>解析器，那么我们建议你使用随同<tt>Python</tt>发布的<tt>htmllib</tt>和<tt>HTMLParser</tt>这两个解析器模块之一，或一个外部的<tt>Python</tt>工具如“<tt>Beautiful Soup</tt>”。 <span id="line-292" class="anchor"/><span id="line-293"
+class="anchor"/></p><p class="line862">两个解析器类分别是<tt>wx.html.HtmlParser</tt>，它是一个更通用的解析器，另一个是<tt>wx.html.HtmlWinParser</tt>，它是<tt>wx.html.HtmlParser</tt>的子类，增加了对在<tt>wx.html.HtmlWindow</tt>中显示文本的支持。由于我们所关注的基本上是<tt>HTML</tt>窗口，所以我们将重点关注<tt>wx.html.HtmlWinParser</tt>。 <span id="line-294" class="anchor"/><span id="line-295" class="anchor"/></p><p
+class="line862">要创建一个<tt>HTML</tt>解析器，可以使用两个构造函数之一。其中基本的一个是<tt>wx.html.HtmlWinParser()</tt>，没有参数。<tt>wx.html.HtmlWinParser</tt>的父类<tt>wx.html.HtmlParser</tt>也有一个没有参数的构造函数。你可以使用另一个构造函数<tt>wx.html.HtmlWinParser(wnd)</tt>将一个<tt>wx.html.HtmlWinParser()</tt>与一个已有的<tt>wx.html.HtmlWindow</tt>联系在一起，参数<tt>wnd</tt>是<tt>HTML</tt>窗口的实例。 <span id="line-296" class="anchor"/><span id="line-297" class="anchor"/></p><p
+class="line862">要使用解析器，最简单的方法是调用<tt>Parse(source)</tt>方法。参数<tt>source</tt>是要被处理的<tt>HTML</tt>字符串。返回值是已解析了的数据。对于一个<tt>wx.html.HtmlWinParser</tt>，返回值是类<tt>wx.html.HtmlCell</tt>的一个实例。 <span id="line-298" class="anchor"/><span id="line-299" class="anchor"/></p><p
+class="line867"><tt>HTML</tt>解析器将<tt>HTML</tt>文本转换为一系列的单元，一个单元可以表示一些文本，一个图像，一个表，一个列表，或其它特定的元素。<tt>wx.html.HtmlCell</tt>的最重要的子类是<tt>wx.html.HtmlContainerCell</tt>，它是一个可以包含其它单元在其中的一个单元，如一个表或一个带有不同文本样式的段落。对于你解析的几乎任何文档，返回值都将是一个<tt>wx.html.HtmlContainerCell</tt>。每个单元都包含一个<tt>Draw(dc, x, y, view_y1, view_y2)</tt>方法，这使它可以在<tt>HTML</tt>窗口中自动绘制它的信息。 <span id="line-300"
+class="anchor"/><span id="line-301" class="anchor"/></p><p class="line862">另一个重要的子类单元是<tt>wx.html.HtmlWidgetCell</tt>，它允许一个任意的<tt>wxPython</tt>控件像任何其它单元一样被插入到一个<tt>HTML</tt>文档中。除了可以包括用于格式化显示的静态文本，这也包括任何类型的用于管理<tt>HTML</tt>表单的控件。<tt>wx.html.HtmlWidgetCell</tt>的构造函数如下： <span id="line-302" class="anchor"/><span id="line-303" class="anchor"/></p><p class="line867"><span id="line-304" class="anchor"/></p><pre>wx.html.HtmlWidgetCell(wnd, w=0)
+<span id="line-305" class="anchor"/></pre><span id="line-306" class="anchor"/><span id="line-307" class="anchor"/><p class="line862">其中参数<tt>wnd</tt>是要被绘制的<tt>wxPython</tt>控件。参数w是一个浮动宽度。如果w不为0，那么它应该是介于1和100之间的一个整数，<tt>wnd</tt>控件的宽度则被动态地调整为相对于其父容器宽度的w%。 <span id="line-308" class="anchor"/><span id="line-309" class="anchor"/></p><p class="line862">另外还有其它许多类型的用于显示<tt>HTML</tt>文档的部分的单元。更多的信息请参考<tt>wxWidget</tt>文档。 <span
+id="line-310" class="anchor"/><span id="line-311" class="anchor"/><span id="line-312" class="anchor"/></p><p class="line867">
+</p><h3 id="head-345a1ecc1c6783cecac7da58a2dfb5f563e49f67">3.2. 如何增加对新标记的支持？</h3>
+<span id="line-313" class="anchor"/><span id="line-314" class="anchor"/><span id="line-315" class="anchor"/><p class="line862">被解析器返回的单元是被标记处理器内在的创建的，通过<tt>HTML</tt>标记，一个可插入的结构与<tt>HTML</tt>解析器单元的创建和处理相联系起来。你可以创建你自己的标记处理器，并将它与<tt>HTML</tt>标记相关联。使用这个机制，你可以扩展<tt>HTML</tt>窗口，以包括当前不支持的标准标记，或你自己发明的自定义的标记。图16.4显示了自定义<tt>HTML</tt>标记的用法。 <span id="line-316" class="anchor"/><span id="line-317"
+class="anchor"/><span id="line-318" class="anchor"/></p><p class="line867"><strong>图16.4</strong> <span id="line-319" class="anchor"/><span id="line-320" class="anchor"/></p><p class="line867"><img title="attachment:w16.4.gif" src="/moin/WxPythonInAction/ChapterSixteen?action=AttachFile&amp;do=get&amp;target=w16.4.gif" class="attachment"/> <span id="line-321" class="anchor"/><span id="line-322" class="anchor"/><span id="line-323" class="anchor"/></p><p class="line874">下例16.4是产生图16.4的代码。 <span id="line-324"
+class="anchor"/><span id="line-325" class="anchor"/></p><p class="line874">例16.4 定义并使用自定义的标记处理器 <span id="line-326" class="anchor"/><span id="line-327" class="anchor"/></p><p class="line867"><span id="line-328" class="anchor"/><span id="line-329" class="anchor"/><span id="line-330" class="anchor"/><span id="line-331" class="anchor"/><span id="line-332" class="anchor"/><span id="line-333" class="anchor"/><span id="line-334" class="anchor"/><span id="line-335" class="anchor"/><span id="line-336"
+class="anchor"/><span id="line-337" class="anchor"/><span id="line-338" class="anchor"/><span id="line-339" class="anchor"/><span id="line-340" class="anchor"/><span id="line-341" class="anchor"/><span id="line-342" class="anchor"/><span id="line-343" class="anchor"/><span id="line-344" class="anchor"/><span id="line-345" class="anchor"/><span id="line-346" class="anchor"/><span id="line-347" class="anchor"/><span id="line-348" class="anchor"/><span id="line-349" class="anchor"/><span id="line-350" class="anchor"/><span
+id="line-351" class="anchor"/><span id="line-352" class="anchor"/><span id="line-353" class="anchor"/><span id="line-354" class="anchor"/><span id="line-355" class="anchor"/><span id="line-356" class="anchor"/><span id="line-357" class="anchor"/><span id="line-358" class="anchor"/><span id="line-359" class="anchor"/><span id="line-360" class="anchor"/><span id="line-361" class="anchor"/><span id="line-362" class="anchor"/><span id="line-363" class="anchor"/><span id="line-364" class="anchor"/><span id="line-365"
+class="anchor"/><span id="line-366" class="anchor"/><span id="line-367" class="anchor"/><span id="line-368" class="anchor"/><span id="line-369" class="anchor"/><span id="line-370" class="anchor"/><span id="line-371" class="anchor"/><span id="line-372" class="anchor"/><span id="line-373" class="anchor"/><span id="line-374" class="anchor"/><span id="line-375" class="anchor"/><span id="line-376" class="anchor"/><span id="line-377" class="anchor"/><span id="line-378" class="anchor"/><span id="line-379" class="anchor"/><span
+id="line-380" class="anchor"/><span id="line-381" class="anchor"/><span id="line-382" class="anchor"/><span id="line-383" class="anchor"/><span id="line-384" class="anchor"/><span id="line-385" class="anchor"/><span id="line-386" class="anchor"/><span id="line-387" class="anchor"/><span id="line-388" class="anchor"/><span id="line-389" class="anchor"/><span id="line-390" class="anchor"/><span id="line-391" class="anchor"/><span id="line-392" class="anchor"/><span id="line-393" class="anchor"/><span id="line-394"
+class="anchor"/><span id="line-395" class="anchor"/><span id="line-396" class="anchor"/><span id="line-397" class="anchor"/><span id="line-398" class="anchor"/><span id="line-399" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-0243408289d86a4f481220f5fcfdd90ad981f896_004\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-0243408289d86a4f481220f5fcfdd90ad981f896_004', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-0243408289d86a4f481220f5fcfdd90ad981f896_004" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">import</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">html</span></span>
+<span class="line"><span class="LineNumber">   3 </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">page</span> <span class="Operator">=</span> <span class="String">""" html  body </span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="String"/></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="String">This silly example shows how custom tags can be defined and used in a</span></span>
+<span class="line"><span class="LineNumber">   7 </span><span class="String">wx.HtmlWindow.  We've defined a new tag,  blue  that will change</span></span>
+<span class="line"><span class="LineNumber">   8 </span><span class="String">the  blue foreground color /blue  of the portions of the document that</span></span>
+<span class="line"><span class="LineNumber">   9 </span><span class="String">it encloses to some shade of blue.  The tag handler can also use</span></span>
+<span class="line"><span class="LineNumber">  10 </span><span class="String">parameters specifed in the tag, for example:</span></span>
+<span class="line"><span class="LineNumber">  11 </span><span class="String"/></span>
+<span class="line"><span class="LineNumber">  12 </span><span class="String"> ul </span></span>
+<span class="line"><span class="LineNumber">  13 </span><span class="String"> li   blue shade='sky' Sky Blue /blue </span></span>
+<span class="line"><span class="LineNumber">  14 </span><span class="String"> li   blue shade='midnight' Midnight Blue /blue </span></span>
+<span class="line"><span class="LineNumber">  15 </span><span class="String"> li   blue shade='dark' Dark Blue /blue </span></span>
+<span class="line"><span class="LineNumber">  16 </span><span class="String"> li   blue shade='navy' Navy Blue /blue </span></span>
+<span class="line"><span class="LineNumber">  17 </span><span class="String"> /ul </span></span>
+<span class="line"><span class="LineNumber">  18 </span><span class="String"/></span>
+<span class="line"><span class="LineNumber">  19 </span><span class="String"> /body  /html </span></span>
+<span class="line"><span class="LineNumber">  20 </span><span class="String">"""</span></span>
+<span class="line"><span class="LineNumber">  21 </span></span>
+<span class="line"><span class="LineNumber">  22 </span></span>
+<span class="line"><span class="LineNumber">  23 </span><span class="ResWord">class</span> <span class="ID">BlueTagHandler</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">html</span><span class="Operator">.</span><span class="ID">HtmlWinTagHandler</span><span class="Operator">)</span><span class="Operator">:</span><span class="Comment">#声明标记处理器</span></span>
+<span class="line"><span class="LineNumber">  24 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  25 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">html</span><span class="Operator">.</span><span class="ID">HtmlWinTagHandler</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  26 </span></span>
+<span class="line"><span class="LineNumber">  27 </span>    <span class="ResWord">def</span> <span class="ID">GetSupportedTags</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span><span class="Comment">#定义要处理的标记</span></span>
+<span class="line"><span class="LineNumber">  28 </span>        <span class="ResWord">return</span> <span class="String">"BLUE"</span></span>
+<span class="line"><span class="LineNumber">  29 </span></span>
+<span class="line"><span class="LineNumber">  30 </span>    <span class="ResWord">def</span> <span class="ID">HandleTag</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">tag</span><span class="Operator">)</span><span class="Operator">:</span><span class="Comment">#处理标记</span></span>
+<span class="line"><span class="LineNumber">  31 </span>        <span class="ID">old</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">GetParser</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">GetActualColor</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  32 </span>        <span class="ID">clr</span> <span class="Operator">=</span> <span class="String">"#0000FF"</span></span>
+<span class="line"><span class="LineNumber">  33 </span>        <span class="ResWord">if</span> <span class="ID">tag</span><span class="Operator">.</span><span class="ID">HasParam</span><span class="Operator">(</span><span class="String">"SHADE"</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  34 </span>            <span class="ID">shade</span> <span class="Operator">=</span> <span class="ID">tag</span><span class="Operator">.</span><span class="ID">GetParam</span><span class="Operator">(</span><span class="String">"SHADE"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  35 </span>            <span class="ResWord">if</span> <span class="ID">shade</span><span class="Operator">.</span><span class="ID">upper</span><span class="Operator">(</span><span class="Operator">)</span> <span class="Operator">==</span> <span class="String">"SKY"</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  36 </span>                <span class="ID">clr</span> <span class="Operator">=</span> <span class="String">"#3299CC"</span></span>
+<span class="line"><span class="LineNumber">  37 </span>            <span class="ResWord">if</span> <span class="ID">shade</span><span class="Operator">.</span><span class="ID">upper</span><span class="Operator">(</span><span class="Operator">)</span> <span class="Operator">==</span> <span class="String">"MIDNIGHT"</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  38 </span>                <span class="ID">clr</span> <span class="Operator">=</span> <span class="String">"#2F2F4F"</span></span>
+<span class="line"><span class="LineNumber">  39 </span>            <span class="ResWord">elif</span> <span class="ID">shade</span><span class="Operator">.</span><span class="ID">upper</span><span class="Operator">(</span><span class="Operator">)</span> <span class="Operator">==</span> <span class="String">"DARK"</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  40 </span>                <span class="ID">clr</span> <span class="Operator">=</span> <span class="String">"#00008B"</span></span>
+<span class="line"><span class="LineNumber">  41 </span>            <span class="ResWord">elif</span> <span class="ID">shade</span><span class="Operator">.</span><span class="ID">upper</span> <span class="Operator">==</span> <span class="String">"NAVY"</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  42 </span>                <span class="ID">clr</span> <span class="Operator">=</span> <span class="String">"#23238E"</span></span>
+<span class="line"><span class="LineNumber">  43 </span></span>
+<span class="line"><span class="LineNumber">  44 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">GetParser</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">SetActualColor</span><span class="Operator">(</span><span class="ID">clr</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  45 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">GetParser</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">GetContainer</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">InsertCell</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">html</span><span class="Operator">.</span><span class="ID">HtmlColourCell</span><span class="Operator">(</span><span class="ID">clr</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  46 </span></span>
+<span class="line"><span class="LineNumber">  47 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">ParseInner</span><span class="Operator">(</span><span class="ID">tag</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  48 </span></span>
+<span class="line"><span class="LineNumber">  49 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">GetParser</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">SetActualColor</span><span class="Operator">(</span><span class="ID">old</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  50 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">GetParser</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">GetContainer</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">InsertCell</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">html</span><span class="Operator">.</span><span class="ID">HtmlColourCell</span><span class="Operator">(</span><span class="ID">old</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  51 </span></span>
+<span class="line"><span class="LineNumber">  52 </span>        <span class="ResWord">return</span> <span class="ID">True</span></span>
+<span class="line"><span class="LineNumber">  53 </span></span>
+<span class="line"><span class="LineNumber">  54 </span></span>
+<span class="line"><span class="LineNumber">  55 </span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">html</span><span class="Operator">.</span><span class="ID">HtmlWinParser_AddTagHandler</span><span class="Operator">(</span><span class="ID">BlueTagHandler</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  56 </span></span>
+<span class="line"><span class="LineNumber">  57 </span></span>
+<span class="line"><span class="LineNumber">  58 </span></span>
+<span class="line"><span class="LineNumber">  59 </span><span class="ResWord">class</span> <span class="ID">MyHtmlFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  60 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  61 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="ID">title</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  62 </span>        <span class="ID">html</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">html</span><span class="Operator">.</span><span class="ID">HtmlWindow</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  63 </span>        <span class="ResWord">if</span> <span class="String">"gtk2"</span> <span class="ResWord">in</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PlatformInfo</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  64 </span>            <span class="ID">html</span><span class="Operator">.</span><span class="ID">SetStandardFonts</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  65 </span>        <span class="ID">html</span><span class="Operator">.</span><span class="ID">SetPage</span><span class="Operator">(</span><span class="ID">page</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  66 </span></span>
+<span class="line"><span class="LineNumber">  67 </span></span>
+<span class="line"><span class="LineNumber">  68 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  69 </span><span class="ID">frm</span> <span class="Operator">=</span> <span class="ID">MyHtmlFrame</span><span class="Operator">(</span><span class="ID">None</span><span class="Operator">,</span> <span class="String">"Custom HTML Tag Handler"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  70 </span><span class="ID">frm</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  71 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-400" class="anchor"/><span id="line-401" class="anchor"/><p class="line862">标记内在的由类<tt>wx.Html.Tag</tt>的方法来表现，标记的实例由<tt>HTML</tt>解析器来创建，通常，你不需要自己创建。表16.4显示了<tt>wx.Html.Tag</tt>类的方法，它们有用于检索标记的信息。 <span id="line-402" class="anchor"/><span id="line-403" class="anchor"/><span id="line-404" class="anchor"/></p><p class="line867"><strong>表16.4</strong>  <span id="line-405"
+class="anchor"/><strong><tt>wx.Html.Tag</tt>的一些方法</strong> <span id="line-406" class="anchor"/><span id="line-407" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line891"><tt>GetAllParams()</tt></p></td>
+<td><p class="line862">返回与标记相关的所有参数，返回值是一个字符串。出于某些目的，解析字符串比得到各个单独的参数更容易。</p></td>
+</tr>
+<tr>  <td><span id="line-408" class="anchor"/><p class="line891"><tt>GetName()</tt></p></td>
+<td><p class="line862">以大写的方式，返回标记的名字。</p></td>
+</tr>
+<tr>  <td><span id="line-409" class="anchor"/><p class="line891"><tt>HasParam(param)</tt></p></td>
+<td><p class="line862">如果标记给定了参数，则返回<tt>True</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-410" class="anchor"/><p class="line891"><tt>GetParam(param, with_commas=False)</tt></p></td>
+<td><p class="line862">返回参数<tt>param</tt>的值。如果参数 <tt>with_commas</tt>为 <tt>True</tt>，那么你得到一个首尾都有引号的原始字符串。如果没有指定该参数，那么返回一个空字符串。方法<tt>GetParamAsColour(param)</tt>返回的参数值是一个<tt>wx.Color</tt>，方法<tt>GetParamAsInt(param)</tt>返回整数值。</p></td>
+</tr>
+<tr>  <td><span id="line-411" class="anchor"/><p class="line891"><tt>HasEnding()</tt></p></td>
+<td><p class="line862">如果标记有结束标记的话，返回<tt>True</tt>，否则返回<tt>false</tt>。</p></td>
+</tr>
+</tbody></table></div><span id="line-412" class="anchor"/><span id="line-413" class="anchor"/><p class="line862">用于扩展<tt>HTML</tt>窗口的标记处理器都是<tt>wx.html.HtmlWinTagHandler</tt>的子类。你的子类需要覆盖两个方法，并且你需要知道进一步的方法。需要覆盖的第一个方法是<tt>GetSupportedTags()</tt>。该方法返回由处理器管理的标记的列表。标记必需是大写的，并且标记之间以逗号分隔，中间不能有空格，如下所示： <span id="line-414" class="anchor"/><span id="line-415" class="anchor"/></p><p
+class="line867"><span id="line-416" class="anchor"/><span id="line-417" class="anchor"/><span id="line-418" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-6a600b4c78aa002eabf188e37b9cb70dd5248911_005\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-6a600b4c78aa002eabf188e37b9cb70dd5248911_005', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-6a600b4c78aa002eabf188e37b9cb70dd5248911_005" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">GetSupportedTags</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">return</span> <span class="String">"MYTAG,MYTAGPARAM"</span><span class="Text"/></span>
+</pre></div><span id="line-419" class="anchor"/><span id="line-420" class="anchor"/><p class="line862">第二个你需要覆盖的方法是<tt>HandleTag(tag)</tt>。在<tt>HandleTag(tag)</tt>方法中，你通过增加新的单元元素到解析器来处理标记（或者交替地改变解析器已经打开的容器单元）。你可以通过调用标记处理器的<tt>GetParser()</tt>方法来得到解析器。 <span id="line-421" class="anchor"/><span id="line-422" class="anchor"/></p><p
+class="line862">要写一个<tt>HandleTag(tag)</tt>方法，你应该像下面这样做： <span id="line-423" class="anchor"/><span id="line-424" class="anchor"/></p><p class="line874">1、得到解析器。 <span id="line-425" class="anchor"/>2、对你的标记的参数做必要的处理，可能要改变或创建一个新的单元。 <span id="line-426" class="anchor"/>3、如果被解析的标记包括着内在的文本，那么解析标记之间的文本。 <span id="line-427" class="anchor"/>4、执行对于解析器所需要的任何清理工作。 <span id="line-428"
+class="anchor"/><span id="line-429" class="anchor"/></p><p class="line862">如上所述，你使用<tt>GetParser()</tt>方法得解析器。要添加或编辑解析器中的单元，你有三个可选方案。第一个，如果你想添加另一个单元到容器中，你可以工作于当前的容器。第二个，你可以调用解析器的<tt>Container()</tt>方法，然后创建你的<tt>wx.html.HTMLCell</tt>子类实例，并通过调用容器的<tt>InsertCell(cell)</tt>方法将它添加到容器。 <span id="line-430" class="anchor"/><span id="line-431" class="anchor"/></p><p
+class="line862">有时，你可能想在当前打开的容器中创建一个附属的或内嵌的容器。例如内嵌于表的一行中的一个单元格。要实现这个，你需要调用解析器的<tt>OpenContainer()</tt>方法。这个方法返回你的新的容器单元，你可以使用<tt>InsertCell(cell)</tt>方法来插入显示单元到你的新的容器单元中。对于每个在你的标记处理器中打开的容器，你应该使用<tt>CloseContainer()</tt>方法来关闭它。如果你没有成对的使用<tt>OpenContainer()</tt>和<tt>CloseContainer()</tt>，那么这将导致解析器解析余下的<tt>HTML</tt>文本时出现混乱。
+<span id="line-432" class="anchor"/><span id="line-433" class="anchor"/></p><p class="line874">第三个方案是创建一个与解析器的当前容器同级的容器，意思是不是嵌入的。例如一个新的段落——它不是前一段的一部分，也不附属于前一段；它是该页中?囊桓鲂碌氖堤濉Ｎ嗽诮馕銎髦惺迪终飧龇桨福阈枰乇障执娴娜萜鳎俅蛞桓鲂碌娜萜鳎缦滤荆? <span id="line-434" class="anchor"/><span id="line-435" class="anchor"/></p><pre>parser = self.GetParser()
+<span id="line-436" class="anchor"/>parser.CloseContainer()#关闭现存的容器
+<span id="line-437" class="anchor"/>parser.OpenContainer()#打一个新的容器
+<span id="line-438" class="anchor"/>
+<span id="line-439" class="anchor"/>
+<span id="line-440" class="anchor"/># 添加或编辑解析器中的单元
+<span id="line-441" class="anchor"/>
+<span id="line-442" class="anchor"/>parser.CloseContainer()
+<span id="line-443" class="anchor"/>parser.OpenContainer()
+<span id="line-444" class="anchor"/>
+<span id="line-445" class="anchor"/></pre><span id="line-446" class="anchor"/><span id="line-447" class="anchor"/><p class="line867">
+</p><h3 id="head-901f2f1c77a6b61e0c66a9af37c925a82f340b8c">3.3. 如何支持其他的文件格式？</h3>
+<span id="line-448" class="anchor"/><span id="line-449" class="anchor"/><span id="line-450" class="anchor"/><p class="line862">默认情况下，<tt>HTML</tt>窗口可以处理带有<tt>MIME</tt>类型<tt>text</tt>/<tt>html, text</tt>/<tt>txt,
+</tt>和<tt>image</tt>/*（假设<tt>wxPython</tt>图像处理器已经被装载）的文件。当碰上一个不是图像或<tt>HTML</tt>文件的文件时，该<tt>HTML</tt>窗口试图以纯文本的方式显示它。这可以不是你想要的行为。如果有一些文件你想以自定义的方式显示它的话，你可以创建一个<tt>wx.html.HtmlFilter</tt>来处理它。比如，你可能想以源代码树的方式显示<tt>XML</tt>文件，或使用语法着色来显示<tt>Python</tt>源代码文件。 <span id="line-451" class="anchor"/><span id="line-452" class="anchor"/></p><p
+class="line862">要创建一个筛选器（<tt>filter</tt>），你必须建造<tt>wx.html.HtmlFilter</tt>的一个子类。<tt>wx.html.HtmlFilter</tt>类有两个方法，你必须都覆盖它们。这第一个方法是<tt>CanRead(file)</tt>。参数<tt>file</tt>是<tt>wx.FSFile</tt>（一个打开的文件的<tt>wxPython</tt>表示）的一个实例。类<tt>wx.FSFile</tt>有两个属性，你可以用来决定你的筛选器是否能够读该文件。方法<tt>GetMimeType()</tt>以一个字符串的形式返回该文件的<tt>MIME</tt>类型。<tt>MIME</tt>类型通常由文件的后缀所定义。方法<tt>GetLocation()</tt>返回带有相关文件位置的绝对路径或<tt>URL</tt>的一个字符串。如果筛选器会处理该文件的话，<tt>CanRead()</tt>方法应该返回<tt>True</tt>，否则返回<tt>False</tt>。处理<tt>Python</tt>源文件的<tt>CanRead()</tt>的一个示例如下：
+<span id="line-453" class="anchor"/><span id="line-454" class="anchor"/></p><p class="line867"><span id="line-455" class="anchor"/><span id="line-456" class="anchor"/><span id="line-457" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-7af6118abccab6e5c31ff3d069f9ac377341cedd_006\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-7af6118abccab6e5c31ff3d069f9ac377341cedd_006', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-7af6118abccab6e5c31ff3d069f9ac377341cedd_006" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">CanRead</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">file</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">return</span> <span class="ID">file</span><span class="Operator">.</span><span class="ID">GetLocation</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">endswith</span><span class="Operator">(</span><span class="String">'.py'</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-458" class="anchor"/><span id="line-459" class="anchor"/><p class="line862">第二个你需要覆盖的方法是<tt>ReadFile(file)</tt>。这个方法要求一个同样的<tt>file</tt>参数，并返回该文件内容的一个字符串的<tt>HTML</tt>表达。如果你不想使用<tt>wxWidgets C</tt>++的文件机制来读该文件的话，你可以通过简单地打开位于<tt>file.GetLocation()</tt>的文件来使用<tt>Python</tt>的文件机制。 <span id="line-460" class="anchor"/><span id="line-461"
+class="anchor"/></p><p class="line862">一旦筛选器被创建了，那么它必须被注册到<tt>wx.html.HtmlWindow</tt>，使用<tt>wx.html.HtmlWindow</tt>窗口的<tt>AddFilter(filter)</tt>静态方法来实现。参数<tt>filter</tt>是你的新的<tt>wx.html.HtmlFilter</tt>类的一个实例。一旦注册了筛选器，那么该窗口就可以使用筛选器来管理通过了<tt>CanRead()</tt>测试的文件对象。 <span id="line-462" class="anchor"/><span id="line-463" class="anchor"/><span id="line-464" class="anchor"/><span
+id="line-465" class="anchor"/></p><p class="line867">
+</p><h3 id="head-ea4fa04d3e8fae34654d7ca6fbbc7b1cdfecc70a">3.4. 如何得到一个性能更加完整的HTML控件？</h3>
+<span id="line-466" class="anchor"/><span id="line-467" class="anchor"/><span id="line-468" class="anchor"/><p class="line862">尽管<tt>wx.html.HtmlWindow</tt>不是一个完整特性的浏览器面板，但是这儿有一对用于嵌入更加完整特性的<tt>HTML</tt>表现窗口的选择。如果你是在<tt>Windows</tt>平台上，你可以使用类<tt>wx.lib.iewin.IEHtmlWindow</tt>，它是<tt>Internet Explorer ActiveX</tt>控件的封装。这使得你能够直接将<tt>ie</tt>窗口嵌入到你的应用程序中。 <span id="line-469"
+class="anchor"/><span id="line-470" class="anchor"/></p><p class="line862">使用<tt>IE</tt>控件比较简单，类似于使用内部的<tt>wxPython</tt>的<tt>HTML</tt>窗口。它的构造函数如下： <span id="line-471" class="anchor"/><span id="line-472" class="anchor"/></p><p class="line867"><span id="line-473" class="anchor"/><span id="line-474" class="anchor"/><span id="line-475" class="anchor"/><span id="line-476" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-ac3139ecca4f92b3bbace325221a668123118b6a_007\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-ac3139ecca4f92b3bbace325221a668123118b6a_007', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-ac3139ecca4f92b3bbace325221a668123118b6a_007" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">lib</span><span class="Operator">.</span><span class="ID">iewin</span><span class="Operator">.</span><span class="ID">IEHtmlWindow</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span
+class="ID">parent</span><span class="Operator">,</span> <span class="ID">ID</span><span class="Operator">=</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   2 </span>        <span class="ID">pos</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">DefaultPosition</span><span class="Operator">,</span> <span class="ID">size</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">DefaultSize</span><span class="Operator">,</span> <span
+class="ID">style</span><span class="Operator">=</span><span class="Number">0</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   3 </span>        <span class="ID">name</span><span class="Operator">=</span><span class="String">'IEHtmlWindow'</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-477" class="anchor"/><span id="line-478" class="anchor"/><p class="line862">其中参数<tt>parent</tt>是父窗口，<tt>ID</tt>是<tt>wxPython
+ID</tt>。对于<tt>IE</tt>窗口，这儿没有可用的样式标记。要装载<tt>HTML</tt>到<tt>IE</tt>组件中，可以使用方法<tt>LoadString(html)</tt>，其中参数<tt>html</tt>是要显示的一个<tt>HTML</tt>字符串。你可以使用方法<tt>LoadStream(stream)</tt>装载自一个打开的文件，或一个<tt>Python</tt>文件对象；或使用<tt>LoadString(URL)</tt>方法装载自一个<tt>URL</tt>。你能够使用<tt>GetText(asHTML)</tt>来获取当前显示的文本。参数<tt>asHTML</tt>是布尔值。如果为<tt>True</tt>，则返回<tt>HTML</tt>形式的文本，否则仅返回一个文本字符串。
+<span id="line-479" class="anchor"/><span id="line-480" class="anchor"/></p><p class="line862">在其它平台上，你可以尝试一下<tt>wxMozilla</tt>项目(<tt>http:</tt>//<tt>wxmozilla.sourceforge.net)</tt>，该项目尝试创建一个<tt>Mozilla Gecko</tt>表现器的<tt>wxPython</tt>封装。目前该项目仍在测试阶段。<tt>wxMozilla</tt>有用于<tt>Windows</tt>和<tt>Linux</tt>的安装包，对<tt>Mac OS X</tt>的支持正在开发中。 <span id="line-481" class="anchor"/><span id="line-482"
+class="anchor"/><span id="line-483" class="anchor"/><span id="line-484" class="anchor"/></p><p class="line867">
+</p><h2 id="head-223607e38454caaf25c343093492f3d03d6428c7">4. 本章小结</h2>
+<span id="line-485" class="anchor"/><span id="line-486" class="anchor"/><span id="line-487" class="anchor"/><p class="line862">1、<tt>HTML</tt>不再是只用于<tt>Internet</tt>了。在<tt>wxPython</tt>中，你可以使用一个<tt>HTML</tt>窗口来显示带有<tt>HTML</tt>标记的简单子集的文本。该<tt>HTML</tt>窗口属于<tt>wx.html.HtmlWindow</tt>类。除了<tt>HTML</tt>文本，该<tt>HTML</tt>窗口还可以管理任一的图像（图像处理器已装载的情况下）。 <span id="line-488"
+class="anchor"/><span id="line-489" class="anchor"/></p><p class="line862">2、你可以让<tt>HTML</tt>窗口显示一个字符串，一个本地文件或一个<tt>URL</tt>的信息。你可以像通常的超文本浏览器的方式显示用户的敲击，或使用它自定义的响应。你也可以将<tt>HTML</tt>窗口与它的框架相连接起来，以便标题和状态信息自动地显示在适当的地方。<tt>HTML</tt>窗口维护着一个历史列表，你可以对它进行访问和处理。你可以使用类<tt>wx.Html.HtmlEasyPrinting</tt>来直接打印你的页面。
+<span id="line-490" class="anchor"/><span id="line-491" class="anchor"/></p><p class="line862">3、在<tt>wxPython</tt>中有一个<tt>HTML</tt>解析器，你可以用来创建用于你自己窗口的自定义标记。你也可以配置自定义的文件筛选器来在一个<tt>HTML</tt>窗口中表现其它的文件格式。 <span id="line-492" class="anchor"/><span id="line-493" class="anchor"/></p><p
+class="line862">4、最后，如果你对<tt>HTML</tt>窗口的局限性不太满意的话，那么你可以使用一个对<tt>IE</tt>控件的<tt>wxPython</tt>封闭。如果你不在<tt>Windows</tt>上的话，这儿也有一个对<tt>Mozilla Gecko HTML</tt>表现器的<tt>wxPython</tt>的封装。 <span id="line-494" class="anchor"/><span id="bottom" class="anchor"/></p></div>

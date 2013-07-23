@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "plone2_out"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "可谓瓜熟蒂落，Plone 2.0终于诞生了！", 
+        "modified": "2004-04-02 14:27:19", 
+        "title": "Plone2.0正式发布！"
+    }
+}

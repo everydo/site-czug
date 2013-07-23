@@ -1,0 +1,68 @@
+.managePortletsFallback {
+	MARGIN: 0px 0px 0px 1em
+}
+.portlet {
+	MARGIN: 1px 0px 1em
+}
+.portlet A {
+	TEXT-DECORATION: none
+}
+.portlet A.tile {
+	DISPLAY: block
+}
+.portletItem UL {
+	LIST-STYLE-TYPE: none
+}
+.portletItem A {
+	BORDER-BOTTOM-STYLE: none
+}
+.portletFooter A {
+	BORDER-BOTTOM-STYLE: none
+}
+.portletItem A:visited {
+	
+}
+.portletFooter A:visited {
+	
+}
+.portletHeader {
+	BORDER-RIGHT: #8cacbb 1px solid; PADDING-RIGHT: 1em; PADDING-LEFT: 1em; FONT-WEIGHT: normal; PADDING-BOTTOM: 0em; BORDER-LEFT: #8cacbb 1px solid; LINE-HEIGHT: 1.6em; PADDING-TOP: 0em
+}
+.portletHeader A {
+	
+}
+.portletItem {
+	BORDER-RIGHT: #8cacbb 1px solid; padding-bottom:2em; padding-left:1.5em; padding-right:1.5em; padding-top:1em!important;padding-top: 5em; MARGIN: 0px; BORDER-LEFT: #8cacbb 1px solid; PADDING-TOP: 1em; BORDER-BOTTOM: #8cacbb 1px solid; line-height:24px; font-size:12px;
+}
+.portletItem p{ margin-top:1em; margin-bottom:1em;}
+.portletItem div{ line-height:20px;}
+.portletItem OL {
+	MARGIN: 0px 0px 0px 1em
+}
+.portletItemUserManual{ margin:10px 0px; text-align:center; font-size:14px;}
+.portletItemDetails {
+	DISPLAY: block; TEXT-ALIGN: right
+}
+.portletFooter {
+	PADDING-RIGHT: 1em; PADDING-LEFT: 1em; PADDING-BOTTOM: 0.25em; MARGIN: 0px; PADDING-TOP: 0.25em; TEXT-ALIGN: right
+}
+.portletTopLeft {
+	
+}
+.portletTopRight {
+	
+}
+.portletBottomLeft {
+	
+}
+.portletBottomRight {
+	
+}
+
+dt.portletHeader {
+background-color:#EDF3FE !important;
+border-color:-moz-use-text-color -moz-use-text-color #DEDEDE;
+border-style:none none solid;
+border-width:0 0 1px;
+font-weight:bold;
+}

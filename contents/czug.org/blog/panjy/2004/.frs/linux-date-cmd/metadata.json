@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "linux-date-cmd"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Linux上设置正确时间，可真不是一件容易的事情 ...", 
+        "modified": "2004-11-30 08:56:33", 
+        "title": "Linux上让人迷惑的时间设置"
+    }
+}

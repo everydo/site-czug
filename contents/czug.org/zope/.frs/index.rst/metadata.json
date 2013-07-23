@@ -1,0 +1,13 @@
+{
+    "main": {
+        "contenttype": "Document"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Zope: 一个开源的web应用服务器", 
+        "modified": "2006-10-31 16:43:42", 
+        "title": "Zope简介"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "atratings"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "由于项目需要，对ATRatings进行了一些改进，借鉴zwiki，给了一个界面", 
+        "modified": "2005-01-10 22:19:42", 
+        "title": "ATRatings: 投票和计数器"
+    }
+}

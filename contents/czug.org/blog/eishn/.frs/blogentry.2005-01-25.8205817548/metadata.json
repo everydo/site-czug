@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "blogentry.2005-01-25.8205817548"
+    }, 
+    "dublin": {
+        "creators": [
+            "eishn"
+        ], 
+        "description": "JS 精灵语世界，http://elf.ivi.cn。有着国内顶尖的 JavaScript UI 程序技术。", 
+        "modified": "2005-01-25 12:54:41", 
+        "title": "JS 精灵语世界"
+    }
+}

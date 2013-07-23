@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "News_Item.2003-09-22.1558"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "润普公司贡献介绍Plone基本操作的flash中文演示，这将让初学者快速进入plone的世界", 
+        "modified": "2004-01-11 05:14:10", 
+        "title": "润普贡献Plone基本操作的flash中文演示"
+    }
+}

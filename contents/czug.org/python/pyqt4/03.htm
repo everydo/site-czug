@@ -1,0 +1,298 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-4" class="anchor"/><p class="line867"><strong> Menus and Toolbars in <a href="/moin/PyQt4" class="nonexistent">PyQt4</a> </strong> <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/></p><p class="line862">::-- <a href="/moin/zhuyj">zhuyj</a> [2008-06-06 02:12:56] </p><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-d0f91af7bc1ff9d119c7ca694c13195b1f662e52">Menus and Toolbars in PyQt4</a><ol><li><a href="#head-f183fe8fdaab4c42ea10e1224b4bab04b493148d">Main Window</a></li><li><a href="#head-82d18d133ccc9f690762a8a633fd942fd6026f43">Statusbar</a></li><li><a href="#head-0c59f9ab4a5f37aeeec355b40f5f3c8d1fa2c3ba">Menubar</a></li><li><a
+href="#head-738e0b9a922f0c7d60dbdcc6bd0514f9955e53b1">Toolbar</a></li><li><a href="#head-ce3a00ee21d87575129cbfbc64128624221f825c">Putting it together</a></li></ol></li></ol></div> <span id="line-7" class="anchor"/><span id="line-8" class="anchor"/><p class="line867">
+</p><h1 id="head-d0f91af7bc1ff9d119c7ca694c13195b1f662e52">1. Menus and Toolbars in PyQt4</h1>
+<span id="line-9" class="anchor"/><p class="line867"><strong><a href="/moin/PyQt4" class="nonexistent">PyQt4</a>中的菜单和工具条</strong> <span id="line-10" class="anchor"/><span id="line-11" class="anchor"/></p><p class="line867">
+</p><h2 id="head-f183fe8fdaab4c42ea10e1224b4bab04b493148d">1.1. Main Window</h2>
+<span id="line-12" class="anchor"/><p class="line867"><strong>主窗口</strong> <span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></p><p class="line867"><em> The QMainWindow class provides a main application window. This enables to create the classic application skeleton with a statusbar, toolbars and a menubar.</em> <span id="line-15" class="anchor"/></p><ul><li style="list-style-type: none;">QMainWindow类提供了一个主的应用程序窗口。它创建一个标准的带有状态栏，工具栏和菜单栏的应用程序  <span id="line-16" class="anchor"/><span id="line-17" class="anchor"/></li></ul><p class="line867">
+</p><h2 id="head-82d18d133ccc9f690762a8a633fd942fd6026f43">1.2. Statusbar</h2>
+<span id="line-18" class="anchor"/><p class="line867"><em> The statusbar is a widget that is used for displaying status information. </em> <span id="line-19" class="anchor"/></p><ul><li style="list-style-type: none;">状态栏是一个用于显示状态信息的部件  <span id="line-20" class="anchor"/></li></ul><p class="line867"><span id="line-21" class="anchor"/><span id="line-22" class="anchor"/><span id="line-23" class="anchor"/><span id="line-24" class="anchor"/><span id="line-25" class="anchor"/><span id="line-26" class="anchor"/><span id="line-27" class="anchor"/><span id="line-28" class="anchor"/><span id="line-29" class="anchor"/><span id="line-30" class="anchor"/><span id="line-31" class="anchor"/><span id="line-32" class="anchor"/><span id="line-33" class="anchor"/><span
+id="line-34" class="anchor"/><span id="line-35" class="anchor"/><span id="line-36" class="anchor"/><span id="line-37" class="anchor"/><span id="line-38" class="anchor"/><span id="line-39" class="anchor"/><span id="line-40" class="anchor"/><span id="line-41" class="anchor"/><span id="line-42" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-91521fe2570c2a25d0cb91fe1df4874200c7cbc5_000\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-91521fe2570c2a25d0cb91fe1df4874200c7cbc5_000', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-91521fe2570c2a25d0cb91fe1df4874200c7cbc5_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#!/usr/bin/python</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"># statusbar.py </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">import</span> <span class="ID">sys</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtGui</span></span>
+<span class="line"><span class="LineNumber">   7 </span></span>
+<span class="line"><span class="LineNumber">   8 </span><span class="ResWord">class</span> <span class="ID">MainWindow</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QMainWindow</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   9 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QMainWindow</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">resize</span><span class="Operator">(</span><span class="Number">250</span><span class="Operator">,</span> <span class="Number">150</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setWindowTitle</span><span class="Operator">(</span><span class="String">'statusbar'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">statusBar</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">showMessage</span><span class="Operator">(</span><span class="String">'Ready'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span></span>
+<span class="line"><span class="LineNumber">  17 </span></span>
+<span class="line"><span class="LineNumber">  18 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QApplication</span><span class="Operator">(</span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">argv</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span><span class="ID">main</span> <span class="Operator">=</span> <span class="ID">MainWindow</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span><span class="ID">main</span><span class="Operator">.</span><span class="ID">show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">exit</span><span class="Operator">(</span><span class="ID">app</span><span class="Operator">.</span><span class="ID">exec_</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-43" class="anchor"/><span id="line-44" class="anchor"/><p class="line867"><span id="line-45" class="anchor"/></p><pre> self.statusBar().showMessage('Ready')
+<span id="line-46" class="anchor"/></pre><span id="line-47" class="anchor"/><p class="line867"><em> To get the statusbar, we call the statusBar() method of the QApplication class. The showMessage() displays message on the statusbar.</em> <span id="line-48" class="anchor"/></p><ul><li style="list-style-type: none;">为了获取状态栏，我们调用QApplication类的statusBar()方法。在状态栏上显示消息用showMessage()方法。  <span id="line-49" class="anchor"/></li></ul><p class="line867">
+</p><h2 id="head-0c59f9ab4a5f37aeeec355b40f5f3c8d1fa2c3ba">1.3. Menubar</h2>
+<span id="line-50" class="anchor"/><p class="line867"><em> A menubar is one of the most visible parts of the GUI application. It is a group of commands located in various menus. While in console applications you had to remember all those arcane commands, here we have most of the commands grouped into logical parts. There are accepted standards that further reduce the amount of time spending to learn a new application. </em> <span id="line-51" class="anchor"/></p><ul><li style="list-style-type:
+none;">菜单栏是GUI应用程序最常见的部分，他是一组位于不同菜单中的命令。在控制台程序中你必须记住所有的神秘的命令，而在这里我们将大部分的命令按照逻辑分组。按照公认的标准可以进一步的减少学习一个新应用程序的时间。  <span id="line-52" class="anchor"/></li></ul><p class="line867"><span id="line-53" class="anchor"/><span id="line-54" class="anchor"/><span id="line-55" class="anchor"/><span id="line-56" class="anchor"/><span id="line-57" class="anchor"/><span id="line-58" class="anchor"/><span id="line-59" class="anchor"/><span id="line-60" class="anchor"/><span id="line-61" class="anchor"/><span id="line-62"
+class="anchor"/><span id="line-63" class="anchor"/><span id="line-64" class="anchor"/><span id="line-65" class="anchor"/><span id="line-66" class="anchor"/><span id="line-67" class="anchor"/><span id="line-68" class="anchor"/><span id="line-69" class="anchor"/><span id="line-70" class="anchor"/><span id="line-71" class="anchor"/><span id="line-72" class="anchor"/><span id="line-73" class="anchor"/><span id="line-74" class="anchor"/><span id="line-75" class="anchor"/><span id="line-76" class="anchor"/><span id="line-77" class="anchor"/><span id="line-78" class="anchor"/><span id="line-79"
+class="anchor"/><span id="line-80" class="anchor"/><span id="line-81" class="anchor"/><span id="line-82" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-119c8bc6e7379148ec1347915be51f0d841c65db_001\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-119c8bc6e7379148ec1347915be51f0d841c65db_001', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-119c8bc6e7379148ec1347915be51f0d841c65db_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#!/usr/bin/python</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"># menubar.py </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">import</span> <span class="ID">sys</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtGui</span><span class="Operator">,</span> <span class="ID">QtCore</span></span>
+<span class="line"><span class="LineNumber">   7 </span></span>
+<span class="line"><span class="LineNumber">   8 </span><span class="ResWord">class</span> <span class="ID">MainWindow</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QMainWindow</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   9 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QMainWindow</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">resize</span><span class="Operator">(</span><span class="Number">250</span><span class="Operator">,</span> <span class="Number">150</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setWindowTitle</span><span class="Operator">(</span><span class="String">'menubar'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">exit</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QAction</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QIcon</span><span class="Operator">(</span><span class="String">'icons/exit.png'</span><span class="Operator">)</span><span class="Operator">,</span> <span class="String">'Exit'</span><span class="Operator">,</span> <span class="ID">self</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ID">exit</span><span class="Operator">.</span><span class="ID">setShortcut</span><span class="Operator">(</span><span class="String">'Ctrl+Q'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">exit</span><span class="Operator">.</span><span class="ID">setStatusTip</span><span class="Operator">(</span><span class="String">'Exit application'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">connect</span><span class="Operator">(</span><span class="ID">exit</span><span class="Operator">,</span> <span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">SIGNAL</span><span class="Operator">(</span><span class="String">'triggered()'</span><span class="Operator">)</span><span class="Operator">,</span> <span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">SLOT</span><span
+class="Operator">(</span><span class="String">'close()'</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">statusBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span></span>
+<span class="line"><span class="LineNumber">  22 </span>        <span class="ID">menubar</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">menuBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  23 </span>        <span class="ID">file</span> <span class="Operator">=</span> <span class="ID">menubar</span><span class="Operator">.</span><span class="ID">addMenu</span><span class="Operator">(</span><span class="String">'&File'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  24 </span>        <span class="ID">file</span><span class="Operator">.</span><span class="ID">addAction</span><span class="Operator">(</span><span class="ID">exit</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  25 </span></span>
+<span class="line"><span class="LineNumber">  26 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QApplication</span><span class="Operator">(</span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">argv</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  27 </span><span class="ID">main</span> <span class="Operator">=</span> <span class="ID">MainWindow</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  28 </span><span class="ID">main</span><span class="Operator">.</span><span class="ID">show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  29 </span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">exit</span><span class="Operator">(</span><span class="ID">app</span><span class="Operator">.</span><span class="ID">exec_</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-83" class="anchor"/><span id="line-84" class="anchor"/><p class="line867"><span id="line-85" class="anchor"/></p><pre> menubar = self.menuBar()
+<span id="line-86" class="anchor"/> file = menubar.addMenu('&File')
+<span id="line-87" class="anchor"/> file.addAction(exit)
+<span id="line-88" class="anchor"/></pre><span id="line-89" class="anchor"/><p class="line867"><em> First we create a menubar with the menuBar() method of the QMainWindow class. Then we add a menu with the <a href="/moin/AddMenu" class="nonexistent">AddMenu</a>() method. In the end we plug the action object into the file menu. </em> <span id="line-90" class="anchor"/></p><ul><li style="list-style-type: none;"><p class="line862">首先我们利用QMainWindow类的menuBar() 创建一个菜单栏，然后我们利用<a href="/moin/AddMenu"
+class="nonexistent">AddMenu</a>()方法添加一个菜单。最后我们将action对象插入到文件菜单中。  <span id="line-91" class="anchor"/></p></li></ul><p class="line867">
+</p><h2 id="head-738e0b9a922f0c7d60dbdcc6bd0514f9955e53b1">1.4. Toolbar</h2>
+<span id="line-92" class="anchor"/><p class="line867"><em> Menus group all commands that we can use in an application. Toolbars provide a quick access to the most frequently used commands.</em> <span id="line-93" class="anchor"/></p><ul><li style="list-style-type: none;">菜单聚合了我们在一个应用程序中要用的的所有的命令。工具栏提供了一个最经常使用命令的快速链接。  <span id="line-94" class="anchor"/></li></ul><p class="line867"><span id="line-95" class="anchor"/><span id="line-96" class="anchor"/><span id="line-97" class="anchor"/><span id="line-98" class="anchor"/><span id="line-99"
+class="anchor"/><span id="line-100" class="anchor"/><span id="line-101" class="anchor"/><span id="line-102" class="anchor"/><span id="line-103" class="anchor"/><span id="line-104" class="anchor"/><span id="line-105" class="anchor"/><span id="line-106" class="anchor"/><span id="line-107" class="anchor"/><span id="line-108" class="anchor"/><span id="line-109" class="anchor"/><span id="line-110" class="anchor"/><span id="line-111" class="anchor"/><span id="line-112" class="anchor"/><span id="line-113" class="anchor"/><span id="line-114" class="anchor"/><span id="line-115"
+class="anchor"/><span id="line-116" class="anchor"/><span id="line-117" class="anchor"/><span id="line-118" class="anchor"/><span id="line-119" class="anchor"/><span id="line-120" class="anchor"/><span id="line-121" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-9c48b7baa4dfa0776354e7b19a595c36239c7a7a_002\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-9c48b7baa4dfa0776354e7b19a595c36239c7a7a_002', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-9c48b7baa4dfa0776354e7b19a595c36239c7a7a_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#!/usr/bin/python</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"># toolbar.py </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">import</span> <span class="ID">sys</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtGui</span><span class="Operator">,</span> <span class="ID">QtCore</span></span>
+<span class="line"><span class="LineNumber">   7 </span></span>
+<span class="line"><span class="LineNumber">   8 </span><span class="ResWord">class</span> <span class="ID">MainWindow</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QMainWindow</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   9 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QMainWindow</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">resize</span><span class="Operator">(</span><span class="Number">250</span><span class="Operator">,</span> <span class="Number">150</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setWindowTitle</span><span class="Operator">(</span><span class="String">'toolbar'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">exit</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QAction</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QIcon</span><span class="Operator">(</span><span class="String">'icons/exit.png'</span><span class="Operator">)</span><span class="Operator">,</span> <span class="String">'Exit'</span><span
+class="Operator">,</span> <span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">exit</span><span class="Operator">.</span><span class="ID">setShortcut</span><span class="Operator">(</span><span class="String">'Ctrl+Q'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">connect</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">exit</span><span class="Operator">,</span> <span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">SIGNAL</span><span class="Operator">(</span><span class="String">'triggered()'</span><span class="Operator">)</span><span class="Operator">,</span> <span class="ID">QtCore</span><span
+class="Operator">.</span><span class="ID">SLOT</span><span class="Operator">(</span><span class="String">'close()'</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span></span>
+<span class="line"><span class="LineNumber">  19 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">toolbar</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">addToolBar</span><span class="Operator">(</span><span class="String">'Exit'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">toolbar</span><span class="Operator">.</span><span class="ID">addAction</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">exit</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span></span>
+<span class="line"><span class="LineNumber">  22 </span></span>
+<span class="line"><span class="LineNumber">  23 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QApplication</span><span class="Operator">(</span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">argv</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  24 </span><span class="ID">main</span> <span class="Operator">=</span> <span class="ID">MainWindow</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  25 </span><span class="ID">main</span><span class="Operator">.</span><span class="ID">show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  26 </span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">exit</span><span class="Operator">(</span><span class="ID">app</span><span class="Operator">.</span><span class="ID">exec_</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-122" class="anchor"/><p class="line867"><span id="line-123" class="anchor"/></p><pre> self.exit = QtGui.QAction(QtGui.QIcon('icons/exit.png'), 'Exit', self)
+<span id="line-124" class="anchor"/> self.exit.setShortcut('Ctrl+Q')
+<span id="line-125" class="anchor"/></pre><span id="line-126" class="anchor"/><p class="line867"><em>GUI applications are controlled with commands. These commands can be launched from a menu, a context menu, a toolbar or with a shortcut. <a href="/moin/PyQt">PyQt</a> simplifies development with the introduction of actions. An action object can have menu text, an icon, a shortcut, status text, "What's This?" text and a tooltip. In our example, we define an action object with an icon, a tooltip and a shortcut.</em> <span id="line-127" class="anchor"/></p><ul><li
+style="list-style-type: none;"><p class="line862">GUI应用程序通过命令来控制，这些命令可以通过菜单，上下文菜单，工具栏或者一个快捷方式来执行。<a href="/moin/PyQt">PyQt</a>简化了actions传入的开发。一个action对象可以具有菜单文本，图标，快捷方式，状态栏提示，"这是什么?"提示和工具提示。在我们的例子里，我们定义了一个具有图标，工具提示和快捷方式的action对象。  <span id="line-128" class="anchor"/></p></li></ul><p class="line867"><span id="line-129" class="anchor"/></p><pre> self.connect(self.exit, QtCore.SIGNAL('triggered()'), QtCore.SLOT('close()'))
+<span id="line-130" class="anchor"/></pre><span id="line-131" class="anchor"/><p class="line867"><em> Here we connect the action's triggered() signal to the predefined close() signal.</em> <span id="line-132" class="anchor"/></p><ul><li style="list-style-type: none;">这里我们将triggered()信号的动作与预先定义的close()信号连接。  <span id="line-133" class="anchor"/></li></ul><p class="line867"><span id="line-134" class="anchor"/></p><pre> self.toolbar = self.addToolBar('Exit')
+<span id="line-135" class="anchor"/> self.toolbar.addAction(self.exit)
+<span id="line-136" class="anchor"/></pre><span id="line-137" class="anchor"/><p class="line867"><em> Here we create a toolbar and plug and action object into it. </em> <span id="line-138" class="anchor"/></p><ul><li style="list-style-type: none;">这里我们创建一个工具栏并将action对象插入进去。  <span id="line-139" class="anchor"/><span id="line-140" class="anchor"/>toolbar  <span id="line-141" class="anchor"/></li></ul><p class="line867"><img title="attachment:toolbar.jpg"
+src="/moin/Menus_and_Toolbars_%E8%8F%9C%E5%8D%95%E4%B8%8E%E5%B7%A5%E5%85%B7%E6%9D%A1?action=AttachFile&amp;do=get&amp;target=toolbar.jpg" class="attachment"/> <span id="line-142" class="anchor"/>Figure: toolbar <span id="line-143" class="anchor"/>
+</p><h2 id="head-ce3a00ee21d87575129cbfbc64128624221f825c">1.5. Putting it together</h2>
+<span id="line-144" class="anchor"/><p class="line867"><em> In the last example of this section, we will create a menubar, toolbar and a statusbar. We will also create a central widget.</em> <span id="line-145" class="anchor"/></p><ul><li style="list-style-type: none;">在这节的最后一个例子里，我们将创建一个菜单栏，工具栏和状态栏。我们也会创建一个中央的部件。  <span id="line-146" class="anchor"/></li></ul><p class="line867"><span id="line-147" class="anchor"/><span id="line-148" class="anchor"/><span id="line-149" class="anchor"/><span id="line-150" class="anchor"/><span
+id="line-151" class="anchor"/><span id="line-152" class="anchor"/><span id="line-153" class="anchor"/><span id="line-154" class="anchor"/><span id="line-155" class="anchor"/><span id="line-156" class="anchor"/><span id="line-157" class="anchor"/><span id="line-158" class="anchor"/><span id="line-159" class="anchor"/><span id="line-160" class="anchor"/><span id="line-161" class="anchor"/><span id="line-162" class="anchor"/><span id="line-163" class="anchor"/><span id="line-164" class="anchor"/><span id="line-165" class="anchor"/><span id="line-166" class="anchor"/><span
+id="line-167" class="anchor"/><span id="line-168" class="anchor"/><span id="line-169" class="anchor"/><span id="line-170" class="anchor"/><span id="line-171" class="anchor"/><span id="line-172" class="anchor"/><span id="line-173" class="anchor"/><span id="line-174" class="anchor"/><span id="line-175" class="anchor"/><span id="line-176" class="anchor"/><span id="line-177" class="anchor"/><span id="line-178" class="anchor"/><span id="line-179" class="anchor"/><span id="line-180" class="anchor"/><span id="line-181" class="anchor"/><span id="line-182" class="anchor"/><span
+id="line-183" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-370bbbba9a0c6b3f6fe75a9ba93ca32fafcd5a35_003\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-370bbbba9a0c6b3f6fe75a9ba93ca32fafcd5a35_003', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-370bbbba9a0c6b3f6fe75a9ba93ca32fafcd5a35_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#!/usr/bin/python</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"># mainwindow.py </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">import</span> <span class="ID">sys</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtGui</span><span class="Operator">,</span> <span class="ID">QtCore</span></span>
+<span class="line"><span class="LineNumber">   7 </span></span>
+<span class="line"><span class="LineNumber">   8 </span><span class="ResWord">class</span> <span class="ID">MainWindow</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QMainWindow</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   9 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QMainWindow</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">resize</span><span class="Operator">(</span><span class="Number">350</span><span class="Operator">,</span> <span class="Number">250</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setWindowTitle</span><span class="Operator">(</span><span class="String">'mainwindow'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">textEdit</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QTextEdit</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setCentralWidget</span><span class="Operator">(</span><span class="ID">textEdit</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span></span>
+<span class="line"><span class="LineNumber">  18 </span>        <span class="ID">exit</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QAction</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QIcon</span><span class="Operator">(</span><span class="String">'icons/exit.png'</span><span class="Operator">)</span><span class="Operator">,</span> <span class="String">'Exit'</span><span class="Operator">,</span> <span
+class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span>        <span class="ID">exit</span><span class="Operator">.</span><span class="ID">setShortcut</span><span class="Operator">(</span><span class="String">'Ctrl+Q'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ID">exit</span><span class="Operator">.</span><span class="ID">setStatusTip</span><span class="Operator">(</span><span class="String">'Exit application'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">connect</span><span class="Operator">(</span><span class="ID">exit</span><span class="Operator">,</span> <span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">SIGNAL</span><span class="Operator">(</span><span class="String">'triggered()'</span><span class="Operator">)</span><span class="Operator">,</span> <span class="ID">QtCore</span><span class="Operator">.</span><span
+class="ID">SLOT</span><span class="Operator">(</span><span class="String">'close()'</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  22 </span></span>
+<span class="line"><span class="LineNumber">  23 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">statusBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  24 </span></span>
+<span class="line"><span class="LineNumber">  25 </span>        <span class="ID">menubar</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">menuBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  26 </span>        <span class="ID">file</span> <span class="Operator">=</span> <span class="ID">menubar</span><span class="Operator">.</span><span class="ID">addMenu</span><span class="Operator">(</span><span class="String">'&File'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  27 </span>        <span class="ID">file</span><span class="Operator">.</span><span class="ID">addAction</span><span class="Operator">(</span><span class="ID">exit</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  28 </span></span>
+<span class="line"><span class="LineNumber">  29 </span>        <span class="ID">toolbar</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">addToolBar</span><span class="Operator">(</span><span class="String">'Exit'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  30 </span>        <span class="ID">toolbar</span><span class="Operator">.</span><span class="ID">addAction</span><span class="Operator">(</span><span class="ID">exit</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  31 </span></span>
+<span class="line"><span class="LineNumber">  32 </span></span>
+<span class="line"><span class="LineNumber">  33 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QApplication</span><span class="Operator">(</span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">argv</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  34 </span><span class="ID">main</span> <span class="Operator">=</span> <span class="ID">MainWindow</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  35 </span><span class="ID">main</span><span class="Operator">.</span><span class="ID">show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  36 </span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">exit</span><span class="Operator">(</span><span class="ID">app</span><span class="Operator">.</span><span class="ID">exec_</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-184" class="anchor"/><span id="line-185" class="anchor"/><p class="line867"><span id="line-186" class="anchor"/></p><pre> textEdit = QtGui.QTextEdit()
+<span id="line-187" class="anchor"/> self.setCentralWidget(textEdit)
+<span id="line-188" class="anchor"/></pre><span id="line-189" class="anchor"/><p class="line867"><em> Here we create a text edit widget. We set it to be the central widget of the QMainWindow. The central widget will occupy all space that is left.</em> <span id="line-190" class="anchor"/></p><ul><li style="list-style-type: none;">这里我们创建一个文本编辑插件，我们将他设置为QMainWindow的中央插件。中央插件将会占据剩下的所有的空间。  <span id="line-191" class="anchor"/><span id="line-192" class="anchor"/>mainwindow  <span id="line-193"
+class="anchor"/></li></ul><p class="line867"><img title="attachment:mainwindow.jpg" src="/moin/Menus_and_Toolbars_%E8%8F%9C%E5%8D%95%E4%B8%8E%E5%B7%A5%E5%85%B7%E6%9D%A1?action=AttachFile&amp;do=get&amp;target=mainwindow.jpg" class="attachment"/> <span id="line-194" class="anchor"/>Figure: mainwindow <span id="line-195" class="anchor"/><span id="line-196" class="anchor"/><span id="line-197" class="anchor"/></p><p class="line867"/><div id="pagecomment">
+<a name="pagecomment1"/>
+<table border="0" class="pagecomment">
+<tbody><tr><td colspan="5" style="border-width: 1px; margin: 10px 0pt;">
+
+<script language="javascript">
+<!--
+function setCookie(name, value) {
+var today = new Date();
+var expire = new Date(today.getTime() + 60*60*24*365*1000);
+document.cookie = name + "=" + encodeURIComponent(value) + "; expires=" + expire.toGMTString() + "; path=/moin";
+}
+//-->
+</script>
+<form onsubmit="setCookie('PG2AUTHOR', this.comauthor.value);" method="post" name="comment" action="Menus_and_Toolbars_%E8%8F%9C%E5%8D%95%E4%B8%8E%E5%B7%A5%E5%85%B7%E6%9D%A1#pagecomment1">
+<table class="addcommentform">
+<tbody><tr>
+<td style="border-width: 0px; vertical-align: middle; font-size: 0.9em;"><textarea onblur="if (this.value=='') {this.value='Add your comment';};" onfocus="if (this.value=='Add your comment') {this.value='';};" style="font-size: 9pt;" cols="60" rows="4" name="comtext">Add your comment</textarea></td>
+<td style="border-width: 0px; font-size: 0.9em; vertical-align: bottom;"><input type="submit" style="font-size: 9pt; width: 6em; height: 3em;" value="保存" name="button_save"/></td>
+</tr>
+<tr><td style="border-width: 0px; vertical-align: middle; font-size: 0.9em;">
+Name<input type="text" onblur="if (this.value=='') {this.value='58';};" onfocus="if (this.value=='58') {this.value='';};" value="58" name="comauthor" maxlength="20" size="6" style="font-size: 9pt;"/>
+Password4deL<input type="password" onblur="if (this.value=='') {this.value='wog7';};" onfocus="if (this.value=='wog7') {this.value='';};" value="wog7" name="compasswd" maxlength="10" size="4" style="font-size: 9pt;"/>
+<input type="hidden" name="autopasswd" value="wog7"/>
+<input type="radio" value=";)" name="comicon"/><img width="15" height="15" title=";)" src="/htdocs/woodpecker/img/smile4.png" alt=";)"/>
+<input type="radio" value="=D" name="comicon"/>
+<input type="radio" value="=)" name="comicon"/>
+<input type="radio" value=":P" name="comicon"/>
+<input type="radio" value=":(|)" name="comicon"/>
+<input type="radio" value=":-|" name="comicon"/>
+<input type="radio" value=":(" name="comicon"/><img width="15" height="15" title=":(" src="/htdocs/woodpecker/img/sad.png" alt=":("/>
+<input type="radio" value="X-(" name="comicon"/><img width="15" height="15" title="X-(" src="/htdocs/woodpecker/img/angry.png" alt="X-("/>
+<input type="radio" value="B-)" name="comicon"/><img width="15" height="15" title="B-)" src="/htdocs/woodpecker/img/smile2.png" alt="B-)"/>
+
+</td>
+<td style="border-width: 0px; vertical-align: middle; text-align: right; font-size: 9pt;"/>
+</tr>
+</tbody></table>
+<input type="hidden" value="show" name="action"/>
+<input type="hidden" value="0" name="comrev"/>
+<input type="hidden" value="addcomment1" name="commentaction"/>
+</form>
+</td></tr>
+<tr><td style="border-width: 0px; height: 20px;" class="commentblankline" colspan="5"/></tr>
+<script language="javascript">
+<!--
+function requesttodeleteadmin1(delform, comkey) {
+if (confirm("Really delete this comment?")) {;
+delform.delkey.value = comkey;
+delform.delpasswd.value = "****";
+delform.submit();
+}
+}
+function requesttodelete1(delform, comkey) {
+var passwd = prompt("请输入一个密码!:", "");
+if(!(passwd == "" || passwd == null)) {
+delform.delkey.value = comkey;
+delform.delpasswd.value = passwd;
+delform.submit();
+}
+}
+//-->
+</script>
+<form method="post" action="Menus_and_Toolbars_%E8%8F%9C%E5%8D%95%E4%B8%8E%E5%B7%A5%E5%85%B7%E6%9D%A1#pagecomment1" name="delform1"/>
+<input type="hidden" name="action" value="show"/>
+<input type="hidden" value="****" name="delpasswd"/>
+<input type="hidden" value="" name="delkey"/>
+<input type="hidden" value="delcomment1" name="commentaction"/>
+
+
+</tbody></table>
+</div> <span id="line-198" class="anchor"/><span id="bottom" class="anchor"/></div>

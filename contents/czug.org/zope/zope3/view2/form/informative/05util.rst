@@ -1,0 +1,251 @@
+=============================
+Utility Functions and Classes
+=============================
+
+.. Contents::
+.. sectnum::
+
+This file documents the utility functions and classes that are otherwise not
+tested.
+
+  >>> from z3c.form import util
+
+
+``creeateId(name)`` Function
+----------------------------
+
+This function converts an arbitrary unicode string into a valid Python
+identifier. If the name is a valid identifier, then it is just returned, but
+all upper case letters are lowered:
+
+  >>> util.createId(u'Change')
+  'change'
+
+  >>> util.createId(u'Change_2')
+  'change_2'
+
+If a name is not a valid identifier, a hex code of the string is created:
+
+  >>> util.createId(u'Change 3')
+  '4368616e67652033'
+
+The function can also handle non-ASCII characters:
+
+  >>> util.createId(u'Ändern')
+  'c383c2846e6465726e'
+
+
+``getWidgetById(form, id)`` Function
+------------------------------------
+
+Given a form and a widget id, this function extracts the widget for you. First
+we need to create a properly developed form:
+
+  >>> import zope.interface
+  >>> import zope.schema
+
+  >>> class IPerson(zope.interface.Interface):
+  ...     name = zope.schema.TextLine(title=u'Name')
+
+  >>> from z3c.form import form, field
+  >>> class AddPerson(form.AddForm):
+  ...     fields = field.Fields(IPerson)
+
+  >>> from z3c.form import testing
+  >>> testing.setupFormDefaults()
+
+  >>> addPerson = AddPerson(None, testing.TestRequest())
+  >>> addPerson.update()
+
+We can now ask for the widget:
+
+  >>> util.getWidgetById(addPerson, 'form-widgets-name')
+  <TextWidget 'form.widgets.name'>
+
+The widget id can be split into a prefix and a widget name. The id must always
+start with the correct prefix, otherwise a value error is raised:
+
+  >>> util.getWidgetById(addPerson, 'myform-widgets-name')
+  Traceback (most recent call last):
+  ...
+  ValueError: Name 'myform.widgets.name' must start with prefix 'form.widgets.'
+
+If the widget is not found but the prefix is correct, ``None`` is returned:
+
+  >>> util.getWidgetById(addPerson, 'form-widgets-myname') is None
+  True
+
+
+``extractFileName(form, id, cleanup=True, allowEmtpyPostFix=False)`` Function
+-----------------------------------------------------------------------------
+
+Test the filename extraction method:
+
+  >>> class IDocument(zope.interface.Interface):
+  ...     data = zope.schema.Bytes(title=u'Data')
+
+Define a widgets stub and a upload widget stub class and setup them as a
+faked form:
+
+  >>> class FileUploadWidgetStub(object):
+  ...     def __init__(self):
+  ...         self.filename = None
+
+  >>> class WidgetsStub(object):
+  ...     def __init__(self):
+  ...         self.data = FileUploadWidgetStub()
+  ...         self.prefix = 'widgets.'
+  ...     def get(self, name, default):
+  ...         return self.data
+
+  >>> class FileUploadFormStub(form.AddForm):
+  ...     def __init__(self):
+  ...         self.widgets = WidgetsStub()
+  ...
+  ...     def setFakeFileName(self, filename):
+  ...         self.widgets.data.filename = filename
+
+Now we can setup the stub form. Note this form is just a fake it's not a real
+implementation. We just provide a form like class which simulates the
+FileUpload object in the a widget. See z3c.form.browser.file.txt for a real
+file upload test uscase:
+
+  >>> uploadForm = FileUploadFormStub()
+  >>> uploadForm.setFakeFileName('foo.txt')
+
+And extract the filename
+
+  >>> util.extractFileName(uploadForm, 'form.widgets.data', cleanup=True)
+  'foo.txt'
+
+Test a unicode filename:
+
+  >>> uploadForm.setFakeFileName(u'foo.txt')
+  >>> util.extractFileName(uploadForm, 'form.widgets.data', cleanup=True)
+  u'foo.txt'
+
+Test a windows IE uploaded filename:
+
+  >>> uploadForm.setFakeFileName(u'D:\\some\\folder\\foo.txt')
+  >>> util.extractFileName(uploadForm, 'form.widgets.data', cleanup=True)
+  u'foo.txt'
+
+Test another filename:
+
+  >>> uploadForm.setFakeFileName(u'D:/some/folder/foo.txt')
+  >>> util.extractFileName(uploadForm, 'form.widgets.data', cleanup=True)
+  u'foo.txt'
+
+Test another filename:
+
+  >>> uploadForm.setFakeFileName(u'/tmp/folder/foo.txt')
+  >>> util.extractFileName(uploadForm, 'form.widgets.data', cleanup=True)
+  u'foo.txt'
+
+Test special characters in filename, e.g. dots:
+
+  >>> uploadForm.setFakeFileName(u'/tmp/foo.bar.txt')
+  >>> util.extractFileName(uploadForm, 'form.widgets.data', cleanup=True)
+  u'foo.bar.txt'
+
+Test some other special characters in filename:
+
+  >>> uploadForm.setFakeFileName(u'/tmp/foo-bar.v.0.1.txt')
+  >>> util.extractFileName(uploadForm, 'form.widgets.data', cleanup=True)
+  u'foo-bar.v.0.1.txt'
+
+Test special characters in file path of filename:
+
+  >>> uploadForm.setFakeFileName(u'/tmp-v.1.0/foo-bar.v.0.1.txt')
+  >>> util.extractFileName(uploadForm, 'form.widgets.data', cleanup=True)
+  u'foo-bar.v.0.1.txt'
+
+Test optional keyword arguments. But remember it's hard for Zope to guess the
+content type for filenames without extensions:
+
+  >>> uploadForm.setFakeFileName(u'minimal')
+  >>> util.extractFileName(uploadForm, 'form.widgets.data', cleanup=True,
+  ...     allowEmtpyPostFix=True)
+  u'minimal'
+
+  >>> uploadForm.setFakeFileName(u'/tmp/minimal')
+  >>> util.extractFileName(uploadForm, 'form.widgets.data', cleanup=True,
+  ...     allowEmtpyPostFix=True)
+  u'minimal'
+
+  >>> uploadForm.setFakeFileName(u'D:\\some\\folder\\minimal')
+  >>> util.extractFileName(uploadForm, 'form.widgets.data', cleanup=True,
+  ...     allowEmtpyPostFix=True)
+  u'minimal'
+
+There will be a ValueError if we get a empty filename by default:
+
+  >>> uploadForm.setFakeFileName(u'/tmp/minimal')
+  >>> util.extractFileName(uploadForm, 'form.widgets.data', cleanup=True)
+  Traceback (most recent call last):
+  ...
+  ValueError: Missing filename extension.
+
+We also can skip removing a path from a upload. Note only IE will upload a
+path in a upload ``<input type="file" ...>`` field:
+
+  >>> uploadForm.setFakeFileName(u'/tmp/foo.txt')
+  >>> util.extractFileName(uploadForm, 'form.widgets.data', cleanup=False)
+  u'/tmp/foo.txt'
+
+  >>> uploadForm.setFakeFileName(u'/tmp-v.1.0/foo-bar.v.0.1.txt')
+  >>> util.extractFileName(uploadForm, 'form.widgets.data', cleanup=False)
+  u'/tmp-v.1.0/foo-bar.v.0.1.txt'
+
+  >>> uploadForm.setFakeFileName(u'D:\\some\\folder\\foo.txt')
+  >>> util.extractFileName(uploadForm, 'form.widgets.data', cleanup=False)
+  u'D:\\some\\folder\\foo.txt'
+
+And missing filename extensions are also not allowed by deafault if we skip
+the filename:
+
+  >>> uploadForm.setFakeFileName(u'/tmp/minimal')
+  >>> util.extractFileName(uploadForm, 'form.widgets.data', cleanup=False)
+  Traceback (most recent call last):
+  ...
+  ValueError: Missing filename extension.
+
+
+``extractContentType(form, id)`` Function
+-----------------------------------------
+
+there s alos a method which is able to extract the content type for a given
+file upload. We can use the stub form form the previous test.
+
+  >>> uploadForm = FileUploadFormStub()
+  >>> uploadForm.setFakeFileName('foo.txt')
+  >>> util.extractContentType(uploadForm, 'form.widgets.data')
+  'text/plain'
+
+  >>> uploadForm.setFakeFileName('foo.gif')
+  >>> util.extractContentType(uploadForm, 'form.widgets.data')
+  'image/gif'
+
+  >>> uploadForm.setFakeFileName('foo.jpg')
+  >>> util.extractContentType(uploadForm, 'form.widgets.data')
+  'image/jpeg'
+
+  >>> uploadForm.setFakeFileName('foo.png')
+  >>> util.extractContentType(uploadForm, 'form.widgets.data')
+  'image/png'
+
+  >>> uploadForm.setFakeFileName('foo.tif')
+  >>> util.extractContentType(uploadForm, 'form.widgets.data')
+  'image/tiff'
+
+  >>> uploadForm.setFakeFileName('foo.doc')
+  >>> util.extractContentType(uploadForm, 'form.widgets.data')
+  'application/msword'
+
+  >>> uploadForm.setFakeFileName('foo.zip')
+  >>> util.extractContentType(uploadForm, 'form.widgets.data')
+  'application/zip'
+
+  >>> uploadForm.setFakeFileName('foo.unknown')
+  >>> util.extractContentType(uploadForm, 'form.widgets.data')
+  'text/x-unknown-content-type'

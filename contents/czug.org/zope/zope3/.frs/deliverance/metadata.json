@@ -1,0 +1,27 @@
+{
+    "main": {
+        "left_col": ".. navtree::\n   :root_depth: 2",
+        "hidden_keys": [
+            "img", 
+            "__init__.pyc", 
+            "__init__.py"
+        ], 
+        "keys": [
+            "quickstart.rst", 
+            "philosophy.rst", 
+            "configuration.rst", 
+            "pyref.rst", 
+            "clientside-theming.rst", 
+            "code-map.rst", 
+            "page-classes.rst", 
+            "rules.rst", 
+            "proxy.rst", 
+            "license.rst"
+        ], 
+        "contenttype": "Folder"
+    }, 
+    "dublin": {
+        "description": "Deliverance 是一个根据一组规则，将外观套用到内容上的轻量级程序。", 
+        "title": "deliverance"
+    }
+}

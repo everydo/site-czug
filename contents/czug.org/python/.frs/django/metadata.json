@@ -1,0 +1,13 @@
+{
+    "main": {
+        "contenttype": "Folder",
+        "hidden_keys":["fetch.py"]
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "", 
+        "title": "《The Django Book》"
+    }
+}

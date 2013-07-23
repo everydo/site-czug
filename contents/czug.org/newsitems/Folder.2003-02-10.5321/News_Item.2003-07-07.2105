@@ -1,0 +1,24 @@
+<p>新闻<a href="http://www.zope.org/Members/nuxeo/news/cps-cea">在此</a></p>
+<p>CPS是法国Nuxeo公司基于zope和cmf的一个产品，法国政府就是用的这个产品。</p>
+<p>法国原子能委员会用CPS来建立项目协作网站，现在已经有超过30个实例在运行，而且在改进后将有更多的建设计划。</p>
+<p>另外，他们和法国文化部也有长期的合作。</p>
+<p>我看到，因为这几个单子的资助，其中的一些产品将以GPL软件的形式贡献到zope社区，包括：</p>
+
+<ul>
+<li>Zope authentification ("yet another user folder", as Paul E. said in a private conversation) </li>
+<li>CPS user management systems, </li>
+<li>document storage scalability, </li>
+<li>better WebDAV support, </li>
+<li>better mailing list support, </li>
+<li>...</li>
+
+</ul>
+<p>我感觉这是开放源代码发展的一个典型良性循环：</p>
+
+<ol>
+<li> 政府以低价获得高质量的软件</li>
+<li> Nuxeo因为开放源代码，而名气大增</li>
+<li> zope因为这个交易，在产品性能和名声上，也大增</li>
+
+</ol>
+<p>Long Life Opensource！</p>

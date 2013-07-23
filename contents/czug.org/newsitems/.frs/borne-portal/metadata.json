@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "borne-portal"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "这可能是全世界第一个采用Plone构建的首都级的门户网站", 
+        "modified": "2005-01-11 10:19:27", 
+        "title": "瑞士首都borne采用Plone重建门户网站"
+    }
+}

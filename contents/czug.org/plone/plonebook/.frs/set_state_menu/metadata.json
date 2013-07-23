@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Image", 
+        "id": "set_state_menu"
+    }, 
+    "dublin": {
+        "creators": [
+            "blueszhao"
+        ], 
+        "description": "", 
+        "modified": "2004-03-10 09:30:56", 
+        "title": "状态设置菜单"
+    }
+}

@@ -1,0 +1,30 @@
+UL.visualNoMarker {
+	LIST-STYLE-IMAGE: none; MARGIN: 0.5em 0px 0px; LIST-STYLE-TYPE: none
+}
+OL.visualNoMarker {
+	LIST-STYLE-IMAGE: none; MARGIN: 0.5em 0px 0px; LIST-STYLE-TYPE: none
+}
+.visualOverflow {
+	MARGIN: 0px 0px 1em; OVERFLOW: auto
+}
+.visualOverflow PRE {
+	MARGIN: 0px
+}
+.visualOverflow TABLE {
+	MARGIN: 0px
+}
+.visualOverflow IMG {
+	MARGIN: 0px
+}
+.hiddenStructure {
+	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; BACKGROUND: none transparent scroll repeat 0% 0%; PADDING-BOTTOM: 0px; MARGIN: -1px 0px 0px -1px; OVERFLOW: hidden; WIDTH: 1px; PADDING-TOP: 0px; HEIGHT: 1px
+}
+.hiddenLabel {
+	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; BACKGROUND: none transparent scroll repeat 0% 0%; PADDING-BOTTOM: 0px; MARGIN: -1px 0px 0px -1px; OVERFLOW: hidden; WIDTH: 1px; PADDING-TOP: 0px; HEIGHT: 1px
+}
+.visualClear {
+	CLEAR: both; DISPLAY: block
+}
+.netscape4 {
+	DISPLAY: none
+}

@@ -1,0 +1,13 @@
+{
+    "main": {
+        "contenttype": "Document"
+    },
+    "dublin": {
+        "title": "zope组件架构",
+        "description": "大型系统内部如何架构，组件架构是利器",
+        "creators": [
+            "潘俊勇"
+        ],
+        "created": "2010-06-26 12:20:11.635713"
+    }
+}

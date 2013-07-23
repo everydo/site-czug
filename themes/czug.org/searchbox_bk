@@ -1,0 +1,22 @@
+
+                    <div id="portal-searchbox">
+                        <form name="searchform" action="search" style="white-space:nowrap" onsubmit="return liveSearchSubmit()">
+                            <label for="searchGadget" class="hiddenStructure">
+                                Search Site
+                            </label>
+                            <div class="LSBox">
+                                <input id="searchGadget" name="SearchableText" type="text" size="15" title="Search Site"
+                                accesskey="4" class="visibility:visible" />
+                                <input class="searchButton" type="submit" value="搜索" />
+                                <div class="LSResult" id="LSResult" style="">
+                                    <div class="LSShadow" id="LSShadow">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="portal-advanced-search" class="hiddenStructure">
+                            <a href="search_form" accesskey="5">
+                                Advanced Search&hellip;
+                            </a>
+                        </div>
+                    </div>

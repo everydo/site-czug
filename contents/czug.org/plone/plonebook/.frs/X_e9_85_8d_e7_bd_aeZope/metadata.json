@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "X_e9_85_8d_e7_bd_aeZope"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "", 
+        "modified": "2005-12-14 14:34:25", 
+        "title": "配置Zope"
+    }
+}

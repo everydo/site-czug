@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<manifest xmlns="http://zopechina.com/ns/frs"
+           xmlns:tal="http://xml.zope.org/namespaces/tal"
+           contenttype="<bound method ATImage.getPortalTypeName of <ATImage at /58080_1/default.czug.edo/projects/341196/files/security/folder_localrole_addgroup.png>>"
+           uid="0dda8109a98f79d9ced63c5f176a8106">
+
+
+    <entry type="primary_field"
+           name="image"
+           mimetype="image/png"
+           filename=""
+           fullpath=""/>
+
+
+    <entry type="xns"
+           name=""
+           mimetype="text/xml"
+           filename="folder_localrole_addgroup.png.xml"
+           fullpath="xns.xml"/>
+
+
+</manifest>

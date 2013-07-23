@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "cmfboard-upgrade"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "经过不懈的努力，基本完成的CMFBoard的迁移", 
+        "modified": "2004-06-12 16:07:57", 
+        "title": "网站论坛升级至CMFBoard 2.1"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "id": "case"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "介绍Zope/Plone在各个领域的成功应用案例，包括国内的和国外。如有新的zope/plone网站或案例，请联系站长加入。", 
+        "modified": "2004-03-26 03:15:37", 
+        "title": "应用案例"
+    }
+}

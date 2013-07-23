@@ -1,0 +1,26 @@
+{
+    "main": {
+        "hidden_keys": [
+            "img", 
+            "__init__.pyc", 
+            "__init__.py"
+        ], 
+        "keys": [
+            "quickstart.rst", 
+            "philosophy.rst", 
+            "configuration.rst", 
+            "pyref.rst", 
+            "clientside-theming.rst", 
+            "code-map.rst", 
+            "page-classes.rst", 
+            "rules.rst", 
+            "proxy.rst", 
+            "license.rst"
+        ], 
+        "contenttype": "Folder"
+    }, 
+    "dublin": {
+        "description": "注意：这个文章写在更新程序代码之前，需要校正。", 
+        "title": "页面类"
+    }
+}

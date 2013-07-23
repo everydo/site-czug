@@ -1,0 +1,390 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-3" class="anchor"/><p class="line867"><strong> <span id="line-4" class="anchor"/><a href="/moin/StartProgramming"> （首页）开始编程之旅</a> <span id="line-5" class="anchor"/>翻译自Lee Harr的<a href="http://staff.easthighschool.net/lee/computers/book/Start_Programming.html" class="http">Start Programming</a> <span id="line-6" class="anchor"/><span id="line-7" class="anchor"/></strong></p><p class="line862"><strong>本文是使用<a href="http://www.nongnu.org/pygsear/" class="http">pygsear</a>+<a href="http://pygame.org" class="http">pygame</a>作为开发环境，以初级用户角度来分步分阶段学习<a href="http://www.python.org"
+class="http">PYTHON</a>基本概念，并以小游戏开发项目为具体案例，介绍的十分详细。编写风格清新朴实，没有象一般教科书那样枯燥，极其适合初级用户来激发兴趣时使用。 <span id="line-8" class="anchor"/></strong> <span id="line-9" class="anchor"/></p>
+
+<div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-7e04cf210b3e1b552cb53dcd80c7e7c1ac3a6088">StartProgramming-3-1 Ball</a><ol><li><a href="#head-47d011e4d014ebbd329ac2354f7ebb6d92447edc">class WhoaBall</a></li><li><a href="#head-08a6358aeb7d8e01b579b369647ad4b61897dd21">a better bounce一个更好弹起</a></li><li><a href="#head-2d633ec0ba67baf3da6383691af5fd5fbf646aa6">initialize初始化</a></li>
+<li><a href="#head-dfdc2eb5b8957ff88c1a81db14cebbbbd2f10dd4">StartProgramming-3-2 Demo</a></li></ol></div>
+
+<span id="line-10" class="anchor"/>
+<h2 id="head-7e04cf210b3e1b552cb53dcd80c7e7c1ac3a6088">1. StartProgramming-3-1 Ball</h2>
+<span id="line-11" class="anchor"/><span id="line-12" class="anchor"/><p class="line874">All of this abstract knowledge about classes is fine, but what we need is to see something real. <span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></p><p class="line867"><strong>所有的关于类的抽象认识是很好，但是我们需要看到一些真实的东西。</strong> <span id="line-15" class="anchor"/><span id="line-16" class="anchor"/></p><p class="line874">The pygsear modules provide classes which you can use as-is, or which you can subclass to make your own game objects. <span id="line-17" class="anchor"/><span id="line-18" class="anchor"/></p><p class="line867"><strong>pygsear组件提供类让我们可以直接来用，或者你可以用作子类来构造你自己的游戏对象。</strong> <span id="line-19"
+class="anchor"/><span id="line-20" class="anchor"/></p><p class="line874">Let's go back to the ball, but this time subclass pygsear.Drawable.Circle <span id="line-21" class="anchor"/><span id="line-22" class="anchor"/></p><p class="line867"><strong>让我们回到 ball，但是这次用基类 pygsear.Drawable.Circle</strong> <span id="line-23" class="anchor"/><span id="line-24" class="anchor"/></p><p class="line867">
+</p><h3 id="head-47d011e4d014ebbd329ac2354f7ebb6d92447edc">1.1. class WhoaBall</h3>
+<span id="line-25" class="anchor"/><p class="line867"><span id="line-26" class="anchor"/><span id="line-27" class="anchor"/><span id="line-28" class="anchor"/><span id="line-29" class="anchor"/><span id="line-30" class="anchor"/><span id="line-31" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-47558f411b5ef19ae9dc585a9c26d7a35bc1afa9_000\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-47558f411b5ef19ae9dc585a9c26d7a35bc1afa9_000', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-47558f411b5ef19ae9dc585a9c26d7a35bc1afa9_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">from</span> <span class="ID">pygsear</span><span class="Operator">.</span><span class="ID">Drawable</span> <span class="ResWord">import</span> <span class="ID">Circle</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">WhoaBall</span><span class="Operator">(</span><span class="ID">Circle</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">def</span> <span class="ID">bounce</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ResWord">print</span> <span class="String">'boing!'</span><span class="Text"/></span>
+</pre></div><span id="line-32" class="anchor"/><span id="line-33" class="anchor"/><p class="line862">You can put <a href="/moin/WhoaBall" class="nonexistent">WhoaBall</a> in to Ball.py or start a new file. It is up to you. Just so long as you can find and import your new class: <span id="line-34" class="anchor"/><span id="line-35" class="anchor"/></p><p class="line867"><strong>你可以把 <a href="/moin/WhoaBall" class="nonexistent">WhoaBall</a> 放到 Ball.py 里或者新建一个文件。它是你的更新版。仅仅只要找到并且导入你的新类中。</strong> <span id="line-36" class="anchor"/><span id="line-37"
+class="anchor"/></p><p class="line867"><span id="line-38" class="anchor"/><span id="line-39" class="anchor"/><span id="line-40" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-729082a754c67b5bcc2c1d67d80a3939e4691751_001\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-729082a754c67b5bcc2c1d67d80a3939e4691751_001', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-729082a754c67b5bcc2c1d67d80a3939e4691751_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">Ball</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="ID">Ball</span><span class="Operator">.</span><span class="ID">WhoaBall</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-41" class="anchor"/><span id="line-42" class="anchor"/><p class="line874">I kept the old bounce() method in there, just so you can see that this is still your ball, but you can also see that by inheriting from Circle we gain a lot of new functions. <span id="line-43" class="anchor"/><span id="line-44" class="anchor"/></p><p class="line867"><strong>我在这里保持了旧的 bounce() 方法，所以这里看起来仍然是 ball 的方法，但是你能够同样的看到那些我们继承 Circle 的许多新方法。</strong> <span id="line-45" class="anchor"/><span id="line-46" class="anchor"/></p><p
+class="line862">For one thing, when you instantiated your <a href="/moin/WhoaBall" class="nonexistent">WhoaBall</a> another window should have opened up. If it did (and you did not get an error) you should now (finally) be able to see your ball: <span id="line-47" class="anchor"/><span id="line-48" class="anchor"/></p><p class="line867"><strong>首先，当你实例化你的 <a href="/moin/WhoaBall" class="nonexistent">WhoaBall</a> 时，其他的窗口将被打开。如果它实现了（并且你没有得到错误）你现在将（终于）能够看到你的球了：</strong> <span id="line-49" class="anchor"/><span id="line-50"
+class="anchor"/></p><p class="line867"><span id="line-51" class="anchor"/><span id="line-52" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-d52cac7285a2f1cf1f67ef2c354de4c7d7c85b5c_002\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-d52cac7285a2f1cf1f67ef2c354de4c7d7c85b5c_002', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-d52cac7285a2f1cf1f67ef2c354de4c7d7c85b5c_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">b</span><span class="Operator">.</span><span class="ID">udraw</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-53" class="anchor"/><span id="line-54" class="anchor"/><p class="line874">Remember that if you want to see the methods available for an object, you can use: <span id="line-55" class="anchor"/><span id="line-56" class="anchor"/></p><p class="line867"><strong>记得如果你想看到对象可用的方法时，你可以用：</strong> <span id="line-57" class="anchor"/><span id="line-58" class="anchor"/></p><p class="line867"><span id="line-59" class="anchor"/><span id="line-60" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-ec523b668b0dab81be1691c88c8f6d942aaacee8_003\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-ec523b668b0dab81be1691c88c8f6d942aaacee8_003', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-ec523b668b0dab81be1691c88c8f6d942aaacee8_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">dir</span><span class="Operator">(</span><span class="ID">b</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-61" class="anchor"/><span id="line-62" class="anchor"/><p class="line867">
+</p><h3 id="head-08a6358aeb7d8e01b579b369647ad4b61897dd21">1.2. a better bounce一个更好弹起</h3>
+<span id="line-63" class="anchor"/><span id="line-64" class="anchor"/><p class="line874">Now that we can actually see the ball, having bounce() just print out to the console is not so interesting. Let's see if we can make it more useful. <span id="line-65" class="anchor"/><span id="line-66" class="anchor"/></p><p class="line867"><strong>现在我们能够实际看到球了，只有 bounce() 打印到控制台不是那么有趣的。让我们看看我们还能够做些什么有用的。</strong> <span id="line-67" class="anchor"/><span id="line-68" class="anchor"/></p><p class="line874">How about if
+we have the ball change direction if it tries to move off of the bottom of the screen? Let's do that: <span id="line-69" class="anchor"/><span id="line-70" class="anchor"/></p><p class="line867"><strong>怎样做才能当球它尝试离开屏幕的底部时，让我们改变 ball 的方向？让我们这样做：</strong> <span id="line-71" class="anchor"/><span id="line-72" class="anchor"/></p><p class="line867"><span id="line-73" class="anchor"/><span id="line-74" class="anchor"/><span id="line-75" class="anchor"/><span id="line-76" class="anchor"/><span id="line-77"
+class="anchor"/><span id="line-78" class="anchor"/><span id="line-79" class="anchor"/><span id="line-80" class="anchor"/><span id="line-81" class="anchor"/><span id="line-82" class="anchor"/><span id="line-83" class="anchor"/><span id="line-84" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-b81fb14652256cd2e67e2ebc54094dd4e7859664_004\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-b81fb14652256cd2e67e2ebc54094dd4e7859664_004', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-b81fb14652256cd2e67e2ebc54094dd4e7859664_004" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">from</span> <span class="ID">pygsear</span><span class="Operator">.</span><span class="ID">Drawable</span> <span class="ResWord">import</span> <span class="ID">Circle</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">WhoaBall</span><span class="Operator">(</span><span class="ID">Circle</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">def</span> <span class="ID">bounce</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ResWord">if</span> <span class="ResWord">not</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">onscreen</span><span class="Operator">(</span><span class="ID">bottom</span><span class="Operator">=</span><span class="Number">0</span><span class="Operator">,</span> <span class="ID">jail</span><span class="Operator">=</span><span class="Number">1</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">vy</span> <span class="Operator">=</span> <span class="Operator">-</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">vy</span></span>
+<span class="line"><span class="LineNumber">   7 </span>            <span class="ResWord">print</span> <span class="String">'boing!'</span></span>
+<span class="line"><span class="LineNumber">   8 </span></span>
+<span class="line"><span class="LineNumber">   9 </span>    <span class="ResWord">def</span> <span class="ID">move</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">bounce</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">Circle</span><span class="Operator">.</span><span class="ID">move</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-85" class="anchor"/><span id="line-86" class="anchor"/><p class="line874">Circle already has a lot of built-in logic for how to move around on screen, which we want to leverage. So, when we want the ball to move, we need to call Circle.move() after we extend the method by calling bounce() first. <span id="line-87" class="anchor"/><span id="line-88" class="anchor"/></p><p class="line867"><strong>Circle 中已经拥有很多我们希望用的内置的逻辑来在屏幕上到处跑。所以当我们希望移动 ball 时，我们需要首先在调用 bounce()
+之前调用 Circle.move() 来扩展这个方法。</strong> <span id="line-89" class="anchor"/><span id="line-90" class="anchor"/></p><p class="line874">This onscreen() call is also inherited from Circle and it tells you if the ball has moved off of the bottom of the screen. The jail parameter tells it to move the ball back onscreen if it has moved off. <span id="line-91" class="anchor"/><span id="line-92" class="anchor"/></p><p class="line867"><strong>这个 onscreen() 调用也是从 Circle 继承来的并且它告诉你如果 ball 已经离开屏幕的下方。这个 jail
+参数告诉它如果 ball 离开的话就移动它回到屏幕上。</strong> <span id="line-93" class="anchor"/><span id="line-94" class="anchor"/></p><p class="line874">Ok, let's see: <span id="line-95" class="anchor"/><strong>好了，让我们看看吧：</strong> <span id="line-96" class="anchor"/><span id="line-97" class="anchor"/></p><p class="line867"><span id="line-98" class="anchor"/><span id="line-99" class="anchor"/><span id="line-100" class="anchor"/><span id="line-101" class="anchor"/><span id="line-102" class="anchor"/></p><div lang="en" dir="ltr"
+class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-a419a31fec6f58a03e1d1cf90cf43df7cbdc50d1_005\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-a419a31fec6f58a03e1d1cf90cf43df7cbdc50d1_005', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-a419a31fec6f58a03e1d1cf90cf43df7cbdc50d1_005" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">reload</span><span class="Operator">(</span><span class="ID">Ball</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="ID">Ball</span><span class="Operator">.</span><span class="ID">WhoaBall</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">b</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">set_gravity</span><span class="Operator">(</span><span class="ID">gy</span><span class="Operator">=</span><span class="Number">400</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">b</span><span class="Operator">.</span><span class="ID">runPath</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-103" class="anchor"/><span id="line-104" class="anchor"/><p class="line874">boing! boing! boing! <span id="line-105" class="anchor"/><span id="line-106" class="anchor"/></p><p class="line867"><strong>跳起！跳起！跳起！</strong> <span id="line-107" class="anchor"/><span id="line-108" class="anchor"/></p><p class="line874">(Press ctrl-c to stop the bouncing.) <span id="line-109" class="anchor"/><span id="line-110" class="anchor"/></p><p class="line867"><strong>（请按 ctrl-c
+键来停止弹跳。）</strong> <span id="line-111" class="anchor"/><span id="line-112" class="anchor"/></p><p class="line867">
+</p><h3 id="head-2d633ec0ba67baf3da6383691af5fd5fbf646aa6">1.3. initialize初始化</h3>
+<span id="line-113" class="anchor"/><span id="line-114" class="anchor"/><p class="line862">Now move those steps that set up the <a href="/moin/WhoaBall" class="nonexistent">WhoaBall</a> in to an <tt class="backtick">__init__</tt> method: <span id="line-115" class="anchor"/><span id="line-116" class="anchor"/></p><p class="line867"><strong>现在利用这些步骤在 <tt class="backtick">__init__</tt> 方法里设置 <a href="/moin/WhoaBall" class="nonexistent">WhoaBall</a>：</strong> <span id="line-117" class="anchor"/><span
+id="line-118" class="anchor"/></p><p class="line867"><span id="line-119" class="anchor"/><span id="line-120" class="anchor"/><span id="line-121" class="anchor"/><span id="line-122" class="anchor"/><span id="line-123" class="anchor"/><span id="line-124" class="anchor"/><span id="line-125" class="anchor"/><span id="line-126" class="anchor"/><span id="line-127" class="anchor"/><span id="line-128" class="anchor"/><span id="line-129" class="anchor"/><span id="line-130" class="anchor"/><span id="line-131" class="anchor"/><span
+id="line-132" class="anchor"/><span id="line-133" class="anchor"/><span id="line-134" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-e49b9dfdc94ff2c02a605782b4afdb4d8b686223_006\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-e49b9dfdc94ff2c02a605782b4afdb4d8b686223_006', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-e49b9dfdc94ff2c02a605782b4afdb4d8b686223_006" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">from</span> <span class="ID">pygsear</span><span class="Operator">.</span><span class="ID">Drawable</span> <span class="ResWord">import</span> <span class="ID">Circle</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">WhoaBall</span><span class="Operator">(</span><span class="ID">Circle</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">Circle</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">set_gravity</span><span class="Operator">(</span><span class="ID">gy</span><span class="Operator">=</span><span class="Number">400</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span></span>
+<span class="line"><span class="LineNumber">   8 </span>    <span class="ResWord">def</span> <span class="ID">bounce</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ResWord">if</span> <span class="ResWord">not</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">onscreen</span><span class="Operator">(</span><span class="ID">bottom</span><span class="Operator">=</span><span class="Number">0</span><span class="Operator">,</span> <span class="ID">jail</span><span class="Operator">=</span><span class="Number">1</span><span class="Operator">)</span><span
+class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  10 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">vy</span> <span class="Operator">=</span> <span class="Operator">-</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">vy</span></span>
+<span class="line"><span class="LineNumber">  11 </span>            <span class="ResWord">print</span> <span class="String">'boing!'</span></span>
+<span class="line"><span class="LineNumber">  12 </span></span>
+<span class="line"><span class="LineNumber">  13 </span>    <span class="ResWord">def</span> <span class="ID">move</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">bounce</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">Circle</span><span class="Operator">.</span><span class="ID">move</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-135" class="anchor"/><span id="line-136" class="anchor"/><p class="line874">That makes it very easy to test your ball: <span id="line-137" class="anchor"/><span id="line-138" class="anchor"/></p><p class="line867"><strong>这个使得测试你的 ball 非常简单：</strong> <span id="line-139" class="anchor"/><span id="line-140" class="anchor"/></p><p class="line867"><span id="line-141" class="anchor"/><span id="line-142" class="anchor"/><span id="line-143" class="anchor"/><span
+id="line-144" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-3981737af904cb4239324f240d0ab8f2ed78f477_007\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-3981737af904cb4239324f240d0ab8f2ed78f477_007', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-3981737af904cb4239324f240d0ab8f2ed78f477_007" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">reload</span><span class="Operator">(</span><span class="ID">Ball</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="ID">Ball</span><span class="Operator">.</span><span class="ID">WhoaBall</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">b</span><span class="Operator">.</span><span class="ID">runPath</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-145" class="anchor"/><span id="line-146" class="anchor"/><p class="line874">Now let's test for going off the sides of the screen so we can give the ball some sideways motion: <span id="line-147" class="anchor"/><span id="line-148" class="anchor"/></p><p class="line867"><strong>现在让我们测试移出屏幕的边，所以我们要给这个 ball 一些向一边方向的动作：</strong> <span id="line-149" class="anchor"/><span id="line-150" class="anchor"/></p><p class="line867"><span
+id="line-151" class="anchor"/><span id="line-152" class="anchor"/><span id="line-153" class="anchor"/><span id="line-154" class="anchor"/><span id="line-155" class="anchor"/><span id="line-156" class="anchor"/><span id="line-157" class="anchor"/><span id="line-158" class="anchor"/><span id="line-159" class="anchor"/><span id="line-160" class="anchor"/><span id="line-161" class="anchor"/><span id="line-162" class="anchor"/><span id="line-163" class="anchor"/><span id="line-164"
+class="anchor"/><span id="line-165" class="anchor"/><span id="line-166" class="anchor"/><span id="line-167" class="anchor"/><span id="line-168" class="anchor"/><span id="line-169" class="anchor"/><span id="line-170" class="anchor"/><span id="line-171" class="anchor"/><span id="line-172" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-402258ed93a42022b02d2564c0860bf3bbae3a56_008\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-402258ed93a42022b02d2564c0860bf3bbae3a56_008', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-402258ed93a42022b02d2564c0860bf3bbae3a56_008" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">from</span> <span class="ID">pygsear</span><span class="Operator">.</span><span class="ID">Drawable</span> <span class="ResWord">import</span> <span class="ID">Circle</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">WhoaBall</span><span class="Operator">(</span><span class="ID">Circle</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">Circle</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">set_velocity</span><span class="Operator">(</span><span class="ID">vx</span><span class="Operator">=</span><span class="Number">150</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">set_gravity</span><span class="Operator">(</span><span class="ID">gy</span><span class="Operator">=</span><span class="Number">400</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span></span>
+<span class="line"><span class="LineNumber">   9 </span>    <span class="ResWord">def</span> <span class="ID">walls</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ResWord">if</span> <span class="ResWord">not</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">onscreen</span><span class="Operator">(</span><span class="ID">left</span><span class="Operator">=</span><span class="Number">0</span><span class="Operator">,</span> <span class="ID">right</span><span class="Operator">=</span><span class="Number">0</span><span
+class="Operator">,</span> <span class="ID">jail</span><span class="Operator">=</span><span class="Number">1</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  11 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">vx</span> <span class="Operator">=</span> <span class="Operator">-</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">vx</span></span>
+<span class="line"><span class="LineNumber">  12 </span></span>
+<span class="line"><span class="LineNumber">  13 </span>    <span class="ResWord">def</span> <span class="ID">bounce</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ResWord">if</span> <span class="ResWord">not</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">onscreen</span><span class="Operator">(</span><span class="ID">bottom</span><span class="Operator">=</span><span class="Number">0</span><span class="Operator">,</span> <span class="ID">jail</span><span class="Operator">=</span><span class="Number">1</span><span
+class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  15 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">vy</span> <span class="Operator">=</span> <span class="Operator">-</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">vy</span></span>
+<span class="line"><span class="LineNumber">  16 </span>            <span class="ResWord">print</span> <span class="String">'boing!'</span></span>
+<span class="line"><span class="LineNumber">  17 </span></span>
+<span class="line"><span class="LineNumber">  18 </span>    <span class="ResWord">def</span> <span class="ID">move</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  19 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">bounce</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">walls</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span>        <span class="ID">Circle</span><span class="Operator">.</span><span class="ID">move</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-173" class="anchor"/><span id="line-174" class="anchor"/><p class="line874">Here is a shorcut method to see your updated ball: <span id="line-175" class="anchor"/><span id="line-176" class="anchor"/></p><p class="line867"><strong>这里是一个看到你更新的 ball 的快捷方法：</strong> <span id="line-177" class="anchor"/><span id="line-178" class="anchor"/></p><p class="line867"><span id="line-179" class="anchor"/><span id="line-180" class="anchor"/><span
+id="line-181" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-8ee86547697466898168af10b524de1a548bd21d_009\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-8ee86547697466898168af10b524de1a548bd21d_009', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-8ee86547697466898168af10b524de1a548bd21d_009" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">reload</span><span class="Operator">(</span><span class="ID">Ball</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">Ball</span><span class="Operator">.</span><span class="ID">WhoaBall</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">runPath</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-182" class="anchor"/><span id="bottom" class="anchor"/></div>
+
+
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-3" class="anchor"/><p class="line867"><strong> <span id="line-4" class="anchor"/><a href="/moin/StartProgramming"> （首页）开始编程之旅</a> <span id="line-5" class="anchor"/>翻译自Lee Harr的<a href="http://staff.easthighschool.net/lee/computers/book/Start_Programming.html" class="http">Start Programming</a> <span id="line-6" class="anchor"/><span id="line-7" class="anchor"/></strong></p><p class="line862"><strong>本文是使用<a href="http://www.nongnu.org/pygsear/" class="http">pygsear</a>+<a href="http://pygame.org" class="http">pygame</a>作为开发环境，以初级用户角度来分步分阶段学习<a href="http://www.python.org"
+class="http">PYTHON</a>基本概念，并以小游戏开发项目为具体案例，介绍的十分详细。编写风格清新朴实，没有象一般教科书那样枯燥，极其适合初级用户来激发兴趣时使用。 <span id="line-8" class="anchor"/></strong> <span id="line-9" class="anchor"/></p>
+
+
+<span id="line-10" class="anchor"/>
+<h2 id="head-dfdc2eb5b8957ff88c1a81db14cebbbbd2f10dd4">1. StartProgramming-3-2 Demo</h2>
+<span id="line-11" class="anchor"/><span id="line-12" class="anchor"/><p class="line862">We got <tt class="backtick">WhoaBall</tt> working pretty well, but it is still a hassle having to go in to the interpreter, import your module, make a ball, and run its path. <span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></p><p class="line867"><strong>我们使得 <tt class="backtick">WhoaBall</tt> 工作的非常好，但是它仍然有打扰解释器，导入你的组建，生产一个球，并且运行它的路径。</strong> <span id="line-15" class="anchor"/><span id="line-16" class="anchor"/></p><p class="line874">Let's use the pygsear.Game module to make this a bit easier: <span id="line-17" class="anchor"/><span id="line-18" class="anchor"/></p><p class="line867"><strong>让我们利用 <tt
+class="backtick">pygsear.Game</tt> 组件使这件事很简单：</strong> <span id="line-19" class="anchor"/><span id="line-20" class="anchor"/></p><p class="line867"><span id="line-21" class="anchor"/><span id="line-22" class="anchor"/><span id="line-23" class="anchor"/><span id="line-24" class="anchor"/><span id="line-25" class="anchor"/><span id="line-26" class="anchor"/><span id="line-27" class="anchor"/><span id="line-28" class="anchor"/><span id="line-29" class="anchor"/><span id="line-30" class="anchor"/><span id="line-31" class="anchor"/><span id="line-32" class="anchor"/><span id="line-33" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-04a437e22354d4251132541cb4628361f50c2067_000\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-04a437e22354d4251132541cb4628361f50c2067_000', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-04a437e22354d4251132541cb4628361f50c2067_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">from</span> <span class="ID">pygsear</span><span class="Operator">.</span><span class="ID">Game</span> <span class="ResWord">import</span> <span class="ID">Game</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">from</span> <span class="ID">Ball</span> <span class="ResWord">import</span> <span class="ID">WhoaBall</span></span>
+<span class="line"><span class="LineNumber">   4 </span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">class</span> <span class="ID">BallGame</span><span class="Operator">(</span><span class="ID">Game</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>    <span class="ResWord">def</span> <span class="ID">initialize</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">ball</span> <span class="Operator">=</span> <span class="ID">WhoaBall</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">sprites</span><span class="Operator">.</span><span class="ID">add</span><span class="Operator">(</span><span class="ID">ball</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span></span>
+<span class="line"><span class="LineNumber">  10 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">'__main__'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  11 </span>    <span class="ID">g</span> <span class="Operator">=</span> <span class="ID">BallGame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>    <span class="ID">g</span><span class="Operator">.</span><span class="ID">mainloop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-34" class="anchor"/><span id="line-35" class="anchor"/><p class="line862">Here we inherit from <tt class="backtick">pygsear.Game.Game</tt> to get more functionality. Save this as <tt class="backtick">BallGame.py</tt> and run the program: <span id="line-36" class="anchor"/><span id="line-37" class="anchor"/></p><p class="line867"><strong>在这儿我们继承了<tt class="backtick">pygsear.Game.Game</tt>并获得了更多的功能。以文件名<tt class="backtick">BallGame.py</tt>保存这些并且运行这个程序：</strong> <span id="line-38" class="anchor"/><span id="line-39" class="anchor"/></p><p
+class="line867"><span id="line-40" class="anchor"/></p><pre>python BallGame.py
+<span id="line-41" class="anchor"/></pre><span id="line-42" class="anchor"/><span id="line-43" class="anchor"/><p class="line874">Your code to set the game up goes in the initialize method. <span id="line-44" class="anchor"/><span id="line-45" class="anchor"/></p><p class="line867"><strong>你的程序用预置的方法使得程序运行起来。</strong> <span id="line-46" class="anchor"/><span id="line-47" class="anchor"/></p><p class="line874">The odd looking section at the bottom is an idiom which says "if this program is being run (and not just imported) do this:" It creates an instance of your game and starts the
+main loop. <span id="line-48" class="anchor"/><span id="line-49" class="anchor"/></p><p class="line867"><strong>在下面的奇怪部分是一种习语，它的意思是“如果这个程序开始运行了（不是被导入的）运行这些：”它创建了游戏的一个实例并且开始主循环。</strong> <span id="line-50" class="anchor"/><span id="line-51" class="anchor"/></p><p class="line862">Now let's make a few changes to <tt class="backtick">WhoaBall</tt> so that we can improve <tt class="backtick">BallGame</tt> too. <span id="line-52" class="anchor"/><span id="line-53" class="anchor"/></p><p class="line867"><strong>现在让我们为<tt
+class="backtick">WhoaBall</tt>做一点小改动以便我们也能够改进<tt class="backtick">BallGame</tt>。</strong> <span id="line-54" class="anchor"/><span id="line-55" class="anchor"/></p><p class="line867"><span id="line-56" class="anchor"/><span id="line-57" class="anchor"/><span id="line-58" class="anchor"/><span id="line-59" class="anchor"/><span id="line-60" class="anchor"/><span id="line-61" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-3eeab70dfb6b4e6864a432af251f1d4641f53785_001\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-3eeab70dfb6b4e6864a432af251f1d4641f53785_001', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-3eeab70dfb6b4e6864a432af251f1d4641f53785_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">class</span> <span class="ID">WhoaBall</span><span class="Operator">(</span><span class="ID">Circle</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">v</span><span class="Operator">=</span><span class="Number">150</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>        <span class="ID">Circle</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">color</span><span class="Operator">=</span><span class="String">'random'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">set_velocity</span><span class="Operator">(</span><span class="ID">vx</span><span class="Operator">=</span><span class="ID">v</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">set_gravity</span><span class="Operator">(</span><span class="ID">gy</span><span class="Operator">=</span><span class="Number">400</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-62" class="anchor"/><span id="line-63" class="anchor"/><p class="line874">I only show the method which needs to be changed. <span id="line-64" class="anchor"/><span id="line-65" class="anchor"/></p><p class="line867"><strong>我只展示了需要被改变的方法。</strong> <span id="line-66" class="anchor"/><span id="line-67" class="anchor"/></p><p class="line862">This makes each <tt class="backtick">WhoaBall</tt> a random color, and makes <a href="/moin/WhoaBall" class="nonexistent">WhoaBall</a> take a parameter to set the initial horizontal velocity. <span
+id="line-68" class="anchor"/><span id="line-69" class="anchor"/></p><p class="line867"><strong>这样使得每个<tt class="backtick">WhoaBall</tt>有随机的颜色，并且使<tt class="backtick">WhoaBall</tt>有一个设置开始水平速度的参数。</strong> <span id="line-70" class="anchor"/><span id="line-71" class="anchor"/></p><p class="line874">Now your game can make a few balls each with different velocities: <span id="line-72" class="anchor"/><span id="line-73" class="anchor"/></p><p class="line867"><strong>现在你的游戏能够生产少数的每个都有不同速度的球：</strong> <span id="line-74"
+class="anchor"/><span id="line-75" class="anchor"/></p><p class="line867"><span id="line-76" class="anchor"/><span id="line-77" class="anchor"/><span id="line-78" class="anchor"/><span id="line-79" class="anchor"/><span id="line-80" class="anchor"/><span id="line-81" class="anchor"/><span id="line-82" class="anchor"/><span id="line-83" class="anchor"/><span id="line-84" class="anchor"/><span id="line-85" class="anchor"/><span id="line-86" class="anchor"/><span id="line-87" class="anchor"/><span id="line-88" class="anchor"/><span id="line-89" class="anchor"/><span id="line-90"
+class="anchor"/><span id="line-91" class="anchor"/><span id="line-92" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-3b74e01509f13d882d974972531a506bd3431909_002\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-3b74e01509f13d882d974972531a506bd3431909_002', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-3b74e01509f13d882d974972531a506bd3431909_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">random</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">from</span> <span class="ID">pygsear</span><span class="Operator">.</span><span class="ID">Game</span> <span class="ResWord">import</span> <span class="ID">Game</span></span>
+<span class="line"><span class="LineNumber">   4 </span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">from</span> <span class="ID">Ball</span> <span class="ResWord">import</span> <span class="ID">WhoaBall</span></span>
+<span class="line"><span class="LineNumber">   6 </span></span>
+<span class="line"><span class="LineNumber">   7 </span><span class="ResWord">class</span> <span class="ID">BallGame</span><span class="Operator">(</span><span class="ID">Game</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   8 </span>    <span class="ResWord">def</span> <span class="ID">initialize</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ResWord">for</span> <span class="ID">b</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="Number">5</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  10 </span>            <span class="ID">vx</span> <span class="Operator">=</span> <span class="ID">random</span><span class="Operator">.</span><span class="ID">uniform</span><span class="Operator">(</span><span class="Number">100</span><span class="Operator">,</span> <span class="Number">200</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span>            <span class="ID">ball</span> <span class="Operator">=</span> <span class="ID">WhoaBall</span><span class="Operator">(</span><span class="ID">vx</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">sprites</span><span class="Operator">.</span><span class="ID">add</span><span class="Operator">(</span><span class="ID">ball</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span></span>
+<span class="line"><span class="LineNumber">  14 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">'__main__'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  15 </span>    <span class="ID">g</span> <span class="Operator">=</span> <span class="ID">BallGame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span>    <span class="ID">g</span><span class="Operator">.</span><span class="ID">mainloop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-93" class="anchor"/><span id="line-94" class="anchor"/><p class="line862">One last change to <tt class="backtick">WhoaBall</tt> and this will make a nice demo: <span id="line-95" class="anchor"/><span id="line-96" class="anchor"/></p><p class="line867"><strong>这是<tt class="backtick">WhoaBall</tt>的最后一次改动，并且这次将有一个很好的演示：</strong> <span id="line-97" class="anchor"/><span id="line-98" class="anchor"/></p><p class="line867"><span id="line-99" class="anchor"/><span id="line-100" class="anchor"/><span id="line-101"
+class="anchor"/><span id="line-102" class="anchor"/><span id="line-103" class="anchor"/><span id="line-104" class="anchor"/><span id="line-105" class="anchor"/><span id="line-106" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-0dfef07a9ef027f8e7ddf2052b570c3023b216e9_003\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-0dfef07a9ef027f8e7ddf2052b570c3023b216e9_003', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-0dfef07a9ef027f8e7ddf2052b570c3023b216e9_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">class</span> <span class="ID">WhoaBall</span><span class="Operator">(</span><span class="ID">Circle</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">def</span> <span class="ID">bounce</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>        <span class="ResWord">if</span> <span class="ResWord">not</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">onscreen</span><span class="Operator">(</span><span class="ID">bottom</span><span class="Operator">=</span><span class="Number">0</span><span class="Operator">,</span> <span class="ID">jail</span><span class="Operator">=</span><span class="Number">1</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">vy</span> <span class="Operator">=</span> <span class="Operator">-</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">vy</span> <span class="Operator">*</span> <span class="Number">0.85</span></span>
+<span class="line"><span class="LineNumber">   5 </span>            <span class="ResWord">if</span> <span class="ID">abs</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">vy</span><span class="Operator">)</span> <span class="Operator"><=</span> <span class="Number">20</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>                <span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">set_velocity</span><span class="Operator">(</span><span class="ID">vy</span><span class="Operator">=</span><span class="Operator">-</span><span class="Number">800</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>                <span class="ResWord">print</span> <span class="String">'FLING!'</span><span class="Text"/></span>
+</pre></div><span id="line-107" class="anchor"/><span id="line-108" class="anchor"/><p class="line874">Again, I only show the method which needs to be changed. <span id="line-109" class="anchor"/><span id="line-110" class="anchor"/></p><p class="line867"><strong>我再次只显示了那些需要改动的方法。</strong> <span id="line-111" class="anchor"/><span id="line-112" class="anchor"/></p><p class="line874">This does two things: <span id="line-113" class="anchor"/><span id="line-114" class="anchor"/></p><p class="line867"><strong>这次做了两件事：</strong> <span
+id="line-115" class="anchor"/><span id="line-116" class="anchor"/></p><p class="line874">First, on each bounce the velocity is cut to 85% of the previous bounce, to make the bounces decay more quickly. <span id="line-117" class="anchor"/><span id="line-118" class="anchor"/></p><p class="line867"><strong>首先，每次弹起的高度切到前一次的85%，使弹起更快的衰竭</strong> <span id="line-119" class="anchor"/><span id="line-120" class="anchor"/></p><p class="line874">Second, when the bounce goes below a certain height, the ball is re-energized and flinged back
+in to the air. <span id="line-121" class="anchor"/><span id="line-122" class="anchor"/></p><p class="line867"><strong>第二，当弹起低于某个高度，球被重新激起并冲回天上去。</strong> <span id="line-123" class="anchor"/><span id="line-124" class="anchor"/></p><p class="line874">Here are the final versions of the two files. You can download the files by clicking on the link: <span id="line-125" class="anchor"/><span id="line-126" class="anchor"/></p><p class="line867"><strong>这是这两个文件的最后版本。你可以点击连接下载这些文件：</strong> <span id="line-127"
+class="anchor"/><span id="line-128" class="anchor"/></p><p class="line867"><span id="line-129" class="anchor"/><span id="line-130" class="anchor"/><span id="line-131" class="anchor"/><span id="line-132" class="anchor"/><span id="line-133" class="anchor"/><span id="line-134" class="anchor"/><span id="line-135" class="anchor"/><span id="line-136" class="anchor"/><span id="line-137" class="anchor"/><span id="line-138" class="anchor"/><span id="line-139" class="anchor"/><span id="line-140" class="anchor"/><span id="line-141" class="anchor"/><span
+id="line-142" class="anchor"/><span id="line-143" class="anchor"/><span id="line-144" class="anchor"/><span id="line-145" class="anchor"/><span id="line-146" class="anchor"/><span id="line-147" class="anchor"/><span id="line-148" class="anchor"/><span id="line-149" class="anchor"/><span id="line-150" class="anchor"/><span id="line-151" class="anchor"/><span id="line-152" class="anchor"/><span id="line-153" class="anchor"/><span id="line-154" class="anchor"/><span id="line-155" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-4988c3ddc1c210889be519a4fa56d9a180d83e2b_004\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-4988c3ddc1c210889be519a4fa56d9a180d83e2b_004', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-4988c3ddc1c210889be519a4fa56d9a180d83e2b_004" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment"># Ball.py</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="ResWord">from</span> <span class="ID">pygsear</span><span class="Operator">.</span><span class="ID">Drawable</span> <span class="ResWord">import</span> <span class="ID">Circle</span></span>
+<span class="line"><span class="LineNumber">   3 </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">class</span> <span class="ID">WhoaBall</span><span class="Operator">(</span><span class="ID">Circle</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">v</span><span class="Operator">=</span><span class="Number">150</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ID">Circle</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">color</span><span class="Operator">=</span><span class="String">'random'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">set_velocity</span><span class="Operator">(</span><span class="ID">vx</span><span class="Operator">=</span><span class="ID">v</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">set_gravity</span><span class="Operator">(</span><span class="ID">gy</span><span class="Operator">=</span><span class="Number">400</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span></span>
+<span class="line"><span class="LineNumber">  10 </span>    <span class="ResWord">def</span> <span class="ID">walls</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ResWord">if</span> <span class="ResWord">not</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">onscreen</span><span class="Operator">(</span><span class="ID">left</span><span class="Operator">=</span><span class="Number">0</span><span class="Operator">,</span> <span class="ID">right</span><span class="Operator">=</span><span class="Number">0</span><span class="Operator">,</span> <span class="ID">jail</span><span
+class="Operator">=</span><span class="Number">1</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  12 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">vx</span> <span class="Operator">=</span> <span class="Operator">-</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">vx</span></span>
+<span class="line"><span class="LineNumber">  13 </span></span>
+<span class="line"><span class="LineNumber">  14 </span>    <span class="ResWord">def</span> <span class="ID">bounce</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ResWord">if</span> <span class="ResWord">not</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">onscreen</span><span class="Operator">(</span><span class="ID">bottom</span><span class="Operator">=</span><span class="Number">0</span><span class="Operator">,</span> <span class="ID">jail</span><span class="Operator">=</span><span class="Number">1</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  16 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">vy</span> <span class="Operator">=</span> <span class="Operator">-</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">vy</span> <span class="Operator">*</span> <span class="Number">0.85</span></span>
+<span class="line"><span class="LineNumber">  17 </span>            <span class="ResWord">print</span> <span class="String">'boing!'</span></span>
+<span class="line"><span class="LineNumber">  18 </span>            <span class="ResWord">if</span> <span class="ID">abs</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">vy</span><span class="Operator">)</span> <span class="Operator"><=</span> <span class="Number">20</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  19 </span>                <span class="ID">self</span><span class="Operator">.</span><span class="ID">set_color</span><span class="Operator">(</span><span class="String">'random'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>                <span class="ID">self</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">set_velocity</span><span class="Operator">(</span><span class="ID">vy</span><span class="Operator">=</span><span class="Operator">-</span><span class="Number">800</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span>                <span class="ResWord">print</span> <span class="String">'FLING!'</span></span>
+<span class="line"><span class="LineNumber">  22 </span></span>
+<span class="line"><span class="LineNumber">  23 </span>    <span class="ResWord">def</span> <span class="ID">move</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  24 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">bounce</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  25 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">walls</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  26 </span>        <span class="ID">Circle</span><span class="Operator">.</span><span class="ID">move</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-156" class="anchor"/><span id="line-157" class="anchor"/><p class="line867"><span id="line-158" class="anchor"/><span id="line-159" class="anchor"/><span id="line-160" class="anchor"/><span id="line-161" class="anchor"/><span id="line-162" class="anchor"/><span id="line-163" class="anchor"/><span id="line-164" class="anchor"/><span id="line-165" class="anchor"/><span id="line-166" class="anchor"/><span id="line-167" class="anchor"/><span id="line-168" class="anchor"/><span id="line-169" class="anchor"/><span
+id="line-170" class="anchor"/><span id="line-171" class="anchor"/><span id="line-172" class="anchor"/><span id="line-173" class="anchor"/><span id="line-174" class="anchor"/><span id="line-175" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-07a788a72167ecfafe19a4b8a441108472af02d0_005\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-07a788a72167ecfafe19a4b8a441108472af02d0_005', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-07a788a72167ecfafe19a4b8a441108472af02d0_005" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment"># BallGame.py</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="ResWord">import</span> <span class="ID">random</span></span>
+<span class="line"><span class="LineNumber">   3 </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">from</span> <span class="ID">pygsear</span><span class="Operator">.</span><span class="ID">Game</span> <span class="ResWord">import</span> <span class="ID">Game</span></span>
+<span class="line"><span class="LineNumber">   5 </span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">from</span> <span class="ID">Ball</span> <span class="ResWord">import</span> <span class="ID">WhoaBall</span></span>
+<span class="line"><span class="LineNumber">   7 </span></span>
+<span class="line"><span class="LineNumber">   8 </span><span class="ResWord">class</span> <span class="ID">BallGame</span><span class="Operator">(</span><span class="ID">Game</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   9 </span>    <span class="ResWord">def</span> <span class="ID">initialize</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ResWord">for</span> <span class="ID">b</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="Number">5</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  11 </span>            <span class="ID">vx</span> <span class="Operator">=</span> <span class="ID">random</span><span class="Operator">.</span><span class="ID">uniform</span><span class="Operator">(</span><span class="Number">100</span><span class="Operator">,</span> <span class="Number">200</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>            <span class="ID">ball</span> <span class="Operator">=</span> <span class="ID">WhoaBall</span><span class="Operator">(</span><span class="ID">vx</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">sprites</span><span class="Operator">.</span><span class="ID">add</span><span class="Operator">(</span><span class="ID">ball</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span></span>
+<span class="line"><span class="LineNumber">  15 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">'__main__'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ID">g</span> <span class="Operator">=</span> <span class="ID">BallGame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">g</span><span class="Operator">.</span><span class="ID">mainloop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-176" class="anchor"/><span id="bottom" class="anchor"/></div>
+
+

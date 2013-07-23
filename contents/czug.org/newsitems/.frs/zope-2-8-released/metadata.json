@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zope-2-8-released"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Zope 2.8是Zope发展史上又一个比较重大的版本", 
+        "modified": "2005-06-13 09:12:28", 
+        "title": "Zope 2.8发布！"
+    }
+}

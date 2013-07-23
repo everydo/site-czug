@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "yuyinlangdu-text2speech-jishu"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Python/Plone中的语音朗读支持。", 
+        "modified": "2006-05-04 20:31:53", 
+        "title": "文字语音合成(Text2Speech)技术"
+    }
+}

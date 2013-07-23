@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "id": "localization"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "开发一些扩展产品和插件，让Zope/Plone更好的支持中文，满足中国人的使用习惯。", 
+        "modified": "2006-09-15 08:46:51", 
+        "title": "本地化项目"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "getting-started"
+    }, 
+    "dublin": {
+        "creators": [
+            "chenq"
+        ], 
+        "description": "设置DIYPloneStyle，使之成为一个新Plone样式的骨架。", 
+        "modified": "2005-11-15 10:43:44", 
+        "title": "准备开始——手动方式"
+    }
+}

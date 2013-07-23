@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "id": "team"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "czug的长久发展，需要有一个中立的、健康的团队支持，下面是一些设想", 
+        "modified": "2005-12-14 15:46:00", 
+        "title": "CZUG团队"
+    }
+}

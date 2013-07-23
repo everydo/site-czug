@@ -1,0 +1,90 @@
+按此觀看繁體版本_ 
+
+.. _按此觀看繁體版本: X_e5_ae_89_e8_a3_9d_e7_94_a2_e5_93_81
+
+Plone 的其中一项强劲功能便是安装附加产品的方便和快捷。安装其他人的产品完成后，你的网站便会拥有多一项新的功能。 
+
+附加产品是大家轻易使用的其他人开发的东西。如czug 站长的portlet 便是受欢迎的产品之一, 如PloneLanguageTool 便是语言设定的方便工具。大家可以在几分钟内便可使用合适的产品。 
+
+其实你的Plone 已有一些Plone 连载的产品，你的Plone 有 Archetypes, CMFCore<a class="new" href="http://members.czug.org/plone/quickguide/X_e5_ae_89_e8_a3_85_e4_ba_a7_e5_93_81/createform?page=CMFCore" title="create this page">?</a>, CMFCalendar<a class="new" href="http://members.czug.org/plone/quickguide/X_e5_ae_89_e8_a3_85_e4_ba_a7_e5_93_81/createform?page=CMFCalendar" title="create this page">?</a> 等等，详情可看 CZUG产品介绍_ 
+
+.. _CZUG产品介绍:  <a href="http://www.czug.org/docs/plone/plonebook/X_e6_89_8b_e5_b7_a5_e5_ae_89_e8_a3_85Plone_e7_ad_89_e4_ba_a7_e5_93_81/view?searchterm=products">http://www.czug.org/docs/plone/plonebook/X_e6_89_8b_e5_b7_a5_e5_ae_89_e8_a3_85Plone_e7_ad_89_e4_ba_a7_e5_93_81/view?searchterm=products</a> 
+
+很多有用的产品也可在 <a href="http://sourceforge.net/projects/collective">http://sourceforge.net/projects/collective</a> 找到，你也可在 <a href="http://www.zope.org">http://www.zope.org</a> 中找你心目中的产品。 
+
+试范 
+==== 
+
+好了，现在试范一次怎样安装一个相簿，其他大部份产品的安装方法是一样的。 
+
+1 下载CMFPhoto_ 和 下载CMFPhotoAlbum_ 
+
+.. _下载CMFPhoto: <a href="http://prdownloads.sourceforge.net/collective/CMFPhoto-0.4.2.tar.gz?use_mirror=easynews">http://prdownloads.sourceforge.net/collective/CMFPhoto-0.4.2.tar.gz?use_mirror=easynews</a> 
+
+.. _下载CMFPhotoAlbum: <a href="http://prdownloads.sourceforge.net/collective/CMFPhotoAlbum-0.4final.tar.gz?use_mirror=keihanna">http://prdownloads.sourceforge.net/collective/CMFPhotoAlbum-0.4final.tar.gz?use_mirror=keihanna</a> 
+
+2 解压到:: 
+
+    C:\Program Files\Plone 2\Data\Products 
+
+Winzip 可能不懂解压.tgz, .gz 一类Linux压缩档。可以 下载PowerArchiever_ 程式 
+
+.. _下载PowerArchiever: <a href="http://www.powerarchiver.com/download/">http://www.powerarchiver.com/download/</a> 
+
+.. image:: unzip.jpg 
+     :align: center 
+
+
+解压完成后可看到CMFPhoto 和 CMFPhotoAlbum<a class="new" href="http://members.czug.org/plone/quickguide/X_e5_ae_89_e8_a3_85_e4_ba_a7_e5_93_81/createform?page=CMFPhotoAlbum" title="create this page">?</a> 两个新文件夹。你可以移除原本的那CMFPhotoxxx.gz 和CMFPhotoAlbumxxx.gz 
+
+.. image:: unzipped.jpg 
+    :align: center 
+
+3 restart Zope. 
+
+    - 一般来说，可以先开启Plone Controller，按Stop 然后按Start 来restart Zope 
+
+    - 若你使用Service 模式运行Plone ，可到ZMI 浏览至Control Panel，那里有一个restart 键，按下便可。 
+
+4 到"`Plone setup > add remove products`" 
+
+.. image:: plonesetup.jpg 
+      :align: center 
+
+.. image:: addremove.jpg 
+      :align: center 
+
+5 选取CMFPhoto 和CMFPhotoAlbum，然后按 Install 键 
+
+.. image:: plonesetupinstall.jpg 
+      :align: center 
+
+成功后两个产品也会自动移至 Installed Products 部份 
+
+完成 
+==== 
+
+个人相簿诞生！可尝试加入相簿并在相簿内上载你的相片。 
+
+.. image:: photoalbum.jpg 
+    :align: center 
+
+
+总结 
+==== 
+
+所有产品的基本安装方法是:: 
+
+    1. 解压在Products 文件夹内 2. restart Zope 3. 在Plone 选取安装，完成！ 
+
+如不成功，可尝试以下方法。 
+
+1 查看在新产品文件夹内的 README 或 INSTALL 档，跟随其步骤 
+
+2 查看 ZMI 内的 Control Panel> Product Management 看看新产品的图示是否有 broken link 图示 
+
+3 在"Plone Setup"的"Add Remove Products"部份查看新产品的"错误记录" 
+
+4 或查看在Server的:: 
+
+        C:\Program Files\Plone 2\Data\log\events.log 

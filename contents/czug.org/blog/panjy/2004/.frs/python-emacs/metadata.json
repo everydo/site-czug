@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "python-emacs"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Emacs号称是编辑器之王，无所不能。可把他作为一个Python的集成开发环境", 
+        "modified": "2004-10-26 21:06:34", 
+        "title": "使用Emacs作为Python开发环境"
+    }
+}

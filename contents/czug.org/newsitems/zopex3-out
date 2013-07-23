@@ -1,0 +1,18 @@
+
+ <div class="stx">
+ <p><a href="http://zope.org/Products/ZopeX3/3.0.0final/ZopeX3-3.0.0-Release">Zope X3
+ 3.0.0 final released!</a></p>
+ <p>Zope X3 是下一代的Zope主要发行版，他在Zope2的经验之上，基于最新的设计模式，完全重新编写。名字中的"X"
+ 表示"experimental", 因为这个版本还没有开始提供对Zope2的后向兼容.</p>
+ <p>Zope 是一个使用Python编程语言编写的开放源代码的Web应用服务器.
+ 他提供了一个支持事务的对象数据库，他不仅能存储内容和数据，同时也能保存动态的HTML模板，脚本，查询引擎，和关系数据库(RDBMS)的链接和代 码.
+ 他提供了一个功能强大的通过Web开发的模型, 允许在世界任何地方你更改你的网站. 同时，Zope
+ 也提供了一个紧密集成的安全模型。贯穿"安全的控制授权"的概念, Zope的安全架构也能让你将部分网站的控制权转交到其他的组织或个人.</p>
+ <p>Zope的用户包括 Viacom, Boston.com, Lufthansa, SGI, AARP, Bell Atlantic Mobile
+ (now Verizon Wireless), Red Hat, NASA, the US Navy, ishophere.com, i-Gift,
+ IDG (Brazil), GE, Digital Garage, Verio, www.HireTechs.com, Park City Ski
+ Area, 和 Storm Linux.</p>
+ <p>相关链接：<br />
+ <a href="http://zope.org/Products/ZopeX3">下载</a> | <a href="http://www.zope.org/Products/Zope3-Packages">附加包</a> | <a href="http://dev.zope.org/Zope3/Zope3Book">开发宝典</a> | <a href="http://dev.zope.org/Zope3/ProgrammerTutorial">编程教程</a> | <a href="http://dev.zope.org/Zope3/Zope3DeveloperInfo">开发人员信息</a> | <a href="http://dev.zope.org/Zope3/Zope3DeveloperInfo"></a><a href="http://www.python.org/pycon/dc2004/papers/3/">Zope的Roadmap</a></p>
+ <p><a href="http://dev.zope.org/Zope3">Zope3项目开发网站</a> | <a href="http://mail.zope.org/mailman/listinfo/zope3-dev">Zope3开发邮件列表<br /></a></p>
+ </div>

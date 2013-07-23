@@ -1,0 +1,22 @@
+{
+    "main": {
+        "right_col": ".. navtree::\n   :root_depth: 2",
+        "hidden_keys": [
+            "include.rst"
+        ], 
+        "keys": [
+            "index.rst",
+            "install.rst",
+            "deploy.rst",
+            "frs.rst",
+            "theme.rst",
+            "czug.rst",
+            "export.rst"
+        ], 
+        "contenttype": "Folder"
+    }, 
+    "dublin": {
+        "description": "一个开源的CMS系统，简单，对程序员友好，内容存储开放", 
+        "title": "易度网站"
+    }
+}

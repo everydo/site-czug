@@ -1,0 +1,13 @@
+
+                    <ul id="portal-personaltools">
+                        <li>
+                            <a href="login_form">
+                                登录
+                            </a>
+                        </li>
+                        <li>
+                            <a href="join_form">
+                                注册
+                            </a>
+                        </li>
+                    </ul>

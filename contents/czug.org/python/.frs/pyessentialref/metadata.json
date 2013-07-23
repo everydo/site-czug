@@ -1,0 +1,13 @@
+{
+    "main": {
+        "hidden_keys":["f.py"],
+        "contenttype": "Folder"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "python精华参考",
+        "title": "《python精华参考》"
+    }
+}

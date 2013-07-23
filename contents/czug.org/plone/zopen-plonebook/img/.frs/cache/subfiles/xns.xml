@@ -1,0 +1,116 @@
+<?xml version="1.0" ?>
+<metadata xmlns="http://plone.org/ns/archetypes/" xmlns:cmf="http://cmf.zope.org/namespaces/default/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xmp="adobe:ns:meta">
+	<dc:title>
+		cache
+	</dc:title>
+	<dc:creator>
+		benky
+	</dc:creator>
+	<xmp:CreateDate>
+		2007-07-06T06:54:18Z
+	</xmp:CreateDate>
+	<xmp:ModifyDate>
+		2007-07-06T06:54:18Z
+	</xmp:ModifyDate>
+	<field id="locallyAllowedTypes">
+		Document
+	</field>
+	<field id="locallyAllowedTypes">
+		Event
+	</field>
+	<field id="locallyAllowedTypes">
+		Favorite
+	</field>
+	<field id="locallyAllowedTypes">
+		File
+	</field>
+	<field id="locallyAllowedTypes">
+		Folder
+	</field>
+	<field id="locallyAllowedTypes">
+		Image
+	</field>
+	<field id="locallyAllowedTypes">
+		Large Plone Folder
+	</field>
+	<field id="locallyAllowedTypes">
+		Link
+	</field>
+	<field id="locallyAllowedTypes">
+		News Item
+	</field>
+	<field id="locallyAllowedTypes">
+		OrganizationUnit
+	</field>
+	<field id="locallyAllowedTypes">
+		TeamFolder
+	</field>
+	<field id="locallyAllowedTypes">
+		ChatLog
+	</field>
+	<field id="locallyAllowedTypes">
+		Project
+	</field>
+	<field id="locallyAllowedTypes">
+		Message
+	</field>
+	<field id="immediatelyAddableTypes">
+		Document
+	</field>
+	<field id="immediatelyAddableTypes">
+		Event
+	</field>
+	<field id="immediatelyAddableTypes">
+		Favorite
+	</field>
+	<field id="immediatelyAddableTypes">
+		File
+	</field>
+	<field id="immediatelyAddableTypes">
+		Folder
+	</field>
+	<field id="immediatelyAddableTypes">
+		Image
+	</field>
+	<field id="immediatelyAddableTypes">
+		Large Plone Folder
+	</field>
+	<field id="immediatelyAddableTypes">
+		Link
+	</field>
+	<field id="immediatelyAddableTypes">
+		News Item
+	</field>
+	<field id="immediatelyAddableTypes">
+		OrganizationUnit
+	</field>
+	<field id="immediatelyAddableTypes">
+		TeamFolder
+	</field>
+	<field id="immediatelyAddableTypes">
+		ChatLog
+	</field>
+	<field id="immediatelyAddableTypes">
+		Project
+	</field>
+	<field id="immediatelyAddableTypes">
+		Message
+	</field>
+	<cmf:type>
+		Large Plone Folder
+	</cmf:type>
+	<cmf:workflow_history>
+		<cmf:workflow cmf:id="basecamp_workflow">
+			<cmf:history>
+				<cmf:var cmf:id="action" cmf:type="None" cmf:value="None"/>
+				<cmf:var cmf:id="review_state" cmf:type="str" cmf:value="normal"/>
+				<cmf:var cmf:id="comments" cmf:type="str" cmf:value=""/>
+				<cmf:var cmf:id="actor" cmf:type="str" cmf:value="benky"/>
+				<cmf:var cmf:id="time" cmf:type="date" cmf:value="2007-07-06 14:54:18"/>
+			</cmf:history>
+		</cmf:workflow>
+	</cmf:workflow_history>
+	<cmf:security cmf:acquire_local_roles="1">
+		<cmf:local_role cmf:role="Owner" cmf:user_id="benky"/>
+	</cmf:security>
+</metadata>

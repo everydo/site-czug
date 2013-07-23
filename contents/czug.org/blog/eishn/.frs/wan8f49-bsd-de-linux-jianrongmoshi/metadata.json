@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "wan8f49-bsd-de-linux-jianrongmoshi"
+    }, 
+    "dublin": {
+        "creators": [
+            "eishn"
+        ], 
+        "description": "linux, 兼容模式, openbsd", 
+        "modified": "2007-01-08 14:25:02", 
+        "title": "玩轉 BSD 的 Linux 兼容模式"
+    }
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<metadata xmlns="http://plone.org/ns/archetypes/" xmlns:cmf="http://cmf.zope.org/namespaces/default/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xmp="adobe:ns:meta">
+	<dc:title>
+		ch5 - Plone外观风格定制
+	</dc:title>
+	<dc:creator>
+		benky
+	</dc:creator>
+	<xmp:CreateDate>
+		2007-07-06T02:27:01Z
+	</xmp:CreateDate>
+	<xmp:ModifyDate>
+		2007-09-19T07:14:27Z
+	</xmp:ModifyDate>
+	<field id="allowDiscussion">
+		True
+	</field>
+	<cmf:type>
+		Document
+	</cmf:type>
+	<cmf:workflow_history>
+		<cmf:workflow cmf:id="basecamp_workflow">
+			<cmf:history>
+				<cmf:var cmf:id="action" cmf:type="None" cmf:value="None"/>
+				<cmf:var cmf:id="review_state" cmf:type="str" cmf:value="normal"/>
+				<cmf:var cmf:id="comments" cmf:type="str" cmf:value=""/>
+				<cmf:var cmf:id="actor" cmf:type="str" cmf:value="benky"/>
+				<cmf:var cmf:id="time" cmf:type="date" cmf:value="2007-07-06 10:27:02"/>
+			</cmf:history>
+		</cmf:workflow>
+	</cmf:workflow_history>
+	<cmf:security cmf:acquire_local_roles="1">
+		<cmf:local_role cmf:role="Editor" cmf:user_id="projectseniors-341196"/>
+		<cmf:local_role cmf:role="Contributor" cmf:user_id="projectseniors-341196"/>
+		<cmf:local_role cmf:role="Owner" cmf:user_id="benky"/>
+	</cmf:security>
+</metadata>

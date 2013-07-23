@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "id": "czsp"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Zope/Plone服务提供商\r\n", 
+        "modified": "2005-01-07 19:58:29", 
+        "title": "服务提供商"
+    }
+}

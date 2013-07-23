@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "ruherangzopepaodegengkuai"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "有人抱怨Zope/Plone的站点比较慢，lovelysystems的人有办法让他跑的更快", 
+        "modified": "2007-04-02 00:35:43", 
+        "title": "如何让Zope跑得更快"
+    }
+}

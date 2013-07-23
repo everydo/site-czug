@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "blogentry.2005-08-07.3676852744"
+    }, 
+    "dublin": {
+        "creators": [
+            "eishn"
+        ], 
+        "description": "今天闲逛 CZUG ，看到关于 Lucene 和 Lupy 的讨论。顺便把 Lupy 的汉化思路写一下。", 
+        "modified": "2005-08-12 12:26:38", 
+        "title": "使 Lupy 支持中文"
+    }
+}

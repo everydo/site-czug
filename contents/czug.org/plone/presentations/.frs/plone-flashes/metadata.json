@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "id": "plone-flashes"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "使用Flash介绍Plone", 
+        "modified": "2004-09-14 03:17:33", 
+        "title": "Flash演示"
+    }
+}

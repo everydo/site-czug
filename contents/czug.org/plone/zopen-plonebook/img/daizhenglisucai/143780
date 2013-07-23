@@ -1,0 +1,4 @@
+
+<p>from zope.i18nmessageid import MessageFactory</p>
+<p>_ = MessageFactory('zopen.project')</p>
+<p>print _(u'label_active_state', default=u'Active — Fully functional project.')</p>

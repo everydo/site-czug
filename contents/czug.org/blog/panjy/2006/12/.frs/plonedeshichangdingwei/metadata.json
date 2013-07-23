@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "plonedeshichangdingwei"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "你该选Plone吗？转自Martin的对Plone的说明", 
+        "modified": "2006-12-13 09:17:25", 
+        "title": "Plone的市场定位"
+    }
+}

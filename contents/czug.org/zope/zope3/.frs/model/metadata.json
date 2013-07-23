@@ -1,0 +1,19 @@
+{
+    "main": {
+        "left_col": ".. navtree::\n   :root_depth: 2",
+        "keys": [
+            "container.rst", 
+            "annotation.rst", 
+            "index.rst", 
+            "relation.rst"
+        ], 
+        "hidden_keys": [
+            "img"
+        ], 
+        "contenttype": "Folder"
+    }, 
+    "dublin": {
+        "description": "内容组件，也就是Model对象", 
+        "title": "内容组件"
+    }
+}

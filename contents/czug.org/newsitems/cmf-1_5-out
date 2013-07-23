@@ -1,0 +1,27 @@
+
+ <p><br />
+ <a href="http://zope.org/Products/CMF/cmf_1_5_0_final_released">CMF 1.5.0
+ Release!</a></p>
+<br />
+ <h1>什么是CMF？</h1>
+ <p><br />
+ CMF，Content Management Framework,
+ 是zope公司发布的一个基于Zope的内容管理框架，Plone、CPS等多个内容管理系统(CMS)，均基于这个框架开发。</p>
+<br />
+ <h1>新的特性</h1>
+ <ul>
+ <li>CMF 1.5 需要Zope 2.7.0 或者更高版本.</li>
+ <li>CMFActionIcons 产品进入了CMF 发布包.</li>
+ <li>新添加了一个CMFUid 产品，这样内容可以使用UID标识.
+ 收藏(Favorite)类型的内容，现在在目标移动的情况下，依然可以跟踪到了.</li>
+ <li>新添加了portal_setup 工具，他提供了导出/导入各种网站配置选择的功能.</li>
+ <li>提供了创建、审核、删除成员的用户界面.</li>
+ <li>提供了方法(Method)别名机制，便于定位和合理化 链接URL.</li>
+ <li>ZPT 皮肤不在依赖域老的DTML 皮肤目录.</li>
+ <li>请查看<a href="http://zope.org/Products/CMF/CMF-1.5.0/CHANGES.txt">变更历史</a>
+ ，以获得本版本完整的特性和故障更改清单.</li>
+ </ul>
+ <h1>更多信息</h1>
+ <p><br />
+ <a href="http://zope.org/Products/CMF/CMF-1.5.0/CMF-1.5.0.zip">下载</a>&nbsp; |
+ <a href="http://zope.org/Products/CMF/CMF-1.5.0">产品页面</a> | <a href="http://zope.org/Collectors/CMF">报告故障</a> | <a href="http://zope.org/Products/CMF/CMF-1.5.0/INSTALL.txt">安装方法</a></p>

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "ca-brightstore"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "CA公司支持的开源文档和内容管理软件BrightStor文档管理器 r11.2 使用Plone作为核心，现在已经开放进行Beta测试.", 
+        "modified": "2004-12-11 11:29:00", 
+        "title": "CA公司的BrightStor文档管理器r11.2 Beta"
+    }
+}

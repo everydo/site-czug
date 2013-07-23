@@ -1,0 +1,13 @@
+我们<a href="http://www.zopechina.com"> 润普公司</a>，很荣幸地发布ZopeChinaPak的新版本。<br />
+<br />
+这个版本能够在Zope的FTP访问下，支持中文的文件名。（暂不支持中文目录）<br />
+<br />
+注意：<br />
+<ul>
+  <li>您需要修改config.py文件中的LOCAL_FTP_ENCODING参数。如果您在windows上安装这个产品，您设置为'mbcs'就行了</li>
+  <li>如果您在linux上安装，则需要设置为gb18030或者big5，并确保安装<a href="http://cjkpython.i18n.org/">cjkcodecs</a></li>
+</ul>
+<br />
+<a href="http://zope.org/Members/panjunyong/ZopeChinaPak">英文产品主页</a> | <a href="http://www.czug.org/projects/ZopeChinaPak">中文产品主页</a> | <a href="http://zope.org/Members/panjunyong/ZopeChinaPak/zopechinapak-0_4/zopechinapak-0_4.tgz">下载</a><br />
+<br />
+注意本产品仅仅支持 Zope 2.7 / Plone 2.0.3 以上的版本<br />

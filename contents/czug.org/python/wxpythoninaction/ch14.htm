@@ -1,0 +1,925 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-1" class="anchor"/><p class="line867"><strong>14</strong>  <span id="line-2" class="anchor"/><strong>网格(<tt>grid)</tt>控件</strong> <span id="line-3" class="anchor"/><span id="line-4" class="anchor"/><span id="line-5" class="anchor"/></p><p class="line867"><strong>本章内容包括:</strong> <span id="line-6" class="anchor"/><span id="line-7" class="anchor"/></p><ul><li><p class="line862">创建网格(<tt>grid)</tt> <span id="line-8" class="anchor"/><span id="line-9" class="anchor"/></p></li><li class="gap"><p class="line862">添加行和单元格(<tt>cell),</tt>并且处理列的首部 <span id="line-10" class="anchor"/><span id="line-11" class="anchor"/></p></li><li class="gap"><p class="line862">使用一个自定义的单元格(<tt>cell)</tt>描绘器(<tt>renderer)</tt> <span id="line-12"
+class="anchor"/><span id="line-13" class="anchor"/></p></li><li class="gap">创建自定义的编辑器 <span id="line-14" class="anchor"/><span id="line-15" class="anchor"/></li><li class="gap">捕获用户事件 <span id="line-16" class="anchor"/><span id="line-17" class="anchor"/><span id="line-18" class="anchor"/></li></ul><p class="line862">网格控件大概是<tt>wxPython</tt>中最复杂和最灵活的一个窗口部件。在这一章，你将有机会接触到这个控件的许多特性。我们将讨论如何输入数据到网格控件以及如何处理该控件的显示属性，并且我们还将讨论自定义编辑器和描绘器。网格控件使你能够在一个类似电子表格格式的网格中显示表格数据。该控件允许你为行和列指定标签，以及通过拖动网格线来改变网格的大小，并且可以为每个单元格单独指定字体和颜色属性。 <span id="line-19" class="anchor"/><span id="line-20"
+class="anchor"/></p><p class="line874">在最常见的情况下，你一般会显示一个简单的字符串值。然而，你也能为任一单元格指定一个自定义的描绘器，以使你能够显示不同的数据；你可以有编辑表中的单元格，并且对不同的数据使用不同类型的编辑器。你还能够创建你自己自定义的描绘器和编辑器，这使得你在单元格数据的显示和处理上可以非常的灵活，几乎没有什么限制。网格控件还有大量的鼠标和键盘事件，你可以程序中捕获它们并用来触发相关的代码。 <span id="line-21" class="anchor"/><span id="line-22" class="anchor"/></p><p class="line862">我们将通过展示两个创建<tt>wxPython</tt>网格的方法来作为我们讨论的开始。 <span id="line-23" class="anchor"/><span id="line-24" class="anchor"/><span id="line-25" class="anchor"/><span id="line-26" class="anchor"/></p><p class="line867">
+</p><h2 id="head-c8e7495df6ac813fed6c33e186e0376a6a70aaa1">1. 创建你的网格</h2>
+<span id="line-27" class="anchor"/><span id="line-28" class="anchor"/><span id="line-29" class="anchor"/><p class="line862">网格控件是用以显示一个二维的数据集的。要使用该控件显示有用的信息，你需要告诉该控件它工作所基于的是什么数据。在<tt>wxPython</tt>中，有两种不同的机制用于在网格控件中处理数据，它们之间在处理数据的添加，删除和编辑的方式上有些许的不同。 <span id="line-30" class="anchor"/><span id="line-31" class="anchor"/></p><p class="line874">* 网格控件可以直接处理每行和每列中的值。 <span id="line-32" class="anchor"/><span id="line-33" class="anchor"/></p><p class="line862">* 数据可以通过使用一个网格表(<tt>grid table)</tt>来间接地处理。 <span id="line-34" class="anchor"/><span id="line-35" class="anchor"/></p><p
+class="line862">较简单的一种是使用网格控件直接处理值。在这种情况下，网格维护着数据的一份拷贝。在这种情况下，如果有大量的数据或你的应用程序已经有了一个现存的网格类的数据结构，那么这可能显得比较笨拙。如果是这样，你可以使用一个网格表来处理该网格的数据。参见第5章来回顾一下在<tt>MVC</tt>架构中，网格表是如何被作为一个模型的。 <span id="line-36" class="anchor"/><span id="line-37" class="anchor"/><span id="line-38" class="anchor"/></p><p class="line867">
+</p><h3 id="head-c0fc62ffb0abf1b4f13af3ea35459c5dab523327">1.1. 如何创建一个简单的网格？</h3>
+<span id="line-39" class="anchor"/><span id="line-40" class="anchor"/><span id="line-41" class="anchor"/><p class="line874">尽管网格控件有大量的方法用于控件精确的显示和数据的管理，但时开始使用一个网格控件是十分简单的。图14.1显示了一个简单的网格，其中的单元格中添加了一些字符串数据。 <span id="line-42" class="anchor"/><span id="line-43" class="anchor"/><span id="line-44" class="anchor"/></p><p class="line867"><strong>图14.1</strong> <span id="line-45" class="anchor"/><span id="line-46" class="anchor"/></p><p class="line867"><img title="attachment:w14.1.gif" src="/moin/WxPythonInAction/ChapterFourteen?action=AttachFile&amp;do=get&amp;target=w14.1.gif" class="attachment"/> <span id="line-47" class="anchor"/><span id="line-48" class="anchor"/><span id="line-49"
+class="anchor"/></p><p class="line862">网格控件是类<tt>wx.grid.Grid</tt>的实例。由于网格类及相关类的尺寸的原因，实际中许多的程序都不使用它，<tt>wxPython</tt>的网格类存在于它们自己的模块中，它们不会被自动导入到核心的名字空间中。<tt>wx.grid.Grid</tt>的构造函数类似于其它的控件的构造函数。 <span id="line-50" class="anchor"/><span id="line-51" class="anchor"/></p><p class="line867"><span id="line-52" class="anchor"/><span id="line-53" class="anchor"/><span id="line-54" class="anchor"/><span id="line-55" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-6826579f1a67b05d78e651c729bf4359b7f2f1fc_000\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-6826579f1a67b05d78e651c729bf4359b7f2f1fc_000', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-6826579f1a67b05d78e651c729bf4359b7f2f1fc_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span><span class="Operator">.</span><span class="ID">Grid</span><span class="Operator">(</span><span class="ID">parent</span><span class="Operator">,</span> <span class="ID">id</span><span class="Operator">,</span> <span class="ID">pos</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">DefaultPosition</span><span
+class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   2 </span>        <span class="ID">size</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">DefaultSize</span><span class="Operator">,</span> <span class="ID">style</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">WANTS_CHARS</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   3 </span>        <span class="ID">name</span><span class="Operator">=</span><span class="ID">wxPanelNameStr</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-56" class="anchor"/><span id="line-57" class="anchor"/><p class="line862">其中的所有的参数与<tt>wx.Window</tt>的构造函数是相同的，并且有相同的意义。<tt>wx.WANTS_CHARS</tt>样式是网格的默认样式，除此之外，<tt>wx.grid.Grid</tt>没有为自己定义特别的样式。由于网格类的复杂性，所以在程序中，你一般要自定义网格类的一个子类来实现一个网格，而非直接使用<tt>wx.grid.Grid</tt>的一个实例。 <span id="line-58" class="anchor"/><span id="line-59" class="anchor"/></p><p class="line874">和我们所见过的别的控件不同，调用该构造函数不足以创建一个可用的网格。有两个方法用以初始化网格 <span
+id="line-60" class="anchor"/><span id="line-61" class="anchor"/></p><p class="line862">* <tt>CreateGrid()</tt> <span id="line-62" class="anchor"/>* <tt>SetTable()</tt> <span id="line-63" class="anchor"/><span id="line-64" class="anchor"/></p><p class="line874">在这一节，我们将讨论一个方法，第二个方法将在网格表的讨论中提及。 <span id="line-65" class="anchor"/><span id="line-66" class="anchor"/></p><p class="line862">要显式地初始化网格，可以使用方法<tt>CreateGrid(numRows, numCols,
+selmode=wx.grid.Grid.SelectCells)</tt>。这个方法应该在构造函数之后被直接地调用，并用必须在网格被显示之前调用。参数<tt>numRows,
+numCols</tt>指定了网格的初始大小。参数<tt>selmode</tt>指定了网格中单元格的选择模式，默认值是<tt>wx.grid.Grid.SelectCells</tt>，意思是一次只选择一个单元格。其它的值有<tt>wx.grid.Grid.SelectRows</tt>，意思是一次选择整个行，<tt>wx.grid.Grid.SelectionColumns</tt>，意思是一次选择整个列。创建之后，你可以使用方法<tt>GetSelectionMode()</tt>来访问选择模式，并且你可以使用方法<tt>SetSelectionMode(mode)</tt>来重置模式。你还可以使用方法<tt>GetNumberCols()</tt>和<tt>GetNumberRows()</tt>来得到行和列数。 <span id="line-67" class="anchor"/><span id="line-68" class="anchor"/></p><p
+class="line862">在内部，使用<tt>CreateGrid()</tt>初始化网格之后，<tt>wxPython</tt>设置了一个二维的字符串数组。一旦网格被初始化了，你就可以使用方法<tt>SetCellValue(row, col, s)</tt>来放置数据。其中参数<tt>row, col</tt>是要设置的单元格的坐标，s是要在该坐标处显示的字符串文本。如果你想获取特定坐标处的值，你可以使用函数<tt>GetCellValue(row, col)</tt>，该函数返回字符串。要一次清空整个网格，你可以使用方法<tt>ClearGrid()</tt>。例14.1显示了产生图14.1的代码。 <span id="line-69" class="anchor"/><span id="line-70" class="anchor"/><span id="line-71" class="anchor"/></p><p
+class="line867"><strong>例14.1</strong>  <span id="line-72" class="anchor"/><strong>使用<tt>ClearGrid()</tt>创建的一个示例网格</strong> <span id="line-73" class="anchor"/><span id="line-74" class="anchor"/></p><p class="line867"><span id="line-75" class="anchor"/><span id="line-76" class="anchor"/><span id="line-77" class="anchor"/><span id="line-78" class="anchor"/><span id="line-79" class="anchor"/><span id="line-80" class="anchor"/><span id="line-81" class="anchor"/><span id="line-82" class="anchor"/><span id="line-83" class="anchor"/><span id="line-84" class="anchor"/><span id="line-85"
+class="anchor"/><span id="line-86" class="anchor"/><span id="line-87" class="anchor"/><span id="line-88" class="anchor"/><span id="line-89" class="anchor"/><span id="line-90" class="anchor"/><span id="line-91" class="anchor"/><span id="line-92" class="anchor"/><span id="line-93" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-4831faa4e35d833859849017f66248cc4dbf4096_001\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-4831faa4e35d833859849017f66248cc4dbf4096_001', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-4831faa4e35d833859849017f66248cc4dbf4096_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">import</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span></span>
+<span class="line"><span class="LineNumber">   3 </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">class</span> <span class="ID">TestFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">=</span><span class="String">"Simple Grid"</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   7 </span>                          <span class="ID">size</span><span class="Operator">=</span><span class="Operator">(</span><span class="Number">640</span><span class="Operator">,</span><span class="Number">480</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">grid</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span><span class="Operator">.</span><span class="ID">Grid</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ID">grid</span><span class="Operator">.</span><span class="ID">CreateGrid</span><span class="Operator">(</span><span class="Number">50</span><span class="Operator">,</span><span class="Number">50</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ResWord">for</span> <span class="ID">row</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="Number">20</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  11 </span>            <span class="ResWord">for</span> <span class="ID">col</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="Number">6</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  12 </span>                <span class="ID">grid</span><span class="Operator">.</span><span class="ID">SetCellValue</span><span class="Operator">(</span><span class="ID">row</span><span class="Operator">,</span> <span class="ID">col</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  13 </span>                                  <span class="String">"cell (%d,%d)"</span> <span class="Operator">%</span> <span class="Operator">(</span><span class="ID">row</span><span class="Operator">,</span> <span class="ID">col</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span></span>
+<span class="line"><span class="LineNumber">  15 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span><span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">TestFrame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span><span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-94" class="anchor"/><span id="line-95" class="anchor"/><p class="line867"><tt>CreateGrid()</tt>和<tt>SetCellValue()</tt>仅限于你的网格数据是由简单字符串组成的情况。如果你的数据更加的复杂或表特别大的话，更好的方法是创建一个网格表，这将随后讨论。 <span id="line-96" class="anchor"/><span id="line-97" class="anchor"/><span id="line-98" class="anchor"/></p><p class="line867">
+</p><h3 id="head-14b3705ed8ae02385388fd31f8363384584df6d2">1.2. 如何使用网格表来创建一个网格？</h3>
+<span id="line-99" class="anchor"/><span id="line-100" class="anchor"/><span id="line-101" class="anchor"/><p class="line874">对于较复杂的情况，你可以将你的数据保存在一个网格表中，网格表是一个单独的类，它存储数据并与网格控件交互以显示数据。推荐在下列情况下使用网格表： <span id="line-102" class="anchor"/><span id="line-103" class="anchor"/></p><p class="line874">* 网格的数据比较复杂 <span id="line-104" class="anchor"/>* 数据存储在你的系统中的另外的对象中 <span id="line-105" class="anchor"/>* 网格太大以致于不能一次整个被存储到内存中 <span id="line-106" class="anchor"/><span
+id="line-107" class="anchor"/></p><p class="line862">在第5章中，我们在<tt>MVC</tt>设计模式中讨论了网格表以及在你的应用程序中实现一个网格表的不同方法。在本章，我们将重点放在对网格表的使用上。图14.2显示了使用网格表创建的一个网格。 <span id="line-108" class="anchor"/><span id="line-109" class="anchor"/><span id="line-110" class="anchor"/></p><p class="line867"><strong>图14.2</strong> <span id="line-111" class="anchor"/><span id="line-112" class="anchor"/></p><p class="line867"><img title="attachment:w14.2.gif"
+src="/moin/WxPythonInAction/ChapterFourteen?action=AttachFile&amp;do=get&amp;target=w14.2.gif" class="attachment"/> <span id="line-113" class="anchor"/><span id="line-114" class="anchor"/><span id="line-115" class="anchor"/></p><p class="line862">要使用一个网格表，你需要要创建<tt>wx.grid.PyGridTableBase</tt>的子类。该子类必须覆盖父类<tt>wx.grid.GridTableBase</tt>的一些方法。例14.2显示了用于创建图14.2的代码。 <span id="line-116" class="anchor"/><span id="line-117" class="anchor"/><span id="line-118" class="anchor"/></p><p class="line867"><strong>例14.2</strong>  <span id="line-119"
+class="anchor"/><strong>关于使用网格表机制的代码</strong> <span id="line-120" class="anchor"/><span id="line-121" class="anchor"/></p><p class="line867"><span id="line-122" class="anchor"/><span id="line-123" class="anchor"/><span id="line-124" class="anchor"/><span id="line-125" class="anchor"/><span id="line-126" class="anchor"/><span id="line-127" class="anchor"/><span id="line-128" class="anchor"/><span id="line-129" class="anchor"/><span id="line-130" class="anchor"/><span id="line-131" class="anchor"/><span id="line-132" class="anchor"/><span id="line-133" class="anchor"/><span
+id="line-134" class="anchor"/><span id="line-135" class="anchor"/><span id="line-136" class="anchor"/><span id="line-137" class="anchor"/><span id="line-138" class="anchor"/><span id="line-139" class="anchor"/><span id="line-140" class="anchor"/><span id="line-141" class="anchor"/><span id="line-142" class="anchor"/><span id="line-143" class="anchor"/><span id="line-144" class="anchor"/><span id="line-145" class="anchor"/><span id="line-146" class="anchor"/><span id="line-147" class="anchor"/><span id="line-148" class="anchor"/><span id="line-149" class="anchor"/><span id="line-150"
+class="anchor"/><span id="line-151" class="anchor"/><span id="line-152" class="anchor"/><span id="line-153" class="anchor"/><span id="line-154" class="anchor"/><span id="line-155" class="anchor"/><span id="line-156" class="anchor"/><span id="line-157" class="anchor"/><span id="line-158" class="anchor"/><span id="line-159" class="anchor"/><span id="line-160" class="anchor"/><span id="line-161" class="anchor"/><span id="line-162" class="anchor"/><span id="line-163" class="anchor"/><span id="line-164" class="anchor"/><span id="line-165" class="anchor"/><span id="line-166"
+class="anchor"/><span id="line-167" class="anchor"/><span id="line-168" class="anchor"/><span id="line-169" class="anchor"/><span id="line-170" class="anchor"/><span id="line-171" class="anchor"/><span id="line-172" class="anchor"/><span id="line-173" class="anchor"/><span id="line-174" class="anchor"/><span id="line-175" class="anchor"/><span id="line-176" class="anchor"/><span id="line-177" class="anchor"/><span id="line-178" class="anchor"/><span id="line-179" class="anchor"/><span id="line-180" class="anchor"/><span id="line-181" class="anchor"/><span id="line-182"
+class="anchor"/><span id="line-183" class="anchor"/><span id="line-184" class="anchor"/><span id="line-185" class="anchor"/><span id="line-186" class="anchor"/><span id="line-187" class="anchor"/><span id="line-188" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-dd0e6f3ec033b3d20fd0cad980ba66d869d60d76_002\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-dd0e6f3ec033b3d20fd0cad980ba66d869d60d76_002', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-dd0e6f3ec033b3d20fd0cad980ba66d869d60d76_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#-*- encoding:UTF-8 -*-</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">import</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span></span>
+<span class="line"><span class="LineNumber">   4 </span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">class</span> <span class="ID">TestTable</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span><span class="Operator">.</span><span class="ID">PyGridTableBase</span><span class="Operator">)</span><span class="Operator">:</span><span class="Comment">#定义网格表</span></span>
+<span class="line"><span class="LineNumber">   6 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span><span class="Operator">.</span><span class="ID">PyGridTableBase</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">data</span> <span class="Operator">=</span> <span class="Operator">{</span> <span class="Operator">(</span><span class="Number">1</span><span class="Operator">,</span><span class="Number">1</span><span class="Operator">)</span> <span class="Operator">:</span> <span class="String">"Here"</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   9 </span>                      <span class="Operator">(</span><span class="Number">2</span><span class="Operator">,</span><span class="Number">2</span><span class="Operator">)</span> <span class="Operator">:</span> <span class="String">"is"</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  10 </span>                      <span class="Operator">(</span><span class="Number">3</span><span class="Operator">,</span><span class="Number">3</span><span class="Operator">)</span> <span class="Operator">:</span> <span class="String">"some"</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  11 </span>                      <span class="Operator">(</span><span class="Number">4</span><span class="Operator">,</span><span class="Number">4</span><span class="Operator">)</span> <span class="Operator">:</span> <span class="String">"data"</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  12 </span>                      <span class="Operator">}</span></span>
+<span class="line"><span class="LineNumber">  13 </span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">odd</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span><span class="Operator">.</span><span class="ID">GridCellAttr</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">odd</span><span class="Operator">.</span><span class="ID">SetBackgroundColour</span><span class="Operator">(</span><span class="String">"sky blue"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">odd</span><span class="Operator">.</span><span class="ID">SetFont</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Font</span><span class="Operator">(</span><span class="Number">10</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">SWISS</span><span class="Operator">,</span> <span class="ID">wx</span><span
+class="Operator">.</span><span class="ID">NORMAL</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">BOLD</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span></span>
+<span class="line"><span class="LineNumber">  18 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">even</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span><span class="Operator">.</span><span class="ID">GridCellAttr</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">even</span><span class="Operator">.</span><span class="ID">SetBackgroundColour</span><span class="Operator">(</span><span class="String">"sea green"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">even</span><span class="Operator">.</span><span class="ID">SetFont</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Font</span><span class="Operator">(</span><span class="Number">10</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">SWISS</span><span class="Operator">,</span> <span class="ID">wx</span><span
+class="Operator">.</span><span class="ID">NORMAL</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">BOLD</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span></span>
+<span class="line"><span class="LineNumber">  22 </span></span>
+<span class="line"><span class="LineNumber">  23 </span>    <span class="Comment"># these five are the required methods</span></span>
+<span class="line"><span class="LineNumber">  24 </span><span class="Comment"/>    <span class="ResWord">def</span> <span class="ID">GetNumberRows</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  25 </span>        <span class="ResWord">return</span> <span class="Number">50</span></span>
+<span class="line"><span class="LineNumber">  26 </span></span>
+<span class="line"><span class="LineNumber">  27 </span>    <span class="ResWord">def</span> <span class="ID">GetNumberCols</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  28 </span>        <span class="ResWord">return</span> <span class="Number">50</span></span>
+<span class="line"><span class="LineNumber">  29 </span></span>
+<span class="line"><span class="LineNumber">  30 </span>    <span class="ResWord">def</span> <span class="ID">IsEmptyCell</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">row</span><span class="Operator">,</span> <span class="ID">col</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  31 </span>        <span class="ResWord">return</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">data</span><span class="Operator">.</span><span class="ID">get</span><span class="Operator">(</span><span class="Operator">(</span><span class="ID">row</span><span class="Operator">,</span> <span class="ID">col</span><span class="Operator">)</span><span class="Operator">)</span> <span class="ResWord">is</span> <span class="ResWord">not</span> <span class="ID">None</span></span>
+<span class="line"><span class="LineNumber">  32 </span></span>
+<span class="line"><span class="LineNumber">  33 </span>    <span class="ResWord">def</span> <span class="ID">GetValue</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">row</span><span class="Operator">,</span> <span class="ID">col</span><span class="Operator">)</span><span class="Operator">:</span><span class="Comment">#为网格提供数据</span></span>
+<span class="line"><span class="LineNumber">  34 </span>        <span class="ID">value</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">data</span><span class="Operator">.</span><span class="ID">get</span><span class="Operator">(</span><span class="Operator">(</span><span class="ID">row</span><span class="Operator">,</span> <span class="ID">col</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  35 </span>        <span class="ResWord">if</span> <span class="ID">value</span> <span class="ResWord">is</span> <span class="ResWord">not</span> <span class="ID">None</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  36 </span>            <span class="ResWord">return</span> <span class="ID">value</span></span>
+<span class="line"><span class="LineNumber">  37 </span>        <span class="ResWord">else</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  38 </span>            <span class="ResWord">return</span> <span class="String">''</span></span>
+<span class="line"><span class="LineNumber">  39 </span></span>
+<span class="line"><span class="LineNumber">  40 </span>    <span class="ResWord">def</span> <span class="ID">SetValue</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">row</span><span class="Operator">,</span> <span class="ID">col</span><span class="Operator">,</span> <span class="ID">value</span><span class="Operator">)</span><span class="Operator">:</span><span class="Comment">#给表赋值</span></span>
+<span class="line"><span class="LineNumber">  41 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">data</span><span class="Operator">[</span><span class="Operator">(</span><span class="ID">row</span><span class="Operator">,</span><span class="ID">col</span><span class="Operator">)</span><span class="Operator">]</span> <span class="Operator">=</span> <span class="ID">value</span></span>
+<span class="line"><span class="LineNumber">  42 </span></span>
+<span class="line"><span class="LineNumber">  43 </span></span>
+<span class="line"><span class="LineNumber">  44 </span>    <span class="Comment"># the table can also provide the attribute for each cell</span></span>
+<span class="line"><span class="LineNumber">  45 </span><span class="Comment"/>    <span class="ResWord">def</span> <span class="ID">GetAttr</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">row</span><span class="Operator">,</span> <span class="ID">col</span><span class="Operator">,</span> <span class="ID">kind</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  46 </span>        <span class="ID">attr</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">even</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">odd</span><span class="Operator">]</span><span class="Operator">[</span><span class="ID">row</span> <span class="Operator">%</span> <span class="Number">2</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">  47 </span>        <span class="ID">attr</span><span class="Operator">.</span><span class="ID">IncRef</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  48 </span>        <span class="ResWord">return</span> <span class="ID">attr</span></span>
+<span class="line"><span class="LineNumber">  49 </span></span>
+<span class="line"><span class="LineNumber">  50 </span></span>
+<span class="line"><span class="LineNumber">  51 </span></span>
+<span class="line"><span class="LineNumber">  52 </span><span class="ResWord">class</span> <span class="ID">TestFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  53 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  54 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">=</span><span class="String">"Grid Table"</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  55 </span>                          <span class="ID">size</span><span class="Operator">=</span><span class="Operator">(</span><span class="Number">640</span><span class="Operator">,</span><span class="Number">480</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  56 </span></span>
+<span class="line"><span class="LineNumber">  57 </span>        <span class="ID">grid</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span><span class="Operator">.</span><span class="ID">Grid</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  58 </span></span>
+<span class="line"><span class="LineNumber">  59 </span>        <span class="ID">table</span> <span class="Operator">=</span> <span class="ID">TestTable</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  60 </span>        <span class="ID">grid</span><span class="Operator">.</span><span class="ID">SetTable</span><span class="Operator">(</span><span class="ID">table</span><span class="Operator">,</span> <span class="ID">True</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  61 </span></span>
+<span class="line"><span class="LineNumber">  62 </span></span>
+<span class="line"><span class="LineNumber">  63 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  64 </span><span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">TestFrame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  65 </span><span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  66 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-189" class="anchor"/><span id="line-190" class="anchor"/><p class="line862">在例14.2中，所有特定于应用程序的逻辑都已被移到了网格表类，所以这里就没有必须创建一个自定义的<tt>wx.grid.Grid</tt>的子类。 <span id="line-191" class="anchor"/><span id="line-192" class="anchor"/></p><p class="line874">要使网格表有效，你必须覆盖5个方法。表14.1列出了这些方法。在这一章中，我们还会看到其它你能覆盖的方法，你可以覆盖它们以给于你的表更多的功能。 <span id="line-193" class="anchor"/><span id="line-194" class="anchor"/><span id="line-195" class="anchor"/></p><p
+class="line867"><strong>表14.1</strong>  <span id="line-196" class="anchor"/><strong><tt>wx.grid.GridTableBase</tt>中需要被覆盖的方法</strong> <span id="line-197" class="anchor"/><span id="line-198" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line891"><tt>GetNumberCols()</tt></p></td>
+<td><p class="line862">返回显示在网格中的列的数目</p></td>
+</tr>
+<tr>  <td><span id="line-199" class="anchor"/><p class="line891"><tt>GetNumberRows()</tt></p></td>
+<td><p class="line862">返回显示在网格中的行的数目</p></td>
+</tr>
+<tr>  <td><span id="line-200" class="anchor"/><p class="line891"><tt>GetValue(row, col)</tt></p></td>
+<td><p class="line862">返回坐标(<tt>row, col)</tt>处的值</p></td>
+</tr>
+<tr>  <td><span id="line-201" class="anchor"/><p class="line891"><tt>IsEmptyCell(row, col)</tt></p></td>
+<td><p class="line862">如果坐标(<tt>row, col)</tt>处的单元格为空的话，返回<tt>True</tt>。否则返回<tt>False</tt>。</p></td>
+</tr>
+</tbody></table></div><span id="line-202" class="anchor"/><span id="line-203" class="anchor"/><p class="line867"><tt>SetValue(row, col, value)</tt>：如果你需要的话，它使你能够更新你底层的数据结构以匹配用户的编辑。对于一个只读的表，你仍然需要声明该方法，但是你可以通过<tt>pass</tt>来使它什么也不做。该方法在当用户编辑一个单元格时自动被调用。 <span id="line-204" class="anchor"/><span id="line-205" class="anchor"/></p><p class="line874">要将网格表实例附着于你的表的实例，要调用 <span id="line-206"
+class="anchor"/><tt>SetTable(table,takeOwnership=False,selmode=wx.grid.Grid.SelectCells)</tt>方法。其中参数<tt>table</tt>是你的<tt>wx.grid.PyGridTableBase</tt>的实例。参数<tt>takeOwnership</tt>使得网格控件拥有这个表。如果<tt>takeOwnership</tt>为<tt>True</tt>，那么当网格被删除时，该表也被<tt>wxPython</tt>系统删除。参数<tt>selmode</tt>作用等同于在<tt>CreateGrid()</tt>中的作用。 <span id="line-207" class="anchor"/><span id="line-208" class="anchor"/></p><p
+class="line862">还有一些其它的方法你可以覆盖，以处理网格的各部分，而非表的数据。在本章的稍后部分，我们将讨论这些方法中的一些。并且，我们将看到在某些情况中，使用<tt>SetTable</tt>创建的表的行为与使用<tt>CreateGrid()</tt>创建的表的行为是不同的。 <span id="line-209" class="anchor"/><span id="line-210" class="anchor"/></p><p
+class="line862">你能够覆盖的另一个方法是<tt>Clear()</tt>，它在当对网格调用<tt>ClearGrid()</tt>时被调用，如果适当的话，你可以覆盖该方法来清除潜在的数据源。在网格中置入数据了以后，你现在可以开始对网格作各种有兴趣的事情了。在下一节，我们将给你展示如何处理网格的外观。 <span id="line-211" class="anchor"/><span id="line-212" class="anchor"/><span id="line-213" class="anchor"/></p><p class="line867">
+</p><h2 id="head-e0de67600426836106a3499967e15b6a9e511530">2. 使用网格工作</h2>
+<span id="line-214" class="anchor"/><span id="line-215" class="anchor"/><span id="line-216" class="anchor"/><p class="line874">一旦网格被创建并初始化了，你就可以用很多不同的方法来处理它了。单元格、行或列可以被添加和删除。你可以增加首部，改变一行或一列的大小，并可以用代码的方式来改变网格的可见部分或被选择的部分。下面的几节，我们将涉及这些内容。 <span id="line-217" class="anchor"/><span id="line-218" class="anchor"/><span id="line-219" class="anchor"/></p><p class="line867">
+</p><h3 id="head-cefb1a9ff4b90c4a98414e88ee96cef084ccef77">2.1. 如何添加、删除行，列和单元格？</h3>
+<span id="line-220" class="anchor"/><span id="line-221" class="anchor"/><span id="line-222" class="anchor"/><p class="line862">在网格被创建之后，你仍然可以添加新的行和列。注意，依据网格的创建方法不同，该机制的工作也不同。你可以使用<tt>AppendCols(numCols=1)</tt>方法在你的网格的右边增加一列。使用<tt>AppendRows(numRows=1)</tt>在网格的底部增加一行。 <span id="line-223" class="anchor"/><span id="line-224" class="anchor"/></p><p class="line862">如果不是想在网格的行或列的最后添加一行或一列，你可以使用方法<tt>InsertCols(pos=0, numCols=1)</tt>或<tt>InsertRows(pos=1,
+numRows=1)</tt>来在指定位置添加。其中参数<tt>pos</tt>代表被添加的新元素中第一个的索引。如果参数<tt>numRows</tt>或<tt>numCols</tt>大于1 ，那么有更多的元素被添加到起始位置的右边（对于列来说），或起始位置的下边（对于行来说）。 <span id="line-225" class="anchor"/><span id="line-226" class="anchor"/></p><p class="line862">要删除一行或一列，你可以使用方法<tt>DeleteCols(pos=0, numCols=1)</tt>和<tt>DeleteRows(pos=0, numRows=1)</tt>。其中参数<tt>pos</tt>是要被删除的行或列的第一个的索引。 <span id="line-227" class="anchor"/><span id="line-228" class="anchor"/></p><p
+class="line862">如果网格是使用<tt>CreateGrid()</tt>方法被初始化的，那么上面讨论的方法总是可以工作的，并且在新的行或列中创建的单元格是以一个空字符串从为初始值的。如果网是使用<tt>SetTable()</tt>方法被初始化的，那么网格表必须支持对表的改变。 <span id="line-229" class="anchor"/><span id="line-230" class="anchor"/></p><p class="line862">要支持改变，你的网格表要对同样的改变方法进行覆盖。例如，如果你对你的网格调用了<tt>InsertCols()</tt>方法，那么网格表也必须声明一个<tt>InsertCols(pos=0,
+numCols=1)</tt>方法。该网格表的这个方法返回布尔值<tt>True</tt>表示支持改变，返回<tt>False</tt>则否决改变。例如，要创建一个只允许被扩展到50行的一个表，可以在你的网格表中写上下面的方法。 <span id="line-231" class="anchor"/><span id="line-232" class="anchor"/></p><p class="line867"><span id="line-233" class="anchor"/><span id="line-234" class="anchor"/><span id="line-235" class="anchor"/><span id="line-236" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-0d3797861f1c865d346fbde48f264afff32445f4_003\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-0d3797861f1c865d346fbde48f264afff32445f4_003', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-0d3797861f1c865d346fbde48f264afff32445f4_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">def</span> <span class="ID">AppendRows</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">numRows</span><span class="Operator">=</span><span class="Number">1</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">return</span> <span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">GetRowCount</span><span class="Operator">(</span><span class="Operator">)</span> <span class="Operator">+</span> <span class="ID">numRows</span><span class="Operator">)</span>  <span class="Operator">=</span> <span class="Number">50</span><span class="Text"/></span>
+</pre></div><span id="line-237" class="anchor"/><p class="line862">某些对网格的改变不会立即被显示出来，而是要等待网格被刷新。你可能通过使用<tt>ForceRefresh()</tt>方法来触发一个即时的刷新。在通常情况下，如果你用代码的方式来改变你的网格，则改变不会立即显示出来，那么插入对<tt>ForceRefresh()</tt>方法的调用可以确保你的改变即时的显示出来。 <span id="line-238" class="anchor"/><span id="line-239" class="anchor"/></p><p
+class="line862">如果你在对一个网格作一个大量的改变，而你在改变期间不想让网格的显示产生闪烁的话，你可以通过使用<tt>BeginBatch()</tt>方法来告诉该网格去作一个批量的处理。该方法将针对网格作一个内在的增量计数。你也必须在批量的任务之后调用<tt>EndBatch()</tt>——该方法针对网格作一个内在的减量计数。当计数值比0大时，表明正处于开始和结束计数之间，网格这时不会重绘。如果必要的话，你还可以在批量处理中再嵌套批量处理。同样，在全部的批量处理没有完成时，网格不会重绘。 <span id="line-240" class="anchor"/><span id="line-241" class="anchor"/><span id="line-242"
+class="anchor"/></p><p class="line867">
+</p><h3 id="head-9dee60e93ae26861c337957c3b6680891d4b4124">2.2. 如何处理一个网格的行和列的首部？</h3>
+<span id="line-243" class="anchor"/><span id="line-244" class="anchor"/><span id="line-245" class="anchor"/><p class="line862">在一个<tt>wxPython</tt>的网格控件中，每行和每列都有它们自己的标签。默认情况下，行的标签是数字，从1开坮。列的标签是字母，从A开始。<tt>wxPython</tt>提供了一些方法来改变这些标签。图14.3显示了一个带有首部标签的网格。 <span id="line-246" class="anchor"/><span id="line-247" class="anchor"/><span id="line-248" class="anchor"/></p><p class="line867"><strong>图14.3</strong> <span id="line-249" class="anchor"/><span id="line-250"
+class="anchor"/></p><p class="line867"><img title="attachment:w14.3.gif" src="/moin/WxPythonInAction/ChapterFourteen?action=AttachFile&amp;do=get&amp;target=w14.3.gif" class="attachment"/> <span id="line-251" class="anchor"/><span id="line-252" class="anchor"/><span id="line-253" class="anchor"/></p><p class="line862">例子14.3显示了产生图14.3的代码。其中网格是用<tt>CreateGrid()</tt>初始化的。 <span id="line-254" class="anchor"/><span id="line-255" class="anchor"/><span id="line-256" class="anchor"/></p><p class="line867"><strong>例14.3</strong>
+<span id="line-257" class="anchor"/><strong>带自定义标签的一个非模式的网格</strong> <span id="line-258" class="anchor"/><span id="line-259" class="anchor"/></p><p class="line867"><span id="line-260" class="anchor"/><span id="line-261" class="anchor"/><span id="line-262" class="anchor"/><span id="line-263" class="anchor"/><span id="line-264" class="anchor"/><span id="line-265" class="anchor"/><span id="line-266" class="anchor"/><span id="line-267" class="anchor"/><span id="line-268" class="anchor"/><span id="line-269" class="anchor"/><span
+id="line-270" class="anchor"/><span id="line-271" class="anchor"/><span id="line-272" class="anchor"/><span id="line-273" class="anchor"/><span id="line-274" class="anchor"/><span id="line-275" class="anchor"/><span id="line-276" class="anchor"/><span id="line-277" class="anchor"/><span id="line-278" class="anchor"/><span id="line-279" class="anchor"/><span id="line-280" class="anchor"/><span id="line-281" class="anchor"/><span id="line-282" class="anchor"/><span id="line-283" class="anchor"/><span id="line-284" class="anchor"/><span
+id="line-285" class="anchor"/><span id="line-286" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-62dbb9d0c720fdd74d9c1ec90fde6a0a96291441_004\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-62dbb9d0c720fdd74d9c1ec90fde6a0a96291441_004', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-62dbb9d0c720fdd74d9c1ec90fde6a0a96291441_004" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">import</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span></span>
+<span class="line"><span class="LineNumber">   3 </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">class</span> <span class="ID">TestFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span></span>
+<span class="line"><span class="LineNumber">   6 </span>    <span class="ID">rowLabels</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="String">"uno"</span><span class="Operator">,</span> <span class="String">"dos"</span><span class="Operator">,</span> <span class="String">"tres"</span><span class="Operator">,</span> <span class="String">"quatro"</span><span class="Operator">,</span> <span class="String">"cinco"</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   7 </span>    <span class="ID">colLabels</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="String">"homer"</span><span class="Operator">,</span> <span class="String">"marge"</span><span class="Operator">,</span> <span class="String">"bart"</span><span class="Operator">,</span> <span class="String">"lisa"</span><span class="Operator">,</span> <span class="String">"maggie"</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   8 </span></span>
+<span class="line"><span class="LineNumber">   9 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">=</span><span class="String">"Grid Headers"</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  11 </span>                          <span class="ID">size</span><span class="Operator">=</span><span class="Operator">(</span><span class="Number">500</span><span class="Operator">,</span><span class="Number">200</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">grid</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span><span class="Operator">.</span><span class="ID">Grid</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">grid</span><span class="Operator">.</span><span class="ID">CreateGrid</span><span class="Operator">(</span><span class="Number">5</span><span class="Operator">,</span><span class="Number">5</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ResWord">for</span> <span class="ID">row</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="Number">5</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  15 </span>            <span class="Comment">#1 start</span></span>
+<span class="line"><span class="LineNumber">  16 </span><span class="Comment"/>            <span class="ID">grid</span><span class="Operator">.</span><span class="ID">SetRowLabelValue</span><span class="Operator">(</span><span class="ID">row</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">rowLabels</span><span class="Operator">[</span><span class="ID">row</span><span class="Operator">]</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span>            <span class="ID">grid</span><span class="Operator">.</span><span class="ID">SetColLabelValue</span><span class="Operator">(</span><span class="ID">row</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">colLabels</span><span class="Operator">[</span><span class="ID">row</span><span class="Operator">]</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span>            <span class="Comment">#1 end</span></span>
+<span class="line"><span class="LineNumber">  19 </span><span class="Comment"/>            <span class="ResWord">for</span> <span class="ID">col</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="Number">5</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  20 </span>                <span class="ID">grid</span><span class="Operator">.</span><span class="ID">SetCellValue</span><span class="Operator">(</span><span class="ID">row</span><span class="Operator">,</span> <span class="ID">col</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  21 </span>                        <span class="String">"(%s,%s)"</span> <span class="Operator">%</span> <span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">rowLabels</span><span class="Operator">[</span><span class="ID">row</span><span class="Operator">]</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">colLabels</span><span class="Operator">[</span><span
+class="ID">col</span><span class="Operator">]</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  22 </span></span>
+<span class="line"><span class="LineNumber">  23 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  24 </span><span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">TestFrame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  25 </span><span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  26 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-287" class="anchor"/><span id="line-288" class="anchor"/><p class="line862">正如添加和删除行一样，改变标签也是根据网格的类型而不同的。对于使用<tt>CreateGrid()</tt>创建的网格，要使用<tt>SetColLabelValue(col, value)</tt>和<tt>SetRowLabelValue(row, value)</tt>方法来设置标签值，如#1所示。参数<tt>col</tt>和<tt>row</tt>是列和行的索引，<tt>value</tt>是要显示在标签中的字符串。要得到一行或一列的标签，使用<tt>GetColLabelValue(col)</tt>和<tt>GetRowLabelValue(row)</tt>方法。 <span id="line-289"
+class="anchor"/><span id="line-290" class="anchor"/></p><p class="line862">对于使用外部网格表的一个网格控件，你可以通过覆盖网格表的<tt>GetColLabelValue(col)</tt>和<tt>GetRowLabelValue(row)</tt>方法来达到相同的作用。为了消除混淆，网格控件在当它需要显示标签并且网格有一个关联的表时，内在地调用这些方法。由于返回值是动态地由你在覆盖的方法中所写的代码决定的，所以这里不需要覆盖或调用<tt>set</tt>*方法。不过<tt>set</tt>*方法仍然存在——<tt>SetColLabelValue(col, value)</tt>和<tt>SetRowLabelValue(row,
+value)</tt>——但是你很少会使用到，除非你想让用户能够改变潜在的数据。通常，你不需要<tt>set</tt>*方法。例14.4显示了如何改变网格表中的标签——这个例子产生与上一例相同的输出。 <span id="line-291" class="anchor"/><span id="line-292" class="anchor"/><span id="line-293" class="anchor"/></p><p class="line867"><strong>例14.4</strong>  <span id="line-294" class="anchor"/><strong>带有自定义标签的使用了网格表的网格</strong> <span id="line-295" class="anchor"/><span id="line-296" class="anchor"/></p><p class="line867"><span id="line-297"
+class="anchor"/><span id="line-298" class="anchor"/><span id="line-299" class="anchor"/><span id="line-300" class="anchor"/><span id="line-301" class="anchor"/><span id="line-302" class="anchor"/><span id="line-303" class="anchor"/><span id="line-304" class="anchor"/><span id="line-305" class="anchor"/><span id="line-306" class="anchor"/><span id="line-307" class="anchor"/><span id="line-308" class="anchor"/><span id="line-309" class="anchor"/><span id="line-310" class="anchor"/><span id="line-311" class="anchor"/><span
+id="line-312" class="anchor"/><span id="line-313" class="anchor"/><span id="line-314" class="anchor"/><span id="line-315" class="anchor"/><span id="line-316" class="anchor"/><span id="line-317" class="anchor"/><span id="line-318" class="anchor"/><span id="line-319" class="anchor"/><span id="line-320" class="anchor"/><span id="line-321" class="anchor"/><span id="line-322" class="anchor"/><span id="line-323" class="anchor"/><span id="line-324" class="anchor"/><span id="line-325" class="anchor"/><span id="line-326"
+class="anchor"/><span id="line-327" class="anchor"/><span id="line-328" class="anchor"/><span id="line-329" class="anchor"/><span id="line-330" class="anchor"/><span id="line-331" class="anchor"/><span id="line-332" class="anchor"/><span id="line-333" class="anchor"/><span id="line-334" class="anchor"/><span id="line-335" class="anchor"/><span id="line-336" class="anchor"/><span id="line-337" class="anchor"/><span id="line-338" class="anchor"/><span id="line-339" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-0b53a8fc595282769d3f338018b6a71a8e6d9777_005\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-0b53a8fc595282769d3f338018b6a71a8e6d9777_005', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-0b53a8fc595282769d3f338018b6a71a8e6d9777_005" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">import</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span></span>
+<span class="line"><span class="LineNumber">   3 </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">class</span> <span class="ID">TestTable</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span><span class="Operator">.</span><span class="ID">PyGridTableBase</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span><span class="Operator">.</span><span class="ID">PyGridTableBase</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">rowLabels</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="String">"uno"</span><span class="Operator">,</span> <span class="String">"dos"</span><span class="Operator">,</span> <span class="String">"tres"</span><span class="Operator">,</span> <span class="String">"quatro"</span><span class="Operator">,</span> <span
+class="String">"cinco"</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">colLabels</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="String">"homer"</span><span class="Operator">,</span> <span class="String">"marge"</span><span class="Operator">,</span> <span class="String">"bart"</span><span class="Operator">,</span> <span class="String">"lisa"</span><span class="Operator">,</span> <span
+class="String">"maggie"</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   9 </span></span>
+<span class="line"><span class="LineNumber">  10 </span>    <span class="ResWord">def</span> <span class="ID">GetNumberRows</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ResWord">return</span> <span class="Number">5</span></span>
+<span class="line"><span class="LineNumber">  12 </span></span>
+<span class="line"><span class="LineNumber">  13 </span>    <span class="ResWord">def</span> <span class="ID">GetNumberCols</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ResWord">return</span> <span class="Number">5</span></span>
+<span class="line"><span class="LineNumber">  15 </span></span>
+<span class="line"><span class="LineNumber">  16 </span>    <span class="ResWord">def</span> <span class="ID">IsEmptyCell</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">row</span><span class="Operator">,</span> <span class="ID">col</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ResWord">return</span> <span class="ID">False</span></span>
+<span class="line"><span class="LineNumber">  18 </span></span>
+<span class="line"><span class="LineNumber">  19 </span>    <span class="ResWord">def</span> <span class="ID">GetValue</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">row</span><span class="Operator">,</span> <span class="ID">col</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ResWord">return</span> <span class="String">"(%s,%s)"</span> <span class="Operator">%</span> <span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">rowLabels</span><span class="Operator">[</span><span class="ID">row</span><span class="Operator">]</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">colLabels</span><span
+class="Operator">[</span><span class="ID">col</span><span class="Operator">]</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span></span>
+<span class="line"><span class="LineNumber">  22 </span>    <span class="ResWord">def</span> <span class="ID">SetValue</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">row</span><span class="Operator">,</span> <span class="ID">col</span><span class="Operator">,</span> <span class="ID">value</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  23 </span>        <span class="ResWord">pass</span></span>
+<span class="line"><span class="LineNumber">  24 </span></span>
+<span class="line"><span class="LineNumber">  25 </span>    <span class="ResWord">def</span> <span class="ID">GetColLabelValue</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">col</span><span class="Operator">)</span><span class="Operator">:</span><span class="Comment">#列标签</span></span>
+<span class="line"><span class="LineNumber">  26 </span>        <span class="ResWord">return</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">colLabels</span><span class="Operator">[</span><span class="ID">col</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">  27 </span></span>
+<span class="line"><span class="LineNumber">  28 </span>    <span class="ResWord">def</span> <span class="ID">GetRowLabelValue</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">row</span><span class="Operator">)</span><span class="Operator">:</span><span class="Comment">#行标签</span></span>
+<span class="line"><span class="LineNumber">  29 </span>        <span class="ResWord">return</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">rowLabels</span><span class="Operator">[</span><span class="ID">row</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">  30 </span></span>
+<span class="line"><span class="LineNumber">  31 </span><span class="ResWord">class</span> <span class="ID">TestFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  32 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  33 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">=</span><span class="String">"Grid Table"</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  34 </span>                          <span class="ID">size</span><span class="Operator">=</span><span class="Operator">(</span><span class="Number">500</span><span class="Operator">,</span><span class="Number">200</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  35 </span>        <span class="ID">grid</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span><span class="Operator">.</span><span class="ID">Grid</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  36 </span>        <span class="ID">table</span> <span class="Operator">=</span> <span class="ID">TestTable</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  37 </span>        <span class="ID">grid</span><span class="Operator">.</span><span class="ID">SetTable</span><span class="Operator">(</span><span class="ID">table</span><span class="Operator">,</span> <span class="ID">True</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  38 </span></span>
+<span class="line"><span class="LineNumber">  39 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  40 </span><span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">TestFrame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  41 </span><span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  42 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-340" class="anchor"/><span id="line-341" class="anchor"/><p class="line862">默认情况下，标签是居中显示的。但是你也可以使用<tt>SetColumnLabelAlignment(horiz, vert)</tt>和<tt>SetRowLabelAlignment(horiz, vert)</tt>来改变这个行为。其中参数<tt>horiz</tt>用以控制水平对齐方式，取值有<tt>wx.ALIGN_LEFT, wx.ALIGN_CENTRE</tt>或<tt>wx.ALIGN_RIGHT</tt>。参数<tt>vert</tt>用以控制垂直对齐方式，取值有<tt>wx.ALIGN_TOP, wx.ALIGN_CENTRE,</tt>或<tt>wx.ALIGN_BOTTOM</tt>。 <span id="line-342"
+class="anchor"/><span id="line-343" class="anchor"/></p><p class="line862">行和列的标签区域共享一套颜色和字体属性。你可以使用<tt>SetLabelBackgroundColour(colour)</tt> <span id="line-344" class="anchor"/>, <tt>SetLabelFont(font), and SetLabelTextColour(colour)</tt>方法来处理这些属性。参数<tt>colour</tt>是<tt>wx.Colour</tt>的一个实例或<tt>wxPython</tt>会转换为颜色的东西，如颜色的字符串名。参数<tt>font</tt>是<tt>wx.Font</tt>的一个实例。与<tt>set</tt>*相应的<tt>get</tt>*方法有<tt>GetLabelBackgoundColour(),
+GetLabelFont()</tt>，和<tt>GetLabelTextFont()</tt>。 <span id="line-345" class="anchor"/><span id="line-346" class="anchor"/><span id="line-347" class="anchor"/></p><p class="line867">
+</p><h3 id="head-6dcf6e90511e652092971499364c6bce239e5d91">2.3. 如何管理网格元素的尺寸？</h3>
+<span id="line-348" class="anchor"/><span id="line-349" class="anchor"/><span id="line-350" class="anchor"/><p class="line874">网格控件提供了几个不同的方法来管理单元格、行和列的尺寸。在这一节，我们将讨论这些方法。图14.4显示了一些用来改变一个特定的单元格的尺寸的方法。 <span id="line-351" class="anchor"/><span id="line-352" class="anchor"/></p><p class="line874">例14.5显示了创建了一个带有可调节大小的单元格、行和列的网格。 <span id="line-353" class="anchor"/><span id="line-354" class="anchor"/><span id="line-355"
+class="anchor"/></p><p class="line867"><strong>图14.4</strong> <span id="line-356" class="anchor"/><span id="line-357" class="anchor"/></p><p class="line867"><img title="attachment:w14.4.gif" src="/moin/WxPythonInAction/ChapterFourteen?action=AttachFile&amp;do=get&amp;target=w14.4.gif" class="attachment"/> <span id="line-358" class="anchor"/><span id="line-359" class="anchor"/><span id="line-360" class="anchor"/><span id="line-361" class="anchor"/></p><p class="line867"><strong>例14.5</strong>  <span id="line-362"
+class="anchor"/><strong>可调整尺寸的单元格的示例代码</strong> <span id="line-363" class="anchor"/><span id="line-364" class="anchor"/></p><p class="line867"><span id="line-365" class="anchor"/><span id="line-366" class="anchor"/><span id="line-367" class="anchor"/><span id="line-368" class="anchor"/><span id="line-369" class="anchor"/><span id="line-370" class="anchor"/><span id="line-371" class="anchor"/><span id="line-372" class="anchor"/><span id="line-373" class="anchor"/><span id="line-374"
+class="anchor"/><span id="line-375" class="anchor"/><span id="line-376" class="anchor"/><span id="line-377" class="anchor"/><span id="line-378" class="anchor"/><span id="line-379" class="anchor"/><span id="line-380" class="anchor"/><span id="line-381" class="anchor"/><span id="line-382" class="anchor"/><span id="line-383" class="anchor"/><span id="line-384" class="anchor"/><span id="line-385" class="anchor"/><span id="line-386" class="anchor"/><span id="line-387" class="anchor"/><span id="line-388"
+class="anchor"/><span id="line-389" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-43c1c48b8f465135fed9f8b238f5c4fb359937d1_006\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-43c1c48b8f465135fed9f8b238f5c4fb359937d1_006', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-43c1c48b8f465135fed9f8b238f5c4fb359937d1_006" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">import</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span></span>
+<span class="line"><span class="LineNumber">   3 </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">class</span> <span class="ID">TestFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span></span>
+<span class="line"><span class="LineNumber">   6 </span></span>
+<span class="line"><span class="LineNumber">   7 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">=</span><span class="String">"Grid Sizes"</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   9 </span>                          <span class="ID">size</span><span class="Operator">=</span><span class="Operator">(</span><span class="Number">600</span><span class="Operator">,</span><span class="Number">300</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">grid</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span><span class="Operator">.</span><span class="ID">Grid</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">grid</span><span class="Operator">.</span><span class="ID">CreateGrid</span><span class="Operator">(</span><span class="Number">5</span><span class="Operator">,</span><span class="Number">5</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ResWord">for</span> <span class="ID">row</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="Number">5</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  13 </span>            <span class="ResWord">for</span> <span class="ID">col</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="Number">5</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  14 </span>                <span class="ID">grid</span><span class="Operator">.</span><span class="ID">SetCellValue</span><span class="Operator">(</span><span class="ID">row</span><span class="Operator">,</span> <span class="ID">col</span><span class="Operator">,</span> <span class="String">"(%s,%s)"</span> <span class="Operator">%</span> <span class="Operator">(</span><span class="ID">row</span><span class="Operator">,</span> <span
+class="ID">col</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ID">grid</span><span class="Operator">.</span><span class="ID">SetCellSize</span><span class="Operator">(</span><span class="Number">2</span><span class="Operator">,</span> <span class="Number">2</span><span class="Operator">,</span> <span class="Number">2</span><span class="Operator">,</span> <span class="Number">3</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">grid</span><span class="Operator">.</span><span class="ID">SetColSize</span><span class="Operator">(</span><span class="Number">1</span><span class="Operator">,</span> <span class="Number">125</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span>        <span class="ID">grid</span><span class="Operator">.</span><span class="ID">SetRowSize</span><span class="Operator">(</span><span class="Number">1</span><span class="Operator">,</span> <span class="Number">100</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span></span>
+<span class="line"><span class="LineNumber">  20 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span><span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">TestFrame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  22 </span><span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  23 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-390" class="anchor"/><span id="line-391" class="anchor"/><p class="line867"><strong>改变单元格的尺寸</strong> <span id="line-392" class="anchor"/><span id="line-393" class="anchor"/></p><p class="line862">一个作用于单元格尺寸的基本的方法是使它跨多行或多列，类似于<tt>HTML</tt>的<tt>rowspan</tt>和<tt>colspan</tt>。要达到这种效果，在<tt>wxPython</tt>中可以使用方法<tt>SetCellSize(row, col, num_rows,
+num_cols)</tt>。该方法设置坐标<tt>row,col</tt>处的单元格跨<tt>num_rows</tt>行和<tt>num_cols</tt>列。在通常的情形下，每个单元格占据一行和一列，要使用单元格不止占据一行或一列，你需要给参数<tt>num_rows, num_cols</tt>大于1的值。参数<tt>num_rows, num_cols</tt>的值小于等于0会导致错误。如果你的设置使得一个单元格的尺寸与另一个早先声明为跨越的单元格的尺寸相重叠时，早先的这个单元格的尺寸会重置为占据一行和一列。你也能够使用方法<tt>SetCellOverflow(row, col,
+allow)</tt>方法来关闭单元格的跨越显示。只要在该方法中使用<tt>pass</tt>就可以阻止单元格跨越了，即使已经使用了<tt>SetCellSize()</tt>方法来设置它的尺寸。 <span id="line-394" class="anchor"/><span id="line-395" class="anchor"/></p><p class="line862">调整网格的尺寸的一个更加典型的方法是基于一行或一列来处理其像素尺寸。你可以使用<tt>SetColSize(col, width)</tt>和<tt>SetRowSize(row,
+height)</tt>方法来改变一列或一行的宽度。当然，你可以使用<tt>GetColSize(col)</tt>或<tt>GetRowSize(row)</tt>来确定一列或一行的当前尺寸。 <span id="line-396" class="anchor"/><span id="line-397" class="anchor"/><span id="line-398" class="anchor"/></p><p class="line867"><strong>设置默认尺寸</strong> <span id="line-399" class="anchor"/><span id="line-400" class="anchor"/></p><p class="line874">你可以通过改变所有的行和列的默认尺寸来改变整个网格的尺寸。方法如下： <span id="line-401" class="anchor"/><span
+id="line-402" class="anchor"/></p><p class="line867"><tt>SetDefaultColSize(width, resizeExistingCols=False) </tt> <span id="line-403" class="anchor"/><tt>SetDefaultRowSize(height, resizeExistingRows=False)</tt> <span id="line-404" class="anchor"/><span id="line-405" class="anchor"/></p><p
+class="line862">其中的第一个参数是以像素为单位的新的默认尺寸。如果第二个布尔参数的值是<tt>True</tt>，那么当前存在的所有行或列立即被调整到新的默认尺寸。如果第二个参数的值为<tt>False</tt>，那么这个新的默认尺寸仅被应用于新添加的行或列。通常，设置新的默认值是在初始化的开头，甚至是在调用<tt>CreateGrid()</tt>或<tt>SetTable()</tt>之前。你可以使用<tt>GetDefaultColSize()</tt>和<tt>GetDefaultRowSize()</tt>方法来得到当前的默认尺寸。 <span id="line-406" class="anchor"/><span id="line-407"
+class="anchor"/></p><p class="line862">设置默认尺寸与为单个行或列设置尺寸相比，有一个性能上的问题。对于存储默认值，<tt>wxPython</tt>只需要存储这两个整数。如果你将单个行或列设置到一个非默认的尺寸，<tt>wxPython</tt>切换并将每个行或列的尺寸存储到一个数组中。如果你的表是非常的大的话，这将明显地占用很多的内存，因此这是需要注意的。 <span id="line-408" class="anchor"/><span id="line-409" class="anchor"/></p><p
+class="line874">有时，你想为一行或一列设置一个最小的尺寸，以便不用担心程序的某个方法的调用或用户对网格线的拖动会致使该行或列变得更小。 <span id="line-410" class="anchor"/><span id="line-411" class="anchor"/></p><p
+class="line862">在<tt>wxPython</tt>中，你可以对一个网格的宽度设置最小值或为单独的行和列分别设置最小尺寸值。要改变整个网格的最小尺寸，可以使用方法<tt>SetColMinimalAcceptableWidth(width)</tt>或<tt>SetRowMinimalAcceptableHeight(height)</tt>。其中的参数是针对所有行或列的最小的像素尺寸。要一行一行的设置最小尺寸，使用方法<tt>SetColMinimalWidth(col, width)</tt>或<tt>SetRowMinimalHeight(row,
+height)</tt>。其中第一个参数是要调整尺寸的项目的索引，第二个参数是以像素为单位的新的尺寸。单个的行的最小尺寸必须比最小的网格尺寸大，如果单个的行的最小尺寸被设置了的话。上面的<tt>set</tt>*方法都有一个相应的<tt>get</tt>*方法： <span id="line-412" class="anchor"/><span id="line-413" class="anchor"/></p><p class="line862">* <tt>GetColMinimalAcceptableWidth()</tt> <span id="line-414" class="anchor"/>* <tt>GetRowMinimalAcceptableHeight()</tt> <span id="line-415" class="anchor"/>*
+<tt>GetColMinimalWidth(col)</tt> <span id="line-416" class="anchor"/>* <tt>GetRowMinimalHeight(row)</tt> <span id="line-417" class="anchor"/><span id="line-418" class="anchor"/><span id="line-419" class="anchor"/></p><p class="line867"><strong>设置标签的尺寸</strong> <span id="line-420" class="anchor"/><span id="line-421" class="anchor"/></p><p
+class="line862">网格上的标签区域有一套单独的调整尺寸的函数。在这种情况下，你是在设置行标签的宽度和列标签的高度，意思就是，把列标签作为一个特殊的行，把行标签作为一个特殊的列。<tt>set</tt>*方法有<tt>SetRowLabelSize(width)</tt>，它设置行标签的宽度，<tt>SetColLabelSize(height)</tt>，它设置列标签的高度。你可以使用相应的<tt>GetRowLabelSize()</tt>和<tt>GetColLabelSize()</tt>方法来得到这些尺寸。 <span id="line-422" class="anchor"/><span id="line-423" class="anchor"/></p><p
+class="line862">通常，你不会关心单元格的实际的像素尺寸，你希望它们被自动调整到足够显示你的数据的大小。在<tt>wxPython</tt>中，你可以通过使用<tt>AutoSize()</tt>方法来自动调整整个网格的尺寸。该方法使得所有的行和列的尺寸与它们中的内容相适应。你也可以对单个的行或列使用<tt>AutoSizeColumn(col, setAsMin=True)</tt>和<tt>AutoSizeRow(row,
+setAsMin=True)</tt>来使它们的尺寸自动与其中的内容相适应。如果参数<tt>setAsMin</tt>为<tt>True</tt>，那么新的自动的尺寸将作为该行或列的最小尺寸。<tt>AutoSizeColumns(setAsMin=True)</tt>和<tt>AutoSizeRows(setAsMin=True)</tt>自动调整所有的列和行的尺寸。 <span id="line-424" class="anchor"/><span id="line-425" class="anchor"/></p><p class="line874">你也可以让用户通过拖动标签单元格的边框来调整行的尺寸。用于实现这种行为的主要的方法如下： <span id="line-426" class="anchor"/><span id="line-427"
+class="anchor"/></p><ul><li><p class="line891"><tt>EnableDragColSize(enable=True)</tt>：控制用户能否通过拖动边框来改变标签的宽度 <span id="line-428" class="anchor"/></p></li><li><p class="line891"><tt>EnableDragRowSize(enable=True)</tt>：控制用户能否通过拖动边框来改变标签的高度 <span id="line-429" class="anchor"/></p></li><li><p class="line891"><tt>EnableDragGridSize(enable=True)</tt>：控制用户能否通过拖动边框一次性改变标签的宽度和高度 <span id="line-430" class="anchor"/><span id="line-431"
+class="anchor"/></p></li></ul><p class="line874">下面的方法是上面方法的相应的使拖动无效的简便的方法： <span id="line-432" class="anchor"/><span id="line-433" class="anchor"/><span id="line-434" class="anchor"/></p><ul><li><p class="line891"><tt>DisableDragColSize()</tt> <span id="line-435" class="anchor"/></p></li><li><p class="line891"><tt>DisableDragRowSize()</tt> <span id="line-436" class="anchor"/></p></li><li><p class="line891"><tt>DisableDragGridSize()</tt> <span id="line-437"
+class="anchor"/><span id="line-438" class="anchor"/></p></li></ul><p class="line874">下面的一套方法用以判断能否拖动： <span id="line-439" class="anchor"/><span id="line-440" class="anchor"/><span id="line-441" class="anchor"/></p><ul><li><p class="line891"><tt>CanDragColSize()</tt> <span id="line-442" class="anchor"/></p></li><li><p class="line891"><tt>CanDragRowSize()</tt> <span id="line-443" class="anchor"/></p></li><li><p class="line891"><tt>CanDragGridSize()</tt> <span id="line-444"
+class="anchor"/><span id="line-445" class="anchor"/><span id="line-446" class="anchor"/></p></li></ul><p class="line867">
+</p><h3 id="head-a21ca2edde7120a519ea9ad3d1f1f3f5976819de">2.4. 如何管理哪些单元格处于选择或可见状态？</h3>
+<span id="line-447" class="anchor"/><span id="line-448" class="anchor"/><span id="line-449" class="anchor"/><p class="line862">在网格控件中，用户可以选择一个或多个单元格。在<tt>wxPython</tt>中，有几个方法让你能够处理多选的情况。 <span id="line-450" class="anchor"/><span id="line-451" class="anchor"/></p><p class="line874">在下面的几个情况中，网格控件中的被选择的项可以是0个或多个： <span id="line-452" class="anchor"/><span id="line-453" class="anchor"/></p><ul><li>单个的处于选择状态的单元格 <span
+id="line-454" class="anchor"/></li><li>被选择的行 <span id="line-455" class="anchor"/></li><li>被选择的行 <span id="line-456" class="anchor"/></li><li>被选择的由单元格组成的块 <span id="line-457" class="anchor"/><span id="line-458" class="anchor"/></li></ul><p class="line862">用户可以通过命令或在单元格、行或列标签上的敲击，或拖动鼠标来选择多组单元格。要确定网格中是否有被选择的单元格，可能使用方法<tt>IsSelection()</tt>，如果有则该方法返回<tt>True</tt>。你可以通过使用<tt>IsInSelection(row,
+col)</tt>方法来查询任意一个特定的单元格当前是否处于选择状态中，如果是则返回<tt>True</tt>。 <span id="line-459" class="anchor"/><span id="line-460" class="anchor"/></p><p class="line874">表14.2显示了几个方法，它们得到当前被选择的内容并返回给你。 <span id="line-461" class="anchor"/><span id="line-462" class="anchor"/><span id="line-463" class="anchor"/></p><p class="line867"><strong>表14.2</strong>  <span id="line-464" class="anchor"/><strong>返回当前被选择的单元格的集的方法</strong> <span
+id="line-465" class="anchor"/><span id="line-466" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line891"><tt>GetSelectedCells()</tt></p></td>
+<td><p class="line862">返回包含一些单个的处于选择状态的单元格的一个<tt>Python</tt>列表。在这个列表中的每个项目都是一个(<tt>row, col)</tt>元组。</p></td>
+</tr>
+<tr>  <td><span id="line-467" class="anchor"/><p class="line891"><tt>GetSelectedCols()</tt></p></td>
+<td><p class="line862">返回由通过敲击列的标签而被选择的列的索引组成的一个<tt>Python</tt>列表。</p></td>
+</tr>
+<tr>  <td><span id="line-468" class="anchor"/><p class="line891"><tt>GetSelectedRows()</tt></p></td>
+<td><p class="line862">返回由通过敲击行的标签而被选择的列的索引组成的一个<tt>Python</tt>列表。</p></td>
+</tr>
+<tr>  <td><span id="line-469" class="anchor"/><p class="line891"><tt>GetSelectionBlockTopLeft()</tt></p></td>
+<td><p class="line862">返回包含一些被选择的由单元格组成的块的一个<tt>Python</tt>列表。其中的每个元素都时一个(<tt>row, col)</tt>元组，(<tt>row, col)</tt>元组是每块的左上角。</p></td>
+</tr>
+<tr>  <td><span id="line-470" class="anchor"/><p class="line891"><tt>GetSelectionBlockBottomRight()</tt></p></td>
+<td><p class="line862">返回包含一些被选择的由单元格组成的块的一个<tt>Python</tt>列表。其中的每个元素都时一个(<tt>row, col)</tt>元组，(<tt>row, col)</tt>元组是每块的右下角。</p></td>
+</tr>
+</tbody></table></div><span id="line-471" class="anchor"/><span id="line-472" class="anchor"/><span id="line-473" class="anchor"/><p class="line862">这儿也有几个用于设置或修改选择状态的方法。第一个是<tt>ClearSelection()</tt>，它清除当有的被选状态。在该方法被调用以后，<tt>IsSelection()</tt>返回<tt>False</tt>。你也可以做一个相反的动作，就是使用<tt>SelectAll()</tt>选择所有的单元格。你也可以使用方法<tt>SelectCol(col, addToSelected=False)</tt>和<tt>SelectRow(row,
+addToSelected=False)</tt>来选择整列或整行。在这两个方法中，第一个参数是要选择的行或列的索引。如果参数<tt>addToSelected</tt>为<tt>True</tt>，所有另外被选择的单元格仍然处于被选状态，并且该行或列也被增加到已有的选择中。如果参数<tt>addToSelected</tt>为<tt>False</tt>，那么所有另外被选择的单元格解除被选状态，而新的行或列代替它们作为被选择对象。同样地，你也可以使用方法<tt>SelectBlock(topRow,  leftCol,  bottomRow,  rightCol,
+addToSelected=False)</tt>来增加一个对一块范围的选择，前面四个参数是所选的范围的对角，<tt>addToSelected</tt>参数的作用同前一样。 <span id="line-474" class="anchor"/><span id="line-475" class="anchor"/></p><p class="line862">你也可以使用<tt>IsVisible(row, col,
+wholeCellVisible=True)</tt>方法来得到一个特定的单元格在当前的显示中是否是可见的。如果该单元格当前显示在屏幕上了（相对于处在一个可滚动的容器的不可见部分而言），那么该方法返回<tt>True</tt>。如果参数<tt>wholeCellVisible</tt>为<tt>True</tt>，那么单元格要整个都是可见的，方法才返回<tt>True</tt>，如果参数<tt>wholeCellVisible</tt>为<tt>False</tt>，则单元格部分可见，方法就会返回<tt>True</tt>。方法<tt>MakeCellVisible(row, col)</tt>通过滚动确保了指定位置的单元格是可见的。 <span id="line-476"
+class="anchor"/><span id="line-477" class="anchor"/></p><p class="line862">除了被选的单元格外，网格控件也有一个光标单元格，它代表获得当前用户焦点的单元格。你可以使用<tt>GetGridCursorCol()</tt>和<tt>GetGridCursorRow()</tt>方法来确定光标的当前位置，这两个方法返回整数的索引值。你可以使用<tt>SetGridCursor(row, col)</tt>方法来显式地放置一个光标。该方法除了移到光标外，它还隐式地对新的光标位置调用了<tt>MakeCellVisible</tt>。 <span id="line-478" class="anchor"/><span id="line-479"
+class="anchor"/></p><p class="line874">表14.3说明了在网格坐标和显示器坐标之间作转换的网格控件的方法。 <span id="line-480" class="anchor"/><span id="line-481" class="anchor"/><span id="line-482" class="anchor"/></p><p class="line867"><strong>表14.3</strong>  <span id="line-483" class="anchor"/><strong>坐标转换方法</strong> <span id="line-484" class="anchor"/><span id="line-485" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line891"><tt>BlockToDeviceRect(topLeft,
+bottomRight)</tt></p></td>
+<td><p class="line862">参数<tt>topLeft, bottomRight</tt>是单元格的坐标（(<tt>row, col)</tt>元组的形式）。返回值是一个<tt>wx.Rect</tt>，<tt>wx.Rect</tt>使用给定的网格坐标所包围的矩形的设备像素坐标。</p></td>
+</tr>
+<tr>  <td><span id="line-486" class="anchor"/><p class="line891"><tt>CellToRect(row, col)</tt></p></td>
+<td><p class="line862">返回一个<tt>wx.Rect</tt>，<tt>wx.Rect</tt>的坐标是相对网格坐标(<tt>row, col)</tt>处的单元格的容器的坐标。</p></td>
+</tr>
+<tr>  <td><span id="line-487" class="anchor"/><p class="line891"><tt>XToCol(x)</tt></p></td>
+<td><p class="line862">返回包含x坐标（该坐标是相对于容器的）的列的索引。如果没有这样的列，则返回<tt>wx.NOT_FOUND</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-488" class="anchor"/><p class="line891"><tt>XToEdgeOfCol(x)</tt></p></td>
+<td><p class="line862">返回右边缘最接近给定的x坐标的列的整数索引。如果没有这样的列，则返回<tt>wx.NOT_FOUND</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-489" class="anchor"/><p class="line891"><tt>YToRow(y)</tt></p></td>
+<td><p class="line862">返回包含y坐标（该坐标是相对于容器的）的行的索引。如果没有这样的行，则返回<tt>wx.NOT_FOUND</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-490" class="anchor"/><p class="line891"><tt>YToEdgeOfRow(y)</tt></p></td>
+<td><p class="line862">返回底边缘最接近给定的y坐标的行的整数索引。如果没有这样的行，则返回<tt>wx.NOT_FOUND</tt>。</p></td>
+</tr>
+</tbody></table></div><span id="line-491" class="anchor"/><span id="line-492" class="anchor"/><p class="line874">你可以使用上面这些方法来对网格单元格上的鼠标敲击的位置作转换。 <span id="line-493" class="anchor"/><span id="line-494" class="anchor"/><span id="line-495" class="anchor"/></p><p class="line867">
+</p><h3 id="head-fd037b061a63a5adc8436384a311a79b6c0c3208">2.5. 如何改变一个网格的单元格的颜色和字体?</h3>
+<span id="line-496" class="anchor"/><span id="line-497" class="anchor"/><span id="line-498" class="anchor"/><p class="line862">正如其它的控件一样，这儿也有一些属性方法，你可以用来改变每个单元格的显示属性。图14.5是个示例图片。例14.6显示了产生图14.5的代码。注意其中的针对特定单元格的网格方法和<tt>wx.grid.GridCellAttr</tt>对象的创建方法的用法。 <span id="line-499" class="anchor"/><span id="line-500" class="anchor"/><span id="line-501" class="anchor"/></p><p
+class="line867"><strong>图14.5</strong> <span id="line-502" class="anchor"/><span id="line-503" class="anchor"/></p><p class="line867"><img title="attachment:w14.5.gif" src="/moin/WxPythonInAction/ChapterFourteen?action=AttachFile&amp;do=get&amp;target=w14.5.gif" class="attachment"/> <span id="line-504" class="anchor"/><span id="line-505" class="anchor"/><span id="line-506" class="anchor"/><span id="line-507" class="anchor"/></p><p class="line867"><strong>例14.6</strong>  <span
+id="line-508" class="anchor"/><strong>改变网格的单元格的颜色</strong> <span id="line-509" class="anchor"/><span id="line-510" class="anchor"/></p><p class="line867"><span id="line-511" class="anchor"/><span id="line-512" class="anchor"/><span id="line-513" class="anchor"/><span id="line-514" class="anchor"/><span id="line-515" class="anchor"/><span id="line-516" class="anchor"/><span id="line-517" class="anchor"/><span id="line-518" class="anchor"/><span id="line-519"
+class="anchor"/><span id="line-520" class="anchor"/><span id="line-521" class="anchor"/><span id="line-522" class="anchor"/><span id="line-523" class="anchor"/><span id="line-524" class="anchor"/><span id="line-525" class="anchor"/><span id="line-526" class="anchor"/><span id="line-527" class="anchor"/><span id="line-528" class="anchor"/><span id="line-529" class="anchor"/><span id="line-530" class="anchor"/><span id="line-531" class="anchor"/><span id="line-532"
+class="anchor"/><span id="line-533" class="anchor"/><span id="line-534" class="anchor"/><span id="line-535" class="anchor"/><span id="line-536" class="anchor"/><span id="line-537" class="anchor"/><span id="line-538" class="anchor"/><span id="line-539" class="anchor"/><span id="line-540" class="anchor"/><span id="line-541" class="anchor"/><span id="line-542" class="anchor"/><span id="line-543" class="anchor"/><span id="line-544" class="anchor"/></p><div lang="en" dir="ltr"
+class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-135eefe10fb9281977d176dc4f541a8fdacd0694_007\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-135eefe10fb9281977d176dc4f541a8fdacd0694_007', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-135eefe10fb9281977d176dc4f541a8fdacd0694_007" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">import</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span></span>
+<span class="line"><span class="LineNumber">   3 </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">class</span> <span class="ID">TestFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span></span>
+<span class="line"><span class="LineNumber">   6 </span></span>
+<span class="line"><span class="LineNumber">   7 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">=</span><span class="String">"Grid
+Attributes"</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   9 </span>                          <span class="ID">size</span><span class="Operator">=</span><span class="Operator">(</span><span class="Number">600</span><span class="Operator">,</span><span class="Number">300</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">grid</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span><span class="Operator">.</span><span class="ID">Grid</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">grid</span><span class="Operator">.</span><span class="ID">CreateGrid</span><span class="Operator">(</span><span class="Number">10</span><span class="Operator">,</span><span class="Number">6</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ResWord">for</span> <span class="ID">row</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="Number">10</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  13 </span>            <span class="ResWord">for</span> <span class="ID">col</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="Number">6</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  14 </span>                <span class="ID">grid</span><span class="Operator">.</span><span class="ID">SetCellValue</span><span class="Operator">(</span><span class="ID">row</span><span class="Operator">,</span> <span class="ID">col</span><span class="Operator">,</span> <span class="String">"(%s,%s)"</span> <span class="Operator">%</span> <span class="Operator">(</span><span class="ID">row</span><span
+class="Operator">,</span> <span class="ID">col</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ID">grid</span><span class="Operator">.</span><span class="ID">SetCellTextColour</span><span class="Operator">(</span><span class="Number">1</span><span class="Operator">,</span> <span class="Number">1</span><span class="Operator">,</span> <span class="String">"red"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">grid</span><span class="Operator">.</span><span class="ID">SetCellFont</span><span class="Operator">(</span><span class="Number">1</span><span class="Operator">,</span><span class="Number">1</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Font</span><span class="Operator">(</span><span class="Number">10</span><span
+class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">SWISS</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">NORMAL</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">BOLD</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span>        <span class="ID">grid</span><span class="Operator">.</span><span class="ID">SetCellBackgroundColour</span><span class="Operator">(</span><span class="Number">2</span><span class="Operator">,</span> <span class="Number">2</span><span class="Operator">,</span> <span class="String">"light blue"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ID">attr</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span><span class="Operator">.</span><span class="ID">GridCellAttr</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span>        <span class="ID">attr</span><span class="Operator">.</span><span class="ID">SetTextColour</span><span class="Operator">(</span><span class="String">"navyblue"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  22 </span>        <span class="ID">attr</span><span class="Operator">.</span><span class="ID">SetBackgroundColour</span><span class="Operator">(</span><span class="String">"pink"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  23 </span>        <span class="ID">attr</span><span class="Operator">.</span><span class="ID">SetFont</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Font</span><span class="Operator">(</span><span class="Number">10</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">SWISS</span><span
+class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">NORMAL</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">BOLD</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  24 </span></span>
+<span class="line"><span class="LineNumber">  25 </span>        <span class="ID">grid</span><span class="Operator">.</span><span class="ID">SetAttr</span><span class="Operator">(</span><span class="Number">4</span><span class="Operator">,</span> <span class="Number">0</span><span class="Operator">,</span> <span class="ID">attr</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  26 </span>        <span class="ID">grid</span><span class="Operator">.</span><span class="ID">SetAttr</span><span class="Operator">(</span><span class="Number">5</span><span class="Operator">,</span> <span class="Number">1</span><span class="Operator">,</span> <span class="ID">attr</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  27 </span>        <span class="ID">grid</span><span class="Operator">.</span><span class="ID">SetRowAttr</span><span class="Operator">(</span><span class="Number">8</span><span class="Operator">,</span> <span class="ID">attr</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  28 </span></span>
+<span class="line"><span class="LineNumber">  29 </span></span>
+<span class="line"><span class="LineNumber">  30 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  31 </span><span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">TestFrame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  32 </span><span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  33 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-545" class="anchor"/><span id="line-546" class="anchor"/><p class="line862">我们将通过讨论用于设置整个网格默认值的方法作为开始。你可以使用<tt>SetDefaultCellAlignment(horiz, vert)</tt>方法来为网格中所有的单元格设置默认的对齐方式，其中<tt>horiz</tt>的取值有<tt>wx.LEFT</tt>、<tt>wx.CENTRE</tt>、<tt>wx.RIGHT</tt>，<tt>vert</tt>的取值有<tt>wx.TOP,  wx.CENTRE,
+</tt>和<tt>wx.BOTTOM</tt>。你可以使用<tt>GetDefaultCellAlignment()</tt>来得到这个默认的单元格对齐方式，该方法返回一个(<tt>horiz, vert)</tt>元组。 <span id="line-547" class="anchor"/><span id="line-548" class="anchor"/></p><p
+class="line862">背景和文本的颜色可以使用<tt>SetDefaultCellTextColour(colour)</tt>和<tt>SetDefaultCellBackgroundColour(colour)</tt>方法来设置。同样，<tt>colour</tt>参数可以是一个<tt>wx.Colour</tt>实例或颜色名。相应的<tt>get</tt>*方法是<tt>GetDefaultCellTextColour()</tt>和<tt>GetDefaultCellBackgroundColour()</tt>。最后，你可以使用<tt>SetDefaultCellFont(font)</tt>和<tt>GetDefaultCellFont()</tt>来处理默认的字体。 <span id="line-549" class="anchor"/><span
+id="line-550" class="anchor"/></p><p class="line874">使用下面的方法，你可以设置单个单元格的相关属性： <span id="line-551" class="anchor"/><span id="line-552" class="anchor"/></p><pre>GetCellAlignment(row, col)
+<span id="line-553" class="anchor"/>SetCellAlignment(row, col, horiz, vert)
+<span id="line-554" class="anchor"/>
+<span id="line-555" class="anchor"/>GetCellBackgroundColour(row, col)
+<span id="line-556" class="anchor"/>SetCellBackgroundColour(row, col, colour)
+<span id="line-557" class="anchor"/>
+<span id="line-558" class="anchor"/>GetCellFont(row, col)
+<span id="line-559" class="anchor"/>SetCellFont(row, col, font)
+<span id="line-560" class="anchor"/>
+<span id="line-561" class="anchor"/>GetCellTextColour(row, col)
+<span id="line-562" class="anchor"/>SetCellTextColour(row, col, colour)
+<span id="line-563" class="anchor"/></pre><span id="line-564" class="anchor"/><span id="line-565" class="anchor"/><p class="line862">也可使用<tt>SetSelectionBackground(colour)</tt>和<tt>SetSelectionForeground(colour)</tt>方法来使用被选的单元格有另外背景色和前景色，相应的<tt>get</tt>*方法是<tt>GetSelectionBackground()</tt>和<tt>GetSelectionForeground()</tt>。 <span id="line-566" class="anchor"/><span id="line-567" class="anchor"/></p><p
+class="line862">你也可以使用<tt>SetMargins(extraWidth, extraHeight)</tt>方法来设置网格控件与它的容器的边距。 <span id="line-568" class="anchor"/><span id="line-569" class="anchor"/></p><p class="line862">在内部，类<tt>wx.grid.Grid</tt>使用一个名为<tt>wx.grid.GridCellAttr</tt>类来管理每个单元格的属性。<tt>wx.grid.GridCellAttr</tt>类对于本节所讨论到的属性，也有<tt>get</tt>*和<tt>set</tt>*方法。你可以通过使用<tt>GetOrCreateCellAttr(row,
+col)</tt>方法来得到关于一个特定的单元格的<tt>attr</tt>对象，它是单元格的属性对象。一个单元格的属性对象仅在该单元格已定义了非默认的属性时才被创建。一旦你有了该单元格的属性对象，你就可以用它来定义该单元格的显示属性。 <span id="line-570" class="anchor"/><span id="line-571" class="anchor"/></p><p
+class="line862">要创建你自己的单元格属性对象，这个构造函数是<tt>wx.grid.GridCellAttr()</tt>。你可以设置某些参数，然后将该对象传递给方法<tt>SetColAttr(attr)</tt>或<tt>SetRowAttr(attr)</tt>，这两个方法将将这些显示属性应用到该行或列中的每个单元格，如例14.6所示。 <span id="line-572" class="anchor"/><span id="line-573" class="anchor"/></p><p class="line862">如果你在使用一个网格表，你可以覆盖方法<tt>GetAttr(row,
+col)</tt>来返回特定单元格的一个<tt>wx.grid.GridCellAttr</tt>实例。 <span id="line-574" class="anchor"/><span id="line-575" class="anchor"/></p><p class="line862">你也可以改变网格线的颜色和显示。网格线的显示是由方法<tt>EnableGridLines(enable)</tt>来控制的。参数<tt>enable</tt>是一个布乐值。如果为<tt>True</tt>，网格线被显示，如果为<tt>False</tt>，则不显示。你可以使用方法<tt>SetGridLineColor(colour)</tt>来改变网格线的颜色。 <span id="line-576" class="anchor"/><span
+id="line-577" class="anchor"/><span id="line-578" class="anchor"/></p><p class="line867">
+</p><h2 id="head-12fa2da1a5fbcefa819bdfdcf9e6af1d68007a03">3. 自定义描绘器和编辑器</h2>
+<span id="line-579" class="anchor"/><span id="line-580" class="anchor"/><span id="line-581" class="anchor"/><p class="line874">是什么使得网格控件是如此的灵活和有用呢？它就是显示或编辑一个单元格的内容的机制可以被改变这一特性。在后面的几节中，我们将给你展示如何去使用预定义的描绘器和编辑器，以及如何写你自己的描绘器和编辑器。 <span id="line-582" class="anchor"/><span id="line-583" class="anchor"/><span id="line-584" class="anchor"/></p><p class="line867">
+</p><h3 id="head-711b94f8d9cd75da1cf55988f5e71428a4f98c13">3.1. 如何使用一个自定义的单元格描绘器？</h3>
+<span id="line-585" class="anchor"/><span id="line-586" class="anchor"/><span id="line-587" class="anchor"/><p class="line874">默认情况下，网格将它的数据以简单字符串的形式显示，然而，你也可以以不同的格式显示你的数据。你可以想将布尔值数据显示为一个复选框，或以图片格式显示一个数字值，或将一个数据的列表以线条的方式显示。 <span id="line-588" class="anchor"/><span id="line-589" class="anchor"/></p><p
+class="line862">在<tt>wxPython</tt>中，每个单元格都可以有它自己的描绘器，这使得它能够以不同的方式显示它的数据。下面的部分讨论几个<tt>wxPython</tt>中预定义的描绘器，以及如何定义你自己的描绘器。 <span id="line-590" class="anchor"/><span id="line-591" class="anchor"/><span id="line-592" class="anchor"/></p><p class="line867"><strong>预定义的描绘器(<tt>renderer)</tt></strong> <span id="line-593" class="anchor"/><span id="line-594" class="anchor"/></p><p
+class="line862">一个网格描绘器是类<tt>wx.grid.GridCellRenderer</tt>的一个实例，<tt>wx.grid.GridCellRenderer</tt>是一个抽象的父类。一般，你会使用它的子类。表14.4说明了几个你可以用在你的单元格中的预定义的描绘器。它们都有一个构造函数和<tt>get</tt>*,<tt>set</tt>*方法。 <span id="line-595" class="anchor"/><span id="line-596" class="anchor"/><span id="line-597" class="anchor"/></p><p class="line867"><strong>表14.4</strong>  <span id="line-598"
+class="anchor"/><strong>预定义的网格单元格描绘器</strong> <span id="line-599" class="anchor"/><span id="line-600" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line891"><tt>wx.grid.GridCellAutoWrapStringRenderer</tt></p></td>
+<td><p class="line862">显示文本化的数据，在单元格边界按词按行。</p></td>
+</tr>
+<tr>  <td><span id="line-601" class="anchor"/><p class="line891"><tt>wx.grid.GridCellBoolRenderer</tt></p></td>
+<td><p class="line862">使用一个复选框来描绘布尔数据——选中表示<tt>True</tt>，未选中表示<tt>False</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-602" class="anchor"/><p class="line891"><tt>wx.grid.GridCellDateTimeRenderer</tt></p></td>
+<td><p class="line862">使单元格能够显示一个格式化的日期或时间。</p></td>
+</tr>
+<tr>  <td><span id="line-603" class="anchor"/><p class="line891"><tt>wx.grid.GridCellEnumRenderer</tt></p></td>
+<td><p class="line862">文本形式。</p></td>
+</tr>
+<tr>  <td><span id="line-604" class="anchor"/><p class="line891"><tt>wx.grid.GridCellFloatRenderer</tt></p></td>
+<td><p class="line862">使用指定位数和精度来描绘浮点数。该类的构造函数要求两个参数(<tt>width=</tt>-1, <tt>precision=</tt>-1)。默认的对齐方式为右对齐。</p></td>
+</tr>
+<tr>  <td><span id="line-605" class="anchor"/><p class="line891"><tt>wx.grid.GridCellNumberRenderer</tt></p></td>
+<td><p class="line862">数字数据。默认为右对齐方式显示。</p></td>
+</tr>
+<tr>  <td><span id="line-606" class="anchor"/><p class="line891"><tt>wx.grid.GridCellStringRenderer</tt></p></td>
+<td><p class="line862">简单字符串的形式。</p></td>
+</tr>
+</tbody></table></div><span id="line-607" class="anchor"/><span id="line-608" class="anchor"/><p class="line862">要得到一个特定单元格的描绘器，可以使用方法<tt>GetCellRenderer(row, col)</tt>，该方法返回指定坐标处的单元格的描绘器实例。要为一个单元格设置描绘器，可以使用<tt>SetCellRenderer(row, col,
+renderer)</tt>方法，其中<tt>renderer</tt>参数是用于指定单元格的新的描绘器。这些方法都简单地设置或得到存储在相关单元格属性对象中的描绘器，所以如果你愿意的话，你可以直接处理<tt>GridCellAttr</tt>。你可以通过使<tt>GetDefaultRenderer</tt>和 <tt>SetDefaultRenderer(renderer)</tt>来得到和设置用于整个网格的默认的描绘器。 <span id="line-609" class="anchor"/><span id="line-610" class="anchor"/></p><p
+class="line862">你也可以为一行设置描绘器，这个的典型应用是电子表格中的某列总是显示特定类型的数据。实现的方法是<tt>SetColFormatBool(col), SetColFormatNumber(col)</tt>，以及<tt>SetColFormatFloat(col,  width,  precision)</tt>。 <span id="line-611" class="anchor"/><span id="line-612" class="anchor"/><span id="line-613" class="anchor"/></p><p class="line867"><strong>创建一个自定义的描绘器</strong>  <span id="line-614" class="anchor"/><span id="line-615"
+class="anchor"/></p><p class="line862">要创建你自定义的单元格描绘器，需要创建<tt>wx.grid.PyGridCellRenderer</tt>的一个子类。创建自定义的单元格描绘器，使你能够以特定的格式显示相关的数据。 <span id="line-616" class="anchor"/><span id="line-617" class="anchor"/></p><p class="line874">图14.6显示了一个自定义描绘器的示例，它随机地绘制单元格的背景色。 <span id="line-618" class="anchor"/><span id="line-619" class="anchor"/><span id="line-620"
+class="anchor"/></p><p class="line867"><strong>图14.6</strong> <span id="line-621" class="anchor"/><span id="line-622" class="anchor"/></p><p class="line867"><img title="attachment:w14.6.gif" src="/moin/WxPythonInAction/ChapterFourteen?action=AttachFile&amp;do=get&amp;target=w14.6.gif" class="attachment"/> <span id="line-623" class="anchor"/><span id="line-624" class="anchor"/><span id="line-625" class="anchor"/></p><p
+class="line874">例14.7是产生图14.6的代码，其中显示了相关的类和所覆盖的方法 <span id="line-626" class="anchor"/><span id="line-627" class="anchor"/><span id="line-628" class="anchor"/></p><p class="line867"><strong>例14.7</strong> <span id="line-629" class="anchor"/><span id="line-630" class="anchor"/></p><p class="line867"><span id="line-631" class="anchor"/><span id="line-632" class="anchor"/><span id="line-633" class="anchor"/><span id="line-634"
+class="anchor"/><span id="line-635" class="anchor"/><span id="line-636" class="anchor"/><span id="line-637" class="anchor"/><span id="line-638" class="anchor"/><span id="line-639" class="anchor"/><span id="line-640" class="anchor"/><span id="line-641" class="anchor"/><span id="line-642" class="anchor"/><span id="line-643" class="anchor"/><span id="line-644" class="anchor"/><span id="line-645" class="anchor"/><span id="line-646"
+class="anchor"/><span id="line-647" class="anchor"/><span id="line-648" class="anchor"/><span id="line-649" class="anchor"/><span id="line-650" class="anchor"/><span id="line-651" class="anchor"/><span id="line-652" class="anchor"/><span id="line-653" class="anchor"/><span id="line-654" class="anchor"/><span id="line-655" class="anchor"/><span id="line-656" class="anchor"/><span id="line-657" class="anchor"/><span id="line-658"
+class="anchor"/><span id="line-659" class="anchor"/><span id="line-660" class="anchor"/><span id="line-661" class="anchor"/><span id="line-662" class="anchor"/><span id="line-663" class="anchor"/><span id="line-664" class="anchor"/><span id="line-665" class="anchor"/><span id="line-666" class="anchor"/><span id="line-667" class="anchor"/><span id="line-668" class="anchor"/><span id="line-669" class="anchor"/><span id="line-670"
+class="anchor"/><span id="line-671" class="anchor"/><span id="line-672" class="anchor"/><span id="line-673" class="anchor"/><span id="line-674" class="anchor"/><span id="line-675" class="anchor"/><span id="line-676" class="anchor"/><span id="line-677" class="anchor"/><span id="line-678" class="anchor"/><span id="line-679" class="anchor"/><span id="line-680" class="anchor"/><span id="line-681" class="anchor"/><span id="line-682"
+class="anchor"/><span id="line-683" class="anchor"/><span id="line-684" class="anchor"/><span id="line-685" class="anchor"/><span id="line-686" class="anchor"/><span id="line-687" class="anchor"/><span id="line-688" class="anchor"/><span id="line-689" class="anchor"/><span id="line-690" class="anchor"/><span id="line-691" class="anchor"/><span id="line-692" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-2c49a4282b989b596132b58b45088eb909f81bd5_008\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-2c49a4282b989b596132b58b45088eb909f81bd5_008', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-2c49a4282b989b596132b58b45088eb909f81bd5_008" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#-*- encoding:UTF-8 -*-</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">import</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">import</span> <span class="ID">random</span></span>
+<span class="line"><span class="LineNumber">   5 </span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">class</span> <span class="ID">RandomBackgroundRenderer</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span><span class="Operator">.</span><span class="ID">PyGridCellRenderer</span><span class="Operator">)</span><span class="Operator">:</span><span
+class="Comment">#定义描绘器</span></span>
+<span class="line"><span class="LineNumber">   7 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span><span class="Operator">.</span><span class="ID">PyGridCellRenderer</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span></span>
+<span class="line"><span class="LineNumber">  10 </span></span>
+<span class="line"><span class="LineNumber">  11 </span>    <span class="ResWord">def</span> <span class="ID">Draw</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">grid</span><span class="Operator">,</span> <span class="ID">attr</span><span class="Operator">,</span> <span class="ID">dc</span><span class="Operator">,</span> <span class="ID">rect</span><span
+class="Operator">,</span> <span class="ID">row</span><span class="Operator">,</span> <span class="ID">col</span><span class="Operator">,</span> <span class="ID">isSelected</span><span class="Operator">)</span><span class="Operator">:</span><span class="Comment">#绘制</span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">text</span> <span class="Operator">=</span> <span class="ID">grid</span><span class="Operator">.</span><span class="ID">GetCellValue</span><span class="Operator">(</span><span class="ID">row</span><span class="Operator">,</span> <span class="ID">col</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">hAlign</span><span class="Operator">,</span> <span class="ID">vAlign</span> <span class="Operator">=</span> <span class="ID">attr</span><span class="Operator">.</span><span class="ID">GetAlignment</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">dc</span><span class="Operator">.</span><span class="ID">SetFont</span><span class="Operator">(</span> <span class="ID">attr</span><span class="Operator">.</span><span class="ID">GetFont</span><span class="Operator">(</span><span class="Operator">)</span> <span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ResWord">if</span> <span class="ID">isSelected</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  16 </span>            <span class="ID">bg</span> <span class="Operator">=</span> <span class="ID">grid</span><span class="Operator">.</span><span class="ID">GetSelectionBackground</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span>            <span class="ID">fg</span> <span class="Operator">=</span> <span class="ID">grid</span><span class="Operator">.</span><span class="ID">GetSelectionForeground</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span>        <span class="ResWord">else</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  19 </span>            <span class="ID">bg</span> <span class="Operator">=</span> <span class="ID">random</span><span class="Operator">.</span><span class="ID">choice</span><span class="Operator">(</span><span class="Operator">[</span><span class="String">"pink"</span><span class="Operator">,</span> <span class="String">"sky blue"</span><span class="Operator">,</span> <span
+class="String">"cyan"</span><span class="Operator">,</span> <span class="String">"yellow"</span><span class="Operator">,</span> <span class="String">"plum"</span><span class="Operator">]</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>            <span class="ID">fg</span> <span class="Operator">=</span> <span class="ID">attr</span><span class="Operator">.</span><span class="ID">GetTextColour</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span></span>
+<span class="line"><span class="LineNumber">  22 </span>        <span class="ID">dc</span><span class="Operator">.</span><span class="ID">SetTextBackground</span><span class="Operator">(</span><span class="ID">bg</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  23 </span>        <span class="ID">dc</span><span class="Operator">.</span><span class="ID">SetTextForeground</span><span class="Operator">(</span><span class="ID">fg</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  24 </span>        <span class="ID">dc</span><span class="Operator">.</span><span class="ID">SetBrush</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Brush</span><span class="Operator">(</span><span class="ID">bg</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">SOLID</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  25 </span>        <span class="ID">dc</span><span class="Operator">.</span><span class="ID">SetPen</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">TRANSPARENT_PEN</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  26 </span>        <span class="ID">dc</span><span class="Operator">.</span><span class="ID">DrawRectangleRect</span><span class="Operator">(</span><span class="ID">rect</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  27 </span>        <span class="ID">grid</span><span class="Operator">.</span><span class="ID">DrawTextRectangle</span><span class="Operator">(</span><span class="ID">dc</span><span class="Operator">,</span> <span class="ID">text</span><span class="Operator">,</span> <span class="ID">rect</span><span class="Operator">,</span> <span class="ID">hAlign</span><span class="Operator">,</span>
+<span class="ID">vAlign</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  28 </span></span>
+<span class="line"><span class="LineNumber">  29 </span></span>
+<span class="line"><span class="LineNumber">  30 </span>    <span class="ResWord">def</span> <span class="ID">GetBestSize</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">grid</span><span class="Operator">,</span> <span class="ID">attr</span><span class="Operator">,</span> <span class="ID">dc</span><span class="Operator">,</span> <span class="ID">row</span><span
+class="Operator">,</span> <span class="ID">col</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  31 </span>        <span class="ID">text</span> <span class="Operator">=</span> <span class="ID">grid</span><span class="Operator">.</span><span class="ID">GetCellValue</span><span class="Operator">(</span><span class="ID">row</span><span class="Operator">,</span> <span class="ID">col</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  32 </span>        <span class="ID">dc</span><span class="Operator">.</span><span class="ID">SetFont</span><span class="Operator">(</span><span class="ID">attr</span><span class="Operator">.</span><span class="ID">GetFont</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  33 </span>        <span class="ID">w</span><span class="Operator">,</span> <span class="ID">h</span> <span class="Operator">=</span> <span class="ID">dc</span><span class="Operator">.</span><span class="ID">GetTextExtent</span><span class="Operator">(</span><span class="ID">text</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  34 </span>        <span class="ResWord">return</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Size</span><span class="Operator">(</span><span class="ID">w</span><span class="Operator">,</span> <span class="ID">h</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  35 </span></span>
+<span class="line"><span class="LineNumber">  36 </span>    <span class="ResWord">def</span> <span class="ID">Clone</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  37 </span>        <span class="ResWord">return</span> <span class="ID">RandomBackgroundRenderer</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  38 </span></span>
+<span class="line"><span class="LineNumber">  39 </span><span class="ResWord">class</span> <span class="ID">TestFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  40 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  41 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">=</span><span
+class="String">"Grid Renderer"</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  42 </span>                          <span class="ID">size</span><span class="Operator">=</span><span class="Operator">(</span><span class="Number">640</span><span class="Operator">,</span><span class="Number">480</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  43 </span></span>
+<span class="line"><span class="LineNumber">  44 </span>        <span class="ID">grid</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span><span class="Operator">.</span><span class="ID">Grid</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  45 </span>        <span class="ID">grid</span><span class="Operator">.</span><span class="ID">CreateGrid</span><span class="Operator">(</span><span class="Number">50</span><span class="Operator">,</span><span class="Number">50</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  46 </span></span>
+<span class="line"><span class="LineNumber">  47 </span>        <span class="Comment"># Set this custom renderer just for row 4</span></span>
+<span class="line"><span class="LineNumber">  48 </span><span class="Comment"/>        <span class="ID">attr</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span><span class="Operator">.</span><span class="ID">GridCellAttr</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  49 </span>        <span class="ID">attr</span><span class="Operator">.</span><span class="ID">SetRenderer</span><span class="Operator">(</span><span class="ID">RandomBackgroundRenderer</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  50 </span>        <span class="ID">grid</span><span class="Operator">.</span><span class="ID">SetRowAttr</span><span class="Operator">(</span><span class="Number">4</span><span class="Operator">,</span> <span class="ID">attr</span><span class="Operator">)</span><span class="Comment">#赋于第5行</span></span>
+<span class="line"><span class="LineNumber">  51 </span></span>
+<span class="line"><span class="LineNumber">  52 </span>        <span class="ResWord">for</span> <span class="ID">row</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="Number">10</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  53 </span>            <span class="ResWord">for</span> <span class="ID">col</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="Number">10</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  54 </span>                <span class="ID">grid</span><span class="Operator">.</span><span class="ID">SetCellValue</span><span class="Operator">(</span><span class="ID">row</span><span class="Operator">,</span> <span class="ID">col</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  55 </span>                                  <span class="String">"cell (%d,%d)"</span> <span class="Operator">%</span> <span class="Operator">(</span><span class="ID">row</span><span class="Operator">,</span> <span class="ID">col</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  56 </span></span>
+<span class="line"><span class="LineNumber">  57 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  58 </span><span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">TestFrame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  59 </span><span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  60 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-693" class="anchor"/><span id="line-694" class="anchor"/><p class="line874">你的描绘器类必须覆盖基类的下面三个方法。 <span id="line-695" class="anchor"/><span id="line-696" class="anchor"/></p><p class="line867"><span id="line-697" class="anchor"/></p><pre>Draw()
+<span id="line-698" class="anchor"/>GetBestSize()
+<span id="line-699" class="anchor"/>Clone()
+<span id="line-700" class="anchor"/></pre><span id="line-701" class="anchor"/><span id="line-702" class="anchor"/><p class="line862">这三个方法中最重要的是<tt>Draw(grid, attr, dc, rect, row, col,
+isSelected)</tt>。其中参数<tt>grid</tt>是包含相应单元格的网格实例。参数<tt>attr</tt>是网格的属性实例。如果你需要使用基本的绘制方法的话，参数<tt>dc</tt>是用于绘制的设备上下文。参数<tt>rect</tt>是单元格的矩形区域。参数<tt>row,col</tt>是单元格的坐标，如果单元格当前处于被选状态的话，参数<tt>isSelected</tt>为<tt>True</tt>。在你的绘制方法中，你可以自由地做任何你想做的事情。 <span id="line-703" class="anchor"/><span id="line-704"
+class="anchor"/></p><p class="line862">方法<tt>GetBestSize(grid, attr, dc, row, col)</tt>返回一个<tt>wx.Size</tt>实例，该实例代表单元格的首先尺寸。方法<tt>Clone()</tt>返回一个<tt>wx.grid.GridCellRenderer</tt>实例。一旦描绘器被定义了，你就可以像使用预定义的描绘器一样使用它。 <span id="line-705" class="anchor"/><span id="line-706" class="anchor"/><span id="line-707" class="anchor"/></p><p class="line867">
+</p><h3 id="head-4b1f0bff124b23c03b021907fcecc8cdc92f37d7">3.2. 如何编辑一个单元格？</h3>
+<span id="line-708" class="anchor"/><span id="line-709" class="anchor"/><span id="line-710" class="anchor"/><p class="line867"><tt>wxPython</tt>的网格控件允许你编辑单元格中的值。敲击一个单元格，或开始键入一个新的数据值都将打开一个默认的字符串编辑器，让你可以输入不同的字符串。在这一节，我们将讨论多种修改此默认行为的方法。 <span id="line-711" class="anchor"/><span id="line-712" class="anchor"/></p><p
+class="line862">你可以使用方法<tt>EnableEditing(enable)</tt>来开关整个网格的可编辑性——参数<tt>enable</tt>是一个布尔值。如果它是<tt>False</tt>，那么所有的单元格都不可编辑。如果关闭了网格的可编辑性，那么你就不能再设置单个单元格的编辑状态了。如果打开了网格的可编辑性的话，单个的单元格可以被指定为只读。你可以使用方法<tt>IsEditable()</tt>来确定网格是否可编辑。 <span id="line-713" class="anchor"/><span id="line-714" class="anchor"/></p><p
+class="line862">你可以使用方法<tt>SetReadOnly(row, col, isReadOnly=True)</tt>来设置一个特定单元格的编辑状态。<tt>isReadOnly=True</tt>代表该单元格为只读，为<tt>False</tt>代表单元格可编辑。<tt>SetReadOnly()</tt>是类<tt>wx.grid.GridCellAttr</tt>中的同名方法的一个简捷方式。换句话说，你可以使用<tt>GetCellAttr(row,
+col).SetReadOnly(isReadOnly)</tt>之类的来将一个单元格设置为只读。使用单元格属性机制的好处就是你可以将<tt>SetReadOnly</tt>与<tt>SetRowAttr()</tt>和<tt>SetColAttr()</tt>方法结合起来，以一次性的将整个行或列设置为可编辑的或只读的。 <span id="line-715" class="anchor"/><span id="line-716" class="anchor"/></p><p
+class="line862">你也可以使用方法<tt>EnableCellEditControl(enable=True)</tt>和<tt>DisableCellEditControl()</tt>来处理网格的可编辑性，第二个方法等同于<tt>EnableCellEditControl(False)</tt>。<tt>Enable</tt>*方法将在当前所选择的单元格中创建并显示该单元格的编辑器。<tt>disable</tt>*方法则相反。如果<tt>enable</tt>*方法将工作于当前单元格，那么<tt>CanEnableCellControl()</tt>返回<tt>true</tt>，这就意味该网格是可编辑并且单元格没有被指定为只读。如果当前单元格的编辑器被激活了，则方法<tt>IsCellEditControlEnabled()</tt>返回<tt>true</tt>。
+<span id="line-717" class="anchor"/><span id="line-718" class="anchor"/></p><p
+class="line862">这里还有一些内在的可用的方法，你可以用于对编辑进行更细致的处理。你可以使用方法<tt>ShowCellEditControl()</tt>来触发当前单元格的编辑，并且你也可以使用方法<tt>HideCellEditControl()</tt>该编辑。你可以使用方法<tt>IsCurrentCellReadOnly()</tt>来确定当前单元格可编辑的有效性。你可以使用方法<tt>SaveEditControlValue()</tt>来确保在编辑器中所输入的新值被存储。当焦点从被编辑的单元格上移走时，网格控件隐式地调用该方法，当在你的程序中所做的一些事情可能会导致值被丢失时（比如关闭网格所处的窗口时），隐式地调用该方法是一个好的方式。
+<span id="line-719" class="anchor"/><span id="line-720" class="anchor"/></p><p class="line862">每个单元格都有它自己特定的编辑器对象。你可以使用方法<tt>GetCellEditor(row, col)</tt>来得到相关单元格的编辑器的一个引用，返回值是是类<tt>wx.grid.GridCellEditor</tt>的一个实例。你可以使用方法<tt>SetCellEditor(row,  col,
+editor)</tt>来设置该编辑器，其中的<tt>editor</tt>参数是一个<tt>wx.grid.GridCellEditor</tt>。你可以使用方法<tt>GetDefaultEditor()</tt>和<tt>SetDefaultEditor(editor)</tt>来为整个网格管理默认的编辑器。正如描绘器一样，编辑器对象作为与单元格、行或列相关的<tt>wx.grid.GridCellAttr</tt>的一部分被存储。 <span id="line-721" class="anchor"/><span id="line-722" class="anchor"/><span id="line-723" class="anchor"/></p><p class="line867">
+</p><h3 id="head-166ec7933caf1cf87fad4470b8e7ae6bf8188703">3.3. 如何使用一个自定义的单元格编辑器？</h3>
+<span id="line-724" class="anchor"/><span id="line-725" class="anchor"/><span id="line-726" class="anchor"/><p class="line862">正如描绘器一样，<tt>wxPython</tt>提供了几个不同类型的标准编辑器，也让你可以创建你自己的编辑器。 <span id="line-727" class="anchor"/><span id="line-728" class="anchor"/><span id="line-729" class="anchor"/></p><p class="line867"><strong>预定义的编辑器</strong> <span id="line-730" class="anchor"/><span
+id="line-731" class="anchor"/></p><p class="line862">所有的<tt>wxPython</tt>编辑器都是类<tt>wx.grid.GridCellEditor</tt>的子类。表14.5说明了这些标准的编辑器。 <span id="line-732" class="anchor"/><span id="line-733" class="anchor"/></p><p class="line874">在接下来的部分，我们将给你展示如何创建自定义的单元格编辑器。 <span id="line-734" class="anchor"/><span id="line-735" class="anchor"/><span id="line-736" class="anchor"/></p><p
+class="line867"><strong>表14.5</strong>  <span id="line-737" class="anchor"/><strong><tt>wxPyhton</tt>中的单元格编辑器</strong> <span id="line-738" class="anchor"/><span id="line-739" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line891"><tt>wx.grid.GridCellAutoWrapStringEditor</tt></p></td>
+<td><p class="line862">使用多行文本控件来编辑数据值。</p></td>
+</tr>
+<tr>  <td><span id="line-740" class="anchor"/><p class="line891"><tt>wx.grid.GridCellBooleanEditor</tt></p></td>
+<td><p class="line862">用于单元格布尔值的编辑器，由一个复选框构成必，双击显示该复选框。你不必将布尔值描绘器用于一个布尔值编辑器——你可以用1或0，或者<tt>on</tt>/<tt>off</tt>此类的东西来替代布尔值描绘器来显示被选或未选状态。</p></td>
+</tr>
+<tr>  <td><span id="line-741" class="anchor"/><p class="line891"><tt>wx.grid.GridCellChoiceEditor</tt></p></td>
+<td><p class="line862">复合框编辑器。这个构造函数要求两个参数</p></td>
+<td><p class="line862">(<tt>choices,allowOthers=False)</tt>，其中参数<tt>choices</tt>是字符串的选项列表。如果<tt>allowOthers</tt>为<tt>True</tt>，那么除了下拉列表中的选项外，用户可以自己键入一个字符串。</p></td>
+</tr>
+<tr>  <td><span id="line-742" class="anchor"/><p class="line891"><tt>wx.grid.GridCellEnumEditor</tt></p></td>
+<td><p class="line862">继承自<tt>wx.grid.GridCellChoiceEditor</tt>，将数字换成等同的字符串呈现给用户。</p></td>
+</tr>
+<tr>  <td><span id="line-743" class="anchor"/><p class="line891"><tt>wx.grid.GridCellFloatEditor </tt></p></td>
+<td><p class="line862">用于输入指定精度的浮点数。这个构造函数要求的参数是(<tt>width=</tt>-1，<tt>precision=</tt>-1)，参数的意义与相应描绘器中的意思一样。使用这个编辑器输入的数被转换到相应的位数和精度。</p></td>
+</tr>
+<tr>  <td><span id="line-744" class="anchor"/><p class="line891"><tt>wx.grid.GridCellNumberEditor</tt></p></td>
+<td><p class="line862">整数编辑器。该构造函数要求的参数是(<tt>min=</tt>-1, <tt>max=</tt>-1)。如果<tt>min</tt>和<tt>max</tt>设置了，那么这个编辑器将进行范围检查，并否决试图输入范围之外的数。单元格的右边会有一个<tt>spinner</tt>控件，使用户可以通过鼠标来改变单元格中的值。</p></td>
+</tr>
+<tr>  <td><span id="line-745" class="anchor"/><p class="line891"><tt>wx.grid.GridCellTextEditor</tt></p></td>
+<td><p class="line862">默认的文本编辑器。</p></td>
+</tr>
+</tbody></table></div><span id="line-746" class="anchor"/><span id="line-747" class="anchor"/><span id="line-748" class="anchor"/><p class="line867"><strong>创建自定义的编辑器</strong> <span id="line-749" class="anchor"/><span id="line-750" class="anchor"/></p><p
+class="line862">你可以想创建一个自定义的编辑器自行处理输入的数据。要创建你自己的编辑器，你要创建<tt>wx.grid.PyGridCellEditor</tt>的一个子类。这比描绘器复杂些。表14.6显示了几个你需要覆盖的方法。 <span id="line-751" class="anchor"/><span id="line-752" class="anchor"/></p><p class="line874">表14.7显示了父类的更多的方法，你可以覆盖它们以改进你的自定义编辑器的外观。 <span id="line-753" class="anchor"/><span id="line-754"
+class="anchor"/><span id="line-755" class="anchor"/></p><p class="line867"><strong>表14.6</strong>  <span id="line-756" class="anchor"/><strong>你必须覆盖的<tt>PyGridCellEditor</tt>的方法</strong> <span id="line-757" class="anchor"/><span id="line-758" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line891"><tt>BeginEdit(row, col, grid)</tt></p></td>
+<td><p class="line862">参数<tt>row,col</tt>是单元格的坐标，<tt>grid</tt>是包含的单元格。该方法在编辑请求之初被调用。在该方法中，编辑器用于得到数据去编辑，并为编辑做准工作。</p></td>
+</tr>
+<tr>  <td><span id="line-759" class="anchor"/><p class="line891"><tt>Clone()</tt></p></td>
+<td><p class="line862">返回该编辑器的一个拷贝。</p></td>
+</tr>
+<tr>  <td><span id="line-760" class="anchor"/><p class="line891"><tt>Create(parent, id, evtHandler)</tt></p></td>
+<td><p class="line862">创建被编辑器使用的控件。参数<tt>parent</tt>是容器，<tt>id</tt>是要创建的控件的标识符，<tt>evtHandler</tt>是绑定到该新控件的事件处理器。</p></td>
+</tr>
+<tr>  <td><span id="line-761" class="anchor"/><p class="line891"><tt>EndEdit(row, col, grid)</tt></p></td>
+<td><p class="line862">如果编辑已经改变了单元格的值，则返回<tt>True</tt>。任何其它的必须的清除工作都应该在这里被执行。</p></td>
+</tr>
+<tr>  <td><span id="line-762" class="anchor"/><p class="line891"><tt>Reset()</tt></p></td>
+<td><p class="line862">如果编辑被取消了，则该方法被调用。此时应该将控件中的值还原为初始值。</p></td>
+</tr>
+</tbody></table></div><span id="line-763" class="anchor"/><span id="line-764" class="anchor"/><span id="line-765" class="anchor"/><p class="line867"><strong>表14.7</strong>  <span id="line-766" class="anchor"/><strong>可以覆盖的<tt>PyGridCellEditor</tt>的方法</strong> <span id="line-767" class="anchor"/><span id="line-768" class="anchor"/></p><div><table><tbody><tr>  <td><p
+class="line891"><tt>Destroy()</tt></p></td>
+<td><p class="line862">当编辑被销毁时，执行任何最终的清除工作。</p></td>
+</tr>
+<tr>  <td><span id="line-769" class="anchor"/><p class="line891"><tt>IsAcceptedKey(evt)</tt></p></td>
+<td><p class="line862">如果<tt>evt</tt>中的键被按下会启动编辑器，则方法返回<tt>True</tt>。<tt>F2</tt>键始终都用于启动编辑器。蕨类假设任意键的按下都将启动编辑器，除非它被修改为通过<tt>control,alt,</tt>或<tt>shift</tt>来启动。</p></td>
+</tr>
+<tr>  <td><span id="line-770" class="anchor"/><p class="line891"><tt>PaintBackground(rect, attr) </tt></p></td>
+<td><p class="line862">参数<tt>rect</tt>是一个<tt>wx.Rect</tt>（使用逻辑单位），<tt>attr</tt>是与单元格相关的<tt>wc.grid.GridCellAttr</tt>。该方法的目的是绘制没有被编辑器控件所覆盖的单元格的部分。基类通过属性得到背景色并使用得到的背景色填充矩形。</p></td>
+</tr>
+<tr>  <td><span id="line-771" class="anchor"/><p class="line891"><tt>SetSize(rect)</tt></p></td>
+<td><p class="line891"><tt>rect</tt>是一个该控件在屏幕上的逻辑尺度的<tt>wx.Rect</tt>。如果必要的话，可以使用该方法来将控件定位在该矩形内。</p></td>
+</tr>
+<tr>  <td><span id="line-772" class="anchor"/><p class="line891"><tt>Show(show, attr)</tt></p></td>
+<td><p class="line862">参数<tt>show</tt>是一个布尔值，它决定是否显示编辑器，<tt>attr</tt>是相关单元格的属性实例。调用该方法来显示或隐藏编辑器。</p></td>
+</tr>
+<tr>  <td><span id="line-773" class="anchor"/><p class="line891"><tt>StartingClick()</tt></p></td>
+<td><p class="line862">当编辑器通过在单元格上的一个鼠标敲击被启动时，该方法被调用来允许编辑器将该敲击用于自己的目的。</p></td>
+</tr>
+<tr>  <td><span id="line-774" class="anchor"/><p class="line891"><tt>StartingKey(evt)</tt></p></td>
+<td><p class="line862">如果编辑通过一个按键的按压被启动了，那么该方法被调用来允许编辑器控件使用该按键，如果你想的话。（例如，通过使用它作为实际编辑器的一部分）。</p></td>
+</tr>
+</tbody></table></div><span id="line-775" class="anchor"/><span id="line-776" class="anchor"/><p class="line862">一旦你的编辑器完成了，你就可以使用<tt>SetCellEditor</tt>方法将它设置为任何单元格的编辑器。例14.8显示了一个自定义编辑器的示例，这个例子自动将你输入的文本转换为大写。 <span id="line-777" class="anchor"/><span id="line-778" class="anchor"/><span id="line-779" class="anchor"/></p><p
+class="line867"><strong>例14.8</strong>  <span id="line-780" class="anchor"/><strong>创建自定义的大写编辑器</strong> <span id="line-781" class="anchor"/><span id="line-782" class="anchor"/></p><p class="line867"><span id="line-783" class="anchor"/><span id="line-784" class="anchor"/><span id="line-785" class="anchor"/><span id="line-786" class="anchor"/><span id="line-787"
+class="anchor"/><span id="line-788" class="anchor"/><span id="line-789" class="anchor"/><span id="line-790" class="anchor"/><span id="line-791" class="anchor"/><span id="line-792" class="anchor"/><span id="line-793" class="anchor"/><span id="line-794" class="anchor"/><span id="line-795" class="anchor"/><span id="line-796" class="anchor"/><span id="line-797" class="anchor"/><span id="line-798"
+class="anchor"/><span id="line-799" class="anchor"/><span id="line-800" class="anchor"/><span id="line-801" class="anchor"/><span id="line-802" class="anchor"/><span id="line-803" class="anchor"/><span id="line-804" class="anchor"/><span id="line-805" class="anchor"/><span id="line-806" class="anchor"/><span id="line-807" class="anchor"/><span id="line-808" class="anchor"/><span id="line-809"
+class="anchor"/><span id="line-810" class="anchor"/><span id="line-811" class="anchor"/><span id="line-812" class="anchor"/><span id="line-813" class="anchor"/><span id="line-814" class="anchor"/><span id="line-815" class="anchor"/><span id="line-816" class="anchor"/><span id="line-817" class="anchor"/><span id="line-818" class="anchor"/><span id="line-819" class="anchor"/><span id="line-820"
+class="anchor"/><span id="line-821" class="anchor"/><span id="line-822" class="anchor"/><span id="line-823" class="anchor"/><span id="line-824" class="anchor"/><span id="line-825" class="anchor"/><span id="line-826" class="anchor"/><span id="line-827" class="anchor"/><span id="line-828" class="anchor"/><span id="line-829" class="anchor"/><span id="line-830" class="anchor"/><span id="line-831"
+class="anchor"/><span id="line-832" class="anchor"/><span id="line-833" class="anchor"/><span id="line-834" class="anchor"/><span id="line-835" class="anchor"/><span id="line-836" class="anchor"/><span id="line-837" class="anchor"/><span id="line-838" class="anchor"/><span id="line-839" class="anchor"/><span id="line-840" class="anchor"/><span id="line-841" class="anchor"/><span id="line-842"
+class="anchor"/><span id="line-843" class="anchor"/><span id="line-844" class="anchor"/><span id="line-845" class="anchor"/><span id="line-846" class="anchor"/><span id="line-847" class="anchor"/><span id="line-848" class="anchor"/><span id="line-849" class="anchor"/><span id="line-850" class="anchor"/><span id="line-851" class="anchor"/><span id="line-852" class="anchor"/><span id="line-853"
+class="anchor"/><span id="line-854" class="anchor"/><span id="line-855" class="anchor"/><span id="line-856" class="anchor"/><span id="line-857" class="anchor"/><span id="line-858" class="anchor"/><span id="line-859" class="anchor"/><span id="line-860" class="anchor"/><span id="line-861" class="anchor"/><span id="line-862" class="anchor"/><span id="line-863" class="anchor"/><span id="line-864"
+class="anchor"/><span id="line-865" class="anchor"/><span id="line-866" class="anchor"/><span id="line-867" class="anchor"/><span id="line-868" class="anchor"/><span id="line-869" class="anchor"/><span id="line-870" class="anchor"/><span id="line-871" class="anchor"/><span id="line-872" class="anchor"/><span id="line-873" class="anchor"/><span id="line-874" class="anchor"/><span id="line-875"
+class="anchor"/><span id="line-876" class="anchor"/><span id="line-877" class="anchor"/><span id="line-878" class="anchor"/><span id="line-879" class="anchor"/><span id="line-880" class="anchor"/><span id="line-881" class="anchor"/><span id="line-882" class="anchor"/><span id="line-883" class="anchor"/><span id="line-884" class="anchor"/><span id="line-885" class="anchor"/><span id="line-886"
+class="anchor"/><span id="line-887" class="anchor"/><span id="line-888" class="anchor"/><span id="line-889" class="anchor"/><span id="line-890" class="anchor"/><span id="line-891" class="anchor"/><span id="line-892" class="anchor"/><span id="line-893" class="anchor"/><span id="line-894" class="anchor"/><span id="line-895" class="anchor"/><span id="line-896" class="anchor"/></p><div lang="en"
+dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-cc84df3f6e2b7def10cac4d7cda1c4db83457f7a_009\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-cc84df3f6e2b7def10cac4d7cda1c4db83457f7a_009', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-cc84df3f6e2b7def10cac4d7cda1c4db83457f7a_009" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#-*- encoding:UTF-8 -*-</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">import</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">import</span> <span class="ID">string</span></span>
+<span class="line"><span class="LineNumber">   5 </span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">class</span> <span class="ID">UpCaseCellEditor</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span><span class="Operator">.</span><span class="ID">PyGridCellEditor</span><span class="Operator">)</span><span
+class="Operator">:</span><span class="Comment">#声明编辑器</span></span>
+<span class="line"><span class="LineNumber">   7 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span><span class="Operator">.</span><span class="ID">PyGridCellEditor</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span></span>
+<span class="line"><span class="LineNumber">  10 </span>    <span class="ResWord">def</span> <span class="ID">Create</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">,</span> <span class="ID">id</span><span class="Operator">,</span> <span class="ID">evtHandler</span><span
+class="Operator">)</span><span class="Operator">:</span><span class="Comment">#创建</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="String">"""</span></span>
+<span class="line"><span class="LineNumber">  12 </span><span class="String">        Called to create the control, which must derive from wx.Control.</span></span>
+<span class="line"><span class="LineNumber">  13 </span><span class="String">        *Must Override*</span></span>
+<span class="line"><span class="LineNumber">  14 </span><span class="String">        """</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">_tc</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">TextCtrl</span><span class="Operator">(</span><span class="ID">parent</span><span class="Operator">,</span> <span
+class="ID">id</span><span class="Operator">,</span> <span class="String">""</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">_tc</span><span class="Operator">.</span><span class="ID">SetInsertionPoint</span><span class="Operator">(</span><span class="Number">0</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetControl</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">_tc</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span></span>
+<span class="line"><span class="LineNumber">  19 </span>        <span class="ResWord">if</span> <span class="ID">evtHandler</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  20 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">_tc</span><span class="Operator">.</span><span class="ID">PushEventHandler</span><span class="Operator">(</span><span class="ID">evtHandler</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span></span>
+<span class="line"><span class="LineNumber">  22 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">_tc</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_CHAR</span><span class="Operator">,</span> <span
+class="ID">self</span><span class="Operator">.</span><span class="ID">OnChar</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  23 </span></span>
+<span class="line"><span class="LineNumber">  24 </span>    <span class="ResWord">def</span> <span class="ID">SetSize</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">rect</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  25 </span>        <span class="String">"""</span></span>
+<span class="line"><span class="LineNumber">  26 </span><span class="String">        Called to position/size the edit control within the cell rectangle.</span></span>
+<span class="line"><span class="LineNumber">  27 </span><span class="String">        If you don't fill the cell (the rect) then be sure to override</span></span>
+<span class="line"><span class="LineNumber">  28 </span><span class="String">        PaintBackground and do something meaningful there.</span></span>
+<span class="line"><span class="LineNumber">  29 </span><span class="String">        """</span></span>
+<span class="line"><span class="LineNumber">  30 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">_tc</span><span class="Operator">.</span><span class="ID">SetDimensions</span><span class="Operator">(</span><span class="ID">rect</span><span class="Operator">.</span><span class="ID">x</span><span class="Operator">,</span> <span
+class="ID">rect</span><span class="Operator">.</span><span class="ID">y</span><span class="Operator">,</span> <span class="ID">rect</span><span class="Operator">.</span><span class="ID">width</span><span class="Operator">+</span><span class="Number">2</span><span class="Operator">,</span> <span class="ID">rect</span><span class="Operator">.</span><span
+class="ID">height</span><span class="Operator">+</span><span class="Number">2</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  31 </span>                               <span class="ID">wx</span><span class="Operator">.</span><span class="ID">SIZE_ALLOW_MINUS_ONE</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  32 </span></span>
+<span class="line"><span class="LineNumber">  33 </span>    <span class="ResWord">def</span> <span class="ID">BeginEdit</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">row</span><span class="Operator">,</span> <span class="ID">col</span><span class="Operator">,</span> <span class="ID">grid</span><span
+class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  34 </span>        <span class="String">"""</span></span>
+<span class="line"><span class="LineNumber">  35 </span><span class="String">        Fetch the value from the table and prepare the edit control</span></span>
+<span class="line"><span class="LineNumber">  36 </span><span class="String">        to begin editing.  Set the focus to the edit control.</span></span>
+<span class="line"><span class="LineNumber">  37 </span><span class="String">        *Must Override*</span></span>
+<span class="line"><span class="LineNumber">  38 </span><span class="String">        """</span></span>
+<span class="line"><span class="LineNumber">  39 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">startValue</span> <span class="Operator">=</span> <span class="ID">grid</span><span class="Operator">.</span><span class="ID">GetTable</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span
+class="ID">GetValue</span><span class="Operator">(</span><span class="ID">row</span><span class="Operator">,</span> <span class="ID">col</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  40 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">_tc</span><span class="Operator">.</span><span class="ID">SetValue</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">startValue</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  41 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">_tc</span><span class="Operator">.</span><span class="ID">SetInsertionPointEnd</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  42 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">_tc</span><span class="Operator">.</span><span class="ID">SetFocus</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  43 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">_tc</span><span class="Operator">.</span><span class="ID">SetSelection</span><span class="Operator">(</span><span class="Number">0</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">_tc</span><span class="Operator">.</span><span class="ID">GetLastPosition</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  44 </span></span>
+<span class="line"><span class="LineNumber">  45 </span>    <span class="ResWord">def</span> <span class="ID">EndEdit</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">row</span><span class="Operator">,</span> <span class="ID">col</span><span class="Operator">,</span> <span class="ID">grid</span><span
+class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  46 </span>        <span class="String">"""</span></span>
+<span class="line"><span class="LineNumber">  47 </span><span class="String">        Complete the editing of the current cell. Returns True if the value</span></span>
+<span class="line"><span class="LineNumber">  48 </span><span class="String">        has changed.  If necessary, the control may be destroyed.</span></span>
+<span class="line"><span class="LineNumber">  49 </span><span class="String">        *Must Override*</span></span>
+<span class="line"><span class="LineNumber">  50 </span><span class="String">        """</span></span>
+<span class="line"><span class="LineNumber">  51 </span>        <span class="ID">changed</span> <span class="Operator">=</span> <span class="ID">False</span></span>
+<span class="line"><span class="LineNumber">  52 </span></span>
+<span class="line"><span class="LineNumber">  53 </span>        <span class="ID">val</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">_tc</span><span class="Operator">.</span><span class="ID">GetValue</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  54 </span></span>
+<span class="line"><span class="LineNumber">  55 </span>        <span class="ResWord">if</span> <span class="ID">val</span> <span class="Operator">!=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">startValue</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  56 </span>            <span class="ID">changed</span> <span class="Operator">=</span> <span class="ID">True</span></span>
+<span class="line"><span class="LineNumber">  57 </span>            <span class="ID">grid</span><span class="Operator">.</span><span class="ID">GetTable</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">SetValue</span><span class="Operator">(</span><span class="ID">row</span><span class="Operator">,</span> <span
+class="ID">col</span><span class="Operator">,</span> <span class="ID">val</span><span class="Operator">)</span> <span class="Comment"># update the table</span></span>
+<span class="line"><span class="LineNumber">  58 </span></span>
+<span class="line"><span class="LineNumber">  59 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">startValue</span> <span class="Operator">=</span> <span class="String">''</span></span>
+<span class="line"><span class="LineNumber">  60 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">_tc</span><span class="Operator">.</span><span class="ID">SetValue</span><span class="Operator">(</span><span class="String">''</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  61 </span>        <span class="ResWord">return</span> <span class="ID">changed</span></span>
+<span class="line"><span class="LineNumber">  62 </span></span>
+<span class="line"><span class="LineNumber">  63 </span>    <span class="ResWord">def</span> <span class="ID">Reset</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  64 </span>        <span class="String">"""</span></span>
+<span class="line"><span class="LineNumber">  65 </span><span class="String">        Reset the value in the control back to its starting value.</span></span>
+<span class="line"><span class="LineNumber">  66 </span><span class="String">        *Must Override*</span></span>
+<span class="line"><span class="LineNumber">  67 </span><span class="String">        """</span></span>
+<span class="line"><span class="LineNumber">  68 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">_tc</span><span class="Operator">.</span><span class="ID">SetValue</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">startValue</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  69 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">_tc</span><span class="Operator">.</span><span class="ID">SetInsertionPointEnd</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  70 </span></span>
+<span class="line"><span class="LineNumber">  71 </span>    <span class="ResWord">def</span> <span class="ID">Clone</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  72 </span>        <span class="String">"""</span></span>
+<span class="line"><span class="LineNumber">  73 </span><span class="String">        Create a new object which is the copy of this one</span></span>
+<span class="line"><span class="LineNumber">  74 </span><span class="String">        *Must Override*</span></span>
+<span class="line"><span class="LineNumber">  75 </span><span class="String">        """</span></span>
+<span class="line"><span class="LineNumber">  76 </span>        <span class="ResWord">return</span> <span class="ID">UpCaseCellEditor</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  77 </span></span>
+<span class="line"><span class="LineNumber">  78 </span>    <span class="ResWord">def</span> <span class="ID">StartingKey</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  79 </span>        <span class="String">"""</span></span>
+<span class="line"><span class="LineNumber">  80 </span><span class="String">        If the editor is enabled by pressing keys on the grid, this will be</span></span>
+<span class="line"><span class="LineNumber">  81 </span><span class="String">        called to let the editor do something about that first key if desired.</span></span>
+<span class="line"><span class="LineNumber">  82 </span><span class="String">        """</span></span>
+<span class="line"><span class="LineNumber">  83 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnChar</span><span class="Operator">(</span><span class="ID">evt</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  84 </span>        <span class="ResWord">if</span> <span class="ID">evt</span><span class="Operator">.</span><span class="ID">GetSkipped</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  85 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">_tc</span><span class="Operator">.</span><span class="ID">EmulateKeyPress</span><span class="Operator">(</span><span class="ID">evt</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  86 </span></span>
+<span class="line"><span class="LineNumber">  87 </span>    <span class="ResWord">def</span> <span class="ID">OnChar</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  88 </span>        <span class="ID">key</span> <span class="Operator">=</span> <span class="ID">evt</span><span class="Operator">.</span><span class="ID">GetKeyCode</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  89 </span>        <span class="ResWord">if</span> <span class="ID">key</span>   <span class="Number">255</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  90 </span>            <span class="ID">evt</span><span class="Operator">.</span><span class="ID">Skip</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  91 </span>            <span class="ResWord">return</span></span>
+<span class="line"><span class="LineNumber">  92 </span>        <span class="ID">char</span> <span class="Operator">=</span> <span class="ID">chr</span><span class="Operator">(</span><span class="ID">key</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  93 </span>        <span class="ResWord">if</span> <span class="ID">char</span> <span class="ResWord">in</span> <span class="ID">string</span><span class="Operator">.</span><span class="ID">letters</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  94 </span>            <span class="ID">char</span> <span class="Operator">=</span> <span class="ID">char</span><span class="Operator">.</span><span class="ID">upper</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  95 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">_tc</span><span class="Operator">.</span><span class="ID">WriteText</span><span class="Operator">(</span><span class="ID">char</span><span class="Operator">)</span><span class="Comment">#转换为大写</span></span>
+<span class="line"><span class="LineNumber">  96 </span>        <span class="ResWord">else</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  97 </span>            <span class="ID">evt</span><span class="Operator">.</span><span class="ID">Skip</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  98 </span></span>
+<span class="line"><span class="LineNumber">  99 </span><span class="ResWord">class</span> <span class="ID">TestFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber"> 100 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber"> 101 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span class="Operator">,</span> <span
+class="ID">title</span><span class="Operator">=</span><span class="String">"Grid Editor"</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber"> 102 </span>                          <span class="ID">size</span><span class="Operator">=</span><span class="Operator">(</span><span class="Number">640</span><span class="Operator">,</span><span class="Number">480</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 103 </span></span>
+<span class="line"><span class="LineNumber"> 104 </span>        <span class="ID">grid</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">grid</span><span class="Operator">.</span><span class="ID">Grid</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 105 </span>        <span class="ID">grid</span><span class="Operator">.</span><span class="ID">CreateGrid</span><span class="Operator">(</span><span class="Number">50</span><span class="Operator">,</span><span class="Number">50</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 106 </span>        <span class="ID">grid</span><span class="Operator">.</span><span class="ID">SetDefaultEditor</span><span class="Operator">(</span><span class="ID">UpCaseCellEditor</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span><span class="Comment">#设置成默认编辑器</span></span>
+<span class="line"><span class="LineNumber"> 107 </span></span>
+<span class="line"><span class="LineNumber"> 108 </span></span>
+<span class="line"><span class="LineNumber"> 109 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 110 </span><span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">TestFrame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 111 </span><span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 112 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-897" class="anchor"/><span id="line-898" class="anchor"/><p class="line867">
+</p><h2 id="head-e87bcfba6a5d611fcf7885716d20eb7ee5c9b641">4. 捕获用户事件</h2>
+<span id="line-899" class="anchor"/><span id="line-900" class="anchor"/><span id="line-901" class="anchor"/><p class="line874">网格控件有许多的用户事件。我们将把它们分为鼠标事件和键盘事件。 <span id="line-902" class="anchor"/><span id="line-903" class="anchor"/><span id="line-904" class="anchor"/></p><p class="line867">
+</p><h3 id="head-47359ddfc0686555cd0ca12a7e1dfd1ae519ebc6">4.1. 如何捕获用户的鼠标动作？</h3>
+<span id="line-905" class="anchor"/><span id="line-906" class="anchor"/><span id="line-907" class="anchor"/><p class="line862">对于网格控件，除了不同的鼠标事件类型外，对于这些类型还有一些不同的事件类。最常用的事件类是<tt>wx.grid.GridEvent</tt>。网格的事件类是<tt>wx.CommandEvent</tt>的一个子类，它提供了用于获得事件详情的几个方法，如表14.8所示。 <span id="line-908"
+class="anchor"/><span id="line-909" class="anchor"/><span id="line-910" class="anchor"/></p><p class="line867"><strong>表14.8</strong>  <span id="line-911" class="anchor"/><strong><tt>wx.grid.GridEvent</tt>的方法</strong> <span id="line-912" class="anchor"/><span id="line-913" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line891"><tt>AltDown()</tt></p></td>
+<td><p class="line862">当事件被触发时，如果<tt>alt</tt>键被按下了，则返回<tt>True</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-914" class="anchor"/><p class="line891"><tt>ControlDown()</tt></p></td>
+<td><p class="line862">当事件被触发时，如果<tt>control</tt>键被按下了，则返回<tt>True</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-915" class="anchor"/><p class="line891"><tt>GetCol()</tt></p></td>
+<td><p class="line862">返回发生事件的单元格所在的列的索引。</p></td>
+</tr>
+<tr>  <td><span id="line-916" class="anchor"/><p class="line891"><tt>GetPosition()</tt></p></td>
+<td><p class="line862">返回返回一个<tt>wx.Point</tt>。它代表事件发生点的逻辑坐标（以像素为单位）。</p></td>
+</tr>
+<tr>  <td><span id="line-917" class="anchor"/><p class="line891"><tt>GetRow()</tt></p></td>
+<td><p class="line862">返回发生事件的单元格所在的行的索引。</p></td>
+</tr>
+<tr>  <td><span id="line-918" class="anchor"/><p class="line891"><tt>MetaDown()</tt></p></td>
+<td><p class="line862">当事件被触发时，如果<tt>met</tt>键被按下了，则返回<tt>True</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-919" class="anchor"/><p class="line891"><tt>Selecting()</tt></p></td>
+<td><p class="line862">如果事件是一个被选事件，则返回<tt>True</tt>，如果事件是取消选择事件，则返回<tt>False</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-920" class="anchor"/><p class="line891"><tt>ShiftDown()</tt></p></td>
+<td><p class="line862">当事件被触发时，如果<tt>shift</tt>键被按下了，则返回<tt>True</tt>。</p></td>
+</tr>
+</tbody></table></div><span id="line-921" class="anchor"/><span id="line-922" class="anchor"/><span id="line-923" class="anchor"/><p class="line862">与<tt>wx.grid.GridEvent</tt>相关的有几个不同的事件类型。如表14.9所示。 <span id="line-924" class="anchor"/><span id="line-925" class="anchor"/><span id="line-926" class="anchor"/></p><p
+class="line867"><strong>表14.9</strong>  <span id="line-927" class="anchor"/><strong>关于网格鼠标事件的单元格事件类型</strong> <span id="line-928" class="anchor"/><span id="line-929" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line891"><tt>wx.grid.EVT_GRID_CELL_CHANGE</tt></p></td>
+<td><p class="line862">当用户通过编辑器改变单元格中的数据时触发该事件。</p></td>
+</tr>
+<tr>  <td><span id="line-930" class="anchor"/><p class="line891"><tt>wx.grid.EVT_GRID_CELL_LEFT_CLICK</tt></p></td>
+<td><p class="line862">当用户在一个单元格中敲击鼠标左键时触发该事件。</p></td>
+</tr>
+<tr>  <td><span id="line-931" class="anchor"/><p class="line891"><tt>wx.grid.EVT_GRID_CELL_LEFT_DCLICK</tt></p></td>
+<td><p class="line862">当用户在一个单元格中双击鼠标左键时触发该事件。</p></td>
+</tr>
+<tr>  <td><span id="line-932" class="anchor"/><p class="line891"><tt>wx.grid.EVT_GRID_CELL_RIGHT_CLICK</tt></p></td>
+<td><p class="line862">当用户在一个单元格中敲击鼠标右键时触发该事件。</p></td>
+</tr>
+<tr>  <td><span id="line-933" class="anchor"/><p class="line891"><tt>wx.grid.EVT_GRID_CELL_RIGHT_DCLICK</tt></p></td>
+<td><p class="line862">当用户在一个单元格中双击鼠标右键时触发该事件。</p></td>
+</tr>
+<tr>  <td><span id="line-934" class="anchor"/><p class="line891"><tt>wx.grid.EVT_GRID_EDITOR_HIDDEN</tt></p></td>
+<td><p class="line862">当在编辑会话结束时隐藏一个单元格编辑器则触发该事件。</p></td>
+</tr>
+<tr>  <td><span id="line-935" class="anchor"/><p class="line891"><tt>wx.grid.EVT_GRID_EDITOR_SHOWN</tt></p></td>
+<td><p class="line862">当在编辑会话结束时显示一个单元格编辑器则触发该事件。</p></td>
+</tr>
+<tr>  <td><span id="line-936" class="anchor"/><p class="line891"><tt>wx.grid.EVT_GRID_LABEL_LEFT_CLICK</tt></p></td>
+<td><p class="line862">当用户在行或列的标签区域敲击鼠标左键时触发该事件。</p></td>
+</tr>
+<tr>  <td><span id="line-937" class="anchor"/><p class="line891"><tt>wx.grid.EVT_GRID_LABEL_LEFT_DCLICK</tt></p></td>
+<td><p class="line862">当用户在行或列的标签区域双击鼠标左键时触发该事件。</p></td>
+</tr>
+<tr>  <td><span id="line-938" class="anchor"/><p class="line891"><tt>wx.grid.EVT_GRID_LABEL_RIGHT_CLICK</tt></p></td>
+<td><p class="line862">当用户在行或列的标签区域敲击鼠标右键时触发该事件。</p></td>
+</tr>
+<tr>  <td><span id="line-939" class="anchor"/><p class="line891"><tt>wx.grid.EVT_GRID_LABEL_RIGHT_DCLICK</tt></p></td>
+<td><p class="line862">当用户在行或列的标签区域双击鼠标右键时触发该事件。</p></td>
+</tr>
+<tr>  <td><span id="line-940" class="anchor"/><p class="line891"><tt>wx.grid.EVT_GRID_Select_CELL</tt></p></td>
+<td><p class="line862">当用户将焦点移到一个新的单元格，并选择它时触发该事件。</p></td>
+</tr>
+</tbody></table></div><span id="line-941" class="anchor"/><span id="line-942" class="anchor"/><span id="line-943" class="anchor"/><p
+class="line862">有两个事件类型，它们有一个<tt>wx.grid.GridSizeEvent</tt>实例。这两个事件类型分别是<tt>wx.grid.EVT_GRID_COL_SIZE</tt>：当列大小被改变时触发，<tt>wx.grid.EVT_GRID_ROW_SIZE</tt>：当行的大小被改变时触发。网格的尺寸事件有5个与<tt>wx.GridEvent</tt>!<tt>AltDown(), ControlDown(), GetPosition(), MetaDow(),
+</tt>和<tt>ShiftDown</tt>相同的方法。<tt>wx.grid.GridSizeEvent</tt>的最后的一个方法是<tt>GetRowOrCol()</tt>，该方法返回发生改变的列或行的索引，当然这依赖于具体的事件类型。 <span id="line-944" class="anchor"/><span id="line-945" class="anchor"/></p><p
+class="line862">事件类型<tt>wx.grid.EVT_GRID_RANGE_Select</tt>有一个<tt>wx.grid.GridRangeSelectEvent</tt>的实例，该事件当用户选择连续矩形范围内的单元格中被触发。该事件的实例拥有的方法是<tt>GetBottomRightCoords(),  GetBottomRow(),  GetLeftCol(),  GetRightCol(),
+GetTopRightCoords()</tt>和<tt>GetTopRow()</tt>，它们返回被选择区域的整数索引或(<tt>row, col)</tt>元组。 <span id="line-946" class="anchor"/><span id="line-947" class="anchor"/></p><p
+class="line862">最后，事件类型<tt>EVT_GRID_EDITOR_CreateD</tt>有一个<tt>wx.grid.GridEditorCreatedEvent</tt>实例。这个事件在当通过一个编辑会话创建了一个编辑器时被触发。该事件实例的方法有<tt>GetCol(), GetRow(), </tt>和<tt>GetControl()</tt>，它们分别返回发生事件的列，行的索引和使用的编辑控件。 <span id="line-948" class="anchor"/><span
+id="line-949" class="anchor"/><span id="line-950" class="anchor"/></p><p class="line867">
+</p><h3 id="head-75ce8655ed37e1dc4c643803062d17d8e5b823fb">4.2. 如何捕获用户的键盘动作？</h3>
+<span id="line-951" class="anchor"/><span id="line-952" class="anchor"/><span id="line-953" class="anchor"/><p
+class="line862">除了使用鼠标外，用户还可以使用键盘来在网格中移动。你可以通过代码的方法来使用表14.10中的移动方法改变光标。其中的许多方法都要求一个<tt>expandSelection</tt>参数。每个方法中的<tt>expandSelection</tt>的作用都相同。如果这个参数为<tt>True</tt>，那么当前的选项将被扩展以容纳这个新的光标位置。如果这个参数为<tt>False</tt>，那么当前的选项被新的光标所取代。
+<span id="line-954" class="anchor"/><span id="line-955" class="anchor"/><span id="line-956" class="anchor"/></p><p class="line867"><strong>表14.10</strong>  <span id="line-957" class="anchor"/><strong>网格光标移动方法</strong> <span id="line-958" class="anchor"/><span id="line-959" class="anchor"/></p><div><table><tbody><tr>  <td><p
+class="line891"><tt>MoveCursorDown(expandSelection)</tt></p></td>
+<td><p class="line862">向下移动光标。如果<tt>expandSelection</tt>为<tt>False</tt>，等同于按下"下箭头键"，如果为<tt>True</tt>，则等同于按下"<tt>shift</tt>-下箭头键"。</p></td>
+</tr>
+<tr>  <td><span id="line-960" class="anchor"/><p class="line891"><tt>MoveCursorDownBlock(expandSelection)</tt></p></td>
+<td><p class="line862">向下移动光标。如果<tt>expandSelection</tt>为<tt>False</tt>，则等同于"<tt>ctrl</tt>-下箭头键"，如果为<tt>True</tt>，则等同于"<tt>shift</tt>-<tt>ctrl</tt>-下箭头键"。</p></td>
+</tr>
+<tr>  <td><span id="line-961" class="anchor"/><p class="line891"><tt>MoveCursorLeft(expandSelection)</tt></p></td>
+<td><p class="line862">向左移动光标。如果<tt>expandSelection</tt>为<tt>False</tt>，等同于按下"左箭头键"，如果为<tt>True</tt>，则等同于按下"<tt>shift</tt>-左箭头键"。</p></td>
+</tr>
+<tr>  <td><span id="line-962" class="anchor"/><p class="line891"><tt>MoveCursorLeftBlock(expandSelection)</tt></p></td>
+<td><p class="line862">向左移动光标。如果<tt>expandSelection</tt>为<tt>False</tt>，则等同于"<tt>ctrl</tt>-左箭头键"，如果为<tt>True</tt>，则等同于"<tt>shift</tt>-<tt>ctrl</tt>-左箭头键"。</p></td>
+</tr>
+<tr>  <td><span id="line-963" class="anchor"/><p class="line891"><tt>MoveCursorRight(expandSelection)</tt></p></td>
+<td><p class="line862">向右移动光标。如果<tt>expandSelection</tt>为<tt>False</tt>，等同于按下"右箭头键"，如果为<tt>True</tt>，则等同于按下"<tt>shift</tt>-右箭头键"。</p></td>
+</tr>
+<tr>  <td><span id="line-964" class="anchor"/><p class="line891"><tt>MoveCursorRightBlock(expandSelection)</tt></p></td>
+<td><p class="line862">向右移动光标。如果<tt>expandSelection</tt>为<tt>False</tt>，则等同于"<tt>ctrl</tt>-右箭头键"，如果为<tt>True</tt>，则等同于"<tt>shift</tt>-<tt>ctrl</tt>-右箭头键"。</p></td>
+</tr>
+<tr>  <td><span id="line-965" class="anchor"/><p class="line891"><tt>MoveCursorUp(expandSelection)</tt></p></td>
+<td><p class="line862">向上移动光标。如果<tt>expandSelection</tt>为<tt>False</tt>，等同于按下"上箭头键"，如果为<tt>True</tt>，则等同于按下"<tt>shift</tt>-上箭头键"。</p></td>
+</tr>
+<tr>  <td><span id="line-966" class="anchor"/><p class="line891"><tt>MoveCursorUpBlock(expandSelection)</tt></p></td>
+<td><p class="line862">向上移动光标。如果<tt>expandSelection</tt>为<tt>False</tt>，则等同于"<tt>ctrl</tt>-上箭头键"，如果为<tt>True</tt>，则等同于"<tt>shift</tt>-<tt>ctrl</tt>-上箭头键"。</p></td>
+</tr>
+<tr>  <td><span id="line-967" class="anchor"/><p class="line891"><tt>MovePageDown()</tt></p></td>
+<td><p class="line862">显示下一页的单元格。</p></td>
+</tr>
+<tr>  <td><span id="line-968" class="anchor"/><p class="line891"><tt>MovePageUp()</tt></p></td>
+<td><p class="line862">显示上一页的单元格。</p></td>
+</tr>
+</tbody></table></div><span id="line-969" class="anchor"/><span id="line-970" class="anchor"/><p class="line874">我们已经涵盖了所有你需要了解的有关单元格的知识。在下一章中，我们将讨论树形控件。 <span id="line-971" class="anchor"/><span id="line-972" class="anchor"/><span id="line-973" class="anchor"/></p><p
+class="line867">
+</p><h2 id="head-bca9866ffa6844d35de70969a0e0e7a6236d04ec">5. 本章小结</h2>
+<span id="line-974" class="anchor"/><span id="line-975" class="anchor"/><span id="line-976" class="anchor"/><p
+class="line862">1、网格控件使你能够创建像电子表格一样的网格表，并具有很大的可控性和灵活性。网格控件是类<tt>wx.grid.Grid</tt>的一个实例。通常，如果使用网格控件处理复杂的问题的话，你应该通过<tt>__init__</tt>方法来定义它的子类，这是值得的，而非仅仅创建基类的一个实例并在程序的其它地方调用它的方法。 <span id="line-977"
+class="anchor"/><span id="line-978" class="anchor"/></p><p class="line862">2、有两种方法用来将数据放入一个网格控件中。网格控件可以使用<tt>CreateGrid(numRows, numCols)</tt>方法被显式创建，然后使用<tt>SetCellValue(row, col,
+s)</tt>方法来设置单个的单元格。另一种是，你可以创建一个网格表的实例，该网格表作为网格的一个模型，它使你可以很容易地使用另一数据源的数据并显示在网格中。网格表是<tt>wx.grid.PyGridTableBase</tt>的子类，<tt>wx.grid.PyGridTableBase</tt>的方法中，<tt>GetValue(row,
+col)</tt>可以被覆盖以在显示一个单元格时驱动网格的行为。网格表被连接到网格控件使用方法<tt>SetTable(table)</tt>。当使用网格表的方法创建了网格后，可以通过网格表的方法来改变网格的行和列数。 <span id="line-979" class="anchor"/><span id="line-980" class="anchor"/></p><p
+class="line862">3、网格也有行和列标签，标签有默认的值，类似于电子表格。标签所显示的文本和标签的其它显示属性可以使用网格的方法来改变。每个项的行和列的尺寸可以被显式了设置，或者网格可以根据所显示的自动调整尺寸。用户也可通过拖动网格线来改变网格的尺寸。如果需要的话，你可以为每行或每列设置一个最小的尺寸，以防止单元格变得太小而不能显示相应的数据。另外，特定的单元格了能使用<tt>SetCellSize(row,
+col, numrows, numcols)</tt>方法来达到跨行或列的目的。 <span id="line-981" class="anchor"/><span id="line-982" class="anchor"/></p><p
+class="line862">4、用户可以选择网格中的一个或多个矩形范围的网格，这也可以通过使用很多不同的<tt>select</tt>*方法以程序化的方式实现相同的效果。一个没有在显示区域中的网格单元，可能使用<tt>MakeCellVisible(row, col)</tt>方法来将它移到显示区域上。 <span id="line-983" class="anchor"/><span id="line-984"
+class="anchor"/></p><p
+class="line862">5、网格控件的强大性和灵活性来源于可以为每个单元格创建自定义的描绘器和编辑器这一能力。描绘器用于控件单元格中的信息显示。默认的描绘器只是一个简单的字符串，但是还有用于布尔值、整数和浮点数的预先定义好（预定义）的描绘器。你可以通过子类化<tt>wx.Grid.PyGridCellRenderer</tt>创建你自己的描绘器并覆盖它的绘制方法。
+<span id="line-985" class="anchor"/><span id="line-986" class="anchor"/></p><p
+class="line862">6、默认情况下，网格允许就地编辑数据。你可以改变这个属性（针对单元格，或行或列，或整个网格）。当编辑时，编辑器对象控制显示给用户的东西。默认的编辑器是一个用以修改字符串的普通的文本编辑器控件。其它还有用于布尔值、整数和浮点数的预定义的编辑器。你可以通过子类化<tt>wx.grid.GridCellEditor</tt>并覆盖它的几个方法来创建自己的自定义的编辑器。
+<span id="line-987" class="anchor"/><span id="line-988" class="anchor"/></p><p class="line874">7、网格控件有许多你能捕获的不同的事件，分别包括单元格中的鼠标敲击和标签中的鼠标敲击事件，以及通过改变一个单元格的尺寸而触发的事件。另外，你能够以编程的方式在网格中移动光标。 <span id="line-989" class="anchor"/><span
+id="bottom" class="anchor"/></p></div>

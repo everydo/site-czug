@@ -1,0 +1,68 @@
+<p>出处： <a href="http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch02.html">http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch02.html</a></p>
+
+<h1>第2章 安装Python</h1>
+
+<p><strong>目录表</strong></p>
+<dl>
+<dt><a href="#s01">Linux和BSD用户</a></dt>
+<dt><a href="#ch02s02.html">Windows&reg;用户</a></dt>
+<dt><a href="#ch02s03.html">概括</a></dt>
+</dl>
+
+<h1><a name="s01">Linux和BSD用户</a></h1>
+<p>如果你正在使用一个Linux的发行版比如Fedora或者Mandrake或者其他（你的选择），或者一个BSD系统比如FreeBSD，那么你可能已经在你的系统里安装了Python。</p>
+<p>要测试你是否已经随着你的Linux包安装了Python，你可以打开一个shell程序（就像konsole或gnome-terminal）然后输入如下所示的命令<strong><code>python -V</code></strong>。</p>
+
+<p class="codebox">
+<code>
+$ python -V<br>
+Python 2.3.4
+</code>
+</p>
+
+<p></p>
+
+<p class="notebox">
+<span class="boxtitle">注释</span><br>
+<code>$</code>是shell的提示符。根据你的操作系统的设置，它可能与你那个不同，因此我只用<code>$</code>符号表示提示符。
+</p>
+
+<p>如果你看见向上面所示的那样一些版本信息，那么你已经安装了Python了。</p>
+<p>如果你得到像这样的消息：</p>
+<p class="codebox">
+<code>$ python -V<br>
+bash: python: command not found</code>
+</p>
+
+<p>那么你还没有安装Python。这几乎不可能，只是极其偶尔才会遇到。</p>
+<p>在这种情况下，你有两种方法在你的系统上安装Python。</p>
+<ul>
+<li type="disc"><p>利用你的操作系统附带的包管理软件安装二进制包，比如Fedora Linux的yum、Mandrake Linux的urpmi、Debian Linux的apt-get、FreeBSD的pkg_add等等。注意，使用这种方法的话，你需要连接因特网。</p>
+<p>你也可以从别的地方下载二进制包然后拷贝到你的PC中安装。</p>
+</li>
+<li type="disc"><p>你可以从<a href="http://www.python.org/download/">源代码</a>编译Python然后安装。在网站上有编译的指令。</p></li>
+</ul>
+
+
+<h1><a name="ch02s02.html">Windows&reg;用户</a></h1>
+
+<p><a name="ch02s02.html">Windows&reg;用户</a>可以访问<a href="http://www.python.org/download/">Python.org/download</a>，从网站上下载最新的版本（在写本书的时候，最新版本是<a href="http://www.python.org/ftp/python/2.3.4/Python-2.3.4.exe">2.3.4</a>版）。它的大小大约是9.4MB，与其他大多数语言相比是十分紧凑的。安装过程与其他Windows软件类似。</p>
+
+<p class="notebox">
+<span class="boxtitle">提示</span><br>
+即便安装程序为你提供了不检查 <dfn>可选</dfn> 组件的选项，你也不要不作任何检查！有些组件对你很有用，特别是集成开发环境。
+</p>
+
+<p>有趣的是，大约70%的Python下载是来自Windows用户的。当然，这并不能说明问题，因为几乎所有的Linux用户已经在安装系统的时候默认安装了Python。</p>
+
+<p class="notebox">
+<span class="boxtitle">在Windows命令行中使用Python</span><br>
+如果你想要从Windows命令行调用Python，那么你需要先正确的设置PATH变量。<br><br>
+对于Windows 2000、XP、2003，点击控制面板->系统->高级->环境变量。在“系统变量”表单中点击叫做<strong>PATH</strong>的变量，然后编辑这个变量，把<strong>;C:\Python23</strong>加到它的结尾。当然，是Python所在的正确目录名。<br><br>
+对于较旧版本的Windows，把下面这行加到文件C:\AUTOEXEC.BAT中：<strong>PATH=%PATH%;C:\Python23</strong>，然后重新启动系统。对于Windows NT，则使用AUTOEXEC.NT文件。
+</p>
+
+
+<h1><a name="ch02s03.html">概括</a></h1>
+<p>对于Linux系统，很可能你已经在你的系统里安装了Python。否则，你可以通过你的发行版附带的包管理软件安装Python。对于Windows系统，安装Python就是下载安装程序然后双击它那么简单。从现在起，我们将假设你已经在你的系统里安装了Python。</p>
+

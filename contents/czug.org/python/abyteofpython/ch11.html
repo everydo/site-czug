@@ -1,0 +1,326 @@
+<p>出处： <a href="http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch11.html">http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch11.html</a></p>
+
+<h1>第11章 面向对象的编程</h1>
+
+<p><strong>目录表</strong></p>
+<dl>
+<dt><a href="#s01">简介</a></dt>
+<dt><a href="#ch11s02.html">self</a></dt>
+<dt><a href="#ch11s03.html">类</a></dt>
+<dd><a href="#ch11s03.html#creating">创建一个类</a></dd>
+<dt><a href="#ch11s04.html">对象的方法</a></dt>
+<dd><a href="#ch11s04.html#using">使用对象的方法</a></dd>
+<dt><a href="#ch11s05.html">__init__方法</a></dt>
+<dd><a href="#ch11s05.html#using">使用__init__方法</a></dd>
+<dt><a href="#ch11s06.html">类与对象的变量</a></dt>
+<dd><a href="#ch11s06.html#using">使用类与对象的变量</a></dd>
+<dt><a href="#ch11s07.html">继承</a></dt>
+<dd><a href="#ch11s07.html#using">使用继承</a></dd>
+<dt><a href="#ch11s08.html">概括</a></dt>
+</dl>
+
+<h1><a name="s01">简介</a></h1>
+<p>到目前为止，在我们的程序中，我们都是根据操作数据的函数或语句块来设计程序的。这被称为 <dfn>面向过程的</dfn> 编程。还有一种把数据和功能结合起来，用称为对象的东西包裹起来组织程序的方法。这种方法称为 <dfn>面向对象的</dfn> 编程理念。在大多数时候你可以使用过程性编程，但是有些时候当你想要编写大型程序或是寻求一个更加合适的解决方案的时候，你就得使用面向对象的编程技术。</p>
+<p>类和对象是面向对象编程的两个主要方面。<strong>类</strong>创建一个新类型，而<strong>对象</strong>这个类的 <dfn>实例</dfn> 。这类似于你有一个<code>int</code>类型的变量，这存储整数的变量是<code>int</code>类的实例（对象）。</p>
+
+<p class="notebox">
+<span class="boxtitle">给C/C++/Java/C#程序员的注释</span><br>
+注意，即便是整数也被作为对象（属于<code>int</code>类）。这和C++、Java（1.5版之前）把整数纯粹作为类型是不同的。通过<code>help(int)</code>了解更多这个类的详情。
+C#和Java 1.5程序员会熟悉这个概念，因为它类似与 <dfn>封装与解封装</dfn> 的概念。
+</p>
+
+<p>对象可以使用普通的 <dfn>属于</dfn> 对象的变量存储数据。属于一个对象或类的变量被称为<strong>域</strong>。对象也可以使用 <dfn>属于</dfn> 类的函数来具有功能。这样的函数被称为类的<strong>方法</strong>。这些术语帮助我们把它们与孤立的函数和变量区分开来。域和方法可以合称为类的<strong>属性</strong>。</p>
+<p>域有两种类型——属于每个实例/类的对象或属于类本身。它们分别被称为<strong>实例变量</strong>和<strong>类变量</strong>。</p>
+<p>类使用<code>class</code>关键字创建。类的域和方法被列在一个缩进块中。</p>
+
+
+<h1><a name="ch11s02.html">self</a></h1>
+<p>类的方法与普通的函数只有一个特别的区别——它们必须有一个额外的第一个参数名称，但是在调用这个方法的时候你<strong>不</strong>为这个参数赋值，Python会提供这个值。这个特别的变量指对象本身，按照惯例它的名称是<code><a name="ch11s02.html">self</a></code>。</p>
+<p>虽然你可以给这个参数任何名称，但是 <dfn>强烈建议</dfn> 你使用<code><a name="ch11s02.html">self</a></code>这个名称——其他名称都是不赞成你使用的。使用一个标准的名称有很多优点——你的程序读者可以迅速识别它，如果使用<code><a name="ch11s02.html">self</a></code>的话，还有些IDE（集成开发环境）也可以帮助你。</p>
+
+<p class="notebox">
+<span class="boxtitle">给C++/Java/C#程序员的注释</span><br>
+Python中的<code><a name="ch11s02.html">self</a></code>等价于C++中的<code><a name="ch11s02.html">self</a></code>指针和Java、C#中的<code>this</code>参考。
+</p>
+
+<p>你一定很奇怪Python如何给<code><a name="ch11s02.html">self</a></code>赋值以及为何你不需要给它赋值。举一个例子会使此变得清晰。假如你有一个类称为<code>MyClass</code>和这个类的一个实例<code>MyObject</code>。当你调用这个对象的方法<code>MyObject.method(arg1, arg2)</code>的时候，这会由Python自动转为<code>MyClass.method(MyObject, arg1, arg2)</code>——这就是<code><a name="ch11s02.html">self</a></code>的原理了。</p>
+<p>这也意味着如果你有一个不需要参数的方法，你还是得给这个方法定义一个<code><a name="ch11s02.html">self</a></code>参数。</p>
+
+
+<h1><a name="ch11s03.html">类</a></h1>
+<p>一个尽可能简单的<a name="ch11s03.html">类</a>如下面这个例子所示。</p>
+
+<h2><a name="creating">创建一个<a name="ch11s03.html">类</a></a></h2>
+<p class="exampletitle"><a name="e111">例11.1 创建一个<a name="ch11s03.html">类</a></a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: simplestclass.py</code><br>
+<br>
+<code class="key">class </code><code class="func">Person</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;pass </code><code class="comment"># An empty block</code><br>
+<br>
+<code>p = Person()</code><br>
+<code class="key">print </code><code>p</code>
+</p>
+<p>（源文件：<a href="code/simplestclass.py">code/simplestclass.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python simplestclass.py<br>
+&lt;__main__.Person instance at 0xf6fcb18c&gt;
+</code></p>
+
+<h2>它如何工作</h2>
+<p>我们使用<code>class</code>语句后跟<a name="ch11s03.html">类</a>名，创建了一个新的<a name="ch11s03.html">类</a>。这后面跟着一个缩进的语句块形成<a name="ch11s03.html">类</a>体。在这个例子中，我们使用了一个空白块，它由<code>pass</code>语句表示。</p>
+<p>接下来，我们使用<a name="ch11s03.html">类</a>名后跟一对圆括号来创建一个对象/实例。（我们将在下面的章节中学习<a href="ch11s05.html">更多的如何创建实例的方法</a>）。为了验证，我们简单地打印了这个变量的<a name="ch11s03.html">类</a>型。它告诉我们我们已经在<code>__main__</code>模块中有了一个<code>Person</code><a name="ch11s03.html">类</a>的实例。</p>
+<p>可以注意到存储对象的计算机内存地址也打印了出来。这个地址在你的计算机上会是另外一个值，因为Python可以在任何空位存储对象。</p>
+
+
+<h1><a name="ch11s04.html">对象的方法</a></h1>
+<p>我们已经讨论了类/对象可以拥有像函数一样的方法，这些方法与函数的区别只是一个额外的<code>self</code>变量。现在我们来学习一个例子。</p>
+
+<h2><a name="using">使用<a name="ch11s04.html">对象的方法</a></a></h2>
+<p class="exampletitle"><a name="e112">例11.2 使用<a name="ch11s04.html">对象的方法</a></a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: method.py</code><br>
+<br>
+<code class="key">class </code><code class="func">Person</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;def </code><code class="func">sayHi</code><code>(self):</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Hello, how are you?'</code><br>
+<br>
+<code>p = Person()<br>
+p.sayHi()</code><br>
+<br>
+<code class="comment"># This short example can also be written as Person().sayHi()</code>
+</p>
+<p>（源文件：<a href="code/method.py">code/method.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python method.py<br>
+Hello, how are you?</code></p>
+
+<h2>它如何工作</h2>
+<p>这里我们看到了<code>self</code>的用法。注意<code>sayHi</code>方法没有任何参数，但仍然在函数定义时有<code>self</code>。</p>
+
+
+<h1><a name="ch11s05.html">__init__方法</a></h1>
+<p>在Python的类中有很多方法的名字有特殊的重要意义。现在我们将学习<code>__init__</code>方法的意义。</p>
+<p><code>__init__</code>方法在类的一个对象被建立时，马上运行。这个方法可以用来对你的对象做一些你希望的 <dfn>初始化</dfn> 。注意，这个名称的开始和结尾都是双下划线。</p>
+
+<h2><a name="using">使用<a name="ch11s05.html">__init__方法</a></a></h2>
+<p class="exampletitle"><a name="e113">例11.3 使用<a name="ch11s05.html">__init__方法</a></a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: class_init.py</code><br>
+<br>
+<code class="key">class </code><code class="func">Person</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;def </code><code class="func">__init__</code><code>(self, name):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.name = name</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;def </code><code class="func">sayHi</code><code>(self):</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Hello, my name is'</code><code>, self.name</code><br>
+<br>
+<code>p = Person(</code><code class="cite">'Swaroop'</code><code>)<br>
+p.sayHi()</code><br>
+<br>
+<code class="comment"># This short example can also be written as Person('Swaroop').sayHi()</code>
+</p>
+<p>（源文件：<a href="code/class_init.py">code/class_init.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>$ python class_init.py<br>
+Hello, my name is Swaroop
+</code></p>
+
+<h2>它如何工作</h2>
+<p>这里，我们把<code>__init__</code>方法定义为取一个参数<code>name</code>（以及普通的参数<code>self</code>）。在这个<code>__init__</code>里，我们只是创建一个新的域，也称为<code>name</code>。注意它们是两个不同的变量，尽管它们有相同的名字。点号使我们能够区分它们。</p>
+<p>最重要的是，我们没有专门调用<code>__init__</code>方法，只是在创建一个类的新实例的时候，把参数包括在圆括号内跟在类名后面，从而传递给<code>__init__</code>方法。这是这种方法的重要之处。</p>
+<p>现在，我们能够在我们的方法中使用<code>self.name</code>域。这在<code>sayHi</code>方法中得到了验证。</p>
+
+<p class="notebox">
+<span class="boxtitle">给C++/Java/C#程序员的注释</span><br>
+<code>__init__</code>方法类似于C++、C#和Java中的 <dfn>constructor</dfn> 。
+</p>
+
+
+<h1><a name="ch11s06.html">类与对象的方法</a></h1>
+<p>我们已经讨论了类与对象的功能部分，现在我们来看一下它的数据部分。事实上，它们只是与类和对象的<strong>名称空间</strong> <dfn>绑定</dfn> 的普通变量，即这些名称只在这些类与对象的前提下有效。</p>
+<p>有两种类型的 <dfn>域</dfn> ——类的变量和对象的变量，它们根据是类还是对象 <dfn>拥有</dfn> 这个变量而区分。</p>
+<p><dfn>类的变量</dfn> 由一个类的所有对象（实例）共享使用。只有一个类变量的拷贝，所以当某个对象对类的变量做了改动的时候，这个改动会反映到所有其他的实例上。</p>
+<p><dfn>对象的变量</dfn> 由类的每个对象/实例拥有。因此每个对象有自己对这个域的一份拷贝，即它们不是共享的，在同一个类的不同实例中，虽然对象的变量有相同的名称，但是是互不相关的。通过一个例子会使这个易于理解。</p>
+
+<h2><a name="using">使用类与对象的变量</a></h2>
+<p class="exampletitle"><a name="e114">例11.4 使用类与对象的变量</a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: objvar.py</code><br>
+<br>
+<code class="key">class </code><code class="func">Person</code><code>:</code><br>
+<code class="cite">&nbsp;&nbsp;&nbsp;&nbsp;'''Represents a person.'''</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;population = </code><code class="cite">0</code><br>
+<br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;def </code><code class="func">__init__</code><code>(self, name):</code><br>
+<code class="cite">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'''Initializes the person's data.'''</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.name = name</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'(Initializing %s)' </code><code>% self.name</code><br>
+<br>
+<code class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# When this person is created, he/she<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# adds to the population</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Person.population += </code><code class="cite">1</code><br>
+<br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;def </code><code class="func">__del__</code><code>(self):</code><br>
+<code class="cite">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'''I am dying.'''</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'%s says bye.' </code><code>% self.name</code><br>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Person.population -= </code><code class="cite">1</code><br>
+<br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if </code><code>Person.population == </code><code class="cite">0</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'I am the last one.'</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'There are still %d people left.' </code><code>% Person.population</code><br>
+<br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;def </code><code class="func">sayHi</code><code>(self):</code><br>
+<code class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'''Greeting by the person.<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Really, that's all it does.'''</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Hi, my name is %s.' </code><code>% self.name</code><br>
+<br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;def </code><code class="func">howMany</code><code>(self):</code><br>
+<code class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'''Prints the current population.'''</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if </code><code>Person.population == </code><code class="cite">1</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'I am the only person here.'</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'We have %d persons here.' </code><code>% Person.population</code><br>
+<br>
+<code>swaroop = Person(</code><code class="cite">'Swaroop'</code><code>)<br>
+swaroop.sayHi()<br>
+swaroop.howMany()<br>
+<br>
+kalam = Person(</code><code class="cite">'Abdul Kalam'</code><code>)<br>
+kalam.sayHi()<br>
+kalam.howMany()<br>
+<br>
+swaroop.sayHi()<br>
+swaroop.howMany()</code>
+</p>
+<p>（源文件：<a href="code/objvar.py">code/objvar.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python objvar.py<br>
+(Initializing Swaroop)<br>
+Hi, my name is Swaroop.<br>
+I am the only person here.<br>
+(Initializing Abdul Kalam)<br>
+Hi, my name is Abdul Kalam.<br>
+We have 2 persons here.<br>
+Hi, my name is Swaroop.<br>
+We have 2 persons here.<br>
+Abdul Kalam says bye.<br>
+There are still 1 people left.<br>
+Swaroop says bye.<br>
+I am the last one.
+</code></p>
+
+<h2>它如何工作</h2>
+<p>这是一个很长的例子，但是它有助于说明类与对象的变量的本质。这里，<code>population</code>属于<code>Person</code>类，因此是一个类的变量。<code>name</code>变量属于对象（它使用<code>self</code>赋值）因此是对象的变量。</p>
+<p>观察可以发现<code>__init__</code>方法用一个名字来初始化<code>Person</code>实例。在这个方法中，我们让<code>population</code>增加<code>1</code>，这是因为我们增加了一个人。同样可以发现，<code>self.name</code>的值根据每个对象指定，这表明了它作为对象的变量的本质。</p>
+<p>记住，你<strong>只</strong>能使用<code>self</code>变量来参考同一个对象的变量和方法。这被称为 <dfn>属性参考</dfn> 。</p>
+<p>在这个程序中，我们还看到<strong>docstring</strong>对于类和方法同样有用。我们可以在运行时使用<code>Person.__doc__</code>和<code>Person.sayHi.__doc__</code>来分别访问类与方法的文档字符串。</p>
+<p>就如同<code>__init__</code>方法一样，还有一个特殊的方法<code>__del__</code>，它在对象消逝的时候被调用。对象消逝即对象不再被使用，它所占用的内存将返回给系统作它用。在这个方法里面，我们只是简单地把<code>Person.population</code>减<code>1</code>。</p>
+<p>当对象不再被使用时，<code>__del__</code>方法运行，但是很难保证这个方法究竟在 <dfn>什么时候</dfn> 运行。如果你想要指明它的运行，你就得使用<code>del</code>语句，就如同我们在以前的例子中使用的那样。</p>
+
+<p class="notebox">
+<span class="boxtitle">给C++/Java/C#程序员的注释</span><br>
+Python中所有的类成员（包括数据成员）都是 <dfn>公共的</dfn> ，所有的方法都是 <dfn>有效的</dfn> 。<br>
+只有一个例外：如果你使用的数据成员名称以 <dfn>双下划线前缀</dfn> 比如<code>__privatevar</code>，Python的名称管理体系会有效地把它作为私有变量。<br>
+这样就有一个惯例，如果某个变量只想在类或对象中使用，就应该以单下划线前缀。而其他的名称都将作为公共的，可以被其他类/对象使用。记住这只是一个惯例，并不是Python所要求的（与双下划线前缀不同）。<br>
+同样，注意<code>__del__</code>方法与 <dfn>destructor</dfn> 的概念类似。
+</p>
+
+
+<h1><a name="ch11s07.html">继承</a></h1>
+<p>面向对象的编程带来的主要好处之一是代码的<strong>重用</strong>，实现这种重用的方法之一是通过 <dfn><a name="ch11s07.html">继承</a></dfn> 机制。<a name="ch11s07.html">继承</a>完全可以理解成类之间的 <dfn>类型和子类型</dfn> 关系。</p>
+<p>假设你想要写一个程序来记录学校之中的教师和学生情况。他们有一些共同属性，比如姓名、年龄和地址。他们也有专有的属性，比如教师的薪水、课程和假期，学生的成绩和学费。</p>
+<p>你可以为教师和学生建立两个独立的类来处理它们，但是这样做的话，如果要增加一个新的共有属性，就意味着要在这两个独立的类中都增加这个属性。这很快就会显得不实用。</p>
+<p>一个比较好的方法是创建一个共同的类称为<code>SchoolMember</code>然后让教师和学生的类 <dfn><a name="ch11s07.html">继承</a></dfn> 这个共同的类。即它们都是这个类型（类）的子类型，然后我们再为这些子类型添加专有的属性。</p>
+<p>使用这种方法有很多优点。如果我们增加/改变了<code>SchoolMember</code>中的任何功能，它会自动地反映到子类型之中。例如，你要为教师和学生都增加一个新的身份证域，那么你只需简单地把它加到<code>SchoolMember</code>类中。然而，在一个子类型之中做的改动不会影响到别的子类型。另外一个优点是你可以把教师和学生对象都作为<code>SchoolMember</code>对象来使用，这在某些场合特别有用，比如统计学校成员的人数。一个子类型在任何需要父类型的场合可以被替换成父类型，即对象可以被视作是父类的实例，这种现象被称为<strong>多态现象</strong>。</p>
+<p>另外，我们会发现在 <dfn>重用</dfn> 父类的代码的时候，我们无需在不同的类中重复它。而如果我们使用独立的类的话，我们就不得不这么做了。</p>
+<p>在上述的场合中，<code>SchoolMember</code>类被称为 <dfn>基本类</dfn> 或 <dfn>超类</dfn> 。而<code>Teacher</code>和<code>Student</code>类被称为 <dfn>导出类</dfn> 或 <dfn>子类</dfn> 。</p>
+<p>现在，我们将学习一个例子程序。</p>
+
+<h2><a name="using">使用<a name="ch11s07.html">继承</a></a></h2>
+<p class="exampletitle"><a name="e115">例11.5 使用<a name="ch11s07.html">继承</a></a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: inherit.py</code><br>
+<br>
+<code class="key">class </code><code class="func">SchoolMember</code><code>:</code><br>
+<code class="cite">&nbsp;&nbsp;&nbsp;&nbsp;'''Represents any school member.'''</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;def </code><code class="func">__init__</code><code>(self, name, age):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.name = name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.age = age</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'(Initialized SchoolMember: %s)' </code><code>% self.name</code><br>
+<br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;def </code><code class="func">tell</code><code>(self):</code><br>
+<code class="cite">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'''Tell my details.'''</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Name:"%s" Age:"%s"' </code><code>% (self.name, self.age),</code><br>
+<br>
+<code class="key">class </code><code class="func">Teacher</code><code>(SchoolMember):</code><br>
+<code class="cite">&nbsp;&nbsp;&nbsp;&nbsp;'''Represents a teacher.'''</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;def </code><code class="func">__init__</code><code>(self, name, age, salary):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SchoolMember.__init__(self, name, age)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.salary = salary</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'(Initialized Teacher: %s)' </code><code>% self.name</code><br>
+<br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;def </code><code class="func">tell</code><code>(self):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SchoolMember.tell(self)</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Salary: "%d"' </code><code>% self.salary</code><br>
+<br>
+<code class="key">class </code><code class="func">Student</code><code>(SchoolMember):</code><br>
+<code class="cite">&nbsp;&nbsp;&nbsp;&nbsp;'''Represents a student.'''</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;def </code><code class="func">__init__</code><code>(self, name, age, marks):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SchoolMember.__init__(self, name, age)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.marks = marks</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'(Initialized Student: %s)' </code><code>% self.name</code><br>
+<br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;def </code><code class="func">tell</code><code>(self):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SchoolMember.tell(self)</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Marks: "%d"' </code><code>% self.marks<br>
+<br>
+t = Teacher(</code><code class="cite">'Mrs. Shrividya'</code><code>, </code><code class="cite">40</code><code>, </code><code class="cite">30000</code><code>)<br>
+s = Student(</code><code class="cite">'Swaroop'</code><code>, </code><code class="cite">22</code><code>, </code><code class="cite">75</code><code>)</code><br>
+<br>
+<code class="key">print </code><code class="comment"># prints a blank line</code><br>
+<br>
+<code>members = [t, s]</code><br>
+<code class="key">for </code><code>member </code><code class="key">in </code><code>members:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;member.tell() </code><code class="comment"># works for both Teachers and Students</code>
+</p>
+<p>（源文件：<a href="code/inherit.py">code/inherit.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python inherit.py<br>
+(Initialized SchoolMember: Mrs. Shrividya)<br>
+(Initialized Teacher: Mrs. Shrividya)<br>
+(Initialized SchoolMember: Swaroop)<br>
+(Initialized Student: Swaroop)<br>
+<br>
+Name:"Mrs. Shrividya" Age:"40" Salary: "30000"<br>
+Name:"Swaroop" Age:"22" Marks: "75"
+</code></p>
+
+<h2>它如何工作</h2>
+<p>为了使用<a name="ch11s07.html">继承</a>，我们把基本类的名称作为一个元组跟在定义类时的类名称之后。然后，我们注意到基本类的<code>__init__</code>方法专门使用<code>self</code>变量调用，这样我们就可以初始化对象的基本类部分。这一点十分重要——Python不会自动调用基本类的constructor，你得亲自专门调用它。</p>
+<p>我们还观察到我们在方法调用之前加上类名称前缀，然后把<code>self</code>变量及其他参数传递给它。</p>
+<p>注意，在我们使用<code>SchoolMember</code>类的<code>tell</code>方法的时候，我们把<code>Teacher</code>和<code>Student</code>的实例仅仅作为<code>SchoolMember</code>的实例。</p>
+<p>另外，在这个例子中，我们调用了子类型的<code>tell</code>方法，而不是<code>SchoolMember</code>类的<code>tell</code>方法。可以这样来理解，Python总是首先查找对应类型的方法，在这个例子中就是如此。如果它不能在导出类中找到对应的方法，它才开始到基本类中逐个查找。基本类是在类定义的时候，在元组之中指明的。</p>
+<p>一个术语的注释——如果在<a name="ch11s07.html">继承</a>元组中列了一个以上的类，那么它就被称作 <dfn>多重<a name="ch11s07.html">继承</a></dfn> 。</p>
+
+
+<h1><a name="ch11s08.html">概括</a></h1>
+<p>我们已经研究了类和对象的多个内容以及与它们相关的多个术语。通过本章，你已经了解了面向对象的编程的优点和缺陷。Python是一个高度面向对象的语言，理解这些概念会在将来有助于你进一步深入学习Python。</p>
+<p>接下来，我们将学习如何处理输入/输出已经如何用Python访问文件。</p>
+

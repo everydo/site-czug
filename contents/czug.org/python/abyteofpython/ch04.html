@@ -1,0 +1,259 @@
+<p>出处： <a href="http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch04.html">http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch04.html</a></p>
+
+<h1>第4章 基本概念</h1>
+
+<p><strong>目录表</strong></p>
+<dl>
+<dt><a href="#s01">字面意义上的常量</a></dt>
+<dt><a href="#ch04s02.html">数</a></dt>
+<dt><a href="#ch04s03.html">字符串</a></dt>
+<dt><a href="#ch04s04.html">变量</a></dt>
+<dt><a href="#ch04s05.html">标识符的命名</a></dt>
+<dt><a href="#ch04s06.html">数据类型</a></dt>
+<dt><a href="#ch04s07.html">对象</a></dt>
+<dd><a href="#ch04s07.html#output">输出</a></dd>
+<dd><a href="#ch04s07.html#how">它如何工作</a></dd>
+<dt><a href="#ch04s08.html">逻辑行与物理行</a></dt>
+<dt><a href="#ch04s09.html">缩进</a></dt>
+<dt><a href="#ch04s10.html">概括</a></dt>
+</dl>
+
+<p>仅仅打印“Hello World”就足够了吗？你应该想要做更多的事——你想要得到一些输入，然后做操作，再从中得到一些输出。在Python中，我们可以使用常量和变量来完成这些工作。</p>
+
+<h1><a name="s01">字面意义上的常量</a></h1>
+<p>一个字面意义上的常量的例子是如同<code>5</code>、<code>1.23</code>、<code>9.25e-3</code>这样的数，或者如同<code>'This is a string'</code>、<code>"It's a string!"</code>这样的字符串。它们被称作字面意义上的，因为它们具备 <dfn>字面</dfn> 的意义——你按照它们的字面意义使用它们的值。数<code>2</code>总是代表它自己，而不会是别的什么东西——它是一个常量，因为不能改变它的值。因此，所有这些都被称为字面意义上的常量。</p>
+
+
+<h1><a name="ch04s02.html">数</a></h1>
+<p>在Python中有4种类型的<a name="ch04s02.html">数</a>——整<a name="ch04s02.html">数</a>、长整<a name="ch04s02.html">数</a>、浮点<a name="ch04s02.html">数</a>和复<a name="ch04s02.html">数</a>。</p>
+<ul>
+<li><code>2</code>是一个整<a name="ch04s02.html">数</a>的例子。</li>
+<li>长整<a name="ch04s02.html">数</a>不过是大一些的整<a name="ch04s02.html">数</a>。</li>
+<li><code>3.23</code>和<code>52.3E-4</code>是浮点<a name="ch04s02.html">数</a>的例子。E标记表示10的幂。在这里，<code>52.3E-4</code>表示<code>52.3 * 10</code><sup>-4</sup>。</li>
+<li><code>(-5+4j)</code>和<code>(2.3-4.6j)</code>是复<a name="ch04s02.html">数</a>的例子。</li>
+</ul>
+
+
+<h1><a name="ch04s03.html">字符串</a></h1>
+<p><a name="ch04s03.html">字符串</a>是 <dfn>字符的序列</dfn> 。<a name="ch04s03.html">字符串</a>基本上就是一组单词。</p>
+<p>我几乎可以保证你在每个Python程序中都要用到<a name="ch04s03.html">字符串</a>，所以请特别留心下面这部分的内容。下面告诉你如何在Python中使用<a name="ch04s03.html">字符串</a>。</p>
+
+<ul>
+<li><strong>使用单引号（'）</strong>
+<p>你可以用单引号指示<a name="ch04s03.html">字符串</a>，就如同<code>'Quote me on this'</code>这样。所有的空白，即空格和制表符都照原样保留。</p>
+</li>
+<li><strong>使用双引号（"）</strong>
+<p>在双引号中的<a name="ch04s03.html">字符串</a>与单引号中的<a name="ch04s03.html">字符串</a>的使用完全相同，例如<code>"What's your name?"</code>。</p>
+</li>
+<li><strong>使用三引号（'''或"""）</strong>
+<p>利用三引号，你可以指示一个多行的<a name="ch04s03.html">字符串</a>。你可以在三引号中自由的使用单引号和双引号。例如：</p>
+<p class="filebox"><code class="cite">
+'''This is a multi-line string. This is the first line.<br>
+This is the second line.<br>
+"What's your name?," I asked.<br>
+He said "Bond, James Bond."<br>
+'''</code></p>
+</li>
+<li><strong>转义符</strong>
+<p>假设你想要在一个<a name="ch04s03.html">字符串</a>中包含一个单引号（'），那么你该怎么指示这个<a name="ch04s03.html">字符串</a>？例如，这个<a name="ch04s03.html">字符串</a>是<code>What's your name?</code>。你肯定不会用<code>'What's your name?'</code>来指示它，因为Python会弄不明白这个<a name="ch04s03.html">字符串</a>从何处开始，何处结束。所以，你需要指明单引号而不是<a name="ch04s03.html">字符串</a>的结尾。可以通过 <dfn>转义符</dfn> 来完成这个任务。你用<code>\'</code>来指示单引号——注意这个反斜杠。现在你可以把<a name="ch04s03.html">字符串</a>表示为<code>'What\'s your name?'</code>。</p>
+<p>另一个表示这个特别的<a name="ch04s03.html">字符串</a>的方法是<code>"What's your name?"</code>，即用双引号。类似地，要在双引号<a name="ch04s03.html">字符串</a>中使用双引号本身的时候，也可以借助于转义符。另外，你可以用转义符<code>\\</code>来指示反斜杠本身。</p>
+<p>值得注意的一件事是，在一个<a name="ch04s03.html">字符串</a>中，行末的单独一个反斜杠表示<a name="ch04s03.html">字符串</a>在下一行继续，而不是开始一个新的行。例如：</p>
+<p class="filebox"><code class="cite">
+"This is the first sentence.\<br>
+This is the second sentence."
+</code></p>
+<p>等价于<code>"This is the first sentence. This is the second sentence."</code></p>
+</li>
+<li><strong>自然<a name="ch04s03.html">字符串</a></strong>
+<p>如果你想要指示某些不需要如转义符那样的特别处理的<a name="ch04s03.html">字符串</a>，那么你需要指定一个自然<a name="ch04s03.html">字符串</a>。自然<a name="ch04s03.html">字符串</a>通过给<a name="ch04s03.html">字符串</a>加上前缀<code>r</code>或<code>R</code>来指定。例如<code>r"Newlines are indicated by \n"</code>。</p>
+</li>
+<li><strong>Unicode<a name="ch04s03.html">字符串</a></strong>
+<p>Unicode是书写国际文本的标准方法。如果你想要用你的母语如北印度语或阿拉伯语写文本，那么你需要有一个支持Unicode的编辑器。类似地，Python允许你处理Unicode文本——你只需要在<a name="ch04s03.html">字符串</a>前加上前缀<code>u</code>或<code>U</code>。例如，<code>u"This is a Unicode string."</code>。</p>
+<p>记住，在你处理文本文件的时候使用Unicode<a name="ch04s03.html">字符串</a>，特别是当你知道这个文件含有用非英语的语言写的文本。</p>
+</li>
+<li><strong><a name="ch04s03.html">字符串</a>是不可变的</strong>
+<p>这意味着一旦你创造了一个<a name="ch04s03.html">字符串</a>，你就不能再改变它了。虽然这看起来像是一件坏事，但实际上它不是。我们将会在后面的程序中看到为什么我们说它不是一个缺点。</p>
+</li>
+<li><strong>按字面意义级连<a name="ch04s03.html">字符串</a></strong>
+<p>如果你把两个<a name="ch04s03.html">字符串</a>按字面意义相邻放着，他们会被Python自动级连。例如，<code>'What\'s' 'your name?'</code>会被自动转为<code>"What's your name?"</code>。</p>
+</li>
+</ul>
+
+<p class="notebox">
+<span class="boxtitle">给C/C++程序员的注释</span><br>
+在Python中没有专门的<code>char</code>数据类型。确实没有需要有这个类型，我相信你不会为此而烦恼。
+</p><br>
+<p class="notebox">
+<span class="boxtitle">给Perl/PHP程序员的注释</span><br>
+记住，单引号和双引号<a name="ch04s03.html">字符串</a>是完全相同的——它们没有在任何方面有不同。
+</p><br>
+<p class="notebox">
+<span class="boxtitle">给正则表达式用户的注释</span><br>
+一定要用自然<a name="ch04s03.html">字符串</a>处理正则表达式。否则会需要使用很多的反斜杠。例如，后向引用符可以写成<code>'\\1'</code>或<code>r'\1'</code>。
+</p>
+
+
+<h1><a name="ch04s04.html">变量</a></h1>
+<p>仅仅使用字面意义上的常量很快就会引发烦恼——我们需要一种既可以储存信息 又可以对它们进行操作的方法。这是为什么要引入 <dfn><a name="ch04s04.html">变量</a></dfn> 。<a name="ch04s04.html">变量</a>就是我们想要的东西——它们的值可以变化，即你可以使用<a name="ch04s04.html">变量</a>存储任何东西。<a name="ch04s04.html">变量</a>只是你的计算机中存储信息的一部分内存。与字面意义上的常量不同，你需要一些能够访问这些<a name="ch04s04.html">变量</a>的方法，因此你给<a name="ch04s04.html">变量</a>名字。</p>
+
+
+<h1><a name="ch04s05.html">标识符的命名</a></h1>
+<p>变量是标识符的例子。 <dfn>标识符</dfn> 是用来标识 <dfn>某样东西</dfn> 的名字。在命名标识符的时候，你要遵循这些规则：</p>
+<ul>
+<li><p>标识符的第一个字符必须是字母表中的字母（大写或小写）或者一个下划线（‘ _ ’）。</p></li>
+<li><p>标识符名称的其他部分可以由字母（大写或小写）、下划线（‘ _ ’）或数字（0-9）组成。</p></li>
+<li><p>标识符名称是对大小写敏感的。例如，<code>myname</code>和<code>myName</code><strong>不是</strong>一个标识符。注意前者中的小写n和后者中的大写N。</p></li>
+<li><p> <dfn>有效</dfn> 标识符名称的例子有<code>i</code>、<code>__my_name</code>、<code>name_23</code>和<code>a1b2_c3</code>。</p></li>
+<li><p> <dfn>无效</dfn> 标识符名称的例子有<code>2things</code>、<code>this is spaced out</code>和<code>my-name</code>。</p></li>
+</ul>
+
+
+<h1><a name="ch04s06.html">数据类型</a></h1>
+<p>变量可以处理不同类型的值，称为<strong><a name="ch04s06.html">数据类型</a></strong>。基本的类型是数和字符串，我们已经讨论过它们了。在后面的章节里面，我们会研究怎么用<a href="ch11.html">类</a>创造我们自己的类型。</p>
+
+
+<h1><a name="ch04s07.html">对象</a></h1>
+<p>记住，Python把在程序中用到的任何东西都称为 <dfn><a name="ch04s07.html">对象</a></dfn> 。这是从广义上说的。因此我们不会说“某某 <dfn>东西</dfn> ”，我们说“某个 <dfn><a name="ch04s07.html">对象</a></dfn> ”。</p>
+
+<p class="notebox">
+<span class="boxtitle">给面向<a name="ch04s07.html">对象</a>编程用户的注释</span><br>
+就每一个东西包括数、字符串甚至函数都是<a name="ch04s07.html">对象</a>这一点来说，Python是极其完全地面向<a name="ch04s07.html">对象</a>的。
+</p>
+
+<p>我们将看一下如何使用变量和字面意义上的常量。保存下面这个例子，然后运行程序。</p>
+
+<p class="notebox">
+<span class="boxtitle">如何编写Python程序</span><br>
+下面是保存和运行Python程序的标准流程。<br>
+&nbsp;&nbsp;&nbsp;1. 打开你最喜欢的编辑器。<br>
+&nbsp;&nbsp;&nbsp;2. 输入例子中的程序代码。<br>
+&nbsp;&nbsp;&nbsp;3. 用注释中给出的文件名把它保存为一个文件。我按照惯例把所有的Python程序都以扩展名<code>.py</code>保存。<br>
+&nbsp;&nbsp;&nbsp;4. 运行解释器命令<strong>python <dfn>program.py</dfn></strong>或者使用IDLE运行程序。你也可以使用先前介绍的<a href="ch03s05.html">可执行的方法</a>。</p>
+
+<p class="exampletitle"><a name="e41">例4.1 使用变量和字面意义上的常量</a></p>
+<p class="filebox">
+<code class="comment"># Filename : var.py</code><br>
+<code>i = 5</code><br>
+<code class="key">print </code><code>i</code><br>
+<code>i = i + </code><code class="cite">1</code><br>
+<code class="key">print </code><code>i</code><br>
+<br>
+<code>s = </code><code class="cite">'''This is a multi-line string.<br>
+This is the second line.'''</code><br>
+<code class="key">print </code><code>s</code>
+</p>
+<p>（源文件：<a href="code/var.py">code/var.py</a>）</p>
+
+<h2><a name="output">输出</a></h2>
+<p class="codebox"><code>
+$ python var.py<br>
+5<br>
+6<br>
+This is a multi-line string.<br>
+This is the second line.
+</code></p>
+
+<h2><a name="how">它如何工作</a></h2>
+<p>下面来说明一下这个程序如何工作。首先我们使用赋值运算符（<code>=</code>）把一个字面意义上的常数<code>5</code>赋给变量<code>i</code>。这一行称为一个语句。语句声明需要做某件事情，在这个地方我们把变量名<code>i</code>与值<code>5</code>连接在一起。接下来，我们用<code>print</code>语句打印<code>i</code>的值，就是把变量的值打印在屏幕上。</p>
+<p>然后我们对<code>i</code>中存储的值加<code>1</code>，再把它存回<code>i</code>。我们打印它时，得到期望的值<code>6</code>。</p>
+<p>类似地，我们把一个字面意义上的字符串赋给变量<code>s</code>然后打印它。</p>
+
+<p class="notebox">
+<span class="boxtitle">给C/C++程序员的注释</span><br>
+使用变量时只需要给它们赋一个值。不需要声明或定义数据类型。
+</p>
+
+
+<h1><a name="ch04s08.html">逻辑行与物理行</a></h1>
+<p>物理行是你在编写程序时所 <dfn>看见</dfn> 的。逻辑行是Python <dfn>看见</dfn> 的单个语句。Python假定每个 <dfn>物理行</dfn> 对应一个 <dfn>逻辑行</dfn> 。</p>
+<p>逻辑行的例子如<code>print 'Hello World'</code>这样的语句——如果它本身就是一行（就像你在编辑器中看到的那样），那么它也是一个物理行。</p>
+<p>默认地，Python希望每行都只使用一个语句，这样使得代码更加易读。</p>
+<p>如果你想要在一个物理行中使用多于一个逻辑行，那么你需要使用分号（;）来特别地标明这种用法。分号表示一个逻辑行/语句的结束。例如：</p>
+
+<p class="filebox">
+<code>i = </code><code class="cite">5</code><br>
+<code class="key">print </code><code>i</code>
+</p>
+
+<p>与下面这个相同：</p>
+
+<p class="filebox">
+<code>i = </code><code class="cite">5</code><code>;</code><br>
+<code class="key">print </code><code>i</code><code>;</code>
+</p>
+
+<p>同样也可以写成：</p>
+
+<p class="filebox">
+<code>i = </code><code class="cite">5</code><code>; </code><code class="key">print </code><code>i</code><code>;</code>
+</p>
+
+<p>甚至可以写成：</p>
+
+<p class="filebox">
+<code>i = </code><code class="cite">5</code><code>; </code><code class="key">print </code><code>i</code>
+</p>
+
+<p>然而，我<strong>强烈建议</strong>你坚持<strong>在每个物理行只写一句逻辑行</strong>。仅仅当逻辑行太长的时候，在多于一个物理行写一个逻辑行。这些都是为了尽可能避免使用分号，从而让代码更加易读。事实上，我 <dfn>从来没有</dfn> 在Python程序中使用过或看到过分号。</p>
+<p>下面是一个在多个物理行中写一个逻辑行的例子。它被称为<strong>明确的行连接</strong>。</p>
+
+<p class="filebox">
+<code>s = </code><code class="cite">'This is a string. \<br>
+This continues the string.'</code><br>
+<code class="key">print </code><code>s</code>
+</p>
+
+<p>它的输出：</p>
+
+<p class="codebox"><code>
+This is a string. This continues the string.
+</code></p>
+
+<p>类似地，</p>
+
+<p class="filebox">
+<code class="key">print </code><code>\<br>
+i</code>
+</p>
+
+<p>与如下写法效果相同：</p>
+
+<p class="filebox">
+<code class="key">print </code><code>i</code>
+</p>
+
+<p>有时候，有一种暗示的假设，可以使你不需要使用反斜杠。这种情况出现在逻辑行中使用了圆括号、方括号或波形括号的时候。这被称为<strong>暗示的行连接</strong>。你会在后面介绍如何使用<a href="ch09s02.html">列表</a>的章节中看到这种用法。</p>
+
+
+<h1><a name="ch04s09.html">缩进</a></h1>
+<p>空白在Python中是重要的。事实上<strong>行首的空白是重要的</strong>。它称为<strong><a name="ch04s09.html">缩进</a></strong>。在逻辑行首的空白（空格和制表符）用来决定逻辑行的<a name="ch04s09.html">缩进</a>层次，从而用来决定语句的分组。</p>
+<p>这意味着同一层次的语句<strong>必须</strong>有相同的<a name="ch04s09.html">缩进</a>。每一组这样的语句称为一个<strong>块</strong>。我们将在后面的章节中看到有关块的用处的例子。</p>
+<p>你需要记住的一样东西是错误的<a name="ch04s09.html">缩进</a>会引发错误。例如：</p>
+
+<p class="filebox">
+<code>i = </code><code class="cite">5</code><br>
+&nbsp;<code class="key">print </code><code class="cite">'Value is'</code><code>, i </code><code class="comment"># Error! Notice a single space at the start of the line</code><br>
+<code class="key">print </code><code class="cite">'I repeat, the value is'</code><code>, i</code>
+</p>
+
+<p>当你运行这个程序的时候，你会得到下面的错误：</p>
+
+<p class="codebox"><code>
+&nbsp;&nbsp;File "whitespace.py", line 4<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print 'Value is', i # Error! Notice a single space at the start of the line<br>
+&nbsp;&nbsp;&nbsp;&nbsp;^<br>
+SyntaxError: invalid syntax
+</code></p>
+
+<p>注意，在第二行的行首有一个空格。Python指示的这个错误告诉我们程序的语法是无效的，即程序没有正确地编写。它告诉你， <dfn>你不能随意地开始新的语句块</dfn> （当然除了你一直在使用的主块）。何时你能够使用新块，将会在后面的章节，如<a href="ch06.html">控制流</a>中详细介绍。</p>
+
+<p class="notebox">
+<span class="boxtitle">如何<a name="ch04s09.html">缩进</a></span><br>
+<strong>不要</strong>混合使用制表符和空格来<a name="ch04s09.html">缩进</a>，因为这在跨越不同的平台的时候，无法正常工作。我 <dfn>强烈建议</dfn> 你在每个<a name="ch04s09.html">缩进</a>层次使用 <dfn>单个制表符</dfn> 或 <dfn>两个或四个空格</dfn> 。<br>
+选择这三种<a name="ch04s09.html">缩进</a>风格之一。更加重要的是，选择一种风格，然后<strong>一贯地</strong>使用它，即 <dfn>只</dfn> 使用这一种风格。
+</p>
+
+
+<h1><a name="ch04s10.html">概括</a></h1>
+<p>现在我们已经学习了很多详细的内容，我们可以开始学习更加令你感兴趣的东西，比如控制流语句。在继续学习之前，请确信你对本章的内容清楚明了。</p>
+

@@ -1,0 +1,126 @@
+按此观看简体版本_
+
+.. _按此观看简体版本: X_e5_ae_89_e8_a3_85Zope_e7_9a_84_e4_ba_a7_e5_93_81
+
+安裝Plone 的產品一般都是很方便，可參看前一章 安裝產品_ 。但是，有時候有些Zope產品很好用，我們可否加至Plone之中呢？
+
+.. _安裝產品: <a href="http://www.czug.org/docs/plone/quickguide/X_e5_ae_89_e8_a3_9d_e7_94_a2_e5_93_81">http://www.czug.org/docs/plone/quickguide/X_e5_ae_89_e8_a3_9d_e7_94_a2_e5_93_81</a>
+
+答案是yes和 no, 一般來說，是可以的，但要看情況才知怎樣修改。這裏我試範怎樣將ZWeatherApplet 這個Zope 的天氣報告加至你的Plone之中，你可以從中獲得一些怎樣在Plone使用其他Zope產品的頭緒。
+
+- 準備_
+
+- 安裝_
+
+- 將Zope產品加入Plone的Slot面板中_
+
+
+準備
+====
+
+- 下載ZWeatherApplet_ (Zope Product)
+
+- 將下載檔案解壓至::
+
+    C:\Program Files\Plone 2\Data\Products
+
+.. _下載ZWeatherApplet: <a href="http://zope.org/Members/jerome_alet/ZWeatherApplet/1.51/ZWeatherApplet-1.51.tar.gz">http://zope.org/Members/jerome_alet/ZWeatherApplet/1.51/ZWeatherApplet-1.51.tar.gz</a>
+
+.. image:: myserverproductzweatherapplet.jpg
+       :align: center
+       :alt: 解壓ZWeatherApplet
+
+- 下載pymetar_ (Python Module) 
+
+   - ZWeatherAppleat<a class="new" href="http://members.czug.org/plone/quickguide/X_e5_ae_89_e8_a3_9dZope_e7_9a_84_e7_94_a2_e5_93_81/createform?page=ZWeatherAppleat" title="create this page">?</a>還未支援最新的版本，建議使用這個0.5版本 
+
+.. _下載pymetar: <a href="http://www.schwarzvogel.de/pkgs/pymetar-0.5.tar.gz">http://www.schwarzvogel.de/pkgs/pymetar-0.5.tar.gz</a>
+
+
+- 將下載檔案解壓至::
+
+    C:\Program Files\Plone 2\Python\Lib\site-packages
+
+.. image:: myserverpythonpymetar.jpg
+      :align: center
+      :alt: 解壓Pymetar
+
+
+安裝
+====
+
+好了，準備了所有檔案。可以安裝了。
+
+- 打開pythonwin.exe
+
+.. image:: myserverpythonwin.jpg
+       :align: center
+       :alt: 解壓PythonWin
+
+- 打開pymetar setup 檔, 
+
+.. image:: myserverpythonopen.jpg
+       :align: center
+       :alt: 打開Setup.py
+
+
+- 按"Ctrl + R" 打開pythonWin 執行視窗。在Arguments及debugging欄鍵入"build" 及 "No debugging"，然後按 "OK"
+
+.. image:: myserverpythonrun.jpg
+       :align: center
+       :alt: 執行build
+
+- 重覆上一步，按"Ctrl + R" 打開pythonWin 執行視窗。不過在Arguments 欄鍵入"install" debugging 鍵入 "No debugging"，然後按 "OK"
+
+
+- restart Zope
+
+- 在ZMI瀏覽至Plone，然後加上一個"ZWeatherApplet<a class="new" href="http://members.czug.org/plone/quickguide/X_e5_ae_89_e8_a3_9dZope_e7_9a_84_e7_94_a2_e5_93_81/createform?page=ZWeatherApplet" title="create this page">?</a>"。在新跳出的表格填上以下資料(在將來你可修改為適合你的資料)，然後按 "Sumbit Query"
+
+.. image:: zmieditzweatherapplet.jpg
+       :align: center
+       :alt: ZMI加入page_tempate
+
+將Zope產品加入Plone的Slot面板中
+===============================
+
+- 瀏覽至 Plone > portal_skins > custom ，加入一個新的 page_template
+
+.. image:: zmiaddpagetemplate.jpg
+       :align: center
+       :alt: ZMI加入page_tempate
+
+- 鍵入id 為weatherslot，然後按"Add and Edit"。在新的文字欄貼上以下資料，然後按"Save"::
+
+		<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+		xmlns:metal="http://xml.zope.org/namespaces/metal"
+		i18n:domain="plone">
+		
+		<body>
+		<div metal:define-macro="weatherBox"
+		tal:omit-tag="">
+		<div class="portlet"
+		tal:content="structure here/hkweather"> 
+                customize your code here, read README in ZWeatherApplet<a class="new" href="http://members.czug.org/plone/quickguide/X_e5_ae_89_e8_a3_9dZope_e7_9a_84_e7_94_a2_e5_93_81/createform?page=ZWeatherApplet" title="create this page">?</a>
+		</div>
+		</div>
+                </body>
+                </html>
+
+- 瀏覽至Plone，按Properties格，在left_slots鍵入::
+
+     here/weatherslot/macros/weatherBox
+
+.. image:: zmipropertieszweatherapplet.jpg
+       :align: center
+       :alt: 加入ZWeatherAppletProperties
+
+完成
+====
+
+.. image:: mysitezweatherapplet.jpg
+       :align: center
+       :alt: ZWeatherApplet<a class="new" href="http://members.czug.org/plone/quickguide/X_e5_ae_89_e8_a3_9dZope_e7_9a_84_e7_94_a2_e5_93_81/createform?page=ZWeatherApplet" title="create this page">?</a>完成
+
+啊，今天下雨呢！
+ 

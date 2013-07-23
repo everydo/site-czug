@@ -1,0 +1,482 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-1" class="anchor"/><p class="line867"><a href="/moin/WeiZhong/2006-01-17">Python 精要参考(第二版)</a> <span id="line-2" class="anchor"/>Python Essential Reference, Second Edition 译文 <span id="line-3" class="anchor"/><span id="line-4" class="anchor"/></p><p class="line874">原著:David M Beazley <span id="line-5" class="anchor"/>出版商: New Riders Publishing <span id="line-6" class="anchor"/><span id="line-7" class="anchor"/></p><p class="line862">初译: Feather <a href="mailto:andelf@gmail.com" class="mailto">andelf@gmail.com</a> <span id="line-8" class="anchor"/>修正补充: <a href="/moin/WeiZhong">WeiZhong</a> <a href="mailto:weizhong2004@gmail.com" class="mailto">weizhong2004@gmail.com</a> <span id="line-9" class="anchor"/></p><div class="table-of-contents"><p
+class="table-of-contents-heading">目录</p><ol><li><a href="#head-ceabdca05e1abc53f7da3c8a801bb8fb2eecb7bf">第一章　Python快速入门</a><ol><li><a href="#head-250b82a8d0868c91a696a1137475044f237d2498">运行Python</a></li><li><a href="#head-995c19e7435dc3cf00b6ea0862dffd8eacce8c99">变量和表达式</a></li><li><a href="#head-844ba9fbdc08bf1ba6bbbe75e7760a9682aad06c">条件语句</a></li><li><a href="#head-dec0d7f95a9d594c71172cd975a77ca09f1509a1">文件输入/输出</a></li><li><a href="#head-0c9f7c60a9ff3d5430ba03db53454184db478318">字符串</a></li><li><a href="#head-eefac951c49a9a3e84c5e0debab1f84264a04ca9">列表和元组(Lists & Tuples)</a></li><li><a href="#head-996603294a2ca3533542608b2d32d9af5624ba64">循环</a></li><li><a href="#head-0b5313cbe2df3883240f31a1c6fd1c1e456f632f">字典</a></li><li><a
+href="#head-bc6f1dad6953967e9e6eeb7d19788b551193e818">函数</a></li><li><a href="#head-d3a23fd89365d8694b2c4cb3f6040df30af76c6d">类</a></li><li><a href="#head-81132100eb58283eecd02b0178a6115bb2b81df4">异常</a></li><li><a href="#head-d7c430ea8f0657aa0afc650ea5f40368913cad1c">模块</a></li></ol></li></ol></div> <span id="line-10" class="anchor"/><span id="line-11" class="anchor"/><p class="line867">
+</p><h1 id="head-ceabdca05e1abc53f7da3c8a801bb8fb2eecb7bf">1. 第一章　Python快速入门</h1>
+<span id="line-12" class="anchor"/><p class="line874">本章是Python的快速入门，在这一章并不涉及python的特殊规则和细节，目标是通过示例使你快速了解Python语言的特点。本章简要介绍了变量,表达式,控制流,函数以及输入/输出的基本概念,在这一章不涉及Python语言的高级特性。尽管如此，有经验的程序员还是能够通过阅读本章的材料创建高级程序。我们鼓励新手通过运行示例，亲身体验一把Python。 <span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></p><p class="line867">
+</p><h2 id="head-250b82a8d0868c91a696a1137475044f237d2498">1.1. 运行Python</h2>
+<span id="line-15" class="anchor"/><p class="line862">Python 程序通过解释器执行。如果你的机器已经装好了python，简单的在命令行键入python即可运行python解释器。在解释器运行的时，会有一个命令提示符 >>>，在提示符后键入你的程序语句，键入的语句将会立即执行。在下边的例子中，我们在>>>提示符后边键入最常见的显示"Hello World"的命令: <span id="line-16" class="anchor"/><span id="line-17" class="anchor"/></p><pre>Python 2.4.2 (#67, Sep 28 2005, 12:41:11) [MSC v.1310 32 bit (Intel)] on win32
+<span id="line-18" class="anchor"/>Type "copyright", "credits" or "license()" for more information.
+<span id="line-19" class="anchor"/>>>> print "Hello World"
+<span id="line-20" class="anchor"/>Hello World
+<span id="line-21" class="anchor"/>>>>
+<span id="line-22" class="anchor"/>
+<span id="line-23" class="anchor"/>
+<span id="line-24" class="anchor"/>程序也可以像下面一样放置在一个文件中
+<span id="line-25" class="anchor"/>
+<span id="line-26" class="anchor"/># helloworld.py
+<span id="line-27" class="anchor"/>print "Hello World"
+<span id="line-28" class="anchor"/>
+<span id="line-29" class="anchor"/>Python源代码文件使用.py后缀.'#'表示注释(到行末结束)
+<span id="line-30" class="anchor"/>
+<span id="line-31" class="anchor"/>执行文件helloworld.py
+<span id="line-32" class="anchor"/>
+<span id="line-33" class="anchor"/>% python helloworld.py
+<span id="line-34" class="anchor"/>Hello World
+<span id="line-35" class="anchor"/>%
+<span id="line-36" class="anchor"/></pre><span id="line-37" class="anchor"/><p class="line874">在Windows 下，只需双击一个.py文件就能执行这个python程序。windows会自动调用python解释程序，然后启动一个终端窗口(类DOS窗口)来执行它。在这种情况下,终端窗口会在程序执行完毕后立即关闭(经常是在你看到它的输出之前)。为避免这个问题,你可以使用python集成开发环境,例如IDLE或Pythonwin。另一个可行的方法是建立一个 bat文件,在文件写入这样一行语句，如 python -i helloworld.py。运行这个批处理，程序在执行完成后会自动进入python解释器。 <span id="line-38" class="anchor"/><span id="line-39" class="anchor"/></p><p class="line874">在解释器中,也可以通过函数execfile()来运行一个保存在磁盘上的程序,如下例: <span id="line-40" class="anchor"/><span id="line-41" class="anchor"/></p><pre>>>> execfile("helloworld.py")
+<span id="line-42" class="anchor"/>Hello World
+<span id="line-43" class="anchor"/></pre><span id="line-44" class="anchor"/><p class="line874">在UNIX下,你可以在程序的首行写入 #! 魔法字符串 来自动调用python解释器执行你的脚本。 <span id="line-45" class="anchor"/><span id="line-46" class="anchor"/></p><pre>#!/usr/local/bin/python
+<span id="line-47" class="anchor"/>print "Hello World"
+<span id="line-48" class="anchor"/></pre><span id="line-49" class="anchor"/><p class="line862">解释器会一直运行直到文件结束。如果在交互模式下,键入 EOF字符退出解释器。在UNIX下,EOF字符是Ctrl+ D;在Windows下,EOF字符是Ctrl+Z.也可以在程序中使用sys.exit()函数或者通过引发<tt class="backtick">SystemExit</tt>异常来退出程序: <span id="line-50" class="anchor"/><span id="line-51" class="anchor"/></p><pre>>>> import sys
+<span id="line-52" class="anchor"/>>>> sys.exit()
+<span id="line-53" class="anchor"/></pre><span id="line-54" class="anchor"/><p class="line874">或者 <span id="line-55" class="anchor"/><span id="line-56" class="anchor"/></p><pre>>>> raise SystemExit
+<span id="line-57" class="anchor"/></pre><span id="line-58" class="anchor"/><span id="line-59" class="anchor"/><p class="line867">
+</p><h2 id="head-995c19e7435dc3cf00b6ea0862dffd8eacce8c99">1.2. 变量和表达式</h2>
+<span id="line-60" class="anchor"/><span id="line-61" class="anchor"/><p class="line874">通过Listing 1.1所示的程序示例变量和表达式的用法 <span id="line-62" class="anchor"/><span id="line-63" class="anchor"/></p><p class="line874">Listing 1.1 复利计算器(Simple Compound-Interest Calculation) <span id="line-64" class="anchor"/><span id="line-65" class="anchor"/><span id="line-66" class="anchor"/><span id="line-67" class="anchor"/><span id="line-68" class="anchor"/><span id="line-69" class="anchor"/><span id="line-70" class="anchor"/><span id="line-71" class="anchor"/><span id="line-72" class="anchor"/><span id="line-73" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-82b91bc4de280e9e9e77548aa318c2df8e279e73_000\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-82b91bc4de280e9e9e77548aa318c2df8e279e73_000', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-82b91bc4de280e9e9e77548aa318c2df8e279e73_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">principal</span> <span class="Operator">=</span> <span class="Number">1000</span>        <span class="Comment"># Initial amount (本金)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">rate</span> <span class="Operator">=</span> <span class="Number">0.05</span>             <span class="Comment"># Interest rate (利率)</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">numyears</span> <span class="Operator">=</span> <span class="Number">5</span>            <span class="Comment"># Number of years (期数,年)</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">year</span> <span class="Operator">=</span> <span class="Number">1</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">while</span> <span class="ID">year</span> <span class="Operator"><=</span> <span class="ID">numyears</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ID">principal</span> <span class="Operator">=</span> <span class="ID">principal</span><span class="Operator">*</span><span class="Operator">(</span><span class="Number">1</span><span class="Operator">+</span><span class="ID">rate</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ResWord">print</span> <span class="ID">year</span><span class="Operator">,</span> <span class="ID">principal</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">year</span> <span class="Operator">+=</span> <span class="Number">1</span><span class="Text"/></span>
+</pre></div><span id="line-74" class="anchor"/><p class="line874">程序输出: <span id="line-75" class="anchor"/><span id="line-76" class="anchor"/></p><pre>1 1050.0
+<span id="line-77" class="anchor"/>2 1102.5
+<span id="line-78" class="anchor"/>3 1157.625
+<span id="line-79" class="anchor"/>4 1215.50625
+<span id="line-80" class="anchor"/>5 1276.2815625
+<span id="line-81" class="anchor"/></pre><span id="line-82" class="anchor"/><p class="line874">Python 是一种动态语言,在程序运行过程中，同一变量名可以（在程序运行的不同阶段）代表不同形式的值(整型,浮点,列表,元组...)。事实上，程序中使用的变量名只是各种数据及对象的引用。这与C语言不同,C语言中变量名代表的是用来存放结果的一个固定位置及长度的内存片段。从例子Listing 1.1中的变量principal可以看出Python语言的动态特性.最初,它被赋值为一个整数,但是稍后程序将它再次赋值: <span id="line-83" class="anchor"/><span id="line-84" class="anchor"/></p><p class="line867"><tt class="backtick">principal =
+principal*(1+rate)</tt> <span id="line-85" class="anchor"/><span id="line-86" class="anchor"/></p><p class="line874">这个语句计算表达式的值，然后将计算结果赋给 principal 变量做为它的新值。当赋值动作发生时,principal最初绑定的值1000被丢弃。赋值结束，不但 principal 绑定的值发生了变化，它的类型也随着赋值动作发生了相应的变化。在这个例子中，由于rate是一个浮点数,所以在赋值完成后,principal也变成一个浮点数。 <span id="line-87" class="anchor"/><span id="line-88" class="anchor"/></p><p class="line874">Python中每个语句以换行结束,当然你也可以在一行中写多个语句，这时语句之间必须使用用分号分隔，就象下面这样:
+<span id="line-89" class="anchor"/><span id="line-90" class="anchor"/></p><p class="line867"><tt class="backtick">principal = 1000; rate = 0.05; numyears = 5;</tt> <span id="line-91" class="anchor"/><span id="line-92" class="anchor"/></p><p class="line874">（建议这样的写法仅仅用于调试语句，因为可以很方便的只删一行就删掉全部调试语句) <span id="line-93" class="anchor"/><span id="line-94" class="anchor"/></p><p class="line874">while
+语句首先检查在它后边的循环条件,若条件表达式为真,它就执行冒号后面的语句块，然后再次测试循环条件，直至为假。冒号后面的缩近语句块为循环体。注意，Python语言使用缩进块来表示程序逻辑（其它大多数语言使用大括号等）。在Listing 1.1中while语句后的三条语句为循环体，在每次循环中均执行。Python并未指定缩进的空白(空格和制表符)数目，唯一的要求是同一层次的语句必须有相同的缩进空白。（注意，要么都是空格，要是么都制表符，千万别混用) <span id="line-95" class="anchor"/><span id="line-96" class="anchor"/></p><p class="line874">Listing
+1.1中的程序美中不足的就是输出不是很好看，为了让它美观一点,可以用格式字符串将计算结果只保留小数点后两位： <span id="line-97" class="anchor"/><span id="line-98" class="anchor"/></p><pre>print "%3d %0.2f" % (year, principal)
+<span id="line-99" class="anchor"/>
+<span id="line-100" class="anchor"/>这样,程序的输出就变为:
+<span id="line-101" class="anchor"/>
+<span id="line-102" class="anchor"/>1 1050.00
+<span id="line-103" class="anchor"/>2 1102.50
+<span id="line-104" class="anchor"/>3 1157.63
+<span id="line-105" class="anchor"/>4 1215.51
+<span id="line-106" class="anchor"/>5 1276.28
+<span id="line-107" class="anchor"/></pre><span id="line-108" class="anchor"/><p class="line874">格式字符串包含普通文本及格式化字符序列(例如"%d", "%s", 和 "%f"),这些序列决定特定类型的数据(如整型,字符串,浮点数)的输出格式.'%3d'将一个整数在宽度为3个字符的栏中右对齐,'%0.2f'将一个浮点数的小数点后部分转换为2位。格式字符串的作用和C语言中的sprintf()函数基本相同。详细内容请参阅第四章--操作符及表达式。 <span id="line-109" class="anchor"/>
+</p><h2 id="head-844ba9fbdc08bf1ba6bbbe75e7760a9682aad06c">1.3. 条件语句</h2>
+<span id="line-110" class="anchor"/><span id="line-111" class="anchor"/><p class="line874">if和else语句用来进行简单的测试，如: <span id="line-112" class="anchor"/><span id="line-113" class="anchor"/><span id="line-114" class="anchor"/><span id="line-115" class="anchor"/><span id="line-116" class="anchor"/><span id="line-117" class="anchor"/><span id="line-118" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-83b04ba8025150cd27749b46560e62cef6b7a649_001\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-83b04ba8025150cd27749b46560e62cef6b7a649_001', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-83b04ba8025150cd27749b46560e62cef6b7a649_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment"># Compute the maximum (z) of a and b (得到a与b中较大的一个)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="ResWord">if</span> <span class="ID">a</span> <span class="Operator"><</span> <span class="ID">b</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>        <span class="ID">z</span> <span class="Operator">=</span> <span class="ID">b</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">else</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">z</span> <span class="Operator">=</span> <span class="ID">a</span><span class="Text"/></span>
+</pre></div><span id="line-119" class="anchor"/><p class="line874">if和else的语句块用缩近来表示，else从句在某些情况下可以省略。 <span id="line-120" class="anchor"/>如果if或else语句块只有一个语句，也可以不使用缩近。也就是说: <span id="line-121" class="anchor"/><span id="line-122" class="anchor"/><span id="line-123" class="anchor"/><span id="line-124" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-3c6e2ab06762a24519ddf93b95ccb66ffc0936a4_002\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-3c6e2ab06762a24519ddf93b95ccb66ffc0936a4_002', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-3c6e2ab06762a24519ddf93b95ccb66ffc0936a4_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">if</span> <span class="ID">a</span><span class="Operator"><</span><span class="ID">b</span><span class="Operator">:</span> <span class="ID">z</span><span class="Operator">=</span><span class="ID">a</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">else</span><span class="Operator">:</span> <span class="ID">z</span><span class="Operator">=</span><span class="ID">b</span><span class="Text"/></span>
+</pre></div><span id="line-125" class="anchor"/><p class="line874">这样的写法也是合法的，但这不是推荐的作法。一直使用缩近可以让你方便的在语句体中添加一个语句，而且读起来更清晰。 <span id="line-126" class="anchor"/>若某个子句不需任何操作,就使用pass语句，如: <span id="line-127" class="anchor"/><span id="line-128" class="anchor"/><span id="line-129" class="anchor"/><span id="line-130" class="anchor"/><span id="line-131" class="anchor"/><span id="line-132" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-287d0a9d737757e4f8dade9c21b96be3a478c2fe_003\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-287d0a9d737757e4f8dade9c21b96be3a478c2fe_003', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-287d0a9d737757e4f8dade9c21b96be3a478c2fe_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">if</span> <span class="ID">a</span> <span class="Operator"><</span> <span class="ID">b</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>        <span class="ResWord">pass</span>      <span class="Comment"># Do nothing</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">else</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>        <span class="ID">z</span> <span class="Operator">=</span> <span class="ID">a</span><span class="Text"/></span>
+</pre></div><span id="line-133" class="anchor"/><p class="line874">通过使用 or,and 和 not 关键字你可以建立任意的条件表达式: <span id="line-134" class="anchor"/><span id="line-135" class="anchor"/><span id="line-136" class="anchor"/><span id="line-137" class="anchor"/><span id="line-138" class="anchor"/><span id="line-139" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-e9fa21a00d6e77a966fc2fc3560c94625a8df64c_004\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-e9fa21a00d6e77a966fc2fc3560c94625a8df64c_004', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-e9fa21a00d6e77a966fc2fc3560c94625a8df64c_004" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">if</span> <span class="ID">b</span> <span class="Operator">>=</span> <span class="ID">a</span> <span class="ResWord">and</span> <span class="ID">b</span> <span class="Operator"><=</span> <span class="ID">c</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>        <span class="ResWord">print</span> <span class="String">"b is between a and c"</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">if</span> <span class="ResWord">not</span> <span class="Operator">(</span><span class="ID">b</span> <span class="Operator"><</span> <span class="ID">a</span> <span class="ResWord">or</span> <span class="ID">b</span> <span class="Operator">></span> <span class="ID">c</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>        <span class="ResWord">print</span> <span class="String">"b is still between a and c"</span><span class="Text"/></span>
+</pre></div><span id="line-140" class="anchor"/><p class="line874">用 elif 语句可以检验多重条件(用于代替其它语言中的switch语句): <span id="line-141" class="anchor"/><span id="line-142" class="anchor"/><span id="line-143" class="anchor"/><span id="line-144" class="anchor"/><span id="line-145" class="anchor"/><span id="line-146" class="anchor"/><span id="line-147" class="anchor"/><span id="line-148" class="anchor"/><span id="line-149" class="anchor"/><span id="line-150" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-0a271ef0550daf60e45504a732d026026320b65b_005\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-0a271ef0550daf60e45504a732d026026320b65b_005', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-0a271ef0550daf60e45504a732d026026320b65b_005" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">if</span> <span class="ID">a</span> <span class="Operator">==</span> <span class="String">'+'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>        <span class="ID">op</span> <span class="Operator">=</span> <span class="ID">PLUS</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">elif</span> <span class="ID">a</span> <span class="Operator">==</span> <span class="String">'-'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>        <span class="ID">op</span> <span class="Operator">=</span> <span class="ID">MINUS</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">elif</span> <span class="ID">a</span> <span class="Operator">==</span> <span class="String">'*'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ID">op</span> <span class="Operator">=</span> <span class="ID">MULTIPLY</span></span>
+<span class="line"><span class="LineNumber">   7 </span><span class="ResWord">else</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ResWord">raise</span> <span class="ID">RuntimeError</span><span class="Operator">,</span> <span class="String">"Unknown operator"</span><span class="Text"/></span>
+</pre></div><span id="line-151" class="anchor"/><span id="line-152" class="anchor"/><p class="line867">
+</p><h2 id="head-dec0d7f95a9d594c71172cd975a77ca09f1509a1">1.4. 文件输入/输出</h2>
+<span id="line-153" class="anchor"/><span id="line-154" class="anchor"/><p class="line874">下面的程序打开一个文件,然后一行行地读出并显示文件内容: <span id="line-155" class="anchor"/><span id="line-156" class="anchor"/><span id="line-157" class="anchor"/><span id="line-158" class="anchor"/><span id="line-159" class="anchor"/><span id="line-160" class="anchor"/><span id="line-161" class="anchor"/><span id="line-162" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-da57992e48994389c4fa3389edf7524a8ad62083_006\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-da57992e48994389c4fa3389edf7524a8ad62083_006', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-da57992e48994389c4fa3389edf7524a8ad62083_006" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">f</span> <span class="Operator">=</span> <span class="ID">open</span><span class="Operator">(</span><span class="String">"foo.txt"</span><span class="Operator">)</span>        <span class="Comment"># Returns a file object</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">line</span> <span class="Operator">=</span> <span class="ID">f</span><span class="Operator">.</span><span class="ID">readline</span><span class="Operator">(</span><span class="Operator">)</span>        <span class="Comment"># Invokes readline() method on file</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">while</span> <span class="ID">line</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>        <span class="ResWord">print</span> <span class="ID">line</span><span class="Operator">,</span>        <span class="Comment"># trailing ',' omits newline character</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">line</span> <span class="Operator">=</span> <span class="ID">f</span><span class="Operator">.</span><span class="ID">readline</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ID">f</span><span class="Operator">.</span><span class="ID">close</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-163" class="anchor"/><p class="line867"><tt class="backtick">open()</tt>函数返回一个新文件对象(file object)。通过调用此对象的不同方法可以对文件进行不同的操作。<tt class="backtick">readline()</tt>方法读取文件的一行(包括换行符'\n')。如果读到文件末尾，就返回一个空字符串。要将程序的输出内容由屏幕重定向到文件中，可以使用'>>'运算符，如下例: <span id="line-164" class="anchor"/><span id="line-165" class="anchor"/><span id="line-166" class="anchor"/><span id="line-167"
+class="anchor"/><span id="line-168" class="anchor"/><span id="line-169" class="anchor"/><span id="line-170" class="anchor"/><span id="line-171" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-db83307f88a79582acef262b75ece43c429ffc53_007\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-db83307f88a79582acef262b75ece43c429ffc53_007', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-db83307f88a79582acef262b75ece43c429ffc53_007" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">f</span> <span class="Operator">=</span> <span class="ID">open</span><span class="Operator">(</span><span class="String">"out"</span><span class="Operator">,</span><span class="String">"w"</span><span class="Operator">)</span>     <span class="Comment"># Open file for writing</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">while</span> <span class="ID">year</span> <span class="Operator"><=</span> <span class="ID">numyears</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>        <span class="ID">principal</span> <span class="Operator">=</span> <span class="ID">principal</span><span class="Operator">*</span><span class="Operator">(</span><span class="Number">1</span><span class="Operator">+</span><span class="ID">rate</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span>        <span class="ResWord">print</span> <span class="Operator">>></span><span class="ID">f</span><span class="Operator">,</span><span class="String">"%3d %0.2f"</span> <span class="Operator">%</span> <span class="Operator">(</span><span class="ID">year</span><span class="Operator">,</span><span class="ID">principal</span><span class="Operator">)</span>  <span class="Comment">#将格式文本输出到文件对象 f</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">year</span> <span class="Operator">+=</span> <span class="Number">1</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ID">f</span><span class="Operator">.</span><span class="ID">close</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-172" class="anchor"/><p class="line862">当然,文件对象也拥有<tt class="backtick">write()</tt>方法，通过它可以向文件对象写入新的数据。例如上边例子中的print的语句也可以写成这样: <span id="line-173" class="anchor"/><span id="line-174" class="anchor"/></p><p class="line867"><tt>f.write("%3d   %0.2f\n" % (year,principal)) </tt> <span id="line-175" class="anchor"/><span id="line-176" class="anchor"/></p><p class="line867">
+</p><h2 id="head-0c9f7c60a9ff3d5430ba03db53454184db478318">1.5. 字符串</h2>
+<span id="line-177" class="anchor"/><span id="line-178" class="anchor"/><p class="line874">要创建一个字符串，你使用单引号,双引号或三引号将其引起来，如下例: <span id="line-179" class="anchor"/><span id="line-180" class="anchor"/><span id="line-181" class="anchor"/><span id="line-182" class="anchor"/><span id="line-183" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-a6de4d88f02fef0a6aaabddff4df6fed0bd8984f_008\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-a6de4d88f02fef0a6aaabddff4df6fed0bd8984f_008', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-a6de4d88f02fef0a6aaabddff4df6fed0bd8984f_008" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="String">'Hello World'</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="String">"Python is groovy"</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">c</span> <span class="Operator">=</span> <span class="String">"""What is footnote 5?"""</span><span class="Text"/></span>
+</pre></div><span id="line-184" class="anchor"/><p class="line874">一个字符串用什么引号开头，就必须用什么引号结尾。单引号与双引号只能创建单行字符串，两个三引号之间的一切字符(包括换行)都是字符串的内容, 因此三引号能够创建多行字符串 。如下例： <span id="line-185" class="anchor"/><span id="line-186" class="anchor"/><span id="line-187" class="anchor"/><span id="line-188" class="anchor"/><span id="line-189" class="anchor"/><span id="line-190" class="anchor"/><span id="line-191"
+class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-f3acb1b75c6dacf908ed256c95e949ad0bffa403_009\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-f3acb1b75c6dacf908ed256c95e949ad0bffa403_009', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-f3acb1b75c6dacf908ed256c95e949ad0bffa403_009" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">print</span> <span class="String">'''Content-type: text/html</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="String"/></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="String"><h1> Hello World </h1></span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="String">Click <a href="http://www.python.org">here</a>.</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="String">'''</span><span class="Text"/></span>
+</pre></div><span id="line-192" class="anchor"/><p class="line874">字符串是一个以0开始，整数索引的字符序列,要获得字符串 s 中的第 i+1 个字符(别忘了0是第一个),使用索引运算符 s[i]: <span id="line-193" class="anchor"/><span id="line-194" class="anchor"/><span id="line-195" class="anchor"/><span id="line-196" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-ba60f8362ce8651b3db311375f3a60f4f1d3f699_010\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-ba60f8362ce8651b3db311375f3a60f4f1d3f699_010', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-ba60f8362ce8651b3db311375f3a60f4f1d3f699_010" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="String">"Hello World"</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="ID">a</span><span class="Operator">[</span><span class="Number">4</span><span class="Operator">]</span>                <span class="Comment"># b = 'o'</span><span class="Text"/></span>
+</pre></div><span id="line-197" class="anchor"/><p class="line874">要获得一个子串,使用切片运算符 s[i:j]。 它返回字符串 s 中从索引 i (包括i)到 j (不包括 j)之间的子串。若 i 被省略，python就认为 i=0，若 j 被省略，python就认为 j=len(s)-1: <span id="line-198" class="anchor"/><span id="line-199" class="anchor"/><span id="line-200" class="anchor"/><span id="line-201" class="anchor"/><span id="line-202" class="anchor"/></p><div lang="en" dir="ltr"
+class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-7cf8f0116fb2214b57925f8ec444e204d4443521_011\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-7cf8f0116fb2214b57925f8ec444e204d4443521_011', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-7cf8f0116fb2214b57925f8ec444e204d4443521_011" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">c</span> <span class="Operator">=</span> <span class="ID">a</span><span class="Operator">[</span><span class="Number">0</span><span class="Operator">:</span><span class="Number">5</span><span class="Operator">]</span>              <span class="Comment"># c = "Hello"</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">d</span> <span class="Operator">=</span> <span class="ID">a</span><span class="Operator">[</span><span class="Number">6</span><span class="Operator">:</span><span class="Operator">]</span>               <span class="Comment"># d = "World"</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">e</span> <span class="Operator">=</span> <span class="ID">a</span><span class="Operator">[</span><span class="Number">3</span><span class="Operator">:</span><span class="Number">8</span><span class="Operator">]</span>              <span class="Comment"># e = "lo Wo"</span><span class="Text"/></span>
+</pre></div><span id="line-203" class="anchor"/><p class="line874">可以用加(+)运算符来连结字符串: <span id="line-204" class="anchor"/><span id="line-205" class="anchor"/></p><p class="line867"><tt class="backtick">g = a + " This is a test"</tt> <span id="line-206" class="anchor"/><span id="line-207" class="anchor"/></p><p class="line874">通过使用str()函数,repr()函数或向后的引号(`)可以将其他类型的数据转换为字符串: <span
+id="line-208" class="anchor"/><span id="line-209" class="anchor"/><span id="line-210" class="anchor"/><span id="line-211" class="anchor"/><span id="line-212" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-236a15274b4e5679db94e0802a90f45bc1821909_012\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-236a15274b4e5679db94e0802a90f45bc1821909_012', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-236a15274b4e5679db94e0802a90f45bc1821909_012" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">s</span> <span class="Operator">=</span> <span class="String">"The value of x is "</span> <span class="Operator">+</span> <span class="ID">str</span><span class="Operator">(</span><span class="ID">x</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">s</span> <span class="Operator">=</span> <span class="String">"The value of y is "</span> <span class="Operator">+</span> <span class="ID">repr</span><span class="Operator">(</span><span class="ID">y</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">s</span> <span class="Operator">=</span> <span class="String">"The value of y is "</span> <span class="Operator">+</span> <span class="Operator">`</span><span class="ID">y</span><span class="Operator">`</span><span class="Text"/></span>
+</pre></div><span id="line-213" class="anchor"/><p class="line874">repr()函数用来取得对象的规范字符串表示，向后的引号(`)是repr()函数的快捷版。 <span id="line-214" class="anchor"/><span id="line-215" class="anchor"/></p><p class="line874">在大多情况下str()和repr()函数会返回同一个结果,但是它们之间有很微妙的差别,后边的章节对此将有详细描述。 <span id="line-216" class="anchor"/><span id="line-217"
+class="anchor"/></p><p class="line867">
+</p><h2 id="head-eefac951c49a9a3e84c5e0debab1f84264a04ca9">1.6. 列表和元组(Lists & Tuples)</h2>
+<span id="line-218" class="anchor"/><span id="line-219" class="anchor"/><p class="line874">就如同字符串是字符的序列,列表和元组则是任意对象的序列。象下面这样就可以创建一个列表: <span id="line-220" class="anchor"/><span id="line-221" class="anchor"/></p><p class="line867"><tt class="backtick">names = [ "Dave", "Mark", "Ann", "Phil" ]</tt> <span id="line-222" class="anchor"/><span id="line-223"
+class="anchor"/></p><p class="line874">列表和元组都是以整数0来开始索引的序列,你可以用索引操作符来读取或者修改列表中特定元素的值: <span id="line-224" class="anchor"/><span id="line-225" class="anchor"/></p><pre>a = names[2]             # Returns the third item of the list, "Ann"
+<span id="line-226" class="anchor"/>names[0] = "Jeff"        # Changes the first item to "Jeff"
+<span id="line-227" class="anchor"/>
+<span id="line-228" class="anchor"/>用len()函数得到列表的长度:
+<span id="line-229" class="anchor"/>
+<span id="line-230" class="anchor"/>print len(names)        # prints 4
+<span id="line-231" class="anchor"/>
+<span id="line-232" class="anchor"/>append()方法可以把一个新元素插入列表的末尾:
+<span id="line-233" class="anchor"/>
+<span id="line-234" class="anchor"/>names.append("Kate")
+<span id="line-235" class="anchor"/>
+<span id="line-236" class="anchor"/>aList.insert(index,aMember)方法可以把新元素 aMember 插入到列表 aList[index] 元素之前:
+<span id="line-237" class="anchor"/>
+<span id="line-238" class="anchor"/>names.insert(2, "Sydney")
+<span id="line-239" class="anchor"/>
+<span id="line-240" class="anchor"/>用切片操作符可以取出一个子列表或者对子列表重新赋值:
+<span id="line-241" class="anchor"/>
+<span id="line-242" class="anchor"/>b = names[0:2]                      # Returns [ "Jeff", "Mark" ]
+<span id="line-243" class="anchor"/>c = names[2:]                       # Returns [ "Sydney", "Ann", "Phil", "Kate" ]
+<span id="line-244" class="anchor"/>names[1] = 'Jeff'                   # Replace the 2nd item in names with "Jeff"
+<span id="line-245" class="anchor"/>names[0:2] = ['Dave','Mark','Jeff'] # 用右边的 list 替换 names 列表中的前两个元素
+<span id="line-246" class="anchor"/>
+<span id="line-247" class="anchor"/>加(+)运算符可以连结列表:
+<span id="line-248" class="anchor"/>
+<span id="line-249" class="anchor"/>a = [1,2,3] + [4,5]     # Result is [1,2,3,4,5]
+<span id="line-250" class="anchor"/>
+<span id="line-251" class="anchor"/>列表元素可以是任意的 Python 对象,当然也包括列表:
+<span id="line-252" class="anchor"/>
+<span id="line-253" class="anchor"/>a = [1,"Dave",3.14, ["Mark", 7, 9, [100,101]], 10]
+<span id="line-254" class="anchor"/>
+<span id="line-255" class="anchor"/>子列表的元素用下面的方式调用:
+<span id="line-256" class="anchor"/>
+<span id="line-257" class="anchor"/>a[1]            # Returns "Dave"
+<span id="line-258" class="anchor"/>a[3][2]         # Returns 9
+<span id="line-259" class="anchor"/>a[3][3][1]      # Returns 101
+<span id="line-260" class="anchor"/></pre><span id="line-261" class="anchor"/><p class="line874">Listing 1.2中代码从一个文件中读取一系列数字，然后输出其中的最大值和最小值。 <span id="line-262" class="anchor"/>通过这个示例我们可以了解到列表的一些高级特性： <span id="line-263" class="anchor"/><span id="line-264" class="anchor"/></p><p class="line874">Listing 1.2 列表的高级特性 <span id="line-265"
+class="anchor"/><span id="line-266" class="anchor"/><span id="line-267" class="anchor"/><span id="line-268" class="anchor"/><span id="line-269" class="anchor"/><span id="line-270" class="anchor"/><span id="line-271" class="anchor"/><span id="line-272" class="anchor"/><span id="line-273" class="anchor"/><span id="line-274" class="anchor"/><span id="line-275" class="anchor"/><span id="line-276"
+class="anchor"/><span id="line-277" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-6b19978425d6b44214f011c39e5575eaf6e0b33f_013\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-6b19978425d6b44214f011c39e5575eaf6e0b33f_013', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-6b19978425d6b44214f011c39e5575eaf6e0b33f_013" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">sys</span>                       <span class="Comment"># Load the sys module (导入sys模块)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">f</span> <span class="Operator">=</span> <span class="ID">open</span><span class="Operator">(</span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">argv</span><span class="Operator">[</span><span class="Number">1</span><span class="Operator">]</span><span class="Operator">)</span>            <span
+class="Comment"># Filename on the command line (从命令行读取文件名)</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">svalues</span> <span class="Operator">=</span> <span class="ID">f</span><span class="Operator">.</span><span class="ID">readlines</span><span class="Operator">(</span><span class="Operator">)</span>          <span class="Comment"># Read all lines into a list (读出所有行到一个列表)</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">f</span><span class="Operator">.</span><span class="ID">close</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   5 </span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="Comment"># Convert all of the input values from strings to floats (把输入的值转换为浮点数)</span></span>
+<span class="line"><span class="LineNumber">   7 </span><span class="Comment"/><span class="ID">fvalues</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="ID">float</span><span class="Operator">(</span><span class="ID">s</span><span class="Operator">)</span> <span class="ResWord">for</span> <span class="ID">s</span> <span class="ResWord">in</span> <span
+class="ID">svalues</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   8 </span></span>
+<span class="line"><span class="LineNumber">   9 </span><span class="Comment"># Print min and max values (输出最大值和最小值)</span></span>
+<span class="line"><span class="LineNumber">  10 </span><span class="Comment"/><span class="ResWord">print</span> <span class="String">"The minimum value is "</span><span class="Operator">,</span> <span class="ID">min</span><span class="Operator">(</span><span class="ID">fvalues</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span><span class="ResWord">print</span> <span class="String">"The maximum value is "</span><span class="Operator">,</span> <span class="ID">max</span><span class="Operator">(</span><span class="ID">fvalues</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-278" class="anchor"/><p class="line874">程序第一行用import语句从Python library中导入sys模块。 <span id="line-279" class="anchor"/><span id="line-280" class="anchor"/></p><p class="line874">你需要在命令行提供一个文件名给上面的程序，该文件名参数保存在sys.argv 列表中，open方法通过读取sys.argv[1]得到这个文件名参数。 <span id="line-281" class="anchor"/><span id="line-282"
+class="anchor"/></p><p class="line874">readlines()方法读取文件中的所有的行到一个列表中。 <span id="line-283" class="anchor"/><span id="line-284" class="anchor"/></p><p class="line874">表达式 [float(s) for s in svalues] 通过循环列表svalues中的所有字符串并对每个元素运行函数float()来建立一个新的列表,这种特殊的建立列表的方法叫做列表包含( list comprehension)。 <span id="line-285"
+class="anchor"/>在列表中所有的字符串都转换为浮点数之后,内建函数min()和max()计算出列表中的最大值及最小值。 <span id="line-286" class="anchor"/><span id="line-287" class="anchor"/></p><p class="line874">元组(tuple)类型和列表关系很密切,通过用圆括号中将一系列逗号分割的值括起来可以得到一个元组: <span id="line-288" class="anchor"/><span id="line-289" class="anchor"/><span id="line-290"
+class="anchor"/><span id="line-291" class="anchor"/><span id="line-292" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-8ba3c7fc9365674d5d31d840edca92b8e12ae4a1_014\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-8ba3c7fc9365674d5d31d840edca92b8e12ae4a1_014', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-8ba3c7fc9365674d5d31d840edca92b8e12ae4a1_014" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="Operator">(</span><span class="Number">1</span><span class="Operator">,</span><span class="Number">4</span><span class="Operator">,</span><span class="Number">5</span><span
+class="Operator">,</span><span class="Operator">-</span><span class="Number">9</span><span class="Operator">,</span><span class="Number">10</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="Operator">(</span><span class="Number">7</span><span class="Operator">,</span><span class="Operator">)</span>                                 <span class="Comment"># 一个元素的元组 (注意一定要加一个额外的逗号！)</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">person</span> <span class="Operator">=</span> <span class="Operator">(</span><span class="ID">first_name</span><span class="Operator">,</span> <span class="ID">last_name</span><span class="Operator">,</span> <span class="ID">phone</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-293" class="anchor"/><p class="line874">在某些时候，即使没有圆括号, Python仍然可以根据上下文认出这是一个元组，如: (为了写出更清晰可读的程序，建议你不要依赖 Python 的智能) <span id="line-294" class="anchor"/><span id="line-295" class="anchor"/></p><pre>a = 1,4,5,-9,10
+<span id="line-296" class="anchor"/>b = 7,
+<span id="line-297" class="anchor"/>person = first_name, last_name, phone
+<span id="line-298" class="anchor"/></pre><span id="line-299" class="anchor"/><p class="line874">元组支持大多数列表的操作,比如索引,切片和连结。一个关键的不同是你不能在一个tuple创建之后修改它的内容。也就是说,你不能修改其中的元素,也不能给tuple添加新的元素。 <span id="line-300" class="anchor"/><span id="line-301" class="anchor"/></p><p class="line867">
+</p><h2 id="head-996603294a2ca3533542608b2d32d9af5624ba64">1.7. 循环</h2>
+<span id="line-302" class="anchor"/><span id="line-303" class="anchor"/><p class="line874">通过使用while语句，我们在前面已经简单介绍了 while 循环。在Python中另一种循环结构是 for 循环，它通过 迭代 一个序列(例如字符串,列表,或者tuple等)中的每个元素来建立循环。下边是一个例子: <span id="line-304" class="anchor"/><span id="line-305" class="anchor"/></p><pre>for i in range(1,10):
+<span id="line-306" class="anchor"/>        print "2 to the %d power is %d" % (i, 2**i)
+<span id="line-307" class="anchor"/></pre><span id="line-308" class="anchor"/><p class="line874">range(i,j)函数建立一个整数序列,这个序列从第 i 数开始(包括 i )到第 j 数为止(不包括 j)。若第一个数被省略，它将被认为是0。该函数还可以有第三个参数，步进值，见下面的例子: <span id="line-309" class="anchor"/><span id="line-310" class="anchor"/></p><pre>a = range(5)         # a = [0,1,2,3,4]
+<span id="line-311" class="anchor"/>b = range(1,8)       # b = [1,2,3,4,5,6,7]
+<span id="line-312" class="anchor"/>c = range(0,14,3)    # c = [0,3,6,9,12]
+<span id="line-313" class="anchor"/>d = range(8,1,-1)    # d = [8,7,6,5,4,3,2]
+<span id="line-314" class="anchor"/></pre><span id="line-315" class="anchor"/><p class="line874">for语句可以迭代任何类型的序列: <span id="line-316" class="anchor"/><span id="line-317" class="anchor"/></p><pre>a = "Hello World"
+<span id="line-318" class="anchor"/># Print out the characters in a
+<span id="line-319" class="anchor"/>for c in a:
+<span id="line-320" class="anchor"/>        print c
+<span id="line-321" class="anchor"/>b = ["Dave","Mark","Ann","Phil"]
+<span id="line-322" class="anchor"/># Print out the members of a list
+<span id="line-323" class="anchor"/>for name in b:
+<span id="line-324" class="anchor"/>        print name
+<span id="line-325" class="anchor"/></pre><span id="line-326" class="anchor"/><p class="line874">range()函数根据起始值，终止值及步进值三个参数在内存中建立一个列表，当需要一个很大的列表时,这个既占内存又费时间。为了克服它的缺点,Python提供了xrange()函数: <span id="line-327" class="anchor"/><span id="line-328" class="anchor"/></p><pre>for i in xrange(1,10):
+<span id="line-329" class="anchor"/>        print "2 to the %d power is %d" % (i, 2**i)
+<span id="line-330" class="anchor"/>
+<span id="line-331" class="anchor"/>a = xrange(100000000)       # a = [0,1,2, ..., 99999999]
+<span id="line-332" class="anchor"/>b = xrange(0,100000000,5)   # b = [0,5,10, ...,99999995]
+<span id="line-333" class="anchor"/></pre><span id="line-334" class="anchor"/><p class="line874">xrange()函数只有在需要值时才临时通过计算提供值，这大大节省了内存。 <span id="line-335" class="anchor"/><span id="line-336" class="anchor"/></p><p class="line867">
+</p><h2 id="head-0b5313cbe2df3883240f31a1c6fd1c1e456f632f">1.8. 字典</h2>
+<span id="line-337" class="anchor"/><span id="line-338" class="anchor"/><p class="line874">字典就是一个关联数组(或称为哈希表)。它是一个通过关键字索引的对象的集合。使用大括号{}来创建一个字典，如下 例: <span id="line-339" class="anchor"/><span id="line-340" class="anchor"/></p><pre>a = {
+<span id="line-341" class="anchor"/>       "username" : "beazley",
+<span id="line-342" class="anchor"/>       "home" : "/home/beazley",
+<span id="line-343" class="anchor"/>       "uid" : 500
+<span id="line-344" class="anchor"/>    }
+<span id="line-345" class="anchor"/>
+<span id="line-346" class="anchor"/>用关键字索引操作符可以访问字典的某个特定值:
+<span id="line-347" class="anchor"/>
+<span id="line-348" class="anchor"/>u = a["username"]
+<span id="line-349" class="anchor"/>d = a["home"]
+<span id="line-350" class="anchor"/>
+<span id="line-351" class="anchor"/>用下面的方式插入或者修改对象:
+<span id="line-352" class="anchor"/>
+<span id="line-353" class="anchor"/>a["username"] = "pxl"
+<span id="line-354" class="anchor"/>a["home"] = "/home/pxl"
+<span id="line-355" class="anchor"/>a["shell"] = "/usr/bin/tcsh"
+<span id="line-356" class="anchor"/></pre><span id="line-357" class="anchor"/><p class="line874">尽管字符串是最常见的 关键字(key) 类型，你还是可以使用很多其它的 python 对象做为字典的关键字，比如 数字 和 tuple，只要是不可修改对象，都可以用来做字典的key。有些对象,例如列表和字典,不可以用来做字典的key,因为他们的内容是允许更改的。 <span id="line-358" class="anchor"/><span id="line-359"
+class="anchor"/></p><p class="line874">我们可以使用 has_key() 方法来检验一个键/值对是否存在(或者in操作符): <span id="line-360" class="anchor"/><span id="line-361" class="anchor"/></p><pre>if a.has_key("username"):
+<span id="line-362" class="anchor"/>     username = a["username"]
+<span id="line-363" class="anchor"/>else:
+<span id="line-364" class="anchor"/>     username = "unknown user"
+<span id="line-365" class="anchor"/>
+<span id="line-366" class="anchor"/>上边的操作还可以用更简单的方法完成:
+<span id="line-367" class="anchor"/>
+<span id="line-368" class="anchor"/>username = a.get("username", "unknown user")
+<span id="line-369" class="anchor"/>
+<span id="line-370" class="anchor"/>字典的keys() 方法返回由所有关键字组成的列表:
+<span id="line-371" class="anchor"/>
+<span id="line-372" class="anchor"/>k = a.keys()         # k = ["username","home","uid","shell"]
+<span id="line-373" class="anchor"/>
+<span id="line-374" class="anchor"/>del语句可以删除字典中的特定元素:
+<span id="line-375" class="anchor"/>
+<span id="line-376" class="anchor"/>del a["username"]
+<span id="line-377" class="anchor"/></pre><span id="line-378" class="anchor"/><span id="line-379" class="anchor"/><p class="line867">
+</p><h2 id="head-bc6f1dad6953967e9e6eeb7d19788b551193e818">1.9. 函数</h2>
+<span id="line-380" class="anchor"/><span id="line-381" class="anchor"/><p class="line874">在Python中，使用def语句来创建函数，如下例: <span id="line-382" class="anchor"/><span id="line-383" class="anchor"/></p><pre>def remainder(a,b):
+<span id="line-384" class="anchor"/>        q = a/b
+<span id="line-385" class="anchor"/>        r = a - q*b
+<span id="line-386" class="anchor"/>        return r
+<span id="line-387" class="anchor"/></pre><span id="line-388" class="anchor"/><span id="line-389" class="anchor"/><p class="line874">要调用一个函数，只要使用函数名加上用括号括起来的参数就可以了。比如result = remainder(37,15),如果你打算让函数返回多个值，就让它返回一个元组好了。（当然，只要你愿意，让它返回一个列表我们也不会介意) <span id="line-390" class="anchor"/><span
+id="line-391" class="anchor"/></p><pre>def divide(a,b):
+<span id="line-392" class="anchor"/>        q = a/b        # If a and b are integers, q is an integer
+<span id="line-393" class="anchor"/>        r = a - q*b
+<span id="line-394" class="anchor"/>        return (q,r)
+<span id="line-395" class="anchor"/></pre><span id="line-396" class="anchor"/><p class="line874">当返回一个 tuple 时，你会发现象下面这样调用函数会很有用: <span id="line-397" class="anchor"/><span id="line-398" class="anchor"/></p><p class="line867"><tt class="backtick">quotient, remainder = divide(1456,33)</tt> <span id="line-399" class="anchor"/><span id="line-400"
+class="anchor"/></p><p class="line874">你也可以象下面这样给函数的参数指定一个默认值: <span id="line-401" class="anchor"/><span id="line-402" class="anchor"/></p><pre>def connect(hostname,port,timeout=300):
+<span id="line-403" class="anchor"/>      # Function body
+<span id="line-404" class="anchor"/></pre><span id="line-405" class="anchor"/><p class="line874">若在函数定义的时候提供了默认参数，那么在调用函数时就允许省略这个参数： <span id="line-406" class="anchor"/><span id="line-407" class="anchor"/></p><p class="line867"><tt class="backtick">connect('www.python.org', 80)</tt> <span id="line-408" class="anchor"/><span id="line-409"
+class="anchor"/></p><p class="line874">你也可以使用关键字参数来调用函数,这样你的参数就可以使用任意顺序: <span id="line-410" class="anchor"/><span id="line-411" class="anchor"/></p><p class="line867"><tt class="backtick">connect(port=80,hostname="www.python.org")</tt> <span id="line-412" class="anchor"/><span id="line-413" class="anchor"/></p><p
+class="line874">函数内部定义的变量为局部变量，要想在一个函数内部改变一个全局变量的值，在函数中使用global语句: <span id="line-414" class="anchor"/><span id="line-415" class="anchor"/><span id="line-416" class="anchor"/><span id="line-417" class="anchor"/><span id="line-418" class="anchor"/><span id="line-419" class="anchor"/><span id="line-420" class="anchor"/></p><div lang="en"
+dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-8f5d680930040aefe7bcbb812987dc26e910dc78_015\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-8f5d680930040aefe7bcbb812987dc26e910dc78_015', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-8f5d680930040aefe7bcbb812987dc26e910dc78_015" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="Number">4.5</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Operator">.</span><span class="Operator">.</span><span class="Operator">.</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">def</span> <span class="ID">foo</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>        <span class="ResWord">global</span> <span class="ID">a</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">a</span> <span class="Operator">=</span> <span class="Number">8.8</span>             <span class="Comment"># 改变全局变量 a</span><span class="Text"/></span>
+</pre></div><span id="line-421" class="anchor"/><p class="line867">
+</p><h2 id="head-d3a23fd89365d8694b2c4cb3f6040df30af76c6d">1.10. 类</h2>
+<span id="line-422" class="anchor"/><span id="line-423" class="anchor"/><p class="line874">Python支持面向对象编程，在面向对象编程中，class语句用于定义新类型的对象。例如，下面这个类定义了一个简单的堆栈： <span id="line-424" class="anchor"/><span id="line-425" class="anchor"/><span id="line-426" class="anchor"/><span id="line-427" class="anchor"/><span id="line-428"
+class="anchor"/><span id="line-429" class="anchor"/><span id="line-430" class="anchor"/><span id="line-431" class="anchor"/><span id="line-432" class="anchor"/><span id="line-433" class="anchor"/><span id="line-434" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-e3e3aae3d84f22f0574be6e52d633b0a31b542d1_016\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-e3e3aae3d84f22f0574be6e52d633b0a31b542d1_016', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-e3e3aae3d84f22f0574be6e52d633b0a31b542d1_016" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">class</span> <span class="ID">Stack</span><span class="Operator">(</span><span class="ID">object</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>        <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span>              <span class="Comment"># 初始化栈</span></span>
+<span class="line"><span class="LineNumber">   3 </span>                <span class="ID">self</span><span class="Operator">.</span><span class="ID">stack</span> <span class="Operator">=</span> <span class="Operator">[</span> <span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   4 </span>        <span class="ResWord">def</span> <span class="ID">push</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span><span class="ID">object</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>                <span class="ID">self</span><span class="Operator">.</span><span class="ID">stack</span><span class="Operator">.</span><span class="ID">append</span><span class="Operator">(</span><span class="ID">object</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ResWord">def</span> <span class="ID">pop</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   7 </span>                <span class="ResWord">return</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">stack</span><span class="Operator">.</span><span class="ID">pop</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ResWord">def</span> <span class="ID">length</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   9 </span>                <span class="ResWord">return</span> <span class="ID">len</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">stack</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-435" class="anchor"/><p class="line862">在类定义中,方法用 def 语句定义。类中每个方法的第一个参数总是引用类实例对象本身，大家习惯上使用 self
+这个名字代表这个参数。不过这仅仅是个习惯而已，如果你愿意也可以用任意的别的名字。不过为了别人容易看懂你的程序，最好还是跟随大家的习惯。类的方法中若需要调用实例对象的属性则必须显式使用self变量(如上所示)。方法名中若前后均有两个下划线，则表示这是一个特殊方法，比如<span class="u">init</span>方法被用来初始化一个对象(实例)。 <span id="line-436"
+class="anchor"/><span id="line-437" class="anchor"/></p><p class="line874">象下面这样来使用一个类: <span id="line-438" class="anchor"/><span id="line-439" class="anchor"/><span id="line-440" class="anchor"/><span id="line-441" class="anchor"/><span id="line-442" class="anchor"/><span id="line-443" class="anchor"/><span id="line-444"
+class="anchor"/><span id="line-445" class="anchor"/><span id="line-446" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-2c95b17b71bdc4922b6e81b52cb950a545feed42_017\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-2c95b17b71bdc4922b6e81b52cb950a545feed42_017', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-2c95b17b71bdc4922b6e81b52cb950a545feed42_017" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">s</span> <span class="Operator">=</span> <span class="ID">Stack</span><span class="Operator">(</span><span class="Operator">)</span>           <span class="Comment"># Create a stack
+(创建)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">s</span><span class="Operator">.</span><span class="ID">push</span><span class="Operator">(</span><span class="String">"Dave"</span><span class="Operator">)</span>        <span class="Comment"># Push some things onto it (写入)</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">s</span><span class="Operator">.</span><span class="ID">push</span><span class="Operator">(</span><span class="Number">42</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">s</span><span class="Operator">.</span><span class="ID">push</span><span class="Operator">(</span><span class="Operator">[</span><span class="Number">3</span><span class="Operator">,</span><span class="Number">4</span><span class="Operator">,</span><span
+class="Number">5</span><span class="Operator">]</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ID">x</span> <span class="Operator">=</span> <span class="ID">s</span><span class="Operator">.</span><span class="ID">pop</span><span class="Operator">(</span><span class="Operator">)</span>           <span class="Comment"># x gets [3,4,5] (读取)</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ID">y</span> <span class="Operator">=</span> <span class="ID">s</span><span class="Operator">.</span><span class="ID">pop</span><span class="Operator">(</span><span class="Operator">)</span>           <span class="Comment"># y gets 42</span></span>
+<span class="line"><span class="LineNumber">   7 </span><span class="ResWord">del</span> <span class="ID">s</span>                 <span class="Comment"># Destroy s (删除)</span><span class="Text"/></span>
+</pre></div><span id="line-447" class="anchor"/><span id="line-448" class="anchor"/><p class="line867">
+</p><h2 id="head-81132100eb58283eecd02b0178a6115bb2b81df4">1.11. 异常</h2>
+<span id="line-449" class="anchor"/><span id="line-450" class="anchor"/><p class="line874">如果在你的程序发生了一个错误，就会引发异常(exception),你会看到类似下面的错误信息: <span id="line-451" class="anchor"/><span id="line-452" class="anchor"/></p><pre>Traceback (most recent call last):
+<span id="line-453" class="anchor"/> File "<interactive input>", line 42, in foo.py
+<span id="line-454" class="anchor"/>NameError: a
+<span id="line-455" class="anchor"/></pre><span id="line-456" class="anchor"/><p class="line874">错误信息指出了发生的错误类型及出错位置，通常情况下，错误会导致程序终止。不过你可以使用 try 和 except 语句来捕获并处理异常: <span id="line-457" class="anchor"/><span id="line-458" class="anchor"/></p><pre>try:
+<span id="line-459" class="anchor"/>    f = open("file.txt","r")
+<span id="line-460" class="anchor"/>except IOError, e:
+<span id="line-461" class="anchor"/>    print e
+<span id="line-462" class="anchor"/></pre><span id="line-463" class="anchor"/><p class="line874">上面的语句表示：如果有 IOError 发生，造成错误的详细原因将会被放置在对象 e 中，然后运行 except 代码块。 <span id="line-464" class="anchor"/>若发生其他类型的异常，系统就会将控制权转到处理该异常的 except
+代码块，如果没有找到该代码块，程序将运行终止。若没有异常发生，except代码块就被忽略掉。 <span id="line-465" class="anchor"/><span id="line-466" class="anchor"/></p><p class="line874">raise语句用来有意引发异常，,你可以使用内建异常来引发异常，如下例: <span id="line-467" class="anchor"/><span id="line-468" class="anchor"/></p><p
+class="line867"><tt class="backtick">raise RuntimeError, "Unrecoverable error"</tt> <span id="line-469" class="anchor"/><span id="line-470" class="anchor"/></p><p class="line874">当然，你也可以建立你自己的异常，这将在 第五章--控制流中的定义新的异常中详细讲述。 <span id="line-471" class="anchor"/><span id="line-472"
+class="anchor"/></p><p class="line867">
+</p><h2 id="head-d7c430ea8f0657aa0afc650ea5f40368913cad1c">1.12. 模块</h2>
+<span id="line-473" class="anchor"/><span id="line-474" class="anchor"/><p class="line874">当你的程序变得越来越大，为了便于修改和维护，你可能需要把它们分割成多个相关文件。
+Python允许你把函数定义或公共部分放入一个文件，然后在其他程序或者脚本中将该文件作为一个模块导入。要创建一个模块，把相应的语句和定义放入一个文件，这个文件名就是模块名。(注意:该文件必须有.py后缀)： <span id="line-475" class="anchor"/><span id="line-476" class="anchor"/><span id="line-477" class="anchor"/><span id="line-478"
+class="anchor"/><span id="line-479" class="anchor"/><span id="line-480" class="anchor"/><span id="line-481" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-d516c56487dc0606e8744df652d6e6513aa9f7f9_018\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-d516c56487dc0606e8744df652d6e6513aa9f7f9_018', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-d516c56487dc0606e8744df652d6e6513aa9f7f9_018" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment"># file : div.py</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="ResWord">def</span> <span class="ID">divide</span><span class="Operator">(</span><span class="ID">a</span><span class="Operator">,</span><span class="ID">b</span><span class="Operator">)</span><span
+class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ID">q</span> <span class="Operator">=</span> <span class="ID">a</span><span class="Operator">/</span><span class="ID">b</span>        <span class="Comment"># If a and b are integers, q is an integer</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ID">r</span> <span class="Operator">=</span> <span class="ID">a</span> <span class="Operator">-</span> <span class="ID">q</span><span class="Operator">*</span><span class="ID">b</span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ResWord">return</span> <span class="Operator">(</span><span class="ID">q</span><span class="Operator">,</span><span class="ID">r</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-482" class="anchor"/><p class="line874">要在其它的程序中使用这个模块，使用import语句: <span id="line-483" class="anchor"/><span id="line-484" class="anchor"/></p><pre>import div
+<span id="line-485" class="anchor"/>a, b = div.divide(2305, 29)
+<span id="line-486" class="anchor"/></pre><span id="line-487" class="anchor"/><span id="line-488" class="anchor"/><p class="line862">import语句创建一个新的名字空间，该空间包含模块中所有定义对象的名称。要访问这个名字空间，把模块名作为一个前缀来使用这个模块内的对象，就像上边例子中那样:<tt
+class="backtick">div.divide()</tt> <span id="line-489" class="anchor"/><span id="line-490" class="anchor"/></p><p class="line874">如果你希望使用一个不同的模块名字访问这个模块，给import语句加上一个 as 模块名 部分就可以了: <span id="line-491" class="anchor"/><span id="line-492" class="anchor"/></p><pre>import div as foo
+<span id="line-493" class="anchor"/>a,b = foo.divide(2305,29)
+<span id="line-494" class="anchor"/>
+<span id="line-495" class="anchor"/>如果你只想导入指定的对象到当前的名称空间,使用 from 语句:
+<span id="line-496" class="anchor"/>
+<span id="line-497" class="anchor"/>from div import divide
+<span id="line-498" class="anchor"/>a,b = divide(2305,29)       # No longer need the div prefix (不再需要div前缀)
+<span id="line-499" class="anchor"/>
+<span id="line-500" class="anchor"/>导入一个模块中的所有内容到当前的名称空间:
+<span id="line-501" class="anchor"/>
+<span id="line-502" class="anchor"/>from div import *
+<span id="line-503" class="anchor"/>
+<span id="line-504" class="anchor"/>最后，内建函数dir()可以列出一个模块中的所有可访问内容。当你在python交互环境中测试一个模块的功能时，
+这会是一个很有用的工具，因为它可以提供一个包含可用函数及变量的列表:
+<span id="line-505" class="anchor"/>
+<span id="line-506" class="anchor"/>>>> import string
+<span id="line-507" class="anchor"/>>>> dir(string)
+<span id="line-508" class="anchor"/>['_ _builtins_ _', '_ _doc_ _', '_ _file_ _', '_ _name_ _', '_idmap',
+<span id="line-509" class="anchor"/> '_idmapL', '_lower', '_swapcase', '_upper', 'atof', 'atof_error',
+<span id="line-510" class="anchor"/> 'atoi', 'atoi_error', 'atol', 'atol_error', 'capitalize',
+<span id="line-511" class="anchor"/> 'capwords', 'center', 'count', 'digits', 'expandtabs', 'find',
+<span id="line-512" class="anchor"/>...
+<span id="line-513" class="anchor"/>>>>
+<span id="line-514" class="anchor"/></pre><span id="line-515" class="anchor"/><span id="bottom" class="anchor"/></div>

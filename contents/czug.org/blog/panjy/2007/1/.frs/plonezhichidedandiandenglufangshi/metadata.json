@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "plonezhichidedandiandenglufangshi"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "因为客户需要，所以查了下Plone的单点登录认证方式。 ", 
+        "modified": "2007-01-19 14:17:22", 
+        "title": "Plone支持的单点登录方式"
+    }
+}

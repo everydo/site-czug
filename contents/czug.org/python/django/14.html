@@ -1,0 +1,121 @@
+  
+  <h1 style="margin:25px 0 10px 10px">翻译www.djangobook.com之第十四章：缓存 
+    
+  </h1>
+  <div class="content">
+    <span style="color: red"><strong>The Django Book：第14章 缓存</strong></span><br /><br />静态网站的简单文件直接服务于Web，性能很好，但是动态网站的一个基本的权衡是它们是动态的，每次用户请求一个页面<br />Web服务器会执行各种计算--从数据库查询到模板渲染到商业逻辑--来创建你的站点的访问者看到的页面，从处理过度的角<br />度来看，这代价非常昂贵<br />对于大多数Web应用，过度不是大问题，大部分Web程序不是washingtonpost.com或者slashdot.org，它们只是简单的小的<br />到中等大小的流量不过如此的站点，但是对于中等到高流量的站点，尽可能多的去除过度就很重要，所以缓存来了<br />缓存就是把一个昂贵计算的结果保存起来，于是你下次不需要再计算一次，这里是解释它怎样为动态网页工作的伪代码:<br /><pre name="code" class="java">
+given a URL, try finding that page in the cache
+if the page is in the cache:
+    return the cached page
+else:
+    generate the page
+    save the generated page in the cache (for next time)
+    return the generated page
+</pre><br />Django带有一个健壮的缓存系统，它使得你可以保存动态页面，于是它们不需要对每个请求都计算，方便起见，Django提供<br />了不同级别的缓存粒度，你可以缓存特殊视图的输出，可以只缓存很难生成的部分，也可以缓存你的整个站点<br />Django也和"上游"缓存工作的很好，例如Squid(<a href="http://www.squid-cache.org" target="_blank">http://www.squid-cache.org</a>)和基于浏览器的缓存，这些类型<br />的缓存你不直接控制，但是你可以提供关于你的站点哪部分应该被缓存和怎样缓存的线索(通过HTTP头部)给它们<br /><br /><strong>设定缓存</strong><br />缓存系统需要一些少量的设定工作，即你必需告诉它你的缓存数据在哪里--在数据库，文件系统或者直接在内存中，这是影<br />响你的缓存性能的重要决定，是的，一些缓存类型要比其它的快，内存缓存通常比文件系统或数据库缓存快，因为前者没有<br />访问文件系统或数据库的过度<br />你的缓存选择在你的settings文件的CACHE_BACKEND设置中，如果你使用缓存但没有指定CACHE_BACKEND，Django将默认使用<br />simple:///，下面解释了CACHE_BACKEND的所有可得到的值<br /><br /><strong>Memcached</strong><br />目前为止Django可得到的最快的最高效的缓存类型是基于内存的缓存框架Memcached，它起初开发来为LiveJournal.com处理<br />高负荷并随后被Danga Interactive(<a href="http://www.danga.com" target="_blank">http://www.danga.com</a>)开源，它被Slashdot和Wikipedia等站点使用来减少<br />数据库访问和戏剧般的增加站点性能<br />Memcached可以在<a href="http://danga.com/memcached/" target="_blank">http://danga.com/memcached/</a>免费得到，它作为后台进程运行并分配一个指定数量的RAM--为<br />在缓存中添加，得到和删除任意数据，所有的数据直接存储在内存中，所以没有数据库和文件系统使用的过度<br />在安装了Memcached本身之后，你将需要安装Memcached Python绑定，它没有直接和Django绑定，这些绑定在一个单独的<br />Python模块中，memcache.py，可以在<a href="http://www.djangoproject.com/thirdparty/python-memcached" target="_blank">http://www.djangoproject.com/thirdparty/python-memcached</a>得到<br />设置CACHE_BACKEND为memcached://ip:port/来让Django使用Memcached，这里的ip是Memcached后台进程的IP地址，port则是<br />Memcached运行所在的端口<br />在这个例子中，Memcached运行在localhost(127.0.0.1)端口11211:<br />CACHE_BACKEND = 'memcached://127.0.0.1:11211/'<br />Memcached的一个极好的特性是它在多个服务器分享缓存的能力，这意味着你可以在多台机器上运行Memcached进程，程序将<br />会把这组机器当作一个单独的缓存，而不需要在每台机器上复制缓存值，为了让Django利用此特性，需要在CACHE_BACKEND<br />里包含所有的服务器地址并用分号分隔<br />这个例子中，缓存在运行在172.19.26.240和172.19.26.242的IP地址和11211端口的Memcached实例间分享:<br />CACHE_BACKEND = 'memcached://172.19.26.240:11211;172.19.26.242:11211/'<br />这个例子中，缓存在运行在172.19.26.240(端口11211)，172.19.26.242(端口11212)，172.19.26.244(端口11213)的Memcach<br />ed实例间分享:<br />CACHE_BACKEND = 'memcached://172.19.26.240:11211;172.19.26.242:11212;172.19.26.244:11213/'<br />最后关于Memcached的是基于内存的缓存有一个重大的缺点，因为缓存数据只存储在内存中，则如果服务器死机的话数据会丢<br />失，显然内存不是为持久数据存储准备的，Django没有一个缓存后端是用来做持久存储的，它们都是缓存方案，而不是存储<br />但是我们在这里指出是因为基于内存的缓存特别的短暂<br /><br /><strong>数据库缓存</strong><br />在你的数据库创建缓存表并在表里指出Django的缓存系统来使用数据库表作为缓存后端，首先运行这个命令创建缓存表:<br />python manage.py createcachetable [cache_table_name]<br />这里的[cache_table_name]是要创建的数据库表名，名字可以是任何你想要的，只要它是合法的在你的数据库中没有被使用<br />这个命令在你的数据库创建一个遵循Django的数据库缓存系统期望形式的单独的表<br />一旦你创建了数据库表，设置你的CACHE_BACKEND设置为"db://tablename"，这里的tablename是数据库表的名字，在这个例<br />子中，缓存表名为my_cache_table:<br />CACHE_BACKEND = 'db://my_cache_table'<br />数据库缓存后端使用你的settings文件指定的同一数据库，你不能为你的缓存表使用不同的数据库后端<br /><br /><strong>文件系统缓存</strong><br />使用"file://"缓存类型作为CACHE_BACKEND并指定存储缓存数据的文件系统目录来在文件系统存储缓存条目<br />例如，使用下面的设置来在/var/tmp/django_cache存储缓存数据:<br />CACHE_BACKEND = 'file:///var/tmp/django_cache'<br />注意例子中开头有三个前斜线，前两个是file://，第三个是目录路径的第一个字符，/var/tmp/django_cache，如果你使用<br />Windows，把盘符字母放在file://后面，像这样:file://c:/foo/bar<br />目录路径应该是绝对路径，即应该以你的文件系统的根开始，你在设置的结尾放置斜线与否无关紧要<br />确认该设置指向的目录存在并且你的Web服务器运行的系统的用户可以读写该目录，继续上面的例子，如果你的服务器以用户<br />apache运行，确认/var/tmp/django_cache存在并且用户apache可以读写/var/tmp/django_cache目录<br />每个缓存值将被存储为单独的文件，其内容是Python的pickle模块以序列化("pickled")形式保存的缓存数据，每个文件的<br />文件名是缓存键，并escape为安全的文件系统使用<br /><br /><strong>本地存储器缓存</strong><br />如果你想要内存缓存的速度优势但没有能力运行Memcached，可以考虑使用本地存储器缓存后端，该缓存是多线程和线程安全<br />的，但是由于其简单的锁和内存分配策略它没有Memcached高效<br />设置CACHE_BACKEND为'locmem:///'来使用它，例如:<br />CACHE_BACKEND = 'locmem:///'<br /><br /><strong>简单缓存(开发用)</strong><br />'simple:///'是一个简单，单线程的内存缓存，它只在程序中保存缓存数据，这意味着它只能在开发或测试环境下使用，如:<br />CACHE_BACKEND = 'simple:///'<br /><br /><strong>假缓存(开发用)</strong><br />最后，Django带有一个"假"缓存，它事实上不缓存--它只是实现了缓存接口但不做任何事情<br />如果你有一个产品站点，站点在不同的地方使用重型缓存但开发和测试环境中你不想使用缓存，则它是很有用的，这种情况<br />下，在settings文件中设置CACHE_BACKEND为'dummy:///'来做开发环境，这样你的开发环境就不会使用缓存但你的产品环境<br />仍然会使用，例如:<br />CACHE_BACKEND = 'dummy:///'<br /><br /><strong>CACHE_BACKEND参数</strong><br />每个缓存后端都可能使用参数，它们在CACHE_BACKEND设置中以查询字符串形式给出，合法的参数为:<br />1，timeout--缓存默认的超时限定，以秒为单位，默认为300秒(5分钟)<br />2，max_entries--简单后端，本地存储器后端和数据库后端缓存在旧值清楚前允许的最大的条目，默认为300<br />3，cull_percentage--当到达max_entries时选择的条目的比率，准确的比率是1/cull_percentage，所以设置cull_percenta<br />ge=2则当max_entries到达时会选择1/2的条目<br />cull_percentage=0表示当到达max_entries时条目缓存将被清除，这以更多的缓存缺失为代价让选择更快，默认值为3<br />这个例子中，timeout设置为60:<br />CACHE_BACKEND = "locmem:///?timeout=60"<br />这个例子中，timeout为30并且max_entries为400:<br />CACHE_BACKEND = "locmem:///?timeout=30&amp;max_entries=400"<br />不合法的参数被静静的忽略，作为已知参数的非法值<br /><br /><strong>整站缓存</strong><br />一旦你指定了CACHE_BACKEND，使用缓存的最简单的方式是缓存你的整个站点，这意味着每个没有GET或POST参数的页面第一<br />次请求时都会缓存一段特有的时间<br />把'django.middleware.cache.CacheMiddleware'添加到你的MIDDLEWARE_CLASSES设置中来激活整站缓存，例如:<br /><pre name="code" class="java">
+MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.CacheMiddleware',
+    'django.middleware.common.CommonMiddleware',
+)
+</pre><br />(MIDDLEWARE_CLASSES的顺序有关系，参考下面的"MIDDLEWARE_CLASSES的顺序")<br />然后，在你的Django settings文件中添加下列必需设置:<br />1，CACHE_MIDDLEWARE_SECONDS--每个页面应该被缓存的秒数<br />2，CACHE_MIDDLEWARE_KEY_PREFIX--如果在同一Django安装的多个站点分享缓存，设置它为站点名，或者其它唯一代表当前<br />Django实例的字符串来防止键冲突，如果你不在意则可以使用空字符串<br />缓存中间件缓存每个没有GET或者POST参数的页面，即如果用户请求页面并在查询字符串里传递GET参数或者POST参数，中间<br />件将不会尝试得到缓存版本的页面，如果你打算使用整站缓存，设计你的程序时牢记这点，例如，不要使用拥有查询字符串<br />的URLs，除非那些页面可以不缓存<br />缓存中间件支持另一个设置，CACHE_MIDDLEWARE_ANONYMOUS_ONLY，如果你定义了这个设置，并且值设为True，则缓存中间件<br />将只缓存匿名请求，即那些没有登录的用户的请求，这是对用户特有的页面禁止缓存的简单和有效的方式，如Django的admin<br />界面，注意如果你使用CACHE_MIDDLEWARE_ANONYMOUS_ONLY，你应该确认你已经激活了AuthenticationMiddleware并且它在<br />你的MIDDLEWARE_CLASSES中的CacheMiddleware之前<br />最后，注意CacheMiddleware自动为每个HttpResponse设置一些头部:<br />1，当一个新(没缓存的)版本的页面被请求时设置Last-Modified头部为当前日期/时间<br />2，设置Expires头部为当前日期/时间加上定义的CACHE_MIDDLEWARE_SECONDS<br />3，设置Cache-Control头部来给页面一个最大的时间--再一次，根据CACHE_MIDDLEWARE_SECONDS设置<br /><br /><strong>视图缓存</strong><br />一个更细粒度的使用缓存框架的方式是缓存单独视图的输出，它和整站缓存有一样的效果(包括忽略有GET和POST参数的请求)<br />它适合任何你指定的视图，而不是整个站点<br />通过使用一个装饰器--一个改变你的视图方法的行为来使用缓存的封装器来使用视图缓存，视图缓存装饰器叫cache_page<br />它位于django.views.decorators.cache模块，例如:<br /><pre name="code" class="java">
+from django.views.decorators.cache import cache_page
+
+def my_view(request, param):
+    # ...
+my_view = cache_page(my_view, 60 * 15)
+</pre><br />如果你使用Python2.4或更高，你可以使用装饰器语法，这个例子是相同的:<br /><pre name="code" class="java">
+from django.views.decorators.cache import cache_page
+
+@cache_page(60 * 15)
+def my_view(request, param):
+    # ...
+</pre><br />cache_page使用一个单独的参数:缓存超时，以秒为单位，在上面的例子中，my_view()视图的结果将被缓存15分钟(注意我们<br />为了可读性把它写成了60 * 15，等于900，即15分钟乘以每分钟60秒)<br />类似于整站缓存，视图缓存和URL有关，如果多个URLs指向同一视图，则每个URL将被单独缓存，继续my_view例子，如果你的<br />URL配置像下面这样:<br /><pre name="code" class="java">
+urlpatterns = ('',
+    (r'^foo/(\d{1,2})/$', my_view),
+)
+</pre><br />则对/foo/1/和/foo/23/的请求将像你期望的那样被单独缓存，但是一旦一个特别的URL(例如/foo/23/)被请求，则该URL后续<br />的请求将使用缓存<br /><br /><strong>在URL配置指定视图缓存</strong><br />上面的例子硬编码了视图被缓存的事实，因为cache_page在适当的位置改变了my_view视图，这种方式耦合了你的视图和缓存<br />系统，在一些方面这是不理想的，例如，你可能想重用视图方法到另一个很少缓存的站点，或者你可能想发布视图给那些可<br />能想不用缓存来使用它们的人，这些问题的解决方案是在URL配置里指定视图缓存而不是在视图方法本身附近<br />这很容易做到，当你在URL配置里引用它的时候简单的用cache_page包装视图方法，这里是上面旧的URL配置:<br /><pre name="code" class="java">
+urlpatterns = ('',
+    (r'^foo/(\d{1,2})/$', my_view),
+)
+</pre><br />这里是同样的东西，但用cache_page包装了my_view:<br /><pre name="code" class="java">
+from django.views.decorators.cache import cache_page
+
+urlpatterns = ('',
+    (r'^foo/(\d{1,2})/$', cache_page(my_view, 60 * 15)),
+)
+</pre><br />如果你使用这种方式，别忘了在你的URL配置里import cache_page<br /><br /><strong>低级缓存API</strong><br />有时候，缓存完整渲染的页面不会让你收获很多，事实上，这有点不方便，例如你的站点包括一个结果依赖于一些昂贵查询<br />的结果的视图，而且结果在一段时间后会更改，这种情况下，使用整站缓存或视图缓存策略提供的全页面缓存就不是很理想<br />因为你不想缓存整个结果(既然有些数据频繁更改的话)，但是你仍然想缓存很少更改的结果<br />对于这种情况，Django暴露了一个简单低级的缓存API，它位于django.core.cache，你可以使用任何粒度的低级缓存API来<br />在缓存中存储对象，你可以缓存任何可以被安全"pickled"的Python对象--字符串，字典，模型对象列表等等(大部分通常的<br />Python对象都可以被pickled，参考Python文档得到更多关于pickling的信息)<br />这里是怎样import它:<br /><pre name="code" class="java">
+&gt;&gt;&gt; from django.core.cache import cache
+</pre><br />基本接口为set(key, value, timeout_seconds)和get(key):<br /><pre name="code" class="java">
+&gt;&gt;&gt; cache.set('my_key', 'hello, world!', 30)
+&gt;&gt;&gt; cache.get('my_key')
+'hello, world!'
+</pre><br />timeout_seconds参数可选并且默认为上面解释的CACHE_BACKEND设置中的timeout参数<br />如果缓存中对象不存在，或者缓存后端不可得到，则cache.get()返回None:<br /><pre name="code" class="java">
+# Wait 30 seconds for 'my_key' to expire...
+
+&gt;&gt;&gt; cache.get('my_key')
+None
+
+&gt;&gt;&gt; cache.get('some_unset_key')
+None
+</pre><br />我们建议不要在缓存中存储字面上的None，因为你不能区别你存储的None值和通过返回None值表示的缓存缺失<br />cache.get()可以使用一个default参数，它指定了如果对象在缓存中不存在时的返回值:<br /><pre name="code" class="java">
+&gt;&gt;&gt; cache.get('my_key', 'has expired')
+'has expired'
+</pre><br />使用cache.get_many()来一次获得多个缓存值，对于给定的缓存后端，如果可能，get_many()将只访问缓存一次，而不是对<br />每个缓存键访问一次，get_many()返回一个包含所有你请求的在缓存中存在并没有过期的键的字典:<br /><pre name="code" class="java">
+&gt;&gt;&gt; cache.set('a', 1)
+&gt;&gt;&gt; cache.set('b', 2)
+&gt;&gt;&gt; cache.set('c', 3)
+&gt;&gt;&gt; cache.get_many(['a', 'b', 'c'])
+{'a': 1, 'b': 2, 'c': 3}
+</pre><br />如果缓存键不存在或者已过期，它将不包含在这个字典中，继续例子:<br /><pre name="code" class="java">
+&gt;&gt;&gt; cache.get_many(['a', 'b', 'c', 'd'])
+{'a': 1, 'b': 2, 'c': 3}
+</pre><br />最后，你可以用cache.delete()显示的删除键，这是清除缓存中特殊对象的简易方式:<br /><pre name="code" class="java">
+&gt;&gt;&gt; cache.delete('a')
+</pre><br />cache.delete()没有返回值，并且它同给定缓存键和对应值存在与否的工作方式一样<br /><br /><strong>上游缓存</strong><br />到目前为止，本章集中关注缓存你自己的数据，但是另一种类型的缓存也和Web开发相关:通过"上游"缓存来执行缓存，这些<br />缓存是在请求到达你的Web站点之前为用户缓存页面的系统<br />这里是一些上游缓存的例子:<br />1，你的ISP可能缓某些页面，所以如果你请求example.com的一个页面，你的ISP将不直接访问example.com而发送给你那个<br />页面，example.com的维护者不知道这个缓存，ISP位于example.com和你的Web浏览器之间透明的处理所有的缓存<br />2，你的Django网站可能在一个代理缓存后面，例如Squid(<a href="http://www.squid-cache.org" target="_blank">http://www.squid-cache.org</a>)，它为性能而缓存页面<br />这种情况下，每个请求首先被代理处理，然后如果需要的话才被发送到你的程序<br />3，你的Web浏览器也缓存页面，如果一个Web页面发送适当的头部，你的浏览器将为后面对该页面的请求使用本地缓存拷贝<br />而不是再一次连接网页来看它是否更改<br />上游缓存是很好的功效推进，但是它有一个危险，许多网页的内容基于认证和一些其它变量而不同，并且完全基于URL来盲目<br />的保存页面的缓存系统可能暴露不正确的或者敏感数据给后面访问那些页面的访问者<br />例如，你操作一个Web e-mail系统，"收件箱"页面的内容显然依赖于登录的用户，如果ISP盲目的缓存你的站点，则第一个<br />通过ISP登录的用户将会使他的用户专有的收件箱页面缓存给后面访问该站点的访问者，这不cool<br />幸运的是，HTTP提供了该问题的解决方案，存在一些HTTP头部来告知上游缓存根据指派的变量显示不同的缓存内容，以及告<br />诉缓存机制不要缓存特殊的页面<br /><br /><strong>使用Vary头部</strong><br />这些头部中的一个为Vary，它定义了当缓存机制构建它的缓存键时应该考虑哪个请求头部，例如，如果一个网页的内容依赖<br />于用户的语言选择，则这个页面称为"根据语言而不同"<br />Django的缓存系统默认使用请求路径来创建它的缓存键，例如"/stories/2005/jun/23/bank_robbed/"，这意味着对该URL的<br />每个请求将使用同样的缓存版本，不管user-agent是否不同，如cookies或者语言选择等等，尽管如此，如果页面根据请求<br />头部的一些不同来输出不同的内容--如cookie，语言，或user-agent--你将需要使用Vary头部来告诉缓存机制页面输出依赖<br />于那些东西，像这样使用方便的vary_on_headers视图装饰器来在Django中做这个:<br /><pre name="code" class="java">
+from django.views.decorators.vary import vary_on_headers
+
+# Python 2.3 syntax.
+def my_view(request):
+    # ...
+my_view = vary_on_headers(my_view, 'User-Agent')
+
+# Python 2.4+ decorator syntax.
+@vary_on_headers('User-Agent')
+def my_view(request):
+    # ...
+</pre><br />这种情况下，缓存机制(例如Django自己的缓存中间件)将对每个唯一的user-agent缓存单独版本的页面<br />使用vary_on_headers装饰器而不是手动设置Vary头部(使用类似于response['Vary'] = 'user-agent')的优势是装饰器添加<br />到Vary头部(可能已经存在)而不是从零开始设置它并潜在的覆盖已经在那里的东西<br />你可以传递多个头部到vary_on_headers():<br /><pre name="code" class="java">
+@vary_on_headers('User-Agent', 'Cookie')
+def my_view(request):
+    # ...
+</pre><br />这告诉上游缓存对两者而不同，即对每个user-agent和cookie的结合得到它自己的缓存值，例如，使用user-agent为Mozilla<br />和cookie值foo=bar的请求将被认为和user-agent为Mozilla和cookie值foo=ham的请求不同<br />因为对cookie而不同是如此常见的情形，有一个vary_on_cookie装饰器，这两个视图是相等的:<br /><pre name="code" class="java">
+@vary_on_cookie
+def my_view(request):
+    # ...
+
+@vary_on_headers('Cookie')
+def my_view(request):
+    # ...
+</pre><br />你传递给vary_on_headers的头部是大小写不敏感的，"User-Agent"和"user-agent"一样<br />你也可以直接使用辅助方法django.utils.cache.patch_vary_headers，这个方法设置或添加到Vary头部，例如:<br /><pre name="code" class="java">
+from django.utils.cache import patch_vary_headers
+
+def my_view(request):
+    # ...
+    response = render_to_response('template_name', context)
+    patch_vary_headers(response, ['Cookie'])
+    return response
+</pre><br />patch_vary_headers使用HttpResponse实例作为它的第一个参数，一个大小写不敏感的头部名的列表/元组作为它的第二个<br />参数<br /><br /><strong>控制缓存:使用其它头部</strong><br />另一个缓存的问题是数据的私有性和数据应该存储在级联缓存的什么位置，用户通常面对两种类型的缓存:它自己的浏览器<br />缓存(私有缓存)和他的提供者的缓存(公众缓存)，公众缓存被多个用户使用并且被其它的一些人控制，这产生了敏感数据的<br />问题:你不想让你的银行帐号存储在公众缓存中，所以Web程序需要一种告诉缓存那些数据是私有和那些数据是公众的方式<br />解决方案是指出一个页面的缓存应该为"私有"，使用cache_control视图装饰器来在Django中做这件事，例如:<br /><pre name="code" class="java">
+from django.views.decorators.cache import cache_control
+
+@cache_control(private=True)
+def my_view(request):
+    # ...
+</pre><br />这个装饰器在幕后处理发送适当的HTTP头部<br />有一些其它控制缓存参数的方式，例如，HTTP允许程序做下面的事情:<br />1，定义一个页面缓存的最大时间<br />2，指定一个缓存是否应该一直检查新的版本，只有在内容没有更改时发送缓存(一些缓存可能即使服务器页面更改了也发送<br />缓存内容--简单的因为缓存拷贝没有过期)<br />在Django中使用cache_control视图装饰器来指定这些缓存参数，这个例子中，cache_control告诉缓存对每次访问都重新验<br />证缓存并最多存储缓存版本3600秒:<br /><pre name="code" class="java">
+from django.views.decorators.cache import cache_control
+@cache_control(must_revalidate=True, max_age=3600)
+def my_view(request):
+    ...
+</pre><br />一些合法的Cache-Control HTTP指示在cache_control()中是合法的，这里是完整的列表:<br />1，public=True<br />2，private=True<br />3，no_cache=True<br />4，no_transform=True<br />5，must_revalidate=True<br />6，proxy_revalidate=True<br />7，max_age=num_seconds<br />8，s_maxage=num_seconds<br />参考规范<a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9" target="_blank">http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9</a>来得到Cache-Control HTTP指示<br />的解释<br />(注意，缓存中间件已经通过CACHE_MIDDLEWARE_SETTINGS设置来设置了缓存头部的max-age，如果你在cache_control装饰器<br />中使用自定义的max_age，装饰器将优先采用，而头部的值会被正确的合并)<br /><br /><strong>其它优化</strong><br />Django一些其它可以帮你优化你的apps性能的中间件:<br />1，django.middleware.http.ConditionalGetMiddleware添加对现代浏览器的基于ETag和Last-Modified头部的有条件的GET<br />应答的支持<br />2，django.middleware.gzip.GZipMiddleware为所有现代浏览器压缩应答来节省带宽和传输时间<br /><br /><strong>MIDDLEWARE_CLASSES的顺序</strong><br />如果你使用CacheMiddleware，把它放在MIDDLEWARE_CLASSES设置的正确位置很重要，因为缓存中间件需要知道改变缓存存储<br />的头部，把CacheMiddleware放在任何可能添加东西到Vary头部的中间件后面，包括:<br />1，SessionMiddleware，它添加Cookie<br />2，GZipMiddleware，它添加Accept-Encoding
+  </div>
+
+  
+
+  

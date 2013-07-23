@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "learn-zope3-install-zmi"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "开始学习Zope3，先了解了安装和ZMI", 
+        "modified": "2004-09-03 16:05:33", 
+        "title": "学习Zope3：安装和用户界面"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "sqlitedexianzhi"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "sqlite小巧轻便，深受欢迎，但是也存在一些局限。", 
+        "modified": "2006-04-18 10:36:15", 
+        "title": "sqlite的限制"
+    }
+}

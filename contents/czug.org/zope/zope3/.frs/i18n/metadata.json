@@ -1,0 +1,9 @@
+{
+    "main": {
+        "contenttype": "Folder"
+    }, 
+    "dublin": {
+        "description": "让zope3支持多种语言", 
+        "title": "国际化"
+    }
+}

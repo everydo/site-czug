@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "ew_server_on_line"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "现在czug正式在新的服务器环境上运行了，高速的网络环境和硬件环境，给大家更好的享受。", 
+        "modified": "2004-03-16 05:46:39", 
+        "title": "新服务器正式上架"
+    }
+}

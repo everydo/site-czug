@@ -1,0 +1,17 @@
+<p>中国的才是世界的，经常听到这句话，所以我在plone.org上发布的标题也有一些中国势力：）</p>
+<p><a href="http://plone.org/newsitems/cp-1_4%20releasedv">CMFContentPanels Chinese-Spring-Festival release out!</a></p>
+<p>应该说，这个版本界面改观不少，功能更强，操作也更简单，大家看看：</p>
+<p><a href="http://plone.org/Members/panjunyong/ContentPanels/cp-1_4.jpg"><img style="z-index:9; overflow: hidden; width:100%" src="http://plone.org/Members/panjunyong/ContentPanels/cp-1_4.jpg" /></a></p>
+<h2>主要特性：</h2>
+
+<ul>
+<li>plone2界面更漂亮</li>
+<li>更多配置功能: 移动页面; 移动列;移动面板（上下左右全方位移动！）</li>
+<li>内容支持了相对的路径</li>
+<li>使用一个表单提交所有的配置更改</li>
+<li>...</li>
+
+</ul>
+<h2>你第一次知道这个产品？</h2>
+<p> 这个产品由<a href="http://www.zopechina.com">润普公司</a>荣誉出品.</p>
+<p> 这个产品通过简单的拼装组合，可以完成复杂的页面。你应该使用一下。本网站的首页就是用这个产品做的。这个产品的<a href="/projects/CMFContentPanels">中文产品开发项目</a>在我们czug的<a href="/projects">项目中心</a>中</p>

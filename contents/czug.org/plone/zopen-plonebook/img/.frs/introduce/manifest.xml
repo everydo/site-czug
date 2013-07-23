@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<manifest xmlns="http://zopechina.com/ns/frs"
+           xmlns:tal="http://xml.zope.org/namespaces/tal"
+           contenttype="<bound method ATBTreeFolder.getPortalTypeName of <ATBTreeFolder at /58080_1/default.czug.edo/projects/341196/files/introduce>>"
+           uid="5eaf69618957a46bef91ab14026faa06">
+
+
+    <entry type="xns"
+           name=""
+           mimetype="text/xml"
+           filename="introduce.xml"
+           fullpath="xns.xml"/>
+
+
+</manifest>

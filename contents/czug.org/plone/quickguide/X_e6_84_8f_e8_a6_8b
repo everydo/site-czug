@@ -1,0 +1,50 @@
+潘俊勇
+  做为一个教程的形式写，更加实用。但是有些内容和中文PloneBook要避免冲突，定位上，这个让用户能够迅速入门，并能够充分反映出plone的特性。
+
+  为简化，可直接写在windows上的安装和操作，不必全。
+
+zoomq
+  把中文使用，win32 平台下的使用，作为重点，详细说明先！中国大地上毕竟 M$ 平台多！能使用Linux 的人一般，根本不用问什么的！是也乎？？？
+
+-----------------
+From steers Wed Mar 17 02:16:37 +0800 2004
+From: steers
+Date: Wed, 17 Mar 2004 02:16:37 +0800
+Subject: 
+Message-ID: <20040317181637+0800@www.czug.org>
+
+应该首先让看得人明白什么是zope,plone及其二者的关系，要不然按步骤一步一步做完后，还是一头雾水。可以给个简单的例子，那样容易懂。
+
+From panjy Wed Mar 17 04:40:58 +0800 2004
+From: panjy
+Date: Wed, 17 Mar 2004 04:40:58 +0800
+Subject: 这是FAQ的内容
+Message-ID: <20040317204058+0800@www.czug.org>
+
+这个问题问得人实在太多，我先回答吧，你到plone的faq中找一下回答。
+
+From ccube Wed Mar 17 05:26:46 +0800 2004
+From: ccube
+Date: Wed, 17 Mar 2004 05:26:46 +0800
+Subject: 
+Message-ID: <20040317212646+0800@www.czug.org>
+
+我將會動手做這個wiki, 大家有什麼有用的入門問題和建議post 上來吧
+
+From panjy Fri Mar 19 00:49:46 +0800 2004
+From: panjy
+Date: Fri, 19 Mar 2004 00:49:46 +0800
+Subject: wiki可以订阅了:)
+Message-ID: <20040319164946+0800@www.czug.org>
+
+所有wiki现在都可以订阅了，这样沟通无缝隙
+
+From panjy Fri Mar 19 16:31:55 +0800 2004
+From: panjy
+Date: Fri, 19 Mar 2004 16:31:55 +0800
+Subject: to ccube
+Message-ID: <20040320083155+0800@www.czug.org>
+
+1. ccube, your are the project leader, you should subscribe the whole wiki. Then you can get all the comments to your mailbox. 
+
+2. I agree with zoomq: no need write too much about install. You can just write how to install with the plone '.exe' file. It is much easier. And newbies can be surprised with the easy-install feature.

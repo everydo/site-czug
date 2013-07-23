@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "opensource1"
+    }, 
+    "dublin": {
+        "creators": [
+            "woo"
+        ], 
+        "description": "商业软件（系统）还是开源软件（系统）的争论\r\n文章来源：http://www.csdn.net/news/newstopic/20/20330.shtml", 
+        "modified": "2006-07-13 11:04:25", 
+        "title": " 商业、开源和定制CMS优劣谈"
+    }
+}

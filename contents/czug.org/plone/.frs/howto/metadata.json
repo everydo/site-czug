@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "id": "howto"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "一步步的操作指导，更多的Howto位于：http://plone.org/documentation/howto，欢迎大家翻译为中文后贴到这里。", 
+        "modified": "2006-02-19 01:17:57", 
+        "title": "How-tos"
+    }
+}

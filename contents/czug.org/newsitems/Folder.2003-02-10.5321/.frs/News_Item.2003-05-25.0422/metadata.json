@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "News_Item.2003-05-25.0422"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "CMF的一个新的步伐", 
+        "modified": "2003-05-25 09:10:42", 
+        "title": "CMF1.4发布！"
+    }
+}

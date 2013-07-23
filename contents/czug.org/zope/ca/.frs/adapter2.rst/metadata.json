@@ -1,0 +1,14 @@
+{
+    "main": {
+        "hidden_keys": [
+            "img", 
+            "__init__.pyc", 
+            "__init__.py"
+        ], 
+        "contenttype": "Document"
+    }, 
+    "dublin": {
+        "description": "多重适配，订阅和处理", 
+        "title": "适配器进阶"
+    }
+}

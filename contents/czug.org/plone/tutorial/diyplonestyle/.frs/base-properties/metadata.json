@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "base-properties"
+    }, 
+    "dublin": {
+        "creators": [
+            "chenq"
+        ], 
+        "description": "通过编辑base_properties.props文件进行快速定制。", 
+        "modified": "2005-11-15 10:43:45", 
+        "title": "设置基本属性"
+    }
+}

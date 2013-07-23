@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "bzr-bazaar-ng-youyigebanbenguanlixitong"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "开始关注 Bazaar-NG_ (bzr)这个分布式的版本管理系统，最初的原因有2个：", 
+        "modified": "2006-01-21 12:09:21", 
+        "title": "bzr(Bazaar NG)又一个版本管理系统"
+    }
+}

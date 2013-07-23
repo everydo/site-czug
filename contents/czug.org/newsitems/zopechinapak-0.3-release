@@ -1,0 +1,24 @@
+
+ <p><br />
+ ZopeChinaPak 0.3版本已经发布, 可供下载.</p><br />
+
+ <h1>什么是ZopeChinaPak?</h1>
+
+ <p><br />
+ ZopeChinaPak是有<a href="http://www.zopechina.com">润普公司</a>发布的一个zope/cmf/plone和其他产品的中文补丁集合。</p>
+
+ <h1>有什么新的特性?</h1>
+
+ <ul>
+  <li>和Plone2.0.3的CustomPolicy接口兼容</li>
+
+  <li>windows上自动支持gb2312/gbk/gb18030/big5等编码,
+  无需安装其他的中文编解码模块</li>
+ </ul>
+
+ <h1>相关链接</h1>
+
+ <p><br />
+ <a href="http://plone.org/Members/panjunyong/zopechinapak.tgz">下载</a> |
+ <a href="../projects/ZopeChinaPak">czug产品主页</a><br />
+ (由于zope.org太慢, 暂未提交正式新闻.)</p>

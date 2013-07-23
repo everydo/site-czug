@@ -1,0 +1,18 @@
+<div class="stx">
+
+            
+<p>这个版本使用了新的viewlet/skin结构，结构更简单，更灵活，界面更好，和Plone集成更好.</p>
+<p><strong>新版本包括什么功能？</strong></p><ol><li>和Plone的portlet 兼容的新viewlet结构<ul><li>集成了Plone的缺省portlets, 您可在任意的面板中添加Plone的 portlet.<br />
+</li><li><span style="font-family: monospace;">新添的</span><code>我最近更新</code> 的面板. 您可以添加自己的viewlet. (viewlet 就是和内容相关的portlet)</li></ul>
+</li><li> 更简单的css 封装的面板皮肤<ul><li>现在skin仅仅是现有portlet的一个css 封装, 无需编码! 更简单，更灵活</li><li>4个新的皮肤: default plone, no title, zopezen, default box</li>
+</ul>
+</li><li> bug fix</li></ol>
+<p><strong>How to upgrade?</strong></p>
+
+<ol><li> reinstall CMFContentPanels via portal_quickinstaller</li><li> reconfig panel skins in your existing contentpanels</li></ol>
+<p><span class="link-external"><a href="http://zope.org/Members/panjunyong/CMFContentPanels">product home</a></span>&nbsp; | <a href="http://www.czug.org/projects/CMFContentPanels">中文项目</a><br />
+</p>
+
+
+        
+</div>

@@ -1,0 +1,20 @@
+
+ <p><br />
+ <a href="http://blog.czug.org">blog.czug.org</a>是czug的一个试验性质的Blog区域，从前是集中管理，但这限制了大家的参与性。<br />
+ <br />
+ 秉承一贯的开放作风，现在将这个区域开放出来，<b>所有注册用户，均可在这里开辟属于自己的Blog</b>。<br />
+ <br />
+ 当然，对于太过偏离CZUG技术主题的、长期荒废的Blog区，CZUG管理者有权关闭。</p>
+ <h2>如何建立自己的Blog？</h2>
+ <p><br />
+ 为了避开czug的cache设置，应该采用如下的方法：</p>
+ <ol>
+ <li>在www.czug.org登录，这时候会发现域名变成nocache.czug.org,
+ nocache的域名是没有做cache的<br /></li>
+ <li>点击导航树中的Blog区，进入Blog区</li>
+ <li>点击内容区右上放的”添加 Blog“，添加自己的Blog</li>
+ <li>恭喜，你有了自己的Blog区域！</li>
+ </ol>
+ <h1>如何添加帖子到自己的Blog？</h1>
+ <p><br />
+ 为了避开czug的cache，您最好通过nocache.czug.org/blog登录，进行著录。</p>

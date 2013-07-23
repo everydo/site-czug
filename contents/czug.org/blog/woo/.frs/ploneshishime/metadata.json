@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "ploneshishime"
+    }, 
+    "dublin": {
+        "creators": [
+            "woo"
+        ], 
+        "description": "", 
+        "modified": "2006-09-22 22:42:06", 
+        "title": "Plone是什么？"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "X_e5_b7_a5_e4_bd_9c_e6_b5_81Workflow"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Plone包含一个强大的工作流引擎，本章介绍了Plone工作流引擎的基本原理。", 
+        "modified": "2006-02-20 17:23:11", 
+        "title": "工作流(Workflow)"
+    }
+}

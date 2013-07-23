@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<manifest xmlns="http://zopechina.com/ns/frs"
+           xmlns:tal="http://xml.zope.org/namespaces/tal"
+           contenttype="<bound method ATBTreeFolder.getPortalTypeName of <ATBTreeFolder at /58080_1/default.czug.edo/projects/341196/files/pythonscript>>"
+           uid="9bd5501bfc7f8142f855e347e2218d8b">
+
+
+    <entry type="xns"
+           name=""
+           mimetype="text/xml"
+           filename="pythonscript.xml"
+           fullpath="xns.xml"/>
+
+
+</manifest>

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "objectis"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Objectis提供免费的Zope和Plone的空间", 
+        "modified": "2004-02-16 14:05:58", 
+        "title": "免费的Zope和Plone空间-objectis"
+    }
+}

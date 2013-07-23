@@ -1,0 +1,90 @@
+<p>出处： <a href="http://www.javaeye.com/wiki/Django-book/735-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%9A%E5%8A%A8%E6%80%81Web%E9%A1%B5%E9%9D%A2%E5%9F%BA%E7%A1%80">http://www.javaeye.com/wiki/Django-book/735-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%9A%E5%8A%A8%E6%80%81Web%E9%A1%B5%E9%9D%A2%E5%9F%BA%E7%A1%80</a></p>
+  
+  <h1 style="margin:25px 0 10px 10px">翻译www.djangobook.com之第三章：动态Web页面基础 
+    
+  </h1>
+  <div class="content">
+    <span style="color: red"><strong>The Django Book：第3章 动态Web页面基础</strong></span><br /><br />revised by <a href="http://xin-wang.javaeye.com/" target="_blank">xin_wang</a><br /><br />上一章我们解释了怎样开始一个Django项目和运行Django服务器<br />当然了，这个站点实际上什么也没有做------除了显示了"It worked"这条信息以外。<br />这一章我们介绍怎样使用Django创建动态网页<br /><br /><strong>你的第一个视图：动态内容</strong><br />让我们创建一个显示当前日期和时间的Web页面来作为你的第一个目标<br />这是一个动态Web页面的例子，因为页面内容根据计算当前时间而变化<br />这个例子不需要数据库和任何用户输入，只是输出服务器内部时钟<br />我们将写一个视图方法，它只是一个Python方法，接受Web请求并返回Web应答<br />这个应答可以是HTML内容、重定向、404错误、XML文档、图像等等<br />视图本身包含任意必要的逻辑来返回应答<br />在这里视图作为HTML文档返回当前日期和时间<br /><pre name="code" class="java">from django.http import HttpResponse
+import datetime
+def current_datetime(request):
+ now = datetime.datetime.now()
+ html = "It is now %s." % now
+ return HttpResponse(html)</pre><br />让我们来看看代码<br />1，首先，我们从django.http模块import HttpResponse类<br />2，然后，我们从Python标准库import datetime模块<br />datetime模块包含一些处理日期和时间的类和方法，并且包含一个返回当前时间的方法<br />3，然后，我们定义current_datetime方法<br />这是一个视图方法，它使用一个HttpRequest对象作为它的第一个参数<br />每个视图方法都使用HttpRequest对象作为自己的第一个参数<br />在这个方法里，我们把这个参数叫做request<br />Django并不关心视图方法的名字，我们也不必遵循某种特定的命名方式供Django鉴别。我们以current_datetime命名这个方法<br />纯粹是因为它正好可以明确的表达方法的意图，你可以任意地命名view方法，current_datetime清楚的表明了它会做什么事情<br />一会我们会解释Django怎样找到这个方法<br />4，该方法的第一行代码计算当前日期和时间，并存储在本地变量now中<br />5，该方法的第二行代码使用Python的格式化string能力构建了一个HTML应答<br />string里面的%s是一个占位符，string后面的百分号表示使用now变量的值代替%s<br />(给html纯化论者们：我们没有写DOCTYPE申明，没有&lt;head&gt;标签，等等等等，我们只是尽量让这个页面简洁明了。)<br />6，最后，视图返回一个包含生成的HTML的HttpResponse对象<br />每个视图方法都会返回一个HttpResponse对象，例外的情况我们后面会解释<br /><br /><strong>你的第一个URL配置</strong><br />这个视图方法返回了一个包含当前日期和时间的HTML页面<br />但是这些代码应该放在哪？怎样告诉Django使用这些代码呢？<br />第一个问题的答案是：你可以把view的代码放在任何位置，只要它是在你的Python PATH下，没有任何其他的要求----没有"魔术"。<br />我们将这些代码保存在views.py里面，并将views.py放在mysite目录下<br />Python PATH是一个你系统的目录列表，当你使用Python import语句时Python会查看这些目录<br />例如你的Python PATH设置成['', '/usr/lib/python2.4/site-packages', '/home/mycode']<br />如果你执行代码from foo import bar，Python将首先在当前目录下查找叫foo.py的模块<br />第一个Python PATH为空string，这表示当前目录<br />如果找不到foo.py，Python将尝试查找/usr/lib/python2.4/site-packages/foo.py<br />最后，如果foo.py还是找不到，Python将报ImportError<br />如果你有兴趣查看Python PATH，进入Python交互环境并输入import sys和print sys.path<br />一般来说你不必担心设置Python PATH，Python和Django会暗中自动为你做这些事情<br />如果你实在好奇，设置Python PATH是manage.py的一个工作<br />我们怎么告诉Django使用这些视图代码？答案是URL配置<br />URLConf就像是一张Django web站点的内容表格。基本上，这个配置是一个URL模式和对应的view函数的映射，这些函数会在请求某个符合特定模式的URL时被调用。<br />URLconf就是告诉Django，"对于这个URL，调用这些代码，对于那个URL，调用那些代码..."<br />URL配置就像是你的Django项目的目录<br />基本上，它是URL模式和URL模式调用的视图方法的映射<br />django-admin.py startproject会自动生成一个URL配置文件urls.py，默认情况下它是这样的：<br /><pre name="code" class="java">from django.conf.urls.defaults import *
+urlpatterns = patterns('',
+ # Example:
+ # (r'^mysite/', include('mysite.apps.foo.urls.foo')),
+
+ # Uncomment this for admin:
+# (r'^admin/', include('django.contrib.admin.urls')),
+)</pre><br />让我们来看看这些代码<br />1，第一行import django.conf.urls.defaults模块的所有对象，包括一个叫patterns的方法<br />2，第二行调用patterns()方法并将接过保存到urlpatterns变量，patterns()方法只传了一个空string作为参数<br />其它行被注释掉了<br />这里主要看的就是变量urlpatterns，它定义了URL和处理URL的代码的映射<br />默认情况下所有的URL配置被注释掉了，这意味着你的Django项目是空的，这让Django得知显示“It worked!”页面<br />如果你的URL配置是空的，Django假设你刚开始一个新的项目，这样就显示这条信息<br />让我们编辑urls.py来暴露current_datetime视图：<br /><pre name="code" class="java">from django.conf.urls.defaults import *
+form mysite.views import current_datetime
+
+urlpatterns = patterns('',
+ (r'^now/$', current_datetime),
+)</pre><br />我们做了两处改动。首先，我们从mysite/views.py模块import current_datetime视图<br />该模块在Python的import语法中被转换成mysite.views<br />然后我们增加一行(r'^now/$', current_datetime)，它指向一个URL模式<br />这是一个Python元组，第一个元素是一个正则表达式，第一个是视图方法<br />这样，我们就告知Django对URL /now/的请求应该被current_datetime视图方法处理<br />注意几个地方：<br />1，在例子中，我们把视图方法current_datetime当成对象传递而不是调用这个方法<br />这是Python及其它动态语言的特性，函数是第一类对象，可以像其它变量一样传递，cool吧？<br />2，不必在'^now/$'前面增加斜线来匹配/now/，Django自动在每个表达式前面添加斜线<br />3，'^'和'$'符号很重要，前者表示“匹配string的开始的模式”，后者表示“匹配string结束的模式”<br />这个例子很好的解释了概念问题，如果我们使用模式'^now/'，则/now/，/now/foo，/now/bar都将匹配<br />如果我们使用模式'now/$'则/now/，/foo/bar/now/等也将匹配<br />所以我们使用'^now/$'，则不多不少只有/now/匹配<br />现在测试一下我们对URLConf的修改。运行python manage.py runserver来启动Django的开发服务器<br />（如果让它一直运行也没有问题，服务器会自动探测Python代码的修改，在必要的时候重新载入，所以没有必要一修改就重起）<br />浏览器访问<a href="http://127.0.0.1:8000/now/" target="_blank">http://127.0.0.1:8000/now/</a>测试一下<br />万岁!你已经开发了你的第一个Django-powered Web页面<br /><br /><strong>Django怎样处理请求</strong><br />Django怎样处理Web请求？让我们来看看事实真相<br />1，命令python manage.py runserver寻找settings.py，这个文件包含了这个Django实例的所有配置选项<br />最重要的设置是ROOT_URLCONF，它告诉Django使用哪个Python模块作为当前站点的URL配置<br />2，当一个请求进来如/now/，Django载入URL配置，然后按顺序检查每个URL模式直到找到一个匹配的URL请求模式<br />然后Django调用那个模式匹配的方法，并传递一个HttpRequest对象作为第一个参数<br />3，视图方法负责返回一个HttpResponse对象<br />这样你就了解了Django-powerd页面的基础，它很简单，只需写视图方法和通过URL配置映射到URL<br /><br /><strong>URL配置和松耦合</strong><br />现在是指出URL配置和Django后面的哲学的良好时机：松耦合原则<br />松耦合是具有使得部分模块可替换的价值的软件开发方法<br />如果两个模块是松耦合的，那么对一个模块做改动不会或很少对另一个有影响<br />Django的URL配置是这个原则的很好的例子<br />在Django Web程序中，URL定义和视图方法是松耦合的，开发人员可以替换其中一个而不会对另一个产生影响<br />对比之下，其他的web开发平台耦合了URL和程序，例如在basic php中，应用的URL取决于代码在文件系统中的位置，<br />在CherryPy框架中，URL和应用中的方法名称是相对应的。这些方式看来非常方便，但是长远来看会造成难以管理的问题<br />举例来说，考虑我们刚刚的那个显示当前时间的函数。如果我们想改变这个应用的URL，比如从/now/变成/currenttime/<br />我们可以对URLconf做一个非常快捷的修改，不用担心隐藏在这个URL之后的函数实现。类似的，如果我们想修改view函数<br />修改它的逻辑，我们用不着影响URL就可以做到。<br />更进一步，如果我们想把这个当前时间的方法暴露到多个URL上，我们也可以通过修改URLconf轻易完成，而无需影响view的代码。<br /><br /><strong>404错误</strong><br />在我们当前的URLconf里面只有一个处理/now/的URL模式。如果我们请求一个不同的URL会发生什么呢？<br />当访问一个没有在URLconf里面定义过的URL时，你将看到一个"Page not found"的信息，因为这个URL还没有定义在URLconf里。<br />这个页面的用途其实不仅仅是显示404错误信息：它精确的告诉我们Django使用了哪一个URLconf，以及这个配置里的每一个URL匹配模式。<br />通过这个页面我们可以轻易的得知为什么请求的URL抛出了404错误。<br />当然了，这些信息的初衷是为了方便web开发者。如果这是一个实际的internet站点，我们不希望这些信息被泄露出去。<br />出于这个原因，这个"Page not found"页面只显示在debug模式下。<br /><br /><strong>你的第二个视图：动态URL</strong><br />第一个视图例子中，页面内容当前日期和时间是动态的，但是URL("/now/")是静态的<br />大多数动态Web程序中，URL包含了影响输出页面的参数<br />下面的例子中我们使用一个数字来显示为了几小时的日期和时间<br />如/now/plus1hour/显示未来1小时的时间，/now/plus3hour/显示未来3小时的时间<br />先修改URL配置：<br /><pre name="code" class="java">urlpatterns = patterns('',
+ (r'^now/$', current_datetime),
+ (r'^now/plus1hour/$', one_hour_ahead),
+ (r'^now/plus2hour/$', two_hours_ahead),
+ (r'^now/plus3hour/$', three_hours_ahead),
+ {r'^now/plus4hour/$', four_hours_ahead),
+)</pre><br />显然这样的模式有缺陷，不仅会产生大量的视图方法，还将程序局限在预先定义的小时范围内<br />如果我们想显示5小时后的时间，我们还得再添加一行<br />所以我们应该在这里做出一点抽象<br /><br /><strong>关于良好的URL</strong><br />如果你使用过PHP或Java，你可能会说“让我们使用一个查询参数”，类似于像/now/plus?hours=3<br />你也可以使用Django这样做，但是Django的一个核心哲学是，URL应该是优雅的<br />/now/plus3hours/更干净、更简单、更可读、更朗朗上口<br />良好的URL是Web程序质量的一个显示<br />Django的URL配置系统提供容易配置的良好的URL定义<br /><br /><strong>URL模式通配符</strong><br />继续我们的例子，让我们在URL模式中添加一个通配符<br />上面提到，URL模式是一个正则表达式，这里我们可以使用\d+来匹配1个或多个数字：<br /><pre name="code" class="java">from django.conf.urls.defaults import *
+from mysite.views import corruent_datetime, hours_ahead
+
+urlpatterns = patterns('',
+ (r'^now/$', current_datetime),
+ (r'^now/plus\d+hours/$', hours_ahead),
+)</pre><br />这个URL模式可以匹配任何URL，例如/now/plus2hours/，/now/plus25hours/，甚至/now/plus100000000000hours/<br />让我们限制最多99小时，即我们只允许1个或2个数字，在正则表达式里就是\d{1,2}：<br />(r'^now/plus\d{1,2}hours/$', hours_ahead),<br />当我们构建web程序的时候，考虑可能出现的不合常理的输入， 并且决定是否处理这些输入是非常重要的。<br />我们在这里限制时间的偏移量&lt;=99小时。顺便啰嗦一句，Outlandishness Curtailers是个超级棒的乐队。<br />正则表达式是一个在文本里面指定模式的简洁方式<br />Django的URL配置允许任意的正则表达式来提供强大的URL匹配能力，下面是一些常用的模式：<br /><pre name="code" class="java">Symbol    Matches
+.(dot)    任意字符
+\d        任意数字
+[A-Z]     从A到Z的任意字符(大写)
+[a-z]     从a到z的任意字符(小写)
+[A-Za-z]  从a到z的任意字符(大小写不敏感)
+[^/]+     任意字符直到一个前斜线(不包含斜线本身)
++         一个或多个前面的字符
+?         零个或多个前面的字符
+{1,3}     1个到3个之间前面的字符(包括1和3)</pre><br />更多的正则表达式信息请查看Appendix 9，正则表达式<br />好了，我们已经在URL里设计了一个通配符，但我们需要把信息传递给视图方法<br />这样我们才能使用一个单独的视图方法来处理任意的小时参数<br />我们把我们在URL模式里希望保存的数据用括号括起来，即把\d{1,2}括起来<br />(r'^now/plus(\d{1,2})hours/$', hours_ahead),<br />如果你熟悉正则表达式，你会觉得非常亲切：我们正是在使用括号从匹配的文本中获得我们想要的数据。<br />最终的URL配置如下：<br /><pre name="code" class="java">from django.conf.urls.defautls import *
+form mysite.views import current_datetime, hours_ahead
+
+urlpatterns = patterns('',
+ (r'^now/$', current_datetime),
+ (r'^now/plus(\d{1,2})hours/$', hours_ahead),
+)</pre><br />下面我们定义hours_ahead方法：<br />告诫:关于编码的顺序<br />在这个例子里面,我们先定义了URL模式，然后才开始撰写view代码，但是在前一个例子里，编码的顺序正好相反。那么哪一种方式更好呢？<br />当然，每一个开发人员都有不一样的习惯。<br />如果你是一个大局观很好的人，一次性就定义好所有的URL模式，然后再来实现view的代码，这是非常不错的。<br />这种方式能够展现一个非常清晰的to-do list，因为它从根本上定义了将要实现的view函数所需的参数。<br />如果你是一个有着自底向上的习惯的程序员，你也许更愿意写一个view，然后把它和某一个URL模式绑定起来。这样做也不错。<br />两种方式当然都是正确的，使用哪一个取决于哪一种更加符合你思考的模式。<br /><pre name="code" class="java">from django.http import HttpResponse
+import datetime
+
+def hours_ahead(request, offset):
+ offset = int(offset)
+ dt = datetime.datetime.now() + datetime.timedelta(hours=offset)
+ html = "In %s hour(s), it will be %s." % (offset, dt)
+ return HttpResponse(html)</pre><br />我们还是一次一行的解读这些代码:<br />跟我们在current_datetime里所做的一样，我们导入了django.http.HttpResponse和datetime模块<br />view函数hours_ahead接受两个参数：request和offset。<br />request是一个HttpRequest对象，和在current_datetime中一样。我们要重申一点：每一个view函数的第一个参数总是HttpRequest对象。<br />offset是一个string，它的值是通过URL模式里的那一对括号从请求的URL中得到的。比如请求的URL是/now/plus3hours/<br />offset的值就是一个string‘3’。请注意从URL中得到的值始终是string而不是integer，即使这个string是由纯数字构成的。<br />我们把这个变量命名为offset，但是你可以用任何合法的Python变量名来命名它。变量的名字并不重要，但是必须是view函数的第二个参数。<br />在函数里我们做的第一件事就是调用int()，把offset转换成整形。<br />如果一个值不能被转换成为一个整型数（像字符串'foo'）， Python将会抛出ValueError。<br />但是我们对此并不担心，因为我们可以肯定offset一定可以被转换，正则表达式\d{1,2}一定会从URL中获得数字。<br />这也从另一个侧面证明了URLconf的优雅：它相当清楚地提供了一个对输入的校验。<br />程序的下一行揭示了我们对offset做类型转换的原因，这行代码计算了当前的时间加上一个时间偏移量，这个偏移量的值就是offset<br />保存计算的结果在变量dt.datetime.timedelta函数需要的输入参数就是整型。<br />下一行我们构造一个html的输出，和在current_datetime函数中类似。<br />最后，和current_datetime函数一样，我们返回一个HttpResponse对象。<br />好了，我们访问<a href="http://127.0.0.1:8000/now/plus3hours/" target="_blank">http://127.0.0.1:8000/now/plus3hours/</a>可以验证它工作了<br />然后我们试试<a href="http://127.0.0.1:8000/now/plus100hours/" target="_blank">http://127.0.0.1:8000/now/plus100hours/</a>，Django显示“Page not found”错误<br /><a href="http://127.0.0.1:8000/plushours/" target="_blank">http://127.0.0.1:8000/plushours/</a>也会显示404错误，因为我们只接受1个或2个数字的参数<br /><br /><strong>Django良好的出错页面</strong><br />我们将offset = int(offset)注释掉<br /># offset = int(offset)<br />然后重新访问/now/plus3hours，你将看到一个很多信息的出错页面，包括TypeError信息在最上面：<br />“unsupported type for timedelta hours component: str”<br />发生了什么？<br />datetime.timedelta函数预期hours参数为integer类型，但我们注释掉了把offset转化为integer的代码<br />这导致datetime.timedelta产生TypeError，只是典型的每个程序员容易出现的小bug<br />中一些需要注意的地方：<br />1，页面的顶端显示的是关于异常的主要信息：异常的类型，异常的参数，导致异常的文件和行数<br />2，接下来页面显示完整的异常的Python traceback，在stack的每个frame里Django都显示了文件名、方法名、行数和该行代码<br />点击暗灰色的代码，你可以看到出错行前后的几行代码，让你得到上下文<br />点击“Local vars”可以看到所有的本地变量的列表，变量值，出错点等，这个debug信息是很有价值的<br />3，点击在“Traceback”下面的“Switch to copy-and-paste view”将切换到可以很容易复制粘贴的版本<br />当你想同他人分享异常信息或得到技术支持时(Django IRC聊天室或者Django用户邮件列表)可以很好的利用它<br />4，“Request information”包括大量的产生错误的Web请求的信息，GET和POST信息，cookie值和meta信息如CGI头部等<br />下面的“Settings”部分列出了当前Django安装的所有设置信息，后面我们会慢慢解释这些<br />Django错误页面在模板语法错误等情况下会显示更丰富的信息，现在去掉注释offset=int(offset)<br />你是那种喜欢用print语句debug 的程序员吗？使用Django错误页面就可以做到这点，不需要print语句<br />你可以临时插入assert False来触发错误页面，后面我们会解释更高级的debug方法<br />很显然大部分这些错误信息是敏感的，它暴露了你的Python代码和Django配置的五脏六腑<br />把这些信息显示到网上是愚蠢的，心怀恶意的人可能会在你的网站里面做肮脏的事情<br />无论如何，后面我们会提到怎样去除debug模式<br /><br /><strong>练习</strong><br />这里是一些巩固本章知识的练习，我们在这里介绍了一些新的技巧<br />1，创建另一个视图hours_behind，类似于hours_ahead，只不过显示过去的时间偏移量<br />这个视图应该绑定到/now/minusXhours/，这里X是偏移量小时数<br />2，一旦你做完练习1，一个良好的程序员会发现hours_ahead和hours_behind非常类似，这显得多余了<br />把这两个方法合并到单独的一个方法hour_offset，URL还是保持/now/minusXhours/和/now/plusXhours/不变<br />别忘了根据偏移量是正还是负来改变HTML代码，“In X hour(s)”或者“X hour(s) ago”<br />3，让我们更专业一点，允许/now/plus1hour/和/now/plus2hours/，但是不允许/now/plus1hours/和/now/plus2hour/<br />4，在HTML的显示里，如果偏移量是个位数，使用hour，否则使用hours<br /><br /><strong>答案</strong><br />1，hours_behind视图：<br /><pre name="code" class="java">def hours_behind(request, offset):
+    offset = int(offset)
+    dt = datetime.datetime.now() - datetime.timedelta(hours=offset)
+    html = "%s hour(s) ago, it was %s." % (offset, dt)
+    return HttpResponse(html)</pre><br />URL模式：<br /><pre name="code" class="java">(r'^now/minus(\d{1,2})hours/$', hours_behind),</pre><br />2，hour_offset视图：<br /><pre name="code" class="java">def hour_offset(request, plus_or_minus, offset):
+    offset = int(offset)
+    if plus_or_minus == 'plus':
+        dt = datetime.datetime.now() + datetime.timedelta(hours=offset)
+        html = 'In %s hour(s), it will be %s.' % (offset, dt)
+    else:
+        dt = datetime.datetime.now() - datetime.timedelta(hours=offset)
+        html = '%s hour(s) ago, it was %s.' % (offset, dt)
+    html = '%s' % html
+    return HttpResponse(html)</pre><br />URL模式：<br /><pre name="code" class="java">(r'^now/(plus|minus)(\d{1,2})hours/$', hour_offset),</pre><br />3，URL模式：<br /><pre name="code" class="java">(r'^now/(plus|minus)(1)hour/$', hour_offset),
+(r'^now/(plus|minus)([2-9]|\d\d)hours/$', hour_offset),</pre><br />其中“|”表示“or”，上面的模式表示匹配模式[2-9]或者\d\d<br />即匹配一个2到9的数字或者匹配两个数字<br />4，hour_offset视图：<br /><pre name="code" class="java">def hour_offset(request, plus_or_minus, offset):
+    offset = int(offset)
+    if offset == 1:
+        hours = 'hour'
+    else:
+        hours = 'hours'
+    if plus_or_minus == 'plus':
+        dt = datetime.datetime.now() + datetime.timedelta(hours=offset)
+        output = 'In %s %s, it will be %s.' % (offset, hours, dt)
+    else:
+        dt = datetime.datetime.now() - datetime.timedelta(hours=offset)
+        output = '%s %s ago, it was %s.' % (offset, hours, dt)
+    output = '%s' % output
+    return HttpResponse(output)</pre><br /><br />难道不能把展现层代码从Python代码里分离出去吗？呵呵，这预示着......
+  </div>
+
+  
+
+  

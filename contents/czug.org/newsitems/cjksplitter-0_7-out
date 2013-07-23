@@ -1,0 +1,15 @@
+
+ <p>CJKSplitter0.7是一个故障修补版本，这个版本修正了错误的中日韩文字范围（先前版本的范围偏小）。<br />
+ <br />
+ 谢谢Kang, Taewook提供相关的信息。<br />
+ <br />
+ <a href="http://zope.org/Members/panjunyong/CJKSplitter/cjkspliter-0_7/cjkspliter-0_7.tgz">
+ 下载</a> | <a href="http://zope.org/Members/panjunyong/CJKSplitter">更多信息</a><br />
+ <br />
+ 另：中日韩文字符范围表：<br />
+ <br />
+ http://jrgraphix.net/research/unicode_blocks.php?block=87<br />
+ http://jrgraphix.net/research/unicode_blocks.php?block=85<br />
+ http://jrgraphix.net/research/unicode_blocks.php?block=95<br />
+ http://jrgraphix.net/research/unicode_blocks.php?block=76<br />
+ http://jrgraphix.net/research/unicode_blocks.php?block=90</p>

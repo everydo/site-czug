@@ -1,0 +1,255 @@
+/* - contentpanels.css - */
+@media all {
+/* http://czug.org:38081/czug/portal_css/contentpanels.css?original=1 */
+/* */
+#region-content .viewlet .portlet{
+font-size: 100%
+}
+.documentContent .portletFooter,
+.documentContent .portletItem {
+padding: 0.3em;
+}
+.documentContent .portletItemDetails {
+color: #76797c;
+font-size: 100%;
+margin-top: -0.5em;
+}
+.cpPanels .cpPanel {
+margin: 1em 0 0 0;
+}
+.documentContent .viewlet .portlet{
+margin: 0 0 0 0;
+}
+.cpPanelsHeading {
+background-color: lavender;
+white-space: nowrap;
+text-align: right;
+}
+.cpPanelsHeading .cpPanelsHeadingInput,
+.cpPanelHeading .cpPanelsHeadingInput {
+float: left;
+}
+.cpPanelHeading {
+background-color: lavender;
+}
+.cpPanelHeading td {
+text-align: right
+}
+.cpViewletItem a {
+white-space: nowrap;
+}
+.cpViewletItem span {
+white-space:nowrap;
+background-color: lightgreen;
+}
+/* */
+.cpEditFormInputValues {
+float: left;
+}
+.cpEditFormSubmitButtons {
+float: right;
+}
+.cpRelatedContent li.cpRelatedItem{
+display: inline;
+}
+.cpPages {
+float:right;
+white-space: nowrap;
+margin-top: 0;
+}
+.cpPages li {
+display: inline;
+}
+.cpPages li a {
+font-size: 90%;
+background-color: transparent;
+border: 1px solid #74ae0b;
+color: #578308;
+margin-right: 0.5em;
+padding: 0em 1em;
+text-decoration: none;
+text-transform: lowercase;
+z-index: 1;
+}
+.cpPages li.selected a {
+background-color: #cde2a7;
+color: #578308;
+}
+.cpPages li a:hover {
+background-color: #cde2a7;
+color: #578308;
+}
+/* */
+/* */
+/* */
+.notitlePortletWrapper dt.portletHeader {
+display: none;
+}
+.notitlePortletWrapper .portlet,
+.notitlePortletWrapper dd.portletFooter,
+.notitlePortletWrapper dd.portletItem{
+border: none;
+}
+/* */
+.zopezenPortletWrapper dt.portletHeader {
+background-color: White;
+font-style: normal;
+border: none;
+text-transform: capitalize;
+border-bottom: 2px solid #CCE3ED;
+}
+.boxPortletWrapper dl.portlet dd.portletFooter,
+.boxPortletWrapper dl.portlet dd.portletItem,
+.boxPortletWrapper dl.portlet,
+.zopezenPortletWrapper dl.portlet,
+.zopezenPortletWrapper dl.portlet dd.portletFooter,
+.zopezenPortletWrapper dl.portlet dd.portletItem {
+border: none;
+}
+/* */
+.alertPortletWrapper dl.portlet dt.portletHeader{
+background: #ffa500;
+font-weight: bold;
+border-color: #ffa500;
+text-transform: uppercase;
+background-image: url(http://czug.org:38081/czug/info_icon.gif);
+background-repeat: no-repeat;
+background-position: 5px 50%;
+padding-left: 2.5em;
+}
+.alertPortletWrapper dl.portlet dd.portletFooter,
+.alertPortletWrapper dl.portlet dd.portletItem {
+background-color: #ffce7b;
+}
+/* */
+.dottedPortletWrapper dl.portlet dt.portletHeader{
+background: White;
+font-weight: bold;
+border: none;
+padding-left: 0em;
+text-transform: capitalize;
+color: Black;
+border-bottom: 2px dotted #CCE3ED;
+}
+.dottedPortletWrapper dl.portlet dd.portletFooter,
+.dottedPortletWrapper dl.portlet dd.portletItem {
+border: 2px dotted #CCE3ED;
+border-top:none;
+border-bottom: none;
+}
+.dottedPortletWrapper dl.portlet{
+border-bottom: 2px dotted #CCE3ED;
+}
+.imageNewsImage {
+float: left;
+margin: 0.5em;
+}
+.imageNewsTitle {
+font-weight:bold;
+}
+.viewlet-rss-link{
+padding-right: 2px;
+float: right;
+display: block;
+}
+/* */
+
+}
+
+
+/* - contentpanelsCustom.css - */
+@media all {
+/* http://czug.org:38081/czug/portal_css/contentpanelsCustom.css?original=1 */
+/* */
+/* */
+
+}
+
+
+/* - tabber.css - */
+@media all {
+/* http://czug.org:38081/czug/portal_css/tabber.css?original=1 */
+/* */  .tabberlive .tabbertabhide {   display:none;  }
+.tabber {  }  .tabberlive {      margin-bottom: 1em;  }
+ul.tabbernav  {   margin:0;   padding: 1px 0;   border-bottom: 1px solid #74ae0b;   text-align: center;  }
+ul.tabbernav li  {   list-style: none;   margin: 0;   display: inline;  }
+ul.tabbernav li a  {   padding: 3px 0.5em;   margin-left: 0;   border: 1px solid #74ae0b;   border-style: solid none solid dotted;   text-decoration:
+none;   color: #5d8811;   position: relative;   top: 1em;   background-color: White;  }
+ul.tabbernav li a:hover  {   background-color: #cde2a7;   border-color: #74ae0b;  }
+ul.tabbernav li a:active {   color: #5d8811;  }  ul.tabbernav li.tabberactive a  {   background-color: #cde2a7;   color: #5d8811;  }
+ul.tabbernav li.tabberactive a:hover  {   background-color: #cde2a7;  }
+.tabberlive .tabbertab {   padding: 1em 0.1em 0.1em 0.1em;   border:1px solid #74ae0b;   border-top:0;
+/* */
+/* */
+/* */
+/* */  }
+/* */
+.tabberlive .tabbertab h2 {   display:none;  }
+/* */
+#undefinednav1 { border-left: 1px solid #74ae0b;;}
+#undefinednav2 { border-right: 1px solid #74ae0b;;}
+* html .tabbertab {height: 1%} /* */
+.summaryColumn {      border-right: 1px solid #8cacbb;  }
+.visualOnlyPrint {display: none;}
+
+}
+
+
+/* - ploneCustom.css - */
+@media all {
+/* http://czug.org:38081/czug/portal_css/ploneCustom.css?original=1 */
+/* */
+/* */
+/* */
+/* */
+/* */
+
+}
+
+
+/* - minipp.css - */
+@media all {
+/* http://czug.org:38081/czug/portal_css/minipp.css?original=1 */
+/* */
+/* */
+/* */
+body{}
+a:hover{text-decoration:underline;}
+#visual-portal-wrapper{border-top:5px solid #fff;}
+#portal-globalnav{padding:8px 20px 0 41px;border-bottom:5px solid #1B375E;height:38px;line-height:12px;background:url(http://czug.org:38081/czug/images/main_menu_bg00.gif) #B2E2F9 left top repeat-x;}
+#portal-globalnav li{margin:0;padding:0;}
+#portal-globalnav li a {float:left;display:block;margin:0;margin-right:1px;padding:6px 12px 0 12px;border:0;height:32px;background:url(http://czug.org:38081/czug/images/main_menu_bg01.gif)  center top no-repeat;-moz-border-radius-topleft: 4px;-moz-border-radius-topright: 4px;}
+#portal-globalnav li a:hover{border:0;color:#fff;background:url(http://czug.org:38081/czug/images/main_menu_bg01.gif) #407CA0 center -35px no-repeat;}
+#portal-globalnav li.selected a{border:0;color:#9AE2FC;background:url(http://czug.org:38081/czug/images/main_menu_bg01.gif) #407CA0 center -35px no-repeat;}
+#portal-personaltools-wrapper{padding-top:5px;border-top:1px solid #DBF1FC;}
+#portal-top{margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:10px;background:url(http://czug.org:38081/czug/images/personaltools_bg01.gif) left 144px repeat-x !important;background:url(http://czug.org:38081/czug/images/personaltools_bg01.gif) left 128px repeat-x;}
+#portal-personaltools{border-top:0;border-bottom:1px dotted #DBF1FC;background:transparent;}
+#portal-breadcrumbs{border-bottom:0;}
+#portal-header{margin-bottom:0;}
+.portletHeader{-moz-border-radius-topleft: 4px;-moz-border-radius-topright: 4px;}
+#portal-columns{margin-top:0;}
+.literal-block{overflow: auto;overflow-y: hidden;width:520px;}
+.figure img{padding:5px;border:1px solid #8CACBB;background:#CCE3ED;}
+.docutils{margin-bottom:8px;border:1px solid #8CACBB;}
+.docutils th{background:#CCE3ED;}
+.docutils td{background:#E7F3F7;}
+.navTree{margin:0;}
+.portletItem img{background:none;}
+.lastItem,.blog .portletItem{padding:2px 0 2px 0;}
+#portlet-navigation-tree .lastItem a,.blog .portletItem a{margin:2px 0;padding:1px 0;padding-left:28px;padding-right:5px;line-height:20px;}
+#portlet-navigation-tree .lastItem div a:hover,.blog .portletItem div a:hover{border:1px solid #CCEAF9;-moz-border-radius: 5px;background:url(http://czug.org:38081/czug/images/icon_stars.gif) #BDE6FA 5px 6px no-repeat;}
+#portlet-navigation-tree .lastItem  .navTreeCurrentItem{-moz-border-radius: 5px;border:1px solid #B2E2F9;background:url(http://czug.org:38081/czug/images/icon_star0.gif) #7AC4EA 5px 6px no-repeat;}
+#portlet-navigation-tree .lastItem  a.navTreeCurrentItem:hover{color:#74AE0B;}
+#portlet-navigation-tree dt,#portlet-navigation-tree dd,.blog dt,.blog dd{border:0;}
+#portlet-navigation-tree .portletHeader{border-bottom:4px solid #213D64;line-height:22px;background:#7AC4EA;}
+.portletItem li{border-top:1px dotted #ccc;}
+.portletItem li ul{padding:1px 0;}
+.portletItem li li{}
+.portletItem li li li{}
+.portletItem li li li li{}
+/* */
+/* */
+
+}
+
+

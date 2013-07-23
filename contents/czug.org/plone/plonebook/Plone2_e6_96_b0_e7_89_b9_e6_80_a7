@@ -1,0 +1,40 @@
+:作者: Alexander Limi
+:原文: http://plone.org/documentation/whatsnew/2.0/
+:翻译: 赵玉勇
+:版本: $Revision: 1.5 $
+:版权: 
+
+
+相对于 1.0，Plone 2.0在系统易用性、用户界面、系统性能等方面都有了极大改善，并增强了对扩展开发方面的支持。
+
+Plone发展到现在，不单是一个用户友好、功能强大的内容管理系统，其实也已经发展成为了一个应用开发平台。
+
+本章主要从以下几个方面介绍Plone 2.0的新特性：
+
+`可用性 <X_e5_8f_af_e7_94_a8_e6_80_a7>`__ （Usability）
+  采用新的菜单形式添加内容以及改变内容状态，改善了权限设置界面。
+
+`用户界面 <X_e7_94_a8_e6_88_b7_e7_95_8c_e9_9d_a2>`__ （User Interface）
+  包括查询词加亮显示、内容类型图标定义、更多的RSS支持、字体大小切换、内容顺序设置等诸多改进。
+
+国际化&可访问性（Internationalization & Accessibility）
+  支持更多语言（目前是35种语言）、改善了对Unicode的支持，以及支持更多的可访问标准。
+
+`系统管理 <X_e7_b3_bb_e7_bb_9f_e7_ae_a1_e7_90_86>`__ （Administration）
+  增加了可集中进行系统设置的控制面板、增加了对用户组的支持。
+
+`系统安装与系统控制器 <X_e7_b3_bb_e7_bb_9f_e5_ae_89_e8_a3_85_e4_b8_8e_e7_b3_bb_e7_bb_9f_e6_8e_a7_e5_88_b6_e5_99_a8>`__ （Installer and Controller）
+  缺省安装中增加了新的优秀产品（Products）， 改进了Windows版本下的系统控制器（Controller）。 
+
+
+`系统架构 <X_e7_b3_bb_e7_bb_9f_e6_9e_b6_e6_9e_84>`__ （Architecture）
+  运行环境相关软件采用最新版本，包括采用新版本的Python, Zope, and CMF。
+
+`针对设计人员的改进 <X_e9_92_88_e5_af_b9_e8_ae_be_e8_ae_a1_e4_ba_ba_e5_91_98_e7_9a_84_e6_94_b9_e8_bf_9b>`__ （For Designers）
+  精练了界面模板程序结构、加强CSS对外观的控制，并且支持选择标准CSS或者Tableless CSS进行界面设计，给了设计人员更大的灵活性。
+
+针对开发人员的改进（For Developers）
+  包括工具（tools）、测试框架（testing frameworks）、内容类型（content types）等方面的改善。 `详细了解`__ 
+
+  __ http://plone.org/documentation/whatsnew/2.0/developers
+

@@ -1,0 +1,523 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-4" class="anchor"/><p class="line867"><strong> <span id="line-5" class="anchor"/>含有章节索引的中文 文章模板 <span id="line-6" class="anchor"/></strong> <span id="line-7" class="anchor"/><span id="line-8" class="anchor"/></p><p class="line862">::-- <a href="/moin/zhuyj">zhuyj</a> [2008-12-22 02:23:50] <span id="line-9" class="anchor"/></p><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-b581eb4be1bdbbb1f9a5240f36b2e81e05e54d79">Custom Widgets in PyQt4</a><ol><li><a href="#head-fddb54f6faf1b5ecf10f976959514aea8dc0ce10">Burning widget</a></li></ol></li><li><a href="#head-5d04df8c2a3e256e53a521a790a7145726ec09de">交流</a></li></ol></div> <span id="line-10" class="anchor"/><span id="line-11" class="anchor"/><p
+class="line867">
+</p><h1 id="head-b581eb4be1bdbbb1f9a5240f36b2e81e05e54d79">1. Custom Widgets in PyQt4</h1>
+<span id="line-12" class="anchor"/><p class="line867"><strong><a href="/moin/PyQt4" class="nonexistent">PyQt4</a>的自定义组件</strong> <span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></p><p class="line867"><em>Have you ever looked at an application and wondered, how a particular gui item was created? Probably every wannabe programmer has. Then you were looking at a list of widgets provided by your favourite gui library. But you couldn't find it. Toolkits usually provide only the most common widgets like buttons, text widgets, sliders etc. No toolkit can provide all possible widgets.</em> <span id="line-15" class="anchor"/></p><ul><li style="list-style-type:
+none;">你是否曾经关注一个程序，并且想知道其独特的图形项目是怎么创造的?也许每个程序员都这么想过。但是当你查看你最喜爱的gui库的组件目录时，却发现没有这个组件。工具包一般只提供最常有的组件，比如按钮，文本组件，滑块等，没有那个工具包可以提供所有的组件。 <span id="line-16" class="anchor"/><span id="line-17" class="anchor"/></li></ul><p class="line867"><em>There are actually two kinds of toolkits. Spartan toolkits and heavy weight toolkits. The FLTK toolkit is a kind of a spartan toolkit. It provides only the very basic widgets and assumes, that the programemer will create the more complicated ones himself. <a href="/moin/PyQt4" class="nonexistent">PyQt4</a> is a heavy weight one. It has lots of widgets. Yet it does not provide the more specialized widgets. For example a speed meter
+widget, a widget that measures the capacity of a CD to be burned (found e.g. in nero). Toolkits also don't have usually charts.</em> <span id="line-18" class="anchor"/></p><ul><li style="list-style-type: none;"><p class="line862">事实上有两种工具包，简单的工具包和复杂的工具包。FLTK工具包是一种简单的工具包，它只提供最基本的组件和呈现，程序员可以自己创建更复杂的组件。 <a href="/moin/PyQt4" class="nonexistent">PyQt4</a>是复杂的工具包，它有许多的组件，但是它并不提供专业化的组件。例如速度计组件，用来检测将要烧录的CD的容量（可以在nero这类程序中找到）。工具包也不具备通常的图表。 <span id="line-19" class="anchor"/><span id="line-20" class="anchor"/></p></li></ul><p class="line867"><em>Programmers must create such widgets by themselves. They do it by using the drawing tools provided by
+the toolkit. There are two possibilities. A programmer can modify or enhance an existing widget. Or he can create a custom widget from scratch.</em> <span id="line-21" class="anchor"/></p><ul><li style="list-style-type: none;">程序员必须自己创建这些组件，他们可以通过工具包提供的绘图工具来实现。有两种可能，程序员可以更改或增强一个现存的组件或着从零开始创建一个自定义组件。 <span id="line-22" class="anchor"/></li></ul><p class="line867">
+</p><h2 id="head-fddb54f6faf1b5ecf10f976959514aea8dc0ce10">1.1. Burning widget</h2>
+<span id="line-23" class="anchor"/><p class="line867"><strong>烧录组件</strong> <span id="line-24" class="anchor"/><span id="line-25" class="anchor"/></p><p class="line867"><em>This is a widget that we can see in Nero, K3B or other CD/DVD burning software.</em> <span id="line-26" class="anchor"/></p><ul><li style="list-style-type: none;">这是一个我们经常在Nero,K3B或其他CD/DVD烧录软件中见到的组件。 <span id="line-27" class="anchor"/><span id="line-28" class="anchor"/></li></ul><p class="line867"><span id="line-29" class="anchor"/><span id="line-30" class="anchor"/><span id="line-31" class="anchor"/><span id="line-32" class="anchor"/><span id="line-33" class="anchor"/><span id="line-34" class="anchor"/><span id="line-35" class="anchor"/><span id="line-36" class="anchor"/><span
+id="line-37" class="anchor"/><span id="line-38" class="anchor"/><span id="line-39" class="anchor"/><span id="line-40" class="anchor"/><span id="line-41" class="anchor"/><span id="line-42" class="anchor"/><span id="line-43" class="anchor"/><span id="line-44" class="anchor"/><span id="line-45" class="anchor"/><span id="line-46" class="anchor"/><span id="line-47" class="anchor"/><span id="line-48" class="anchor"/><span id="line-49" class="anchor"/><span id="line-50" class="anchor"/><span id="line-51" class="anchor"/><span id="line-52" class="anchor"/><span id="line-53" class="anchor"/><span id="line-54" class="anchor"/><span id="line-55" class="anchor"/><span id="line-56" class="anchor"/><span id="line-57" class="anchor"/><span id="line-58" class="anchor"/><span id="line-59"
+class="anchor"/><span id="line-60" class="anchor"/><span id="line-61" class="anchor"/><span id="line-62" class="anchor"/><span id="line-63" class="anchor"/><span id="line-64" class="anchor"/><span id="line-65" class="anchor"/><span id="line-66" class="anchor"/><span id="line-67" class="anchor"/><span id="line-68" class="anchor"/><span id="line-69" class="anchor"/><span id="line-70" class="anchor"/><span id="line-71" class="anchor"/><span id="line-72" class="anchor"/><span id="line-73" class="anchor"/><span id="line-74" class="anchor"/><span id="line-75" class="anchor"/><span id="line-76" class="anchor"/><span id="line-77" class="anchor"/><span id="line-78" class="anchor"/><span id="line-79" class="anchor"/><span id="line-80" class="anchor"/><span id="line-81"
+class="anchor"/><span id="line-82" class="anchor"/><span id="line-83" class="anchor"/><span id="line-84" class="anchor"/><span id="line-85" class="anchor"/><span id="line-86" class="anchor"/><span id="line-87" class="anchor"/><span id="line-88" class="anchor"/><span id="line-89" class="anchor"/><span id="line-90" class="anchor"/><span id="line-91" class="anchor"/><span id="line-92" class="anchor"/><span id="line-93" class="anchor"/><span id="line-94" class="anchor"/><span id="line-95" class="anchor"/><span id="line-96" class="anchor"/><span id="line-97" class="anchor"/><span id="line-98" class="anchor"/><span id="line-99" class="anchor"/><span id="line-100" class="anchor"/><span id="line-101" class="anchor"/><span id="line-102" class="anchor"/><span id="line-103"
+class="anchor"/><span id="line-104" class="anchor"/><span id="line-105" class="anchor"/><span id="line-106" class="anchor"/><span id="line-107" class="anchor"/><span id="line-108" class="anchor"/><span id="line-109" class="anchor"/><span id="line-110" class="anchor"/><span id="line-111" class="anchor"/><span id="line-112" class="anchor"/><span id="line-113" class="anchor"/><span id="line-114" class="anchor"/><span id="line-115" class="anchor"/><span id="line-116" class="anchor"/><span id="line-117" class="anchor"/><span id="line-118" class="anchor"/><span id="line-119" class="anchor"/><span id="line-120" class="anchor"/><span id="line-121" class="anchor"/><span id="line-122" class="anchor"/><span id="line-123" class="anchor"/><span id="line-124" class="anchor"/><span
+id="line-125" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-41fdf9bdcad2c77a7360001582bb133e14596b88_000\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-41fdf9bdcad2c77a7360001582bb133e14596b88_000', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-41fdf9bdcad2c77a7360001582bb133e14596b88_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#!/usr/bin/python</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"># burning.py</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">import</span> <span class="ID">sys</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtGui</span><span class="Operator">,</span> <span class="ID">QtCore</span></span>
+<span class="line"><span class="LineNumber">   7 </span></span>
+<span class="line"><span class="LineNumber">   8 </span></span>
+<span class="line"><span class="LineNumber">   9 </span><span class="ResWord">class</span> <span class="ID">Widget</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QLabel</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  10 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QLabel</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setMinimumSize</span><span class="Operator">(</span><span class="Number">1</span><span class="Operator">,</span> <span class="Number">30</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">parent</span> <span class="Operator">=</span> <span class="ID">parent</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">num</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="Number">75</span><span class="Operator">,</span> <span class="Number">150</span><span class="Operator">,</span> <span class="Number">225</span><span class="Operator">,</span> <span class="Number">300</span><span class="Operator">,</span> <span class="Number">375</span><span class="Operator">,</span> <span class="Number">450</span><span class="Operator">,</span> <span
+class="Number">525</span><span class="Operator">,</span> <span class="Number">600</span><span class="Operator">,</span> <span class="Number">675</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">  15 </span></span>
+<span class="line"><span class="LineNumber">  16 </span>    <span class="ResWord">def</span> <span class="ID">paintEvent</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">paint</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QPainter</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span>        <span class="ID">paint</span><span class="Operator">.</span><span class="ID">begin</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ID">font</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QFont</span><span class="Operator">(</span><span class="String">'Serif'</span><span class="Operator">,</span> <span class="Number">7</span><span class="Operator">,</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QFont</span><span class="Operator">.</span><span class="ID">Light</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span>        <span class="ID">paint</span><span class="Operator">.</span><span class="ID">setFont</span><span class="Operator">(</span><span class="ID">font</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  22 </span></span>
+<span class="line"><span class="LineNumber">  23 </span>        <span class="ID">size</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">size</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  24 </span>        <span class="ID">w</span> <span class="Operator">=</span> <span class="ID">size</span><span class="Operator">.</span><span class="ID">width</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  25 </span>        <span class="ID">h</span> <span class="Operator">=</span> <span class="ID">size</span><span class="Operator">.</span><span class="ID">height</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  26 </span>        <span class="ID">cw</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">parent</span><span class="Operator">.</span><span class="ID">cw</span></span>
+<span class="line"><span class="LineNumber">  27 </span>        <span class="ID">step</span> <span class="Operator">=</span> <span class="ID">int</span><span class="Operator">(</span><span class="ID">round</span><span class="Operator">(</span><span class="ID">w</span> <span class="Operator">/</span> <span class="Number">10.0</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  28 </span></span>
+<span class="line"><span class="LineNumber">  29 </span></span>
+<span class="line"><span class="LineNumber">  30 </span>        <span class="ID">till</span> <span class="Operator">=</span> <span class="ID">int</span><span class="Operator">(</span><span class="Operator">(</span><span class="Operator">(</span><span class="ID">w</span> <span class="Operator">/</span> <span class="Number">750.0</span><span class="Operator">)</span> <span class="Operator">*</span> <span class="ID">cw</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  31 </span>        <span class="ID">full</span> <span class="Operator">=</span> <span class="ID">int</span><span class="Operator">(</span><span class="Operator">(</span><span class="Operator">(</span><span class="ID">w</span> <span class="Operator">/</span> <span class="Number">750.0</span><span class="Operator">)</span> <span class="Operator">*</span> <span class="Number">700</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  32 </span></span>
+<span class="line"><span class="LineNumber">  33 </span>        <span class="ResWord">if</span> <span class="ID">cw</span> <span class="Operator">>=</span> <span class="Number">700</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  34 </span>            <span class="ID">paint</span><span class="Operator">.</span><span class="ID">setPen</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QColor</span><span class="Operator">(</span><span class="Number">255</span><span class="Operator">,</span> <span class="Number">255</span><span class="Operator">,</span> <span class="Number">255</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  35 </span>            <span class="ID">paint</span><span class="Operator">.</span><span class="ID">setBrush</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QColor</span><span class="Operator">(</span><span class="Number">255</span><span class="Operator">,</span> <span class="Number">255</span><span class="Operator">,</span> <span class="Number">184</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  36 </span>            <span class="ID">paint</span><span class="Operator">.</span><span class="ID">drawRect</span><span class="Operator">(</span><span class="Number">0</span><span class="Operator">,</span> <span class="Number">0</span><span class="Operator">,</span> <span class="ID">full</span><span class="Operator">,</span> <span class="ID">h</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  37 </span>            <span class="ID">paint</span><span class="Operator">.</span><span class="ID">setPen</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QColor</span><span class="Operator">(</span><span class="Number">255</span><span class="Operator">,</span> <span class="Number">175</span><span class="Operator">,</span> <span class="Number">175</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  38 </span>            <span class="ID">paint</span><span class="Operator">.</span><span class="ID">setBrush</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QColor</span><span class="Operator">(</span><span class="Number">255</span><span class="Operator">,</span> <span class="Number">175</span><span class="Operator">,</span> <span class="Number">175</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  39 </span>            <span class="ID">paint</span><span class="Operator">.</span><span class="ID">drawRect</span><span class="Operator">(</span><span class="ID">full</span><span class="Operator">,</span> <span class="Number">0</span><span class="Operator">,</span> <span class="ID">till</span><span class="Operator">-</span><span class="ID">full</span><span class="Operator">,</span> <span class="ID">h</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  40 </span>        <span class="ResWord">else</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  41 </span>            <span class="ID">paint</span><span class="Operator">.</span><span class="ID">setPen</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QColor</span><span class="Operator">(</span><span class="Number">255</span><span class="Operator">,</span> <span class="Number">255</span><span class="Operator">,</span> <span class="Number">255</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  42 </span>            <span class="ID">paint</span><span class="Operator">.</span><span class="ID">setBrush</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QColor</span><span class="Operator">(</span><span class="Number">255</span><span class="Operator">,</span> <span class="Number">255</span><span class="Operator">,</span> <span class="Number">184</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  43 </span>            <span class="ID">paint</span><span class="Operator">.</span><span class="ID">drawRect</span><span class="Operator">(</span><span class="Number">0</span><span class="Operator">,</span> <span class="Number">0</span><span class="Operator">,</span> <span class="ID">till</span><span class="Operator">,</span> <span class="ID">h</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  44 </span></span>
+<span class="line"><span class="LineNumber">  45 </span></span>
+<span class="line"><span class="LineNumber">  46 </span>        <span class="ID">pen</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QPen</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QColor</span><span class="Operator">(</span><span class="Number">20</span><span class="Operator">,</span> <span class="Number">20</span><span class="Operator">,</span> <span class="Number">20</span><span class="Operator">)</span><span class="Operator">,</span> <span
+class="Number">1</span><span class="Operator">,</span> <span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">Qt</span><span class="Operator">.</span><span class="ID">SolidLine</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  47 </span>        <span class="ID">paint</span><span class="Operator">.</span><span class="ID">setPen</span><span class="Operator">(</span><span class="ID">pen</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  48 </span>        <span class="ID">paint</span><span class="Operator">.</span><span class="ID">setBrush</span><span class="Operator">(</span><span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">Qt</span><span class="Operator">.</span><span class="ID">NoBrush</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  49 </span>        <span class="ID">paint</span><span class="Operator">.</span><span class="ID">drawRect</span><span class="Operator">(</span><span class="Number">0</span><span class="Operator">,</span> <span class="Number">0</span><span class="Operator">,</span> <span class="ID">w</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="ID">h</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  50 </span></span>
+<span class="line"><span class="LineNumber">  51 </span>        <span class="ID">j</span> <span class="Operator">=</span> <span class="Number">0</span></span>
+<span class="line"><span class="LineNumber">  52 </span></span>
+<span class="line"><span class="LineNumber">  53 </span>        <span class="ResWord">for</span> <span class="ID">i</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="ID">step</span><span class="Operator">,</span> <span class="Number">10</span><span class="Operator">*</span><span class="ID">step</span><span class="Operator">,</span> <span class="ID">step</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  54 </span>            <span class="ID">paint</span><span class="Operator">.</span><span class="ID">drawLine</span><span class="Operator">(</span><span class="ID">i</span><span class="Operator">,</span> <span class="Number">0</span><span class="Operator">,</span> <span class="ID">i</span><span class="Operator">,</span> <span class="Number">5</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  55 </span>            <span class="ID">metrics</span> <span class="Operator">=</span> <span class="ID">paint</span><span class="Operator">.</span><span class="ID">fontMetrics</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  56 </span>            <span class="ID">fw</span> <span class="Operator">=</span> <span class="ID">metrics</span><span class="Operator">.</span><span class="ID">width</span><span class="Operator">(</span><span class="ID">str</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">num</span><span class="Operator">[</span><span class="ID">j</span><span class="Operator">]</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  57 </span>            <span class="ID">paint</span><span class="Operator">.</span><span class="ID">drawText</span><span class="Operator">(</span><span class="ID">i</span><span class="Operator">-</span><span class="ID">fw</span><span class="Operator">/</span><span class="Number">2</span><span class="Operator">,</span> <span class="ID">h</span><span class="Operator">/</span><span class="Number">2</span><span class="Operator">,</span> <span class="ID">str</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span
+class="ID">num</span><span class="Operator">[</span><span class="ID">j</span><span class="Operator">]</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  58 </span>            <span class="ID">j</span> <span class="Operator">=</span> <span class="ID">j</span> <span class="Operator">+</span> <span class="Number">1</span></span>
+<span class="line"><span class="LineNumber">  59 </span></span>
+<span class="line"><span class="LineNumber">  60 </span>        <span class="ID">paint</span><span class="Operator">.</span><span class="ID">end</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  61 </span></span>
+<span class="line"><span class="LineNumber">  62 </span><span class="ResWord">class</span> <span class="ID">Burning</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QWidget</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  63 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">=</span><span class="ID">None</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  64 </span>        <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QWidget</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  65 </span></span>
+<span class="line"><span class="LineNumber">  66 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">cw</span> <span class="Operator">=</span> <span class="Number">75</span></span>
+<span class="line"><span class="LineNumber">  67 </span></span>
+<span class="line"><span class="LineNumber">  68 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">slider</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QSlider</span><span class="Operator">(</span><span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">Qt</span><span class="Operator">.</span><span class="ID">Horizontal</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  69 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">slider</span><span class="Operator">.</span><span class="ID">setFocusPolicy</span><span class="Operator">(</span><span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">Qt</span><span class="Operator">.</span><span class="ID">NoFocus</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  70 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">slider</span><span class="Operator">.</span><span class="ID">setRange</span><span class="Operator">(</span><span class="Number">1</span><span class="Operator">,</span> <span class="Number">750</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  71 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">slider</span><span class="Operator">.</span><span class="ID">setValue</span><span class="Operator">(</span><span class="Number">75</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  72 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">slider</span><span class="Operator">.</span><span class="ID">setGeometry</span><span class="Operator">(</span><span class="Number">30</span><span class="Operator">,</span> <span class="Number">40</span><span class="Operator">,</span> <span class="Number">150</span><span class="Operator">,</span> <span class="Number">30</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  73 </span></span>
+<span class="line"><span class="LineNumber">  74 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">wid</span> <span class="Operator">=</span> <span class="ID">Widget</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  75 </span></span>
+<span class="line"><span class="LineNumber">  76 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">connect</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">slider</span><span class="Operator">,</span> <span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">SIGNAL</span><span class="Operator">(</span><span class="String">'valueChanged(int)'</span><span class="Operator">)</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">changeValue</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  77 </span>        <span class="ID">hbox</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QHBoxLayout</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  78 </span>        <span class="ID">hbox</span><span class="Operator">.</span><span class="ID">addWidget</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">wid</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  79 </span>        <span class="ID">vbox</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QVBoxLayout</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  80 </span>        <span class="ID">vbox</span><span class="Operator">.</span><span class="ID">addStretch</span><span class="Operator">(</span><span class="Number">1</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  81 </span>        <span class="ID">vbox</span><span class="Operator">.</span><span class="ID">addLayout</span><span class="Operator">(</span><span class="ID">hbox</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  82 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setLayout</span><span class="Operator">(</span><span class="ID">vbox</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  83 </span></span>
+<span class="line"><span class="LineNumber">  84 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setGeometry</span><span class="Operator">(</span><span class="Number">300</span><span class="Operator">,</span> <span class="Number">300</span><span class="Operator">,</span> <span class="Number">300</span><span class="Operator">,</span> <span class="Number">220</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  85 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setWindowTitle</span><span class="Operator">(</span><span class="String">'Burning'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  86 </span></span>
+<span class="line"><span class="LineNumber">  87 </span>    <span class="ResWord">def</span> <span class="ID">changeValue</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  88 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">cw</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">slider</span><span class="Operator">.</span><span class="ID">value</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  89 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">wid</span><span class="Operator">.</span><span class="ID">repaint</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  90 </span></span>
+<span class="line"><span class="LineNumber">  91 </span></span>
+<span class="line"><span class="LineNumber">  92 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QApplication</span><span class="Operator">(</span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">argv</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  93 </span><span class="ID">dt</span> <span class="Operator">=</span> <span class="ID">Burning</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  94 </span><span class="ID">dt</span><span class="Operator">.</span><span class="ID">show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  95 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">exec_</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-126" class="anchor"/><span id="line-127" class="anchor"/><p class="line867"><em>In our example, we have a QSlider and a custom widget. The slider controls the custom widget. This widget shows graphically the total capacity of a medium and the free space available to us. The minimum value of our custom widget is 1, the maximum is 750. If we reach value 700, we begin drawing in red colour. This normally indicates overburning.</em> <span id="line-128" class="anchor"/></p><ul><li style="list-style-type:
+none;">这个例子里，我们有一个QSlider和一个自定义组件。滑块控制自定义组件。这个组件图形化的显示一个媒体的总容量和我们可使用的空余空间。我们自定义组件的最小值为1，最大值为750。如果我们到达700值，我们开始用红色绘制。这一般表示超刻。 <span id="line-129" class="anchor"/><span id="line-130" class="anchor"/></li></ul><p class="line867"><em>The burning widget is placed at the bottom of the window. This is achieved using one QHBoxLayout and one QVBoxLayout.</em> <span id="line-131" class="anchor"/></p><ul><li style="list-style-type: none;">刻录组件放置在窗口的底部，这通过一个QHBoxLayout和一个QVBoxLayout完成。
+<span id="line-132" class="anchor"/></li></ul><p class="line867"><span id="line-133" class="anchor"/><span id="line-134" class="anchor"/><span id="line-135" class="anchor"/><span id="line-136" class="anchor"/><span id="line-137" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-91828eb76315f3446ff48ee7be6eac991d9e27e1_001\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-91828eb76315f3446ff48ee7be6eac991d9e27e1_001', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-91828eb76315f3446ff48ee7be6eac991d9e27e1_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span> <span class="ResWord">class</span> <span class="ID">Widget</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QLabel</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>     <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>         <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QLabel</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-138" class="anchor"/><span id="line-139" class="anchor"/><p class="line867"><em>The burning widget it based on the QLabel widget.</em> <span id="line-140" class="anchor"/></p><ul><li style="list-style-type: none;">刻录组件基于QLabel组件。 <span id="line-141" class="anchor"/></li></ul><p class="line867"><span id="line-142" class="anchor"/></p><pre> self.setMinimumSize(1, 30)
+<span id="line-143" class="anchor"/></pre><span id="line-144" class="anchor"/><p class="line867"><em>We change the minimum size (height) of the widget. The default value is a bit small for us.</em> <span id="line-145" class="anchor"/></p><ul><li style="list-style-type: none;">我们改变组件的最小值(高度).缺省值对我们来说有点小。 <span id="line-146" class="anchor"/></li></ul><p class="line867"><span id="line-147" class="anchor"/></p><pre> font = QtGui.QFont('Serif', 7, QtGui.QFont.Light)
+<span id="line-148" class="anchor"/> paint.setFont(font)
+<span id="line-149" class="anchor"/></pre><span id="line-150" class="anchor"/><p class="line867"><em>We use a smaller font than the default one. That better suits our needs.</em> <span id="line-151" class="anchor"/></p><ul><li style="list-style-type: none;">我们使用一个比缺省小一点的字体，这更适合我们的需要。 <span id="line-152" class="anchor"/></li></ul><p class="line867"><span id="line-153" class="anchor"/></p><pre> size = self.size()
+<span id="line-154" class="anchor"/> w = size.width()
+<span id="line-155" class="anchor"/> h = size.height()
+<span id="line-156" class="anchor"/> cw = self.parent.cw
+<span id="line-157" class="anchor"/> step = int(round(w / 10.0))
+<span id="line-158" class="anchor"/>
+<span id="line-159" class="anchor"/> till = int(((w / 750.0) * cw))
+<span id="line-160" class="anchor"/> full = int(((w / 750.0) * 700))
+<span id="line-161" class="anchor"/></pre><span id="line-162" class="anchor"/><p class="line867"><em>We draw the widget dynamically. The greater the window, the greater the burning widget. And vice versa. That is why we must calculate the size of the widget onto which we draw the custom widget. The till parameter determines the total size to be drawn. This value comes from the slider widget. It is a proportion of the whole area. The full parameter determines the point, where we begin to draw in red color. Notice the use of floating point arithmetics. This is to achieve greater
+precision.</em> <span id="line-163" class="anchor"/></p><ul><li style="list-style-type: none;">我们动态的绘制组件，窗口越大，刻录组件越大。锁定调整，这就是为什么我们必须计算组件的尺寸以便我们绘制自定义的组件。till参数确定绘制的total 尺寸。这个数值从滑块组件取得。是整个区域的比例。full参数确定我们将要用红色绘制的点。这里我们使用了浮点数，以保证精度。 <span id="line-164" class="anchor"/><span id="line-165" class="anchor"/></li></ul><p class="line867"><em>The actual drawing consists of three steps. We draw the yellow or red and yellow rectangle. Then we draw the vertical lines, which
+divide the widget into several parts. Finally, we draw the numbers, which indicate the capacity of the medium.</em> <span id="line-166" class="anchor"/></p><ul><li style="list-style-type: none;">实际的绘制由三步组成。我们绘制黄色或红色和黄色的矩形，然后我们绘制将组件分割成几部分的垂直线，最后，我们绘制标识媒体容量的数字。 <span id="line-167" class="anchor"/></li></ul><p class="line867"><span id="line-168" class="anchor"/></p><pre> metrics = paint.fontMetrics()
+<span id="line-169" class="anchor"/> fw = metrics.width(str(self.num[j]))
+<span id="line-170" class="anchor"/> paint.drawText(i-fw/2, h/2, str(self.num[j]))
+<span id="line-171" class="anchor"/></pre><span id="line-172" class="anchor"/><p class="line867"><em>We use font metrics to draw the text. We must know the width of the text in order to center it around the vertical line.</em> <span id="line-173" class="anchor"/></p><ul><li style="list-style-type: none;">我们使用字体矩阵来绘制文字。我们必须知道文本的宽带以便居中包围垂直线。 <span id="line-174" class="anchor"/><span id="line-175" class="anchor"/></li></ul><p class="line874">The burning widget <span id="line-176" class="anchor"/>Figure: The burning widget <span id="line-177"
+class="anchor"/><span id="line-178" class="anchor"/></p><p class="line867">
+</p><h1 id="head-5d04df8c2a3e256e53a521a790a7145726ec09de">2. 交流</h1>
+<span id="line-179" class="anchor"/><p class="line867"/><div id="pagecomment">
+<a name="pagecomment1"/>
+<table border="0" class="pagecomment">
+<tbody><tr><td colspan="5" style="border-width: 1px; margin: 10px 0pt;">
+
+<script language="javascript">
+<!--
+function setCookie(name, value) {
+var today = new Date();
+var expire = new Date(today.getTime() + 60*60*24*365*1000);
+document.cookie = name + "=" + encodeURIComponent(value) + "; expires=" + expire.toGMTString() + "; path=/moin";
+}
+//-->
+</script>
+<form onsubmit="setCookie('PG2AUTHOR', this.comauthor.value);" method="post" name="comment" action="Custom_widgets_%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6#pagecomment1">
+<table class="addcommentform">
+<tbody><tr>
+<td style="border-width: 0px; vertical-align: middle; font-size: 0.9em;"><textarea onblur="if (this.value=='') {this.value='Add your comment';};" onfocus="if (this.value=='Add your comment') {this.value='';};" style="font-size: 9pt;" cols="60" rows="4" name="comtext">Add your comment</textarea></td>
+<td style="border-width: 0px; font-size: 0.9em; vertical-align: bottom;"><input type="submit" style="font-size: 9pt; width: 6em; height: 3em;" value="保存" name="button_save"/></td>
+</tr>
+<tr><td style="border-width: 0px; vertical-align: middle; font-size: 0.9em;">
+Name<input type="text" onblur="if (this.value=='') {this.value='58';};" onfocus="if (this.value=='58') {this.value='';};" value="58" name="comauthor" maxlength="20" size="6" style="font-size: 9pt;"/>
+Password4deL<input type="password" onblur="if (this.value=='') {this.value='nik3';};" onfocus="if (this.value=='nik3') {this.value='';};" value="nik3" name="compasswd" maxlength="10" size="4" style="font-size: 9pt;"/>
+<input type="hidden" name="autopasswd" value="nik3"/>
+<input type="radio" value=";)" name="comicon"/><img width="15" height="15" title=";)" src="/htdocs/woodpecker/img/smile4.png" alt=";)"/>
+<input type="radio" value="=D" name="comicon"/>
+<input type="radio" value="=)" name="comicon"/>
+<input type="radio" value=":P" name="comicon"/>
+<input type="radio" value=":(|)" name="comicon"/>
+<input type="radio" value=":-|" name="comicon"/>
+<input type="radio" value=":(" name="comicon"/><img width="15" height="15" title=":(" src="/htdocs/woodpecker/img/sad.png" alt=":("/>
+<input type="radio" value="X-(" name="comicon"/><img width="15" height="15" title="X-(" src="/htdocs/woodpecker/img/angry.png" alt="X-("/>
+<input type="radio" value="B-)" name="comicon"/><img width="15" height="15" title="B-)" src="/htdocs/woodpecker/img/smile2.png" alt="B-)"/>
+
+</td>
+<td style="border-width: 0px; vertical-align: middle; text-align: right; font-size: 9pt;"/>
+</tr>
+</tbody></table>
+<input type="hidden" value="show" name="action"/>
+<input type="hidden" value="46" name="comrev"/>
+<input type="hidden" value="addcomment1" name="commentaction"/>
+</form>
+</td></tr>
+<tr><td style="border-width: 0px; height: 20px;" class="commentblankline" colspan="5"/></tr>
+<script language="javascript">
+<!--
+function requesttodeleteadmin1(delform, comkey) {
+if (confirm("Really delete this comment?")) {;
+delform.delkey.value = comkey;
+delform.delpasswd.value = "****";
+delform.submit();
+}
+}
+function requesttodelete1(delform, comkey) {
+var passwd = prompt("请输入一个密码!:", "");
+if(!(passwd == "" || passwd == null)) {
+delform.delkey.value = comkey;
+delform.delpasswd.value = passwd;
+delform.submit();
+}
+}
+//-->
+</script>
+<form method="post" action="Custom_widgets_%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6#pagecomment1" name="delform1"/>
+<input type="hidden" name="action" value="show"/>
+<input type="hidden" value="****" name="delpasswd"/>
+<input type="hidden" value="" name="delkey"/>
+<input type="hidden" value="delcomment1" name="commentaction"/>
+
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra scaduto</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">ptfvqnpv, <a href="http://www.sportal.it/forum/member.php?u=1070">cialis foglietto illustrativo</a>, [url="http://www.sportal.it/forum/member.php?u=1070"]cialis foglietto illustrativo[/url], http://www.sportal.it/forum/member.php?u=1070 cialis foglietto illustrativo,  vcgakegl, <a href="http://www.gamesforum.it/board/member.php?u=64036">viagra 20 anni</a>,
+[url="http://www.gamesforum.it/board/member.php?u=64036"]viagra 20 anni[/url], http://www.gamesforum.it/board/member.php?u=64036 viagra 20 anni,  wauutiuu, <a href="http://www.carputer.it/member.php?u=11875">Ordina levitra</a>, [url="http://www.carputer.it/member.php?u=11875"]Ordina levitra[/url], http://www.carputer.it/member.php?u=11875 Ordina levitra,  swipfctk, <a href="http://www.gamesforum.it/board/member.php?u=64020">acquistare kamagra su internet</a>,
+[url="http://www.gamesforum.it/board/member.php?u=64020"]acquistare kamagra su internet[/url], http://www.gamesforum.it/board/member.php?u=64020 acquistare kamagra su internet,  xdvvrgsf, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 00:21:40 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra romania</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">ehdvjvlf, <a href="http://www.carputer.it/member.php?u=11864">Ordina VIAGRA</a>, [url="http://www.carputer.it/member.php?u=11864"]Ordina VIAGRA[/url], http://www.carputer.it/member.php?u=11864 Ordina VIAGRA,  jtxbbmfp, <a href="http://www.sportal.it/forum/member.php?u=1069">cialis costo</a>, [url="http://www.sportal.it/forum/member.php?u=1069"]cialis costo[/url],
+http://www.sportal.it/forum/member.php?u=1069 cialis costo,  guswcepo, <a href="http://www.gamesforum.it/board/member.php?u=64020">kamagra uk online</a>, [url="http://www.gamesforum.it/board/member.php?u=64020"]kamagra uk online[/url], http://www.gamesforum.it/board/member.php?u=64020 kamagra uk online,  qsrrgavb, <a href="http://www.sportal.it/forum/member.php?u=1068">kamagra professional</a>, [url="http://www.sportal.it/forum/member.php?u=1068"]kamagra professional[/url],
+http://www.sportal.it/forum/member.php?u=1068 kamagra professional,  ehtilqay, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 02:41:43 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra pfizer canada</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">iypsocid, <a href="http://www.gamesforum.it/board/member.php?u=64037">cialis italia</a>, [url="http://www.gamesforum.it/board/member.php?u=64037"]cialis italia[/url], http://www.gamesforum.it/board/member.php?u=64037 cialis italia,  nrparcrx, <a href="http://www.carputer.it/member.php?u=11880">cialis su internet</a>, [url="http://www.carputer.it/member.php?u=11880"]cialis su
+internet[/url], http://www.carputer.it/member.php?u=11880 cialis su internet,  zgjhdqkc, <a href="http://www.carputer.it/member.php?u=11871">acquista viagra on line</a>, [url="http://www.carputer.it/member.php?u=11871"]acquista viagra on line[/url], http://www.carputer.it/member.php?u=11871 acquista viagra on line,  vtxyscsw, <a href="http://www.hwupgrade.it/forum/member.php?u=334480">farmaco viagra</a>, [url="http://www.hwupgrade.it/forum/member.php?u=334480"]farmaco
+viagra[/url], http://www.hwupgrade.it/forum/member.php?u=334480 farmaco viagra,  akyvcqmg, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 05:01:14 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis ritarda</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">mpcaujvr gdatbmja evoxqtyb<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 07:16:35 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">levitra italia</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">maznzydn qfagbknf vlnruekh<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 09:33:38 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra acquistare</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">dgjaqgwc anxnaint irdtdyis<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 11:54:47 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">kamagra su internet</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">xzooaobs sxxvzkrm ignmexzu<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 14:12:59 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">medicinale viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">anstxihi wosyrerg ehwqsznm<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 16:35:16 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra generico</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">xzvrdmin wwxsqhen hxshofys<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 19:00:21 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">levitra galenico</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">dsohfrlt iwqhsqlt cghcxkmy<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 21:26:42 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">kamagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">yjfapyaa uoljoueg ntmnjgok<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 23:44:54 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis on line</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">fqcrknac dfvegeso hazadskj<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-08 02:06:16 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acquistare kamagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">xyibuwik lowvvjqt efxfyhcx<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-08 04:28:52 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">kamagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">mzuqntht, <a href="http://www.feal.fr/index.php?topic=360">cialis</a>, [url="http://www.feal.fr/index.php?topic=360"]cialis[/url], http://www.feal.fr/index.php?topic=360 cialis,  vkajisjg, <a href="http://www.zazieweb.fr/site/perso/espaceperso.php?num=21429">viagra</a>, [url="http://www.zazieweb.fr/site/perso/espaceperso.php?num=21429"]viagra[/url],
+http://www.zazieweb.fr/site/perso/espaceperso.php?num=21429 viagra,  skjpfnsu, <a href="http://forum.skins.be/members/325449-dincolobergstromlyhefe/">viagra prix</a>, [url="http://forum.skins.be/members/325449-dincolobergstromlyhefe/"]viagra prix[/url], http://forum.skins.be/members/325449-dincolobergstromlyhefe/ viagra prix,  kcazbfur, <a href="http://www.feal.fr/index.php?topic=361">cialis prix</a>, [url="http://www.feal.fr/index.php?topic=361"]cialis prix[/url],
+http://www.feal.fr/index.php?topic=361 cialis prix,  tvalcrnq, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-09 11:50:26 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">vxthaowh, <a href="http://www.feal.fr/index.php?topic=359">Levitra prix</a>, [url="http://www.feal.fr/index.php?topic=359"]Levitra prix[/url], http://www.feal.fr/index.php?topic=359 Levitra prix,  mpsdyrgp, <a href="http://fr.lutece.paris.fr/forums/user/profile/860.page">viagra prix</a>, [url="http://fr.lutece.paris.fr/forums/user/profile/860.page"]viagra prix[/url],
+http://fr.lutece.paris.fr/forums/user/profile/860.page viagra prix,  gumklxsc, <a href="http://www.feal.fr/index.php?topic=362">viagra</a>, [url="http://www.feal.fr/index.php?topic=362"]viagra[/url], http://www.feal.fr/index.php?topic=362 viagra,  cwfgasxu, <a href="http://forum.skins.be/members/325449-dincolobergstromlyhefe/">viagra</a>, [url="http://forum.skins.be/members/325449-dincolobergstromlyhefe/"]viagra[/url],
+http://forum.skins.be/members/325449-dincolobergstromlyhefe/ viagra,  yolwvffm, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-09 14:18:51 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Levitra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">dlihozvz, <a href="http://www.feal.fr/index.php?topic=357">achat kamagra</a>, [url="http://www.feal.fr/index.php?topic=357"]achat kamagra[/url], http://www.feal.fr/index.php?topic=357 achat kamagra,  vdcpvprz, <a href="http://fr.lutece.paris.fr/forums/user/profile/860.page">viagra</a>, [url="http://fr.lutece.paris.fr/forums/user/profile/860.page"]viagra[/url],
+http://fr.lutece.paris.fr/forums/user/profile/860.page viagra,  hadmsxwj, <a href="http://forum.canardpc.com/member.php?u=21926">viagra</a>, [url="http://forum.canardpc.com/member.php?u=21926"]viagra[/url], http://forum.canardpc.com/member.php?u=21926 viagra,  zyeyhokm, <a href="http://www.feal.fr/index.php?topic=361">cialis prix</a>, [url="http://www.feal.fr/index.php?topic=361"]cialis prix[/url], http://www.feal.fr/index.php?topic=361 cialis prix,  wqfiqsxo, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-09 16:46:04 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">sbrmpwhi, <a href="http://www.commentdraguerunefille.com/forums/member.php?u=1428">achat viagra</a>, [url="http://www.commentdraguerunefille.com/forums/member.php?u=1428"]achat viagra[/url], http://www.commentdraguerunefille.com/forums/member.php?u=1428 achat viagra,  mofwroex, <a href="http://www.franconaute.org/forum/member.php?u=6951">viagra</a>,
+[url="http://www.franconaute.org/forum/member.php?u=6951"]viagra[/url], http://www.franconaute.org/forum/member.php?u=6951 viagra,  uehdyhjb, <a href="http://jm.bea.free.fr/forum/member.php?u=695">cialis</a>, [url="http://jm.bea.free.fr/forum/member.php?u=695"]cialis[/url], http://jm.bea.free.fr/forum/member.php?u=695 cialis,  mqmjnemq, <a href="http://www.l2wh.com/forum/member.php?u=62544">france cialis</a>, [url="http://www.l2wh.com/forum/member.php?u=62544"]france
+cialis[/url], http://www.l2wh.com/forum/member.php?u=62544 france cialis,  rkrcnsdn, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-14 06:08:58 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">vente viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">jrhsimwz, <a href="http://www.geologue.setif.org/vb/member.php?u=1003">viagra</a>, [url="http://www.geologue.setif.org/vb/member.php?u=1003"]viagra[/url], http://www.geologue.setif.org/vb/member.php?u=1003 viagra,  nieybzns, <a href="http://forumv2.jpnp.org/member.php?u=17938">cialis</a>, [url="http://forumv2.jpnp.org/member.php?u=17938"]cialis[/url],
+http://forumv2.jpnp.org/member.php?u=17938 cialis,  tqbeejgx, <a href="http://jm.bea.free.fr/forum/member.php?u=695">achat cialis</a>, [url="http://jm.bea.free.fr/forum/member.php?u=695"]achat cialis[/url], http://jm.bea.free.fr/forum/member.php?u=695 achat cialis,  mwjvbvri, <a href="http://www.l2wh.com/forum/member.php?u=62544">cialis acheter</a>, [url="http://www.l2wh.com/forum/member.php?u=62544"]cialis acheter[/url], http://www.l2wh.com/forum/member.php?u=62544 cialis
+acheter,  bnczmkhl, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-14 08:33:27 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">qphllplw, <a href="http://www.ducros.info/372/member.php?u=266">viagra</a>, [url="http://www.ducros.info/372/member.php?u=266"]viagra[/url], http://www.ducros.info/372/member.php?u=266 viagra,  zxtomdav, <a href="http://forumv2.jpnp.org/member.php?u=17930">viagra generique</a>, [url="http://forumv2.jpnp.org/member.php?u=17930"]viagra generique[/url],
+http://forumv2.jpnp.org/member.php?u=17930 viagra generique,  wepqpphg, <a href="http://www.franconaute.org/forum/member.php?u=6951">viagra</a>, [url="http://www.franconaute.org/forum/member.php?u=6951"]viagra[/url], http://www.franconaute.org/forum/member.php?u=6951 viagra,  sjrjsabk, <a href="http://www.forum-ouvert.com/member.php?u=56671">viagra</a>, [url="http://www.forum-ouvert.com/member.php?u=56671"]viagra[/url], http://www.forum-ouvert.com/member.php?u=56671 viagra,
+jgusckvc, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-14 11:00:46 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title=":(" src="/htdocs/woodpecker/img/sad.png" alt=":("/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">carlatunme</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">january recent seasonal power <a href="http://thefraserdomain.typepad.com">china contributed</a> [url=http://rdrw1.yahoo.com]resulting observed llc affected[/url] http://www.tosl.com<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-19 00:03:35 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acheter cialis sans </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">quxbwzay, <a href="http://forum.pcworld.it/member.php?u=33176cialis">cialis pas cher</a>, [url="http://forum.pcworld.it/member.php?u=33176cialis"]cialis pas cher[/url], http://forum.pcworld.it/member.php?u=33176cialis cialis pas cher,  blznsfqv, <a href="http://gaming.ngi.it/member.php?u=69544viagra">acheter viagra en ligne</a>,
+[url="http://gaming.ngi.it/member.php?u=69544viagra"]acheter viagra en ligne[/url], http://gaming.ngi.it/member.php?u=69544viagra acheter viagra en ligne,  tutcrpto, <a href="http://www.elaborare.info/forum/vbulletin/member.php?u=65646cialis">cialis</a>, [url="http://www.elaborare.info/forum/vbulletin/member.php?u=65646cialis"]cialis[/url], http://www.elaborare.info/forum/vbulletin/member.php?u=65646cialis cialis,  nydfirzn, <a
+href="http://www.lwita.com/vb/member.php?u=891cialis">acheter cialis pas cher</a>, [url="http://www.lwita.com/vb/member.php?u=891cialis"]acheter cialis pas cher[/url], http://www.lwita.com/vb/member.php?u=891cialis acheter cialis pas cher,  xtbfymec, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-19 10:04:55 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">commande viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">njiwjuzx, <a href="http://gaming.ngi.it/member.php?u=69544viagra">viagra discount</a>, [url="http://gaming.ngi.it/member.php?u=69544viagra"]viagra discount[/url], http://gaming.ngi.it/member.php?u=69544viagra viagra discount,  nqgtfvtk, <a href="http://gaming.ngi.it/member.php?u=69545cialis">achat cialis en ligne</a>, [url="http://gaming.ngi.it/member.php?u=69545cialis"]achat cialis
+en ligne[/url], http://gaming.ngi.it/member.php?u=69545cialis achat cialis en ligne,  btbuylin, <a href="http://www.lwita.com/vb/member.php?u=891cialis">acheter cialis en ligne</a>, [url="http://www.lwita.com/vb/member.php?u=891cialis"]acheter cialis en ligne[/url], http://www.lwita.com/vb/member.php?u=891cialis acheter cialis en ligne,  thqpytmq, <a href="http://www.hwupgrade.it/forum/member.php?u=335789viagra">viagra</a>,
+[url="http://www.hwupgrade.it/forum/member.php?u=335789viagra"]viagra[/url], http://www.hwupgrade.it/forum/member.php?u=335789viagra viagra,  uvnaxdvg, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-19 14:50:10 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">sdexetiv, <a href="http://elearning.econ.univpm.it/user/view.php?id=3297">acquisto cialis</a>, [url="http://elearning.econ.univpm.it/user/view.php?id=3297"]acquisto cialis[/url], http://elearning.econ.univpm.it/user/view.php?id=3297 acquisto cialis,  dvwkfybd, <a href="http://gaming.ngi.it/member.php?u=69544viagra">acquistare viagra su internet</a>,
+[url="http://gaming.ngi.it/member.php?u=69544viagra"]acquistare viagra su internet[/url], http://gaming.ngi.it/member.php?u=69544viagra acquistare viagra su internet,  fgfsbhqd, <a href="http://www.elaborare.info/forum/vbulletin/member.php?u=65646cialis">comprare cialis online</a>, [url="http://www.elaborare.info/forum/vbulletin/member.php?u=65646cialis"]comprare cialis online[/url], http://www.elaborare.info/forum/vbulletin/member.php?u=65646cialis comprare cialis online,
+uaxebiav, <a href="http://www.hwupgrade.it/forum/member.php?u=335914">acquistare via internet</a>, [url="http://www.hwupgrade.it/forum/member.php?u=335914"]acquistare via internet[/url], http://www.hwupgrade.it/forum/member.php?u=335914 acquistare via internet,  baixwyez, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-21 06:21:23 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acquistare viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">myeplovv, <a href="http://www.gamesforum.it/board/member.php?u=64495">compra cialis in italia</a>, [url="http://www.gamesforum.it/board/member.php?u=64495"]compra cialis in italia[/url], http://www.gamesforum.it/board/member.php?u=64495 compra cialis in italia,  wapwitcg, <a href="http://www.sportal.it/forum/member.php?u=1085">cialis</a>,
+[url="http://www.sportal.it/forum/member.php?u=1085"]cialis[/url], http://www.sportal.it/forum/member.php?u=1085 cialis,  ixokhqig, <a href="http://forum.lostpedia.com/member.php?u=33455cialis">acquisto cialis in italia</a>, [url="http://forum.lostpedia.com/member.php?u=33455cialis"]acquisto cialis in italia[/url], http://forum.lostpedia.com/member.php?u=33455cialis acquisto cialis in italia,  ttepchqq, <a href="http://www.carputer.it/member.php?u=12074">acquisto viagra senza
+ricetta</a>, [url="http://www.carputer.it/member.php?u=12074"]acquisto viagra senza ricetta[/url], http://www.carputer.it/member.php?u=12074 acquisto viagra senza ricetta,  zkbqgimv, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-21 18:14:58 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acquistare viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">ozatolcf, <a href="http://elearning.econ.univpm.it/user/view.php?id=3297">comprare cialis senza ricetta</a>, [url="http://elearning.econ.univpm.it/user/view.php?id=3297"]comprare cialis senza ricetta[/url], http://elearning.econ.univpm.it/user/view.php?id=3297 comprare cialis senza ricetta,  dajqtnls, <a href="http://forum.ffonline.it/member.php?u=22782">comprare viagra in
+farmacia</a>, [url="http://forum.ffonline.it/member.php?u=22782"]comprare viagra in farmacia[/url], http://forum.ffonline.it/member.php?u=22782 comprare viagra in farmacia,  dxrzyskk, <a href="http://www.sportal.it/forum/member.php?u=1085">cialis</a>, [url="http://www.sportal.it/forum/member.php?u=1085"]cialis[/url], http://www.sportal.it/forum/member.php?u=1085 cialis,  gnmpjova, <a href="http://elearning.econ.univpm.it/user/view.php?id=3290">viagra</a>,
+[url="http://elearning.econ.univpm.it/user/view.php?id=3290"]viagra[/url], http://elearning.econ.univpm.it/user/view.php?id=3290 viagra,  mwkvebca, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-22 00:12:52 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title=";)" src="/htdocs/woodpecker/img/smile4.png" alt=";)"/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Pharmd806</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">Very nice site! <a href="http://aixopey.com/qqaatt/1.html">cheap viagra</a><br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-22 02:01:41 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">compra cialis online</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">ztsmtcjo, <a href="http://www.hwupgrade.it/forum/member.php?u=336008">cialis</a>, [url="http://www.hwupgrade.it/forum/member.php?u=336008"]cialis[/url], http://www.hwupgrade.it/forum/member.php?u=336008 cialis,  wmttbhao, <a href="http://extjs.com/forum/member.php?u=86147">comprare viagra su internet</a>, [url="http://extjs.com/forum/member.php?u=86147"]comprare viagra su
+internet[/url], http://extjs.com/forum/member.php?u=86147 comprare viagra su internet,  xqekmvfj, <a href="http://www.gamesforum.it/board/member.php?u=64495">acquistare cialis</a>, [url="http://www.gamesforum.it/board/member.php?u=64495"]acquistare cialis[/url], http://www.gamesforum.it/board/member.php?u=64495 acquistare cialis,  ivuxqtgu, <a href="http://www.kaboodle.com/rudenzio">acquisto cialis senza ricetta</a>, [url="http://www.kaboodle.com/rudenzio"]acquisto cialis senza
+ricetta[/url], http://www.kaboodle.com/rudenzio acquisto cialis senza ricetta,  hwewtolx, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-22 09:13:33 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">uusbbenr, <a href="http://teamsystemrocks.com/members/Alarico-De-Luca/default.aspx">compra cialis in italia</a>, [url="http://teamsystemrocks.com/members/Alarico-De-Luca/default.aspx"]compra cialis in italia[/url], http://teamsystemrocks.com/members/Alarico-De-Luca/default.aspx compra cialis in italia,  opkweity, <a
+href="http://gamesurf.tiscali.it/forum/member.php?u=38839viagra">comprare viagra in farmacia</a>, [url="http://gamesurf.tiscali.it/forum/member.php?u=38839viagra"]comprare viagra in farmacia[/url], http://gamesurf.tiscali.it/forum/member.php?u=38839viagra comprare viagra in farmacia,  jqxjdvpn, <a href="http://www.elaborare.info/forum/vbulletin/member.php?u=65646cialis">acquistare cialis</a>, [url="http://www.elaborare.info/forum/vbulletin/member.php?u=65646cialis"]acquistare
+cialis[/url], http://www.elaborare.info/forum/vbulletin/member.php?u=65646cialis acquistare cialis,  kkfevpvw, <a href="http://www.elaborare.info/forum/vbulletin/member.php?u=65645viagra">compra viagra online</a>, [url="http://www.elaborare.info/forum/vbulletin/member.php?u=65645viagra"]compra viagra online[/url], http://www.elaborare.info/forum/vbulletin/member.php?u=65645viagra compra viagra online,  difrcpne, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-22 15:15:09 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">commande viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">owbillcx, <a href="http://www.commentdraguerunefille.com/forums/member.php?u=1583">cialis</a>, [url="http://www.commentdraguerunefille.com/forums/member.php?u=1583"]cialis[/url], http://www.commentdraguerunefille.com/forums/member.php?u=1583 cialis,  meqlwllp, <a href="http://forum.skins.be/members/326641-alessiobaresi/">acheter cialis en pharmacie</a>,
+[url="http://forum.skins.be/members/326641-alessiobaresi/"]acheter cialis en pharmacie[/url], http://forum.skins.be/members/326641-alessiobaresi/ acheter cialis en pharmacie,  uqqtawsp, <a href="http://extjs.com/forum/member.php?u=86380">viagra</a>, [url="http://extjs.com/forum/member.php?u=86380"]viagra[/url], http://extjs.com/forum/member.php?u=86380 viagra,  bjkmrqdt, <a href="http://www.blablaland.com/site/membres.php?p=460837">acheter cialis moins cher</a>,
+[url="http://www.blablaland.com/site/membres.php?p=460837"]acheter cialis moins cher[/url], http://www.blablaland.com/site/membres.php?p=460837 acheter cialis moins cher,  fohwagaw, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-22 18:12:51 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">lravtvaz, <a href="http://www.coldwire.net/members/Emanuele-Marino.aspx">cialis</a>, [url="http://www.coldwire.net/members/Emanuele-Marino.aspx"]cialis[/url], http://www.coldwire.net/members/Emanuele-Marino.aspx cialis,  alkhwqxy, <a href="http://forum.canardpc.com/member.php?u=22253">cialis generique</a>, [url="http://forum.canardpc.com/member.php?u=22253"]cialis generique[/url],
+http://forum.canardpc.com/member.php?u=22253 cialis generique,  pxygmcii, <a href="http://www.heidelbergrepair.com/forums/member.php?u=725">acheter cialis en france</a>, [url="http://www.heidelbergrepair.com/forums/member.php?u=725"]acheter cialis en france[/url], http://www.heidelbergrepair.com/forums/member.php?u=725 acheter cialis en france,  ygheppzg, <a href="http://www.n-europe.com/forum/member.php?u=4434">viagra pfizer</a>,
+[url="http://www.n-europe.com/forum/member.php?u=4434"]viagra pfizer[/url], http://www.n-europe.com/forum/member.php?u=4434 viagra pfizer,  kqlsgdve, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-22 21:16:56 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acquisto viagra senz</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">xjarevld, <a href="http://www.mangaitalia.it/invision/index.php?showuser=29732">compra viagra online</a>, [url="http://www.mangaitalia.it/invision/index.php?showuser=29732"]compra viagra online[/url], http://www.mangaitalia.it/invision/index.php?showuser=29732 compra viagra online,  wmbfpzos, <a href="http://www.gamesforum.it/board/member.php?u=64751">acquistare viagra generico</a>,
+[url="http://www.gamesforum.it/board/member.php?u=64751"]acquistare viagra generico[/url], http://www.gamesforum.it/board/member.php?u=64751 acquistare viagra generico,  hhwcunmh, <a href="http://www.rattidellasabina.it/forums/index.php?showuser=2318">acquisto cialis originale</a>, [url="http://www.rattidellasabina.it/forums/index.php?showuser=2318"]acquisto cialis originale[/url], http://www.rattidellasabina.it/forums/index.php?showuser=2318 acquisto cialis originale,
+krwuqtag, <a href="http://forum.ffonline.it/member.php?u=22834">comprare viagra</a>, [url="http://forum.ffonline.it/member.php?u=22834"]comprare viagra[/url], http://forum.ffonline.it/member.php?u=22834 comprare viagra,  wcqgwgea, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-28 10:19:32 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">pmdorpyc, <a href="http://www.e-bahut.com/user/48287-paride-derose/">achat cialis en ligne</a>, [url="http://www.e-bahut.com/user/48287-paride-derose/"]achat cialis en ligne[/url], http://www.e-bahut.com/user/48287-paride-derose/ achat cialis en ligne,  krmbbzpq, <a href="http://www.rattidellasabina.it/forums/index.php?showuser=2315">acquistare viagra generico</a>,
+[url="http://www.rattidellasabina.it/forums/index.php?showuser=2315"]acquistare viagra generico[/url], http://www.rattidellasabina.it/forums/index.php?showuser=2315 acquistare viagra generico,  scazqjme, <a href="http://www.rattidellasabina.it/forums/index.php?showuser=2318">cialis</a>, [url="http://www.rattidellasabina.it/forums/index.php?showuser=2318"]cialis[/url], http://www.rattidellasabina.it/forums/index.php?showuser=2318 cialis,  lpnwmphw, <a
+href="http://forum.ffonline.it/member.php?u=22834">comprare viagra senza ricetta</a>, [url="http://forum.ffonline.it/member.php?u=22834"]comprare viagra senza ricetta[/url], http://forum.ffonline.it/member.php?u=22834 comprare viagra senza ricetta,  plssymmc, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-28 13:21:51 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">achat viagra france</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">oqumxdnd, <a href="http://www.gametronik.com/forum/index.php?showuser=54371">acheter viagra generique</a>, [url="http://www.gametronik.com/forum/index.php?showuser=54371"]acheter viagra generique[/url], http://www.gametronik.com/forum/index.php?showuser=54371 acheter viagra generique,  pmamidcn, <a href="http://www.rattidellasabina.it/forums/index.php?showuser=2315">comprare viagra
+generico</a>, [url="http://www.rattidellasabina.it/forums/index.php?showuser=2315"]comprare viagra generico[/url], http://www.rattidellasabina.it/forums/index.php?showuser=2315 comprare viagra generico,  baofwfjk, <a href="http://www.gamesforum.it/board/member.php?u=64751">viagra</a>, [url="http://www.gamesforum.it/board/member.php?u=64751"]viagra[/url], http://www.gamesforum.it/board/member.php?u=64751 viagra,  oajbzbyr, <a
+href="http://www.rattidellasabina.it/forums/index.php?showuser=2318">cialis viagra</a>, [url="http://www.rattidellasabina.it/forums/index.php?showuser=2318"]cialis viagra[/url], http://www.rattidellasabina.it/forums/index.php?showuser=2318 cialis viagra,  rhqthbgp, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-28 16:21:46 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis 20mg</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">nvxvluqu, <a href="http://www.rattidellasabina.it/forums/index.php?showuser=2315">viagra naturale</a>, [url="http://www.rattidellasabina.it/forums/index.php?showuser=2315"]viagra naturale[/url], http://www.rattidellasabina.it/forums/index.php?showuser=2315 viagra naturale,  xifozeuu, <a href="http://forum.cinesmeraldo.com/ib/index.php?showuser=3371">acquistare viagra su internet</a>,
+[url="http://forum.cinesmeraldo.com/ib/index.php?showuser=3371"]acquistare viagra su internet[/url], http://forum.cinesmeraldo.com/ib/index.php?showuser=3371 acquistare viagra su internet,  ouurryej, <a href="http://forum.ffonline.it/member.php?u=22841">comprare cialis online</a>, [url="http://forum.ffonline.it/member.php?u=22841"]comprare cialis online[/url], http://forum.ffonline.it/member.php?u=22841 comprare cialis online,  cercdfal, <a
+href="http://forum.ffonline.it/member.php?u=22834">comprare viagra generico</a>, [url="http://forum.ffonline.it/member.php?u=22834"]comprare viagra generico[/url], http://forum.ffonline.it/member.php?u=22834 comprare viagra generico,  isetpnkx, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-28 19:22:23 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis generico</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">utydfjrw, <a href="http://www.mangaitalia.it/invision/index.php?showuser=29736">cialis</a>, [url="http://www.mangaitalia.it/invision/index.php?showuser=29736"]cialis[/url], http://www.mangaitalia.it/invision/index.php?showuser=29736 cialis,  gbrvshma, <a href="http://www.customxp.net/forum/member.php?u=34969">cialis generique</a>,
+[url="http://www.customxp.net/forum/member.php?u=34969"]cialis generique[/url], http://www.customxp.net/forum/member.php?u=34969 cialis generique,  flopghfv, <a href="http://forum.cinesmeraldo.com/ib/index.php?showuser=3372">cialis 20 mg</a>, [url="http://forum.cinesmeraldo.com/ib/index.php?showuser=3372"]cialis 20 mg[/url], http://forum.cinesmeraldo.com/ib/index.php?showuser=3372 cialis 20 mg,  bgwtrxqf, <a href="http://forum.ffonline.it/member.php?u=22834">viagra</a>,
+[url="http://forum.ffonline.it/member.php?u=22834"]viagra[/url], http://forum.ffonline.it/member.php?u=22834 viagra,  usptgvii, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-28 22:22:30 <font style="font-size: 8pt;">
+</font></td></tr>
+</tbody></table>
+</div> <span id="line-180" class="anchor"/><span id="bottom" class="anchor"/></div>

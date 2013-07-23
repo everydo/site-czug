@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "newplonebookproject"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "组织对Andy McKay完成的新书《Definitive Guide to Plone》开放部分的翻译", 
+        "modified": "2004-08-17 14:34:06", 
+        "title": "新PloneBook翻译项目"
+    }
+}

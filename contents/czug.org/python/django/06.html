@@ -1,0 +1,43 @@
+<p>出处： <a href="http://www.javaeye.com/wiki/Django-book/732-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E5%85%AD%E7%AB%A0%EF%BC%9ADjango%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9Fadmin">http://www.javaeye.com/wiki/Django-book/732-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E5%85%AD%E7%AB%A0%EF%BC%9ADjango%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9Fadmin</a></p>
+  
+  <h1 style="margin:25px 0 10px 10px">翻译www.djangobook.com之第六章：Django管理系统admin 
+    
+  </h1>
+  <div class="content">
+    <span style="color: red"><strong>The Django Book：第6章 Django管理系统admin</strong></span><br /><br />Web开发中有一些我们最讨厌的部分：开发管理界面<br />开发站点中公众可以看见的部分一直不一样也很有趣，但是管理用来编辑站点的部分一直是一样的<br />你不得不处理用户认证，显示和处理表单，处理狡猾的验证问题...这很无聊而且是重复性的<br />Django解决这个无聊、重复的任务的方式呢？已经帮你都做好了，只需几行不能再少的代码即可<br />Django中最老和最强大的部分就是自动管理界面，它从你的模型中取得元数据来提供强大的产品级的界面<br />内容制造者可以马上使用它给站点添加内容<br /><br /><strong>激活管理界面</strong><br />我们认为管理界面是Django中最cool的部分，大部分Djangonauts也同意这点<br />但是由于不是每个人都需要它，它是一个可选的部分<br />有3个步骤来激活管理界面：<br />1，向你的模型添加admin metadata<br />并不是所有的模型都可以或者应该被admin用户编辑，所以你需要标记那些需要管理界面的模型<br />上一章的Book模型添加一个管理界面的方法就是：<br /><pre name="code" class="java">
+class Book(models.Model):
+    title = models.CharField(maxlength=100)
+    authors = models.ManyToManyField(Author)
+    publisher = models.ForeignKey(Publisher)
+    publication_date = models.DateField()
+
+    class Admin:
+        pass
+</pre><br />Admin声明标记这个类拥有一个管理界面，在Admin之下你可以配置许多选项<br />目前我们采用默认值，所以我们使用pass来表示Admin类是空的<br />如果你正在按这个例子写自己的代码，现在给Publisher和Author类添加Admin声明是个好主意<br />2，安装admin模型，简单的把"django.contrib.admin"添加到你的INSTALLED_APPS设置里<br />然后运行python manage.py syncdb来安装admin使用的额外的表<br />注意，在你第一次运行syncdb时，你很可能被问起是否创建一个superuser<br />如果那时你没有创建superuser，你需要运行djang/contrib/auth/bin/create_superuser.py<br />来创建一个admin用户，否则你就不能登录到管理界面里去<br />3，把URL模式添加到urls.py，如果仍在使用startproject创建的工程，admin的URL模式可能<br />已经在那儿了，但是被注释掉了，你的URL模式应该像这样：<br /><pre name="code" class="java">
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('',
+    (r'^admin/', include('django.contrib.admin.urls')),
+)
+</pre><br />就这样，现在运行python manage.py runserver来启动服务器，你将看到如下信息：<br />Validating models...<br />0 errors found.<br /><br />Django version 0.96-pre, using settings 'mysite.settings'<br />Development server is running at <a href="http://127.0.0.1:8000/" target="_blank">http://127.0.0.1:8000/</a><br />Quit the server with CONTROL-C.<br />现在你可以访问<a href="http://127.0.0.1:8000/admin/" target="_blank">http://127.0.0.1:8000/admin/</a>，登录，然后随便玩玩<br /><br /><strong>使用管理界面</strong><br />管理页面设计用来给非技术人员使用，所有非常简单，但有几个地方需要注意<br />首先你将看到登录界面，可以用你第一次运行syncdb时创建的用户名和密码来登录<br /><img src="http://media.djangobook.com/content/chapter06/login.png" /><br />登录之后你将看到你可以管理用户，组和权限<br />每个声明了Admin的对象将显示在首页上，添加和编辑这两个链接将导向改动列表和编辑表单的页面<br /><img src="http://media.djangobook.com/content/chapter06/admin_index.png" /><br />改动列表是系统中对象列表的首页<br />[img]http://media.djangobook.com/content/chapter06/changelist.png[/imag]<br />有很多选项来控制哪些域显示在这个列表中以及其它特性的外观，如日期格式，搜索域和过滤接口<br />下面会有对这些特性更多的解释<br />编辑表单用来编辑已有的对象和创建新对象<br />你的模型的每个域将显示在这里，不同的域类型有不同的显示界面，如日期和时间域是日历控件<br />而外键使用的是选择框等等<br /><img src="http://media.djangobook.com/content/chapter06/editform.png" /><br />你会注意到admin也为你处理输入验证，试着留一个需要的域不填，或者在一个时间域里输入不合法的时间，你会看到当你保存时出现错误显示<br /><img src="http://media.djangobook.com/content/chapter06/editform_errors.png" /><br />验证是第7章讲到的一个强大的验证框架来做的<br />当编辑一个对象时你会在右上方看到一个历史链接，admin上的每一个改动都会被记入日志<br />你可以点击历史按钮来查看日志<br /><img src="http://media.djangobook.com/content/chapter06/history.png" /><br />admin里的删除是级联的，当你删除一个对象时，admin会让你确认删除动作以避免代价昂贵的错误<br />确认页面也会显示所有将被删除的相关的对象<br /><img src="http://media.djangobook.com/content/chapter06/delete_confirm.png" /><br /><br /><strong>用户，组，权限</strong><br />既然你用superuser登录，你拥有创建，编辑和删除任何对象的权限<br />尽管如此，admin也有一个用户权限系统，你可以使用它来约束其它用户的访问权限<br />你可以像编辑其它对象一样来编辑这些用户和权限，用户和组模型的链接和其它你定义的对象一样显示在admin首页<br />用户对象有标准的用户名，密码，邮件和真实姓名域，以及一些定义用户在admin的权限的域<br />首先，这里有一些flags：<br />1，“is active”控制用户是否是活动的，如果这项flag为off，这个用户将不能访问任何需要登录的URL<br />2，“is staff”控制用户是否允许登录admin，由于第12章讲到这个用户系统同样被用来控制对public页面的<br />访问权限，这个flag对于public用户和管理员的含义不同<br />3，“is superuser”给予用户在admin的任何访问权限，普通的权限将被忽略<br />对于正常的admin用户，即活动的而非superuser的staff用户，他们的访问权限取决于一些被分配的权限<br />每个可以在admin编辑的对象拥有3个权限：创建权限，编辑权限和删除权限，给一个用户赋予权限将<br />允许用户访问这些权限所描述的页面<br />注意，对编辑用户和编辑权限的访问同样在这个权限系统控制，如果你给一个用户编辑用户的权限，<br />她将可以编辑她自己的权限，这可能是你的初衷！<br />你也可以给用户分配组，一个组就是一些权限，组的权限将分配给组的成员<br />给用户赋予一套数量很多的权限时组就很有用了<br /><br /><strong>定制管理界面</strong><br />有许多方式来定制admin的界面外观和行为，我们仅仅看其中跟我们的“Book”模型相关的一些<br />第12章详述了定制admin界面<br />现在books的改动列表仅仅显示模型的string展现，即__str__<br />这对于少量的books可以很好的工作，但是如果我们有成千上万的books，这将很难在干草推里找到唯一的那根针<br />尽管如此，我们可以给这个界面很方便的添加一些显示，搜索和过滤方法，编辑Admin定义：<br /><pre name="code" class="java">
+class Book(models.Model):
+    title = models.CharField(maxlength=100)
+    authors = models.ManyToManyField(Author)
+    publisher = models.ForeignKey(Publisher)
+    publication_date = models.DateField()
+
+    class Admin:
+        list_display   = ('title', 'publisher', 'publication_date')
+        list_filter    = ('publisher', 'publication_date')
+        ordering       = ('-publication_date',)
+        search_fields  = ('title',)
+</pre><br />这4行代码神奇的改变了我们的列表界面：<br /><img src="http://media.djangobook.com/content/chapter06/changelist2.png" /><br />这些定义中的每一行都告诉admin来构建一个不同的界面：<br />1，ordering选项控制了对象在admin里面显示的顺序，它是对结果排序的域的列表<br />前面加一个减号将排反序，所以例子中我们对publication_date排序，最近的书将显示在最前面<br />2，list_display选项控制了在改动列表里哪些列将显示，默认情况下将只显示对象的string展示<br />这一个单独的列，这里我们显示title，publisher和publication_date<br />3，list_filter选项将在列表的右上方创建过滤器条,我们允许通过date和publisher来过滤<br />你可以让admin过滤任何域，但是外键或者有chioces属性集的域工作的更好<br />4，最后search_fields选项创建一个允许文本搜索的域，这里允许通过title域搜索<br />通过这里以及第12章描述的选项你可以只用几行代码构建一个强大的具备产品能力的编辑数据界面<br /><br /><br /><strong>定制管理系统的外观</strong><br />显然在每个管理页面的顶端拥有一个“Django 管理系统”是很荒谬的，它只是一个占位文本<br />尽管如此，使用Django的模板系统可以很容易改变这点，Django的admin是Django自己支持的<br />它的界面使用Django自己的模板系统<br />打开mysite/settings.py看看TEMPLATE_DIRS设置，用来载入Django模板时检查文件系统目录<br />它是一个搜索的路径，默认情况下它是空的，下面我们加点东西来告诉Django我们的模板在哪：<br /><pre name="code" class="java">
+TEMPLATE_IDRS = (
+    "/home/mytemplates", # Change this to your own directory.
+)
+</pre><br />注意这里包括了最后的逗号，Python使用它来区分单元素元组和括号括起来的表达式<br />现在把admin/base_site.html从Django的admin模板目录(django/contrib/admin/templates)复制到<br />TEMPLATE_DIRS下的admin子目录下，admin是新建的子目录<br />然后编辑admin/base_site.html，用你自己的站点的名字替换Django文本<br />注意任何Django的默认admin模板都可以覆盖，只需像base_site.html一样覆盖模板<br />即从默认目录复制你的自定义目录然后改变这个副本<br />敏锐的读者可能想知道，如果TEMPLATE_DIRS默认是空的，Django是怎样找到默认的admin模板的？<br />答案是，默认情况下Django自动在每个app包下搜寻templates/子目录下的模板<br />看看第10章的“模板载入器”你将了解关于它的更多信息<br /><br /><strong>定制管理系统首页</strong><br />同样需要注意的是，你可能想定制Django的admin首页外观<br />默认时它将根据INSTALLED_APPS并按程序名排序显示所有的apps<br />尽管如此，你可能想改变这个显示顺序来使你更容易找到你要的apps<br />毕竟首页时admin最重要的页面，它应该很容易使用才行<br />需要定制的模板时admin/index.html，记得把admin/base_site.html复制到你的自定义模板目录<br />编辑这个文件，你将看到它使用模板标签{% get_admin_app_list as app_list %}<br />这就是得到所有安装的Django app的魔法所在<br />你可以用你认为最好的方法硬编码对象专有的admin页面来替换这个标签<br />如果你不太明白硬编码链接，可以参考第10章的实现你自己的模板标签的细节<br />Django在这个地方提供另一个捷径，运行python mange.py adminindex &lt;app&gt;来在admin首页模板<br />包含一些模板代码，开始时这十分有用<br />参考第12章关于定制Django的admin站点外观的细节<br /><br /><strong>何时使用和为什么使用管理界面</strong><br />我们认为Django的admin界面很神奇，事实上，我们称它为Django的一个“杀手级特性”<br />尽管如此，我们经常被问到admin的“use cases”这个问题，即什么时候我们使用它，以及为什么使用它？<br />这几年我们讨论了许多使用admin界面可能有帮助的模式<br />显然它对于编辑数据十分有用，如果你有一些数据输入的任务，admin就是你想要的<br />我们也发现admin在下面几种情况下十分有用：<br />1，检查数据模型，当我们定义一个新模型后第一件事就是在admin里面激活它并且输入一些模拟数据<br />发现一些数据模型错误是很常见的，有一个图形界面来揭露这些错误会很有用<br />2，管理需要的数据，例如对于chicagocrime.org有自动的数据数据产生源，但是当数据源出现问题，<br />我们可以通过admin很轻松的编辑数据<br /><br /><strong>下一步是什么</strong><br />到目前为止我们创建了一些模型并且配置了一个高级界面来编辑数据，下一章我们将进入到Web开发<br />真正的“肉和马铃薯”：表单创建和处理<br />所以，再弄一杯你最爱的饮料，让我们开始新的征程...
+  </div>
+
+  
+
+  

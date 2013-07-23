@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "jishuyishu"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "原来技术，也可以是艺术的。看看这些Plone推广的小电影。", 
+        "modified": "2006-05-23 23:14:10", 
+        "title": "技术？艺术？"
+    }
+}

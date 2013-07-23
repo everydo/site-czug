@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "example"
+    }, 
+    "dublin": {
+        "creators": [
+            "chenq"
+        ], 
+        "description": "快速学习DIYPloneStyle中包含的例子。", 
+        "modified": "2005-11-15 10:43:44", 
+        "title": "安装以及基本示例"
+    }
+}

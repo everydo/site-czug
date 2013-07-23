@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "plonespace"
+    }, 
+    "dublin": {
+        "creators": [
+            "zhangbingkai"
+        ], 
+        "description": "", 
+        "modified": "2007-03-23 09:44:41", 
+        "title": "Plonespace"
+    }
+}

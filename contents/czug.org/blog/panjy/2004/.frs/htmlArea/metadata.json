@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "htmlArea"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "htmlArea, 是一个商业公司开放出来的产品，和Epoz一样，也是同时支持IE和mozilla.", 
+        "modified": "2004-10-16 09:46:28", 
+        "title": "另外一个Free的所见即所得web编辑器"
+    }
+}

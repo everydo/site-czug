@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "python-beilun-the-python-paradox"
+    }, 
+    "dublin": {
+        "creators": [
+            "eishn"
+        ], 
+        "description": "我并没有 \"Java 程序员何其盲目\" 的意思, 我只想说 Python 程序员是很聪明的。学一种新的编程语言要花点工夫。而人们不会因为 Python 会给他们带来一份工作而去学它; 他们学 Python 只是因为他们率真地喜欢编程, 而目前以知的编程语言都不能使他们满足。", 
+        "modified": "2006-03-24 15:31:18", 
+        "title": "Python 悖论 (The Python Paradox)"
+    }
+}

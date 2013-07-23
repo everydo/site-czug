@@ -1,0 +1,5 @@
+description: 在线的zope3书籍
+exclude: []
+order: [preface.rst, introduction, ca, bfg, deliverance, model, view, view2, kss,
+  event, i18n, security, deploy, test, components, debug, ref]
+title: Zope 3

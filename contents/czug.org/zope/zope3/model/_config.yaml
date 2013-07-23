@@ -1,0 +1,4 @@
+description: 内容组件，也就是Model对象
+exclude: [img]
+order: [container.rst, annotation.rst, index.rst, relation.rst]
+title: 内容组件

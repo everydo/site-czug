@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "id": "faq"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "经常被问的问题.", 
+        "modified": "2006-10-31 16:09:51", 
+        "title": "常见问题"
+    }
+}

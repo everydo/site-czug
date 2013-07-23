@@ -1,0 +1,6 @@
+
+
+4. 多语言支持，这个我们未来产品需要支持的：
+
+ http://wiki.zope.org/zope3/i18n.html
+

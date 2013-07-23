@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "rangnideploneboardnimingyonghutianxiexingmingkefatie"
+    }, 
+    "dublin": {
+        "creators": [
+            "zhangbingkai"
+        ], 
+        "description": "    Everydo.com的论坛使用Ploneboard实现，匿名浏览用户无需注册登录，填写姓名就可发贴；而再次访问Everydo.com时无需再填写姓名，将使用存在Cookie中的姓名来发贴。\r\n\r\n    因为有社区里朋友问到，我将实现过程写在这里。", 
+        "modified": "2007-09-16 18:22:16", 
+        "title": "让你的Ploneboard匿名用户填写姓名可发贴"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "hidden_keys": [
+            "img", 
+            "__init__.pyc", 
+            "__init__.py"
+        ], 
+        "contenttype": "Document"
+    }, 
+    "dublin": {
+        "description": "通过实例体验使用组件架构让程序变得灵活、可扩展、可重用", 
+        "title": "实例"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "id": "management"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "组织类似sprint这样的活动，协调各个team的工作，规划czug的发展战略", 
+        "modified": "2004-03-05 16:13:43", 
+        "title": "管理团队"
+    }
+}

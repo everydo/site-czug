@@ -1,0 +1,247 @@
+
+<h2>Plone3.0实战</h2>
+<h3>实例一、用Plone3.0制作带有产品分类的企业网站</h3>
+<p>接触Plone也只有短暂的半个月多时间，存在问题在所难免，欢迎大家批评指正！<br />（我目前的Plone功力：已将前5章阅读）</p>
+<p>引言：</p>
+<p>作为一个Plone的初学者，一定会遇到很多这样那样的问题；往往问题看似简单，却会耗掉好多无谓的时间；希望本章的实例，可以为大家提供有用的参考，快速提高我们的Plone的应用水平，节省我们的宝贵时间，为Plone在国内的拓展做出贡献。</p>
+<p>阅读本章前，最好已经读过前面章节，并做好如下的准备。</p>
+<p><strong>本案例的准备工作：</strong></p>
+<p>默认读者熟悉Photoshop软件、熟悉Html和CSS、已经安装了Plone3.0。</p>
+<ol start="1"><li>Photoshop制作好的版面效果图</li><li>切割好的页面前景，背景图片</li></ol>
+<p>本章适合的读者：网站开发者</p>
+<p>（图一）设计草图：</p>
+<div class="figure"><img class="image-inline" src="VS_s.jpg" alt="" height="950" width="776" /></div>
+<p>（图二）完成后的效果抓图：</p>
+<div class="figure"><img class="image-inline" src="VS.jpg" alt="" height="1018" width="759" /></div>
+<p>演示地址：<a href="http://biz01.oa800.com/">biz01.oa800.com</a></p>
+<p>本章重点内容：</p>
+<ul><li>样式表在Plone 3.0中的应用</li><li>更改Plone 3.0的模版</li><li>在Plone中添加内容数据 </li><li>利用新闻摘要视图制作产品展示内容</li><li>利用查询集制作首页产品摘要展示 </li></ul>
+<p>序言：</p>
+<p>即将到来的是开源为王的软件时代，作为开源CMS的真正王者--Plone，在国内的应用也随之逐渐升温，走入了我们的视野；基于Zope的Plone的功能是非常的强大，问题是：如何利用这种强悍的功能为我们的企业提供适合的应用服务，怎么让更多的人参与到我们的开源团体，成为助推企业Web应用的源动力，如何用这种最好的技术提供最好的服务，满足企业的多样化需求呢？希望本章能抛砖引玉，获得更多的参与，组建能像国外Plone那样火爆的开源社区和开源服务团体，为企业为社会提供高质量的商用服务支持。</p>
+<h3>第一节、新建站点</h3>
+<p>Plone3.0安装过程略，可参考《ch2 - 安装Plone》内容。</p>
+<p><strong>1.1开启ZMI服务：</strong></p>
+<p>windows用户可以通过Plone Controller工具开启，</p>
+<div class="figure"><img class="image-inline" src="biz01_002.gif" alt="" height="314" width="483" /></div>
+<p>点击“Zope Management Interface...”即可；</p>
+<p>也可以在地址栏里输入管理地址，然后回车；</p>
+<div class="figure"><img class="image-inline" src="biz01_003.gif" alt="" height="45" width="315" /></div>
+<p>Linux用户需要先启动服务器端的Plone3.0服务：</p>
+<div class="figure"><img class="image-inline" src="biz01_005.gif" alt="" height="159" width="591" /></div>
+<p>然后在地址栏内输入管理地址，回车；</p>
+<div class="figure"><img class="image-inline" src="biz01_000.gif" alt="" height="69" width="399" /></div>
+<p>会出现密码验证面板，输入您安装过程设置的用户名、密码，回车通过密码验证：</p>
+<div class="figure"><img class="image-inline" src="biz01_001.gif" alt="" height="232" width="469" /></div>
+<p>出现ZMI的管理界面，</p>
+<div class="figure"><img class="image-inline" src="biz01_006.gif" alt="" height="360" width="692" /></div>
+<p><strong>1.2开始建立新站点：</strong></p>
+<p>添加一个新站点，</p>
+<div class="figure"><img class="image-inline" src="biz01_007.gif" alt="" height="304" width="490" /></div>
+<p>点击“Add”按钮，出现相应页面，在上面填写Id与Title，点击“Add Plone Site”按钮，</p>
+<div class="figure"><img class="image-inline" src="biz01_008.gif" alt="" height="379" width="513" /></div>
+<p>建好的站点在ZMI界面出现，</p>
+<div class="figure"><img class="image-inline" src="biz01_009.gif" alt="" height="192" width="540" /></div>
+<p>一个基础站点建立完成，在地址栏里输入http://localhost:8080/biz01（Windows）或http://www.ozope.com:8080/biz01（Linux用户，其中www.ozope.com根据您的设置而定），回车，可以看到Plone3.0的默认界面，</p>
+<div class="figure"><img class="image-inline" src="biz01_010.gif/image_preview" alt="默认的Plone3.0界面" height="198" width="400" /></div>
+<h3>第二节、新建站点的基础设定</h3>
+<p><strong>2.1缓存的设定</strong></p>
+<p>在ZMI中的biz01站点根目录下，找到“&nbsp; ResourceRegistryCache ”，点击进入，</p>
+<div class="figure"><img class="image-inline" src="biz01_011.gif" alt="" height="191" width="600" /></div>
+<p>找到“Maximum age of a cache entry ”项，把“86400”改成“1”，这样在修改样式表后，就可以立刻看到更改的效果了，</p>
+<div class="figure"><img class="image-inline" src="biz01_012.gif" alt="" height="389" width="622" /></div>
+<h3>第三节、新建站点的风格定制</h3>
+<p><strong>3.1、Logo的自定义</strong></p>
+<p>在ZMI管理界面里的biz01站点根目录下，进入到portal_skins站点皮肤项，选择Plone_images进入，</p>
+<div class="figure"><img class="image-inline" src="biz01_013.gif" alt="" height="72" width="417" /></div>
+<p>找到logo.jpg(plone)，点击进入，</p>
+<div class="figure"><img class="image-inline" src="biz01_014.gif" alt="" height="27" width="405" /></div>
+<p>出现Plone的默认Logo，点击按钮“Customize”，</p>
+<div class="figure"><img class="image-inline" src="biz01_015.gif" alt="" height="129" width="359" /></div>
+<p>选择本地已经切好的本地Logo图片，进行添加，</p>
+<div class="figure"><img class="image-inline" src="biz01_016.gif" alt="" height="402" width="523" /></div>
+<p>点击“Save Changes”按钮进行替换，</p>
+<div class="figure"><img class="image-inline" src="biz01_017.gif" alt="" height="310" width="523" /></div>
+<p>浏览biz01站点效果，</p>
+<div class="figure"><img class="image-inline" src="biz01_018.gif" alt="" height="410" width="656" /></div>
+<p><strong>3.2、自定义图片文件夹</strong></p>
+<p>通常是在“custom” 文件夹内建立“images”文件夹，</p>
+<div class="figure"><img class="image-inline" src="biz01_019.gif" alt="" height="102" width="626" /></div>
+<p>添加文件夹，点击“Add”按钮，</p>
+<div class="figure"><img class="image-inline" src="biz01_020.gif" alt="" height="290" width="533" /></div>
+<p>在Id内填入“images”，点击“Add”按钮，</p>
+<div class="figure"><img class="image-inline" src="biz01_021.gif" alt="" height="290" width="533" /></div>
+<p>自定义的“images”文件夹已经添加完成，</p>
+<div class="figure"><img class="image-inline" src="biz01_022.gif" alt="" height="290" width="533" /></div>
+<p><strong>3.3、把剪切好的Web图片上传到自定义“images”文件夹里</strong></p>
+<p>点击进入“images”文件夹内，添加Image，点击“Add”按钮，</p>
+<div class="figure"><img class="image-inline" src="biz01_023.gif" alt="" height="290" width="533" /></div>
+<p>加入相应的Id、Title等信息，并从本地选择对应的图片上传，</p>
+<div class="figure"><img class="image-inline" src="biz01_024.gif" alt="" height="290" width="533" /></div>
+<p>把网站需要的图片传入“images”文件夹内，</p>
+<div class="figure"><img class="image-inline" src="biz01_025.gif" alt="" height="290" width="533" /></div>
+<p><strong>3.4、通过“base_properties”面板，设置版面配色和布局</strong></p>
+<p>到portal_skins中找到plone_styles并打开，找到base_properties (Plone's color, font, logo and border defaults) 并点击，</p>
+<div class="figure"><img class="image-inline" src="biz01_026.gif" alt="" height="109" width="596" /></div>
+<p>进入base_properties (Plone's color, font, logo and border defaults) ，点击“Customize”按钮，进行配色和布局自定义，</p>
+<div class="figure"><img class="image-inline" src="biz01_027.gif" alt="" height="290" width="533" /></div>
+<p>修改fontBaseSize为75%、&nbsp; fontSmallSize为100%、globalBorderColor为#C0E7F8、globalBackgroundColor为#C0E7F8、globalFontColor为#3C6379，</p>
+<div class="figure"><img class="image-inline" src="biz01_028.gif" alt="" height="290" width="533" /></div>
+<p>更改默认项以后，选择下面的“Save Changes”保存结果。</p>
+<p>浏览更改“base_properties”后的效果，</p>
+<div class="figure"><img class="image-inline" src="biz01_029.gif/image_preview" alt="更改base_properties后的效果" height="229" width="400" /></div>
+<p><strong>3.5、通过自定义CSS样式表，设置版面配色和布局</strong></p>
+<p>在portal_skins内找到“plone_styles”文件夹，点击进入后，找到“ploneCustom.css”，</p>
+<div class="figure"><img class="image-inline" src="biz01_030.gif" alt="" height="105" width="497" /></div>
+<p>点击进入“ploneCustom.css”，开始编辑自定义样式表，需要注意的一点是：在点击“Customize”按钮定义样式表之前，“ploneCustom.css”的路径是在默认的“plone_styles”文件夹下面，</p>
+<div class="figure"><img class="image-inline" src="biz01_031.gif" alt="" height="205" width="497" /></div>
+<p>点击“Customize”按钮进入自定义样式表编辑界面后，“ploneCustom.css”的路径是在“custom”文件夹下面，</p>
+<div class="figure"><img class="image-inline" src="biz01_032.gif" alt="" height="205" width="497" /></div>
+<p>所以，每次我们需要修改自定义样式表的时候，我们都要到“custom”里找到它，并修改。</p>
+<p>现在我们开始修改它：最好不要删除自定义窗口的默认内容，以免样式变量无法使用，把自己编写的CSS样式写在“/* DELETE THIS LINE AND PUT YOUR CUSTOM STUFF HERE */”的位置上；代码如下（样式表的每个定义最好排成一行、/* --- */注释在真正发布的时候，建议去掉，这样会使CSS的读取速度更快，而且，中文的注释有的时候会在IE6中导致页面显示出错。为了便于组员的协作与之后的维护，需要我们另存一份带有注释的副本。）：</p>
+<pre class="literal-block">body{color:#3C6379;}         /* 更改页面文字颜色为#3C6379 */<br />#portal-logo img {margin:3px 0 10px 0;padding: 0;border: 0;}      /* 更改Logo的上距为3px */<br />#visual-portal-wrapper{margin:0 auto;width:746px;background:#fff;}    /* 更改页面基于800X600居中显示 */</pre>
+<p>点击“Save Changes”保存后，到前台浏览效果：</p>
+<div class="figure"><img class="image-inline" src="biz01_033.gif/image_preview" alt="页面800X600效果" height="254" width="400" /></div>
+<p>在确认实现了我们希望的效果（至少需要我们使用IE和Firefox两种浏览器测试）后，返回到“ploneCustom.css”表中，继续增加自定义代码，来获得更佳的页面效果：</p>
+<p>要修改“频道”的样式，需要通过查看Html页面源代码，来了解“频道”结构：</p>
+<pre class="literal-block">&lt;h5 class="hiddenStructure"&gt;频道&lt;/h5&gt;<br /><br />    &lt;ul id="portal-globalnav"&gt;<br />        &lt;li id="portaltab-index_html" class="selected"&gt;<br />            &lt;a href="http://localhost:8080/biz01" title=""&gt;首页&lt;/a&gt;&lt;/li&gt;<br />        &lt;li id="portaltab-Members" class="plain"&gt;<br />            &lt;a href="http://localhost:8080/biz01/Members"<br />               title="Container for users' home directories"&gt;Users&lt;/a&gt;&lt;/li&gt;<br />        &lt;li id="portaltab-news" class="plain"&gt;<br />            &lt;a href="http://localhost:8080/biz01/news"<br />               title="Site News"&gt;News&lt;/a&gt;&lt;/li&gt;<br />        &lt;li id="portaltab-events" class="plain"&gt;<br />            &lt;a href="http://localhost:8080/biz01/events"<br />               title="Site Events"&gt;Events&lt;/a&gt;&lt;/li&gt;<br />    &lt;/ul&gt;</pre>
+<p>通过这段代码，我们看到“频道”菜单是由标准列表项“ul”发布的，所以，我们又定义了如下样式：</p>
+<pre class="literal-block">#portal-globalnav{display:block;margin:0;padding:1px 10px 0 10px;border:0;width:726px;height: 29px;background:url(&amp;dtml-portal_url;/images/mainmenu_bg.gif) left top #3B7385 no-repeat;line-height:normal;white-space:nowrap;list-style:none;} / * 定义频道菜单这组ul列表项成盒区块显示；使盒区外补丁为0；盒区内补丁为：上1px，左右10px，下为0；盒区边框为0；频道菜单的宽度为726px；高30px；mainmenu_bg.gif作背景，背景居左上显示，背景色#3B7385，不循环显示；标准行高；文本不换行；不显示li圆点；* /<br />#portal-globalnav li {float:left;margin:0;padding:0;border-right:1px solid #5FB6D5;} / * 列表项左浮动；内外补丁为0；右边框显示1px#5FB6D5实线；* / <br />#portal-globalnav li a {display:block;margin:0;padding:0 15px;border:0;border-right:1px solid #386878;height: auto;color: #C0E7F8;text-decoration:none;text-transform: &amp;dtml-textTransform;;line-height:28px;} / * 定义li内链接成盒区块显示；外补丁0；内补丁：上下0，左右15px；边框0；重设右边框为1px实线；高自动；文本颜色#C0E7F8；无下划线；行高28px；* / <br />#portal-globalnav li a:hover {border:0;border-right:1px solid #6EA8BD;color: #fff;background:url(&amp;dtml-portal_url;/images/mainmenu_bg_over.gif) #6EA8BD left top repeat-x;} / * 鼠标浮上状态链接边框0；重设右边框1px实线；文本颜色白色；mainmenu_bg_over.gif作背景，左上显示，x轴循环；* / <br />#portal-globalnav li.selected a {border:0;border-right:1px solid #6EA8BD; color: #D3E6EE;background:transparent;} / * 菜单项选中状态边框0；重设右边框1px实线；文本颜色#D3E6EE；背景透明；* / <br />#portal-globalnav .selected{background:url(&amp;dtml-portal_url;/images/mainmenu_bg_over.gif) #6EA8BD left top repeat-x;} / * 菜单选中状态mainmenu_bg_over.gif作背景，左上显示，x轴循环；* /</pre>
+<p>点击“Save Changes”保存后，到前台浏览效果：</p>
+<div class="figure"><img class="image-inline" src="biz01_034.gif/image_preview" alt="修改主频道菜单样式" height="254" width="400" /></div>
+<p><strong>3.6、增加Visual视觉图片</strong></p>
+<p>接下来，我们需要为页面添加Visual视觉形象图，在ZMI管理页面biz01站点根目录下，找到“portal_view_customizations”并点击进入，然后找到“plone.header”，点击进入，</p>
+<div class="figure"><img class="image-inline" src="biz01_035.gif" alt="" height="102" width="593" /></div>
+<p>找到<img class="image-inline" src="copy_of_biz01_Customize_button.gif" alt="" height="27" width="109" />点击进入自定义页面，加入如下代码：</p>
+<pre class="literal-block">&lt;p id="visual"&gt;<br />&lt;img src="" tal:replace="structure here/images/visual01.jpg" /&gt;<br />&lt;/p&gt;</pre>
+<p>修改后的代码：</p>
+<pre class="literal-block">&lt;div id="portal-header"&gt;<br />&lt;div tal:replace="structure provider:plone.portalheader" /&gt;<br />&lt;p id="visual"&gt;<br />&lt;img src="" tal:replace="structure here/images/visual01.jpg" /&gt;<br />&lt;/p&gt;<br />&lt;/div&gt;</pre>
+<p>点击<img class="image-inline" src="copy_of_biz01_SaveChanges_button.gif" alt="" height="26" width="148" />保存结果。</p>
+<p>返回到“ploneCustom.css”表中，继续增加自定义代码。</p>
+<pre class="literal-block">#visual{margin:5px 0 6px 0 ;}</pre>
+<p><strong>3.7、自定义CSS样式表，合并个人工具与位置导航</strong></p>
+<p>下面我们想把页面位置导航与个人工具并行显示，通过查看这部分Html页面源代码，了解组成结构，以便修改：</p>
+<pre class="literal-block">&lt;div id="portal-personaltools-wrapper"&gt;<br />&lt;h5 class="hiddenStructure"&gt;个人工具&lt;/h5&gt;<br />&lt;ul id="portal-personaltools" class="visualInline"&gt;  <br />        &lt;li&gt;<br />            &lt;a href="http://localhost:8080/biz01/login_form"&gt;登录&lt;/a&gt;<br />        &lt;/li&gt;<br />&lt;/ul&gt;<br />&lt;/div&gt;<br />&lt;div id="portal-breadcrumbs"&gt;<br />    &lt;span id="breadcrumbs-you-are-here"&gt;您位于:&lt;/span&gt;<br />    &lt;a href="http://localhost:8080/biz01"&gt;首页&lt;/a&gt;<br />&lt;/div&gt;</pre>
+<p>通过这段代码，我们看到页面位置导航与个人工具分别是“portal-personaltools-wrapper”和“portal-breadcrumbs”两个盒区块组成的，所以，我们又定义了如下样式：</p>
+<pre class="literal-block">#portal-personaltools{border:0;line-height:26px;height:26px;} <br />#portal-breadcrumbs{position:absolute;top:308px;padding-left:17px;border:0;} / * 定义portal-breadcrumbs盒区绝对方式对齐；上距308像素；左补丁17像素；不显示边框* /</pre>
+<p><img class="image-inline" src="biz01_SaveChanges_button.gif" alt="存储更改按钮" height="30" width="101" />后，去前台浏览效果，</p>
+<div class="figure"><img class="image-inline" src="copy_of_biz01_036.gif/image_preview" alt="增加了Visual的视觉效果" height="30" width="157" />
+<p><strong>3.8、通过管理面板，自定义页面左右面板</strong></p>
+<p>在前台用管理员登陆，选择管理面板链接，</p>
+<div class="figure"><img class="image-inline" src="biz01_037.gif" alt="" height="216" width="200" /></div>
+<p>进入管理界面，可以看到左右两侧的Tools工具面板，</p>
+<div class="figure"><img class="image-inline" src="biz01_038.gif/image_preview" alt="页面Tool管理面板" height="273" width="400" /></div>
+<p>关掉右侧所有Tools工具板，在左侧增加：“日历”、“最近更新条目”、“审批清单”等，分别点击下面的“Save settings”进行保存，</p>
+<div class="figure"><img class="image-inline" src="biz01_039.gif" alt="" height="503" width="434" /></div>
+<p>退出登录，查看效果，可以看到，右侧的工具栏没有了，只剩下左侧的工具栏。</p>
+<p><strong>3.9、CSS定义Tools工具板的Title样式、盒区块间距等其他显示样式等</strong></p>
+<pre class="literal-block">#portal-column-one .visualPadding{padding:6px 0 1em 0;}<br /><br />#portal-column-content{padding-right:0;padding-top:6px;}<br /><br />.documentContent{padding:6px 0 1em 1em ;}<br /><br />.portletHeader{margin:0;padding:0;border:0;height:26px;line-height:26px;}<br /><br />.portletHeader .portletTopLeft{float:left;width:15px;height:26px;background:url(&amp;dtml-portal_url;/images/title01_left.gif) left top no-repeat;display:block;}<br /><br />.portletHeader {background:url(&amp;dtml-portal_url;/images/title01_right.gif) #C0E7F8 right top no-repeat;}<br /><br />.portletLogin, .portlet, .portletItem {border:0;}<br /><br />.portletLogin .field br{display:none;}<br /><br />.portletLogin .field label{float:left;margin:0;padding:0;width:50px;height:25px;}<br /><br />.portletLogin .field input{float:left;margin:0;padding:0;width:100px;}<br /><br />.portletLogin .field{margin:0 5px;padding:5px 0;}<br /><br />.portletLogin .formControls{clear:both;margin:5px 0;padding:8px 0 5px 0;border-top:1px dotted #C0E7F8;text-align:right; }<br /><br />.portletLogin .even{border-top:1px solid #C0E7F8;background:transparent;}<br /><br />.portletLogin .lastItem{display:none;}<br /><br />.ploneCalendar .todaynoevent{border:1px solid #E1F2F9;background:#CCE3EB;}<br /><br />.ploneCalendar .event{border:1px solid #E1F2F9;background:#C0E7F8;}<br /><br />.vcard , .portletItem{clear:both;text-align:left;}<br /><br />.portletItem .ploneCalendar{margin:5px 0 0 0;border:0;border-bottom:1px dotted #C0E7F8;width:100%;background:transparent;}<br /><br />.portletItem .ploneCalendar tr{border:0;border-bottom:1px dotted #C0E7F8;background:transparent;}<br /><br />.vcard .listing{clear:both;margin-right:5px;width:90%;}<br /><br />#parent-fieldname-text{position:static;}<br /><br />.portletFooter{border:0;}<br /><br />.documentByLine{display:none;}<br /><br /> <br /><br />#colophonmenu{display:block;margin:0;padding:7px 10px 0 10px;border:0;width:726px;white-space:nowrap;list-style:none;height:30px;line-height: normal;text-align:center;background: url(&amp;dtml-portal_url;/images/mainmenu_bg.gif) left top transparent no-repeat;}<br /><br />#colophonmenu li{padding:0 9px 0 8px;border-right:1px solid #C0E7F8;display:inline;text-align:center;}<br /><br />#colophonmenu li a{color:#C0E7F8;text-decoration:underline;}<br /><br />#colophonmenu li a:hover{text-decoration:none;}<br /><br />.colophonWrapper li{display:inline;}<br /><br />#portal-footer{margin:0;padding:3px;border:0;border-bottom:1px solid #CCD4CF;background:transparent;}<br /><br />#portal-colophon{margin:0;padding:2px 0 20px 0;}<br /><br />.colophonWrapper,.colophonWrapper ul{margin:0;padding:0;}<br /><br />.portletItem{margin:0;padding:6px 0 0 0;}<br /><br />.navTreeItem img{display:none;}<br /><br />.navTreeItem{margin:0;padding:0;border-bottom:1px dotted #C0E7F8;}<br />.navTreeItem .state-published{display:block;padding:3px 15px;line-height:150%;}</pre>
+<p><img class="image-inline" src="biz01_SaveChanges_button.gif" alt="存储更改按钮" height="30" width="101" />后，浏览前台效果：</p>
+<div class="figure"><img class="image-inline" src="biz01_040.gif/image_preview" alt="CSS定义页面细节效果" height="292" width="400" /></div>
+<h3>第四节、添加新建站点的内容</h3>
+<p>首先，管理员登陆</p>
+<p><strong>4.1、设置网站的路径显示方式、元数据描述等</strong></p>
+<p>登陆后，进入右上角的“网站设置”管理面板</p>
+<div class="figure"><img class="image-inline" src="biz01_041.gif" alt="" height="29" width="230" /></div>
+<p>选择“网站”内容进行管理，输入网站Title、描述、开启路径显示等设置：</p>
+<div class="figure"><img class="image-inline" src="biz01_042.gif" alt="" height="521" width="533" /></div>
+<p>点击“保存”按钮，保存设置（网站Title、描述的合理设置利于企业站点在互联网上的推广，英文ID的设置可以让管理员根据内容定义文件夹的英文路径，使网站更具有结构化的语义）。</p>
+<p><strong>4.2、网站主频道的栏目菜单设置</strong></p>
+<p>打开站点首页，选择“文件夹内容”选项，更改“Events”为“公司事务”、“News”为“新闻中心”；</p>
+<div class="figure"><img class="image-inline" src="biz01_043.gif" alt="" height="298" width="533" /></div>
+<p>选中“News”、“Events”后，点击“改名”按钮：</p>
+<div class="figure"><img class="image-inline" src="biz01_044.gif" alt="" height="100" width="425" /></div>
+<p>填好新英文代号、新标题后，点击“全部改名”进行保存：</p>
+<div class="figure"><img class="image-inline" src="biz01_045.gif" alt="" height="394" width="339" /></div>
+<p>增加“关于我们”、“产品展示”、“产品特点”三个文件夹；</p>
+<div class="figure"><img class="image-inline" src="biz01_046.gif" alt="" height="209" width="400" /></div>
+<p>填好“标题”、“描述”后，点击“保存”按钮保存数据：</p>
+<div class="figure"><img class="image-inline" src="biz01_047.gif" alt="" height="359" width="525" /></div>
+<p>“产品展示”、“产品特点”二个文件夹同上；</p>
+<p>增加“生产设备”、“联系我们”两个页面文件；</p>
+<div class="figure"><img class="image-inline" src="biz01_048.gif" alt="" height="218" width="442" /></div>
+<p>填好“标题”、“描述”，点击“保存”按钮，保存数据：</p>
+<div class="figure"><img class="image-inline" src="biz01_049.gif" alt="" height="277" width="537" /></div>
+<p>“联系我们”设置同上；</p>
+<p>更改“Users”的设置，从导航里排除，使之不能在频道菜单上显示；</p>
+<p>选择“Users”进入该页，选择“编辑”按钮，</p>
+<div class="figure"><img class="image-inline" src="biz01_050.gif" alt="" height="101" width="358" /></div>
+<p>在出现的页面里，选择“Settings”选项：</p>
+<div class="figure"><img class="image-inline" src="biz01_051.gif" alt="" height="194" width="550" /></div>
+<p>选择“ 从导航中排除”，点击“保存”按钮保存设定，使之不显示在频道主菜单内：</p>
+<div class="figure"><img class="image-inline" src="biz01_052.gif" alt="" height="194" width="550" /></div>
+<p>返回首页的“文件夹内容”项，于顺序列，在相应的条目上，按住鼠标左键，拖动调整条目的前后位置，</p>
+<div class="figure"><img class="image-inline" src="biz01_053.gif" alt="" height="303" width="542" /></div>
+<p>使菜单的先后顺序为“首页”、“关于我们”、“新闻中心”、“产品展示”、“生产设备”、“产品特点”、“联系我们”；</p>
+<p>选择红名的“关于我们”、“产品展示”、“生产设备”、“产品特点”、“联系我们”，选择“改名”按钮，批量改英文Id为“aboutus”、“products”、“equipment”、“property”、“contactus”，然后返回选择“改变状态”按钮，批量改变状态为“发布”；</p>
+<p>管理员登出后，查看菜单效果：</p>
+<div class="figure"><img class="image-inline" src="biz01_054.gif" alt="" height="240" width="603" /></div>
+<p><strong>4.3、依次填入网站各项内容</strong></p>
+<p>4.3.1、在根目录下添加“pic”文件夹，用于添加站点图片等文件，并改变其状态为“发布”：</p>
+<p>用管理员登录后，点击主频道上的“首页”，打开“首页”页面，选择“添加新内容”，添加“文件夹”，</p>
+<p>“标题”内输入“pic”，在“Settings”中使其“从导航中排除”为选中状态，保存后改变其状态为发布；</p>
+<p>4.3.2、在关于我们文件夹内填入“总经理致词”、“公司简介”两项页面内容：</p>
+<p>用管理员登录后，点击主频道上的“关于我们”，打开“关于我们”文件夹，选择“添加新内容”，添加“页面”，在Add页面内，填入“标题”为“总经理致词”、“描述”为“总经理致词 Speech of General manager”，“正文”内填入相应图片和文本内容：</p>
+<p>首先填入图片：</p>
+<div class="figure"><img class="image-inline" src="biz01_055.gif" alt="" height="134" width="517" /></div>
+<p>图片添加在根目录下的pic中，</p>
+<div class="figure"><img class="image-inline" src="biz01_056.gif" alt="" height="257" width="377" /></div>
+<p>进入“pic”文件夹内，点击“上载图片”后，填入标题“总经理照片”，选择“OK”确定；</p>
+<p>然后再选择页面上加入的“总经理照片”，重新点击插入图片的标志，选择图片居左显示：</p>
+<div class="figure"><img class="image-inline" src="biz01_057.gif" alt="" height="300" width="531" /></div>
+<p>点击“OK”确认后，继续添加文本内容；</p>
+<p>存储数据后，继续如前述方法添加“公司简介”内容；</p>
+<p>返回“关于我们”文件夹根，在“文件夹内容”中更改“总经理致词”英文Id为“speech”、“公司简介”英文Id为“companyinfo”　。</p>
+<p>4.3.3、巧用“新闻”样式添加产品展示内容</p>
+<p>确认用管理员帐号登录后，点击频道主菜单上的“产品展示”，进入“产品展示”文件夹，添加“送电用复合绝缘子”文件夹，进入文件夹，选择“添加新内容”下的“新闻”选项：</p>
+<div class="figure"><img class="image-inline" src="biz01_058.gif" alt="" height="30" width="28" /></div>
+<p>进入添加新闻页面，添加好“标题”、“描述”和“正文”后，添加摘要视图图片：</p>
+<div class="figure"><img class="image-inline" src="biz01_059.gif" alt="" height="30" width="28" /></div>
+<p>点击“保存”按钮保存数据。</p>
+<p>依样再添加其他页面内容，更改相应英文Id使之变成有语义的英文单字，并更改状态为发布。</p>
+<p>4.3.4、添加数据表格</p>
+<p>新建页面“直流绝缘子主要尺寸与特性”，填好“标题”与“描述”，在正文中加入表格；由于表格数据来自Word，会夹带一些编辑器无法过滤掉的垃圾代码，需要我们使用编辑器的HTML模式来读取代码，例如：</p>
+<pre class="literal-block">&lt;table class="MsoTableGrid"&gt;<br />&lt;tbody&gt;<br />&lt;tr&gt;<br />&lt;td&gt;<br />&lt;p align="center" style="text-align: center;"&gt;&lt;span&gt;序号&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;<br />&lt;p align="center" style="text-align: center;"&gt;&lt;span&gt;No.&lt;/span&gt;&lt;/p&gt;<br />&lt;/td&gt;<br />&lt;td&gt;<br />&lt;p align="center" style="text-align: center;"&gt;&lt;span&gt;绝缘子型号&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;<br />&lt;p align="center" style="text-align: center;"&gt;&lt;span&gt;Type&lt;/span&gt;&lt;/p&gt;<br />&lt;/td&gt;<br />&lt;td&gt;<br />&lt;p align="center" style="text-align: center;"&gt;&lt;span&gt;额定电压&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;<br />&lt;p align="center" style="text-align: center;"&gt;&lt;span&gt;Rated Voltage&lt;/span&gt;&lt;/p&gt;<br />&lt;p align="center" style="text-align: center;"&gt;&lt;span&gt;kV&lt;/span&gt;&lt;/p&gt;<br />&lt;/td&gt;<br />&lt;/tr&gt;<br />&lt;/tbody&gt;<br />&lt;/table&gt;</pre>
+<p>上面的部分代码里，我们会发现好多无用的“&lt;p align="center" style="text-align: center;"&gt;&lt;span&gt;”标签代码，我们可以利用Dreamweaver等带有批处理功能的编辑软件，修改代码，并把修改后的干净代码粘回，例如下面的部分代码：</p>
+<pre class="literal-block">&lt;table class="MsoTableGrid"&gt;<br />&lt;tbody&gt;<br />&lt;tr&gt;<br />&lt;th&gt;序&lt;/th&gt;<br />&lt;th&gt;绝缘子型号&lt;/th&gt;<br />&lt;th&gt;额定&lt;br /&gt;电压&lt;/th&gt;<br />&lt;th&gt;额定&lt;br /&gt;机械拉伸&lt;br /&gt;负荷&lt;/th&gt;<br />&lt;th&gt;连接结构标记&lt;/th&gt;<br />&lt;th&gt;结构高度&lt;/th&gt;<br />&lt;th&gt;最小&lt;br /&gt;电弧距离&lt;/th&gt;<br />&lt;th&gt;最小&lt;br /&gt;爬电距离&lt;/th&gt;<br />&lt;th&gt;干雷电&lt;br /&gt;全波冲击&lt;br /&gt;耐受电压&lt;/th&gt;<br />&lt;th&gt;湿操作&lt;br /&gt;冲击&lt;br /&gt;耐受电压&lt;/th&gt;<br />&lt;th&gt;湿工频&lt;br /&gt;耐受电压&lt;/th&gt;<br />&lt;th&gt;参考重量&lt;br /&gt;（不含均压环）&lt;/th&gt;<br />&lt;/tr&gt;<br />&lt;tr&gt;<br />&lt;td&gt;1&lt;/td&gt;<br />&lt;td&gt;FXBZ-±500/100&lt;/td&gt;<br />&lt;td&gt;±500&lt;/td&gt;<br />&lt;td&gt;100&lt;/td&gt;<br />&lt;td&gt;16&lt;/td&gt;<br />&lt;td&gt;6800±50&lt;/td&gt;<br />&lt;td&gt;6200&lt;/td&gt;<br />&lt;td&gt;23000&lt;/td&gt;<br />&lt;td&gt;+2950&lt;/td&gt;<br />&lt;td&gt;+1750&lt;/td&gt;<br />&lt;td&gt;+700&lt;/td&gt;<br />&lt;td&gt;24.0&lt;/td&gt;<br />&lt;/tr&gt;<br />&lt;/tbody&gt;<br />&lt;/table&gt;</pre>
+<p>保存数据后，我们到ZMI管理界面的/biz01/portal_skins/custom/ploneCustom.css 中添加样式表，来改变表格的显示样式：</p>
+<pre class="literal-block">.MsoTableGrid th{padding:5px 1px; border-collapse:collapse; font-weight:normal;background:#E1E9F2;} <br />.MsoTableGrid td{font-size:10px;text-align:center;background:#ECF1F6;}</pre>
+<p><img class="image-inline" src="biz01_SaveChanges_button.gif" alt="存储更改按钮" height="30" width="101" />后，查看前台效果，我们发现表格里的数据难看的拥挤在一起，所以需要我们关闭左侧的Tools面板，点击面板下面的“管理面板”，调整“Group portlets”、“Content type portlets”、“Parent portlets”为“Block”选项，点击下面的“Save settings”按钮，保存所作的设定，</p>
+<div class="figure"><img class="image-inline" src="biz01_060.gif" alt="关闭面板" height="30" width="77" /></div>
+<p>返回页面浏览效果，我们看到现在的表格好看多了：</p>
+<div class="figure"><img class="image-inline" src="copy_of_biz01_060.gif" alt="调整后的表格" height="30" width="104" /></div>
+<div class="figure"><img class="image-inline" src="biz01_061.gif" alt="" height="283" width="471" /></div>
+<p>如法添加其他的数据表格，并更改英文Id和发布状态；</p>
+<p>添加完所有的产品展示内容后，进入“ 送电用复合绝缘子”页面，选择显示方式为摘要方式；</p>
+<div class="figure"><img class="image-inline" src="copy_of_biz01_062.gif" alt="" height="30" width="28" /></div>
+<p>浏览前台效果（由于我们采用了新闻方式添加的页面内容，所以选择以摘要的方式显示的时候，会有缩略小图显示）：</p>
+<div class="figure"><img class="image-inline" src="biz01_063.gif" alt="" height="30" width="28" /></div>
+<p>我们目前会使用的Plone3的功能，可以让我们继续添加网站的其他页面内容，例如“生产设备”、“产品特点”、“联系方式”等。</p>
+<h3>第五节、查询集的使用</h3>
+<p><strong>5.1、利用查询集制作首页产品摘要 </strong></p>
+<p>用管理员登录后，在主频道导航栏上，点击“产品展示”进入“送电用复合绝缘子”选择“送电用绝缘子”，进入该编辑页面，选择“Categorization”链接按钮，添加分类“推荐产品”：</p>
+<div class="figure"><img class="image-inline" src="biz01_064.gif" alt="" height="73" width="223" /></div>
+<p>点击下面的“保存”按钮，保存分类设定；依次添加“组合绝缘子”、“铁路用绝缘子”、“相间隔离棒”的分类为“推荐产品”；添加“生产设备”的分类为“服务介绍”；</p>
+<p>点击主频道导航栏上的“首页”，在首页“添加新内容”里找到“收藏”链接，点击进入添加查询集页面：</p>
+<div class="figure"><img class="image-inline" src="biz01_065.gif" alt="" height="106" width="328" /></div>
+<p>填写“标题”和“正文”，并在“详情请入”文本上加到“公司简介”的相对链接；</p>
+<div class="figure"><img class="image-inline" src="biz01_066.gif" alt="" height="480" width="520" /></div>
+<p>选中“详情请入”，点击添加链接标志，利用出现的导航提示，找到“公司简介”并选择；</p>
+<div class="figure"><img class="image-inline" src="biz01_067.gif" alt="" height="258" width="454" /></div>
+<p>然后，找到页面下面的“查询结果限制”选中，“条目数量”输入“4”；表格列内去掉已选择的“标题”；点击“保存”按钮，保存所作的设定；</p>
+<p>选择编辑导航条上的“条件”，进入条件设定页面；添加新的搜索条件为“分类”，点击“Add criteria”按钮添加该搜索条件；选择“推荐产品”分类；点击“保存”按钮，保存条件设定；</p>
+<p>在编辑中设定该查询集不在导航中显示，显示方式为“”摘要视图，状态更改为发布；</p>
+<p>浏览效果：</p>
+<div class="figure"><img class="image-inline" src="biz01_068.gif" alt="" height="406" width="545" /></div>
+<p>继续选择“添加Collection”添加子查询集，添加新的查询集，表格列内去掉已选择的“标题”；在条件里选择“分类”，添加后，选择我们已经建好的另一个分类“服务介绍”，点击“保存”按钮保存设定；“显示”选择“摘要视图”；</p>
+<p>点击主频道的首页，选择文件夹内容，在文件夹内容页面点击“显示”，选择“Change content item as default view ...”选项，进入“选择默认页面”，选择我们刚刚建立的“欢迎光临维久日电力器材”查询集；在文件夹内容里，选择“Welcome to Plone”前面的复选框，点击下面的“删除”按钮或进入该页，在编辑中去除导航上的链接；</p>
+<p>浏览效果，我们会看到中间部分的产品展示摘要为竖列显示，到ZMI的管理后台，在 /biz01/portal_skins/custom/ploneCustom.css中加入如下样式表：</p>
+<pre class="literal-block">.content-list li{list-style:outside;}<br />.documentFirstHeading{color:#C80808;}<br />.section-Welcome h2{clear:both;overflow:hidden; text-indent:-9999px;font-size:5px;height:5px;}<br />.section-Welcome .discreet,.section-Welcome .contenttype-topic img{display:none;}<br />.section-Welcome .contentActions{padding:0;}<br />.section-Welcome .tileItem{float:right;margin:0 0 10px 3px;padding:8px 0 0 0;border:0;border-bottom:2px solid #B8D8F8;width:128px;background:url(&amp;dtml-portal_url;/images/main_products_ls_bg.gif) left top #C0E7F8 no-repeat;}<br />.section-Welcome .tileImage{float:none;margin:0;padding:0;border:0;border-bottom:1px solid #fff;border-top:1px solid #fff;}<br />.section-Welcome .plain img,.tileImage,.newsImage,.image-inline{padding:1px;border:2px solid #C0E7F8;}<br />.section-Welcome .tileHeadline{margin-left:3px;font-size:12px;}<br />.section-Welcome .tileBody{display:block;margin:0 0 0 3px;border-bottom:1px dotted #ffffff;height:44px;overflow:hidden;}<br />.section-Welcome .tileFooter{padding-right:3px;text-align:right;}<br />.section-Welcome .tileFooter a{border:0;}<br />.section-Welcome .contenttype-topic{display:block;margin:0;padding:5px 0 5px 20px ;width:509px;height:70px;background: url(&amp;dtml-portal_url;/images/main_bottom_bg.gif) right top transparent no-repeat;}</pre>
+<p>来修饰首页，浏览效果：</p>
+<div class="figure"><img class="image-inline" src="biz01_069.gif/image_preview" alt="首页查询集效果" height="400" width="331" /></div>
+<h3>第六节、更改Plone模板</h3>
+<p>到ZMI中的biz01根目录下，找到“portal_view_customizations”下的“plone.footer”，点击进入后，选择自定义编辑按钮，将其中内容替换成：</p>
+<pre class="literal-block">&lt;ul id="colophonmenu"&gt;<br /><br />&lt;li&gt;&lt;a href="/aboutus"&gt;关于我们&lt;/a&gt;&lt;/li&gt;<br /><br />&lt;li&gt;&lt;a href="/news"&gt;新闻中心&lt;/a&gt;&lt;/li&gt;<br /><br />&lt;li&gt;&lt;a href="/products"&gt;产品介绍&lt;/a&gt;&lt;/li&gt;<br /><br />&lt;li&gt;&lt;a href="/equipment"&gt;生产设备&lt;/a&gt;&lt;/li&gt;<br /><br />&lt;li&gt;&lt;a href="/property"&gt;产品特点&lt;/a&gt;&lt;/li&gt;<br /><br />&lt;li&gt;&lt;a href="/events"&gt;公司事务&lt;/a&gt;&lt;/li&gt;<br /><br />&lt;li&gt;&lt;a href="/contactus"&gt;联系我们&lt;/a&gt;&lt;/li&gt;<br /><br />&lt;/ul&gt;<br /><br />&lt;div id="portal-footer" metal:define-macro="portal_footer" i18n:domain="plone"&gt;<br /><br />&lt;p&gt;<br /><br />    &lt;span&gt;&amp;copy; 2007新动力电力器材有限公司版权所有  由OA800.com提供技术支持。 &lt;/span&gt;<br /><br />&lt;/p&gt;<br /><br />&lt;/div&gt;</pre>
+<p>保存设置，在自定义样式表中作相应调整；</p>
+<p>浏览前台效果如图：</p>
+<div class="figure"><img class="image-inline" src="biz01_layout01.jpg/image_preview" alt="最终页面效果" height="400" width="298" /></div>
+</div>

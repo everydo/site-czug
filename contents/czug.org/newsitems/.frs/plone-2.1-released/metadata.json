@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "plone-2.1-released"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "成长最快速的开源内容管理系统发布新版本", 
+        "modified": "2005-11-02 23:15:02", 
+        "title": "Plone 基金会发布Plone 2.1"
+    }
+}

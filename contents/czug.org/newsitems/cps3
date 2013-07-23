@@ -1,0 +1,14 @@
+<p>CPS3的发布，的确是一个大的消息。详细在<a href="http://zope.org/Members/nuxeo/news/cps30final">这里</a></p>
+<p>CPS3和Plone是一个竞争对手关系，同是基于zope和cmf。但是运作模式完全不同。</p>
+<p>CPS由法国的一个公司Nuxeo运作，主要社区集中在法国。从前的网站也仅仅由法语版本的。法国政府由10几个部门都使用他们的产品。</p>
+<p>CPS本地化做得好，但是社区部大。</p>
+<p>Plone则是更加GPL一些，社区更广泛，我个人感觉也更加成功。</p>
+<p>从产品功能来看：</p>
+
+<ol>
+<li> CPS已经用了源于Plone的很多东西，如PortalTransform。（那为什么还要CPS，为什么不直接在Plone上做？估计Nuxeo还是商业上的原因吧）</li>
+<li> CPS有workspace/versioning/local workflow/skin management, 这些特性是目前Plone所不具备的，但是Plone也有类似未正式发布的产品。为了避免升级上的问题，Plone比较小心的添加一个功能，有些宁缺勿乱的感觉。<p> 当然目前还不能从CPS2升级到CPS3，这可能是很多CPS用户比较痛苦的事情。Plone则可以从Plone1平滑升级到Plone2。</p>
+</li>
+<li> 看看他的很多未来特性，其实都是Plone所具备了的。</li>
+
+</ol>

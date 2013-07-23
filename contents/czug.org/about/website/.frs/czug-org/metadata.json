@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "czug-org"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "介绍本网站上安装的产品、系统的配置，以及补丁等信息", 
+        "modified": "2006-08-24 23:32:11", 
+        "title": "CZUG.org内幕"
+    }
+}

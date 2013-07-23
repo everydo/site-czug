@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "plone.net"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "得知Plone.NET的站点已经正式启用了，这里是Plone商业区。", 
+        "modified": "2007-01-09 10:13:24", 
+        "title": "Plone.NET"
+    }
+}

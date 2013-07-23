@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "history"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "网站更新调整历史", 
+        "modified": "2006-11-01 08:16:17", 
+        "title": "网站历史"
+    }
+}

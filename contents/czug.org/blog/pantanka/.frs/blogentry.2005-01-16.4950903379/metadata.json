@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "blogentry.2005-01-16.4950903379"
+    }, 
+    "dublin": {
+        "creators": [
+            "patanka"
+        ], 
+        "description": "plone不断的给我惊喜，这一次是和domino的集成。", 
+        "modified": "2005-01-16 13:40:36", 
+        "title": "利用ldap与domino集成"
+    }
+}

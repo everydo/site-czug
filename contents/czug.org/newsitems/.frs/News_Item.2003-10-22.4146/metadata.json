@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "News_Item.2003-10-22.4146"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "“轰轰烈烈”的首次Plone Conference结束了，我们看到了一个强大的社区", 
+        "modified": "2003-10-22 01:54:33", 
+        "title": "Plone第一界会议和发展动向"
+    }
+}

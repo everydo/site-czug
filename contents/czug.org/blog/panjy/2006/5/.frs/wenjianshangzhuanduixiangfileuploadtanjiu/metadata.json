@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "wenjianshangzhuanduixiangfileuploadtanjiu"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Zope2的FileUpload对象是如何保存上传文件的。", 
+        "modified": "2006-05-09 22:10:52", 
+        "title": "文件上传对象FileUpload探究"
+    }
+}

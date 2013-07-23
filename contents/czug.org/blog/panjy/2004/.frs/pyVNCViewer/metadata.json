@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "pyVNCViewer"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "pyVNCViewer是使用Twisted-Pyton 和PyGame 编写的应该一个的VNC 查看器.", 
+        "modified": "2004-11-25 13:28:26", 
+        "title": "pyVNCViewer: Python编写的VNC远程桌面"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "quanfangweilejiezope"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "这是来自Martijn Faassen的Zope讲演录像", 
+        "modified": "2006-09-26 09:15:55", 
+        "title": "全方位了解Zope"
+    }
+}

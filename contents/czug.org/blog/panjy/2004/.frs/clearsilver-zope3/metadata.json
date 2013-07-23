@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "clearsilver-zope3"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Martijn Faassen把ClearSilver集成到zope3了，据说性能是Page Template的数倍（2-5倍）", 
+        "modified": "2005-04-20 01:05:54", 
+        "title": "把ClearSilver集成到Zope3"
+    }
+}

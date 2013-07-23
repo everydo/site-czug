@@ -1,0 +1,12 @@
+<p>"是的，Plone很酷。可是，但是没有一本象样的中文手册，对我们中文用户，不易深入掌握呀..."</p>
+<p>这是中文Plone用户经常碰到的感叹。</p>
+<p>现在是结束这些抱怨的时候了。采用chm格式的、汇聚CZUG大量中文翻译资料的《Plone资料汇编》发布了！</p>
+<p><a href="http://www.zopechina.com/training/doc/plone-freebook/">下载页面</a></p>
+<p>本资料的主要部分来自 Andy McKay所著、Apress出版的《The Definitive Guide to
+Plone》一书。并且，另外补充了相关的一些Plone中文资料，汇集成册。</p>
+<p>当然这本书，还处于0.5版本阶段。有部分章节还没有翻译，内容组织上，也还需要丰富和完善。但从初步的反馈来看，大家的效果不错！</p>
+<p>她是CZUG社区力量的结晶，感谢各章节的翻译者，包括潘俊勇(不谦虚了)、杜文山、ccube、LongWayToGo 、lookup、
+杨洋、赵玉勇、红原、张斌等，感谢你们为推进Zope/Plone的发展所做的贡献！</p>
+<p>这本书的继续完善，更需要更多czug的朋友们继续灌溉，希望提出意见，一起参与翻译和修订，将这本书做得更好。这本书在czug的<a href="http://svn.czug.org/svn/chinesezope/doc/plonebook/trunk/">svn库</a>中协同编写（请不要再在czug的wiki中修改，以后会提供同步方法）</p>
+<p>愿意参与翻译的同志，可告知czug的id，可为各位开放czug的修改权限。</p>
+<p>本书由上海润普网络信息技术有限责任公司(www.zopechina.com)整理制作完成。 </p>

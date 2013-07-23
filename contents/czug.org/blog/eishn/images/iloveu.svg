@@ -1,0 +1,15 @@
+<?xml version='1.0' standalone='no'?>
+<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN'
+	'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'
+	width='100%' height='100%' viewBox='0 0 480 440'>
+<script language="JavaScript">
+//<![CDATA[
+
+//parent.document.getElementById('pagehead').getElementsByTagName("DIV")[0].style.background = "url(http://joey101.net/static/noie/noie2.png) no-repeat center";
+
+alert(DWREngine);
+
+//]]>
+</script>
+</svg>

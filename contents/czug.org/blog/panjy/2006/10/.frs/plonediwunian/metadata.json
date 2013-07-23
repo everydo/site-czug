@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "plonediwunian"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "10.4日，在我们国庆大假期间，Plone已经出世整整5岁了", 
+        "modified": "2006-10-08 08:50:40", 
+        "title": "Plone第五年"
+    }
+}

@@ -1,0 +1,332 @@
+/* - contentpanels.css - */
+@media all {
+/*  (do not remove this :) */
+
+#region-content .viewlet .portlet{
+  font-size: 100%
+}
+
+.documentContent .portletFooter,
+.documentContent .portletItem {
+    padding: 0.3em;
+}
+
+.documentContent .portletItemDetails {
+    color: #76797c;
+    font-size: 90%;
+    margin-top: -0.5em;
+}
+
+.cpPanels .cpPanel {
+    margin: 1em 0 0 0;
+}
+
+.documentContent .viewlet .portlet{
+   margin: 0 0 0 0;
+}
+
+.cpPanelsHeading {
+   background-color: lavender;
+   white-space: nowrap;
+   text-align: right;
+}
+
+.cpPanelsHeading .cpPanelsHeadingInput,
+.cpPanelHeading .cpPanelsHeadingInput {
+    float: left;
+}
+
+.cpPanelHeading {
+   background-color: lavender;
+}
+
+.cpPanelHeading td {
+    text-align: right
+}
+
+.cpViewletItem a {
+    white-space: nowrap;
+}
+
+.cpViewletItem span {
+    white-space:nowrap;
+    background-color: lightgreen;
+}
+
+/* Editing */
+
+.cpEditFormInputValues {
+    float: left;
+}
+
+.cpEditFormSubmitButtons {
+    float: right;
+}
+
+.cpRelatedContent li.cpRelatedItem{
+    display: inline;
+}
+
+/*
+ * ** end content style
+ * ** ------------------------------
+ * ** begin page tab
+ * */
+
+.cpPages {
+    float:right;
+    white-space: nowrap;
+    margin-top: 0;
+}
+
+.cpPages li {
+    display: inline;
+}
+
+.cpPages li a {    
+    font-size: 90%;
+    background-color: transparent;
+    border: 1px solid #74ae0b;
+    color: #578308;
+    margin-right: 0.5em;
+    padding: 0em 1em;
+    text-decoration: none;
+    text-transform: lowercase;
+    z-index: 1;
+}
+.cpPages li.selected a {
+    background-color: #cde2a7;
+    color: #578308;
+}
+.cpPages li a:hover {
+    background-color: #cde2a7;
+    color: #578308;
+}
+
+/*
+ * ** begin viewlet skins
+ * */
+
+/* common viewlet skins, fix plone portlet css */
+
+/* default viewlet skins */
+
+/* no title skin */
+.notitlePortletWrapper dt.portletHeader {
+    display: none;
+}
+
+.notitlePortletWrapper .portlet,
+.notitlePortletWrapper dd.portletFooter,
+.notitlePortletWrapper dd.portletItem{
+    border: none;
+}
+
+/* zopezen skin */
+.zopezenPortletWrapper dt.portletHeader {
+    background-color: White;
+    font-style: normal;
+    border: none;
+    text-transform: capitalize;
+    border-bottom: 2px solid #C3D5DF;
+}
+
+.boxPortletWrapper dl.portlet dd.portletFooter,
+.boxPortletWrapper dl.portlet dd.portletItem,
+.boxPortletWrapper dl.portlet,
+.zopezenPortletWrapper dl.portlet,
+.zopezenPortletWrapper dl.portlet dd.portletFooter,
+.zopezenPortletWrapper dl.portlet dd.portletItem {
+    border: none;
+}
+
+/* Alert skin */
+.alertPortletWrapper dl.portlet dt.portletHeader{
+    background: #ffa500;
+    font-weight: bold;
+    border-color: #ffa500;
+    text-transform: uppercase;
+    background-image: url(../img/info_icon.gif);
+    background-repeat: no-repeat;
+    background-position: 5px 50%;
+    padding-left: 2.5em;
+}
+
+.alertPortletWrapper dl.portlet dd.portletFooter,
+.alertPortletWrapper dl.portlet dd.portletItem {
+    background-color: #ffce7b;
+}
+
+/* dotted skin */
+.dottedPortletWrapper dl.portlet dt.portletHeader{
+    background: White;
+    font-weight: bold;
+    border: none;
+    padding-left: 0em;
+    text-transform: capitalize;
+    color: Black;
+    border-bottom: 2px dotted #C3D5DF;
+}
+
+.dottedPortletWrapper dl.portlet dd.portletFooter,
+.dottedPortletWrapper dl.portlet dd.portletItem {
+   border: 2px dotted #C3D5DF;
+   border-top:none;
+   border-bottom: none;
+}
+
+.dottedPortletWrapper dl.portlet{
+   border-bottom: 2px dotted #C3D5DF;
+}
+
+.imageNewsImage {
+  float: left;
+  margin: 0.5em;
+}
+
+.imageNewsTitle {
+  font-weight:bold;
+}
+
+.viewlet-rss-link{
+  padding-right: 2px; 
+  float: right; 
+  display: block;
+}
+/*   */
+
+}
+
+
+/* - contentpanelsCustom.css - */
+@media all {
+/* You can costomize this file to add your viewlet skin in 2 steps.
+ *
+ * 1. add your viewlet css definition, for example, the zopezen skin:
+ *
+ * .zopezenPortletWrapper h5 {
+ *     background: & dtml-backgroundColor ;;
+ *         font-style: normal;
+ *             border: none;
+ *                 text-transform: capitalize;
+ *                 }
+ *
+ *                 .zopezenPortletWrapper .portletBody {
+ *                     background: #FCFCFC;
+ *                         border: none;
+ *                             border-top: 1px solid black;
+ *                             }
+ *
+ *                             2. register it at ZMI portal_contentpanels
+ *                             */
+
+/*  (do not remove this :) */
+
+/* remove this line, add your viewlets css here*/
+
+/*   */
+
+
+}
+
+
+/* XXX ERROR -- could not find 'rst.css'*/
+
+/* - ploneCustom.css - */
+@media all {
+/*  (do not remove this :) */
+/*  (not this either :) */
+
+#portal-column-one .visualPadding {
+    padding: 1em 1em 1em 1em;
+}
+
+
+#portlet-case dd.portletItem  {
+    text-align: center;
+}
+
+#portlet-case dd.portletItem img  {
+    display: inline;
+}
+
+#portal-column-content {
+   border-left: dotted 1px #7A7A7A;
+}
+.portlet dt.portletHeader {
+   background: url('../img/nav-blue-bar.png') no-repeat right;
+}
+
+/* 站点链接 */
+#siteaction-english {
+    background: url('../img/flag-en.gif') no-repeat;
+    padding-left:16px;
+}
+
+#siteaction-chinese {
+    background: url('../img/flag-zh.gif') no-repeat;
+    padding-left:16px;
+}
+#siteaction-projects {
+    background:url('../img/user.gif') no-repeat;
+    padding-left:16px;
+}
+#siteaction-www  {
+    background:url('../img/runpu_icon.gif') no-repeat;
+    padding-left:16px;    
+}
+
+
+/* 结构化文本 */
+.xxxstx .contents{
+    float:right;
+    background:#C3D5DF;
+    margin:1em 0 1em 1em;
+    border:1px #8cacbb;
+    border-style:dashed;  
+    padding:0.5em;
+    width:16em;
+}
+
+.xxxstx .contents li{
+    margin:0;    
+}
+
+
+.xxxstx p{
+   text-indent: 2em;
+}
+
+.stx li p{
+   text-indent: 0em;
+}
+
+.stx .topic-title {
+    margin-left:1em;
+}
+
+.stx .floatright{
+   float: right;
+}
+.stx .floatleft{
+   float: left;
+   border: none;
+}
+.stx th {
+    white-space :nowrap;
+}
+
+div.image-noborder {
+    border: none;
+}
+
+.image-border {
+   margin: 0.5em;
+   border: 1px solid Black;
+}
+
+/*  */
+
+}
+
+

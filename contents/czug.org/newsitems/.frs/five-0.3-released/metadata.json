@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "five-0.3-released"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Five是一个将Zope3技术引入Zope2的一个产品，Five将是Zope2.8的核心组件之一。", 
+        "modified": "2005-03-18 09:57:32", 
+        "title": "Five 0.3版本发布！"
+    }
+}

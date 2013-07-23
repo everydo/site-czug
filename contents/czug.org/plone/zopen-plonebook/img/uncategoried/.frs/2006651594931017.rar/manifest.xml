@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<manifest xmlns="http://zopechina.com/ns/frs"
+           xmlns:tal="http://xml.zope.org/namespaces/tal"
+           contenttype="<bound method ATFile.getPortalTypeName of <ATFile at /58080_1/default.czug.edo/projects/341196/files/uncategoried/2006651594931017.rar>>"
+           uid="6e32a72371059465be53807cd364fc61">
+
+
+    <entry type="primary_field"
+           name="file"
+           mimetype="application/rar"
+           filename="2006651594931017.rar"
+           fullpath=""/>
+
+
+    <entry type="xns"
+           name=""
+           mimetype="text/xml"
+           filename="2006651594931017.rar.xml"
+           fullpath="xns.xml"/>
+
+
+</manifest>

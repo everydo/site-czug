@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "meet-with-philipp"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "和zope3的开发人员之一philipp的见面总结，拷贝自czug-org邮件列表", 
+        "modified": "2005-10-11 11:19:57", 
+        "title": "和phillip的会面总结"
+    }
+}

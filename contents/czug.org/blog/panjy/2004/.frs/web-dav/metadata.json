@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "web-dav"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "WebDAV:\"Web-based Distributed Authoring and Versioning\". 她是一套HTTP协议的扩展，允许用户在远程协同地编辑和管理文件。", 
+        "modified": "2004-11-17 09:04:30", 
+        "title": "认识强大的WebDAV"
+    }
+}

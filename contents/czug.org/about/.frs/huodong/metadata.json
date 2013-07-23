@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "id": "huodong"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "社区组织的活动", 
+        "modified": "2006-11-01 08:21:17", 
+        "title": "社区活动"
+    }
+}

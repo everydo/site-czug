@@ -1,0 +1,15 @@
+{
+    "main": {
+        "left_col": ".. navtree::\n   :root_depth: 2",
+        "hidden_keys": [
+            "img", 
+            "__init__.pyc", 
+            "__init__.py"
+        ], 
+        "contenttype": "Folder"
+    }, 
+    "dublin": {
+        "description": "视图用于内容展现，也就是View对象", 
+        "title": "视图基础"
+    }
+}

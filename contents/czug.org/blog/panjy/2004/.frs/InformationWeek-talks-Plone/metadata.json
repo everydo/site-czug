@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "InformationWeek-talks-Plone"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "如下：The open-source arena now has its own world-class content-management system: Plone.", 
+        "modified": "2004-12-24 00:17:39", 
+        "title": "主流IT杂志InformationWeek评论Plone"
+    }
+}

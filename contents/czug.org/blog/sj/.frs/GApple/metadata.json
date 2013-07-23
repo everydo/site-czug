@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "GApple"
+    }, 
+    "dublin": {
+        "creators": [
+            "ryebread"
+        ], 
+        "description": "放出我用的Plone皮肤，还未搞完吧，所以只是V0.7，但已经能用了吧，现在在我单位的内部WEB中使用……", 
+        "modified": "2006-05-30 09:24:01", 
+        "title": "放出我用的Plone皮肤"
+    }
+}

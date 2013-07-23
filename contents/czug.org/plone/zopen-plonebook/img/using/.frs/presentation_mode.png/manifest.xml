@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<manifest xmlns="http://zopechina.com/ns/frs"
+           xmlns:tal="http://xml.zope.org/namespaces/tal"
+           contenttype="<bound method ATImage.getPortalTypeName of <ATImage at /58080_1/default.czug.edo/projects/341196/files/using/presentation_mode.png>>"
+           uid="ac3cb17720f43ead535bf96bf0791e24">
+
+
+    <entry type="primary_field"
+           name="image"
+           mimetype="image/png"
+           filename=""
+           fullpath=""/>
+
+
+    <entry type="xns"
+           name=""
+           mimetype="text/xml"
+           filename="presentation_mode.png.xml"
+           fullpath="xns.xml"/>
+
+
+</manifest>

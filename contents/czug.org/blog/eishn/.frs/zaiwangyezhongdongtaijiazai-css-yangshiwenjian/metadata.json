@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zaiwangyezhongdongtaijiazai-css-yangshiwenjian"
+    }, 
+    "dublin": {
+        "creators": [
+            "eishn"
+        ], 
+        "description": "无聊, 写了个动态加载 CSS 文件的脚本。至于有什么用处, 以后再说。", 
+        "modified": "2006-11-23 11:48:38", 
+        "title": "在网页中动态加载 CSS 样式文件"
+    }
+}

@@ -1,0 +1,18 @@
+
+{
+    "main": {
+       "left_col": ".. include:: index_left_col.rst",
+       "center_col": ".. include:: accessibility.rst",
+        "mimetype": "text/x-rst", 
+        "contenttype": "Document", 
+        "id": "accessibility-info"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "", 
+        "modified": "2008-01-23 20:23:20", 
+        "title": "可访问性"
+    }
+}

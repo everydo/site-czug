@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "plone-world-wide"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "以色列人 Ofer Weisglass 制作的演示图，介绍plone在世界各地的发展和案例", 
+        "modified": "2005-01-07 19:37:06", 
+        "title": "读图观Plone"
+    }
+}

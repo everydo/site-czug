@@ -1,0 +1,1525 @@
+=====================
+Five和Zope3
+=====================
+
+.. Contents::
+.. sectnum::
+   :prefix: 16.
+
+本章讲述如何通过Five插件在Zope2中使用Zope3技术，进行可重用的、可扩展的、组件化开发，
+也为产品的未来向Zope3升级之路做好铺垫。
+这是文件系统上的扩展产品开发，因此这一章是面向扩展开发人员而编写的。
+
+本章的学习重点:
+
+- 理解Zope3相对于传统的Zope2开发带来的优势，以及Five在引入Zope3技术中所起的作用
+- 掌握一些Zope3的核心技术： 接口、适配器、视图、事件
+- 理解自动测试对于提升软件品质所起的作用，掌握测试的方法
+
+Zope3开发新概念
+================
+这一节讲述从Zope2到Zope3的进化过程，Zope2开发所形成的固有的缺点在Zope3中是如何被克服，
+并介绍了Five作为一个Zope2产品为了引进Zope3的先进技术而扩展了哪些功能。
+还有Zope3中广泛使用的配置语言ZCML，同样在Five中应用广泛。
+
+Zope3所带来的其实是一场关于如何写作可扩展产品的方式的变更，
+因此这一章的一个重点是介绍Zope3所带来的软件设计观念上的革新。
+
+Zope3是什么
+-----------------
+Zope3就是第三代的Zope，Zope3采用了最新的设计模式和组件架构，是对Zope2的一个完全重新改写。
+
+传统的Zope2发展到现在，已经暴露出了很多问题： 
+
+- 为了尽可能简单的提供丰富的功能（特别是对于非技术用户而言），Zope做了许多自动化的工作。
+  这对于简单的应用是非常好的，但是对于那些更复杂些的应用，反而是一种障碍了。
+  如隐式获取(Implict Acquisition)。
+  Plone的皮肤功能继承自CMF，它依赖获取机制，
+  这意味着所有的模板和脚本都共享着一个共同的命名空间（namespace），
+  而不管内容的类型是什么。名字最好要包含类型信息，
+  并且要小心谨慎的获取（否则就可能重名）。
+
+- 还有Zope提供了非常方便地安装第三方产品（products）的机制。
+  但是它很难适用于所有的产品。
+  在传统的Zope产品中，一个对象的所有功能都是它自己的类或者基类提供的。
+  改变这些产品行为的唯一方式，是去修改或者子类化它们。
+  修改产品通常会使维护升级变得很困难。
+  子类化也是令人讨厌的，因为它会让基类和子类之间耦合性得过于紧密了。
+
+..
+  （这就是众所周知的脆弱的基类问题。）
+  Zope的CMF(Content-Management Framework)的一个最大的贡献在于它的工作机制，
+  它能把呈现和业务逻辑分离，能与目标类无关的进行管理，并且可以很容易的实现用户化/定制。
+  换句话说，这可以让呈现和业务逻辑在不修改源码和不使用继承的情况下就能被用户化/定制。
+
+Zope3以组件架构的方式来解决了这些问题，
+对于Zope2中那些易混淆的概念则予以剔除或改造，
+如Zope3去掉了隐式获取的支持，只允许显式的获取。
+组件装配基于对象的连结，通过接口（interfaces）对组件进行组装。
+并且使用视图将业务逻辑与呈现相分离。
+
+在Zope3中每一个页面模板可以声明为只用于某一种接口，
+只有那些实现了这个接口的对象才能使用这个页面模板，
+这样页面模板的名字就不再是全局的了，因此很好地解决了命名冲突的问题。
+
+..
+  基于上面这些有限的信息，Zope3给你展现了一些显著的优势：
+  * 它提供了一个非常清晰的开发模式。试用过Zope3的开发者们都会发现它是一个比Zope2更具生产力的开发环境
+  * Zope 3更容易适应特殊的业务需求。
+    有趣的是Zope3应用再也不像传统的Zope应用了。
+    举例来说，一个应用不再需要使用传统的"对象文件"模式，Zope3让那些使用关系数据库的应用变得简单得多
+  * Zope3被设计为从底层支持I18n和L10n应用
+  * Zope3提供了很好的文档：一本书（还在不断增加中），一个教程，
+    一个内嵌的Api参考手册，和一个在不断细化的内部开发文档。
+
+但是目前的Plone2.5以及即将发行的Plone3.0都是运行于Zope2的，
+因为它仍然依赖于Zope2的隐式获取机制。
+对于一个很容易定制开发的Plone而言，隐式获取机制并非全无用处，
+Plone中有一些关键的特性还得依赖于它。
+只是Zope2中缺少一些Zope3所拥有的新的特性，
+如全局模板命名冲突等问题，
+因此需要一种简单的方案在Zope2引入Zope3的解决方式。
+
+..
+  你该使用Zope3吗？
+  Zope 3 既有重大的改进，也有相对于Zope2的局限性。
+  是否需要使用它依赖于你的实际情况。幸运的是你不必马上转换到Zope3上面。Zope2还将伴随我们相 
+  当长的时间。实际上，Zope2可以让我们从容不迫的对待Zope3。
+  要感谢Five项目，你可以在Zope2的应用里面使用部分的Zope3技术。随着 
+  时间的过去，Zope2也会具有更多的Zope3特性，让最后转变到Zope3的结局更简单更容易。
+
+..
+  TODO from http://python.cn/pipermail/python-chinese/2005-August/014852.html
+
+Five是什么
+-----------------
+Five (主页在 http://codespeak.net/z3/five/)
+是一个Zope2上的产品，
+它的出现正是为了解决Zope2向Zope3的过渡之路。
+它帮助开发者一步步从Zope2走向Zope3的组件架构。
+不使用它，Zope2和Zope3会是两个完全分离的世界，并且不可能在它们之间进行移植。
+Five的目标就是让Zope 2的开发人员在Zope 2中使用Zope 3的代码。
+使用Five产品，允许在Zope2中使用Zope3的接口、适配器和事件机制。
+
+注意Five和Zope3已经被包含在了从Zope2.8开始的最近的Zope发行版中，
+如Zope2.8(其中内含Five1.2版)和Zope2.9(其中内含Five1.3版)，
+还有Zope2.10版本(其中内含Five1.5版)。
+它位于Zope-2.X/lib/python/Products/Five，因此这些Zope版本不需要再安装一次Five产品。
+
+如果说Zope-2.8中只是简单地包含了Five和Zope3产品，
+至Zope-2.9中，Zope的内核已经是使用Five和Zope3技术改写过的了，
+主要体现在其中的接口定义等已经改写为了Zope3接口的形式。
+现在使用的Plone-2.5的主要运行平台是Zope-2.9，
+其中也是大量使用了Five以运用Zope3的设计模式。
+至Zope-2.10，这是一个Zope3的主要技术都融合入Zope2的版本，
+从这个版本开始，Zope2已经逐步过渡为Zope3的一个特殊定制版本。
+Plone-3.0采用Zope-2.10作为运行基础的版本，
+在其中已经大量使用了各种Zope 3的技术。
+因此，在为Plone写作新的产品时，应该更多地考虑使用Five来运用Zope3技术。
+
+..
+  在产品中应用Five有很多的优点：
+
+  * 在Zope 2中使用Zope 3的技术，比如组件架构和声明性的配置
+  * 让你的Zope 2项目，渐进地转向Zope 3，这样优于直接迁移到Zope 3
+  * 你现在几可以开始学习Zope 3, 为未来做准备
+
+..
+  Five也可用于开发全新的Zope 2产品。是否直接基于Zope 3开发，
+  这取决于你的需求。
+
+同时要注意的是Five只是用在Python插件产品级别，它本身不提供任何用户界面。
+因此使用Five技术主要面向的是基于文件系统开发产品的Python开发人员。
+
+Zope3配置标记语言(ZCML)
+----------------------------
+上面讲到，Zope2通过继承类增加功能，会造成代码难以重用等缺点。
+Zope3的原则是将代码按照功能单元分解成尽量小而精简，
+那么这么多分散的小的功能需要一种组合的方式。
+
+Zope3采用配置标记语言(ZCML)来完成这个工作。
+ZCML采用XML语言作为基础，通过描述的方式进行各种类与接口的适配、声明，
+将扩展功能类与基类进行组合。
+
+ZCML通过XML中的名字空间来实现指令的扩展。
+Five针对各种Zope2中现有的并且与Zope3不兼容的用法，
+Five专门有一个five指令名字空间。
+
+Zope中默认加载的ZCML文件名为configure.zcml, 基本的框架为::
+
+        <configure xmlns="http://namespaces.zope.org/zope"
+                   xmlns:browser="http://namespaces.zope.org/browser"
+                   xmlns:five="http://namespaces.zope.org/five">
+
+                   <include package=".browser" />
+                   <!--  ... 在这里添加ZCML语句 -->
+
+        </configure>
+
+..
+  TODO: include 介绍
+
+这是一个标准的XML格式文件，在文件头上需要XML命名空间的声明。
+这里使用"http://namespaces.zope.org/zope"，
+是标准的Zope3命名空间。
+这个文件头上还有对browser和five命名空间的声明。
+
+可以看到，其中有一个include指令，意为包含当前文件夹的browser包的配置声明，
+这样可以把在browser文件夹中的ZCML配置声明写在browser文件夹中的configure.zcml文件中，
+而在外层的configure.zcml只需要包含这个package即可。
+这是一种按组织结构分离不同的ZCML的方法。
+
+在configure之间的部分就是添加各种组装功能的语句。
+需要注意的是它是使用标准的XML规范，
+因为在里面添加语句时需要保持符合XML规范，
+如标签(tag)名称使用小写，注释使用如例中的 ``<!-- -->`` 的方式。
+
+需要特别指出的是，社区很多开发人员对ZCML的引入持有异议。
+因为ZCML引入了新的技术，增加了学习曲线，同时也不便于代码调试。
+所以ZCML自身的发展，是逐步在精简，而且大都有采用Python代码编写的替代方式。
+
+重构示例说明：ATAudio
+===========================
+本篇中将以ATAudio为例，这是一个基于Archetypes写作的产品，
+它提供了Audio和AudioFolder这两个新的基于Archetypes的内容类型；
+其中Audio类型用于存放音频类型(支持mp3文件格式)，
+AudioFolder类型用于存放整个CD的mp3文件。
+
+它的代码可以从svn仓库中取出，原始的基于Archetypes技术开发的ATAudio产品位于::
+
+  http://svn.plone.org/svn/collective/ATAudio/trunk
+
+这个产品中也存在Zope2产品中的一些普遍问题，如Audio类型的功能代码都是写在ATAudio类中，
+造成功能代码不可重用，还有缺少单元测试等。
+
+在2006年的Plone大会上有人以它为例，介绍如何使用Zope3技术来扩展功能，也就是通过使用Five实现。
+使用Zope3技术的代码分支位于::
+
+  http://svn.plone.org/svn/collective/ATAudio/branches/rocky-ploneconf2006-tutorial
+
+这个分支中的代码主要就功能代码的分离和单元测试方面作了改进。
+原来的ATAudio类上的功能被转移到了新的接口中定义，并使用相应的适配器实现。
+这样实现了功能的分离，以便于功能代码的更好的重用。
+
+同时也为了确保重构的过程不会给原来的功能引入新的错误，
+它在重构的过程中采用DocTest增加了自动测试单元。
+
+这里将以此为例展示如何将一个现存的Plone产品以Zope3技术进行重构。
+
+..
+  TODO: 存在什么问题，将改进了什么功能？
+
+Zope3接口
+====================
+接口是Zope所开创的一项Python基础技术，
+在Zope2中就已经用它来给类做文档化，但在Zope2中接口的用途也仅限于此，
+至Zope3中接口已经成为了组件架构的基础，每一个组件都由接口定义功能，
+具体的实现则交由下文讲述的适配器，
+这样才实现了功能的定义与实现的完全分离，
+为产品功能的无限扩展提供了可能。
+
+目前Zope3接口技术已经被社区项目(如twisted等)所广泛采纳。
+它已经不仅仅被用于Zope，而且已成为一项Python基础技术。
+
+定义接口
+-------------------------
+接口就是对象所能够提供的一个描述，比如公开的属性和方法。
+
+它借用标准的Python类(class)来定义。
+按照习惯约定，所有的接口命名都应该加前缀 ``I`` 。
+它和类很相似，但是不包含任何实现::
+
+  from zope import interface
+
+  class IATAudio(interface.Interface):
+      """An interface for handling an ATAudio content type.
+      """
+
+      def getAudioURL(media_server=None):
+          """
+          get the URL for the audio file. Optionally we can pass in the url
+          for a media server which is assumed to be a regular web-server with
+          a similar directory structure to the zope instance.
+          """
+
+这是ATAudio产品中的IATAudio接口定义，
+可以看到这里其实就是以Interface为基类定义一个新的类，但是类的方法中没有任何实现代码，
+与普通的类定义还有一个不同就是方法定义中没有self参数。
+
+.. hint::
+  按照Zope3的命名习惯，接口应该写在interfaces模块或者包中，
+  也就是说如果定义的接口比较少的话可以直接写在interfaces.py作为一个Python模块，
+  而如果定义的接口很多则需要建一个interfaces目录作为Python包，
+  将每一个需要定义的接口写在一个单独的Python模块文件放置于interfaces目录中，
+  再为interfaces目录添加__init__.py文件构成一个Python包。
+
+  这也是Zope3式文件命名的风格，文件名通常使用小写名称。
+  而其中的类使用大写名称，这样有一个好处是从命名上就可以一目了然地区分是Python的包还是模块，
+  还是在其中定义的类。
+
+既然接口中只有空的类定义，那为什么还需要接口呢？
+
+其一是接口中的方法虽然没有实现代码，但有很多的描述信息，
+这些描述信息给予了接口的功能一个很清晰的描述，
+这对于协作项目通常非常重要。
+这个过程其实就是对类的功能的文档化。
+他们帮助你让应用的设计设计更加清晰，通常可提升很多。
+
+其次，接口是Zope3组件架构的基础，
+定义好接口后，可将实现组件之间的松散耦合，可利用Zope3的接口适配、视图等众多的功能。
+
+定义了接口之后就是让你的对象实现该接口，
+在ATAudio另一个ATAudio.py文件中所定义的类实现了这个接口::
+
+  class ATAudio(ATFile):
+      """
+      A content type that handles audio files in your Plone site.
+      """
+
+      interface.implements(interfaces.IATAudio)
+
+这是实现了接口的类，这个类经过实例化所生成的对象也就称为一个Zope3组件。
+
+.. note::
+  如果你在查看代码中看到了 ``__implements__`` 式的接口声明，
+  那是旧的Zope2的接口，在Zope2中，接口仅仅用来给类的功能作文档化，
+  仅此而已。
+
+  为了比较与Zope2式接口的不同，这里也给出一个Zope2的接口声明的例子::
+
+    class Image(File):
+        """Image objects can be GIF, PNG or JPEG and have the same methods
+        as File objects.  Images also have a string representation that
+        renders an HTML 'IMG' tag.
+        """
+        __implements__ = (WriteLockInterface,)
+
+  这是位于Zope2的OFS中的Image.py，它使用类的属性 ``__implements__`` 来声明接口。
+
+  新的产品应该使用Zope3式的接口，而Zope2式的接口已经过时了。
+
+使用ZCML实现接口
+--------------------
+这是一种常用的实现接口的方式，对应于你自己的产品可以如此。
+但有时产品是由别人维护的，但需要让它实现一个接口，
+这就可以使用ZCML配置来实现接口，这是实现接口的另一种方式。
+
+如上面的实现接口的例子也可以在ZCML中实现::
+
+  <five:implements class=".ATAudio.ATAudio"
+                   interface=".interfaces.IATAudio" />
+
+这个句子中的class和interface值都是以 ``.`` 开始，
+是用于声明本产品内的类和接口，这种方式也可以清晰地声明实现了接口。
+
+对于不是自己维护的代码不能直接修改它的类定义，
+这时候使用ZCML来实现接口也是唯一的让它实现接口的方式。
+
+为ATAudio增加功能接口
+----------------------
+上文已叙述的一个IATAudio接口只是能让ATAudio实例对象能成为一个Zope3组件，
+但事情还远不止于此，
+前文已述，组件是Zope3的基础，它不仅将系统中已有对象都强制为一个个组件，
+对于新增加的功能也是如此。
+
+想一想在Zope2中增加一个功能是怎样的方式，在Zope2中通常使用子类化的方式去扩展一个对象的功能，
+但子类化也就意味着扩展的功能只能在此对象上使用，如果还想将功能使用于另一种类型对象，
+还必须得子类化另一个类，再添加同样的功能，
+聪明一点的办法是在一个公共的utils中定义功能，再在每一个子类对象中分别使用公共的功能，
+但这样的解决办法比起Zope3的解决方案来实在是相形见拙。
+
+这次对ATAudio进行Zope3技术改造的目标是给ATAudio类型对象提供更多的功能，
+并实现Zope3方式的可重用。
+应该将增加的功能定义在新的类中，再使用ZCML将它们装配起来。
+
+这是增加功能的接口::
+
+  class IAudio(interface.Interface):
+      """A pythonic representation of an object that contains audio information.
+      """
+
+      title = schema.TextLine(title=u'Title')
+      description = schema.Text(title=u'Description', required=False)
+      year = schema.Int(title=u'Year', required=False)
+      frequency = schema.Int(title=u'Frequency', readonly=True)
+      length = schema.Int(title=u'Length in seconds', readonly=True)
+      url = schema.TextLine(title=u'URL', readonly=True)
+
+这是另一个接口::
+
+  class IATAudioMigrator(interface.Interface):
+      def migrate(audio_file):
+          """Migrate the given audio file, return True if successful."""
+
+因为Zope3有一个最大精简原则，对于ATAudio组件应该只提供基础的功能，
+而非基础功能应该分离开并在单独的接口中定义。
+我们发现migrate功能是不应该属于基类的，因此我们把它提取出来，作为一个单独的类。
+
+单元测试
+========
+当产品的所有接口都定义好后，接下来的工作是写测试案例，写好测试案例之后运行它，
+这时测试案例会全部失败，因为功能还没有实现。
+测试案例写好之后再将这些功能一一实现，直到所有测试案例全部通过时，也就是软件发布之日。
+
+这是Zope3所引入的另一项编程概念革新，就是重视代码级的单元测试。
+这也是极限编程(eXtreme Programming)理念在Zope3中推行的结果。
+以Zope3方式编程有一句重要的格言是::
+
+  如果一个产品是未经测试的，那么它是未经证明的；
+  如果一个产品是未经证明的，那么它是不能分发的。
+
+注意这里的测试不是指传统意义上的、测试部门在软件开发完毕之后对其功能性能等的测试，
+而是指在软件写作过程中甚至写作之前就写好的针对功能代码单元的测试案例。
+
+许多传统的软件工程学方法中常常忽视这种针对代码级的测试的重要性，
+至少测试的重要性从来没有达到过测试在Zope3的开发过程中所达到的那样的高度。
+
+在Zope3的实践中证明测试不仅是必要的，而且是很有用的，它能对提升软件的品质产生积极的作用。
+
+..
+  但是Zope2本身是一个通过不断地继承而得到的一个功能庞大的系统，
+  这也导致写单元测试变得很困难。
+
+文档测试(DocTest)
+-------------------------
+为此Zope3引入了一种DocTest类型的测试，
+这种测试本身是Python语言社区所发明的技术，
+但在Zope3这种重视单元测试的开发得到很多应用。
+在Zope3中，文档测试的应用同时解决了单元测试和开发者文档这两大难题。
+
+看到DocTest这个单词，你大致可以想到它包含了文档和测试两方面。
+DocTest既是一篇文档，同时也是一个测试。
+
+在DocTest出现以前，单元测试与开发者文档(假设两者都有的话)是分离的，
+而功能的实现代码常常会改变，这时测试案例会跟随着改变。
+而开发者文档不会更新得那么快，这样就产生了沉寂的开发者文档。
+
+还有一些争论说测试案例中已经对代码功能描述得非常详细，
+不需要对代码作更多的注释，也就是不需要开发者文档。
+这样说的也是对的，但单元测试案例毕竟还是一种程序的结构，
+不如以直接的文档的形式更为易读。
+
+引入DocTest的概念之后，开发者可以以文档的形式来写测试案例，
+在运行测试时会自动对文档中所描述的功逐一测试。
+同时因为它既是一篇测试，Doctest使文档变活了，永远跟上当前最新的实现。
+
+..
+  一个doctest是一段文本，或是结构化文本(写在软件产品的docs目录)，
+  所以在这个文件中应该解释你的代码并同时调用Python代码：
+
+  ::
+
+      >>>
+
+  这代表着对Python解释器的调用，在它周围放置你的解释。
+  如果你调用的Python代码返回了什么，
+  你必须在这里写下相同的内容，如：
+
+  ::
+
+      >>> print 'hello world'
+      hello world
+
+  注意返回的值应该写在与 ``>>>`` 相同的缩进级别。
+
+注意，在DocTest技术诞生以前，单元测试一直是以单独的测试脚本出现的，
+但这种单独的测试脚本常常写起来很枯燥，
+并且可读性没有文档测试(DocTest)那么好，
+因此对于新开发的扩展产品而言，应该尽量采用文档测试技术来写单元测试。
+
+运用DocTest非常简单，因为它就是写文档的模式来写测试案例，
+下面以ATAudio中的例子来说明DocTest的用法。
+
+给ATAudio增加文档测试
+----------------------
+按照Zope3产品开发的顺序是：
+
+#. 在接口中定义功能
+#. 为接口的功能写测试
+#. 在Python代码中实现这些功能，直到所有测试案例都通过
+
+因此，在接口中定义了要实现的功能之后，拉下来就是为这些要实现的功能写单元测试。
+在上面的tests.py脚本中可以看到使用了audio.txt作为文档测试，
+这个文件是以ReStructed Test格式写成的，这里只列出第一段落，
+还有第二段落是针对视图的测试，留待下面介绍视图时再讲述。
+
+::
+
+  Audio
+  =====
+
+  We start of by ensuring we can actually instantiate our content classes.
+
+    >>> from Products.ATAudio.ATAudio import ATAudio
+    >>> foo = ATAudio('foo')
+    >>> foo
+    <ATAudio ...>
+
+    >>> from Products.ATAudio.ATAudioFolder import ATAudioFolder
+    >>> ATAudioFolder('bar')
+    <ATAudioFolder ...>
+
+  Make sure the ATAudio class implements our IATAudio interface and an instance
+  provides the IATAudio interface.
+
+    >>> from Products.ATAudio.interfaces import IATAudio
+    >>> IATAudio.implementedBy(ATAudio)
+    True
+
+    >>> IATAudio.providedBy(foo)
+    True
+
+  Another interface test, lets do zope verification.
+
+    >>> from zope.interface import verify
+    >>> verify.verifyObject(IATAudio, foo)
+    True
+
+其中的以 ``>>>`` 开始的行都是测试案例，在运行中它们都会被析取出来，
+与下面一行上应该返回的结果进行比较是否相同，相同则测试通过。
+可以看到这个测试清晰而明白，比单独写在Python脚本中的测试的可读性更好。
+
+首先导入ATAudio类，构造一个ATAudio对象，并检查它确实是ATAudio对象::
+
+    >>> foo
+    <ATAudio ...>
+
+然后是同样的方式测试了ATAudioFolder对象，
+
+再对接口进行校验，这里需要说的是使用implements语句实现一个接口时它并不检查是否真的实现了，
+这是考虑执行效率的因素，而Zope中直到真正用到接口的功能时才会知道是否真的实现了，
+如果运行时用到接口的功能却没有被实现时，它会导致异常退出，
+因此在测试中应该对接口进行校验，这是直接调用接口的方法校验::
+
+    >>> IATAudio.implementedBy(ATAudio)
+    True
+
+    >>> IATAudio.providedBy(foo)
+    True
+
+还可以使用单独的verify模块进行校验::
+
+    >>> verify.verifyObject(IATAudio, foo)
+    True
+
+运行测试
+-------------
+所有单元测试写好后，需要一个将它们组织起来一起运行的脚本。
+在ATAudio产品中以一个tests.py脚本将这些测试案例组织起来::
+
+  import unittest
+  from zope.testing import doctest
+
+  def test_suite():
+      return unittest.TestSuite((
+          doctest.DocFileSuite('audio.txt',
+                               package='Products.ATAudio',
+                               optionflags=doctest.ELLIPSIS),
+          ))
+
+  if __name__ == "__main__":
+      unittest.main(defaultTest='test_suite')
+
+测试脚本就使用Python的单元测试，这时使用的doctest从zope.testing导入即是Zope3所提供的，
+(按照命名传统，Zope3使用小写的Python包和模块名，从zope上导出的都是并入的Zope3的内容)。
+
+这段代码中使用了DocFileSuite将文档测试'audio.txt'组织为了一个TestSuite，
+可以按照unittest的要求去自动运行测试了。
+
+运行测试脚本可以使用::
+
+  python tests.py
+
+这个脚本还可以接受参数，可以使用'-h'参数查看帮助::
+
+  python tests.py -h
+
+rocky-ploneconf2006-tutorial分支对于主干的变化中的一个重要部分就是增加了测试，
+但它的测试案例较少，可以综合而写在一个tests.py文件中，
+在测试案例较多的情况下，它还可以作为一个包(package)来写作。
+不管是单个的tests文件模块还是作为文件夹形式的tests包，它都可以使用Zope的运行程序来运行所有测试案例::
+
+  bin/zopectl test -m Products.ATAudio
+
+这条命令执行的过程就是找出目标(Products.ATAudio)中的所有测试案例来运行。
+
+..
+  TODO: PloneTestCase
+  TODO http://plone.org/documentation/tutorial/five-zope3-walkthrough/tests
+
+  在Plone产品中更常见测试方法是使用PloneTestCase。
+
+适配器(Adapter)
+=================
+适配器用于为对象扩展新的功能，通过适配器，可以为一个接口增加另外一个接口的功能，实现2个接口之间的适配。
+它是一个Python类，并且实现了新接口中定义的所有方法和属性。
+
+如在这个ATAudio的例子中，将设置标题、艺术流派等功能从基类分离开来，
+这样可以减少基类的功能，使得分离出来的功能不限于用在ATAudio对象上，
+达到增加重用性的目标。
+
+具体的重构过程是在新的IAudio接口中定义这些功能，并在新的ATAudioAudio适配器中实现它，
+以合适的ZCML将它们组装起来，
+这样让所有ATAudio对象都有ATAudioAudio适配器所提供的功能。
+
+..
+  TODO: IATAudio -> IAudio 举例说明适配的背景，重用：拥有新的接口，就拥有了新接口所附加的所有功能
+
+使用适配器
+-------------
+在ATAudio产品中，定义于audio.py文件中的ATAudioAudio是一个适配器，
+它对所有实现了IATAudio的对象增加IAudio接口所提供的功能。
+
+下面以代码示例来看看适配器的用法：
+
+::
+
+  # obj is ATAudio object
+  from interfaces import IAudio
+
+  adapted_obj = IAudio(obj)
+  title = adapted_obj.title
+  title = title.replace('Blue', 'Country')
+  adapted_obj.title = title
+
+首先假设有obj是一个ATAudio对象，它实现了IATAudio接口。
+适配器ATAudioAudio就正是为IATAudio接口的对象提供IAudio的功能，
+因此下面直接使用接口对对象进行强制转换，就是 ``IAudio(obj)`` 。
+强制转换的结果是返回一个适配过的对象，
+这个对象上可以调用所有适配器中所定义的方法。
+如这个例子中在适配器ATAudioAudio上定义了title设置和获取，
+可以从adapted_obj上调用。
+
+使用适配器只需要使用定义功能的接口去强制转换目标对象就可以了，
+不需要使用具体的实现这个接口功能的适配器类名。
+从这段代码中也可以看出使用适配器的一个优点是：
+
+ 只需要调用功能接口，而不需要考虑具体功能实现。
+
+ATAudio产品的适配器
+---------------------
+..
+  在接口中定义了功能之后，接下来的工作就是在适配器中实现它。
+  TODO: 为什么？
+
+说明了用途之后，再来看看实现这个适配器的代码。
+在ATAudio产品中，实现了上一节所述接口功能的代码定义在audio.py文件中。
+
+其中的适配器定义部分代码如下::
+
+  from zope import component, interface
+  from Products.ATAudio import interfaces
+
+  class ATAudioAudio(object):
+      """An IAudio adapter for IATAudio.
+      """
+
+      interface.implements(interfaces.IAudio)
+      component.adapts(interfaces.IATAudio)
+
+      def __init__(self, context):
+          self.context = context
+
+      def _get_title(self):
+          return self.context.Title()
+      def _set_title(self, v):
+          self.context.setTitle(v)
+      title = property(_get_title, _set_title)
+
+      # ...
+
+这只是其中开始一段，可以看到它基于object类，
+并使用implements实现了其功能定义接口。
+
+这次不同的是多了一个component.adapts语句，
+这一句的意思是将这个类的功能适配到实现了IATAudio接口的对象上。
+上一节中我们已经看到ATAudio实例对象已实现了IATAudio接口，
+因此这个适配器可以作用于ATAudio实例对象。
+
+它的构造方法中只有一个参数，按照习惯它被命名为context。
+这个参数表示被适配的对象。
+
+使用ZCML组装适配器
+--------------------
+上面的操作只是在代码中写到可以适配于IATAudio接口的对象上，
+但是还没有经过装配，Zope3使用ZCML来将它们适配起来。
+在configure.zcml中可以看到这样一句::
+
+  <adapter factory=".audio.ATAudioAudio" />
+
+这就是装配语句，在初始化读到这一句时会找到audio中的ATAudioAudio类，
+读取其中的实现接口信息和适配对象信息来进行装配。
+
+..
+  TODO：使用定义好的适配器，注意强调用接口就行了，不需要搭理具体的实现
+
+这种只有一行factory声明的是一种简化式写法，
+因为在适配器中已经声明了所实现的接口和所适配到的对象类型。
+Five在初始化产品的过程中会找到这一句，对应到audio.py中的ATAudioAudio类上去找，
+已声明实现了IAudio接口，适配到提供IATAudio接口的对象上。
+
+..
+  更通用的适配器指令模式是::
+
+    <adapter
+       for="A"
+       provides="B"
+       factory="C"
+       />
+
+  解释如下：
+
+  - for 为任何实现了A接口的对象
+  - provide 提供一个新功能定义在B接口中
+  - 实现这些新功能在C类中 使用 factory
+
+对应到ATAudio产品中就是::
+
+  <adapter
+     for=".interfaces.IATAudio"
+     provides=".interfaces.IAudio"
+     factory=".audio.ATAudioAudio" />
+
+这一段ZCML的意思是针对任何实现了".interfaces.IATAudio"接口的对象，
+为其提供".interfaces.IAudio"接口所定义的功能，
+功能的具体实现在".audio.ATAudioAudio"类中。
+
+使用这种完全由ZCML来控制装配过程的好处在于功能可以完全自由适配到任意对象，
+而不仅仅是实现了IATAudio接口的对象。
+注意，这里说的任意其实还是有条件的，
+因为适配器中的self.context就是所适配的对象，
+在适配器方法实现中使用了context上的Title等方法，
+所有并不是完全任意的对象都可以适配，只有具有这些使用到的方法的对象是可以适配的。
+
+.. note::
+  注意到这种写在ZCML声明中的装配语句可能要比写在代码中的语句更难理解一些，
+  因此在自己的产品中已确定适配类型的应该像ATAudio产品一样只留下适配语句写在ZCML中，
+  在Zope3的开发实践中已经证明将太多的功能代码转移到配置文件中也不是好的方式，
+  因此应该在功能代码中声明接口和所适配对象类型，而在ZCML中只使用简单的::
+
+    <adapter factory=".audio.ATAudioAudio" />
+
+上文已讲到Zope2发展过程中形成的固有的缺点，
+Zope2的类的主要问题是随时间变得越来越大，即使使用继承技术在类中能稍减少一点复杂度。
+新的Zope3的思考方式是保持你的类足够小，而使用适配器来增加功能。
+所以增加功能就意味着增加适配器，一个适配器为一个基类增加一个功能。
+
+所以记住使用适配器有三个重要的部分：
+
+- 使用接口定义功能
+- 使用适配器去实现功能
+- 使用ZCML配置目标对象可适配
+
+你可以有不同的适配器实现同一个接口。
+适配器接口应该描述功能并尽量保持通用性，
+
+..
+  适配器查找
+  -------------
+  TODO 当一个功能接口存在多个实现的适配器的时候，存在适配器查找问题。
+
+..
+  为适配器增加文档测试(DocTest)
+  --------------------------------
+  如果说接口中只是空的类定义，在接口中只是以文档说明了功能是怎样的，可以不写测试，
+  那么适配器中的就纯粹是功能代码了，按照Zope3开发的观点，有代码的地方就需要单元测试。
+
+  就这个ATAudio产品而言，不仅需要对适配器中的每个方法的功能进行测试，
+  还需要检查接口实现的测试。
+  因为使用Zope3方式的implements实现接口或者使用ZCML实现接口都不会作真正的检查，
+  只在运行的时候才知道接口是否真的实现了。
+  实现指的是接口中定义的所有属性或方法都在适配器中实现，
+  因此需要增加测试案例确保接口中所定义的所有属性或方法都被实现了。
+
+  在ATAudio产品中的tests.py是测试的开始，这是一个框架类，
+  只需要从已知可运行的其它产品中复制一个过来，在其中声明哪些文件是文档测试。
+  可以查看ATAudio产品中的tests.py文件，发现其中定义了audio.txt是文档测试。
+
+  看看其中一个段落::
+
+    Another interface test, lets do zope verification.
+
+      >>> from zope.interface import verify
+      >>> verify.verifyObject(IATAudio, foo)
+      True
+
+  TODO 这个audio.txt中只有三段测试，分别是初始化ATAudioFolder, ATAudio 和检验ATAudio实现接口，
+  还有一段是用于视图，没有单独适配器的测试。
+
+视图(View)
+======================
+前言部分讲到Zope2皮肤存在一个很大的问题，
+就是所有皮肤元素都共享一个全局的命名空间，
+当产品有很多的皮肤元素时，必须十分谨慎地给皮肤元素命名以避免命名冲突。
+Zope3使用视图技术很好地解决了这个问题。
+
+..
+  TODO: 参看此文:
+
+  http://plone.org/documentation/tutorial/borg/zope-3-views/view
+
+..
+  Zope 3's answer is a view - a class (typically) which may be associated with a template.
+
+简单地说，视图就是一个Python类，它还可以选择与一个页面模板相关联。
+通过在类中编写所有的逻辑处理部分，
+在页面模板中调用这个视图类所提供的功能，
+保持了页面模板作为呈现单元的作用的清晰性；
+视图是一种很好的分离业务逻辑与呈现的方式。
+
+..
+  有了Five产品能让Zope3视图应用于Zope2项目中，因此也常被称为Five视图，Five视图也就是Zope3视图。
+
+视图的一个典型的用途就是替换皮肤中的脚本代码。
+现有的传统的Plone产品都是基于Zope2运行的，在产品中常常有一个skins目录，
+这里一般放置模板代码和脚本代码，
+而其中这些脚本代码存在的理由就是在这些类的功能中没有定义的功能，
+但又确实需要，于是这些业务逻辑的部分被单独作为脚本放置于皮肤目录中，
+这样造成皮肤元素过多，容易造成命名冲突。
+
+..
+  前面已经讲过，
+  Plone中所有的皮肤文件不管是模板还是脚本都共享同一个命名空间，
+  这对于复杂应用而言常常引起命名冲突。
+  因此最好的方式是将这些业务逻辑代码分离，
+  但是又不能添加到基类中定义，因为定义在基类中的代码是无法重用的。
+
+因此这部分业务逻辑代码需要一种类似于适配器的方式，
+以适配器的形式给基类添加功能，同时保持基类尽量小。
+
+视图正是这样一种适配器，但它与普通适配器不同的是它不仅要适配目标对象，
+还适配着一个用户请求对象request，因为视图是与这两者都有关系的，
+因此从Python程序的角度来说，视图就是一种二参数适配器。
+
+对于自动测试而言，视图所带来的额外的优点是适配器都是单独的代码段落，
+这是很容易写测试案例的，而原来的方式使用皮肤中的脚本则是难以调试，
+并且在脚本中的错误通常很难检查，因为它不能写出相应的测试案例。
+
+除此之外视图还能以TALES表达式的形式直接用在页面模板或其它可以应用TALES的地方，
+前面的Plone脚本开发中已经使用到的 plone_view 就是一个Plone视图，
+实际上所有的视图都可以在URL上调用，或者在页面模板中调用。
+在这一节的稍后会讲到。
+
+为ATAudio添加视图
+----------------------
+
+下面来看ATAudio产品的browser.py中的一个视图类::
+
+  class AudioView(object):
+      """A view for our audio.
+      """
+
+      def __init__(self, context, request):
+          self.context = context
+          self.request = request
+
+      def pretty_size(self, size=None, obj=None):
+          """Fancy format the size, taken from the getObjSize py script as an
+          example.
+          """
+
+          if obj is None:
+          ...
+
+可以看到视图类也是采用适配器的定义方式，从object开始继承，
+除了构造方法中有context和request两个参数外，与适配器定义方式没有其它的不同。
+
+使用ZCML装配视图
+------------------
+接下来也是需要使用ZCML将它们适配到目标对象上，
+但视图是与用户请求也有关的，因此不能直接使用适配器指令，
+在ZCML中有一类browser命名空间的指令用于注册视图。
+如在ATAudio产品中：
+
+::
+
+  <browser:page
+      name="view-with-z3.html"
+      for=".interfaces.IATAudio"
+      permission="zope2.View"
+      template="audio.pt"
+      class=".browser.AudioView"
+      />
+
+  <browser:page
+      name="edit-with-z3.html"
+      for=".interfaces.IATAudio"
+      permission="cmf.ModifyPortalContent"
+      class=".browser.AudioEditForm"
+      />
+
+在这一段ZCML中使用browser:page指令装配了两个视图：
+
+- 一个是查看视图，命名为"view-with-z3.html"，
+  其中的for属性是说明它只能使用在实现了interfaces中定义的IATAudio接口的对象上，
+  permission说明调用权限是zope2的View权限，
+  template说明它使用页面模板audio.pt为模板，
+  class说明使用browser中定义的AudioView类的功能。
+
+- 另一个是编辑视图，同理可知它命名为"edit-with-z3.html"，
+  使用于IATAudio接口的对象上，权限是"cmf.ModifyPortalContent"，
+  使用了browser中的类AudioEditForm的功能。
+
+..
+  其中的browser:page用于注册视图，它的通用模式是：
+
+  ::
+
+    <browser:page
+        for="A"
+        name="B"
+        permission="C"
+        template="D"
+        class="E" />
+
+  这一段解释如下：
+
+  - 为所有提供了接口A的对象
+  - 增加页面名称为B的视图
+  - 查看这个视图需要名为C的权限
+  - 这个视图使用名为D的页面模板
+  - 这个视图使用名为E的视图类
+
+  其中模板和类可以只使用一个，就是说可以缺少模板声明或者缺少类声明。
+  如果缺少了类声明而只使用了模板时，仅仅是为实现了接口类型的对象增加一个查看页面。
+  这种情况下就不存在视图了，但这也是Zope3所常用的一种添加页面的方法。
+
+  当缺少模板参数时，也就是说只有class声明，这样在调用的过程中最后会调用到这个类，
+  因此这个类需要有一个__call__方法，返回适当的页面内容。
+
+  当两者都用时，在页面模板会比普通页面模板多了一个绑定变量称为view，
+  这个变量就是视图类所实例化的对象，可以调用视图类上所定义的方法，
+  与其它调用方式相同的是调用方法就是发布这个方法对象，
+  因此需要在视图中的方法定义时有相应的docstring。
+
+使用视图
+----------------------
+注册的视图可以直接在URL上调用，如::
+
+  http://localhost:8080/path/to/object/@@view_name
+
+需要注意：
+
+1. ``@@`` 表示后面跟的是一个视图，而不是普通的内容，这样可以区分程序的名字空间和内容的id。
+
+2. 与脚本或模板可以用在任意的context对象上不同的是，
+   视图是注册在某一类接口上，因此context所代表的对象必须是实现了这个接口的对象，
+   否则会报出适配器不匹配的错误。
+
+.. note::
+   注意到虽然在Zope2的页面模板技术中here与context是等同的，
+   但Zope3中的页面模板技术已经不使用here了，只有context变量，
+   因此为了与未来兼容应该只使用context变量。
+
+视图是一种特殊的适配器，它不仅能在Python源代码中调用，
+还可以直接以TALES的形式用在需要的页面模板中，或是直接在URL上调用。
+
+视图用在TALES中的通用形式是以 ``@@`` 来引用视图::
+
+  context/@@view_name
+
+其中的view_name是在ZCML中注册的name。
+这是以路径表达式为例，因为这种形式用起来最为简单，并且也在Plone源代码中应用广泛。
+Five在内部会自动以context和request对象去适配。
+
+调用特殊的视图
+----------------------
+..
+  从上面的讲述中已经知道，视图可以针对特定的内容类型来指定，
+  因此要给任何你已知的对象添加视图，只需要找到它所实现的接口，
+
+除此之外，Zope3中还有一些特殊的接口，
+为这些接口添加视图可以实现一些特殊的效果。
+
+..
+  如添加视图是适配于"添加对象"，在Zope中添加任何对象时都存在一个称为"添加"(Adding)的对象，
+  它实现的接口是"zope.app.container.interfaces.IAdding"，因此下面的ZCML语句::
+
+   <browser:page
+      for="zope.app.container.interfaces.IAdding"
+      name="addDemoContent.html"
+      template="addDemoContent.pt"
+      class=".browser.DemoContentAddView"
+      permission="zope2.ViewManagementScreens"
+      />
+
+  就是给添加视图增加一个名称为"addDemoContent.html"的页面，
+  使用路径表达式可以引用::
+
+   context/@@+/addDemoContent.html
+
+  在URL中直接访问可以使用::
+
+    http://localhost:8080/+/addDemoContent.html
+
+如皮肤中常用的图片，这种类型相比其它皮肤元素而言完全是静态的，
+Zope3的方式是将它分离开使用单独的命名空间以减少可能的命名冲突。
+
+这在Zope3中称为资源视图，用于添加图片等静态对象，
+它使用一个单独的 ``browser:resource`` 指令::
+
+ <browser:resource
+    name="green5.png"
+    image="green5.png"
+    />
+
+这个语句中声明了一个名称为"green5.png"的资源对象，
+在TALES中的访问方法是使用 ``++resource++``::
+
+  context/++resource++green5.png
+
+直接在URL中访问就是::
+
+  http://localhost:8080/++resource++green5.png
+
+..
+  TODO 特殊的视图中还有哪些种类？
+
+
+为旧式的Zope2类添加视图
+------------------------
+视图本是Zope3使用的一项技术，有了Five产品能让它使用在Zope2项目中，
+但上面的例子中看到视图都是装配在实现了Zope3接口的对象(也就是Zope3组件)上。
+
+因此，使用Zope3视图需要满足两个条件：
+
+- 对象必须提供了Zope3接口，也就是说对象必须是一个Zope3组件
+- 对象必须可进行Zope3方式的漫游。
+  这允许Zope 3视图、资源和其他的东西附加到Zope 2的对象上。
+
+通常，可以在类的正文中，使用 ``implements`` 指令提供Zope3接口::
+
+  class MyClass:
+      implements(ISomeInterface)
+
+对于你不能修改的类，可以使用上面接口一节中提到的five指令来实现。
+例如，要让Zope的 ``Folder`` （以及子类）实现 ``IFolder`` （你定义的一个接口），
+你可使用下面的ZCML来实现::
+
+  <five:implements class="OFS.Folder.Folder"
+                   interface=".interfaces.IFolder" />
+
+因此对于你自己定义的类和其它不能修改定义的类都有办法让其成为Zope3组件。
+
+Zope3方式漫游是使用视图的另一个要求，
+注意在对象发布原理一章中我们已经知道Zope2式发布对象的原理，
+但Zope3的漫游方式与Zope2有着少许的不同。
+
+为了让你的MyClass可漫游，让我们假定
+它位于 ``mymodule`` （在和zcml文件相同的包中），
+在configure.zcml中可以增加这一行::
+
+  <five:traversable class=".mymodule.MyClass" />
+
+这一条five指令就是使这个类可以进行Zope3方式漫游。
+
+而如果你还在使用Zope2.9或以前的版本，在Zope2的系统中存在许多不能进行Zope3漫游的类，
+如为了让Zope的 ``Folder`` 可通过Five漫游，可以在ZCML中声明::
+
+  <five:traversable class="OFS.Folder.Folder"/>
+
+这让文件夹先使用Zope 3的方式漫游(traverse)，查找视图和其他的东西，
+如果找不到，就回到标准的Zope 2的漫游方式。
+
+.. note::
+  它的具体原理是通过重载 ``__bobo_traverse__`` 方法实现。
+  从对象发布原理中你已知Zope2式漫游首先会查找这个方法。
+  先前的 ``__bobo_traverse__`` 方法将被存储起来，变成第二位的替补。
+  这样ZMI仍然可以工作，但新增加的视图可以添加进来。
+
+  因此，如果对象没有提供自己的 ``__bobo_traverse__`` 方法，
+  也可以由ZCML让它变成可以Zope3方式漫游。
+
+为视图增加文档测试(DocTest)
+------------------------------
+视图中也是定义了功能代码，因此也需要单元测试。
+
+看看audio.txt中的另一个段落::
+
+  Views
+  -----
+
+  We defined a view component to display the view information for an audio
+  item, lets make sure it works.  The ``pretty_size`` method seems like a prime
+  target, lets start with it.
+
+    >>> from Products.ATAudio.browser import AudioView
+    >>> view = AudioView(None, None)
+    >>> view.pretty_size(size=12345)
+    '12.1 zkB'
+
+    >>> view.pretty_size(1)
+    '1 zB'
+
+在AudioView中有一个主要的功能函数就是pretty_size，因此它是单元测试的重点。
+前面我们已经知道，视图从Python程序的角度来看就是一个多适配器，
+使用context和request来初始化，
+因为我们已知被测试的pretty_size方法并不使用到context和request参数，
+因此可以使用两个None参数来构造一个AudioView对象。
+有了view对象就可以进行测试，
+在文档测试中只需要调用要运行的方法pretty_size和期望返回的结果。
+
+在经过运行 ``python tests.py`` 之后会自动取出文档测试audio.txt中要测试的部分，
+调用对应的函数将返回结果与期望结果进行比较，
+如果相同则测试通过，否则就是测试失败。
+
+Plone中视图的应用
+-------------------------
+
+在Plone2.1至2.5的升级过程中可以明显感觉到运行速度提升许多，
+对应于Plone3.0将是一个功能和易用性改善的版本，Plone2.5则是一个运行效率提升的版本。
+这个运行效率的提升在很大程序上得益于视图的大量运用。
+
+如果比较过两个版本的CMFPlone产品的skins目录就会发现，
+在里面使用的脚本数量减少了很多，
+我们已知从Plone2.1到Plone2.5在功能上并没有减少，
+那么这些被精简的脚本去了哪里呢？
+
+答案是许多脚本的功能代码被转移到了视图中。
+
+继上一章讲述扩展产品在文件系统上的文件布局，
+对于Zope3式的开发有了一个新的惯例是将所有视图类放置在一个browser目录中。
+最新的Plone也是按照这个惯例来开发的，
+因此CMFPlone产品的所有视图可以在文件系统上的CMFPlone/browser目录找到。
+
+这个browser目录布局如下::
+
+  CMFPlone/browser
+  |-- __init__.py
+  |-- configure.zcml
+  |-- interfaces.py
+  |-- navigation.py
+  |-- navtree.py
+  |-- plone.py
+  |-- portlets
+  |   |-- __init__.py
+  |   |-- calendar.py
+  |   |-- events.py
+  |   |-- navigation.py
+  |   |-- news.py
+  |   `-- recent.py
+  `-- sitemap.py
+
+可以看到其中有一个configure.zcml用于配置，其它的都是单独的Python模块。
+
+从配置文件中取出一段如下::
+
+  <browser:page
+      for="*"
+      name="plone"
+      class=".plone.Plone"
+      permission="zope.Public"
+      allowed_interface=".interfaces.IPlone"
+      />
+
+这是装配plone视图，命名为"plone"，类的代码是在plone.py文件中的Plone类，
+权限是"zope.Public"，这意味着任何人都可以访问，
+allowed_interface是针对拥有这个权限(zope.Public)的用户，
+同样允许访问.interfaces.IPlone接口。
+for="*"是让所有对象都可以使用这个视图，
+这是为了兼容以前的Plone版本中是以相应的脚本实现的，而这些脚本都可以在任意的对象上调用。
+前面的Plone脚本开发一章已经使用到这个视图，
+在global_defins中也可以看到 ``plone_view`` 定义为 ``here/@@plone`` ，
+这也就是plone视图在TALES表达式的的访问方式。
+
+从Plone对视图的运用可以学习到如何将自己产品中的脚本改造为视图的方法，
+这是Plone产品的未来趋势。
+
+事件机制
+==========
+..
+  从前的问题：
+
+  - 使用继承，耦合性非常强
+  - 不便增加新的功能
+
+  用处：
+
+  - 松散耦合: 从前是继承一个类，找到API。。。。，了解内部工作机制。
+  - 便于扩展
+
+  Zope2中并没有给出处理事件的好方式，
+  在Zope2中是给你的类添加诸如manage_aferAdd之类特殊命名的方法，
+  但这种方式存在如代码不可重用、
+  非维护人员不能修改事件的处理方式等等诸多Zope2所固有的缺点，
+  所以干脆忘掉Zope2的事件直接进入Zope3吧。
+
+Zope3介绍了一种清楚的方式处理事件。
+
+在计算机理论中，事件就是提示有事情发生了。
+如果你有过GUI的编程经验，Zope3对事件的定义与这也相差不远。
+当用户点击按钮时，一个事件发送往程序，程序中就捕捉到事件并做相应处理。
+
+在Zope2中针对事件的处理方式是在类中定义一个特殊命名的方法，
+这种处理方式导致程序的各部分是高度耦合的：
+
+- 为了给自己定义的类型添加事件处理，需要在文档中查找父类的API，
+  然后在自己的类中重载方法。这种方式的处理受制于父类的方法实现。
+
+- 对于不是自己维护的产品而言，想添加对这个类型的事件处理非常困难：
+  因为这必须修改基类的方法代码，最终造成产品维护的困难。
+
+Zope3的解决方式是把事件的注册和处理与基本的程序部分相分离，
+将事件处理代码定义在单独的函数中，使用ZCML将它们装配起来工作。
+这和适配器、视图的解决思路其实是一致的：
+就是"保持基类尽量小"。
+
+抛出事件
+---------
+..
+  TODO：抛出事件/订阅事件的机制说明，Zope的现有的事件清单。
+
+在一个内容管理系统中有很多的事件，如Zope系统已定义的有这些：
+
+【表 16.1】 Zope的常用触发事件
+
+================== ==
+事件               事件接口
+================== ==
+对象创建事件       zope.app.container.interfaces.IObjectAddedEvent
+对象修改事件       zope.app.event.interfaces.IObjectModifiedEvent
+对象删除事件       zope.app.container.interfaces.IObjectRemovedEvent
+对象复制事件       zope.app.event.interfaces.IObjectCopiedEvent
+对象移动事件       zope.app.container.interfaces.IObjectMovedEvent
+对象容器修改事件   zope.app.container.interfaces.IContainerModifiedEvent
+对象元数据修改事件 zope.app.event.interfaces.IObjectAnnotationsModifiedEvent
+================== ==
+
+其它各种特定事件如邮件、漫游、Zope启动等。
+在Zope运行至特定时刻有事件发生时，就会抛出相应的事件，如：
+当有对象创建时，就会抛出对象创建事件(zope.app.container.interfaces.IObjectAddedEvent)；
+其它各种事件也会在相应时机抛出。
+因此只需要在这些事件被抛出时，执行相应的动作就可以。
+在Zope3中，这称为订阅事件(subscribe)。
+
+为ATAudio产品订阅事件
+----------------------
+再回来看看ATAudio产品，先说它在什么时候需要订阅事件。
+
+用户在创建ATAudio对象时，可以上传一个mp3文件，
+这时ATAudio使用eyeD3这个Python包来将mp3文件中的年份和音乐流派等信息取出来，
+作为元数据存储于ATAudio对象中。
+而当用户在Plone界面上直接修改这些元信息时，
+Plone默认会把这些修改的元数据存储于ZODB中。
+更好的处理方式是把这些修改后的元信息再写回到对应的mp3文件中。
+
+..
+  TODO: 上面不知所云
+
+  这个过程的问题在于作为ATAudio对象的属性的元数据可以由Archetypes生成的界面自动写回到ZODB数据库中，
+  但它不会自动将这些信息写回到mp3文件里去。
+
+  如果按照传统的Zope2方式解决问题需要给ATAudio类重载一个manage_after的方法，
+  但前面已经说过这种方式并不好。
+
+用户在界面修改元信息时，会抛出一个对象修改事件(zope.app.event.interfaces.IObjectModifiedEvent)，
+因此我们只需要订阅这个事件，在事件处理中更新相应的mp3文件信息。
+
+下面是在代码中定义的处理函数，这是在代码文件audio.py中的部分::
+
+  def update_catalog(obj, evt):
+      obj.reindexObject()
+
+  def update_id3(obj, evt):
+      obj.save_tags()
+
+事件处理函数需要有两个参数，一个obj是事件发生的对象，另一个是所发生的事件。
+因此只需要使用传入的两个参数就可以处理更新问题了。
+这两个函数一个是更新在portal_catalog中的索引，另一个是更新mp3文件的tag信息。
+
+..
+  这回我们使用Zope3的方式解决问题。
+  先来看看使用Zope3方式订阅事件的代码：
+
+这是在configure.zcml中的配置订阅事件的部分::
+
+  <subscriber
+      for=".interfaces.IATAudio
+           zope.app.event.interfaces.IObjectModifiedEvent"
+      handler=".audio.update_catalog"
+      />
+
+  <subscriber
+      for=".interfaces.IATAudio
+           zope.app.event.interfaces.IObjectModifiedEvent"
+      handler=".audio.update_id3"
+      />
+
+..
+  TODO: 上面的配置应该在后面
+
+它的意思是针对实现了".interfaces.IATAudio"接口的对象，
+当"zope.app.event.interfaces.IObjectModifiedEvent"事件发生时，
+调用handler所说明的函数。
+
+..
+  而在ATAudio对象的类定义中没有任何改动，不需要重载manage_after之类的方法。
+
+可以看到，这种组织事件处理与基类关系的方式特别灵活。
+
+..
+  上面看到了处理事件的代码非常简单，
+  而且使用ZCML配置事件的处理是与ATAudio基类代码相分离，
+  因此配置的灵活性也更好。
+
+  下面是解释这些简单代码背后Zope3所做的工作：
+
+  首先既然是修改了元信息，与计算机理论中事件的定义正好吻合，
+  因此Zope3使用事件这个名词是有根据的。
+
+  在ZCML中的配置部分是使用了两条subscriber指令，
+  这个指令的用途就是订阅事件，
+
+  先看订阅指令的通用用法::
+
+    <subscriber
+        for="A
+             B"
+        handler="C"
+        />
+
+  这句话的意思就是对于实现了A接口的所有对象，当B事件发生时，执行C的代码。
+
+  对应于ATAudio产品中的两条subscriber指令就是对于实现了IATAudio接口的对象(即是ATAudio对象)，
+  当zope.app.event.interfaces.IObjectModifiedEvent事件发生时，
+  执行audio中的update_catalog和update_id3函数。
+
+..
+  note::
+  这里存在一个问题，两条subscriber指令既然是针对同一种接口和同一种事件，
+  为什么不把这两个函数的功能合并到一个函数中，而只使用一条subscriber指令呢？
+
+  答案是为了代码的可重用性。
+  可以看到update_catalog中的代码是重建索引，而update_id3是更新id3信息，
+  这两个功能是没有关联的，并且update_catalog的功能是很明显可以用于处理其它类型的对象，
+  假设还有另外的存储mp3文件的类型，update_id3也可以应用于它。
+  因此分离的功能块可以用在不同的目标对象上。
+  这也正是Zope3的保持代码单元功能小而精简为原则。
+
+..
+  TODO ATAudio中的事件
+
+转换过时的manage_afterAdd
+----------------------------
+现有一些Zope2产品由于历史的原因还在使用旧式的manage_afterAdd方法，
+包括manage_afterAdd, manage_afterDelete, manage_beforeAdd, 等一系列方法，
+作为产品的维护者，为了产品的未来能与Zope3相兼容，
+应该尽量多地将它改造为符合Zope3的事件的处理方式。
+
+如在ATContentTypes中的ATDocument类型中有对manage_afterAdd的重载：
+
+::
+
+      class ATDocument(ATCTContent, HistoryAwareMixin):
+
+         ...
+
+         implements(ATCTContent, IATDocument, HistoryAwareMixin)
+
+         ...
+
+         security.declarePrivate('manage_afterAdd')
+         def manage_afterAdd(self, item, container):
+             """Fix text when created througt webdav
+                 Guess the right mimetype from the id/data
+              """
+              ATCTContent.manage_afterAdd(self, item, container)
+              field = self.getField('text')
+              # hook for mxTidy / isTidyHtmlWithCleanup validator
+              tidyOutput = self.getTidyOutput(field)
+              if tidyOutput:
+                  if hasattr(self, '_v_renamed'):
+                      mimetype = field.getContentType(self)
+                      del self._v_renamed
+                  else:
+                      mimetype = self.guessMimetypeOfText()
+                  if mimetype:
+                      field.set(self, tidyOutput, mimetype=mimetype) # set is ok
+                  elif tidyOutput:
+                      field.set(self, tidyOutput) # set is ok
+
+          ...
+
+这个重载的方法中首先调用了父类ATCTContent的manage_afterAdd方法，
+然后再做一些其它的处理。
+这是Zope2中常用的处理方法：
+子类需要有与父类不同的处理方式，但不是完全放弃父类的处理方式，
+因此先调用父类方法，再添加自己的处理方式。
+
+这里我们以它为例说明如何改造为Zope3方式的处理事件。
+
+首先我们想到的是把这些代码转移到单独的函数中：
+
+::
+
+      def afterDocumentCreation(document, event):
+          """Fix text when created through webdav
+             Guess the right mimetype from the id/data
+          """
+          field = document.getField('text')
+          # hook for mxTidy / isTidyHtmlWithCleanup validator
+          tidyOutput = document.getTidyOutput(field)
+          if tidyOutput:
+              if hasattr(document, '_v_renamed'):
+                  mimetype = field.getContentType(document)
+                  del document._v_renamed
+              else:
+                  mimetype = document.guessMimetypeOfText()
+              if mimetype:
+                  field.set(document, tidyOutput, mimetype=mimetype) # set is ok
+              elif tidyOutput:
+                  field.set(document, tidyOutput) # set is ok
+
+注意到添加事件已经无法传递给父类了，因为这里是在单独的函数中。
+
+事件定义可以在单独的Python模块内，这里直接写在document.py文件中，
+然后使用下面的ZCML语句组装起来：
+
+::
+
+          <subscriber
+              for="Products.ATContentTypes.interface.IATDocument
+                   zope.app.container.interfaces.IObjectAddedEvent"
+              factory="Products.ATContentTypes.content.document.afterDocumentCreation"
+              />
+
+剩下的除了调用父类的manage_afterAdd以外的语句都转移到了单独的函数中。
+因此ATDocument类中只剩下调用父类的语句：
+
+::
+
+      class ATDocument(ATCTContent, HistoryAwareMixin):
+
+         ...
+
+         implements(ATCTContent, IATDocument, HistoryAwareMixin)
+
+         ...
+
+         security.declarePrivate('manage_afterAdd')
+         def manage_afterAdd(self, item, container):
+             """Fix text when created through webdav
+                 Guess the right mimetype from the id/data
+              """
+              ATCTContent.manage_afterAdd(self, item, container)
+          ...
+
+但由重载的原理我们知道，如果不重载这个manage_afterAdd函数就会直接调用父类的manage_afterAdd函数，
+这正是我们需要的，因此ATDocument中的剩下的调用父类的这部分可以完全去除了。
+
+在当前的Zope2.9中启动时运行到父类的manage_afterAdd会产生警告语句，
+因为这种manage_afterAdd的方式已计划在Zope-2.11版中会最终完全去除。
+可以使用 ``five:deprecatedManageAddDelete`` 声明来消除：
+
+::
+
+  <five:deprecatedManageAddDelete
+      class=".content.document.ATDocument" />
+
+..
+  TODO 选择示例
+
+  ATAudio http://plone.org/events/conferences/seattle-2006/presentations/
+          Developing%20Plone%20Products%20Using%20Zope%203%20Technologies.txt/view
+  http://svn.plone.org/svn/collective/ATAudio/branches/rocky-ploneconf2006-tutorial
+
+工具(utility)
+================
+在任何软件的开发中，常常可以提炼一些实用工具(utility)，
+就是将功能块被反复使用的部分定义为单独的函数，在需要的地方调用这个函数。
+许多Python程序员也是这样做的，在一个单独的utils.py的文件中定义工具，
+在其它需要的地方导入utils模块来使用工具。
+但是这样做常常造成系统的耦合度很强，增加了维护的困难。
+
+..
+  TODO: why?
+
+对于有用的工具函数，Zope3提供了一个 ``utility`` 指令用于注册工具。
+采用这种方式能够实现系统的松散耦合，降低维护难度。
+下面还是以ATAudio产品来举例说明。
+
+在ATAudio产品中我们发现给ATAudio对象升级这个功能应该抽象出来作为功能单独使用，
+因为它是一个通用的功能，分离出来就可以在系统内其它部分使用这个功能，
+并且也降低了程序各部分的耦合度。
+
+这里定义一个特定的接口并在单独的类中实现它。
+
+::
+
+  from zope import interface
+  from Products.ATAudio import interfaces
+
+  class ATAudioMigrator(object):
+      interface.implements(interfaces.IATAudioMigrator)
+
+      def migrate(self, audio_file):
+          """Migrates data from the old format to the new one.
+          """
+
+          storage = audio_file.getField('file').storage
+          filename = audio_file.getId()
+          try:
+              filepath = storage.getFileSystemPath(audio_file, filename)
+              f = open(filepath,'rb')
+              audio_file.setFile(f)
+              f.close()
+              audio_file.forceTagsReset()
+              return True
+          except:
+              return False
+
+然后是在ZCML中使用 ``utility`` 指令声明它是一个工具：
+
+::
+
+  <utility
+      provides=".interfaces.IATAudioMigrator"
+      factory=".migration.ATAudioMigrator"
+      />
+
+声明为工具之后，在所有需要使用到的地方都可以用它，
+如原来的基类功能可以引用工具来实现：
+
+::
+
+  class ATAudio(ATFile):
+
+      interface.implements(interfaces.IATAudio)
+
+      ...
+
+      def migrate(self):
+          """Migrates data from the old format to the new one.
+          """
+          migrator = component.getUtility(interfaces.IATAudioMigrator)
+          passed = migrator.migrate(self)
+          if not passed:
+              return "Failed %s" % self.getId()
+          return "Success %s" % self.getId()
+
+这里使用 ``component.getUtility`` 去获取工具。
+获取得到的就是工具类ATAudioMigrator的一个实例化对象，可以直接调用它的功能。
+
+.. note::
+   也许你认为不使用 utility 也可以做到，这确实也是可以的。
+   但这与多人协作的软件工程学所倡导的松耦合原则是相背的。
+   在一般程序设计中常使用一个单独的utils.py文件存放所有有用的工具，
+   并在其它需要使用到的地方导入utils就可以使用工具了。
+
+   但在多人协作式的软件开发中，需要一种容易的理解他人所提供的代码功能的途径，
+   Zope3所采用的接口正是这样一种技术，在接口中使用文档来注明工具所提供的功能，
+   然后再以单独的类来实现之，这样既利于协作中的明白交流，也利于使用单元测试等保证软件质量的技术，
+   接口是一种简单的类，它可以在项目一开始就定义好，因此别人只需要导入你所定义的类名就可以使用
+   ``component.getUtility`` 来得到你最后实现的工具类，而不需要你最后具体使用什么类去实现它。
+
+   无论如何，对项目的最后决定权在你手中，
+   对于非常简单的项目也不妨使用单独的utils模块定义所有工具的方式，
+   但Zope3所确保的是它提供了一种通用使用工具的方法。
+
+小结
+========
+关于Zope3的论述在本章中到此为止，
+只讲述了已经被Zope2社区所广泛接受的接口、适配器、视图、事件、自动测试等概念。
+事实已证明将它们合理地应用于产品开发中可以提升软件的品质。
+而发展中的Zope3当然不止于此，无论如何，
+你可以查看Zope3Wiki(http://wiki.zope.org/zope3/FrontPage)以跟上最新的Zope3技术。

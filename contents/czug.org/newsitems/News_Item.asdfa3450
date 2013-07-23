@@ -1,0 +1,137 @@
+<p>Demo.Plone.org是什么站点？</p>
+<p>这是Plone的一个产品测试和功能演示的站点，这个站点上将收录众多优秀的产品。</p>
+<p>有<a href="http://zopechina.ods.org">润普公司ZopeChina</a>开发的CMFContentPanels也榜上有名！这说明了社区对这个产品的认可。</p>
+<p>同时，我又看到了Zope.org上又有一个类似的产品<a href="http://www.zope.org/Members/gittew/CMFPortalLayout/">Portal Layout</a></p>
+<p>另外转载我和Plone的社区主要负责人runyan的交流信，介绍了Plone和zope在中国的发展情况。</p>
+<p><pre></p>
+<p>&gt; done ;-)</p>
+<p>ok, I will checkin CMFContentPanels soon.</p>
+<p>&gt;
+&gt; How is the translation of Plone to Chinese?  Could you give me any
+&gt; url's of websites you guys have done?  Is there a emerging
+&gt; market of Plone/Zope in China?  Does opensource software
+&gt; work there?
+&gt;</p>
+<p>I am also a member of plone-i18n team in charge of Simplified Chinese
+translation.
+We have done a lot to make Zope/Plone support Chinese better. And we have
+contributes such things to Zope.org:</p>
+
+<ol>
+<li> CJKSplitter: Make ZCTextIndex support Chinese. It is a great thing for
+Chinese Zopers.</li>
+<li> ZopeChinaPak: a cellection of small monkey patches for zope/cmf/plone and
+related products.  It make STX and CMFWiki CMCollecotor support Chinese(but
+still not very well).</li>
+<li> PloneZopeChinaPolicy(ready to contribute): a new ZopeChinaPolicy for
+plone which will use CJKSplitter and ZCTextIndex for portal_catalog, and use
+Chinese encodings as default. Chinese people can choose the this policy when
+they add a new plone site.</li>
+
+</ol>
+<p>With these stuff, It works nearly well. Plone is the main product we provide
+services to our clients. You can find 2 site which build with Plone here:</p>
+
+<ol>
+<li> http://zopechina.com    our company site, it has different skin.</li>
+<li> http://czug.ods.org     China Zope User Group</li>
+
+</ol>
+<p>Zope/Plone is just gotten started in Chinese.  No big companies use zope
+now. Zope is not a main stream technology in China. but I think it will be
+flourish soon. Zope/Plone is accepted by more and more Chinese developers
+and many greate things about zope happened:</p>
+
+<ol>
+<li> Chinese ZopeBook is published in China now. And it selles well. Most
+Chinese people want read Chinese. English is really a gap for the Chinese to
+reach the wonderful zope.</li>
+<li> Zope 2.6.1 support Chinese much better! It is a greate version for
+Chinese.</li>
+<li> We, ZopeChina, have contributed a set of Products to make Zope support
+Chinese better these days.</li>
+<li> CZUG.org, a Chinese Zope community started 1 month ago. it is a good
+place for Chinese people to communicate and contribute Chinese Zope/Plone
+Document. There are about 74 registered members now.</li>
+<li> The wonderful Plone, which can support Chinese. It will support Chinese
+well with our PloneZopeChinaPolicy and other patches soon. May be we can
+release a Chinese version of Plone with all patches if we have time. We
+Chinese need it.</li>
+
+</ol>
+<p>Many companies uses opensource software for their software development. Many
+developers likes opensource software in China. But there are not much
+opensource software service providers in Chinese. So many end users always
+dout if we can provide strong service as what big software companies such as
+MS can do. But many small companies wants to have a try for it is free.</p>
+<p>More opensource service providers is needed in China, I think. Our company
+is one of the true opensource company in China.</p>
+<p>And, another a interesting thing I want to tell you. After we contributed
+CJKSplitter 0.1 to Zope.org one month ago, 2 another Chinese
+splitters(CJKSplitter0.2 and GB_Splitter) released to Zope.org by other
+Chinese companies.</p>
+<p>Our company is just gotten started now. And if we can win in China, more
+company will choose opensource too. Then opensource will win in China. :)</p>
+<p>panjunyong</p>
+<p>&gt;
+&gt;
+&gt;
+&gt; ~runyaga
+&gt;
+&gt;
+&gt;
+&gt;
+&gt; On Sun, 23 Mar 2003 10:54:59 +0800, 潘俊勇(panjunyong)
+&gt;  wrote:
+&gt;
+&gt; &gt; hi runyan,
+&gt; &gt;
+&gt; &gt; My sf.net userid is: panjunyong.
+&gt; &gt;
+&gt; &gt; I am glad I can contribute it to the collective project.
+&gt; &gt;
+&gt; &gt; Best wishes to Plone!
+&gt; &gt;
+&gt; &gt; Thank u!
+&gt; &gt;
+&gt; &gt; panjunyong
+&gt; &gt;
+&gt; &gt; ----- Original Message -----
+&gt; &gt; From: "alan runyan" 
+&gt; &gt; To: 
+&gt; &gt; Sent: Sunday, March 23, 2003 4:31 AM
+&gt; &gt; Subject: hello
+&gt; &gt;
+&gt; &gt;
+&gt; &gt;&gt; panjunyong,
+&gt; &gt;&gt;
+&gt; &gt;&gt; Hi!  Congrats on the CMFContentPanels!  I havent seen
+&gt; &gt;&gt; them yet. But you ask "How to contribute to Plone?"
+&gt; &gt;&gt; The best thing is for you to create an account on sourceforge.net and
+&gt; &gt;&gt; then
+&gt; &gt;&gt; email me telling me the userid.
+&gt; &gt;&gt;
+&gt; &gt;&gt; I will give you committers access to http://sf.net/projects/collective
+&gt; &gt;&gt; and then you can commit the sourcecode into CVS!  Then
+&gt; &gt;&gt; as people start giving feedback we will try to figure out
+&gt; &gt;&gt; how to roll it into Plone distribution!
+&gt; &gt;&gt;
+&gt; &gt;&gt; cheers,
+&gt; &gt;&gt; --
+&gt; &gt;&gt; alan runyan
+&gt; &gt;&gt;
+&gt; &gt;&gt; ~runyaga@
+&gt; &gt;&gt; Clearnoodle Studio
+&gt; &gt;&gt; http://www.clearnoodle.com/
+&gt; &gt;
+&gt; &gt;
+&gt;
+&gt;
+&gt;
+&gt; --
+&gt; alan runyan
+&gt;
+&gt; ~runyaga@
+&gt; Clearnoodle Studio
+&gt; http://www.clearnoodle.com/</p>
+<p></pre></p>

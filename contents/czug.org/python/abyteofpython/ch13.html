@@ -1,0 +1,188 @@
+<p>出处： <a href="http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch13.html">http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch13.html</a></p>
+
+<h1>第13章 异常</h1>
+
+<p><strong>目录表</strong></p>
+<dl>
+<dt><a href="#s01">错误</a></dt>
+<dt><a href="#ch13s02.html">try..except</a></dt>
+<dd><a href="#ch13s02.html#handling">处理异常</a></dd>
+<dt><a href="#ch13s03.html">引发异常</a></dt>
+<dd><a href="#ch13s03.html#how">如何引发异常</a></dd>
+<dt><a href="#ch13s04.html">try..finally</a></dt>
+<dd><a href="#ch13s04.html#using">使用finally</a></dd>
+<dt><a href="#ch13s05.html">概括</a></dt>
+</dl>
+
+<p>当你的程序中出现某些 <dfn>异常的</dfn> 状况的时候，异常就发生了。例如，当你想要读某个文件的时候，而那个文件不存在。或者在程序运行的时候，你不小心把它删除了。上述这些情况可以使用<strong>异常</strong>来处理。</p>
+<p>假如你的程序中有一些无效的语句，会怎么样呢？Python会<strong>引发</strong>并告诉你那里有一个<strong>错误</strong>，从而处理这样的情况。</p>
+
+<h1><a name="s01">错误</a></h1>
+
+<p>考虑一个简单的<code>print</code>语句。假如我们把<code>print</code>误拼为<code>Print</code>，注意大写，这样Python会 <dfn>引发</dfn> 一个语法错误。</p>
+
+<p class="codebox"><code>
+&gt;&gt;&gt; Print 'Hello World'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;File "&lt;stdin&gt;", line 1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Print 'Hello World'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^<br>
+SyntaxError: invalid syntax<br>
+<br>
+&gt;&gt;&gt; print 'Hello World'<br>
+Hello World
+</code></p>
+
+<p>我们可以观察到有一个<code>SyntaxError</code>被引发，并且检测到的错误位置也被打印了出来。这是这个错误的 <dfn>错误处理器</dfn> 所做的工作。</p>
+
+
+<h1><a name="ch13s02.html">try..except</a></h1>
+<p>我们<strong>尝试</strong>读取用户的一段输入。按<strong>Ctrl-d</strong>，看一下会发生什么。</p>
+<p class="codebox"><code>
+&gt;&gt;&gt; s = raw_input('Enter something --&gt; ')<br>
+Enter something --&gt; Traceback (most recent call last):<br>
+&nbsp;&nbsp;File "&lt;stdin&gt;", line 1, in ?<br>
+EOFError
+</code></p>
+
+<p>Python引发了一个称为<code>EOFError</code>的错误，这个错误基本上意味着它发现一个不期望的 <dfn>文件尾</dfn> （由<strong>Ctrl-d</strong>表示）</p>
+<p>接下来，我们将学习如何处理这样的错误。</p>
+
+<h2><a name="handling">处理异常</a></h2>
+<p>我们可以使用<code><a name="ch13s02.html">try..except</a></code>语句来处理异常。我们把通常的语句放在try-块中，而把我们的错误处理语句放在except-块中。</p>
+<p class="exampletitle"><a name="e131">例13.1 处理异常</a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: try_except.py</code><br>
+<br>
+<code class="key">import </code><code class="func">sys</code><br>
+<br>
+<code class="key">try</code><code>:</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;s = </code><code class="func">raw_input</code><code>(</code><code class="cite">'Enter something --> '</code><code>)</code><br>
+<code class="key">except </code><code>EOFError:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'\nWhy did you do an EOF on me?'</code><br>
+<code class="func">&nbsp;&nbsp;&nbsp;&nbsp;sys</code><code>.exit() </code><code class="comment"># exit the program</code><br>
+<code class="key">except</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'\nSome error/exception occurred.'</code><br>
+<code class="comment">&nbsp;&nbsp;&nbsp;&nbsp;# here, we are not exiting the program</code><br>
+<br>
+<code class="key">print </code><code class="cite">'Done'</code>
+</p>
+<p>（源文件：<a href="code/try_except.py">code/try_except.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python try_except.py<br>
+Enter something --&gt;<br>
+Why did you do an EOF on me?<br>
+<br>
+$ python try_except.py<br>
+Enter something --&gt; Python is exceptional!<br>
+Done<br>
+</code></p>
+
+<h2>它如何工作</h2>
+<p>我们把所有可能引发错误的语句放在<code>try</code>块中，然后在<code>except</code>从句/块中处理所有的错误和异常。<code>except</code>从句可以专门处理单一的错误或异常，或者一组包括在圆括号内的错误/异常。如果没有给出错误或异常的名称，它会处理 <dfn>所有的</dfn> 错误和异常。对于每个<code>try</code>从句，至少都有一个相关联的<code>except</code>从句。</p>
+<p>如果某个错误或异常没有被处理，默认的Python处理器就会被调用。它会终止程序的运行，并且打印一个消息，我们已经看到了这样的处理。</p>
+<p>你还可以让<code>try..catch</code>块关联上一个<code>else</code>从句。当没有异常发生的时候，<code>else</code>从句将被执行。</p>
+<p>我们还可以得到异常对象，从而获取更多有个这个异常的信息。这会在下一个例子中说明。</p>
+
+
+<h1><a name="ch13s03.html">引发异常</a></h1>
+
+<p>你可以使用<code>raise</code>语句 <dfn>引发</dfn> 异常。你还得指明错误/异常的名称和伴随异常 <dfn>触发的</dfn> 异常对象。你可以引发的错误或异常应该分别是一个<code>Error</code>或<code>Exception</code>类的直接或间接导出类。</p>
+
+<h2><a name="how">如何<a name="ch13s03.html">引发异常</a></a></h2>
+
+<p class="exampletitle"><a name="e132">例13.2 如何<a name="ch13s03.html">引发异常</a></a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: raising.py</code><br>
+<br>
+<code class="key">class </code><code class="func">ShortInputException</code><code>(Exception):</code><br>
+<code class="cite">&nbsp;&nbsp;&nbsp;&nbsp;'''A user-defined exception class.'''</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;def </code><code class="func">__init__</code><code>(self, length, atleast):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Exception.__init__(self)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.length = length<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.atleast = atleast</code><br>
+<br>
+<code class="key">try</code><code>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;s = </code><code class="func">raw_input</code><code>(</code><code class="cite">'Enter something --> '</code><code>)</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;if </code><code class="func">len</code><code>(s) &lt; </code><code class="cite">3</code><code>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raise ShortInputException(</code><code class="func">len</code><code>(s), </code><code class="cite">3</code><code>)</code><br>
+<code class="comment">&nbsp;&nbsp;&nbsp;&nbsp;# Other work can continue as usual here</code><br>
+<code class="key">except </code><code>EOFError:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'\nWhy did you do an EOF on me?'</code><br>
+<code class="key">except </code><code>ShortInputException, x:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'ShortInputException: The input was of length %d, \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;was expecting at least %d' </code><code>% (x.length, x.atleast)</code><br>
+<code class="key">else</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'No exception was raised.'
+</code>
+</p>
+<p>源文件（<a href="code/raising.py">code/raising.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python raising.py<br>
+Enter something --&gt;<br>
+Why did you do an EOF on me?<br>
+<br>
+$ python raising.py<br>
+Enter something --&gt; ab<br>
+ShortInputException: The input was of length 2, was expecting at least 3<br>
+<br>
+$ python raising.py<br>
+Enter something --&gt; abc<br>
+No exception was raised.
+</code></p>
+
+<h2>它如何工作</h2>
+<p>这里，我们创建了我们自己的异常类型，其实我们可以使用任何预定义的异常/错误。这个新的异常类型是<code>ShortInputException</code>类。它有两个域——<code>length</code>是给定输入的长度，<code>atleast</code>则是程序期望的最小长度。</p>
+<p>在<code>except</code>从句中，我们提供了错误类和用来表示错误/异常对象的变量。这与函数调用中的形参和实参概念类似。在这个特别的<code>except</code>从句中，我们使用异常对象的<code>length</code>和<code>atleast</code>域来为用户打印一个恰当的消息。</p>
+
+
+<h1><a name="ch13s04.html">try..finally</a></h1>
+<p>假如你在读一个文件的时候，希望在无论异常发生与否的情况下都关闭文件，该怎么做呢？这可以使用<code>finally</code>块来完成。注意，在一个<code>try</code>块下，你可以同时使用<code>except</code>从句和<code>finally</code>块。如果你要同时使用它们的话，需要把一个嵌入另外一个。</p>
+
+<h2><a name="using">使用finally</a></h2>
+<p class="exampletitle"><a name="e133">例13.3 使用finally</a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: finally.py</code><br>
+<br>
+<code class="key">import </code><code class="func">time</code><br>
+<br>
+<code class="key">try</code><code>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;f = </code><code class="func">file</code><code>(</code><code class="cite">'poem.txt'</code><code>)</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;while </code><code class="func">True</code><code>: </code><code class="comment"># our usual file-reading idiom</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line = f.readline()</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if </code><code class="func">len</code><code>(line) == </code><code class="cite">0</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</code><br>
+<code class="func">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time</code><code>.sleep(</code><code class="cite">2</code><code>)</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code>line,</code><br>
+<code class="key">finally</code><code>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;f.close()</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Cleaning up...closed the file'</code>
+</p>
+<p>（源文件：<a href="code/finally.py">code/finally.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>$ python finally.py<br>
+Programming is fun<br>
+When the work is done<br>
+Cleaning up...closed the file<br>
+Traceback (most recent call last):<br>
+&nbsp;&nbsp;File "finally.py", line 12, in ?<br>
+&nbsp;&nbsp;&nbsp;&nbsp;time.sleep(2)<br>
+KeyboardInterrupt
+</code></p>
+
+<h2>它如何工作</h2>
+<p>我们进行通常的读文件工作，但是我有意在每打印一行之前用<code>time.sleep</code>方法暂停2秒钟。这样做的原因是让程序运行得慢一些（Python由于其本质通常运行得很快）。在程序运行的时候，按<strong>Ctrl-c</strong>中断/取消程序。</p>
+<p>我们可以观察到<code>KeyboardInterrupt</code>异常被触发，程序退出。但是在程序退出之前，finally从句仍然被执行，把文件关闭</p>
+
+
+<h1><a name="ch13s05.html">概括</a></h1>
+<p>我们已经讨论了<code>try..except</code>和<code>try..finally</code>语句的用法。我们还学习了如何创建我们自己的异常类型和如何引发异常。</p>
+<p>接下来，我们将探索Python标准库。</p>
+

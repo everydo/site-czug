@@ -1,0 +1,2854 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-2" class="anchor"/><p class="line867"><strong> <span id="line-3" class="anchor"/><a href="http://wiki.woodpecker.org.cn/moin/StartProgramming" class="http">开始编程之旅</a> <span id="line-4" class="anchor"/>翻译自Lee Harr的<a href="http://staff.easthighschool.net/lee/computers/book/Start_Programming.html" class="http">Start Programming</a> <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/></strong></p><p class="line862"><strong>本文是使用<a href="http://www.nongnu.org/pygsear/" class="http">pygsear</a>+<a href="http://pygame.org" class="http">pygame</a>作为开发环境，以初级用户角度来分步分阶段学习<a href="http://www.python.org"
+class="http">PYTHON</a>基本概念，并以小游戏开发项目为具体案例，介绍的十分详细。编写风格清新朴实，没有象一般教科书那样枯燥，极其适合初级用户来激发兴趣时使用。 <span id="line-7" class="anchor"/></strong> <span id="line-8" class="anchor"/></p>
+
+<div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-ada2e20c1d73fbe8a23432b010ca00fde5aaf7f4">StartProgramming-1-1 交互Interact</a><ol><li><a href="#head-3831930eeaf1709c2e2ca2152d3f120982e192e7">解释器Interpreter</a></li><li><a href="#head-66e884f4d5c4b44d8e13f1a56ba6d6aecf73cc77">海龟The Turtle</a></li></ol></li>
+
+
+<li><a href="#head-66ad4bc5cf7a0f3c06d7f6c9e93d87c11edb437d">StartProgramming-1-2 名字Names</a><ol><li><a href="#head-de576c228c869ae457adadd9dae315487b13c2b0">它现在是多少？What Was That Again?</a></li><li><a href="#head-abfa297490f26b0a9da123c387248c9bc7f2558b">昵称Nicknames</a></li><li><a href="#head-4d40d95eab070e4a6e8e1f0ac4e05d5ef0caa51d">好名字Good Names</a></li><li><a href="#head-a96e3aa0e9e2362eb984633bb238f9fcdcf782c7">一点数学知识A Little
+Math</a></li></ol></li>
+<li><a href="#head-3f81fb1f686f977070cc111427ca809a25ae046e">StartProgramming-1-3 比较Compare</a></li>
+<li><a href="#head-b8ddcea3111f6e921299ebfdd1c58f92e6cd18dd">StartProgramming-1-4 控制Control</a></li>
+<li><a href="#head-2730dec6649f59bb83245cc30e233efcad840529">StartProgramming-1-6 函数Functions</a><ol><li><a href="#head-065d34c1e5c7587e8bcb4c1bb758c027387dfa6b">参数Parameters</a></li><li><a href="#head-fedb3efa2e78f791182b5a9d8645ae0718dc970b">更通用的More General</a></li></ol></li>
+<li><a href="#head-8a949012b8b8febf654a94cb7724a561e542f9ab">StartProgramming-1-7 列表Lists</a><ol><li><a href="#head-b0df85acbc5410dc5f5247ca073145e219ab59ed">创建Create</a></li><li><a href="#head-dcdfe1d175a26937aec282f99ef609613577f4bf">改变Mutate</a></li><li><a href="#head-257761ee41ca73a970af870950388892a0c0c192">循环Iterate</a></li><li><a href="#head-0fb78e033ed35e4d4cb2523334f9fca89a82c8d7">排列Range</a></li></ol></li>
+<li><a href="#head-b86fb6afc1476fedad40d098e9ec744ab1fdbac5">StartProgramming-1-8 帮助Help</a></li>
+
+<li><a href="#head-4f3d793733485f7421b667dc9d7ad2cb0d3315bb">StartProgramming-1-9 练习Exercises</a></li></ol></div>
+<h1 id="head-ada2e20c1d73fbe8a23432b010ca00fde5aaf7f4">1. StartProgramming-1-1 交互Interact</h1>
+<span id="line-10" class="anchor"/><span id="line-11" class="anchor"/><p class="line867">
+</p><h2 id="head-3831930eeaf1709c2e2ca2152d3f120982e192e7">1.1. 解释器Interpreter</h2>
+<span id="line-12" class="anchor"/><span id="line-13" class="anchor"/><p class="line874">Eventually, your program will look like other programs. It will have an icon which people click on and which makes it run. <span id="line-14" class="anchor"/><span id="line-15" class="anchor"/></p><p class="line867"><strong>终于，你的程序看起来和别的程序差不多了。当人们双击它的的图标时它就可以运行。</strong> <span id="line-16" class="anchor"/><span id="line-17" class="anchor"/></p><p class="line867"><img title="attachment:python_icon.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-1?action=AttachFile&amp;do=get&amp;target=python_icon.png" class="attachment"/>  <img title="attachment:python_icon.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-1?action=AttachFile&amp;do=get&amp;target=python_icon.png"
+class="attachment"/>  <img title="attachment:python_icon.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-1?action=AttachFile&amp;do=get&amp;target=python_icon.png" class="attachment"/>  <img title="attachment:python_icon.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-1?action=AttachFile&amp;do=get&amp;target=python_icon.png" class="attachment"/>  <img title="attachment:python_icon.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-1?action=AttachFile&amp;do=get&amp;target=python_icon.png" class="attachment"/> <span id="line-18" class="anchor"/><span id="line-19" class="anchor"/></p><p class="line874">For now, though, we will be working from the command line -- interactive mode. <span id="line-20" class="anchor"/><span id="line-21" class="anchor"/></p><p
+class="line867"><strong>虽然暂时我们还必须工作在命令行会话模式下面。</strong> <span id="line-22" class="anchor"/><span id="line-23" class="anchor"/></p><p class="line874">Note: If you are working on a system with a reasonable text terminal (BSD, Linux, etc) you may want to use that instead of interact.py for these interactive sessions. Simply open a terminal in the examples directory, type python then type from penguin import * <span id="line-24" class="anchor"/><span id="line-25" class="anchor"/></p><p class="line867"><strong>注意:如果你工作在正当的文本终端(BSD,Linux,etc)上，你也许希望终端可以替代interact.py来做交互式的会话。在examples目录中打开一个终端，运行python然后键入from penguin import * </strong> <span id="line-26" class="anchor"/><span id="line-27"
+class="anchor"/></p><p class="line874">After that everything should be much the same as with using interact.py except you will have better text editing capabilities. <span id="line-28" class="anchor"/><span id="line-29" class="anchor"/></p><p class="line867"><strong>之后所有的看起来就好像运行interact.py一样了，除非你希望有一个好的编辑器。</strong> <span id="line-30" class="anchor"/><span id="line-31" class="anchor"/></p><p class="line874">The interactive interpreter is a way to type in python commands and get results immediately. <span id="line-32" class="anchor"/><span id="line-33" class="anchor"/></p><p class="line867"><strong>这个交互的解释器是你在python中键入命令和立即获取结果的桥梁。</strong> <span id="line-34" class="anchor"/><span id="line-35" class="anchor"/></p><p
+class="line874">Look in the pygsear examples directory, and run the program called interact.py. You should get a new window with a little penguin in the middle of the screen. <span id="line-36" class="anchor"/><span id="line-37" class="anchor"/></p><p class="line867"><strong>进入pygsear的examples目录，并且运行interact.py这个程序。你会看到一个中间带有小企鹅的新窗口。</strong> <span id="line-38" class="anchor"/><span id="line-39" class="anchor"/></p><p class="line867"><img title="attachment:interact.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-1?action=AttachFile&amp;do=get&amp;target=interact.png" class="attachment"/> <span id="line-40" class="anchor"/><span id="line-41" class="anchor"/></p><p class="line862">The >>> in the lower left corner is called the prompt. It is the Python
+interpreter waiting for you to tell it what to do. <span id="line-42" class="anchor"/><span id="line-43" class="anchor"/></p><p class="line867"><strong>在左下角的>>>叫做提示符。它是Python的翻译器等候你要他做什么。</strong> <span id="line-44" class="anchor"/><span id="line-45" class="anchor"/></p><p class="line867">
+</p><h2 id="head-66e884f4d5c4b44d8e13f1a56ba6d6aecf73cc77">1.2. 海龟The Turtle</h2>
+<span id="line-46" class="anchor"/><span id="line-47" class="anchor"/><p class="line874">We are going to start with something called "turtle" graphics. Oddly enough, our turtle will look like a penguin. <span id="line-48" class="anchor"/><span id="line-49" class="anchor"/></p><p class="line867"><strong>我们将以某些东西开始称为“海龟”图形。说也奇怪，我们的海龟看起来像一只企鹅。</strong> <span id="line-50" class="anchor"/><span id="line-51" class="anchor"/></p><p class="line867"><img title="attachment:pete.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-1?action=AttachFile&amp;do=get&amp;target=pete.png" class="attachment"/> <img title="attachment:pete.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-1?action=AttachFile&amp;do=get&amp;target=pete.png" class="attachment"/> <img title="attachment:pete.png"
+src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-1?action=AttachFile&amp;do=get&amp;target=pete.png" class="attachment"/> <img title="attachment:pete.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-1?action=AttachFile&amp;do=get&amp;target=pete.png" class="attachment"/> <img title="attachment:pete.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-1?action=AttachFile&amp;do=get&amp;target=pete.png" class="attachment"/>  <span id="line-52" class="anchor"/><span id="line-53" class="anchor"/></p><p class="line874">The penguin is called pete. <span id="line-54" class="anchor"/><span id="line-55" class="anchor"/></p><p class="line867"><strong>这个企鹅叫做pete。</strong> <span id="line-56" class="anchor"/><span id="line-57" class="anchor"/></p><p class="line874">Let's start out by having pete draw a line. Type in this line and
+press [ENTER]: <span id="line-58" class="anchor"/><span id="line-59" class="anchor"/></p><p class="line867"><strong>我们以让pete画一条线作为开始。输入下面的这行语句然后按[ENTER回车]：</strong> <span id="line-60" class="anchor"/><span id="line-61" class="anchor"/></p><p class="line867"><span id="line-62" class="anchor"/></p><pre>pete.forward(100)
+<span id="line-63" class="anchor"/></pre><span id="line-64" class="anchor"/><span id="line-65" class="anchor"/><p class="line874">This statement is a function call or method call. It tells pete to move forward 100 pixels. <span id="line-66" class="anchor"/><span id="line-67" class="anchor"/></p><p class="line867"><strong>这个语句是一个函数调用或者方法调用。它通知pete前进100像素。</strong> <span id="line-68" class="anchor"/><span id="line-69" class="anchor"/></p><p class="line874">You can put any number you want inside the parentheses (even negative numbers), but keep in mind that the window that pete is drawing in is probably only about 600 pixels wide and 500 pixels high. <span id="line-70" class="anchor"/><span id="line-71" class="anchor"/></p><p
+class="line867"><strong>你可以用任何的数字代替圆括号内的数字（甚至是负数），但是要记住在这个窗口中pete只能前进600像素宽和500像素高。</strong> <span id="line-72" class="anchor"/><span id="line-73" class="anchor"/></p><p class="line874">We can also make pete turn: <span id="line-74" class="anchor"/><span id="line-75" class="anchor"/></p><p class="line867"><strong>我们也可以让pete转弯：</strong> <span id="line-76" class="anchor"/><span id="line-77" class="anchor"/></p><p class="line867"><span id="line-78" class="anchor"/></p><pre>pete.right(30)
+<span id="line-79" class="anchor"/></pre><span id="line-80" class="anchor"/><span id="line-81" class="anchor"/><p class="line874">pete understands turning in degrees, so when we tell pete right(30), he turns 30 degrees to his right. <span id="line-82" class="anchor"/><span id="line-83" class="anchor"/></p><p class="line867"><strong>pete会记住所转过的角度，所以当我们再次通知pete right(30)，它会从它的右面再转30度。</strong> <span id="line-84" class="anchor"/><span id="line-85" class="anchor"/></p><p class="line867"><img title="attachment:penguin_turn.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-1?action=AttachFile&amp;do=get&amp;target=penguin_turn.png" class="attachment"/> <span id="line-86" class="anchor"/><span id="line-87" class="anchor"/></p><p class="line874">Notice that the amount
+is relative to where pete is looking when you ask him to turn. That means that if you say pete.right(30) again, pete will turn a bit more to the right, and if you do pete.right(30) one more time he will have turned a total of 90 degrees and be looking over at the right side of the screen. <span id="line-88" class="anchor"/><span id="line-89" class="anchor"/></p><p class="line867"><strong>注意你每次调用pete转角时，每次转的角度和的比较。也就是说如果你再次调用pete.right(30)，pete将会转向接近右面，当你第三次调用pete.right(30)，你会发现pete总共转了90度，从屏幕上看是向右的方向了。</strong> <span id="line-90" class="anchor"/><span id="line-91" class="anchor"/></p><p class="line874">Reset the penguin graphics now by typing: <span id="line-92" class="anchor"/><span id="line-93"
+class="anchor"/></p><p class="line867"><strong>让企鹅重新绘图键入：</strong> <span id="line-94" class="anchor"/><span id="line-95" class="anchor"/></p><p class="line867"><span id="line-96" class="anchor"/></p><pre>reset()
+<span id="line-97" class="anchor"/></pre><span id="line-98" class="anchor"/><span id="line-99" class="anchor"/><p class="line874">See if you can make pete go around in a square. How can you do that? <span id="line-100" class="anchor"/><span id="line-101" class="anchor"/></p><p class="line867"><strong>如果你想让pete画一个正方形。该怎么办？</strong> <span id="line-102" class="anchor"/><span id="line-103" class="anchor"/></p><p class="line874">How about like this: <span id="line-104" class="anchor"/><span id="line-105" class="anchor"/></p><p class="line867"><strong>可以像这样做：</strong> <span id="line-106" class="anchor"/><span id="line-107" class="anchor"/></p><p class="line874">First, go forward again. Notice that by using the up and down arrows on your keyboard you can
+retrieve lines you typed previously and save yourself some typing. So, hit the up arrow until the line looks like pete.forward(100) again and hit [ENTER] <span id="line-108" class="anchor"/><span id="line-109" class="anchor"/></p><p class="line867"><strong>首先，再次前进。注意可以利用向上键和向下键找回你前面键入的命令。所以，按下向上键直到找到pete.forword(100)这条命令然后按[ENTER] </strong> <span id="line-110" class="anchor"/><span id="line-111" class="anchor"/></p><p class="line874">Of course a square is just four equal sides, and four right angles, so make pete turn right 90 degrees: <span id="line-112" class="anchor"/><span id="line-113" class="anchor"/></p><p class="line867"><strong>当然，一个正方形有四条相等的边和四个直角，所以让pete右转90度：</strong> <span
+id="line-114" class="anchor"/><span id="line-115" class="anchor"/></p><p class="line867"><span id="line-116" class="anchor"/></p><pre>pete.right(90)
+<span id="line-117" class="anchor"/></pre><span id="line-118" class="anchor"/><span id="line-119" class="anchor"/><p class="line874">Now the simplest way to continue is just to keep hitting up-arrow twice and [ENTER] until pete is back to where he started. <span id="line-120" class="anchor"/><span id="line-121" class="anchor"/></p><p class="line867"><strong>现在用简单的方法用向上键两次和[ENTER]键直到pete回到起始点。</strong> <span id="line-122" class="anchor"/><span id="line-123" class="anchor"/></p><p class="line874">Remember, if you make a mistake, or things get confused, don't worry. Just type: <span id="line-124" class="anchor"/><span id="line-125" class="anchor"/></p><p class="line867"><strong>记住，如果你犯了错误，或者弄得乱七八糟，不要着急。只要键入：</strong> <span
+id="line-126" class="anchor"/><span id="line-127" class="anchor"/></p><p class="line867"><span id="line-128" class="anchor"/></p><pre>reset()
+<span id="line-129" class="anchor"/></pre><span id="line-130" class="anchor"/><span id="line-131" class="anchor"/><p class="line874">pete will go back to where he started and clear the screen in the process. <span id="line-132" class="anchor"/><span id="line-133" class="anchor"/></p><p class="line867"><strong>pete将回到起始点并且清除掉前面画的图形。</strong> <span id="line-134" class="anchor"/><span id="line-135" class="anchor"/></p><p class="line874">You can also use home() to bring pete back to where he started without changing anything drawn on the screen, or cls() to erase everything but without making pete move at all. <span id="line-136" class="anchor"/><span id="line-137" class="anchor"/></p><p
+class="line867"><strong>你还可以用home()命令让pete回到起始点而不清除任何在屏幕上的图形，或者用cls()命令清除所有的图形但是pete却不移动位置。</strong> <span id="line-138" class="anchor"/><span id="line-139" class="anchor"/></p><p class="line867"><img title="attachment:squares.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-1?action=AttachFile&amp;do=get&amp;target=squares.png" class="attachment"/> <span id="line-140" class="anchor"/><span id="bottom" class="anchor"/></p></div>
+
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-2" class="anchor"/><p class="line867"><strong> <span id="line-3" class="anchor"/><a href="http://wiki.woodpecker.org.cn/moin/StartProgramming" class="http">开始编程之旅</a> <span id="line-4" class="anchor"/>翻译自Lee Harr的<a href="http://staff.easthighschool.net/lee/computers/book/Start_Programming.html" class="http">Start Programming</a> <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/></strong></p><p class="line862"><strong>本文是使用<a href="http://www.nongnu.org/pygsear/" class="http">pygsear</a>+<a href="http://pygame.org" class="http">pygame</a>作为开发环境，以初级用户角度来分步分阶段学习<a href="http://www.python.org"
+class="http">PYTHON</a>基本概念，并以小游戏开发项目为具体案例，介绍的十分详细。编写风格清新朴实，没有象一般教科书那样枯燥，极其适合初级用户来激发兴趣时使用。 <span id="line-7" class="anchor"/></strong> <span id="line-8" class="anchor"/></p>
+
+
+<span id="line-9" class="anchor"/>
+<h1 id="head-66ad4bc5cf7a0f3c06d7f6c9e93d87c11edb437d">1. StartProgramming-1-2 名字Names</h1>
+<span id="line-10" class="anchor"/><span id="line-11" class="anchor"/><p class="line874">While programming, you will need to come up with names for many different things that you create. These names are sometimes called variables or identifiers. <span id="line-12" class="anchor"/><span id="line-13" class="anchor"/></p><p class="line867"><strong>编程的时候，你需要为创建一些不同的事物起一个名字。这些名字通常叫做变量或者标识。</strong> <span id="line-14" class="anchor"/><span id="line-15" class="anchor"/></p><p class="line874">For instance, you might want to give a name to the number 50: <span id="line-16" class="anchor"/><span id="line-17" class="anchor"/></p><p class="line867"><strong>例如，你也许想让一个名字等于50：</strong> <span id="line-18" class="anchor"/><span
+id="line-19" class="anchor"/></p><p class="line867"><span id="line-20" class="anchor"/></p><pre>length = 50
+<span id="line-21" class="anchor"/></pre><span id="line-22" class="anchor"/><span id="line-23" class="anchor"/><p class="line867"><img title="attachment:box_length.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-2?action=AttachFile&amp;do=get&amp;target=box_length.png" class="attachment"/> <span id="line-24" class="anchor"/><span id="line-25" class="anchor"/></p><p class="line874">This box represents an integer object which has been given the name length. <span id="line-26" class="anchor"/><span id="line-27" class="anchor"/></p><p class="line867"><strong>这个箱子代表有一个被命名为length的整数对象。</strong> <span id="line-28" class="anchor"/><span id="line-29" class="anchor"/></p><p class="line874">This might seem like a silly idea, but imagine the number is used many times throughout your
+code, and suddenly you realize you need to change the 50 to 75. <span id="line-30" class="anchor"/><span id="line-31" class="anchor"/></p><p class="line867"><strong>这可能是一个不形象地比喻，但是想象这个数值在你的代码中多次用到，并且突然你意识到需要将50更改为75。</strong> <span id="line-32" class="anchor"/><span id="line-33" class="anchor"/></p><p class="line874">You might do this: <span id="line-34" class="anchor"/><span id="line-35" class="anchor"/></p><p class="line867"><strong>你还要做这些：</strong> <span id="line-36" class="anchor"/><span id="line-37" class="anchor"/></p><p class="line867"><span id="line-38" class="anchor"/></p><pre>forward(50)
+<span id="line-39" class="anchor"/>right(90)
+<span id="line-40" class="anchor"/>forward(50)
+<span id="line-41" class="anchor"/>right(90)
+<span id="line-42" class="anchor"/>forward(50)
+<span id="line-43" class="anchor"/>right(90)
+<span id="line-44" class="anchor"/>forward(50)
+<span id="line-45" class="anchor"/>right(90)
+<span id="line-46" class="anchor"/></pre><span id="line-47" class="anchor"/><span id="line-48" class="anchor"/><p class="line874">You could then use the find/replace function in your editor to change all of the 50s to 75s, but there is a good chance that you might miss one. Even worse, if this code were part of a much larger section, you might accidentally change a 50 that has nothing to do with this change. <span id="line-49" class="anchor"/><span id="line-50" class="anchor"/></p><p class="line867"><strong>你可以利用你编辑器的查找替换功能来替换所有的 50 到 75，但是这样你就失去了非常好的机会。更坏的情况，如果这些代码是一个大代码块的一部分，你可能替换掉了某个不希望被替换的50。</strong> <span id="line-51" class="anchor"/><span id="line-52" class="anchor"/></p><p
+class="line874">This is much better: <span id="line-53" class="anchor"/><span id="line-54" class="anchor"/></p><p class="line867"><strong>这样做会更好：</strong> <span id="line-55" class="anchor"/><span id="line-56" class="anchor"/></p><p class="line867"><span id="line-57" class="anchor"/></p><pre>length = 50
+<span id="line-58" class="anchor"/>
+<span id="line-59" class="anchor"/>forward(length)
+<span id="line-60" class="anchor"/>right(90)
+<span id="line-61" class="anchor"/>forward(length)
+<span id="line-62" class="anchor"/>right(90)
+<span id="line-63" class="anchor"/>forward(length)
+<span id="line-64" class="anchor"/>right(90)
+<span id="line-65" class="anchor"/>forward(length)
+<span id="line-66" class="anchor"/>right(90)
+<span id="line-67" class="anchor"/></pre><span id="line-68" class="anchor"/><span id="line-69" class="anchor"/><p class="line874">So, if you needed to change the size of your squares from 50 to 75, instead of having to go through and change all of the 50s to 75s, you can just change length = 50 to length = 75 and instantly make all of the needed changes. <span id="line-70" class="anchor"/><span id="line-71" class="anchor"/></p><p class="line867"><strong>所以，如果你需要把正方形的大小从50 改为 75，你可以改变 length = 50 到 length = 75来代替搜寻和替换所有的50 到 75并且马上可以实现你想要替换的。</strong> <span id="line-72" class="anchor"/><span id="line-73" class="anchor"/></p><p class="line867"><img title="attachment:box_length_move.png"
+src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-2?action=AttachFile&amp;do=get&amp;target=box_length_move.png" class="attachment"/> <span id="line-74" class="anchor"/><span id="line-75" class="anchor"/></p><p class="line874">This picture shows the name length being taken from the 50 object and placed on the 75 object. <span id="line-76" class="anchor"/><span id="line-77" class="anchor"/></p><p class="line867"><strong>这幅图片展示了变量 length 如何从 50转变到 75的。</strong> <span id="line-78" class="anchor"/><span id="line-79" class="anchor"/></p><p class="line867">
+</p><h2 id="head-de576c228c869ae457adadd9dae315487b13c2b0">1.1. 它现在是多少？What Was That Again?</h2>
+<span id="line-80" class="anchor"/><span id="line-81" class="anchor"/><p class="line874">Once you have created variables, you will want to be able to see and to use the values they are holding on to. In the interactive session, you can just mention the name again, and the interpreter will tell you what it is. <span id="line-82" class="anchor"/><span id="line-83" class="anchor"/></p><p class="line867"><strong>当你创建了一个变量，你也许想知道这个变量现在等于多少。在交互环境下，你可以输入变量的名字，解释器就会告诉你答案。</strong> <span id="line-84" class="anchor"/><span id="line-85" class="anchor"/></p><p class="line867"><strong>比如</strong>Like this: <span id="line-86" class="anchor"/><span id="line-87" class="anchor"/></p><p class="line867"><span id="line-88"
+class="anchor"/></p><pre>>>> car = 'Ford Fairlane'
+<span id="line-89" class="anchor"/>>>> weight = 1700
+<span id="line-90" class="anchor"/>>>> length = 23.4
+<span id="line-91" class="anchor"/>>>> has_trunk = True
+<span id="line-92" class="anchor"/>>>> car
+<span id="line-93" class="anchor"/>'Ford Fairlane'
+<span id="line-94" class="anchor"/>>>> weight
+<span id="line-95" class="anchor"/>1700
+<span id="line-96" class="anchor"/>>>> length
+<span id="line-97" class="anchor"/>23.399999999999999
+<span id="line-98" class="anchor"/>>>> has_trunk
+<span id="line-99" class="anchor"/>True
+<span id="line-100" class="anchor"/></pre><span id="line-101" class="anchor"/><span id="line-102" class="anchor"/><p class="line874">Notice here that there are a few different types of values that your variable names can be attached to. <span id="line-103" class="anchor"/><span id="line-104" class="anchor"/></p><p class="line867"><strong>注意在这里只能有少数不同类型的值可以赋予给你的变量。</strong> <span id="line-105" class="anchor"/><span id="line-106" class="anchor"/></p><p class="line874">'Ford Fairlane' is a string -- a series of characters enclosed in quotes. 1700 is an integer with nothing after the decimal point. 23.4 is called a floating point number -- it can have a fractional value, and notice that the value stored may not be exactly what you specified. True and False
+are available as boolean values. <span id="line-107" class="anchor"/><span id="line-108" class="anchor"/></p><p class="line867"><strong> 'Ford Fairlane' 是一个 字符串 -- 一个包围在引号里面的有序的字符序列。1700是一个整数在它的小数点后面没有任何数字。23.4叫做浮点数 -- 它拥有一个小数的值，但是注意这里的值不一定是你指定的值。 True 和False是两个可用的布尔值。（真假值）</strong> <span id="line-109" class="anchor"/><span id="line-110" class="anchor"/></p><p class="line867">
+</p><h2 id="head-abfa297490f26b0a9da123c387248c9bc7f2558b">1.2. 昵称Nicknames</h2>
+<span id="line-111" class="anchor"/><span id="line-112" class="anchor"/><p class="line874">When we used the calls pete.forward() and pete.right() to make a square, the words forward and right are names for different methods that pete the Penguin object understands. <span id="line-113" class="anchor"/><span id="line-114" class="anchor"/></p><p class="line867"><strong>当你调用函数pete.forward() 和 pete.right()来画一个正方形，单词forward 和right 是企鹅pete所能理解的两个不同名字的方法。</strong> <span id="line-115" class="anchor"/><span id="line-116" class="anchor"/></p><p class="line874">Sometimes it is helpful to have more than one name for things. For instance, if you get tired of typing out pete.forward all the time, you could do: <span id="line-117" class="anchor"/><span
+id="line-118" class="anchor"/></p><p class="line867"><strong>有时有不止一种方法能够达到同样的效果。例如当你厌倦输入 pete.forward 时，你可以：</strong> <span id="line-119" class="anchor"/><span id="line-120" class="anchor"/></p><p class="line867"><span id="line-121" class="anchor"/></p><pre>forward = pete.forward
+<span id="line-122" class="anchor"/></pre><span id="line-123" class="anchor"/><span id="line-124" class="anchor"/><p class="line874">and then even: <span id="line-125" class="anchor"/><span id="line-126" class="anchor"/></p><p class="line867"><strong>甚至：</strong> <span id="line-127" class="anchor"/><span id="line-128" class="anchor"/></p><p class="line867"><span id="line-129" class="anchor"/></p><pre>fd = forward
+<span id="line-130" class="anchor"/></pre><span id="line-131" class="anchor"/><span id="line-132" class="anchor"/><p class="line874">(Note that there are no parenthesis at the end of any of the names.) <span id="line-133" class="anchor"/><span id="line-134" class="anchor"/></p><p class="line867"><strong>（注意这里的名字后面都没有圆括号。）</strong> <span id="line-135" class="anchor"/><span id="line-136" class="anchor"/></p><p class="line874">Now, instead of using pete.forward(20), you could just say fd(20) <span id="line-137" class="anchor"/><span id="line-138" class="anchor"/></p><p class="line867"><strong>现在，代替pete.forward(20)， 你可以只输入fd(20)</strong> <span id="line-139" class="anchor"/><span id="line-140" class="anchor"/></p><p class="line874">Of course,
+forward(20) and pete.forward(20) still work too. An object can have as many names or aliases as you would like to give it. <span id="line-141" class="anchor"/><span id="line-142" class="anchor"/></p><p class="line867"><strong>当然， forward(20) 和 pete.forward(20) 仍然可以运行。一件事物可以有许多你喜欢的名字或者别名。</strong> <span id="line-143" class="anchor"/><span id="line-144" class="anchor"/></p><p class="line867"><img title="attachment:box_forward.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-2?action=AttachFile&amp;do=get&amp;target=box_forward.png" class="attachment"/> <span id="line-145" class="anchor"/><span id="line-146" class="anchor"/></p><p class="line874">Here the method object pete.forward has been given many different names: forward, fd and foo. <span id="line-147"
+class="anchor"/><span id="line-148" class="anchor"/></p><p class="line867"><strong>在这里，方法pete.forward 被赋予了许多不同的名字： forward，fd 和foo。</strong> <span id="line-149" class="anchor"/><span id="line-150" class="anchor"/></p><p class="line867">
+</p><h2 id="head-4d40d95eab070e4a6e8e1f0ac4e05d5ef0caa51d">1.3. 好名字Good Names</h2>
+<span id="line-151" class="anchor"/><span id="line-152" class="anchor"/><p class="line874">Making short names -- like using fd for pete.forward -- can save you a lot of time and typing when working in the interactive interpreter. <span id="line-153" class="anchor"/><span id="line-154" class="anchor"/></p><p class="line867"><strong>用一个简短的名字 -- 就像用 fd 代替 pete.forward -- 可以在使用交互环境的时候为你节省很多时间和输入内容。</strong> <span id="line-155" class="anchor"/><span id="line-156" class="anchor"/></p><p class="line874">However, when you start creating longer programs, you need to balance two things: You do not want to not type too much, but also you need to be able to remember what a particular name refers to. <span id="line-157" class="anchor"/><span
+id="line-158" class="anchor"/></p><p class="line867"><strong>任何时候，当你要创建一个比较长的程序时，你需要均衡两件事：你不想键入太多的内容，同时你也希望记住一项名字代表的内容。</strong> <span id="line-159" class="anchor"/><span id="line-160" class="anchor"/></p><p class="line874">Generally, unless a name will only be mentioned in one small area, you should not use names like: <span id="line-161" class="anchor"/><span id="line-162" class="anchor"/></p><p class="line867"><strong>通常，除非这个名字在一个很小的区域使用，你最好不要用像这样的名字：</strong> <span id="line-163" class="anchor"/><span id="line-164" class="anchor"/></p><p class="line867"><span id="line-165" class="anchor"/></p><pre>a
+<span id="line-166" class="anchor"/>i
+<span id="line-167" class="anchor"/>q
+<span id="line-168" class="anchor"/></pre><span id="line-169" class="anchor"/><span id="line-170" class="anchor"/><p class="line874">since it is just too difficult to understand what they mean. <span id="line-171" class="anchor"/><span id="line-172" class="anchor"/></p><p class="line867"><strong>这样的话就非常难理解名字代表什么意思。</strong> <span id="line-173" class="anchor"/><span id="line-174" class="anchor"/></p><p class="line874">Instead, think about what the names refer to, and use names like: <span id="line-175" class="anchor"/><span id="line-176" class="anchor"/></p><p class="line867"><strong>替代的做法是，想一下这个名字代表什么意思，然后这样来用：</strong> <span id="line-177" class="anchor"/><span id="line-178" class="anchor"/></p><p class="line867"><span
+id="line-179" class="anchor"/></p><pre>number_of_apples
+<span id="line-180" class="anchor"/>appleindex
+<span id="line-181" class="anchor"/>quitAppleGame
+<span id="line-182" class="anchor"/></pre><span id="line-183" class="anchor"/><span id="line-184" class="anchor"/><p class="line874">Notice that there are a few different styles used to name things. <span id="line-185" class="anchor"/><span id="line-186" class="anchor"/></p><p class="line867"><strong>注意这里有一些不同的风格用在名字上。</strong> <span id="line-187" class="anchor"/><span id="line-188" class="anchor"/></p><p class="line874">You should read through some other people's code and choose a style that you like, then try to use the same style consistently in all of your code. <span id="line-189" class="anchor"/><span id="line-190" class="anchor"/></p><p
+class="line867"><strong>你可以通过阅读别人的代码然后选择一种你喜欢的命名风格，并在你所有的代码中总是运用这种相同的风格。</strong> <span id="line-191" class="anchor"/><span id="line-192" class="anchor"/></p><p class="line867">
+</p><h2 id="head-a96e3aa0e9e2362eb984633bb238f9fcdcf782c7">1.4. 一点数学知识A Little Math</h2>
+<span id="line-193" class="anchor"/><span id="line-194" class="anchor"/><p class="line874">Sometimes you do not know exactly what you want to store in a variable, but you could calculate it from other values that you do know. Just use mathematical symbols, and Python will do the calculations for you. <span id="line-195" class="anchor"/><span id="line-196" class="anchor"/></p><p class="line867"><strong>许多时候你不知道存储在变量中的精确值是多少，但是可以通过其他已知的值计算出来，现在就用数学符号，Python可以帮你计算它。</strong> <span id="line-197" class="anchor"/><span id="line-198" class="anchor"/></p><p class="line867"><strong>例如：</strong>Like this: <span id="line-199" class="anchor"/><span id="line-200" class="anchor"/></p><p class="line867"><span id="line-201"
+class="anchor"/></p><pre>>>> price = 125
+<span id="line-202" class="anchor"/>>>> tax_rate = 0.08
+<span id="line-203" class="anchor"/>>>> tax = price * tax_rate
+<span id="line-204" class="anchor"/>>>> total = price + tax
+<span id="line-205" class="anchor"/>>>> total
+<span id="line-206" class="anchor"/>135.0
+<span id="line-207" class="anchor"/>>>> shares = 4
+<span id="line-208" class="anchor"/>>>> total_per_share = total / shares
+<span id="line-209" class="anchor"/>>>> total_per_share
+<span id="line-210" class="anchor"/>33.75
+<span id="line-211" class="anchor"/></pre><span id="line-212" class="anchor"/><span id="line-213" class="anchor"/><p class="line874">So, to multiply two numbers, use the * <span id="line-214" class="anchor"/><span id="line-215" class="anchor"/></p><p class="line867"><strong>所以，两个数相乘，用 *</strong> <span id="line-216" class="anchor"/><span id="line-217" class="anchor"/></p><p class="line874">Division uses the / <span id="line-218" class="anchor"/><span id="line-219" class="anchor"/></p><p class="line867"><strong>除法用/ </strong> <span id="line-220" class="anchor"/><span id="bottom" class="anchor"/></p></div>
+
+
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-2" class="anchor"/><p class="line867"><strong> <span id="line-3" class="anchor"/><a href="http://wiki.woodpecker.org.cn/moin/StartProgramming" class="http">开始编程之旅</a> <span id="line-4" class="anchor"/>翻译自Lee Harr的<a href="http://staff.easthighschool.net/lee/computers/book/Start_Programming.html" class="http">Start Programming</a> <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/></strong></p><p class="line862"><strong>本文是使用<a href="http://www.nongnu.org/pygsear/" class="http">pygsear</a>+<a href="http://pygame.org" class="http">pygame</a>作为开发环境，以初级用户角度来分步分阶段学习<a href="http://www.python.org"
+class="http">PYTHON</a>基本概念，并以小游戏开发项目为具体案例，介绍的十分详细。编写风格清新朴实，没有象一般教科书那样枯燥，极其适合初级用户来激发兴趣时使用。 <span id="line-7" class="anchor"/></strong> <span id="line-8" class="anchor"/></p>
+
+
+<span id="line-9" class="anchor"/>
+<h1 id="head-3f81fb1f686f977070cc111427ca809a25ae046e">1. StartProgramming-1-3 比较Compare</h1>
+<span id="line-10" class="anchor"/><span id="line-11" class="anchor"/><p class="line874">You know how to give objects names, but you will also need to know how to tell if one thing is the same as another, or if it is equal, greater or less than another. <span id="line-12" class="anchor"/><span id="line-13" class="anchor"/></p><p class="line867"><strong>现在你知道如何给一个对象命名，但是你也需要知道如何表示一件事物和另外一件一样，或者相等，比较大或者较小。</strong> <span id="line-14" class="anchor"/><span id="line-15" class="anchor"/></p><p class="line874">To do this, we use comparison operators. <span id="line-16" class="anchor"/><span id="line-17" class="anchor"/></p><p class="line867"><strong>要做到这些，我们用比较运算符。</strong> <span id="line-18" class="anchor"/><span
+id="line-19" class="anchor"/></p><p class="line874">The most common comparison is equality: <span id="line-20" class="anchor"/><span id="line-21" class="anchor"/></p><p class="line867"><strong>用的最多的运算符是相等：</strong> <span id="line-22" class="anchor"/><span id="line-23" class="anchor"/></p><p class="line867"><span id="line-24" class="anchor"/></p><pre>this == 5
+<span id="line-25" class="anchor"/></pre><span id="line-26" class="anchor"/><span id="line-27" class="anchor"/><p class="line874">Note the difference between these two lines: <span id="line-28" class="anchor"/><span id="line-29" class="anchor"/></p><p class="line867"><strong>注意下面两行的不同之处：</strong> <span id="line-30" class="anchor"/><span id="line-31" class="anchor"/></p><p class="line867"><span id="line-32" class="anchor"/><span id="line-33" class="anchor"/><span id="line-34" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-f0165785f0e75adc2c222f7fa3ba4cc5e52182e4_000\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-f0165785f0e75adc2c222f7fa3ba4cc5e52182e4_000', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-f0165785f0e75adc2c222f7fa3ba4cc5e52182e4_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">this</span> <span class="Operator">=</span> <span class="Number">4</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">this</span> <span class="Operator">==</span> <span class="Number">5</span><span class="Text"/></span>
+</pre></div><span id="line-35" class="anchor"/><span id="line-36" class="anchor"/><p class="line874">The first line is an assignment. It uses 1 equals sign (=) and it says "Set the variable this equal to 4." This is naming, like we talked about on the last page. <span id="line-37" class="anchor"/><span id="line-38" class="anchor"/></p><p class="line867"><strong>第一行是一个赋值。 这用了一个等于号 (=) 并且表示“设置变量 this的值等于 4。”这是个赋值操作，像我们上面说得那样。</strong> <span id="line-39" class="anchor"/><span id="line-40" class="anchor"/></p><p class="line874">The second line is a
+comparison. It uses 2 equals signs (==) and it asks a question: "Is the variable this equal to 5?" <span id="line-41" class="anchor"/><span id="line-42" class="anchor"/></p><p class="line867"><strong>第二行是一个比较操作。它用了2个等于号 (==) 并且提出了个问题："这个变量 this 是否等于 5?" </strong> <span id="line-43" class="anchor"/><span id="line-44" class="anchor"/></p><p class="line874">Try these lines in the Python interpreter: <span id="line-45" class="anchor"/><span id="line-46" class="anchor"/></p><p class="line867"><strong>在Python交互环境下试试下面的语句。</strong> <span id="line-47"
+class="anchor"/><span id="line-48" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line862">this = 5</p></td>
+<td style="width: 50%; text-align: center;"><p class="line891"><img title="attachment:this5.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-3?action=AttachFile&amp;do=get&amp;target=this5.png" class="attachment"/></p></td>
+<td><p class="line862">assignment<strong>赋值</strong></p></td>
+</tr>
+<tr>  <td><span id="line-49" class="anchor"/><p class="line862">that = 10</p></td>
+<td style="width: 50%; text-align: center;"><p class="line891"><img title="attachment:that10.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-3?action=AttachFile&amp;do=get&amp;target=that10.png" class="attachment"/></p></td>
+<td><p class="line862">assignment<strong>赋值</strong></p></td>
+</tr>
+<tr>  <td><span id="line-50" class="anchor"/><p class="line862">this == that</p></td>
+<td style="width: 50%; text-align: center;"><p class="line891"><img title="attachment:this5.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-3?action=AttachFile&amp;do=get&amp;target=this5.png" class="attachment"/> <img title="attachment:that10.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-3?action=AttachFile&amp;do=get&amp;target=that10.png" class="attachment"/></p></td>
+<td><p class="line862">True<strong>真</strong>or<strong>或者</strong>False<strong>假?</strong></p></td>
+</tr>
+<tr>  <td><span id="line-51" class="anchor"/><p class="line862">this = that</p></td>
+<td style="width: 50%; text-align: center;"><p class="line891"><img title="attachment:thisthat10.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-3?action=AttachFile&amp;do=get&amp;target=thisthat10.png" class="attachment"/></p></td>
+<td><p class="line862">assignment<strong>赋值</strong></p></td>
+</tr>
+<tr>  <td><span id="line-52" class="anchor"/><p class="line862">this == that</p></td>
+<td style="width: 50%; text-align: center;"><p class="line891"><img title="attachment:thisthat.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-3?action=AttachFile&amp;do=get&amp;target=thisthat.png" class="attachment"/></p></td>
+<td><p class="line862">True<strong>真</strong>or<strong>或者</strong>False<strong>假?</strong></p></td>
+</tr>
+</tbody></table></div><span id="line-53" class="anchor"/><span id="line-54" class="anchor"/><p class="line874">If this is equal to that then Python will return True (1) and if not, then Python returns False (0). <span id="line-55" class="anchor"/><span id="line-56" class="anchor"/></p><p class="line867"><strong>如果 this 等于 that 那么 Python 将返回 True真 (1) 否则， Python 返回False假 (0)。</strong> <span id="line-57" class="anchor"/><span id="line-58" class="anchor"/></p><p class="line874">Some other common comparisons: <span id="line-59" class="anchor"/><span id="line-60"
+class="anchor"/></p><p class="line867"><strong>一些常用的比较：</strong> <span id="line-61" class="anchor"/><span id="line-62" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line862">3 < 5</p></td>
+<td><p class="line891"><img title="attachment:three.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-3?action=AttachFile&amp;do=get&amp;target=three.png" class="attachment"/></p></td>
+<td><p class="line862">is less than<strong>小于</strong></p></td>
+<td><p class="line891"><img title="attachment:five.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-3?action=AttachFile&amp;do=get&amp;target=five.png" class="attachment"/></p></td>
+<td><p class="line862">True<strong>真</strong></p></td>
+</tr>
+<tr>  <td><span id="line-63" class="anchor"/><p class="line862">9 > 8</p></td>
+<td><p class="line891"><img title="attachment:nine.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-3?action=AttachFile&amp;do=get&amp;target=nine.png" class="attachment"/></p></td>
+<td><p class="line862">is greater than<strong>大于</strong></p></td>
+<td><p class="line891"><img title="attachment:eight.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-3?action=AttachFile&amp;do=get&amp;target=eight.png" class="attachment"/></p></td>
+<td><p class="line862">True<strong>真</strong></p></td>
+</tr>
+<tr>  <td><span id="line-64" class="anchor"/><p class="line862">1 != 0</p></td>
+<td><p class="line891"><img title="attachment:mon.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-3?action=AttachFile&amp;do=get&amp;target=mon.png" class="attachment"/></p></td>
+<td><p class="line862">is not equal to<strong>不等于</strong></p></td>
+<td><p class="line891"><img title="attachment:mongone.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-3?action=AttachFile&amp;do=get&amp;target=mongone.png" class="attachment"/></p></td>
+<td><p class="line862">True<strong>真</strong></p></td>
+</tr>
+<tr>  <td><span id="line-65" class="anchor"/><p class="line862">5 is not None</p></td>
+<td><p class="line891"><img title="attachment:int5.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-3?action=AttachFile&amp;do=get&amp;target=int5.png" class="attachment"/></p></td>
+<td><p class="line862">is not <strong>不是（id不等于）</strong></p></td>
+<td><p class="line891"><img title="attachment:None.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-3?action=AttachFile&amp;do=get&amp;target=None.png" class="attachment"/></p></td>
+<td><p class="line862">True<strong>真</strong></p></td>
+</tr>
+</tbody></table></div><span id="line-66" class="anchor"/><span id="line-67" class="anchor"/><p class="line874">The last example introduces two new ideas: <span id="line-68" class="anchor"/><span id="line-69" class="anchor"/></p><p class="line867"><strong>最后的例子介绍了两个新概念：</strong> <span id="line-70" class="anchor"/><span id="line-71" class="anchor"/></p><p class="line874">First, None is a special object you can use to mean "no value" or "unknown" or "not set" or "null". It took me a long time to really understand when to use None and the
+best way is just to read other people's code and see how they use it. <span id="line-72" class="anchor"/><span id="line-73" class="anchor"/></p><p class="line867"><strong>首先，None 是一个你可以理解为“没有值”或“没有赋值”或者“空值”。它使我用了相当长的一段时间才真正明白什么时候用 None ，最好的办法是去阅读别人的代码，看看他们是怎么用的。</strong> <span id="line-74" class="anchor"/><span id="line-75" class="anchor"/></p><p class="line874">Second, the comparison is a bit different, as it does not compare the values of the two objects, but their actual
+identities. <span id="line-76" class="anchor"/><span id="line-77" class="anchor"/></p><p class="line867"><strong>另外，比较运算符也有一点不同，它不是用来比较两个对象的值，其实实际上也差不多。</strong> <span id="line-78" class="anchor"/><span id="line-79" class="anchor"/></p><p class="line874">In Python, every object has a unique id number which you can get by using the builtin id() function. <span id="line-80" class="anchor"/><span id="line-81" class="anchor"/></p><p
+class="line867"><strong>在Python里面，每一个对象拥有一个唯一的id号码，你可以通过内值函数 id() 来获得。</strong> <span id="line-82" class="anchor"/><span id="line-83" class="anchor"/></p><p class="line874">So, what the last line actually means is: <span id="line-84" class="anchor"/><span id="line-85" class="anchor"/></p><p class="line867"><strong>所以，刚才最后一行的实际意思是：</strong> <span id="line-86" class="anchor"/><span id="line-87" class="anchor"/></p><p class="line867"><span id="line-88" class="anchor"/></p><pre>id(5) != id(None)
+<span id="line-89" class="anchor"/></pre><span id="line-90" class="anchor"/><span id="line-91" class="anchor"/><p class="line874">We use is or is not because it is quicker and easier to read. <span id="line-92" class="anchor"/><span id="line-93" class="anchor"/></p><p class="line867"><strong>我们用 is 或者 is not 是因为这样比较快，而且容易阅读。</strong> <span id="line-94" class="anchor"/><span id="line-95" class="anchor"/></p><p class="line874">This comparison of identity also implies that two objects can be equal even if they are not identical.
+<span id="line-96" class="anchor"/><span id="line-97" class="anchor"/></p><p class="line867"><strong>身分比较同样暗示我们两个对象即使不是同一个也可以相等。</strong> <span id="line-98" class="anchor"/><span id="line-99" class="anchor"/></p><p class="line867"><strong>例如</strong>For instance: <span id="line-100" class="anchor"/><span id="line-101" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line862">x1 = 3.2</p></td>
+<td style="text-align: center;" colspan="2"><p class="line891"><img title="attachment:x1.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-3?action=AttachFile&amp;do=get&amp;target=x1.png" class="attachment"/></p></td>
+<td style="text-align: center;" colspan="2"><p class="line862">3.2 is not an integer,it is a floating point number.3.2<strong>不是一个整数，它是一个浮点数。</strong></p></td>
+</tr>
+<tr>  <td><span id="line-102" class="anchor"/><p class="line862">x2 = 1.8</p></td>
+<td style="text-align: center;" colspan="2"><p class="line891"><img title="attachment:x2.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-3?action=AttachFile&amp;do=get&amp;target=x2.png" class="attachment"/></p></td>
+<td style="text-align: center;" colspan="2"><p class="line862">1.8 is also a float.1.8<strong>还是一个浮点数。</strong></p></td>
+</tr>
+<tr>  <td><span id="line-103" class="anchor"/><p class="line862">x_total = x1 + x2</p></td>
+<td style="text-align: center;" colspan="2"><p class="line891"><img title="attachment:x_total.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-3?action=AttachFile&amp;do=get&amp;target=x_total.png" class="attachment"/></p></td>
+<td style="text-align: center;" colspan="2"><p class="line862">Adding floats always returns a float.<strong>两个浮点数相加仍然返回一个浮点数。</strong></p></td>
+</tr>
+<tr>  <td><span id="line-104" class="anchor"/><p class="line862">x_total == 5</p></td>
+<td><p class="line891"><img title="attachment:x_total.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-3?action=AttachFile&amp;do=get&amp;target=x_total.png" class="attachment"/></p></td>
+<td><p class="line862">equals<strong>等于</strong></p></td>
+<td><p class="line891"><img title="attachment:int5.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-3?action=AttachFile&amp;do=get&amp;target=int5.png" class="attachment"/></p></td>
+<td><p class="line862">True<strong>真</strong></p></td>
+</tr>
+<tr>  <td><span id="line-105" class="anchor"/><p class="line862">x_total is 5</p></td>
+<td><p class="line891"><img title="attachment:x_total.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-3?action=AttachFile&amp;do=get&amp;target=x_total.png" class="attachment"/></p></td>
+<td><p class="line862">is<strong>id等于</strong></p></td>
+<td><p class="line891"><img title="attachment:int5.png" src="http://wiki.woodpecker.org.cn/moin/StartProgramming-1-3?action=AttachFile&amp;do=get&amp;target=int5.png" class="attachment"/></p></td>
+<td><p class="line862">False<strong>假</strong></p></td>
+</tr>
+</tbody></table></div><span id="line-106" class="anchor"/><span id="line-107" class="anchor"/><p class="line867"><strong> <span id="line-108" class="anchor"/></strong></p><ul><li style="list-style-type: none;"><p class="line891"><strong><img width="15" height="15" title="(!)" src="/htdocs/woodpecker/img/idea.png" alt="(!)"/>
+译者注：id就好像出厂的序列号一样。比方说刚刚生产的小轿车，它们的颜色、体积、重量、发动机等等完全都是相同的，但是出厂的时候，汽车生产商要为小轿车贴上一个出厂序列号，标明是哪年哪月哪日生产的第几辆小轿车，因为次序的不同，所以这个id号也是不同的。 <span id="line-109" class="anchor"/></strong></p></li></ul><p class="line867"> <span id="line-110" class="anchor"/><span id="bottom" class="anchor"/></p></div>
+
+
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-3" class="anchor"/><p class="line867"><strong> <span id="line-4" class="anchor"/><a href="/moin/StartProgramming"> （首页）开始编程之旅</a> <span id="line-5" class="anchor"/>翻译自Lee Harr的<a href="http://staff.easthighschool.net/lee/computers/book/Start_Programming.html" class="http">Start Programming</a> <span id="line-6" class="anchor"/><span id="line-7" class="anchor"/></strong></p><p class="line862"><strong>本文是使用<a href="http://www.nongnu.org/pygsear/" class="http">pygsear</a>+<a
+href="http://pygame.org" class="http">pygame</a>作为开发环境，以初级用户角度来分步分阶段学习<a href="http://www.python.org" class="http">PYTHON</a>基本概念，并以小游戏开发项目为具体案例，介绍的十分详细。编写风格清新朴实，没有象一般教科书那样枯燥，极其适合初级用户来激发兴趣时使用。 <span id="line-8" class="anchor"/></strong> <span id="line-9" class="anchor"/></p>
+
+<span id="line-10" class="anchor"/>
+<h1 id="head-b8ddcea3111f6e921299ebfdd1c58f92e6cd18dd">1. StartProgramming-1-4 控制Control</h1>
+<span id="line-11" class="anchor"/><span id="line-12" class="anchor"/><p class="line874">Now that you can make comparisons, you can control the flow of your programs. <span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></p><p class="line867"><strong>现在你可以做比较了，你也可以控制程序的流向。</strong> <span id="line-15" class="anchor"/><span id="line-16" class="anchor"/></p><p class="line874">Start up the interact.py program again, and try this: <span id="line-17" class="anchor"/><span id="line-18"
+class="anchor"/></p><p class="line867"><strong>再次运行程序 interact.py 并尝试下面的语句：</strong> <span id="line-19" class="anchor"/><span id="line-20" class="anchor"/></p><p class="line867"><span id="line-21" class="anchor"/><span id="line-22" class="anchor"/><span id="line-23" class="anchor"/><span id="line-24" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-ccd73cf60a30b0761a81c7233e803bef093c4c11_000\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-ccd73cf60a30b0761a81c7233e803bef093c4c11_000', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-ccd73cf60a30b0761a81c7233e803bef093c4c11_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">choice</span> <span class="Operator">=</span> <span class="String">'blast'</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">if</span> <span class="ID">choice</span> <span class="Operator">==</span> <span class="String">'blast'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ID">pete</span><span class="Operator">.</span><span class="ID">blast</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-25" class="anchor"/><span id="line-26" class="anchor"/><p class="line874">The drawing on the right is a flow chart and it represents the code on the left. You can follow the flow by starting at the top, following the lines, and acting on the instructions in the boxes. <span id="line-27" class="anchor"/><span id="line-28"
+class="anchor"/></p><p class="line867"><strong>右边的图样是一个流程图代表了左边的代码。你可以从最上面跟随流程，在线上流动，并且执行在方框中的指令。</strong> <span id="line-29" class="anchor"/><span id="line-30" class="anchor"/></p><p class="line874">In the code, notice how the line after the if statement is indented. <span id="line-31"
+class="anchor"/><span id="line-32" class="anchor"/></p><p class="line867"><strong>在代码中，注意 if 后面的语句是怎样缩进的。</strong> <span id="line-33" class="anchor"/><span id="line-34" class="anchor"/></p><p class="line874">Indentation is how Python knows those statements are all run only if the condition is True. Like this: <span id="line-35"
+class="anchor"/><span id="line-36" class="anchor"/></p><p class="line867"><strong>缩进使得 Python 知道当 if 的结果是 True 时，哪些语句可以被运行。像这样：</strong> <span id="line-37" class="anchor"/><span id="line-38" class="anchor"/></p><p class="line867"><span id="line-39" class="anchor"/><span id="line-40" class="anchor"/><span id="line-41"
+class="anchor"/><span id="line-42" class="anchor"/><span id="line-43" class="anchor"/><span id="line-44" class="anchor"/><span id="line-45" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-6f40aa7d262382fabc63ad5b357938a237fedda7_001\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-6f40aa7d262382fabc63ad5b357938a237fedda7_001', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-6f40aa7d262382fabc63ad5b357938a237fedda7_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">if</span> <span class="ID">choice</span> <span class="Operator">==</span> <span class="String">'blast'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ID">pete</span><span class="Operator">.</span><span class="ID">blast</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ID">pete</span><span class="Operator">.</span><span class="ID">blast</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ID">pete</span><span class="Operator">.</span><span class="ID">blast</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   5 </span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ID">pete</span><span class="Operator">.</span><span class="ID">write</span><span class="Operator">(</span><span class="ID">choice</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-46" class="anchor"/><span id="line-47" class="anchor"/><p class="line874">So the three blast()s will only happen if the choice is 'blast', but the write will happen no matter what. <span id="line-48" class="anchor"/><span id="line-49" class="anchor"/></p><p class="line867"><strong>上面的三个 blast() 只有当
+choice 是 'blast' 时才会被运行，write 无论什么情况都会被运行。</strong> <span id="line-50" class="anchor"/><span id="line-51" class="anchor"/></p><p class="line874">Sometimes, you will want to make a choice between two things: <span id="line-52" class="anchor"/><span id="line-53" class="anchor"/></p><p
+class="line867"><strong>有时，你希望在两件事情中做出选择：</strong> <span id="line-54" class="anchor"/><span id="line-55" class="anchor"/></p><p class="line874">It can help to make this more clear by reading the word else as "otherwise". <span id="line-56" class="anchor"/><span id="line-57" class="anchor"/></p><p
+class="line867"><strong>把else 读作 "otherwise" 会帮助我们更容易明白。</strong> <span id="line-58" class="anchor"/><span id="line-59" class="anchor"/></p><p class="line867"><span id="line-60" class="anchor"/><span id="line-61" class="anchor"/><span id="line-62" class="anchor"/><span id="line-63" class="anchor"/><span id="line-64"
+class="anchor"/><span id="line-65" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-e7bfb2c483a0da7a988c875d0d3367c8506f568f_002\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-e7bfb2c483a0da7a988c875d0d3367c8506f568f_002', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-e7bfb2c483a0da7a988c875d0d3367c8506f568f_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">choice</span> <span class="Operator">=</span> <span class="String">'blast'</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">if</span> <span class="ID">choice</span> <span class="Operator">==</span> <span class="String">'blast'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ID">pete</span><span class="Operator">.</span><span class="ID">blast</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">else</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ID">pete</span><span class="Operator">.</span><span class="ID">reset</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-66" class="anchor"/><span id="line-67" class="anchor"/><p class="line874">There are only two possibilities here, and your program can only flow down one of these two branches. <span id="line-68" class="anchor"/><span id="line-69" class="anchor"/></p><p
+class="line867"><strong>这里有两种可能，并且你的程序只能通过一条分叉流动。</strong> <span id="line-70" class="anchor"/><span id="line-71" class="anchor"/></p><p class="line874">Other times, you will want to have multiple branches in your flow. <span id="line-72" class="anchor"/><span id="line-73" class="anchor"/></p><p
+class="line867"><strong>其他时候，你希望在流程中有多个分叉。</strong> <span id="line-74" class="anchor"/><span id="line-75" class="anchor"/></p><p class="line874">Here, the word elif can be read as "else if" or "otherwise if" <span id="line-76" class="anchor"/><span id="line-77" class="anchor"/></p><p
+class="line867"><strong>这里，单词 elif 可以读作 "else if" 或者 "否则 如果"</strong> <span id="line-78" class="anchor"/><span id="line-79" class="anchor"/></p><p class="line867"><span id="line-80" class="anchor"/><span id="line-81" class="anchor"/><span id="line-82" class="anchor"/><span id="line-83"
+class="anchor"/><span id="line-84" class="anchor"/><span id="line-85" class="anchor"/><span id="line-86" class="anchor"/><span id="line-87" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-c75de450dfaea070b336137e47648abe9fffdf1f_003\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-c75de450dfaea070b336137e47648abe9fffdf1f_003', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-c75de450dfaea070b336137e47648abe9fffdf1f_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">choice</span> <span class="Operator">=</span> <span class="String">'tree'</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">if</span> <span class="ID">choice</span> <span class="Operator">==</span> <span class="String">'blast'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ID">pete</span><span class="Operator">.</span><span class="ID">blast</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">elif</span> <span class="ID">choice</span> <span class="Operator">==</span> <span class="String">'tree'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ID">pete</span><span class="Operator">.</span><span class="ID">tree</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">else</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   7 </span>    <span class="ID">pete</span><span class="Operator">.</span><span class="ID">reset</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-88" class="anchor"/><span id="line-89" class="anchor"/><p class="line874">You can have as many elif sections as you need. Once any one of the if or elif conditions is True, that section will run and all other elif or else sections will be skipped. <span id="line-90"
+class="anchor"/><span id="line-91" class="anchor"/></p><p class="line867"><strong>你可以根据你的需要拥有多个 elif 部分。 一旦 if 或者 elif 其中的任何一个的状态是 True 真，那个部分将会被运行并且其他所有的 elif 或者 else 部分将会被跳过。</strong> <span id="line-92" class="anchor"/><span id="line-93"
+class="anchor"/></p><p class="line874">else is not required, and will only run if none of the preceeding if or elif conditions were True. <span id="line-94" class="anchor"/><span id="line-95" class="anchor"/></p><p class="line867"><strong>else 不是必需的，只有当 if 或者 elif 的结果全部不是 True
+真的时候才会运行。</strong> <span id="line-96" class="anchor"/><span id="bottom" class="anchor"/></p></div>
+
+
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-3" class="anchor"/><p class="line867"><strong> <span id="line-4" class="anchor"/><a href="/moin/StartProgramming"> （首页）开始编程之旅</a> <span id="line-5" class="anchor"/>翻译自Lee Harr的<a href="http://staff.easthighschool.net/lee/computers/book/Start_Programming.html"
+class="http">Start Programming</a> <span id="line-6" class="anchor"/><span id="line-7" class="anchor"/></strong></p><p class="line862"><strong>本文是使用<a href="http://www.nongnu.org/pygsear/" class="http">pygsear</a>+<a href="http://pygame.org"
+class="http">pygame</a>作为开发环境，以初级用户角度来分步分阶段学习<a href="http://www.python.org" class="http">PYTHON</a>基本概念，并以小游戏开发项目为具体案例，介绍的十分详细。编写风格清新朴实，没有象一般教科书那样枯燥，极其适合初级用户来激发兴趣时使用。 <span id="line-8" class="anchor"/></strong> <span
+id="line-9" class="anchor"/></p>
+<span id="line-10" class="anchor"/>
+<h1 id="head-706c086ca06456aa5023a456d6ba11f88c5ad0f4">1. StartProgramming-1-5 循环Loops</h1>
+<span id="line-11" class="anchor"/><span id="line-12" class="anchor"/><p class="line874">We made a square by performing the same two steps repeatedly -- once for each side of the square: <span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></p><p
+class="line867"><strong>我们重复用相同的两步 -- 正方形的每个边来画一个正方形：</strong> <span id="line-15" class="anchor"/><span id="line-16" class="anchor"/></p><p class="line867"><span id="line-17" class="anchor"/><span id="line-18" class="anchor"/><span id="line-19" class="anchor"/></p><div lang="en"
+dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-6a615f280569f871acb8bc2e398213e58da8d828_000\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-6a615f280569f871acb8bc2e398213e58da8d828_000', 1, 1);"
+href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-6a615f280569f871acb8bc2e398213e58da8d828_000" dir="ltr"><span class="line"><span class="LineNumber">   1
+</span><span class="ID">forward</span><span class="Operator">(</span><span class="Number">100</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">right</span><span class="Operator">(</span><span
+class="Number">90</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-20" class="anchor"/><span id="line-21" class="anchor"/><p class="line874">It made it a bit easier
+that we could use the up-arrow to get back things we typed previously and so save ourselves some typing, but it was still easy
+to make a mistake and turn our square in to something not exactly what we planned. <span id="line-22" class="anchor"/><span
+id="line-23" class="anchor"/></p><p
+class="line867"><strong>我们利用向上键找回前面输入的内容使事情变得很容易并且节省了我们的输入时间，但是这仍然很容易发生错误，使得我们的正方形不像计划中的那样。</strong>
+<span id="line-24" class="anchor"/><span id="line-25" class="anchor"/></p><p class="line874">There must be a simpler way, and
+there is. <span id="line-26" class="anchor"/><span id="line-27" class="anchor"/></p><p
+class="line867"><strong>必须有一种简单的方法，下面就是：</strong> <span id="line-28" class="anchor"/><span id="line-29"
+class="anchor"/></p><p class="line874">Computers are great at repeating things over and over again without ever making any
+mistakes. We just need to know how to tell the computer what to do. <span id="line-30" class="anchor"/><span id="line-31"
+class="anchor"/></p><p
+class="line867"><strong>计算机非常善于一遍又一遍的重复工作并且不会发生任何错误，我们只需要通知计算机需要做什么。</strong>
+<span id="line-32" class="anchor"/><span id="line-33" class="anchor"/></p><p class="line867">
+</p><h2 id="head-f7058f2db760b0329c2594256a6c8072994a04b5">1.1. for</h2>
+<span id="line-34" class="anchor"/><span id="line-35" class="anchor"/><p class="line874">One way to tell a computer to repeat
+a set of steps is called a loop. <span id="line-36" class="anchor"/><span id="line-37" class="anchor"/></p><p
+class="line867"><strong>通知计算机重复一个集合的途径叫做循环。</strong> <span id="line-38" class="anchor"/><span id="line-39"
+class="anchor"/></p><p class="line874">Here is how we tell pete to make a square using a loop: <span id="line-40"
+class="anchor"/><span id="line-41" class="anchor"/></p><p class="line867"><strong>这是我们通知 pete
+如何用循环来画一个正方形：</strong> <span id="line-42" class="anchor"/><span id="line-43" class="anchor"/></p><p
+class="line867"><span id="line-44" class="anchor"/><span id="line-45" class="anchor"/><span id="line-46" class="anchor"/><span
+id="line-47" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-83cfe652430ec940fef61f78568cf295291c8f69_001\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return
+togglenumber('CA-83cfe652430ec940fef61f78568cf295291c8f69_001', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-83cfe652430ec940fef61f78568cf295291c8f69_001" dir="ltr"><span class="line"><span
+class="LineNumber">   1 </span><span class="ResWord">for</span> <span class="ID">side</span> <span
+class="ResWord">in</span> <span class="Number">1</span><span class="Operator">,</span> <span
+class="Number">2</span><span class="Operator">,</span> <span class="Number">3</span><span
+class="Operator">,</span> <span class="Number">4</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ID">forward</span><span
+class="Operator">(</span><span class="Number">100</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ID">right</span><span
+class="Operator">(</span><span class="Number">90</span><span class="Operator">)</span><span
+class="Text"/></span>
+</pre></div><span id="line-48" class="anchor"/><span id="line-49" class="anchor"/><p class="line874">Go ahead
+and type in the first line for side in 1, 2, 3, 4: and hit [ENTER] <span id="line-50" class="anchor"/><span
+id="line-51" class="anchor"/></p><p class="line867"><strong>到行的开头输入第一行语句 for side in 1, 2, 3, 4:
+并按 [ENTER]</strong> <span id="line-52" class="anchor"/><span id="line-53" class="anchor"/></p><p
+class="line862">Notice that the interpreter does not come back with the >>> prompt this time. Instead it shows
+... <span id="line-54" class="anchor"/><span id="line-55" class="anchor"/></p><p
+class="line867"><strong>注意解释器这时并不会以 >>> 提示符返回。代替它的是 ...</strong> <span id="line-56"
+class="anchor"/><span id="line-57" class="anchor"/></p><p class="line874">This means it is waiting for more
+input before it can get started. You are saying "I want you to do something 4 times", and the computer comes
+back with "Ok. What should I do 4 times?" <span id="line-58" class="anchor"/><span id="line-59"
+class="anchor"/></p><p class="line867"><strong>这里的意思是在开始执行前等待更多的输入。你在说
+"我想把一些事情做4次"，电脑回答说 "好的，你想做什么事情4次？"</strong> <span id="line-60"
+class="anchor"/><span id="line-61" class="anchor"/></p><p class="line874">In Python, the way we tell the
+computer which steps are part of the loop is by indenting. <span id="line-62" class="anchor"/><span
+id="line-63" class="anchor"/></p><p
+class="line867"><strong>在Python里，缩进可以告诉计算机哪些是要循环的部分。</strong> <span id="line-64"
+class="anchor"/><span id="line-65" class="anchor"/></p><p class="line874">It is sort of like an outline. <span
+id="line-66" class="anchor"/><span id="line-67" class="anchor"/></p><p
+class="line867"><strong>这有点像轮廓。</strong> <span id="line-68" class="anchor"/><span id="line-69"
+class="anchor"/></p><p class="line874">Use 4 spaces for each level of indentation. Go ahead now and hit 4
+spaces, then type in the second line of the loop forward(100) and hit [ENTER] <span id="line-70"
+class="anchor"/><span id="line-71" class="anchor"/></p><p
+class="line867"><strong>在每一层缩进上用4个空格。到行的开头并键入4个空格，并且在第二行上输入要循环的语句
+forward(100) 并按 [ENTER]</strong> <span id="line-72" class="anchor"/><span id="line-73"
+class="anchor"/></p><p class="line874">The computer comes back with ... again. <span id="line-74"
+class="anchor"/><span id="line-75" class="anchor"/></p><p class="line867"><strong>计算机再一次以 ...
+返回。</strong> <span id="line-76" class="anchor"/><span id="line-77" class="anchor"/></p><p
+class="line874">It does not know if you are finished telling it what to do 4 times, or if there are more steps
+inside of the loop. <span id="line-78" class="anchor"/><span id="line-79" class="anchor"/></p><p
+class="line867"><strong>它不知道你是已经完成了4次循环的内容，还是在循环里面有更多的步骤。</strong> <span
+id="line-80" class="anchor"/><span id="line-81" class="anchor"/></p><p class="line874">Turns out there is
+another step in the loop. Hit 4 more spaces, then type in the last line right(90) and hit [ENTER] <span
+id="line-82" class="anchor"/><span id="line-83" class="anchor"/></p><p
+class="line867"><strong>当然是循环里还有其他的步骤，键入4个空格，然后在最后一行输入 right(90) 并按
+[ENTER]</strong> <span id="line-84" class="anchor"/><span id="line-85" class="anchor"/></p><p
+class="line874">Again, the computer comes back with ... but this time we are finished with the steps in the
+loop. <span id="line-86" class="anchor"/><span id="line-87" class="anchor"/></p><p
+class="line867"><strong>计算机仍然以 ... 返回，但是这次我们已经完成了循环的步骤。</strong> <span id="line-88"
+class="anchor"/><span id="line-89" class="anchor"/></p><p class="line874">To finish the loop, hit [ENTER]
+again. <span id="line-90" class="anchor"/><span id="line-91" class="anchor"/></p><p
+class="line867"><strong>要结束循环，再次按下 [ENTER]。</strong> <span id="line-92" class="anchor"/><span
+id="line-93" class="anchor"/></p><p class="line874">pete should, very quickly, draw a square for you. <span
+id="line-94" class="anchor"/><span id="line-95" class="anchor"/></p><p
+class="line867"><strong>pete将会非常快的为你画一个正方形。</strong> <span id="line-96" class="anchor"/><span
+id="line-97" class="anchor"/></p><p class="line874">This loop is so simple that we can "unroll" the loop and
+take a look at exactly what is happening... <span id="line-98" class="anchor"/><span id="line-99"
+class="anchor"/></p><p
+class="line867"><strong>这个循环比较的简单，我们可以把它展开并看看究竟发生了什么事情……</strong> <span
+id="line-100" class="anchor"/><span id="line-101" class="anchor"/></p><p class="line867"><span id="line-102"
+class="anchor"/><span id="line-103" class="anchor"/><span id="line-104" class="anchor"/><span id="line-105"
+class="anchor"/><span id="line-106" class="anchor"/><span id="line-107" class="anchor"/><span id="line-108"
+class="anchor"/><span id="line-109" class="anchor"/><span id="line-110" class="anchor"/><span id="line-111"
+class="anchor"/><span id="line-112" class="anchor"/><span id="line-113" class="anchor"/><span id="line-114"
+class="anchor"/><span id="line-115" class="anchor"/><span id="line-116" class="anchor"/><span id="line-117"
+class="anchor"/><span id="line-118" class="anchor"/><span id="line-119" class="anchor"/><span id="line-120"
+class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-c78a123a13e2dc473c32102374fd4e77cecce149_002\',
+1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return
+togglenumber('CA-c78a123a13e2dc473c32102374fd4e77cecce149_002', 1, 1);" href="#">Toggle line
+numbers</a>
+<pre lang="en" id="CA-c78a123a13e2dc473c32102374fd4e77cecce149_002" dir="ltr"><span
+class="line"><span class="LineNumber">   1 </span><span class="ResWord">for</span> <span
+class="ID">side</span> <span class="ResWord">in</span> <span class="Number">1</span><span
+class="Operator">,</span> <span class="Number">2</span><span class="Operator">,</span> <span
+class="Number">3</span><span class="Operator">,</span> <span class="Number">4</span><span
+class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span
+class="ID">forward</span><span class="Operator">(</span><span class="Number">100</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ID">right</span><span
+class="Operator">(</span><span class="Number">90</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span>        <span class="ID">side</span>
+<span class="Operator">=</span> <span class="Number">1</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ID">forward</span><span
+class="Operator">(</span><span class="Number">100</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ID">right</span><span
+class="Operator">(</span><span class="Number">90</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span></span>
+<span class="line"><span class="LineNumber">   8 </span><span class="ID">side</span> <span
+class="Operator">=</span> <span class="Number">2</span></span>
+<span class="line"><span class="LineNumber">   9 </span><span class="ID">forward</span><span
+class="Operator">(</span><span class="Number">100</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span><span class="ID">right</span><span
+class="Operator">(</span><span class="Number">90</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span></span>
+<span class="line"><span class="LineNumber">  12 </span><span class="ID">side</span> <span
+class="Operator">=</span> <span class="Number">3</span></span>
+<span class="line"><span class="LineNumber">  13 </span><span class="ID">forward</span><span
+class="Operator">(</span><span class="Number">100</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span><span class="ID">right</span><span
+class="Operator">(</span><span class="Number">90</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span></span>
+<span class="line"><span class="LineNumber">  16 </span><span class="ID">side</span> <span
+class="Operator">=</span> <span class="Number">4</span></span>
+<span class="line"><span class="LineNumber">  17 </span><span class="ID">forward</span><span
+class="Operator">(</span><span class="Number">100</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span><span class="ID">right</span><span
+class="Operator">(</span><span class="Number">90</span><span class="Operator">)</span><span
+class="Text"/></span>
+</pre></div><span id="line-121" class="anchor"/><span id="line-122" class="anchor"/><p
+class="line874">These two pieces of code are equivalent. The result will be exactly the same.
+<span id="line-123" class="anchor"/><span id="line-124" class="anchor"/></p><p
+class="line867"><strong>这两部分代码是 等效的。他们能准确的画出相同的图形。</strong> <span
+id="line-125" class="anchor"/><span id="line-126" class="anchor"/></p><p class="line874">Two
+things to notice here. <span id="line-127" class="anchor"/><span id="line-128"
+class="anchor"/></p><p class="line867"><strong>这里有两件事情需要注意。</strong> <span
+id="line-129" class="anchor"/><span id="line-130" class="anchor"/></p><p
+class="line874">First, the variable side is never used inside of the loop. You might have
+named it differently, and it would not make much difference. Other reasonable names might have
+been count or even i or x. You do have to be a bit careful though, as naming the variable
+forward would cause problems. <span id="line-131" class="anchor"/><span id="line-132"
+class="anchor"/></p><p class="line867"><strong>首先，变量 side
+从来没有在循环里被用上。你可以为它起一个不同的名字。并且不会有什么差别。其他合理的名字可以是
+count 或者 i 或 x。 尽管这样你仍然要小心一点，如果用 forward 为变量命名会发生错误。</strong>
+<span id="line-133" class="anchor"/><span id="line-134" class="anchor"/></p><p
+class="line874">Second, although horizontal space is used to indicate which statements are
+part of the loop, vertical space is not meaningful. Use blank lines in your code to make it
+easier to read. <span id="line-135" class="anchor"/><span id="line-136" class="anchor"/></p><p
+class="line867"><strong>其次，虽然水平的空格可以用来表示循环的部分，但垂直的空格却没有什么意义。你可以用空行来使你的程序更容易阅读。</strong>
+<span id="line-137" class="anchor"/><span id="line-138" class="anchor"/></p><p
+class="line867">
+</p><h2 id="head-71b12621bae4cf627aad8eec69e01cc9feff906d">1.2. while</h2>
+<span id="line-139" class="anchor"/><span id="line-140" class="anchor"/><p class="line874">The
+for loop is best when you have a list of objects and you want to do something with each one of
+them. <span id="line-141" class="anchor"/><span id="line-142" class="anchor"/></p><p
+class="line867"><strong>当你有一个对象列表，并且你想让列表中的每一个对象都做一些事情， for
+循环是一个非常好的选择。</strong> <span id="line-143" class="anchor"/><span id="line-144"
+class="anchor"/></p><p class="line874">Other times, you will want to continue looping until a
+particular condition is met. Like this: <span id="line-145" class="anchor"/><span
+id="line-146" class="anchor"/></p><p
+class="line867"><strong>其他时候，你想继续一个循环，除非一个特殊的情况发生。像这样：</strong>
+<span id="line-147" class="anchor"/><span id="line-148" class="anchor"/></p><p
+class="line867"><span id="line-149" class="anchor"/><span id="line-150" class="anchor"/><span
+id="line-151" class="anchor"/><span id="line-152" class="anchor"/><span id="line-153"
+class="anchor"/><span id="line-154" class="anchor"/><span id="line-155" class="anchor"/><span
+id="line-156" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return
+togglenumber(\'CA-87639b40a6e561238949777b8f8c67721c84309c_003\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return
+togglenumber('CA-87639b40a6e561238949777b8f8c67721c84309c_003', 1, 1);"
+href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-87639b40a6e561238949777b8f8c67721c84309c_003"
+dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span
+class="ID">angle</span> <span class="Operator">=</span> <span
+class="Number">0</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span
+class="ID">per</span> <span class="Operator">=</span> <span
+class="Number">6</span></span>
+<span class="line"><span class="LineNumber">   3 </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span
+class="ResWord">while</span> <span class="ID">angle</span> <span
+class="Operator"><</span> <span class="Number">360</span><span
+class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span
+class="ID">forward</span><span class="Operator">(</span><span
+class="Number">10</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   6 </span>    <span
+class="ID">right</span><span class="Operator">(</span><span
+class="ID">per</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>    <span
+class="ID">angle</span> <span class="Operator">+=</span> <span
+class="ID">per</span><span class="Text"/></span>
+</pre></div><span id="line-157" class="anchor"/><span id="bottom"
+class="anchor"/></div>
+
+
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-3" class="anchor"/><p class="line867"><strong> <span
+id="line-4" class="anchor"/><a href="/moin/StartProgramming">
+（首页）开始编程之旅</a> <span id="line-5" class="anchor"/>翻译自Lee Harr的<a
+href="http://staff.easthighschool.net/lee/computers/book/Start_Programming.html"
+class="http">Start Programming</a> <span id="line-6" class="anchor"/><span
+id="line-7" class="anchor"/></strong></p><p
+class="line862"><strong>本文是使用<a href="http://www.nongnu.org/pygsear/"
+class="http">pygsear</a>+<a href="http://pygame.org"
+class="http">pygame</a>作为开发环境，以初级用户角度来分步分阶段学习<a
+href="http://www.python.org"
+class="http">PYTHON</a>基本概念，并以小游戏开发项目为具体案例，介绍的十分详细。编写风格清新朴实，没有象一般教科书那样枯燥，极其适合初级用户来激发兴趣时使用。
+<span id="line-8" class="anchor"/></strong> <span id="line-9"
+class="anchor"/></p>
+
+<h1 id="head-2730dec6649f59bb83245cc30e233efcad840529">1. StartProgramming-1-6
+函数Functions</h1>
+<span id="line-11" class="anchor"/><span id="line-12" class="anchor"/><p
+class="line874">Loops are useful for performing a set of steps repeatedly, but
+what if you want to repeat the entire loop over and over again -- maybe with
+different parameters. <span id="line-13" class="anchor"/><span id="line-14"
+class="anchor"/></p><p
+class="line867"><strong>循环在做一套反复的操作是非常有用，但是你想要一遍又一遍重复的究竟是什么
+-- 也许会有不同的参数吧。</strong> <span id="line-15" class="anchor"/><span
+id="line-16" class="anchor"/></p><p class="line874">For instance, maybe you
+want to draw a lot of squares all on different parts of the screen. <span
+id="line-17" class="anchor"/><span id="line-18" class="anchor"/></p><p
+class="line867"><strong>举个例子，也许你想在屏幕四处画许多正方形。</strong>
+<span id="line-19" class="anchor"/><span id="line-20" class="anchor"/></p><p
+class="line874">attachfile:many_squares.png <span id="line-21"
+class="anchor"/><span id="line-22" class="anchor"/></p><p
+class="line874">Using functions we can save a piece of code so that we can use
+it again later. <span id="line-23" class="anchor"/><span id="line-24"
+class="anchor"/></p><p
+class="line867"><strong>用函数我们能够保存一部分代码，等到下一次的时候再用它。</strong>
+<span id="line-25" class="anchor"/><span id="line-26" class="anchor"/></p><p
+class="line874">A function is sort of like a mini program inside of your
+program. <span id="line-27" class="anchor"/><span id="line-28"
+class="anchor"/></p><p
+class="line867"><strong>在你的程序中，一个函数好像一个迷你程序一样。</strong>
+<span id="line-29" class="anchor"/><span id="line-30" class="anchor"/></p><p
+class="line874">When we use the function, we say that we call it, almost like
+you might call the time service on your phone. <span id="line-31"
+class="anchor"/><span id="line-32" class="anchor"/></p><p
+class="line867"><strong>当我们要用一个函数，我们说要调用它，就像在手机中调用报时服务一样。</strong>
+<span id="line-33" class="anchor"/><span id="line-34" class="anchor"/></p><p
+class="line874">Functions can either return some value or object to your main
+program (like the current time), or they can perform some action (like setting
+the time) without returning a value. A function which does not return a value
+is sometimes called a procedure. <span id="line-35" class="anchor"/><span
+id="line-36" class="anchor"/></p><p
+class="line867"><strong>函数可以或者返回一些值或对象到你的主程序（好比现在），或者他们能够执行一些操作（比方说设置时间）但不返回任何值。当一个函数没有返回值时，我们通常称它为一个
+过程。</strong> <span id="line-37" class="anchor"/><span id="line-38"
+class="anchor"/></p><p class="line874">Let's make a function which, when
+called, will draw a square, starting wherever pete happens to be at the time:
+<span id="line-39" class="anchor"/><span id="line-40" class="anchor"/></p><p
+class="line867"><strong>让我们做一个函数，调用它时，不管什么时候在什么地方pete都能画出一个正方形来：</strong>
+<span id="line-41" class="anchor"/><span id="line-42" class="anchor"/></p><p
+class="line867"><span id="line-43" class="anchor"/><span id="line-44"
+class="anchor"/><span id="line-45" class="anchor"/><span id="line-46"
+class="anchor"/><span id="line-47" class="anchor"/></p><div lang="en"
+dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length &&
+obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s =
+document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,'
+')));
+n += nstep;
+if
+(l.childNodes.length)
+l.insertBefore(s,
+l.firstChild)
+else
+l.appendChild(s)
+}
+l
+=
+l.nextSibling;
+}
+return
+false;
+}
+function
+remnumber(did)
+{
+var
+c
+=
+document.getElementById(did),
+l
+=
+c.firstChild;
+if
+(isnumbered(c))
+while
+(l
+!=
+null)
+{
+if
+(l.tagName
+==
+'SPAN'
+&&
+l.firstChild.className
+==
+'LineNumber')
+l.removeChild(l.firstChild);
+l
+=
+l.nextSibling;
+}
+return
+false;
+}
+function
+togglenumber(did,
+nstart,
+nstep)
+{
+var
+c
+=
+document.getElementById(did);
+if
+(isnumbered(c))
+{
+remnumber(did);
+}
+else
+{
+addnumber(did,nstart,nstep);
+}
+return
+false;
+}
+</script>
+
+<script
+type="text/javascript">
+document.write('<a
+href="#"
+onclick="return
+togglenumber(\'CA-1aff77a98ce87db64d3c02b9d96810e2e002d03f_000\',
+1,
+1);"
+\
+class="codenumbers">Toggle
+line
+numbers<\/a>');
+</script><a
+class="codenumbers"
+onclick="return
+togglenumber('CA-1aff77a98ce87db64d3c02b9d96810e2e002d03f_000',
+1,
+1);"
+href="#">Toggle
+line
+numbers</a>
+<pre
+lang="en"
+id="CA-1aff77a98ce87db64d3c02b9d96810e2e002d03f_000"
+dir="ltr"><span
+class="line"><span
+class="LineNumber">
+1
+</span><span
+class="ResWord">def</span>
+<span
+class="ID">square</span><span
+class="Operator">(</span><span
+class="Operator">)</span><span
+class="Operator">:</span></span>
+<span
+class="line"><span
+class="LineNumber">
+2
+</span>
+<span
+class="ResWord">for</span>
+<span
+class="ID">side</span>
+<span
+class="ResWord">in</span>
+<span
+class="Number">1</span><span
+class="Operator">,</span>
+<span
+class="Number">2</span><span
+class="Operator">,</span>
+<span
+class="Number">3</span><span
+class="Operator">,</span>
+<span
+class="Number">4</span><span
+class="Operator">:</span></span>
+<span
+class="line"><span
+class="LineNumber">
+3
+</span>
+<span
+class="ID">forward</span><span
+class="Operator">(</span><span
+class="Number">100</span><span
+class="Operator">)</span></span>
+<span
+class="line"><span
+class="LineNumber">
+4
+</span>
+<span
+class="ID">right</span><span
+class="Operator">(</span><span
+class="Number">90</span><span
+class="Operator">)</span><span
+class="Text"/></span>
+</pre></div><span
+id="line-48"
+class="anchor"/><span
+id="line-49"
+class="anchor"/><p
+class="line874">square
+is
+a
+function
+object.
+<span
+id="line-50"
+class="anchor"/><strong>square
+是一个函数对象。</strong>
+<span
+id="line-51"
+class="anchor"/><span
+id="line-52"
+class="anchor"/></p><p
+class="line874">Notice
+that
+the
+body
+of
+the
+function,
+just
+like
+the
+body
+of
+the
+loop
+before,
+is
+indented,
+and
+since
+there
+is
+a
+loop
+inside
+of
+our
+function,
+the
+body
+of
+the
+loop
+is
+indented
+again.
+The
+first
+indent
+should
+be
+4
+spaces,
+the
+second
+indent
+is
+4
+more
+for
+a
+total
+of
+8
+spaces.
+<span
+id="line-53"
+class="anchor"/><span
+id="line-54"
+class="anchor"/></p><p
+class="line867"><strong>注意这个函数的
+内容
+，刚好和前面的循环一样是缩进的。并且之后在我们的函数里也有一个循环，循环的内容再次缩进。第一次缩进是4个空格，第二次缩进又加了4个总共是8个空格。</strong>
+<span
+id="line-55"
+class="anchor"/><span
+id="line-56"
+class="anchor"/></p><p
+class="line874">To
+call
+our
+new
+function,
+use
+this:
+<span
+id="line-57"
+class="anchor"/><span
+id="line-58"
+class="anchor"/></p><p
+class="line867"><strong>要调用我们的新函数，用：</strong>
+<span
+id="line-59"
+class="anchor"/><span
+id="line-60"
+class="anchor"/></p><p
+class="line867"><span
+id="line-61"
+class="anchor"/></p><pre>square()
+<span
+id="line-62"
+class="anchor"/></pre><span
+id="line-63"
+class="anchor"/><span
+id="line-64"
+class="anchor"/><p
+class="line874">To
+see
+why
+we
+might
+want
+to
+make
+functions,
+try
+a
+combination
+of
+a
+loop
+which
+calls
+our
+function:
+<span
+id="line-65"
+class="anchor"/><span
+id="line-66"
+class="anchor"/></p><p
+class="line867"><strong>想要知道我们为什么要做一个函数，可以试试结合一个循环调用我们的函数：</strong>
+<span
+id="line-67"
+class="anchor"/><span
+id="line-68"
+class="anchor"/></p><p
+class="line867"><span
+id="line-69"
+class="anchor"/><span
+id="line-70"
+class="anchor"/><span
+id="line-71"
+class="anchor"/><span
+id="line-72"
+class="anchor"/><span
+id="line-73"
+class="anchor"/></p><div
+lang="en"
+dir="ltr"
+class="codearea">
+<script
+type="text/javascript">
+document.write('<a
+href="#"
+onclick="return
+togglenumber(\'CA-a7586252875dad934146ee83db65987ce0617801_001\',
+1,
+1);"
+\
+class="codenumbers">Toggle
+line
+numbers<\/a>');
+</script><a
+class="codenumbers"
+onclick="return
+togglenumber('CA-a7586252875dad934146ee83db65987ce0617801_001',
+1,
+1);"
+href="#">Toggle
+line
+numbers</a>
+<pre
+lang="en"
+id="CA-a7586252875dad934146ee83db65987ce0617801_001"
+dir="ltr"><span
+class="line"><span
+class="LineNumber">
+1
+</span><span
+class="ResWord">for</span>
+<span
+class="ID">side</span>
+<span
+class="ResWord">in</span>
+<span
+class="Number">1</span><span
+class="Operator">,</span>
+<span
+class="Number">2</span><span
+class="Operator">,</span>
+<span
+class="Number">3</span><span
+class="Operator">,</span>
+<span
+class="Number">4</span><span
+class="Operator">:</span></span>
+<span
+class="line"><span
+class="LineNumber">
+2
+</span>
+<span
+class="ID">forward</span><span
+class="Operator">(</span><span
+class="Number">125</span><span
+class="Operator">)</span></span>
+<span
+class="line"><span
+class="LineNumber">
+3
+</span>
+<span
+class="ID">square</span><span
+class="Operator">(</span><span
+class="Operator">)</span></span>
+<span
+class="line"><span
+class="LineNumber">
+4
+</span>
+<span
+class="ID">left</span><span
+class="Operator">(</span><span
+class="Number">90</span><span
+class="Operator">)</span><span
+class="Text"/></span>
+</pre></div><span
+id="line-74"
+class="anchor"/><span
+id="line-75"
+class="anchor"/><p
+class="line874">Loop
+in
+progress...
+<span
+id="line-76"
+class="anchor"/><span
+id="line-77"
+class="anchor"/></p><p
+class="line867"><strong>正在循环中……</strong>
+<span
+id="line-78"
+class="anchor"/><span
+id="line-79"
+class="anchor"/></p><p
+class="line874">If
+you
+had
+done
+that
+by
+hand,
+or
+tried
+to
+figure
+out
+how
+to
+put
+all
+those
+loops
+together,
+it
+would
+have
+taken
+a
+long
+time,
+and
+it
+would
+have
+been
+very
+easy
+to
+make
+a
+mistake.
+With
+functions,
+you
+can
+think
+in
+terms
+of
+larger
+pieces.
+This
+loop
+says:
+"Set
+side
+equal
+to
+1,
+go
+forward,
+make
+a
+square,
+turn
+left,
+set
+side
+equal
+to
+2,
+go
+forward,
+etc..."
+<span
+id="line-80"
+class="anchor"/><span
+id="line-81"
+class="anchor"/></p><p
+class="line867"><strong>如果你手工完成这些，或者尝试统计出总共循环了多少次，这将花费你很长的时间，并且很容易发生错误。用函数，你可以从整体上来考虑。这个循环的意思是：“设置
+side
+等于
+1，前进，画一个正方形，左转，设置
+side
+等于
+2，前进，
+等等……”</strong>
+<span
+id="line-82"
+class="anchor"/><span
+id="line-83"
+class="anchor"/></p><p
+class="line874">Remember
+that
+"Set
+side
+equal
+to
+1"
+has
+nothing
+to
+do
+with
+the
+length
+of
+the
+side.
+It
+is
+just
+counting.
+<span
+id="line-84"
+class="anchor"/><span
+id="line-85"
+class="anchor"/></p><p
+class="line867"><strong>记住“设置side等于1”并不会改变正方形的边长。这只不过是个计数器。</strong>
+<span
+id="line-86"
+class="anchor"/><span
+id="line-87"
+class="anchor"/></p><p
+class="line867">
+</p><h2
+id="head-065d34c1e5c7587e8bcb4c1bb758c027387dfa6b">1.1.
+参数Parameters</h2>
+<span
+id="line-88"
+class="anchor"/><span
+id="line-89"
+class="anchor"/><p
+class="line874">square()
+is
+fine
+as
+it
+is.
+It
+makes
+a
+square
+on
+the
+screen
+just
+as
+you
+asked
+it
+to,
+but
+what
+if
+all
+your
+squares
+are
+not
+the
+same
+size?
+<span
+id="line-90"
+class="anchor"/><span
+id="line-91"
+class="anchor"/></p><p
+class="line867"><strong>square()
+表现得很好。它按照你的要求在屏幕上画正方形，但是怎样才能让你的正方形边长不相等呢？</strong>
+<span
+id="line-92"
+class="anchor"/><span
+id="line-93"
+class="anchor"/></p><p
+class="line874">Let's
+make
+a
+function
+which
+is
+a
+bit
+more
+general
+purpose:
+<span
+id="line-94"
+class="anchor"/><span
+id="line-95"
+class="anchor"/></p><p
+class="line867"><strong>让我们给函数来一点通用性：</strong>
+<span
+id="line-96"
+class="anchor"/><span
+id="line-97"
+class="anchor"/></p><p
+class="line867"><span
+id="line-98"
+class="anchor"/><span
+id="line-99"
+class="anchor"/><span
+id="line-100"
+class="anchor"/><span
+id="line-101"
+class="anchor"/><span
+id="line-102"
+class="anchor"/></p><div
+lang="en"
+dir="ltr"
+class="codearea">
+<script
+type="text/javascript">
+document.write('<a
+href="#"
+onclick="return
+togglenumber(\'CA-17f24f632bed489c3341b9ef89ea35424fb362e7_002\',
+1,
+1);"
+\
+class="codenumbers">Toggle
+line
+numbers<\/a>');
+</script><a
+class="codenumbers"
+onclick="return
+togglenumber('CA-17f24f632bed489c3341b9ef89ea35424fb362e7_002',
+1,
+1);"
+href="#">Toggle
+line
+numbers</a>
+<pre
+lang="en"
+id="CA-17f24f632bed489c3341b9ef89ea35424fb362e7_002"
+dir="ltr"><span
+class="line"><span
+class="LineNumber">
+1
+</span><span
+class="ResWord">def</span>
+<span
+class="ID">generalSquare</span><span
+class="Operator">(</span><span
+class="ID">length</span><span
+class="Operator">)</span><span
+class="Operator">:</span></span>
+<span
+class="line"><span
+class="LineNumber">
+2
+</span>
+<span
+class="ResWord">for</span>
+<span
+class="ID">side</span>
+<span
+class="ResWord">in</span>
+<span
+class="Number">1</span><span
+class="Operator">,</span>
+<span
+class="Number">2</span><span
+class="Operator">,</span>
+<span
+class="Number">3</span><span
+class="Operator">,</span>
+<span
+class="Number">4</span><span
+class="Operator">:</span></span>
+<span
+class="line"><span
+class="LineNumber">
+3
+</span>
+<span
+class="ID">forward</span><span
+class="Operator">(</span><span
+class="ID">length</span><span
+class="Operator">)</span></span>
+<span
+class="line"><span
+class="LineNumber">
+4
+</span>
+<span
+class="ID">right</span><span
+class="Operator">(</span><span
+class="Number">90</span><span
+class="Operator">)</span><span
+class="Text"/></span>
+</pre></div><span
+id="line-103"
+class="anchor"/><span
+id="line-104"
+class="anchor"/><p
+class="line874">generalSquare
+takes
+one
+parameter
+--
+the
+length
+<span
+id="line-105"
+class="anchor"/><span
+id="line-106"
+class="anchor"/></p><p
+class="line867"><strong>generalSquare
+有一个参数
+--
+是
+length</strong>
+<span
+id="line-107"
+class="anchor"/><span
+id="line-108"
+class="anchor"/></p><p
+class="line874">This
+time,
+our
+function
+takes
+a
+parameter
+(also
+called
+an
+argument)
+the
+length
+of
+a
+side
+of
+the
+square,
+and
+when
+moving
+forward,
+instead
+of
+using
+the
+value
+100,
+it
+uses
+the
+value
+of
+the
+length.
+<span
+id="line-109"
+class="anchor"/><span
+id="line-110"
+class="anchor"/></p><p
+class="line867"><strong>这次，我们的函数有了一个
+参数
+（也叫做变元）
+是正方形一个边的长度并且前进的时候，我们用
+length
+的值来代替
+100的值。</strong>
+<span
+id="line-111"
+class="anchor"/><span
+id="line-112"
+class="anchor"/></p><p
+class="line874">Now,
+to
+make
+a
+square
+with
+a
+side
+of
+length
+20,
+we
+will
+call:
+<span
+id="line-113"
+class="anchor"/><span
+id="line-114"
+class="anchor"/></p><p
+class="line867"><strong>现在，想要画一个边长是20的正方形，我们可以调用：</strong>
+<span
+id="line-115"
+class="anchor"/><span
+id="line-116"
+class="anchor"/></p><p
+class="line867"><span
+id="line-117"
+class="anchor"/></p><pre>generalSquare(20)
+<span
+id="line-118"
+class="anchor"/></pre><span
+id="line-119"
+class="anchor"/><span
+id="line-120"
+class="anchor"/><p
+class="line874">When
+this
+function
+gets
+called,
+the
+variable
+length
+is
+given
+the
+value
+we
+put
+in
+the
+parentheses.
+Then
+any
+time
+python
+sees
+length
+in
+the
+body
+of
+the
+function,
+it
+substitutes
+that
+value.
+<span
+id="line-121"
+class="anchor"/><span
+id="line-122"
+class="anchor"/></p><p
+class="line867"><strong>当这个函数被调用时，变量
+length
+就会被赋予我们在括号内所给的值。然后任何时候python在函数的语句中看到
+length
+，都会用那个值来代替它。</strong>
+<span
+id="line-123"
+class="anchor"/><span
+id="line-124"
+class="anchor"/></p><p
+class="line874">This
+generalized
+square
+method
+is
+so
+useful,
+that
+it
+is
+built-in
+to
+all
+Penguin
+objects.
+In
+interact.py
+you
+can
+use
+it
+like
+this:
+<span
+id="line-125"
+class="anchor"/><span
+id="line-126"
+class="anchor"/></p><p
+class="line867"><strong>这个通用的
+square
+方法是如此的有用，它已经被内健到所有的
+Penguin
+对象中了。在
+interact.py
+中你可以像这样来用：</strong>
+<span
+id="line-127"
+class="anchor"/><span
+id="line-128"
+class="anchor"/></p><p
+class="line867"><span
+id="line-129"
+class="anchor"/></p><pre>pete.square(20)
+<span
+id="line-130"
+class="anchor"/></pre><span
+id="line-131"
+class="anchor"/><span
+id="line-132"
+class="anchor"/><p
+class="line874">In
+fact,
+there
+is
+also
+another
+type
+of
+square
+built-in
+which
+is
+centered
+on
+the
+penguin's
+present
+location:
+<span
+id="line-133"
+class="anchor"/><span
+id="line-134"
+class="anchor"/></p><p
+class="line867"><strong>实际上，这里还有另外一种类型的正方形被内建在当前的企鹅中：</strong>
+<span
+id="line-135"
+class="anchor"/><span
+id="line-136"
+class="anchor"/></p><p
+class="line867"><span
+id="line-137"
+class="anchor"/></p><pre>pete.cSquare(50)
+<span
+id="line-138"
+class="anchor"/></pre><span
+id="line-139"
+class="anchor"/><span
+id="line-140"
+class="anchor"/><p
+class="line874">will
+draw
+a
+50-pixel
+square
+with
+pete
+right
+in
+the
+middle.
+<span
+id="line-141"
+class="anchor"/><span
+id="line-142"
+class="anchor"/></p><p
+class="line867"><strong>将画一个pete正好在中央的50像素的正方形。</strong>
+<span
+id="line-143"
+class="anchor"/><span
+id="line-144"
+class="anchor"/></p><p
+class="line874">How
+might
+we
+use
+the
+squares?
+Let's
+try
+this:
+<span
+id="line-145"
+class="anchor"/><span
+id="line-146"
+class="anchor"/></p><p
+class="line867"><strong>我们怎样来利用这些正方形？让我们试试着个：</strong>
+<span
+id="line-147"
+class="anchor"/><span
+id="line-148"
+class="anchor"/></p><p
+class="line867"><span
+id="line-149"
+class="anchor"/><span
+id="line-150"
+class="anchor"/><span
+id="line-151"
+class="anchor"/><span
+id="line-152"
+class="anchor"/><span
+id="line-153"
+class="anchor"/><span
+id="line-154"
+class="anchor"/><span
+id="line-155"
+class="anchor"/><span
+id="line-156"
+class="anchor"/></p><div
+lang="en"
+dir="ltr"
+class="codearea">
+<script
+type="text/javascript">
+document.write('<a
+href="#"
+onclick="return
+togglenumber(\'CA-02e3c2cd70888aeb32b3cacf977b5efd40e61d0a_003\',
+1,
+1);"
+\
+class="codenumbers">Toggle
+line
+numbers<\/a>');
+</script><a
+class="codenumbers"
+onclick="return
+togglenumber('CA-02e3c2cd70888aeb32b3cacf977b5efd40e61d0a_003',
+1,
+1);"
+href="#">Toggle
+line
+numbers</a>
+<pre
+lang="en"
+id="CA-02e3c2cd70888aeb32b3cacf977b5efd40e61d0a_003"
+dir="ltr"><span
+class="line"><span
+class="LineNumber">
+1
+</span><span
+class="ID">width</span>
+<span
+class="Operator">=</span>
+<span
+class="Number">5</span></span>
+<span
+class="line"><span
+class="LineNumber">
+2
+</span></span>
+<span
+class="line"><span
+class="LineNumber">
+3
+</span><span
+class="ResWord">while</span>
+<span
+class="ID">width</span>
+<span
+class="Operator"><</span>
+<span
+class="Number">200</span><span
+class="Operator">:</span></span>
+<span
+class="line"><span
+class="LineNumber">
+4
+</span>
+<span
+class="ID">set_color</span><span
+class="Operator">(</span><span
+class="String">'random'</span><span
+class="Operator">)</span></span>
+<span
+class="line"><span
+class="LineNumber">
+5
+</span>
+<span
+class="ID">pete</span><span
+class="Operator">.</span><span
+class="ID">square</span><span
+class="Operator">(</span><span
+class="ID">width</span><span
+class="Operator">)</span></span>
+<span
+class="line"><span
+class="LineNumber">
+6
+</span>
+<span
+class="ID">width</span>
+<span
+class="Operator">+=</span>
+<span
+class="Number">2</span></span>
+<span
+class="line"><span
+class="LineNumber">
+7
+</span>
+<span
+class="ID">left</span><span
+class="Operator">(</span><span
+class="Number">65</span><span
+class="Operator">)</span><span
+class="Text"/></span>
+</pre></div><span
+id="line-157"
+class="anchor"/><span
+id="line-158"
+class="anchor"/><p
+class="line874">That's
+pretty
+neat.
+Let's
+make
+that
+in
+to
+a
+function
+too...
+<span
+id="line-159"
+class="anchor"/><span
+id="line-160"
+class="anchor"/></p><p
+class="line867"><strong>这个是相当的整洁漂亮，让我们把它也定义到一个函数中……</strong>
+<span
+id="line-161"
+class="anchor"/><span
+id="line-162"
+class="anchor"/></p><p
+class="line867"><span
+id="line-163"
+class="anchor"/><span
+id="line-164"
+class="anchor"/><span
+id="line-165"
+class="anchor"/><span
+id="line-166"
+class="anchor"/><span
+id="line-167"
+class="anchor"/><span
+id="line-168"
+class="anchor"/><span
+id="line-169"
+class="anchor"/><span
+id="line-170"
+class="anchor"/><span
+id="line-171"
+class="anchor"/></p><div
+lang="en"
+dir="ltr"
+class="codearea">
+<script
+type="text/javascript">
+document.write('<a
+href="#"
+onclick="return
+togglenumber(\'CA-3f7bfb877939fdd8ca11f0ac37a60561dd49aef5_004\',
+1,
+1);"
+\
+class="codenumbers">Toggle
+line
+numbers<\/a>');
+</script><a
+class="codenumbers"
+onclick="return
+togglenumber('CA-3f7bfb877939fdd8ca11f0ac37a60561dd49aef5_004',
+1,
+1);"
+href="#">Toggle
+line
+numbers</a>
+<pre
+lang="en"
+id="CA-3f7bfb877939fdd8ca11f0ac37a60561dd49aef5_004"
+dir="ltr"><span
+class="line"><span
+class="LineNumber">
+1
+</span><span
+class="ResWord">def</span>
+<span
+class="ID">flow</span><span
+class="Operator">(</span><span
+class="ID">angle</span><span
+class="Operator">,</span>
+<span
+class="ID">grow</span><span
+class="Operator">=</span><span
+class="Number">2</span><span
+class="Operator">)</span><span
+class="Operator">:</span></span>
+<span
+class="line"><span
+class="LineNumber">
+2
+</span>
+<span
+class="ID">width</span>
+<span
+class="Operator">=</span>
+<span
+class="Number">5</span></span>
+<span
+class="line"><span
+class="LineNumber">
+3
+</span></span>
+<span
+class="line"><span
+class="LineNumber">
+4
+</span>
+<span
+class="ResWord">while</span>
+<span
+class="ID">width</span>
+<span
+class="Operator"><</span>
+<span
+class="Number">200</span><span
+class="Operator">:</span></span>
+<span
+class="line"><span
+class="LineNumber">
+5
+</span>
+<span
+class="ID">set_color</span><span
+class="Operator">(</span><span
+class="String">'random'</span><span
+class="Operator">)</span></span>
+<span
+class="line"><span
+class="LineNumber">
+6
+</span>
+<span
+class="ID">pete</span><span
+class="Operator">.</span><span
+class="ID">square</span><span
+class="Operator">(</span><span
+class="ID">width</span><span
+class="Operator">)</span></span>
+<span
+class="line"><span
+class="LineNumber">
+7
+</span>
+<span
+class="ID">width</span>
+<span
+class="Operator">+=</span>
+<span
+class="ID">grow</span></span>
+<span
+class="line"><span
+class="LineNumber">
+8
+</span>
+<span
+class="ID">left</span><span
+class="Operator">(</span><span
+class="ID">angle</span><span
+class="Operator">)</span><span
+class="Text"/></span>
+</pre></div><span
+id="line-172"
+class="anchor"/><span
+id="line-173"
+class="anchor"/><p
+class="line874">square,
+turn,
+square,
+turn,
+square,
+etc...
+<span
+id="line-174"
+class="anchor"/><span
+id="line-175"
+class="anchor"/></p><p
+class="line867"><strong>正方形，转，正方形，转，正方形，等等……</strong>
+<span
+id="line-176"
+class="anchor"/><span
+id="line-177"
+class="anchor"/></p><p
+class="line874">As
+you
+can
+see,
+functions
+can
+also
+take
+more
+than
+one
+parameter.
+flow
+takes
+two
+parameters:
+the
+angle
+to
+turn
+between
+squares,
+and
+the
+amount
+to
+grow
+between
+squares.
+Also,
+grow
+uses
+a
+default
+value
+of
+2.
+<span
+id="line-178"
+class="anchor"/><span
+id="line-179"
+class="anchor"/></p><p
+class="line867"><strong>正如你所见，函数可以拥有不止一个参数。flow
+拥有两个参数：angle
+是正方形之间的夹角，
+grow
+是正方形的增值。另外，
+grow
+用
+2
+作为初始值。</strong>
+<span
+id="line-180"
+class="anchor"/><span
+id="line-181"
+class="anchor"/></p><p
+class="line874">So,
+we
+can
+call
+flow
+with
+2
+parameters:
+<span
+id="line-182"
+class="anchor"/><span
+id="line-183"
+class="anchor"/></p><p
+class="line867"><strong>因此，我们用两个参数调用
+flow：</strong>
+<span
+id="line-184"
+class="anchor"/><span
+id="line-185"
+class="anchor"/></p><p
+class="line867"><span
+id="line-186"
+class="anchor"/></p><pre>flow(4,
+1)
+<span
+id="line-187"
+class="anchor"/></pre><span
+id="line-188"
+class="anchor"/><span
+id="line-189"
+class="anchor"/><p
+class="line874">or,
+if
+the
+default
+value
+is
+ok,
+then
+we
+can
+call
+it
+with
+just
+the
+one
+parameter:
+<span
+id="line-190"
+class="anchor"/><span
+id="line-191"
+class="anchor"/></p><p
+class="line867"><strong>或者，如果同意用缺省值，我们可以用一个参数调用它：</strong>
+<span
+id="line-192"
+class="anchor"/><span
+id="line-193"
+class="anchor"/></p><p
+class="line867"><span
+id="line-194"
+class="anchor"/></p><pre>flow(14)
+<span
+id="line-195"
+class="anchor"/></pre><span
+id="line-196"
+class="anchor"/><span
+id="line-197"
+class="anchor"/><p
+class="line874">and
+it
+will
+be
+the
+same
+as
+if
+we
+had
+called
+flow(14,
+2)
+<span
+id="line-198"
+class="anchor"/><span
+id="line-199"
+class="anchor"/></p><p
+class="line867"><strong>这和调用
+flow(14,
+2)
+是一样的</strong>
+<span
+id="line-200"
+class="anchor"/><span
+id="line-201"
+class="anchor"/></p><p
+class="line867">
+</p><h2
+id="head-fedb3efa2e78f791182b5a9d8645ae0718dc970b">1.2.
+更通用的More
+General</h2>
+<span
+id="line-202"
+class="anchor"/><span
+id="line-203"
+class="anchor"/><p
+class="line874">All
+of
+these
+squares
+might
+make
+you
+wonder
+if
+you
+can
+draw
+some
+other
+shape.
+Maybe
+you
+want
+to
+make
+an
+even
+more
+general
+function.
+Try
+this:
+<span
+id="line-204"
+class="anchor"/><span
+id="line-205"
+class="anchor"/></p><p
+class="line867"><strong>如果你能够画出其他的形状，所有这些正方形会使你感到惊奇。也许你想做一个更加通用的函数。试试这个：</strong>
+<span
+id="line-206"
+class="anchor"/><span
+id="line-207"
+class="anchor"/></p><p
+class="line867"><span
+id="line-208"
+class="anchor"/><span
+id="line-209"
+class="anchor"/><span
+id="line-210"
+class="anchor"/><span
+id="line-211"
+class="anchor"/><span
+id="line-212"
+class="anchor"/></p><div
+lang="en"
+dir="ltr"
+class="codearea">
+<script
+type="text/javascript">
+document.write('<a
+href="#"
+onclick="return
+togglenumber(\'CA-20d83d15c329142eb6a8858608c9021c0e300da3_005\',
+1,
+1);"
+\
+class="codenumbers">Toggle
+line
+numbers<\/a>');
+</script><a
+class="codenumbers"
+onclick="return
+togglenumber('CA-20d83d15c329142eb6a8858608c9021c0e300da3_005',
+1,
+1);"
+href="#">Toggle
+line
+numbers</a>
+<pre
+lang="en"
+id="CA-20d83d15c329142eb6a8858608c9021c0e300da3_005"
+dir="ltr"><span
+class="line"><span
+class="LineNumber">
+1
+</span><span
+class="ResWord">def</span>
+<span
+class="ID">lineTurn</span><span
+class="Operator">(</span><span
+class="ID">length</span><span
+class="Operator">,</span>
+<span
+class="ID">angle</span><span
+class="Operator">)</span><span
+class="Operator">:</span></span>
+<span
+class="line"><span
+class="LineNumber">
+2
+</span>
+<span
+class="ResWord">for</span>
+<span
+class="ID">side</span>
+<span
+class="ResWord">in</span>
+<span
+class="Number">1</span><span
+class="Operator">,</span>
+<span
+class="Number">2</span><span
+class="Operator">,</span>
+<span
+class="Number">3</span><span
+class="Operator">,</span>
+<span
+class="Number">4</span><span
+class="Operator">:</span></span>
+<span
+class="line"><span
+class="LineNumber">
+3
+</span>
+<span
+class="ID">forward</span><span
+class="Operator">(</span><span
+class="ID">length</span><span
+class="Operator">)</span></span>
+<span
+class="line"><span
+class="LineNumber">
+4
+</span>
+<span
+class="ID">right</span><span
+class="Operator">(</span><span
+class="ID">angle</span><span
+class="Operator">)</span><span
+class="Text"/></span>
+</pre></div><span
+id="line-213"
+class="anchor"/><span
+id="line-214"
+class="anchor"/><p
+class="line874">Two
+parameters,
+no
+default
+values.
+<span
+id="line-215"
+class="anchor"/><span
+id="line-216"
+class="anchor"/></p><p
+class="line867"><strong>两个参数，没有缺省值。</strong>
+<span
+id="line-217"
+class="anchor"/><span
+id="line-218"
+class="anchor"/></p><p
+class="line874">and
+call
+it
+like
+this:
+<span
+id="line-219"
+class="anchor"/><span
+id="line-220"
+class="anchor"/></p><p
+class="line867"><strong>并且像这样来调用它：</strong>
+<span
+id="line-221"
+class="anchor"/><span
+id="line-222"
+class="anchor"/></p><p
+class="line867"><span
+id="line-223"
+class="anchor"/><span
+id="line-224"
+class="anchor"/><span
+id="line-225"
+class="anchor"/><span
+id="line-226"
+class="anchor"/></p><div
+lang="en"
+dir="ltr"
+class="codearea">
+<script
+type="text/javascript">
+document.write('<a
+href="#"
+onclick="return
+togglenumber(\'CA-a54030fffa904fe6b4aaabc96826ca727af80915_006\',
+1,
+1);"
+\
+class="codenumbers">Toggle
+line
+numbers<\/a>');
+</script><a
+class="codenumbers"
+onclick="return
+togglenumber('CA-a54030fffa904fe6b4aaabc96826ca727af80915_006',
+1,
+1);"
+href="#">Toggle
+line
+numbers</a>
+<pre
+lang="en"
+id="CA-a54030fffa904fe6b4aaabc96826ca727af80915_006"
+dir="ltr"><span
+class="line"><span
+class="LineNumber">
+1
+</span><span
+class="ID">lineTurn</span><span
+class="Operator">(</span><span
+class="Number">150</span><span
+class="Operator">,</span>
+<span
+class="Number">90</span><span
+class="Operator">)</span></span>
+<span
+class="line"><span
+class="LineNumber">
+2
+</span><span
+class="ID">lineTurn</span><span
+class="Operator">(</span><span
+class="Number">200</span><span
+class="Operator">,</span>
+<span
+class="Number">120</span><span
+class="Operator">)</span></span>
+<span
+class="line"><span
+class="LineNumber">
+3
+</span><span
+class="ID">lineTurn</span><span
+class="Operator">(</span><span
+class="Number">50</span><span
+class="Operator">,</span>
+<span
+class="Number">72</span><span
+class="Operator">)</span><span
+class="Text"/></span>
+</pre></div><span
+id="line-227"
+class="anchor"/><span
+id="line-228"
+class="anchor"/><p
+class="line874">Notice
+that
+I
+did
+not
+give
+it
+a
+name
+that
+mentions
+square
+at
+all,
+since
+what
+lineTurn()
+makes
+will
+not
+always
+be
+a
+square.
+<span
+id="line-229"
+class="anchor"/><span
+id="line-230"
+class="anchor"/></p><p
+class="line867"><strong>注意我命名时，根本没有提到
+square
+，因为
+lineTurn()
+不会总是画出一个正方形来。</strong>
+<span
+id="line-231"
+class="anchor"/><span
+id="line-232"
+class="anchor"/></p><p
+class="line874">Give
+those
+three
+function
+calls
+a
+try
+and
+see
+what
+you
+get.
+<span
+id="line-233"
+class="anchor"/><span
+id="line-234"
+class="anchor"/></p><p
+class="line867"><strong>尝试调用这三个函数，看看你得到了什么。</strong>
+<span
+id="line-235"
+class="anchor"/><span
+id="line-236"
+class="anchor"/></p><p
+class="line874">The
+first
+call
+is
+fine.
+It
+is
+just
+as
+if
+we
+called
+generalSquare(150).
+The
+second
+call
+succeeds
+in
+making
+a
+triangle,
+but
+it
+is
+a
+bit
+wasteful
+as
+it
+draws
+over
+one
+of
+the
+sides
+twice.
+<span
+id="line-237"
+class="anchor"/><span
+id="line-238"
+class="anchor"/></p><p
+class="line867"><strong>第一次调用很好，它就像我们调用
+generalSquare(150)一样。第二个调用成功的画出了一个三角形，不过它把一条边画了2次有点浪费。</strong>
+<span
+id="line-239"
+class="anchor"/><span
+id="line-240"
+class="anchor"/></p><p
+class="line874">What
+happens
+on
+the
+last
+call
+though?
+It
+gets
+most
+of
+the
+way
+through
+a
+pentagon
+and
+stops.
+<span
+id="line-241"
+class="anchor"/><span
+id="line-242"
+class="anchor"/></p><p
+class="line867"><strong>可是最后一次调用发生了什么？它画出了大部分的五角形却停止了。</strong>
+<span
+id="line-243"
+class="anchor"/><span
+id="line-244"
+class="anchor"/></p><p
+class="line874">It
+is
+close
+to
+being
+a
+complete
+pentagon...
+You
+could
+finish
+it
+up
+by
+just
+typing
+forward(50)
+but
+it
+would
+be
+nice
+if
+the
+function
+could
+do
+that
+on
+its
+own.
+<span
+id="line-245"
+class="anchor"/><span
+id="line-246"
+class="anchor"/></p><p
+class="line867"><strong>它终止了完成一个五角星……
+你可以键入
+forward(50)
+来完成它，但是如果函数自己能那样做的话会更好。</strong>
+<span
+id="line-247"
+class="anchor"/><span
+id="line-248"
+class="anchor"/></p><p
+class="line874">In
+the
+next
+section,
+we
+will
+do
+just
+that.
+<span
+id="line-249"
+class="anchor"/><span
+id="line-250"
+class="anchor"/></p><p
+class="line867"><strong>在下一节里，我们再那样做。</strong>
+<span
+id="line-251"
+class="anchor"/><span
+id="bottom"
+class="anchor"/></p></div>
+
+
+
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-3" class="anchor"/><p class="line867"><strong> <span id="line-4" class="anchor"/><a href="/moin/StartProgramming"> （首页）开始编程之旅</a> <span id="line-5" class="anchor"/>翻译自Lee Harr的<a href="http://staff.easthighschool.net/lee/computers/book/Start_Programming.html" class="http">Start Programming</a> <span id="line-6" class="anchor"/><span id="line-7" class="anchor"/></strong></p><p class="line862"><strong>本文是使用<a href="http://www.nongnu.org/pygsear/" class="http">pygsear</a>+<a href="http://pygame.org" class="http">pygame</a>作为开发环境，以初级用户角度来分步分阶段学习<a href="http://www.python.org"
+class="http">PYTHON</a>基本概念，并以小游戏开发项目为具体案例，介绍的十分详细。编写风格清新朴实，没有象一般教科书那样枯燥，极其适合初级用户来激发兴趣时使用。 <span id="line-8" class="anchor"/></strong> <span id="line-9" class="anchor"/></p>
+<span id="line-10"
+class="anchor"/>
+<h1 id="head-8a949012b8b8febf654a94cb7724a561e542f9ab">1. StartProgramming-1-7 列表Lists</h1>
+<span id="line-11" class="anchor"/><span id="line-12" class="anchor"/><p class="line874">In the loops in previous examples, we used code like this: <span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></p><p class="line867"><strong>在前面例子的循环中，我们这样写代码：</strong> <span id="line-15" class="anchor"/><span id="line-16" class="anchor"/></p><p class="line867"><span id="line-17" class="anchor"/></p><pre>for x in 1, 2, 3, 4:
+<span id="line-18" class="anchor"/></pre><span id="line-19" class="anchor"/><span id="line-20" class="anchor"/><p class="line874">The series of numbers 1, 2, 3, 4 is a called a sequence, and loops can iterate over the members of any sequence. <span id="line-21" class="anchor"/><span id="line-22" class="anchor"/></p><p class="line867"><strong>这一串数 1, 2, 3, 4 叫做 序列，并且循环会 列举 任何序列中的所有成员。</strong> <span id="line-23" class="anchor"/><span id="line-24" class="anchor"/></p><p class="line874">What this code means is: "set x = 1 and do the following things, then set x = 2, and do these things again", etc, until the end of the sequence. <span id="line-25" class="anchor"/><span id="line-26" class="anchor"/></p><p class="line867"><strong>这些代码的意思：“设置 x =
+1 并且做下面的事情，然后设置x = 2，并且再次作这些事情”等等，直到序列结束。</strong> <span id="line-27" class="anchor"/><span id="line-28" class="anchor"/></p><p class="line874">A sequence like this will often be written either in square brackets [1, 2, 3, 4] (called a list) or in parentheses (1, 2, 3, 4) (a tuple). <span id="line-29" class="anchor"/><span id="line-30" class="anchor"/></p><p class="line867"><strong>像这样的序列常常被放在中括号里 [1, 2, 3, 4] （叫做一个 列表） 或者在圆括号里 (1, 2, 3, 4) （一个元组）。</strong> <span id="line-31" class="anchor"/><span id="line-32" class="anchor"/></p><p class="line874">The difference between these is a bit subtle. <span id="line-33" class="anchor"/><span id="line-34" class="anchor"/></p><p
+class="line867"><strong>两者之间有着细小的差别。</strong> <span id="line-35" class="anchor"/><span id="line-36" class="anchor"/></p><p class="line874">A list can be changed after it is constructed (we say that it is mutable), whereas a tuple cannot be changed (immutable). <span id="line-37" class="anchor"/><span id="line-38" class="anchor"/></p><p class="line867"><strong>一个列表创建之后可以被改变（我们说它是 不定的），然而一个元组不能被改变 （固定的）。</strong> <span id="line-39" class="anchor"/><span id="line-40" class="anchor"/></p><p class="line874">The differences will become more clear later, but I will use the word "list" for now to keep things simpler. <span id="line-41" class="anchor"/><span id="line-42" class="anchor"/></p><p
+class="line867"><strong>这些不同稍后会变得更加清楚，但是我现在先简单的使用单词“list列表”。</strong> <span id="line-43" class="anchor"/><span id="line-44" class="anchor"/></p><p class="line867">
+</p><h2 id="head-b0df85acbc5410dc5f5247ca073145e219ab59ed">1.1. 创建Create</h2>
+<span id="line-45" class="anchor"/><span id="line-46" class="anchor"/><p class="line874">It is very common to give the list a name instead of typing the list itself in to a loop statement. When creating a list like this, brackets are required. <span id="line-47" class="anchor"/><span id="line-48" class="anchor"/></p><p class="line867"><strong>在循环中使用列表最普遍的做法是用一个列表名字代替键入列表本身。像这样创建一个列表，必须要有方括号。</strong> <span id="line-49" class="anchor"/><span id="line-50" class="anchor"/></p><p class="line874">You can make an empty list: <span id="line-51" class="anchor"/><span id="line-52" class="anchor"/></p><p class="line867"><strong>你可以建立一个空列表：</strong> <span id="line-53" class="anchor"/><span id="line-54" class="anchor"/></p><p
+class="line867"><span id="line-55" class="anchor"/></p><pre>empty_list = []
+<span id="line-56" class="anchor"/></pre><span id="line-57" class="anchor"/><span id="line-58" class="anchor"/><p class="line874">or if you know exactly what needs to be in the list, just go ahead and fill it up: <span id="line-59" class="anchor"/><span id="line-60" class="anchor"/></p><p class="line867"><strong>或者你完全知道列表中需要什么，接着把它们填充进去：</strong> <span id="line-61" class="anchor"/><span id="line-62" class="anchor"/></p><p class="line867"><span id="line-63" class="anchor"/></p><pre>sides = ['side one', 'side two', 'side three', 'side four']
+<span id="line-64" class="anchor"/></pre><span id="line-65" class="anchor"/><span id="line-66" class="anchor"/><p class="line874">Sometimes, especially if the elements in the list are long, it looks better to break it up in to multiple lines. As long as you are inside the brackets, that is fine: <span id="line-67" class="anchor"/><span id="line-68" class="anchor"/></p><p class="line867"><strong>有时，列表中的元素比较长，放到多行中看起来会好一些。只要你把它们都放在中括号里就可以了：</strong> <span id="line-69" class="anchor"/><span id="line-70" class="anchor"/></p><p class="line867"><span id="line-71" class="anchor"/><span id="line-72" class="anchor"/><span id="line-73" class="anchor"/><span id="line-74" class="anchor"/><span id="line-75" class="anchor"/><span id="line-76"
+class="anchor"/><span id="line-77" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-9dc770f8a0e5e601ba66b772b0765c7f0e12ad56_000\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-9dc770f8a0e5e601ba66b772b0765c7f0e12ad56_000', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-9dc770f8a0e5e601ba66b772b0765c7f0e12ad56_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">verbose_sides</span> <span class="Operator">=</span> <span class="Operator">[</span></span>
+<span class="line"><span class="LineNumber">   2 </span>  <span class="String">'The side known as "side one"'</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   3 </span>  <span class="String">'This one is side two'</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   4 </span>  <span class="String">'Another side, called "side three"'</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   5 </span>  <span class="String">'The final side, or side four'</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="Operator">]</span><span class="Text"/></span>
+</pre></div><span id="line-78" class="anchor"/><span id="line-79" class="anchor"/><p class="line867">
+</p><h2 id="head-dcdfe1d175a26937aec282f99ef609613577f4bf">1.2. 改变Mutate</h2>
+<span id="line-80" class="anchor"/><span id="line-81" class="anchor"/><p class="line874">Lists are mutable, but what exactly does that mean? <span id="line-82" class="anchor"/><span id="line-83" class="anchor"/></p><p class="line867"><strong>列表是可变的，但是如何正确的改变呢？</strong> <span id="line-84" class="anchor"/><span id="line-85" class="anchor"/></p><p class="line874">Lists are objects with special methods built in to make it easy to add, remove, sort, and find things that are in the list. <span id="line-86" class="anchor"/><span id="line-87" class="anchor"/></p><p
+class="line867"><strong>列表是一个拥有特殊内置方法的对象，使得它可以简单的添加，删除，排序和查找列表的内容。</strong> <span id="line-88" class="anchor"/><span id="line-89" class="anchor"/></p><p class="line874">For instance, if you did not know beforehand what words you wanted to print around the square, you could add them to the list as you found out: <span id="line-90" class="anchor"/><span id="line-91" class="anchor"/></p><p class="line867"><strong>例如，如果你不知道在正方形周围先打印什么单词，当你弄清楚时你可以把它们添加到列表中：</strong> <span id="line-92" class="anchor"/><span id="line-93"
+class="anchor"/></p><p class="line867"><span id="line-94" class="anchor"/><span id="line-95" class="anchor"/><span id="line-96" class="anchor"/><span id="line-97" class="anchor"/><span id="line-98" class="anchor"/><span id="line-99" class="anchor"/><span id="line-100" class="anchor"/><span id="line-101" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-507e3bc910149aba6f5e19111687943006b1c00a_001\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-507e3bc910149aba6f5e19111687943006b1c00a_001', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-507e3bc910149aba6f5e19111687943006b1c00a_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">from</span> <span class="ID">pygsear</span><span class="Operator">.</span><span class="ID">Widget</span> <span class="ResWord">import</span> <span class="ID">Dialog_LineInput</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">sides</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">for</span> <span class="ID">side</span> <span class="ResWord">in</span> <span class="String">'first'</span><span class="Operator">,</span> <span class="String">'second'</span><span class="Operator">,</span> <span class="String">'third'</span><span class="Operator">,</span> <span class="String">'fourth'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ID">message</span> <span class="Operator">=</span> <span class="String">'Enter the name of the %s side'</span> <span class="Operator">%</span> <span class="ID">side</span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ID">namegetter</span> <span class="Operator">=</span> <span class="ID">Dialog_LineInput</span><span class="Operator">(</span><span class="ID">message</span><span class="Operator">=</span><span class="ID">message</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   6 </span>    <span class="ID">name</span> <span class="Operator">=</span> <span class="ID">namegetter</span><span class="Operator">.</span><span class="ID">modal</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>    <span class="ID">sides</span><span class="Operator">.</span><span class="ID">append</span><span class="Operator">(</span><span class="ID">name</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-102" class="anchor"/><span id="line-103" class="anchor"/><p class="line867">
+</p><h2 id="head-257761ee41ca73a970af870950388892a0c0c192">1.3. 循环Iterate</h2>
+<span id="line-104" class="anchor"/><span id="line-105" class="anchor"/><p class="line874">In this case, the members in the list sides are not numbers, but text (called strings), so we could not use them in math formulas, but we could use them like this: <span id="line-106" class="anchor"/><span id="line-107" class="anchor"/></p><p class="line867"><strong>在这个情况中，列表sides 的成员并不是数字，而是文字（叫做 字符串），所以我们不能把它们用在数学公式里，但是我们可以这样用它们：</strong> <span id="line-108" class="anchor"/><span id="line-109" class="anchor"/></p><p
+class="line867"><span id="line-110" class="anchor"/><span id="line-111" class="anchor"/><span id="line-112" class="anchor"/><span id="line-113" class="anchor"/><span id="line-114" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-8fa928bafb7151d8bdf6473c0627de6858805434_002\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-8fa928bafb7151d8bdf6473c0627de6858805434_002', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-8fa928bafb7151d8bdf6473c0627de6858805434_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">for</span> <span class="ID">word</span> <span class="ResWord">in</span> <span class="ID">sides</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ID">write</span><span class="Operator">(</span><span class="ID">word</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ID">forward</span><span class="Operator">(</span><span class="Number">180</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ID">right</span><span class="Operator">(</span><span class="Number">90</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-115" class="anchor"/><span id="line-116" class="anchor"/><p class="line874">Or, more generally: <span id="line-117" class="anchor"/><span id="line-118" class="anchor"/></p><p class="line867"><strong>或者，更通用的：</strong> <span id="line-119" class="anchor"/><span id="line-120" class="anchor"/></p><p class="line867"><span id="line-121" class="anchor"/><span id="line-122" class="anchor"/><span id="line-123" class="anchor"/><span id="line-124" class="anchor"/><span id="line-125" class="anchor"/><span id="line-126" class="anchor"/></p><div
+lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-4b7559476c460fdaa696a399b1199c0be1224821_003\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-4b7559476c460fdaa696a399b1199c0be1224821_003', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-4b7559476c460fdaa696a399b1199c0be1224821_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">def</span> <span class="ID">messageSquare</span><span class="Operator">(</span><span class="ID">messages</span><span class="Operator">=</span><span class="Operator">[</span><span class="String">'one'</span><span class="Operator">,</span> <span class="String">'two'</span><span class="Operator">,</span> <span class="String">'three'</span><span class="Operator">,</span> <span
+class="String">'four'</span><span class="Operator">]</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">for</span> <span class="ID">word</span> <span class="ResWord">in</span> <span class="ID">messages</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>        <span class="ID">write</span><span class="Operator">(</span><span class="ID">word</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span>        <span class="ID">forward</span><span class="Operator">(</span><span class="Number">180</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">right</span><span class="Operator">(</span><span class="Number">90</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-127" class="anchor"/><span id="line-128" class="anchor"/><p class="line874">The function messageSquare() takes one parameter, and if called without a value it will use the default argument ['one', 'two', 'three', 'four']. <span id="line-129" class="anchor"/><span id="line-130" class="anchor"/></p><p class="line867"><strong>函数messageSquare() 需要一个参数，并且如果被调用时参数没有值的话，它将会用 缺省值 ['one', 'two', 'three', 'four'].</strong> <span id="line-131" class="anchor"/><span id="line-132" class="anchor"/></p><p
+class="line874">In other words, a call to: <span id="line-133" class="anchor"/><span id="line-134" class="anchor"/></p><p class="line867"><strong>换句话说，调用：</strong> <span id="line-135" class="anchor"/><span id="line-136" class="anchor"/></p><p class="line867"><span id="line-137" class="anchor"/></p><pre>messageSquare()
+<span id="line-138" class="anchor"/></pre><span id="line-139" class="anchor"/><span id="line-140" class="anchor"/><p class="line874">is the same as if you called it: <span id="line-141" class="anchor"/><span id="line-142" class="anchor"/></p><p class="line867"><strong>等同于你调用：</strong> <span id="line-143" class="anchor"/><span id="line-144" class="anchor"/></p><p class="line867"><span id="line-145" class="anchor"/></p><pre>messageSquare(['one', 'two', 'three', 'four'])
+<span id="line-146" class="anchor"/></pre><span id="line-147" class="anchor"/><span id="line-148" class="anchor"/><p class="line874">You can also call it with a totally different list: <span id="line-149" class="anchor"/><span id="line-150" class="anchor"/></p><p class="line867"><strong>你也能够用一个完全不同的列表调用它：</strong> <span id="line-151" class="anchor"/><span id="line-152" class="anchor"/></p><p class="line867"><span id="line-153" class="anchor"/></p><pre>messageSquare(['penguins', 'like', 'to eat', 'herring'])
+<span id="line-154" class="anchor"/></pre><span id="line-155" class="anchor"/><span id="line-156" class="anchor"/><p class="line874">or with a list created before: <span id="line-157" class="anchor"/><span id="line-158" class="anchor"/></p><p class="line867"><strong>或者用一个之前创建的列表：</strong> <span id="line-159" class="anchor"/><span id="line-160" class="anchor"/></p><p class="line867"><span id="line-161" class="anchor"/></p><pre>messageSquare(sides)
+<span id="line-162" class="anchor"/></pre><span id="line-163" class="anchor"/><span id="line-164" class="anchor"/><p class="line867">
+</p><h2 id="head-0fb78e033ed35e4d4cb2523334f9fca89a82c8d7">1.4. 排列Range</h2>
+<span id="line-165" class="anchor"/><span id="line-166" class="anchor"/><p class="line874">The function messageSquare() has a problem similar to the problem with the function at the end of the last page. If you pass in a sequence which is longer or shorter than 4 elements, it is probably not going to do what you want. <span id="line-167" class="anchor"/><span id="line-168" class="anchor"/></p><p
+class="line867"><strong>函数messageSquare()有一个问题，相似问题的函数在上一页的结尾部分。如果你换一个多于或者少于4个元素的列表，它很可能不会按照你的要求来做。</strong> <span id="line-169" class="anchor"/><span id="line-170" class="anchor"/></p><p class="line874">Try it now. If the sequence is less than 4 elements, it will not make a complete square. If the sequence is more than 4 elements, it will write over the words on previous sides. <span id="line-171" class="anchor"/><span id="line-172" class="anchor"/></p><p
+class="line867"><strong>现在就试一下。如果序列少于4个元素，它就不能完成一个四边形。如果序列多于4个元素，它将覆盖前面写的单词。</strong> <span id="line-173" class="anchor"/><span id="line-174" class="anchor"/></p><p class="line867"><span id="line-175" class="anchor"/><span id="line-176" class="anchor"/><span id="line-177" class="anchor"/><span id="line-178" class="anchor"/><span id="line-179" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-2e5d00c15f6550167fff0a4260df0eb49375f977_004\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-2e5d00c15f6550167fff0a4260df0eb49375f977_004', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-2e5d00c15f6550167fff0a4260df0eb49375f977_004" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">reset</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">messageSquare</span><span class="Operator">(</span><span class="Operator">[</span><span class="String">'one'</span><span class="Operator">,</span> <span class="String">'side'</span><span class="Operator">,</span> <span class="String">'short'</span><span class="Operator">]</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">reset</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">messageSquare</span><span class="Operator">(</span><span class="Operator">[</span><span class="String">'one'</span><span class="Operator">,</span> <span class="String">'side'</span><span class="Operator">,</span> <span class="String">'too'</span><span class="Operator">,</span> <span class="String">'many'</span><span class="Operator">,</span> <span class="String">'here'</span><span class="Operator">]</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-180" class="anchor"/><span id="line-181" class="anchor"/><p class="line874">To get around this problem, we need to figure out what angle to turn from the number of sides we want the shape to have. <span id="line-182" class="anchor"/><span id="line-183" class="anchor"/></p><p class="line867"><strong>要避开这个问题，我们需要算出我们希望的多边形需要转多少度的角。</strong> <span id="line-184" class="anchor"/><span id="line-185" class="anchor"/></p><p class="line874">Using the built-in function range() we can make a
+very general function to draw polygons: <span id="line-186" class="anchor"/><span id="line-187" class="anchor"/></p><p class="line867"><strong>用内置函数 range()我们可以做一个非常通用的函数来画多边形：</strong> <span id="line-188" class="anchor"/><span id="line-189" class="anchor"/></p><p class="line867"><span id="line-190" class="anchor"/><span id="line-191" class="anchor"/><span id="line-192" class="anchor"/><span id="line-193" class="anchor"/><span id="line-194" class="anchor"/><span id="line-195" class="anchor"/></p><div lang="en"
+dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-aa2b19f5dfbaf5fc8fb31e28cc6db0ba955e2b58_005\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-aa2b19f5dfbaf5fc8fb31e28cc6db0ba955e2b58_005', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-aa2b19f5dfbaf5fc8fb31e28cc6db0ba955e2b58_005" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">def</span> <span class="ID">poly</span><span class="Operator">(</span><span class="ID">sides</span><span class="Operator">,</span> <span class="ID">length</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ID">angle</span> <span class="Operator">=</span> <span class="Number">360.0</span> <span class="Operator">/</span> <span class="ID">sides</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ResWord">for</span> <span class="ID">side</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="ID">sides</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>        <span class="ID">forward</span><span class="Operator">(</span><span class="ID">length</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">right</span><span class="Operator">(</span><span class="ID">angle</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-196" class="anchor"/><span id="line-197" class="anchor"/><p class="line874">The function range() takes a number, and returns a list with that many elements. <span id="line-198" class="anchor"/><span id="line-199" class="anchor"/></p><p class="line867"><strong>函数range()需要一个数字，并且返回一个有许多元素的列表。</strong> <span id="line-200" class="anchor"/><span id="line-201" class="anchor"/></p><p class="line874">That means: if sides=5 then range(sides) is the same as range(5) and it returns
+[0, 1, 2, 3, 4] <span id="line-202" class="anchor"/><span id="line-203" class="anchor"/></p><p class="line867"><strong>意思是：如果sides=5那么range(sides)等同于range(5)并返回[0, 1, 2, 3, 4]</strong> <span id="line-204" class="anchor"/><span id="line-205" class="anchor"/></p><p class="line874">So the function call poly(5, 10) will draw a five-sided figure with sides of length 10. <span id="line-206" class="anchor"/><span id="line-207" class="anchor"/></p><p class="line867"><strong>所以调用函数poly(5,
+10)将画一个边长是10的五边形。</strong> <span id="line-208" class="anchor"/><span id="line-209" class="anchor"/></p><p class="line874">Now we can make almost any sort of regular polygon by giving poly() the number of sides and the length of each side: <span id="line-210" class="anchor"/><span id="line-211" class="anchor"/></p><p class="line867"><strong>现在我们可以通过给出poly()边数和边长来画出几乎任意种类的正多边形：</strong> <span id="line-212" class="anchor"/><span id="line-213" class="anchor"/></p><p
+class="line867"><span id="line-214" class="anchor"/><span id="line-215" class="anchor"/><span id="line-216" class="anchor"/><span id="line-217" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-2280951b13f5df26c55eacbd7b3433a628814ed5_006\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-2280951b13f5df26c55eacbd7b3433a628814ed5_006', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-2280951b13f5df26c55eacbd7b3433a628814ed5_006" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">poly</span><span class="Operator">(</span><span class="Number">5</span><span class="Operator">,</span> <span class="Number">20</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">poly</span><span class="Operator">(</span><span class="Number">6</span><span class="Operator">,</span> <span class="Number">30</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">poly</span><span class="Operator">(</span><span class="Number">100</span><span class="Operator">,</span> <span class="Number">3</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-218" class="anchor"/><span id="line-219" class="anchor"/><p class="line874">The last one will probably be indistinguishable from a circle. In fact, if pete did not have a built in circle() method, that would be a good way to simulate a circle. <span id="line-220" class="anchor"/><span id="line-221" class="anchor"/></p><p class="line867"><strong>最后一个很可能无法和一个圆区分开。事实上，如果pete没有内置的函数circle()，这是也许个代替画圆的好办法。</strong> <span id="line-222"
+class="anchor"/><span id="bottom" class="anchor"/></p></div>
+
+
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-3" class="anchor"/><p class="line867"><strong> <span id="line-4" class="anchor"/><a href="/moin/StartProgramming"> （首页）开始编程之旅</a> <span id="line-5" class="anchor"/>翻译自Lee Harr的<a href="http://staff.easthighschool.net/lee/computers/book/Start_Programming.html" class="http">Start Programming</a> <span id="line-6" class="anchor"/><span id="line-7" class="anchor"/></strong></p><p class="line862"><strong>本文是使用<a href="http://www.nongnu.org/pygsear/" class="http">pygsear</a>+<a href="http://pygame.org" class="http">pygame</a>作为开发环境，以初级用户角度来分步分阶段学习<a href="http://www.python.org"
+class="http">PYTHON</a>基本概念，并以小游戏开发项目为具体案例，介绍的十分详细。编写风格清新朴实，没有象一般教科书那样枯燥，极其适合初级用户来激发兴趣时使用。 <span id="line-8" class="anchor"/></strong> <span id="line-9" class="anchor"/></p>
+<span id="line-10" class="anchor"/>
+<h1 id="head-b86fb6afc1476fedad40d098e9ec744ab1fdbac5">1. StartProgramming-1-8 帮助Help</h1>
+<span id="line-11" class="anchor"/><span id="line-12" class="anchor"/><p class="line874">We will come back to functions and sequences in the next chapter, but first I want to bring up one more thing about the interactive interpreter: <span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></p><p class="line867"><strong>我们将在下一节中回到函数和列表中，但是首先我想中断其它的事情是因为这个交互解释器。</strong> <span id="line-15" class="anchor"/><span id="line-16" class="anchor"/></p><p class="line874">Notice that by typing: <span id="line-17" class="anchor"/><span id="line-18" class="anchor"/></p><p class="line867"><strong>注意键入：</strong> <span id="line-19" class="anchor"/><span id="line-20" class="anchor"/></p><p class="line867"><span id="line-21"
+class="anchor"/></p><pre>help
+<span id="line-22" class="anchor"/></pre><span id="line-23" class="anchor"/><span id="line-24" class="anchor"/><p class="line874">python will tell you how to get help. <span id="line-25" class="anchor"/><span id="line-26" class="anchor"/></p><p class="line867"><strong>python将会告诉你怎样获得帮助。</strong> <span id="line-27" class="anchor"/><span id="line-28" class="anchor"/></p><p class="line874">Basically, it tells you to type help() with which you can enter the python help browser and get a lot of generally helpful information. Alternatively, you can put something inside the parentheses which you want to get help on. Try this: <span id="line-29" class="anchor"/><span id="line-30" class="anchor"/></p><p
+class="line867"><strong>基本上，它告诉你在可以进入的python帮助系统中键入help() 并获得一些通用的帮助信息。或者，你可以在圆括号内输入你需要获得帮助的事物。试试这个：</strong> <span id="line-31" class="anchor"/><span id="line-32" class="anchor"/></p><p class="line867"><span id="line-33" class="anchor"/></p><pre>>>> help(range)
+<span id="line-34" class="anchor"/>Help on built-in function range:
+<span id="line-35" class="anchor"/>
+<span id="line-36" class="anchor"/>range(...)
+<span id="line-37" class="anchor"/>range([start,] stop[, step]) -> list of integers
+<span id="line-38" class="anchor"/>
+<span id="line-39" class="anchor"/>Return a list containing an arithmetic progression of integers.
+<span id="line-40" class="anchor"/>range(i, j) returns [i, i+1, i+2, ..., j-1]; start (!) defaults to 0.
+<span id="line-41" class="anchor"/>When step is given, it specifies the increment (or decrement).
+<span id="line-42" class="anchor"/>For example, range(4) returns [0, 1, 2, 3]. The end point is omitted!
+<span id="line-43" class="anchor"/>These are exactly the valid indices for a list of 4 elements.
+<span id="line-44" class="anchor"/></pre><span id="line-45" class="anchor"/><span id="line-46" class="anchor"/><p class="line862">You type in the first line, after the >>> <span id="line-47" class="anchor"/><span id="line-48" class="anchor"/></p><p class="line867"><strong>你在第一行的>>>后面输入</strong> <span id="line-49" class="anchor"/><span id="line-50" class="anchor"/></p><p class="line867"><span id="line-51" class="anchor"/></p><pre>help(range)
+<span id="line-52" class="anchor"/></pre><span id="line-53" class="anchor"/><span id="line-54" class="anchor"/><p class="line874">and Python will tell you about the range function. <span id="line-55" class="anchor"/><span id="line-56" class="anchor"/></p><p class="line867"><strong>Python就会告诉你关于range函数的帮助。</strong> <span id="line-57" class="anchor"/><span id="line-58" class="anchor"/></p><p class="line874">That is interesting. Let's try out the example they give: <span id="line-59" class="anchor"/><span id="line-60" class="anchor"/></p><p class="line867"><strong>这是很有趣的。让我们尝试一下他们给出的这个例子：</strong> <span id="line-61" class="anchor"/><span id="line-62" class="anchor"/></p><p class="line867"><span id="line-63" class="anchor"/></p><pre>range(4)
+<span id="line-64" class="anchor"/>returns: [0, 1, 2, 3]
+<span id="line-65" class="anchor"/></pre><span id="line-66" class="anchor"/><span id="line-67" class="anchor"/><p class="line874">Just like they said it would be. How about if we give range 2 numbers: <span id="line-68" class="anchor"/><span id="line-69" class="anchor"/></p><p class="line867"><strong>就像说将要发生的事情一样。如果我们给range两个数会怎样：</strong> <span id="line-70" class="anchor"/><span id="line-71" class="anchor"/></p><p class="line867"><span id="line-72" class="anchor"/></p><pre>range(4, 10)
+<span id="line-73" class="anchor"/>returns: [4, 5, 6, 7, 8, 9]
+<span id="line-74" class="anchor"/></pre><span id="line-75" class="anchor"/><span id="line-76" class="anchor"/><p class="line874">Notice how the list returned does include the first number you give, but it does not include the last number you give. <span id="line-77" class="anchor"/><span id="line-78" class="anchor"/></p><p class="line867"><strong>注意列表是怎样返回一个 包含 你给出的第一个数字，但却 不 包含你给出的最后的数字。</strong> <span id="line-79" class="anchor"/><span id="line-80" class="anchor"/></p><p class="line874">Now try range with 3 arguments: <span id="line-81" class="anchor"/><span id="line-82" class="anchor"/></p><p class="line867"><strong>现在试试有3个参数的range：</strong> <span id="line-83" class="anchor"/><span id="line-84" class="anchor"/></p><p
+class="line867"><span id="line-85" class="anchor"/></p><pre>range(0, 100, 10)
+<span id="line-86" class="anchor"/>returns: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+<span id="line-87" class="anchor"/></pre><span id="line-88" class="anchor"/><span id="line-89" class="anchor"/><p class="line874">Very nice. I wonder if we can use this to make pete perform some even more amazing tricks? <span id="line-90" class="anchor"/><span id="line-91" class="anchor"/></p><p class="line867"><strong>非常好。我怀疑我们是否还能够用pete做出更多令人惊奇的把戏来？</strong> <span id="line-92" class="anchor"/><span id="line-93" class="anchor"/></p><p class="line874">Also notice that you can get help on pete himself! <span id="line-94" class="anchor"/><span id="line-95" class="anchor"/></p><p class="line867"><strong>同样也要注意我们可以在pete自身上获得帮助！</strong> <span id="line-96" class="anchor"/><span id="line-97" class="anchor"/></p><p
+class="line874">Unfortunately, help(pete) only tells us that pete is an instance of the Penguin class. We can get help on pete and all of his kind with: <span id="line-98" class="anchor"/><span id="line-99" class="anchor"/></p><p class="line867"><strong>不幸的是，help(pete)只能告诉我们pete是一个Penguin类的实例。我们能够在pete和它所有的同类身上获得帮助：</strong> <span id="line-100" class="anchor"/><span id="line-101" class="anchor"/></p><p class="line867"><span id="line-102" class="anchor"/></p><pre>help(Penguin)
+<span id="line-103" class="anchor"/></pre><span id="line-104" class="anchor"/><span id="bottom" class="anchor"/></div>
+
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-3" class="anchor"/><p class="line867"><strong> <span id="line-4" class="anchor"/><a href="/moin/StartProgramming"> （首页）开始编程之旅</a> <span id="line-5" class="anchor"/>翻译自Lee Harr的<a href="http://staff.easthighschool.net/lee/computers/book/Start_Programming.html" class="http">Start Programming</a> <span id="line-6" class="anchor"/><span id="line-7" class="anchor"/></strong></p><p class="line862"><strong>本文是使用<a href="http://www.nongnu.org/pygsear/" class="http">pygsear</a>+<a href="http://pygame.org" class="http">pygame</a>作为开发环境，以初级用户角度来分步分阶段学习<a href="http://www.python.org"
+class="http">PYTHON</a>基本概念，并以小游戏开发项目为具体案例，介绍的十分详细。编写风格清新朴实，没有象一般教科书那样枯燥，极其适合初级用户来激发兴趣时使用。 <span id="line-8" class="anchor"/></strong> <span id="line-9" class="anchor"/></p>
+
+<span id="line-10" class="anchor"/>
+<h1 id="head-4f3d793733485f7421b667dc9d7ad2cb0d3315bb">1. StartProgramming-1-9 练习Exercises</h1>
+<span id="line-11" class="anchor"/><span id="line-12" class="anchor"/><ol type="1"><li>Play the practice.py game to get used to moving the penguin around. Read the comments at the start of the file to see how to play. (Hint) <span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></li><li class="gap">You made pete move in a square. Now make him go in a rectangle that is twice as wide as it is high. (Hint) <span id="line-15" class="anchor"/><span id="line-16" class="anchor"/></li><li class="gap">Now see if you can make pete go in a triangle. (Hint) <span id="line-17" class="anchor"/><span id="line-18" class="anchor"/></li><li class="gap">Use a variable distance to make pete walk in a square or triangular spiral. (Hint) <span id="line-19" class="anchor"/><span
+id="line-20" class="anchor"/></li><li class="gap">Make two different loops -- one to draw a pentagon and one to draw a five-pointed star. (Hint) <span id="line-21" class="anchor"/><span id="line-22" class="anchor"/></li><li class="gap">Turn exercise 4 in to both a for loop and a while loop. (Hint) <span id="line-23" class="anchor"/><span id="line-24" class="anchor"/></li><li class="gap">Create functions for triangle and pentagon like we made for square. Make the functions take a parameter for the length of a side. (Hint) <span id="line-25" class="anchor"/><span id="line-26" class="anchor"/></li><li class="gap">Create a function which takes a sequence of strings and writes them around the edges of a polygon with one side for each string. (Hint) <span id="line-27"
+class="anchor"/><span id="line-28" class="anchor"/></li><li class="gap">Create a function which takes a sequence of strings and writes each one on a separate line, one above the next. (Hint) <span id="line-29" class="anchor"/></li></ol><span id="bottom" class="anchor"/></div>

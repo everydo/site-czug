@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "linuxexpo-zope-cps-erp5"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "法国Nexedi公司（开发了ERP5）的CEO和Nuxeo将参加在中国上海举办的LinuxExpo（Linux展览会）", 
+        "modified": "2004-09-06 03:04:17", 
+        "title": "本周在上海将有Zope/CPS/ERP5技术研讨会"
+    }
+}

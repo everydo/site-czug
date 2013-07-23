@@ -1,0 +1,29 @@
+
+ <p>我们<a href="http://www.zopechina.com/">润普公司</a>,
+ 荣幸的发布CMFContentPanels 1.7.1版本.<br />
+ <br />
+ CMFContentPanels是一个Plone上的复合页面产品, 您可以使用这个产品,
+ 直接在web上"所见即所得"的制作负责的组合动态页面.</p>
+
+ <p><a href="http://plone.org/Members/panjunyong/ContentPanels/howto">附带截图的介绍
+ |&nbsp;</a><span class="link-external"><a href="http://zope.org/Members/panjunyong/CMFContentPanels/swpackage_view">
+ 英文产品主页</a></span> | <a href="../../../../../../../../projects/CMFContentPanels">中文产品主页</a>
+ | <a href="http://zope.org/Members/panjunyong/CMFContentPanels/contentpanels-1_7/contentpanels-1_7_1.tgz">
+ 下载</a></p>
+
+ <h1>新的特性</h1>
+
+ <ol>
+  <li>支持多行多列:
+
+   <p>在编辑页面中有一个新的选项: 如果你使用 <code>tile</code> 页面布局模式,
+   每个页面将变成一个新的行!</p>
+  </li>
+
+  <li>调整了viewlt的下拉选择菜单的位置</li>
+
+  <li>修改了设置portlet位置的一个bug</li>
+
+  <li>修改了bug: <code>NoneType</code> object has no attribute
+  <code>base_panel</code></li>
+ </ol>

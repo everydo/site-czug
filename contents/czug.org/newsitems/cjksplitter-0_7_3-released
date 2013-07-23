@@ -1,0 +1,16 @@
+<p>这是一个补丁修正版本.</p>
+<p><a href="http://www.zope.org/Members/panjunyong/CJKSplitter/cjkspliter-0_7/cjksplitter-0_7_3.tgz">下载</a>
+| 
+<a href="http://www.zope.org/Members/panjunyong/CJKSplitter">英文产品主页</a>
+| 
+<a href="http://www.zopechina.com/products/CJKSplitter">中文产品主页</a></p>
+<p>修改清单包括：</p>
+
+<ul>
+<li>修正可能导致多个中文汉字查询失败的bug</li>
+<li>修正可能导致中英混合查询失败的bug</li>
+<li>修正导致重复索引的严重bug</li>
+<li>和Zope 2.7.3以上的版本兼容</li>
+<li>更好的单字搜索支持</li>
+
+</ul>

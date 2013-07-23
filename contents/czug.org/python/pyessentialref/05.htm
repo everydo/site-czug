@@ -1,0 +1,303 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-a31bad5127df2d35f5cb81c8e6b297de373af3b5">第五章 控制流</a><ol><li><a href="#head-1fd3b3c14c417d579b3d3e943a9ebc46d1224df6">条件语句</a></li><li><a href="#head-d22eac0f77f630bdb46869450c1a8ede6cac2350">循环</a></li><li><a href="#head-9b6a2b64a85688ccd268b488ae73848fef35521e">异常</a></li><li><a href="#head-05709b9c4a4f384ce4be13565c9a30f2ab12953a">定义新的异常</a></li><li><a href="#head-af4ad81ac8db49759594a75e15395470dfd6d82c">断言和__debug__</a></li></ol></li></ol></div> <span id="line-2" class="anchor"/>
+<h1 id="head-a31bad5127df2d35f5cb81c8e6b297de373af3b5">1. 第五章 控制流</h1>
+<span id="line-3" class="anchor"/><span id="line-4" class="anchor"/><p class="line874">本章描述程序中与控制流有关的语句.主题包括条件语句,循环及异常. <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/></p><p class="line867">
+</p><h2 id="head-1fd3b3c14c417d579b3d3e943a9ebc46d1224df6">1.1. 条件语句</h2>
+<span id="line-7" class="anchor"/><span id="line-8" class="anchor"/><p class="line874">if,else,以及elif语句用来控制条件代码的执行.条件语句的通常格式如下: <span id="line-9" class="anchor"/><span id="line-10" class="anchor"/></p><pre>if expression:
+<span id="line-11" class="anchor"/>    statements
+<span id="line-12" class="anchor"/>elif expression:
+<span id="line-13" class="anchor"/>    statements
+<span id="line-14" class="anchor"/>elif expression:
+<span id="line-15" class="anchor"/>    statements
+<span id="line-16" class="anchor"/>...
+<span id="line-17" class="anchor"/>else:
+<span id="line-18" class="anchor"/>    statements
+<span id="line-19" class="anchor"/></pre><span id="line-20" class="anchor"/><p class="line874">如果不需要判断if条件外的其它情形，条件语句中的else从句和elif从句可以省略. pass语句用于不需要做任何事的特殊情形: <span id="line-21" class="anchor"/><span id="line-22" class="anchor"/></p><pre>if expression:
+<span id="line-23" class="anchor"/>    pass            # 不做任何事
+<span id="line-24" class="anchor"/>else:
+<span id="line-25" class="anchor"/>    statements
+<span id="line-26" class="anchor"/></pre><span id="line-27" class="anchor"/><p class="line867"><span id="line-28" class="anchor"/></p><pre>    注：上面的语句等价于
+<span id="line-29" class="anchor"/>if !expression:
+<span id="line-30" class="anchor"/>    statements
+<span id="line-31" class="anchor"/></pre><span id="line-32" class="anchor"/><span id="line-33" class="anchor"/><p class="line867">
+</p><h2 id="head-d22eac0f77f630bdb46869450c1a8ede6cac2350">1.2. 循环</h2>
+<span id="line-34" class="anchor"/><span id="line-35" class="anchor"/><p class="line874">可以使用for或while语句实现循环: <span id="line-36" class="anchor"/><span id="line-37" class="anchor"/></p><pre>while expression:
+<span id="line-38" class="anchor"/>    statements
+<span id="line-39" class="anchor"/>
+<span id="line-40" class="anchor"/>for i in s:
+<span id="line-41" class="anchor"/>    statements
+<span id="line-42" class="anchor"/></pre><span id="line-43" class="anchor"/><p class="line874">while语句循环执行块中的语句,直到表达式为假. for语句反复迭代一个序列中的元素,直到迭代完序列中最后一个元素。如果序列中的每个元素都是元素个数统一的元组,你可以以下面这样的形式应用for语句: <span id="line-44" class="anchor"/><span id="line-45" class="anchor"/></p><pre>for x,y,z in s:
+<span id="line-46" class="anchor"/>    statements
+<span id="line-47" class="anchor"/></pre><span id="line-48" class="anchor"/><p class="line874">在这个例子中, s必须为一个元组的序列,每个元组有三个元素.每次循环中,元组的三个元素的值被分别赋值给 x,y,和z. <span id="line-49" class="anchor"/><span id="line-50" class="anchor"/></p><p class="line874">break语句用于立刻中止循环.下边的例子从用户输入中读入内容,当输入为空时退出循环: <span id="line-51" class="anchor"/><span id="line-52" class="anchor"/></p><pre>while 1:
+<span id="line-53" class="anchor"/>   cmd = raw_input('Enter command > ')
+<span id="line-54" class="anchor"/>   if not cmd:
+<span id="line-55" class="anchor"/>      break            # 无输入,退出循环
+<span id="line-56" class="anchor"/>   # 运行命令
+<span id="line-57" class="anchor"/>    ...
+<span id="line-58" class="anchor"/></pre><span id="line-59" class="anchor"/><p class="line874">continue语句用于直接进入下一次循环(忽略当前循环的剩余语句)。这个语句可以使循环跳过不必要的语句.下列这个例子打印出一个序列中的非负元素: <span id="line-60" class="anchor"/><span id="line-61" class="anchor"/><span id="line-62" class="anchor"/><span id="line-63" class="anchor"/><span id="line-64" class="anchor"/><span id="line-65" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-e2ac8ce18bbd9ef2389d703b70d50dc8a5da046a_000\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-e2ac8ce18bbd9ef2389d703b70d50dc8a5da046a_000', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-e2ac8ce18bbd9ef2389d703b70d50dc8a5da046a_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">for</span> <span class="ID">a</span> <span class="ResWord">in</span> <span class="ID">s</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">if</span> <span class="ID">a</span> <span class="Operator"><</span> <span class="Number">0</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>       <span class="ResWord">continue</span>       <span class="Comment"># 忽略负值元素</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">print</span> <span class="ID">a</span><span class="Text"/></span>
+</pre></div><span id="line-66" class="anchor"/><p class="line874">break和continue语句只用于语句所在的当前循环,如果你需要退出一个多重循环,你应该使用异常。Python不提供goto语句. <span id="line-67" class="anchor"/><span id="line-68" class="anchor"/></p><p class="line874">你可以在一个循环结构中使用else语句: <span id="line-69" class="anchor"/><span id="line-70" class="anchor"/><span id="line-71" class="anchor"/><span id="line-72" class="anchor"/><span id="line-73" class="anchor"/><span id="line-74" class="anchor"/><span id="line-75" class="anchor"/><span id="line-76" class="anchor"/><span id="line-77"
+class="anchor"/><span id="line-78" class="anchor"/><span id="line-79" class="anchor"/><span id="line-80" class="anchor"/><span id="line-81" class="anchor"/><span id="line-82" class="anchor"/><span id="line-83" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-c96a33bc994eec04df3c85a653dd02367b0dde4c_001\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-c96a33bc994eec04df3c85a653dd02367b0dde4c_001', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-c96a33bc994eec04df3c85a653dd02367b0dde4c_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment"># while-else</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="ResWord">while</span> <span class="ID">i</span> <span class="Operator"><</span> <span class="Number">10</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>     <span class="ID">do</span> <span class="ID">something</span></span>
+<span class="line"><span class="LineNumber">   4 </span>     <span class="ID">i</span> <span class="Operator">=</span> <span class="ID">i</span> <span class="Operator">+</span> <span class="Number">1</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">else</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>     <span class="ResWord">print</span> <span class="String">'Done'</span></span>
+<span class="line"><span class="LineNumber">   7 </span></span>
+<span class="line"><span class="LineNumber">   8 </span><span class="Comment"># for-else</span></span>
+<span class="line"><span class="LineNumber">   9 </span><span class="Comment"/><span class="ResWord">for</span> <span class="ID">a</span> <span class="ResWord">in</span> <span class="ID">s</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  10 </span>     <span class="ResWord">if</span> <span class="ID">a</span> <span class="Operator">==</span> <span class="String">'Foo'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  11 </span>          <span class="ResWord">break</span></span>
+<span class="line"><span class="LineNumber">  12 </span><span class="ResWord">else</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  13 </span>     <span class="ResWord">print</span> <span class="String">'Not found!'</span><span class="Text"/></span>
+</pre></div><span id="line-84" class="anchor"/><p class="line874">循环中的else语句只在循环正常完成后运行(for或while循环),或者在循环条件不成立时立即运行(仅while循环),或者迭代序列为空时立即执行(仅for循环).如果循环使用break语句退出的话,else语句将被忽略. <span id="line-85" class="anchor"/><span id="line-86" class="anchor"/></p><p class="line867">
+</p><h2 id="head-9b6a2b64a85688ccd268b488ae73848fef35521e">1.3. 异常</h2>
+<span id="line-87" class="anchor"/><p class="line874">异常意味着错误,未经处理的异常会中止程序运行. raise语句用来有意引发一个异常. raise语句的通常格式是raise exception [, value ] , exception是异常类型, value是对于这个异常的特定描述.例如: <span id="line-88" class="anchor"/><span id="line-89" class="anchor"/></p><pre>raise RuntimeError, 'Unrecoverable Error'
+<span id="line-90" class="anchor"/></pre><span id="line-91" class="anchor"/><p class="line874">如果raise语句没有使用任何参数,最近一次发生的异常将被再次引发(尽管它只能用于处理一个刚刚发生的异常) <span id="line-92" class="anchor"/><span id="line-93" class="anchor"/></p><p class="line874">我们可以使用try和except语句来处理异常: <span id="line-94" class="anchor"/><span id="line-95" class="anchor"/><span id="line-96" class="anchor"/><span id="line-97" class="anchor"/><span id="line-98" class="anchor"/><span id="line-99" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-abc1228cd492de030a7bd56d42a42f73822f13ad_002\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-abc1228cd492de030a7bd56d42a42f73822f13ad_002', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-abc1228cd492de030a7bd56d42a42f73822f13ad_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">try</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ID">f</span> <span class="Operator">=</span> <span class="ID">open</span><span class="Operator">(</span><span class="String">'foo'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">except</span> <span class="ID">IOError</span><span class="Operator">,</span> <span class="ID">e</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">print</span> <span class="String">"Unable to open 'foo': "</span><span class="Operator">,</span> <span class="ID">e</span><span class="Text"/></span>
+</pre></div><span id="line-100" class="anchor"/><p class="line874">当一个异常发生时,解释器停止运行try块中的语句并寻找相应的except异常处理从句.若找到,控制就被传递到except块的第一条语句.否则,异常就被传递到上一级try语句语句块。try-except语句可以嵌套.如果异常被传递到整个程序的最顶层依然没有被处理,解释器就会终止程序运行,并显示出错信息。如果需要,不可捕获的错误也可以传递给用户定义函数 sys.excepthook() 处理.(参见附录A,The Python Library) <span id="line-101" class="anchor"/><span id="line-102" class="anchor"/></p><p
+class="line874">except语句中可选的第二个参数代表异常的说明,相当于raise语句的第二个可选参数.异常处理语句可以从这个值中得到关于异常原因的有用信息. <span id="line-103" class="anchor"/><span id="line-104" class="anchor"/></p><p class="line874">多个except语句可处理多种不同的异常，参见下例: <span id="line-105" class="anchor"/><span id="line-106" class="anchor"/></p><pre>try:
+<span id="line-107" class="anchor"/>   do something
+<span id="line-108" class="anchor"/>except IOError, e:
+<span id="line-109" class="anchor"/>   # 处理 I/O error
+<span id="line-110" class="anchor"/>   ...
+<span id="line-111" class="anchor"/>except TypeError, e:
+<span id="line-112" class="anchor"/>   # 处理 Type error
+<span id="line-113" class="anchor"/>   ...
+<span id="line-114" class="anchor"/>except NameError, e:
+<span id="line-115" class="anchor"/>   # 处理 Name error
+<span id="line-116" class="anchor"/>   ...
+<span id="line-117" class="anchor"/></pre><span id="line-118" class="anchor"/><p class="line874">一个except语句也可以处理多个异常: <span id="line-119" class="anchor"/><span id="line-120" class="anchor"/></p><pre>try:
+<span id="line-121" class="anchor"/>   do something
+<span id="line-122" class="anchor"/>except (IOError, TypeError, NameError), e:
+<span id="line-123" class="anchor"/>   # 处理 I/O, Type, 或 Name errors
+<span id="line-124" class="anchor"/>   ...
+<span id="line-125" class="anchor"/></pre><span id="line-126" class="anchor"/><p class="line874">pass语句可以用来忽略异常: <span id="line-127" class="anchor"/><span id="line-128" class="anchor"/></p><pre>try:
+<span id="line-129" class="anchor"/>   do something
+<span id="line-130" class="anchor"/>except IOError:
+<span id="line-131" class="anchor"/>   pass              # 不做任何事
+<span id="line-132" class="anchor"/></pre><span id="line-133" class="anchor"/><p class="line874">省略异常名和值就可以捕获所有异常: <span id="line-134" class="anchor"/><span id="line-135" class="anchor"/></p><pre>try:
+<span id="line-136" class="anchor"/>   do something
+<span id="line-137" class="anchor"/>except:
+<span id="line-138" class="anchor"/>   print 'An error occurred'
+<span id="line-139" class="anchor"/></pre><span id="line-140" class="anchor"/><p class="line867"><strong>Table 5.1. 内建异常类型</strong> <span id="line-141" class="anchor"/><span id="line-142" class="anchor"/></p><pre>异常                      描述
+<span id="line-143" class="anchor"/>Exception               所有内建异常
+<span id="line-144" class="anchor"/>SystemExit              由sys.exit()产生
+<span id="line-145" class="anchor"/>StandardError           除SystemExit外所有内建异常
+<span id="line-146" class="anchor"/>ArithmeticError         所有运算异常
+<span id="line-147" class="anchor"/>FloatingPointError      浮点数运算异常
+<span id="line-148" class="anchor"/>OverflowError           数值溢出
+<span id="line-149" class="anchor"/>ZeroDivisionError       被零除
+<span id="line-150" class="anchor"/>AssertionError          assert语句引起的异常
+<span id="line-151" class="anchor"/>AttributeError          属性名称不可用时引起
+<span id="line-152" class="anchor"/>EnvironmentError        Python外部错误
+<span id="line-153" class="anchor"/>IOError                 I/O 或与文件有关的错误(输入/输出错误)
+<span id="line-154" class="anchor"/>OSError                 操作系统错误
+<span id="line-155" class="anchor"/>WindowsError            Windows错误
+<span id="line-156" class="anchor"/>EOFError                当到达一个文件的末尾时引起
+<span id="line-157" class="anchor"/>ImportError             import语句失败
+<span id="line-158" class="anchor"/>KeyboardInterrupt       键盘中断(通常是 Ctrl+C)
+<span id="line-159" class="anchor"/>LookupError             索引或关键字错误
+<span id="line-160" class="anchor"/>IndexError              超出序列的范围
+<span id="line-161" class="anchor"/>KeyError                不存在的字典关键字
+<span id="line-162" class="anchor"/>MemoryError             内存不足
+<span id="line-163" class="anchor"/>NameError               寻找局部或全局变量时失败
+<span id="line-164" class="anchor"/>UnboundLocalError       未绑定变量
+<span id="line-165" class="anchor"/>RuntimeError            一般运行时错误
+<span id="line-166" class="anchor"/>NotImplementedError     不可实现的特征
+<span id="line-167" class="anchor"/>SyntaxError             语法错误
+<span id="line-168" class="anchor"/>TabError                不一致的制表符使用 (由 -tt 选项产生)
+<span id="line-169" class="anchor"/>IndentationError        缩进错误
+<span id="line-170" class="anchor"/>SystemError             解释器致命错误
+<span id="line-171" class="anchor"/>TypeError               给一个操作传递了一个不适当的类型
+<span id="line-172" class="anchor"/>ValueError              值错误(不合适或丢失)
+<span id="line-173" class="anchor"/>UnicodeError            Unicode编码错误
+<span id="line-174" class="anchor"/></pre><span id="line-175" class="anchor"/><p class="line874">try语句也支持else从句. else从句必须放在最后一个except从句后. 这块代码只在try块中的语句没有引发异常的时候运行.例如: <span id="line-176" class="anchor"/><span id="line-177" class="anchor"/><span id="line-178" class="anchor"/><span id="line-179" class="anchor"/><span id="line-180" class="anchor"/><span id="line-181" class="anchor"/><span id="line-182" class="anchor"/><span id="line-183" class="anchor"/><span id="line-184" class="anchor"/></p><div lang="en" dir="ltr"
+class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-576b8dca868ab19d4b9f538dcc83c147d8b918cc_003\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-576b8dca868ab19d4b9f538dcc83c147d8b918cc_003', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-576b8dca868ab19d4b9f538dcc83c147d8b918cc_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">try</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>   <span class="ID">f</span> <span class="Operator">=</span> <span class="ID">open</span><span class="Operator">(</span><span class="String">'foo'</span><span class="Operator">,</span> <span class="String">'r'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">except</span> <span class="ID">IOError</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>   <span class="ResWord">print</span> <span class="String">'Unable to open foo'</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">else</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>   <span class="ID">data</span> <span class="Operator">=</span> <span class="ID">f</span><span class="Operator">.</span><span class="ID">read</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>   <span class="ID">f</span><span class="Operator">.</span><span class="ID">close</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-185" class="anchor"/><p class="line874">finally语句定义了在try块中代码的结束操作,例如: <span id="line-186" class="anchor"/><span id="line-187" class="anchor"/><span id="line-188" class="anchor"/><span id="line-189" class="anchor"/><span id="line-190" class="anchor"/><span id="line-191" class="anchor"/><span id="line-192" class="anchor"/><span id="line-193" class="anchor"/><span id="line-194" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-f05b0a9664e4acb8c6da61efca2bd4749794a59d_004\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-f05b0a9664e4acb8c6da61efca2bd4749794a59d_004', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-f05b0a9664e4acb8c6da61efca2bd4749794a59d_004" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">f</span> <span class="Operator">=</span> <span class="ID">open</span><span class="Operator">(</span><span class="String">'foo'</span><span class="Operator">,</span><span class="String">'r'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">try</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>   <span class="Comment"># Do some stuff</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="Comment"/>   <span class="Operator">.</span><span class="Operator">.</span><span class="Operator">.</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">finally</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>   <span class="ID">f</span><span class="Operator">.</span><span class="ID">close</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>   <span class="ResWord">print</span> <span class="String">"File closed regardless of what happened."</span><span class="Text"/></span>
+</pre></div><span id="line-195" class="anchor"/><p class="line874">finally语句并不用于捕获异常.它用来指示无论是否发生异常都要执行的语句块。如果没有引起异常,finally块中的语句将在try块中语句执行完毕后执行;如果有异常发生,控制将先传递到finally块中的第一条语句.在这块语句执行完后,异常被自动再次引发,然后交由异常处理语句处理. finally和except语句不能在同一个try语句中出现. <span id="line-196" class="anchor"/>Table 5.1列出了Python中定义的全部内建异常类型.(关于异常的更多细节,参见附录A) <span id="line-197" class="anchor"/><span id="line-198"
+class="anchor"/></p><p class="line874">可以通过异常名称来访问一个异常。例如: <span id="line-199" class="anchor"/><span id="line-200" class="anchor"/></p><pre>try:
+<span id="line-201" class="anchor"/>     statements
+<span id="line-202" class="anchor"/>except LookupError:     # 捕获 IndexError 或 KeyError
+<span id="line-203" class="anchor"/>     statements
+<span id="line-204" class="anchor"/>或
+<span id="line-205" class="anchor"/>try:
+<span id="line-206" class="anchor"/>     statements
+<span id="line-207" class="anchor"/>except StandardError:   # 捕获任何内建的异常类型
+<span id="line-208" class="anchor"/>     statements
+<span id="line-209" class="anchor"/></pre><span id="line-210" class="anchor"/><span id="line-211" class="anchor"/><p class="line867">
+</p><h2 id="head-05709b9c4a4f384ce4be13565c9a30f2ab12953a">1.4. 定义新的异常</h2>
+<span id="line-212" class="anchor"/><span id="line-213" class="anchor"/><p class="line862">所有的内建异常类型都是使用类来定义的.要定义一个新的异常，就创建一个父类为<tt class="backtick">exceptions.Exception</tt>的新类: <span id="line-214" class="anchor"/><span id="line-215" class="anchor"/><span id="line-216" class="anchor"/><span id="line-217" class="anchor"/><span id="line-218" class="anchor"/><span id="line-219" class="anchor"/><span id="line-220" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-f1a5a6382a0b8edbe343e92d2bcd799a1a8179c9_005\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-f1a5a6382a0b8edbe343e92d2bcd799a1a8179c9_005', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-f1a5a6382a0b8edbe343e92d2bcd799a1a8179c9_005" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">exceptions</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"># Exception class</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"/><span class="ResWord">class</span> <span class="ID">NetworkError</span><span class="Operator">(</span><span class="ID">exceptions</span><span class="Operator">.</span><span class="ID">Exception</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>     <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span><span class="ID">args</span><span class="Operator">=</span><span class="ID">None</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>         <span class="ID">self</span><span class="Operator">.</span><span class="ID">args</span> <span class="Operator">=</span> <span class="ID">args</span><span class="Text"/></span>
+</pre></div><span id="line-221" class="anchor"/><p class="line874">args应该像上面那样使用.这样就可以使用raise语句来引发这个异常,并显示出错误返回信息以及诊断,如: <span id="line-222" class="anchor"/><span id="line-223" class="anchor"/></p><pre>raise NetworkError, "Cannot find host."
+<span id="line-224" class="anchor"/></pre><span id="line-225" class="anchor"/><p class="line862">通过调用<a href="/moin/NetworkError" class="nonexistent">NetworkError</a>("Cannot find host.")可以创建一个<a href="/moin/NetworkError" class="nonexistent">NetworkError</a>异常的实例. 如： <span id="line-226" class="anchor"/><span id="line-227" class="anchor"/><span id="line-228" class="anchor"/><span id="line-229" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-bc0408040e2a2012c8b4fda972d640ee84f05eab_006\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-bc0408040e2a2012c8b4fda972d640ee84f05eab_006', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-bc0408040e2a2012c8b4fda972d640ee84f05eab_006" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span><span class="Operator">=</span><span class="ID">NetworkError</span><span class="Operator">(</span><span class="String">"Cannot find host."</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">print</span> <span class="ID">a</span>                 <span class="Comment">#得到 Cannot find host.</span><span class="Text"/></span>
+</pre></div><span id="line-230" class="anchor"/><p class="line874">如果你使用一个不是 self.args 的属性名或你根本没有这个属性, 异常实例就没有这种行为. <span id="line-231" class="anchor"/><span id="line-232" class="anchor"/></p><p class="line862">当使用 raise 语句有意引发一个异常时, raise语句的可选参数将做为该异常的构造函数(<tt class="backtick">__init__()</tt>方法)参数.如果异常的构造函数需要一个以上参数,有两种方法可以用来引发这种异常: <span id="line-233" class="anchor"/><span id="line-234"
+class="anchor"/><span id="line-235" class="anchor"/><span id="line-236" class="anchor"/><span id="line-237" class="anchor"/><span id="line-238" class="anchor"/><span id="line-239" class="anchor"/><span id="line-240" class="anchor"/><span id="line-241" class="anchor"/><span id="line-242" class="anchor"/><span id="line-243" class="anchor"/><span id="line-244" class="anchor"/><span id="line-245" class="anchor"/><span id="line-246" class="anchor"/><span id="line-247" class="anchor"/></p><div lang="en" dir="ltr"
+class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-84ef954e02776c34dd8a2fb3ff7f44471fb1c4fc_007\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-84ef954e02776c34dd8a2fb3ff7f44471fb1c4fc_007', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-84ef954e02776c34dd8a2fb3ff7f44471fb1c4fc_007" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">exceptions</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"># Exception class</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"/><span class="ResWord">class</span> <span class="ID">NetworkError</span><span class="Operator">(</span><span class="ID">exceptions</span><span class="Operator">.</span><span class="ID">Exception</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>     <span class="ResWord">def</span> <span class="ID">_</span> <span class="ID">_init_</span> <span class="ID">_</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span><span class="ID">errno</span><span class="Operator">,</span><span class="ID">msg</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>     <span class="ID">self</span><span class="Operator">.</span><span class="ID">args</span> <span class="Operator">=</span> <span class="Operator">(</span><span class="ID">errno</span><span class="Operator">,</span> <span class="ID">msg</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   6 </span>     <span class="ID">self</span><span class="Operator">.</span><span class="ID">errno</span> <span class="Operator">=</span> <span class="ID">errno</span></span>
+<span class="line"><span class="LineNumber">   7 </span>     <span class="ID">self</span><span class="Operator">.</span><span class="ID">errmsg</span> <span class="Operator">=</span> <span class="ID">msg</span></span>
+<span class="line"><span class="LineNumber">   8 </span></span>
+<span class="line"><span class="LineNumber">   9 </span><span class="Comment"># 方法一</span></span>
+<span class="line"><span class="LineNumber">  10 </span><span class="Comment"/><span class="ResWord">raise</span> <span class="ID">NetworkError</span><span class="Operator">(</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">'Host not found'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span></span>
+<span class="line"><span class="LineNumber">  12 </span><span class="Comment"># 方法二</span></span>
+<span class="line"><span class="LineNumber">  13 </span><span class="Comment"/><span class="ResWord">raise</span> <span class="ID">NetworkError</span><span class="Operator">,</span> <span class="Operator">(</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">'Host not found'</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-248" class="anchor"/><p class="line862">基于类的这种异常体制让你能够轻易创建多级异常.例如,前边定义的 <tt class="backtick">NetworkError</tt>异常可以用做以下异常的基类: <span id="line-249" class="anchor"/><span id="line-250" class="anchor"/><span id="line-251" class="anchor"/><span id="line-252" class="anchor"/><span id="line-253" class="anchor"/><span id="line-254" class="anchor"/><span id="line-255" class="anchor"/><span id="line-256" class="anchor"/><span
+id="line-257" class="anchor"/><span id="line-258" class="anchor"/><span id="line-259" class="anchor"/><span id="line-260" class="anchor"/><span id="line-261" class="anchor"/><span id="line-262" class="anchor"/><span id="line-263" class="anchor"/><span id="line-264" class="anchor"/><span id="line-265" class="anchor"/><span id="line-266" class="anchor"/><span id="line-267" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-a8c792b16ba3c67c1e5bb7a5b38dde7e3229ae23_008\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-a8c792b16ba3c67c1e5bb7a5b38dde7e3229ae23_008', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-a8c792b16ba3c67c1e5bb7a5b38dde7e3229ae23_008" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">class</span> <span class="ID">HostnameError</span><span class="Operator">(</span><span class="ID">NetworkError</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">pass</span></span>
+<span class="line"><span class="LineNumber">   3 </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">class</span> <span class="ID">TimeoutError</span><span class="Operator">(</span><span class="ID">NetworkError</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ResWord">pass</span></span>
+<span class="line"><span class="LineNumber">   6 </span></span>
+<span class="line"><span class="LineNumber">   7 </span><span class="ResWord">def</span> <span class="ID">error3</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   8 </span>    <span class="ResWord">raise</span> <span class="ID">HostnameError</span></span>
+<span class="line"><span class="LineNumber">   9 </span></span>
+<span class="line"><span class="LineNumber">  10 </span><span class="ResWord">def</span> <span class="ID">error4</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  11 </span>    <span class="ResWord">raise</span> <span class="ID">TimeoutError</span></span>
+<span class="line"><span class="LineNumber">  12 </span></span>
+<span class="line"><span class="LineNumber">  13 </span><span class="ResWord">try</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  14 </span>    <span class="ID">error3</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span><span class="ResWord">except</span> <span class="ID">NetworkError</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  16 </span>    <span class="ResWord">import</span> <span class="ID">sys</span></span>
+<span class="line"><span class="LineNumber">  17 </span>    <span class="ResWord">print</span> <span class="ID">sys</span><span class="Operator">.</span><span class="ID">exc_type</span>    <span class="Comment"># 打印出异常类型</span><span class="Text"/></span>
+</pre></div><span id="line-268" class="anchor"/><p class="line862">在这个例子中<tt class="backtick">except NetworkError</tt> 语句能捕获任何从<tt class="backtick">NetworkError</tt>中继承而来的异常. 通过变量 sys.exc_type可以得到这个特殊异常的名称. sys.exc_info()函数用于返回最近一个异常的信息(不依靠全局变量,属于安全线程). <span id="line-269" class="anchor"/><span id="line-270" class="anchor"/></p><p class="line867">
+</p><h2 id="head-af4ad81ac8db49759594a75e15395470dfd6d82c">1.5. 断言和__debug__</h2>
+<span id="line-271" class="anchor"/><span id="line-272" class="anchor"/><p class="line874">assert语句用来断言某个条件是真的,常用于程序调试. assert语句的一般格式为： <span id="line-273" class="anchor"/><span id="line-274" class="anchor"/></p><p class="line874">assert test [, data] <span id="line-275" class="anchor"/><span id="line-276" class="anchor"/></p><p class="line862">test是一个表达式，它返回True或False. 如果test的值为假, assert语句就引发<a href="/moin/AssertionError"
+class="nonexistent">AssertionError</a>异常, 可选的data字符串将被传递给这个异常.例如: <span id="line-277" class="anchor"/><span id="line-278" class="anchor"/><span id="line-279" class="anchor"/><span id="line-280" class="anchor"/><span id="line-281" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-a010076414b11f51d8b7964c2e183575cc9aacc1_009\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-a010076414b11f51d8b7964c2e183575cc9aacc1_009', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-a010076414b11f51d8b7964c2e183575cc9aacc1_009" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">def</span> <span class="ID">write_data</span><span class="Operator">(</span><span class="ID">file</span><span class="Operator">,</span><span class="ID">data</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">assert</span> <span class="ID">file</span><span class="Operator">,</span> <span class="String">"write_data: file is None!"</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="Operator">.</span><span class="Operator">.</span><span class="Operator">.</span><span class="Text"/></span>
+</pre></div><span id="line-282" class="anchor"/><p class="line874">实际上assert语句在执行时会被实时翻译为下面的代码: <span id="line-283" class="anchor"/><span id="line-284" class="anchor"/><span id="line-285" class="anchor"/><span id="line-286" class="anchor"/><span id="line-287" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-e612e93490a0ed76c2cf59e634d3c4b61a89fc5f_010\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-e612e93490a0ed76c2cf59e634d3c4b61a89fc5f_010', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-e612e93490a0ed76c2cf59e634d3c4b61a89fc5f_010" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">if</span> <span class="ID">__debug__</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>   <span class="ResWord">if</span> <span class="ResWord">not</span> <span class="Operator">(</span><span class="ID">test</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>      <span class="ResWord">raise</span> <span class="ID">AssertionError</span><span class="Operator">,</span> <span class="ID">data</span><span class="Text"/></span>
+</pre></div><span id="line-288" class="anchor"/><p class="line867"><tt class="backtick">__debug__</tt>是一个内建的只读值,除非解释器运行在最佳化模式(使用 -O 或 -OO 选项)，否则它的值总是 True. 虽然<tt class="backtick">__debug__</tt>被设计为供 assert 语句使用,你仍然可以在任何自定义调试代码中使用它. <span id="line-289" class="anchor"/><span id="line-290" class="anchor"/></p><p
+class="line874">assert语句不能用于用来确保程序执行正确的场合,因为该语句在最佳化模式下会被忽略掉.尤其不要用assert来检查用户输入. assert语句用于正常情况下应该总是为真的场合;若assert语句引发了异常,那就代表程序中存在bug,是程序员出了问题而不是用户出现了问题. <span id="line-291" class="anchor"/><span id="line-292" class="anchor"/></p><p class="line874">如果打算将上边的 write_data() 函数交付给最终用户使用,
+assert语句就应该使用if语句和错误处理语句来重写. <span id="line-293" class="anchor"/><span id="bottom" class="anchor"/></p></div>

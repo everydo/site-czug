@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zidonghuanxingdeshixianfangfa"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "连续的英文或数字能是容器被撑大，不能根据容器的大小自动换行，下面是 CSS如何将他们换行的方法", 
+        "modified": "2006-03-16 17:53:01", 
+        "title": "自动换行的实现方法"
+    }
+}

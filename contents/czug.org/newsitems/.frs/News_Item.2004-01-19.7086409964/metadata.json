@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "News_Item.2004-01-19.7086409964"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "发布全新的CMFContentPanels以庆祝中国春节。", 
+        "modified": "2004-01-19 08:32:32", 
+        "title": "CMFContentPanel春节版发布：）"
+    }
+}

@@ -1,0 +1,319 @@
+<p>出处： <a href="http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch10.html">http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch10.html</a></p>
+
+<h1>第10章 解决问题——编写一个Python脚本</h1>
+<p><strong>目录表</strong></p>
+<dl>
+<dt><a href="#s01">问题</a></dt>
+<dt><a href="#ch10s02.html">解决方案</a></dt>
+<dd><a href="#ch10s02.html#first">版本一</a></dd>
+<dd><a href="#ch10s02.html#second">版本二</a></dd>
+<dd><a href="#ch10s02.html#third">版本三</a></dd>
+<dd><a href="#ch10s02.html#fourth">版本四</a></dd>
+<dd><a href="#ch10s02.html#more">进一步优化</a></dd>
+<dt><a href="#ch10s03.html">软件开发过程</a></dt>
+<dt><a href="#ch10s04.html">概括</a></dt>
+</dl>
+
+<p>我们已经研究了Python语言的众多内容，现在我们将来学习一下怎么把这些内容结合起来。我们将设计编写一个能够 <dfn>做</dfn> 一些确实有用的事情的程序。</p>
+
+<h1><a name="s01">问题</a></h1>
+
+<p>我提出的问题是： <dfn>我想要一个可以为我的所有重要文件创建备份的程序。</dfn></p>
+<p>尽管这是一个简单的问题，但是问题本身并没有给我们足够的信息来解决它。进一步的<strong>分析</strong>是必需的。例如，我们如何确定该备份哪些文件？备份保存在哪里？我们怎么样存储备份？</p>
+<p>在恰当地分析了这个问题之后，我们开始<strong>设计</strong>我们的程序。我们列了一张表，表示我们的程序应该如何工作。对于这个问题，我已经创建了下面这个列表以说明 <dfn>我</dfn> 如何让它工作。如果是你设计的话，你可能不会这样来解决问题——每个人都有其做事的方法，这很正常。</p>
+
+<ol>
+<li><p>需要备份的文件和目录由一个列表指定。</p></li>
+<li><p>备份应该保存在主备份目录中。</p></li>
+<li><p>文件备份成一个zip文件。</p></li>
+<li><p>zip存档的名称是当前的日期和时间。</p></li>
+<li><p>我们使用标准的<strong>zip</strong>命令，它通常默认地随Linux/Unix发行版提供。Windows用户可以使用Info-Zip程序。注意你可以使用任何地存档命令，只要它有命令行界面就可以了，那样的话我们可以从我们的脚本中传递参数给它。</p></li>
+</ol>
+
+
+<h1><a name="ch10s02.html">解决方案</a></h1>
+<p>当我们基本完成程序的设计，我们就可以编写代码了，它是对我们的<a name="ch10s02.html">解决方案</a>的<strong>实施</strong>。</p>
+
+<h2><a name="first">版本一</a></h2>
+<p class="exampletitle"><a name="e101">例10.1 备份脚本——版本一</a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: backup_ver1.py</code><br>
+<br>
+<code class="key">import </code><code class="func">os</code><br>
+<code class="key">import </code><code class="func">time</code><br>
+<br>
+<code class="comment"># 1. The files and directories to be backed up are specified in a list.</code><br>
+<code>source = [</code><code class="cite">'/home/swaroop/byte'</code><code>, </code><code class="cite">'/home/swaroop/bin'</code><code>]</code><br>
+<code class="comment"># If you are using Windows, use source = [r'C:\Documents', r'D:\Work'] or something like that<br>
+<br>
+# 2. The backup must be stored in a main backup directory</code><br>
+<code>target_dir = </code><code class="cite">'/mnt/e/backup/' </code><code class="comment"># Remember to change this to what you will be using</code><br>
+<br>
+<code class="comment"># 3. The files are backed up into a zip file.<br>
+# 4. The name of the zip archive is the current date and time</code><br>
+<code>target = target_dir + </code><code class="func">time</code><code>.strftime(</code><code class="cite">'%Y%m%d%H%M%S'</code><code>) + </code><code class="cite">'.zip'</code><br>
+<br>
+<code class="comment"># 5. We use the zip command (in Unix/Linux) to put the files in a zip archive</code><br>
+<code>zip_command = </code><code class="cite">"zip -qr '%s' %s" </code><code>% (target, </code><code class="cite">' '</code><code>.join(source))</code><br>
+<br>
+<code class="comment"># Run the backup</code><br>
+<code class="key">if </code><code class="func">os</code><code>.system(zip_command) == </code><code class="cite">0</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Successful backup to'</code><code>, target</code><br>
+<code class="key">else</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Backup FAILED'</code>
+</p>
+<p>（源文件：<a href="code/backup_ver1.py">code/backup_ver1.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>$ python backup_ver1.py<br>
+Successful backup to /mnt/e/backup/20041208073244.zip
+</code></p>
+
+<p>现在，我们已经处于<strong>测试</strong>环节了，在这个环节，我们测试我们的程序是否正确工作。如果它与我们所期望的不一样，我们就得<strong>调试</strong>我们的程序，即消除程序中的 <dfn>瑕疵</dfn> （错误）。</p>
+
+<h2>它如何工作</h2>
+
+<p>接下来你将看到我们如何把 <dfn>设计</dfn> 一步一步地转换为 <dfn>代码</dfn> 。</p>
+<p>我们使用了<code>os</code>和<code>time</code>模块，所以我们输入它们。然后，我们在<code>source</code>列表中指定需要备份的文件和目录。目标目录是我们想要存储备份文件的地方，它由<code>target_dir</code>变量指定。zip归档的名称是目前的日期和时间，我们使用<code>time.strftime()</code>函数获得。它还包括<code>.zip</code>扩展名，将被保存在<code>target_dir</code>目录中。</p>
+<p><code>time.strftime()</code>函数需要我们在上面的程序中使用的那种定制。<code>%Y</code>会被无世纪的年份所替代。<code>%m</code>会被01到12之间的一个十进制月份数替代，其他依次类推。这些定制的详细情况可以在《Python参考手册》中获得。《Python参考手册》包含在你的Python发行版中。注意这些定制与用于<code>print</code>语句的定制（<code>%</code>后跟一个元组）类似（但不完全相同）</p>
+<p>我们使用加法操作符来 <dfn>级连</dfn> 字符串，即把两个字符串连接在一起返回一个新的字符串。通过这种方式，我们创建了目标zip文件的名称。接着我们创建了<code>zip_command</code>字符串，它包含我们将要执行的命令。你可以在shell（Linux终端或者DOS提示符）中运行它，以检验它是否工作。</p>
+<p><strong>zip</strong>命令有一些选项和参数。<code>-q</code>选项用来表示zip命令<strong>安静地</strong>工作。<code>-r</code>选项表示zip命令对目录<strong>递归地</strong>工作，即它包括子目录以及子目录中的文件。两个选项可以组合成缩写形式<code>-qr</code>。选项后面跟着待创建的zip归档的名称，然后再是待备份的文件和目录列表。我们使用已经学习过的字符串<code>join</code>方法把<code>source</code>列表转换为字符串。</p>
+<p>最后，我们使用<code>os.system</code>函数 <dfn>运行</dfn> 命令，利用这个函数就好像在 <dfn>系统</dfn> 中运行命令一样。即在shell中运行命令——如果命令成功运行，它返回0，否则它返回错误号。</p>
+<p>根据命令的输出，我们打印对应的消息，显示备份是否创建成功。好了，就是这样我们已经创建了一个脚本来对我们的重要文件做备份！</p>
+
+<p class="notebox">
+<span class="boxtitle">给Windows用户的注释</span><br>
+你可以把<code>source</code>列表和<code>target</code>目录设置成任何文件和目录名，但是在Windows中你得小心一些。问题是Windows把反斜杠（\）作为目录分隔符，而Python用反斜杠表示转义符！<br>
+所以，你得使用转义符来表示反斜杠本身或者使用自然字符串。例如，使用<code>'C:\\Documents'</code>或<code>r'C:\Documents'</code>而<strong>不是</strong><code>'C:\Documents'</code>——你在使用一个不知名的转义符<code>\D</code>！
+</p>
+
+<p>现在我们已经有了一个可以工作的备份脚本，我们可以在任何我们想要建立文件备份的时候使用它。建议Linux/Unix用户使用前面介绍的<a href="ch03s05.html">可执行的方法</a>，这样就可以在任何地方任何时候运行备份脚本了。这被称为软件的<strong>实施</strong>环节或<strong>开发</strong>环节。</p>
+<p>上面的程序可以正确工作，但是（通常）第一个程序并不是与你所期望的完全一样。例如，可能有些问题你没有设计恰当，又或者你在输入代码的时候发生了一点错误，等等。正常情况下，你应该回到设计环节或者调试程序。</p>
+
+<h2><a name="second">版本二</a></h2>
+<p>第一个版本的脚本可以工作。然而，我们可以对它做些优化以便让它在我们的日常工作中变得更好。这称为软件的<strong>维护</strong>环节。</p>
+<p>我认为优化之一是采用更好的文件名机制——使用 <dfn>时间</dfn> 作为文件名，而当前的 <dfn>日期</dfn> 作为目录名，存放在主备份目录中。这样做的一个优势是你的备份会以等级结构存储，因此它就更加容易管理了。另外一个优势是文件名的长度也可以变短。还有一个优势是采用各自独立的文件夹可以帮助你方便地检验你是否在每一天创建了备份，因为只有在你创建了备份，才会出现那天的目录。</p>
+
+<p class="exampletitle"><a name="e102">例10.2 备份脚本——版本二</a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: backup_ver2.py</code><br>
+<br>
+<code class="key">import </code><code class="func">os</code><br>
+<code class="key">import </code><code class="func">time</code><br>
+<br>
+<code class="comment"># 1. The files and directories to be backed up are specified in a list.</code><br>
+<code>source = [</code><code class="cite">'/home/swaroop/byte'</code><code>, </code><code class="cite">'/home/swaroop/bin'</code><code>]</code><br>
+<code class="comment"># If you are using Windows, use source = [r'C:\Documents', r'D:\Work'] or something like that<br>
+<br>
+# 2. The backup must be stored in a main backup directory</code><br>
+<code>target_dir = </code><code class="cite">'/mnt/e/backup/' </code><code class="comment"># Remember to change this to what you will be using</code><br>
+<br>
+<code class="comment"># 3. The files are backed up into a zip file.<br>
+# 4. The current day is the name of the subdirectory in the main directory</code><br>
+<code>today = target_dir + </code><code class="func">time</code><code>.strftime(</code><code class="cite">'%Y%m%d'</code><code>)</code><br>
+<code class="comment"># The current time is the name of the zip archive</code><br>
+<code>now = </code><code class="func">time</code><code>.strftime(</code><code class="cite">'%H%M%S'</code><code>)</code><br>
+<br>
+<code class="comment"># Create the subdirectory if it isn't already there</code><br>
+<code class="key">if not </code><code class="func">os</code><code>.path.exists(today):</code><br>
+<code class="func">&nbsp;&nbsp;&nbsp;&nbsp;os</code><code>.mkdir(today) </code><code class="comment"># make directory</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Successfully created directory'</code><code>, today</code><br>
+<br>
+<code class="comment"># The name of the zip file</code><br>
+<code>target = today + </code><code class="func">os</code><code>.sep + now + </code><code class="cite">'.zip'</code><br>
+<br>
+<code class="comment"># 5. We use the zip command (in Unix/Linux) to put the files in a zip archive</code><br>
+<code>zip_command = </code><code class="cite">"zip -qr '%s' %s" </code><code>% (target, </code><code class="cite">' '</code><code>.join(source))</code><br>
+<br>
+<code class="comment"># Run the backup</code><br>
+<code class="key">if </code><code class="func">os</code><code>.system(zip_command) == </code><code class="cite">0</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Successful backup to'</code><code>, target</code><br>
+<code class="key">else</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Backup FAILED'</code>
+</p>
+<p>（源文件：<a href="code/backup_ver2.py">code/backup_ver2.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python backup_ver2.py<br>
+Successfully created directory /mnt/e/backup/20041208<br>
+Successful backup to /mnt/e/backup/20041208/080020.zip<br>
+<br>
+$ python backup_ver2.py<br>
+Successful backup to /mnt/e/backup/20041208/080428.zip
+</code></p>
+
+<h2>它如何工作</h2>
+<p>两个程序的大部分是相同的。改变的部分主要是使用<code>os.exists</code>函数检验在主备份目录中是否有以当前日期作为名称的目录。如果没有，我们使用<code>os.mkdir</code>函数创建。</p>
+<p>注意<code>os.sep</code>变量的用法——这会根据你的操作系统给出目录分隔符，即在Linux、Unix下它是<code>'/'</code>，在Windows下它是<code>'\\'</code>，而在Mac OS下它是<code>':'</code>。使用<code>os.sep</code>而非直接使用字符，会使我们的程序具有移植性，可以在上述这些系统下工作。</p>
+
+<h2><a name="third">版本三</a></h2>
+<p>第二个版本在我做较多备份的时候还工作得不错，但是如果有极多备份的时候，我发现要区分每个备份是干什么的，会变得十分困难！例如，我可能对程序或者演讲稿做了一些重要的改变，于是我想要把这些改变与zip归档的名称联系起来。这可以通过在zip归档名上附带一个用户提供的注释来方便地实现。</p>
+
+<p class="exampletitle"><a name="e103">例10.3 备份脚本——版本三（不工作！）</a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: backup_ver3.py</code><br>
+<br>
+<code class="key">import </code><code class="func">os</code><br>
+<code class="key">import </code><code class="func">time</code><br>
+<br>
+<code class="comment"># 1. The files and directories to be backed up are specified in a list.</code><br>
+<code>source = [</code><code class="cite">'/home/swaroop/byte'</code><code>, </code><code class="cite">'/home/swaroop/bin'</code><code>]</code><br>
+<code class="comment"># If you are using Windows, use source = [r'C:\Documents', r'D:\Work'] or something like that<br>
+<br>
+# 2. The backup must be stored in a main backup directory</code><br>
+<code>target_dir = </code><code class="cite">'/mnt/e/backup/' </code><code class="comment"># Remember to change this to what you will be using</code><br>
+<br>
+<code class="comment"># 3. The files are backed up into a zip file.<br>
+# 4. The current day is the name of the subdirectory in the main directory</code><br>
+<code>today = target_dir + </code><code class="func">time</code><code>.strftime(</code><code class="cite">'%Y%m%d'</code><code>)</code><br>
+<code class="comment"># The current time is the name of the zip archive</code><br>
+<code>now = </code><code class="func">time</code><code>.strftime(</code><code class="cite">'%H%M%S'</code><code>)</code><br>
+<br>
+<code class="comment"># Take a comment from the user to create the name of the zip file</code><br>
+<code>comment = </code><code class="func">raw_input</code><code>(</code><code class="cite">'Enter a comment --> '</code><code>)</code><br>
+<code class="key">if </code><code class="func">len</code><code>(comment) == </code><code class="cite">0</code><code>: </code><code class="comment"># check if a comment was entered</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;target = today + </code><code class="func">os</code><code>.sep + now + </code><code class="cite">'.zip'</code><br>
+<code class="key">else</code><code>:</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;target = today + </code><code class="func">os</code><code>.sep + now + </code><code class="cite">'_' </code><code>+</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;comment.replace(</code><code class="cite">' '</code><code>, </code><code class="cite">'_'</code><code>) + </code><code class="cite">'.zip'</code><br>
+<br>
+<code class="comment"># Create the subdirectory if it isn't already there</code><br>
+<code class="key">if not </code><code class="func">os</code><code>.path.exists(today):</code><br>
+<code class="func">&nbsp;&nbsp;&nbsp;&nbsp;os</code><code>.mkdir(today) </code><code class="comment"># make directory</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Successfully created directory'</code><code>, today</code><br>
+<br>
+<code class="comment"># 5. We use the zip command (in Unix/Linux) to put the files in a zip archive</code><br>
+<code>zip_command = </code><code class="cite">"zip -qr '%s' %s" </code><code>% (target, </code><code class="cite">' '</code><code>.join(source))</code><br>
+<br>
+<code class="comment"># Run the backup</code><br>
+<code class="key">if </code><code class="func">os</code><code>.system(zip_command) == </code><code class="cite">0</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Successful backup to'</code><code>, target</code><br>
+<code class="key">else</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Backup FAILED'</code>
+</p>
+<p>（源文件：<a href="code/backup_ver3.py">code/backup_ver3.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python backup_ver3.py<br>
+File "backup_ver3.py", line 25<br>
+target = today + os.sep + now + '_' +<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^<br>
+SyntaxError: invalid syntax
+</code></p>
+
+<h2>它如何（不）工作</h2>
+<p><strong>这个程序不工作！</strong>Python说有一个语法错误，这意味着脚本不满足Python可以识别的结构。当我们观察Python给出的错误的时候，它也告诉了我们它检测出错误的位置。所以我们从那行开始 <dfn>调试</dfn> 我们的程序。</p>
+<p>通过仔细的观察，我们发现一个逻辑行被分成了两个物理行，但是我们并没有指明这两个物理行属于同一逻辑行。基本上，Python发现加法操作符（＋）在那一逻辑行没有任何操作数，因此它不知道该如何继续。记住我们可以使用物理行尾的反斜杠来表示逻辑行在下一物理行继续。所以，我们修正了程序。这被称为<strong>修订</strong>。</p>
+
+<h2><a name="fourth">版本四</a></h2>
+<p class="exampletitle"><a name="e104">例10.4 备份脚本——版本四</a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: backup_ver4.py</code><br>
+<br>
+<code class="key">import </code><code class="func">os</code><br>
+<code class="key">import </code><code class="func">time</code><br>
+<br>
+<code class="comment"># 1. The files and directories to be backed up are specified in a list.</code><br>
+<code>source = [</code><code class="cite">'/home/swaroop/byte'</code><code>, </code><code class="cite">'/home/swaroop/bin'</code><code>]</code><br>
+<code class="comment"># If you are using Windows, use source = [r'C:\Documents', r'D:\Work'] or something like that<br>
+<br>
+# 2. The backup must be stored in a main backup directory</code><br>
+<code>target_dir = </code><code class="cite">'/mnt/e/backup/' </code><code class="comment"># Remember to change this to what you will be using</code><br>
+<br>
+<code class="comment"># 3. The files are backed up into a zip file.<br>
+# 4. The current day is the name of the subdirectory in the main directory</code><br>
+<code>today = target_dir + </code><code class="func">time</code><code>.strftime(</code><code class="cite">'%Y%m%d'</code><code>)</code><br>
+<code class="comment"># The current time is the name of the zip archive</code><br>
+<code>now = </code><code class="func">time</code><code>.strftime(</code><code class="cite">'%H%M%S'</code><code>)</code><br>
+<br>
+<code class="comment"># Take a comment from the user to create the name of the zip file</code><br>
+<code>comment = </code><code class="func">raw_input</code><code>(</code><code class="cite">'Enter a comment --> '</code><code>)</code><br>
+<code class="key">if </code><code class="func">len</code><code>(comment) == </code><code class="cite">0</code><code>: </code><code class="comment"># check if a comment was entered</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;target = today + </code><code class="func">os</code><code>.sep + now + </code><code class="cite">'.zip'</code><br>
+<code class="key">else</code><code>:</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;target = today + </code><code class="func">os</code><code>.sep + now + </code><code class="cite">'_' </code><code>+ \</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;comment.replace(</code><code class="cite">' '</code><code>, </code><code class="cite">'_'</code><code>) + </code><code class="cite">'.zip'</code><br>
+<code class="comment">&nbsp;&nbsp;&nbsp;&nbsp;# Notice the backslash!</code><br>
+<br>
+<code class="comment"># Create the subdirectory if it isn't already there</code><br>
+<code class="key">if not </code><code class="func">os</code><code>.path.exists(today):</code><br>
+<code class="func">&nbsp;&nbsp;&nbsp;&nbsp;os</code><code>.mkdir(today) </code><code class="comment"># make directory</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Successfully created directory'</code><code>, today</code><br>
+<br>
+<code class="comment"># 5. We use the zip command (in Unix/Linux) to put the files in a zip archive</code><br>
+<code>zip_command = </code><code class="cite">"zip -qr '%s' %s" </code><code>% (target, </code><code class="cite">' '</code><code>.join(source))</code><br>
+<br>
+<code class="comment"># Run the backup</code><br>
+<code class="key">if </code><code class="func">os</code><code>.system(zip_command) == </code><code class="cite">0</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Successful backup to'</code><code>, target</code><br>
+<code class="key">else</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Backup FAILED'</code>
+</p>
+<p>（源文件：<a href="code/backup_ver4.py">code/backup_ver4.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python backup_ver4.py<br>
+Enter a comment --> added new examples<br>
+Successful backup to /mnt/e/backup/20041208/082156_added_new_examples.zip<br>
+<br>
+$ python backup_ver4.py<br>
+Enter a comment --><br>
+Successful backup to /mnt/e/backup/20041208/082316.zip
+</code></p>
+
+<h2>它如何工作</h2>
+<p>这个程序现在工作了！让我们看一下版本三中作出的实质性改进。我们使用<code>raw_input</code>函数得到用户的注释，然后通过<code>len</code>函数找出输入的长度以检验用户是否确实输入了什么东西。如果用户只是按了<strong>回车</strong>（比如这只是一个惯例备份，没有做什么特别的修改），那么我们就如之前那样继续操作。</p>
+<p>然而，如果提供了注释，那么它会被附加到zip归档名，就在<code>.zip</code>扩展名之前。注意我们把注释中的空格替换成下划线——这是因为处理这样的文件名要容易得多。</p>
+
+<h2><a name="more">进一步优化</a></h2>
+<p>对于大多数用户来说，第四个版本是一个满意的工作脚本了，但是它仍然有进一步改进的空间。比如，你可以在程序中包含 <dfn>交互</dfn> 程度——你可以用<code>-v</code>选项来使你的程序更具交互性。</p>
+<p>另一个可能的改进是使文件和目录能够通过命令行直接传递给脚本。我们可以通过<code>sys.argv</code>列表来获取它们，然后我们可以使用<code>list</code>类提供的<code>extend</code>方法把它们加到<code>source</code>列表中去。</p>
+<p>我还希望有的一个优化是使用<strong>tar</strong>命令替代<strong>zip</strong>命令。这样做的一个优势是在你结合使用<strong>tar</strong>和<strong>gzip</strong>命令的时候，备份会更快更小。如果你想要在Windows中使用这些归档，WinZip也能方便地处理这些<code>.tar.gz</code>文件。<strong>tar</strong>命令在大多数Linux/Unix系统中都是默认可用的。Windows用户也可以<a href="http://gnuwin32.sourceforge.net/packages/tar.htm">下载</a>安装它。</p>
+<p>命令字符串现在将称为：</p>
+<p class="filebox">
+<code>tar = </code><code class="cite">'tar -cvzf %s %s -X /home/swaroop/excludes.txt' </code><code>% (target, </code><code class="cite">' '</code><code>.join(srcdir))</code>
+</p>
+<p>选项解释如下：</p>
+<ul>
+<li><p><code>-c</code>表示<strong>创建</strong>一个归档。</p></li>
+<li><p><code>-v</code>表示<strong>交互</strong>，即命令更具交互性。</p></li>
+<li><p><code>-z</code>表示使用<strong>gzip</strong>滤波器。</p></li>
+<li><p><code>-f</code>表示<strong>强迫</strong>创建归档，即如果已经有一个同名文件，它会被替换。</p></li>
+<li><p><code>-X</code>表示含在指定文件名列表中的文件会被<strong>排除</strong>在备份之外。例如，你可以在文件中指定<code>*~</code>，从而不让备份包括所有以<code>~</code>结尾的文件。</p></li>
+</ul>
+
+<p class="notebox">
+<span class="boxtitle">重要</span><br>
+最理想的创建这些归档的方法是分别使用<code>zipfile</code>和<code>tarfile</code>。它们是Python标准库的一部分，可以供你使用。使用这些库就避免了使用<code>os.system</code>这个不推荐使用的函数，它容易引发严重的错误。<br>
+然而，我在本节中使用<code>os.system</code>的方法来创建备份，这纯粹是为了教学的需要。这样的话，例子就可以简单到让每个人都能够理解，同时也已经足够用了。
+</p>
+
+
+<h1><a name="ch10s03.html">软件开发过程</a></h1>
+<p>现在，我们已经走过了编写一个软件的各个环节。这些环节可以概括如下：</p>
+<ol>
+<li>什么（分析）</li>
+<li>如何（设计）</li>
+<li>编写（实施）</li>
+<li>测试（测试与调试）</li>
+<li>使用（实施或开发）</li>
+<li>维护（优化）</li>
+</ol>
+
+<p class="notebox">
+<span class="boxtitle">重要</span><br>
+我们创建这个备份脚本的过程是编写程序的推荐方法——进行分析与设计。开始时实施一个简单的版本。对它进行测试与调试。使用它以确信它如预期那样地工作。再增加任何你想要的特性，根据需要一次次重复这个编写－测试－使用的周期。记住“<strong>软件是长出来的，而不是建造的</strong>”。
+</p>
+
+
+<h1><a name="ch10s04.html">概括</a></h1>
+<p>我们已经学习如何创建我们自己的Python程序/脚本，以及在编写这个程序中所设计到的不同的状态。你可以发现它们在创建你自己的程序的时候会十分有用，让你对Python以及解决问题都变得更加得心应手。</p>
+<p>接下来，我们将讨论面向对象的编程。</p>
+

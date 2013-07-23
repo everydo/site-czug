@@ -1,0 +1,988 @@
+=======================================================
+附录: Plone 常用API参考
+=======================================================
+
+..
+  参考：
+  http://www.plope.com/Books/2_7Edition/BasicScripting.stx
+  ZopeBook
+  Zope API
+  http://www.zope.org/Documentation/Books/ZopeBook/2_6Edition/AppendixB.stx
+  http://czug.org/plone/tutorial/plone-api-shili/jieshao
+  http://czug.org/plone/howto/ruheshiyongextendedpathindexjinxingjiyulujingdesousuo
+  chm:file:///home/rae/archives/plone-scripting.chm!/plone-scripting/plone-api.html
+
+  http://www.plope.com/Books/2_7Edition/AppendixB.stx
+
+
+.. sectnum::
+   :prefix: 17.
+
+本章介绍Zope/Plone的一些常用的API，特别是内容搜索、工作流和发送邮件方面的API。
+
+
+..
+  TODO: 表的编号需要调整
+
+Zope对象基本API
+===============================
+简单对象的属性和方法
+-----------------------
+在Zope编程中有一个基类称为SimpleItem，大多数Zope对象都是这个类的子类的对象，
+因此可以调用SimpleItem上提供的方法。
+
+.. csv-table:: 【表 17.1】Zope对象的基本属性和方法
+  :header: id, 说明, 示例
+
+  id, 对象的id, context.id
+  getId, 返回对象的id，以字符串形式返回, context.getId()
+  title, 对象的标题, context.title
+  title_or_id, 如果对象有title属性则返回title属性，没有则返回id, context.title_or_id()
+  title_and_id, 当存在title属性并且title属性不为空时以title(id)的形式返回，否则只返回id, context.title_and_id()
+
+文件夹操作
+-----------------
+文件夹操作包括检查子对象的操作，还有剪切、拷贝、粘贴等
+
+.. csv-table:: 【表 17.2】 文件夹操作
+  :header: id, 说明, 示例
+
+  hasObject, 检查文件夹中是否存在某个对象, folder.hasObject(id)
+  objectIds, 返回文件夹中的对象id字符串的列表，可以指定某些类型则只返回该类型, folder.objectIds()
+  objectValues, 返回文件夹中对象的列表，可以指定某些类型则只返回该类型, folder.objectValues()
+  manage_delObjects, 删除文件夹中的一些对象，参数是所要删除的id字符串列表, folder.manage_delObjects(['id'])
+  _setObject, 因为以下划线开头的函数是不会发布的，这个常用在文件系统上的开发中，用于给文件夹中添加对象, "folder._setObject('id', someObject)"
+  manage_renameObject, 修改文件夹中的子对象的id, "folder.renameObject(id, new_id)"
+  manage_renameObjects, 这个函数接受两个id的列表作为参数以同时对多个子对象进行改名, "folder.renameObjects([id], [new_id])"
+  manage_copyObjects, 复制文件夹中的一组对象, "cb_copy_data = folder.manage_copyObjects(['my_document'])"
+  manage_cutObjects, 剪切文件夹中的一组对象, "cb_copy_data = folder.manage_cutObjects(['my_document'])"
+  manage_pasteObjects, 剪贴一组对象，它使用manage_copyObjects或manage_cutObjects的返回值作为参数, "another_folder.manage_pasteObjects(cb_copy_data)"
+
+..
+  objectItems, "返回文件夹中对象的(id, value)形式的元组的列表"
+
+
+现在介绍一个剪切、复制和粘贴的实例。下面的脚本，其功能是把刚才创建的my_document文档复制到新文件夹my_folder里::
+
+  from Products.CMFCore.utils import getToolByName
+
+  urltool = getToolByName(context, "portal_url")
+  portal = urltool.getPortalObject()
+  cb_copy_data = portal.manage_copyObjects(["my_document"])
+  folder = getattr(portal, "my_folder")
+  folder.manage_pasteObjects(cb_copy_data)
+
+
+属性操作
+-------------
+在ZMI中操作时很多对象都有一个 Properties 标签页，这些类型都是以 PropertyManager 为基类的，
+这些属性都可以通过调用基类 PropertyManager 的方法来改变。
+
+.. csv-table:: 【表 17.3】属性操作
+  :header: 名称, 说明, 示例
+
+  hasProperty, 查询是否有某个属性, folder.hasProperty('isLocal')
+  getProperty, 获取属性, folder.getProperty('isLocal')
+  propertyIds, 返回所有属性的id的字符串列表, folder.propertyIds()
+  propertyValues, 返回所有属性的值的列表, folder.propertyValues()
+  manage_addProperty, 增加属性, "folder.manage_addProperty(id, value, type)"
+  manage_changeProperties, 修改属性, folder.manage_changeProperties(title='the title')
+  manage_delProperties, 删除属性, folder.delProperty(['isLocal'])
+
+..
+  propertyItems, "返回所有属性的(id, value)形式的元组的列表"
+
+..
+  获取操作 (Acquisition)
+  ----------------------
+  获取是Acquisition包提供的功能，在Zope中的所有对象都支持获取功能，
+  它的原理是使用一个类作为包裹器，
+  在程序中使用获取可以让脚本编程变得很容易，
+  因此，在扩展产品开发中也需要让新的类支持获取，
+  这种情况下会用到Acquisition包提供的函数。
+
+  .. csv-table:: 获取操作
+    :header: id, 说明, 示例
+
+    aq_base,
+    aq_parent, 获取父对象, context.aq_parent
+    aq_self, 返回除去包裹器的
+    aq_inner,
+    aq_chain,
+    __of__,
+
+漫游方法
+--------------
+漫游是Zope发布对象时所采用的方法，因此所有Zope上可发布的对象都可以调用这些漫游方法。
+
+.. list-table:: 【表 17.4】漫游方法
+   :header-rows: 1
+
+   * - id
+     - 说明
+   * - absolute_url
+     - 返回当前对象的绝对路径，调用它如 ``context.absolute_url()``
+   * - absolute_url_path
+     - 返回当前对象的绝对路径中的path部分，调用它如 ``context.absolute_url_path()``
+   * - getPhysicalPath
+     - 返回对象的物理路径的列表，这个地址和是否使用虚拟主机在访问无关。
+       调用它如 ``context.getPhysicalPath()``
+   * - unrestrictedTraverse
+     - 不检查访问权限的漫游, 此方法不能在ZMI脚本中使用，
+       在扩展开发中的调用如 ``context.unrestrictedTraverse('path/to/object')``
+   * - restrictedTraverse
+     - 需要检查权限的漫游，与unrestrictedTraverse区别是多了每一级上的权限检查，
+       如 ``context.restrictedTraverse('path/to/object')``
+
+DateTime类型
+-----------------------
+Python本身并未提供一个很好的表示时间日期和时区信息的类型，
+为此Zope有一个DateTime类，用来表示和生成包括日期、时间、和时区信息的类型对象。
+
+DateTime对象通过使用标准的int、long和float函数可以把从1901年1月1日以来的时间转换成整数、长整数和浮点数形式。
+（兼容性注意：int、long 和float返回自从1901年以来的GMT天数，而不是按照本地时区计算的天数）。
+DateTime对象还可以访问以浮点数格式表示的值，它可以和Python的time模块一起使用，
+前提是对象的值属于这个基于新纪元的time模块的时间值的范围之内。
+DateTime对象是不变的，所有转换和数值操作返回一个新的DateTime对象而不是修改当前的对象。
+它总是按照绝对UTC时间维护数值，根据时区以及参数来提供数值。
+
+DateTime对象可以通过形式多样的字符串或数值来创建，或者通过其它DateTime对象计算得到。DateTime可以把时间的格式转换成不同时区的格式，还可以在一个按照给定时区创建DateTime对象。如果没有指定时区，默认使用本地时区来表示时间。
+创建DateTime对象可使用0到7个参数：
+
+* 如果采用不带参数的方式调用函数，那么返回当前的日期时间，并且按照本地时区表示。
+* 如果采用带有一个字符串参数的方式调用函数，其中这个字符串代表时区名称，那么返回指定时区示当前时间的DateTime对象。
+* 如果采用带有唯一的字符串参数的方式调用函数，其中字符串表示一个有效的日期或时间，那么就返回相应的日期或时间对象。一般来说，任何北美居民可以明确识别的日期或时间格式都是可接受的。（其中的原因是：在北美，像2/1/1994这样的日期被认为是 February 1, 1994，然而在世界上的一些地方，它被认为是January 2, 1994。）一个日期时间对象包含两个部分：日期部分和可选的时间部分，由一个或多个空格分隔。如果时间部分忽略，则假定为12:00am。时区名称可以在日期时间字符串最后一个元素中指定，任何可以识别的时区名称用于计算日期时间值。（如果你用字符串Mar 9, 1997 1:45pm US/Pacific 创建一个DateTime对象，它的值在本质上等同于你在一台属于那个时区的机器上在指定的日期和时间捕捉的时间）::
+
+    e=DateTime("US/Eastern") # returns current date/time, represented in US/Eastern.
+
+    x=DateTime("1997/3/9 1:45pm") # returns specified time, represented in local machine zone.
+
+    y=DateTime("Mar 9, 1997 13:45:00") # y is equal to x
+
+  日期部分由年、月和日的值组成。年的值必须为1位、2位或4位数的整数。如果使用1位或2位数，年被假设属于20世纪。月可以是一个整数，从1到 12，也可以是月的名称或月的缩写，其中一个句点可以选择性的跟随在缩写后。日必须属于从1到该月的天数之间的整数。年、月和日的值可以用句点、连字号、右箭号或空格分隔。在分隔符周围允许使用额外的空格。年、月和日的值可以按照任何顺序给定，只要能够区分出组件。如果所有这三个组件都是小于13的数字，那么假定的顺序为月-日-年。
+
+  time部分由小时、分钟和秒的值组成，用冒号分隔。小时的值必须是一个0至23（包含0和23）之间的整数，分钟的值必须为0至59（包含0和 59）之间的整数。秒的值可以为0至59.999（包含0和59.999）之间的整数。秒的值，或者分钟和秒的值，可以忽略。时间可以跟随大写或小写格式的am 或 pm，其被假定为12小时制。
+*
+
+  如果DateTime函数被调用时带有一个数字参数，这个数字被假定为浮点数值，例如由time.time()返回的值。返回的DateTime对象表示了用本地时区表示的浮点数形式的gmt值。
+*
+
+  如果函数调用时带有两个数字参数，那么第一个被认为是一个整数年，第二个参数被认为是在本地时区中本年开始以来的天数偏移量。返回的日期时间值是用本地时区表示的给定年份开始以来的天数的给定偏移量。偏移量可以是正数或负数。两位数的年被假定为20世纪当中的年份。
+*
+
+  如果函数调用时带有两个参数——第一个以浮点数形式提供的参数表示了在GMT里新纪元以来的秒数，就像那些由time.time()返回的数字，第二个以字符串形式提供的参数指定一个可识别的时区，返回具有GMT时间值的DateTime对象并按照给定时区形式表示::
+
+    import time
+    t=time.time()
+
+    now_east=DateTime(t,'US/Eastern')
+    # Time t represented as US/Eastern
+
+    now_west=DateTime(t,'US/Pacific')
+    # Time t represented as US/Pacific
+
+    # now_east == now_west
+    # only their representations are different
+
+*
+
+  如果函数调用时带有三个或更多的数字参数，那么第一个被认为是整数年，第二个被认为是整数月，第三个被认为是整数天。如果结合在一起的值无效，那么引发一个DateTimeError。两位数的年被认为是20世纪中的年份。第4、5、6个参数分别指定小时、分钟和秒——小时和分钟应该为正整数，秒应该为一个正的浮点数——所有这些如果没有给定则默认为0。可以给定一个可选择的字符串，从而作为最后一个参数来表示时区（这个效果就好像是你已经在一台位于指定时区中的机器上选定了 time.time()的值。）
+
+如果传递给DateTime构造器的字符串参数不能解析，它引发一个DateTime.SyntaxError错误。
+无效的日期、时间或时区组件引发一个DateTime.DateTimeError 错误。
+
+构造器返回的就是一个DateTime对象，对象上有很多有用的方法，见下表。
+
+..
+  TODO: 这个DateTime还是很常用的，最好给出完整的API
+
+.. list-table:: 【表 17.5】DateTime类型的常用操作
+  :header-rows: 1
+
+  * - 调用形式
+    - 说明
+  * - strftime(format)
+    - 返回按照format格式提供的日期时间字符串。 参见 Python中的 time.strftime 函数。
+  * - dow()
+    - 返回用整数表示的星期中的天数，星期日是0。
+  * - aCommon()
+    - 返回按照“Mar 1, 1997 1:45 pm”格式表示的日期时间字符串。
+  * - h_12()
+    - 返回12小时制的小时数。
+  * - Mon_()
+    - 兼容：见pMonth。
+  * - HTML4()
+    - 按照符合HTML 4.0规范的格式返回对象，这个规范是ISO8601标准之一。
+      参见 HTML 4.0 规范，日期输出格式为：YYYY-MM-DDTHH:MM:SSZ T，其中Z是文本字符。时间为UTC（通用协调时间）时间。
+  * - greaterThanEqualTo(t)
+    - 和其它DateTime对象或浮点数比较DateTime对象，比如由Python 的time 模块返回的数值。
+      如果对象表示一个大于或等于指定的DateTime或time 模块风格的时间的日期或时间对象，则返回真。
+      通过比较长整数型的毫秒，它可以给出更为精确的结果。
+  * - dayOfYear()
+    - 返回按照对象所在时区表示的年的天数。
+  * - lessThan(t)
+    - 与其它的DateTime对象或一个浮点数比较DateTime对象，比如由Pythontime 模块返回的数字。
+      如果对象表示一个小于指定的DateTime或time 模块风格的时间的日期或时间对象，则返回真。
+      通过比较长整数型毫秒，它可以给出更为精确的结果。
+  * - AMPM()
+    - 返回一个对象的最接近秒的时间字符串。
+  * - isCurrentHour()
+    - 如果这个对象在所在时区中表示一个属于当前小时范围里的日期或时间对象，则返回真。
+  * - Month()
+    - 返回完整的月份的名称。
+  * - mm()
+    - 以两位数字符形式返回月份。
+  * - ampm()
+    - 返回适当的时间修饰语（am或pm）。
+  * - hour()
+    - 返回以24小时制表示的小时。
+  * - aCommonZ()
+    - 返回以"Mar 1, 1997 1:45 pm US/Eastern"格式表示对象值的字符串。
+  * - Day_()
+    - 兼容：见pDay。
+  * - pCommon()
+    - 返回以"Mar. 1, 1997 1:45 pm"格式表示的对象值的字符串。
+  * - minute()
+    - 返回分钟。
+  * - day()
+    - 返回以整数表示的天。
+  * - earliestTime()
+    - 返回一个新的表示最早时间（全部按秒计算）的DateTime对象，它仍然属于对象所在时区中的当前天。
+  * - Date()
+    - 返回对象的日期字符串。
+  * - Time()
+    - 返回对象的最接近秒的时间字符串。
+  * - isFuture()
+    - 如果这个对象表示一个晚于调用时间的时间日期对象，则返回真。
+  * - greaterThan(t)
+    - 和其它的DateTime对象或一个浮点数比较DateTime对象，比如和由Pythontime 模块返回的数字比较。
+      如果对象表示一个大于指定的DateTime或符合time 模块风格的时间的date/time对象，则返回真。
+      通过比较长整数型毫秒，它可以给出更为精确的结果。
+  * - TimeMinutes()
+    - 返回对象的时间字符串，不显示秒。
+  * - yy()
+    - 返回以两位数字符表示的日历年。
+  * - isCurrentDay()
+    - 如果对象在所在时区中表示一个属于当前天范围内的日期时间对象，则返回真。
+  * - dd()
+    - 返回以两位数字符形式表示的天。
+  * - rfc822()
+    - 返回以RFC 822格式显示的日期。
+  * - isLeapYear()
+    - 如果当前年（在对象所属时区中）是闰年则返回真
+  * - fCommon()
+    - 返回一个以"March 1, 1997 1:45 pm"格式表示的对象值的字符串。
+  * - isPast()
+    - 如果对象表示一个早于调用时间的日期时间对象，则返回真。
+  * - fCommonZ()
+    - 返回一个以"March 1, 1997 1:45 pm"格式表示的对象值的字符串。
+  * - timeTime()
+    - 返回UTC中按照Python time模块所使用的格式以浮点数形式表示的日期时间。
+      注意，采用那些拥有对于time模块来说没有含义的值的DateTime来创建日期或时间是可能的。
+  * - toZone(z)
+    - 返回当前对象在指定的z时区中的DateTime 。
+  * - lessThanEqualTo(t)
+    - 和另外一个DateTime对象或一个浮点数比较DateTime对象，比如和由Python time模块返回的数字进行比较。
+      如果对象表示一个小于或等于指定的DateTime或time模块风格的时间的日期时间，则返回真。
+      通过比较长整数型毫秒，它可以给出更为精确的结果。
+  * - Mon()
+    - 兼容：参见aMonth。
+  * - parts()
+    - 返回包含对象的日历年、月、日、小时、分钟、秒和时区值的元组。
+  * - isCurrentYear()
+    - 如果这个对象在所属时区中表示一个属于当前年范围以内的日期时间对象，则返回真。
+  * - PreciseAMPM()
+    - 返回对象的时间字符串。
+  * - AMPMMinutes()
+    - 返回对象的时间字符串，不显示秒。
+  * - equalTo(t)
+    - 和另外一个DateTime对象或一个浮点数比较DateTime对象，比如和由Python time模块返回的数字进行比较。
+      如果对象表示一个等于指定的DateTime或time模块风格时间的日期时间，则返回真。通过比较长整数型毫秒，它可以给出更为精确的结果。
+  * - pDay()
+    - 返回星期的简短名称（带有句点）。
+  * - notEqualTo(t)
+    - 和另外一个DateTime对象或一个浮点数比较DateTime对象，比如和由Python time模块返回的数字进行比较。
+      如果对象表示一个不等于指定的DateTime或time模块风格时间的日期时间，则返回真。
+      通过比较长整数型毫秒，它可以给出更为精确的结果。
+  * - h_24()
+    - 返回24小时制的小时。
+  * - pCommonZ()
+    - 返回以"Mar. 1, 1997 1:45 pm US/Eastern"格式表示的对象值的字符串。
+  * - isCurrentMonth()
+    - 如果对象在所属的时区中表示一个属于当前月范围以内的日期时间对象，则返回真。
+  * - DayOfWeek()
+    - 兼容：参见aDay。
+  * - latestTime()
+    - 返回一个新的表示最迟时间（全部按秒计算）的DateTime对象，它仍然属于对象所在时区中的当前天。
+  * - dow_1()
+    - 返回以整数表示的星期的天数，星期日为1。
+  * - timezone()
+    - 返回对象的所属时区。
+  * - year()
+    - 返回对象的日历年。
+  * - PreciseTime()
+    - 返回对象的时间字符串。
+  * - ISO()
+    - 按照ISO标准格式返回对象。
+      输出格式为：YYYY-MM-DD HH:MM:SS
+  * - millis()
+    - 返回自从GMT新纪元以来的毫秒数。
+  * - second()
+    - 返回秒
+  * - month()
+    - 返回以整数表示的对象的月份。
+  * - pMonth()
+    - 返回简写（带有句点）的月份名称。
+  * - aMonth()
+    - 返回简写的月份名称。
+  * - isCurrentMinute()
+    - 如果对象在所属时区中表示一个属于当前分钟范围以内的日期时间对象，则返回真。
+  * - Day()
+    - 返回星期中天的完整名称。
+  * - aDay()
+    - 返回星期中天的简写名称。
+
+此外，DateTime对象还支持数值计算：
+
+* 两个DateTime对象可以相减，从而获得两者间的时间差。
+* 一个DateTime对象和一个正的或负的数字可以相加，从而获得一个新DateTime对象。
+* 一个正的或负的数字和一个DateTime对象可以相加，从而获得一个新DateTime对象。
+* 一个正的或负的数字可以从一个DateTime对象中减去，从而获得一个新DateTime对象。
+
+REQUEST 和 RESPONSE
+----------------------
+
+.. list-table:: 【表 17.6】REQUEST
+   :header-rows: 1
+
+   * - 调用形式
+     - 说明
+   * - environ
+     - CGI编程规范所要求的环境变量，包括用户请求头信息，
+       服务器信息和其它用户请求相关的信息
+   * - form
+     - 从用户请求上提交的表单变量
+   * - cookies
+     - cookie数据
+   * - other
+     - 其它可以设置的数据
+   * - PARENTS
+     - 漫游访问对象时所经历的对象列表，
+       从PARENTS[0]开始是所访问对象的父对象
+   * - RESPONSE
+     - 获取RESPONSE对象
+   * - URL
+     - 用户所访问的URL，但不包含参数字符串
+   * - URLn
+     - 其中的n分别是0, 1一直往上数。
+       URL0就是URL，URL1是URL0去掉最后一级路径，URL2是URL1再去掉一级路径，
+       直到网站根为止
+   * - URLPATHn
+     - URLPATHn分别对应着URLn的路径部分，如URLPATH0就是URL0的路径部分，依此类推
+   * - BASEn
+     - BASEn以一种与URLn相反的方式计数：
+       BASE0就是网站根，BASE1是所访问的URL的网站根加上一级路径，
+       BASE2就是加上二级路径，依此类推
+   * - BASEPATHn
+     - BASEPATHn就是BASEn的路径部分
+   * - get_header(name, default=None)
+     - 返回命名的HTTP头，或者可选的default参数，如果没有这个HTTP头则返回空。
+       注意，有没有 ``HTTP_`` 都可以识别，如 Content-Type,
+       CONTENT_TYPE, HTTP_CONTENT_TYPE 都会返回 Content-Type 头，如果有的话。
+   * - getClientAddr()
+     - 以字符串形式返回客户端IP，不能找到时返回空字符串
+   * - has_key(key)
+     - 如果REQUEST对象上有这个key则返回真，否则返回假
+   * - items()
+     - 以(key, value)的形式返回对象的元组的一个序列
+   * - keys()
+     - 返回REQUEST所保存的所有对象的key的已排序的序列
+   * - set(name, value)
+     - 在REQUEST上设置属性，如在Plone模板开发中常用的设置无边框操作是
+       ``request.set('disable_border', 1)``
+   * - set_lazy(key, callable)
+     - 设置延迟计算的数据，callable是一个可调用的对象
+       当这个数据被访问时才调用callable计算出，计算后就保存在other数据中
+   * - setServerURL(protocol=None, hostname=None, port=None)
+     - 设置服务器相关的URL，同时会影响到URL,URLn,BASEn,还有absolute_url的计算值
+   * - values()
+     - 返回REQUEST中所保存的所有值的序列
+
+.. list-table:: 【表 17.7】RESPONSE 的常用方法
+   :header-rows: 1
+
+   * - 调用形式
+     - 说明
+   * - addHeader(name, value)
+     - 添加一项HTTP响应头
+   * - ``expireCookie(name, **kw)``
+     - 发送一个cookie过期的消息，通知浏览器删除这个cookie
+   * - redirect(location, status=302, lock=0)
+     - 给浏览器回应重定向，如 ``RESPONSE.redirect('http://czug.org')``
+   * - setBase(base)
+     - 设置响应的基准URL，如果base为None或这个输出已经有base，则没有效果
+   * - setBody(body, title="", is_error=0)
+     - 设置返回的响应体为body字符串的内容。并更新返回的Content-Length字段。
+   * - ``setCookie(name, value, **kw)``
+     - 设置cookie信息，如 ``RESPONSE.setCookie('__cp', cp, path='%s' % cookie_path(REQUEST))``
+   * - setHeader(name, value, literal=0)
+     - 设置一个返回的HTTP头
+   * - setStatus(status, reason=None)
+     - 设置返回状态，reason参数是用于描述这个状态的字符串。
+
+排序函数
+-------------
+Zope提供了专用的对对象序列进行排序的模块，就是sequence模块，这个模块中提供了sort函数用于排序。
+可以用在脚本或者页面模板中。
+
+sequence.sort是排序，用在模板中对列表进行排序，使用这个sort函数首先要定义一个排序函数。
+排序函数是一个元组，元组中的每一个对象都是一个三元组，
+三元组中的三个值分别是属性、比较方法、升序还是降序。
+
+注意这里使用"排序函数"仅仅是一个形象的说法，并不是要真正定义一个Python函数。
+并且待排序的对象上都应该有三元组中所定义的属性。
+
+如这个例子中对当前文件夹中的对象以title进行大小写不敏感的比较以升序排列，
+对title比较相等的对象进行修改时间的比较进行降序排列：
+
+::
+
+ tal:define="objects here/objectValues;
+             sort_on python:(('title', 'nocase', 'asc'),
+                             ('bobobase_modification_time', 'cmp', 'desc'));
+             sorted_objects python:sequence.sort(objects, sort_on)">
+
+它也可以用在脚本中，首先要导入：
+
+::
+
+ import sequence
+
+然后就是定义排序函数，用法与在页面模板中相同。
+
+Script (Python) 中已知可导入的模块
+--------------------------------------
+
+.. list-table:: 【表 17.8】Script (Python) 中已知可导入的模块
+   :header-rows: 1
+
+   * - id
+     - 说明
+   * - DateTime
+     - 导入日期时间模块，如 "from DateTime import DateTime"
+   * - random
+     - Python的random模块
+   * - math
+     - Python的math模块
+   * - sequence
+     - 上面讲到的Zope定义的sequence排序模块
+   * - Products.PythonScripts.standard
+     - 一些工具函数如 html_quote
+   * - Products.CMFCore.utils
+     - 一些工具函数如 getToolByName ，这个函数通常用来获取站点上的各个工具对象，如
+       ``portal_catalog = getToolByName(context, 'portal_catalog')``
+
+Plone对象基本API
+==============================
+Plone的内容操作
+-------------------------
+.. list-table:: 【表 17.9】Plone文件夹操作
+   :header-rows: 1
+
+   * - 调用形式
+     - 说明
+   * - setTitle
+     - 设置内容的标题
+   * - setDescription
+     - 设置内容的描述信息
+   * - reindexObject
+     - 无参数运行，将对象在portal_catalog中的索引更新，
+
+
+reindexObject常用在脚本中设置了title或description之后需要更新索引信息时调用。 如::
+
+         folder.setTitle('another title')
+         folder.setDescription('another description')
+         folder.reindexObject()
+
+Plone文件夹操作
+-------------------
+在Plone中建立的文件夹由Plone(更准确地说是CMF)添加了一组操作：
+
+.. list-table:: 【表 17.10】Plone文件夹操作
+   :header-rows: 1
+
+   * - 调用形式
+     - 说明
+   * - invokeFactory
+     -  这个用于在文件夹上添加指定类型的对象：
+        如在已知的folder下面再建一个Folder可以这样
+        ``folder.invokeFactory(type_name='Folder', id='folder-id')``
+   * - contentIds
+     - 列出文件夹中的Plone内容对象的id，返回值是id字符串的列表
+   * - contentValues
+     - 列出文件夹中的Plone内容对象，返回值是内容对象的列表
+   * - contentItems
+     - 列出文件夹中的Plone内容对象id和对象组成的元组，返回值是二元组的列表
+   * - listFolderContents
+     - 返回对象的列表，这与contentValues的区别在于这个方法会检查调用者是否有对这个对象的查看权限
+
+下面介绍一个创建内容的例子。
+创建一个文件夹，其id为my_folder::
+
+       portal.invokeFactory('Folder', 'my_folder')
+
+这是创建文件夹设置其元数据并更新索引::
+
+  fld = portal.invokeFactory("Folder", "test_folder")
+  folder = getattr(portal, "test_folder")
+  folder.setTitle("My Folder")
+  folder.setDescription("This is the description of a test folder")
+  folder.reindexObject()
+
+创建一个事件并编辑它的属性::
+
+  evt = folder.invokeFactory("Event", id="event")
+  event = getattr(folder, "event")
+  event.edit(title = "Foo",
+             start_date="2003-09-18",
+             end_date="2003-09-19",
+             location="home",
+             description="This is the description of a test event")
+  event.editMetadata(subject="Appointment")
+  event.reindexObject()
+
+创建一个文档::
+
+  doc = portal.invokeFactory("Document", "my_document")
+
+Plone内容目录 (portal_catalog)
+-------------------------------
+portal_catalog是Plone站点用来保存所有对象的索引信息，
+在Plone界面中生成页首标签、导航树等都会用到它。
+
+.. list-table:: 【表 17.11】portal_catalog上的常用的方法
+   :header-rows: 1
+
+   * - 调用形式
+     - 说明
+   * - searchResults
+     - 这个是portal_catalog的主要调用形式，即搜索
+   * - __call__
+     - 这个在定义中与 searchResults 是同一个方法，有了这个方法可以直接调用portal_catalog对象，
+       如 ``portal_catalog(...)`` ，
+       和这一行调用是相同的 ``portal_catalog.searchResults(...)``
+   * - uniqueValuesFor
+     - 取得某个索引的所有可能值，如这个调用
+       ``portal_catalog.uniqueValuesFor('Creator')`` ，
+       它以不重复的形式返回站点内所有作者名的一个列表
+   * - refreshCatalog
+     - 更新索引
+
+其中以searchResults或直接地调用(即调用 ``__call__``)的形式使用最为广泛，
+并且这个调用有多种传入参数的方法：
+
+.. list-table:: 【表 17.12】portal_catalog 搜索调用形式
+   :header-rows: 1
+
+   * - 调用形式
+     - 说明
+   * - 值形式
+     - 即 "索引=值" 形式，如 ``catalog.searchResults(path='/training/Members')``
+   * - 字典形式
+     - 即： {"索引":值} 的形式，如
+       ``catalog.searchResults( {'path': '/training/Members'} )``
+   * - 高级形式
+     - 值高级的表示: {"query":值, "operation":操作} 。
+       如这个例子展示了如何搜索最近20天内更新的页面，它使用了范围搜索，其中的now变量使用无参数的DateTime初始为当前时间。
+       ``results = context.portal_catalog.searchResults( Type = "Page", modified = { "query": [now - 20,], "range": "min" })`` 。 
+       同样地， range 参数还可以写 "max" 表示搜索上限，而 "minmax" 表示搜索一个时间范围，
+       将取 query 参数中的最小值作为下限，最大值作为上限。
+
+在portal_catalog中有几种不同类型的索引，其中的path索引使用的是ExtendedPathIndex，
+这种类型的索引有更多的高级控制参数：
+
+- catalog(path='some/path')
+  搜索位于某个路径之下的所有对象， (循环, 相当于depth = -1)
+- catalog(path={'query' : 'some/path', 'depth' : 0})
+  搜索位于某个路径的对象 
+- catalog(path={'query' : 'some/path', 'depth' : 2})
+  搜索所有位于某个路径之下，且深度为2的对象 
+- catalog(path={'query' : 'some/path', 'navtree' : 1})
+  搜索在某个路径用于导航树的对象。这包括所有该路径下深度为1的对象和所有的父对象。 
+- catalog(path={'query' : 'some/path', 'navtree' : 1, 'depth': 0 })
+  搜索某路径用于显示当前路径的对象. 这包括所有的父对象。 
+- catalog(path={'query' : 'some/path', 'navtree':1, 'navtree_start':1})
+  搜索某个路径下用于显示一个局部导航树。这包括所有位于该路径下、根结点1级下的对象。 
+- catalog(path={'query' : 'some/path', 'navtree':1, 'depth':0'navtree_start':1})
+  搜索某个路径下的对象，用于显示一个局部的对象路径。 包括该路径上、根路径1级下的所有父对象。
+
+此外，还可以传入特殊的参数以控制返回的对象列表的顺序，这样就省去了对返回对象列表的进一步排序操作：
+
+.. csv-table:: 【表 17.13】portal_catalog的搜索排序参数
+  :header: 调用形式, 说明
+
+  sort_on='索引名', 返回结果列表将以这个索引名由小到大进行排序
+  sort_order='reverse', 这个可以调整是否要逆序返回结果
+  sort_limit=100, 加快查询性能，限制最多返回结果的个数
+
+返回的结果是一个列表，列表是由brain对象组成的，
+而不是内容对象自身，但可以通过其属性来访问原对象:
+
+.. csv-table:: 【表 17.14】brain对象的特性
+  :header: 调用形式, 说明
+
+  metadata, 可以通过其属性方式访问所有的metadata，就是catalog对象所索引的元数据。
+  getPath, 返回对象路径
+  getURL, 返回原对象的URL
+  getObject, 返回所查到的原始对象，注意：调用这个方法可能影响性能，应该尽量少用
+
+下面的例子将列出这样一些对象，他们的创建日期晚于2005/11/30，而且创建者是用户admin。
+下面的脚本说明了如何把一个record对象传递给searchResults方法。
+参数Date接受一record对象，并按其中给定的日期查找创建时间在其之后的那些对象。参数Creator则过滤掉那些不是由用户admin创建的对象
+示例::
+
+  results = context.portal_catalog.searchResults
+             (Date={"query": DateTime("2005/11/30"), "range": "min"},
+              Creator="admin")
+  print [i.getObject().Title() for i in results]
+  return printed
+
+按id降序排列所有文档：
+
+下面的脚本将把当前Portal中的所有文档按其id降序列出来。
+注意其中的参数，portal_type限制内容对象的类型，而sort_on和sort_order则指定排序的依据以及排序的方式::
+
+  results = context.portal_catalog.searchResults(sort_on="id",
+                                                 portal_type="Document",
+                                                 sort_order="reverse")
+  print [i.getObject().id for i in results]
+  return printed
+
+列出所有含有单词"texto"的私有对象：
+
+每个content对象都定义了自己信息的哪部分可以参与搜索。
+参数SearchableText就是对每个对象的那部分信息进行查找的。而参数review_state则是用来根据对象的状态进行过滤::
+
+  results = context.portal_catalog.searchResults(SearchableText="texto",
+                                                 review_state="private")
+  print [i.getObject().Title() for i in results]
+  return printed
+
+用户管理
+--------------------------------
+portal_membership和portal_registration和portal_groups工具在Plone中用于控制用户和组。
+可以在自己的脚本中使用它们所提供的方法来增加或删除用户和组。
+
+.. list-table:: 【表 17.15】常用的成员管理操作
+   :header-rows: 1
+
+   * - 调用形式
+     - 说明
+   * - addMember
+     - 使用portal_registration向站点添加一个新成员，如
+       ``context.portal_registration.addMember(id, password, roles, domains="", properties=props)``
+   * - addGroup
+     -  使用portal_groups向站点添加新的组
+        创建一用户组，取名Group0，如
+        ``context.portal_groups.addGroup('Group0')``
+   * - group.addMember
+     - 向某个组里添加用户，如
+       ``group = context.portal_groups.getGroupById('Group0')
+       group.addMember('new-user')``
+
+..
+  `RegistrationTool-class.html <http://api.plone.org/Plone/2.1.1/public/CMFPlone.RegistrationTool.RegistrationTool-class.html>`__
+  `GroupsTool-class.html <http://api.plone.org/Plone/2.1.1/public/CMFPlone.GroupsTool.GroupsTool-class.html>`__
+
+工作流操作 (portal_workflow)
+------------------------------
+..
+  TODO: state_change变量的说明, 参看Plone资料汇编中工作流一章
+
+工作流操作使用Plone站点根上的portal_workflow对象，这个对象提供了很多操作工作流的方法。
+
+.. list-table:: 【表 17.16】常用的工作流操作
+   :header-rows: 1
+
+   * - 调用形式
+     - 说明
+   * - ``getInfoFor(self, ob, name, default=[], wf_id=None, args, *kw)``
+     - 这个方法从CMFCore.WorkflowTool.WorkflowTool类中导入.它返回与指定对象obj工作流相关的一个特别属性(由参数name指定)
+   * - ``doActionFor(self, ob, action, wf_id=None, args, *kw)``
+     - 此方法从CMFCore.WorkflowTool.WorkflowTool类中导入.它基于指定对象obj的工作流而执行一个行为
+
+这些方法一般都用在为工作流设置的脚本中。
+
+需要说明的是，在工作流中使用的脚本是带有一个参数运行的，
+从这个参数上可以得到工作流的各种信息。
+如，要访问存在于工作流中的对象，可以使用这个Python脚本来实现：
+
+::
+
+  ##parameters=state_change
+  obj = state_change.object
+
+脚本为开发人员提供了机会，使他们可以在过渡之上执行一些逻辑——几乎可以是任何你想要的逻辑。
+你可以检查一些条件是否已被执行（例如文档拼写检查是否执行了？）或者一些特殊动作是否已被执行。
+当对象处于过渡时期，脚本就会被调用执行。
+
+当脚本被调用执行时，会有一个额外的参数传递给它。
+这个额外的参数提供了对与过渡相关的各种元素和属性的访问通路。
+这个参数被称作state_change参数，它有如下属性或调用形式：
+
+.. csv-table:: 【表 17.17】state_change变量上的属性
+   :header: 属性或调用形式, 说明
+
+   status, 工作流状态
+   object, 在工作流中历经过渡的对象
+   workflow, 历经过渡的对象所依赖的当前工作流对象
+   transition, 当前正在执行的过渡（过渡也被看作是一个对象）
+   old_state, 历经过渡的对象的原始状态
+   new_state, 历经过渡的对象的目标状态
+   kwargs, 传递给 doActionFor 方法的关键字自变量
+   getHistory, 一个不含参数的方法，返回对象的工作流历史的一个拷贝
+   getPortal, 一个不含参数的方法，返回Plone的根对象（root Plone object）
+   ObjectDeleted(folder), 告诉工作流历经过渡的对象已经被删除；它含有你希望返还给用户的对象，它会转到异常，把用户重定位到你希望的folder（可参考本章后面的“移动对象”一节）
+   "ObjectMoved(newObject, newObject)", 告诉工作流历经过渡的对象已经被移动。它会转到异常，把用户重定位到你希望的folder（可参考本章后面的“移动对象”一节）
+   WorkflowException, 抛出一个异常，回到工作流并中止事务（在这种情况下中止的是过渡）
+   getDateTime, 一个不含参数的方法，返回与过渡相关的DateTime对象
+
+这个脚本中将会发生的事情完全要依赖于开发者——作为开发者，你在这里几乎可以做任何事情。
+你可以引发事件，你也可以访问其他的工作流和过渡。
+当脚本执行时，往往是启动了过渡的用户同时启动了脚本。
+如果需要让其他人来这样做，你可以把代理人角色（proxy roles）分配到脚本中。
+在返回过渡时，你可以在 script(after) 和 script(before) 设置中把脚本分配给任意数量的过渡。你可以在过渡发生之前或之后执行脚本。
+
+下面举一个例子说明。在程序中一般需要根据条件来改变某个Plone内容的工作流状态，
+常用的就是先使用getInfoFor来获取对象的状态，再使用doActionFor执行一个工作流的动作。
+如这个例子是通过Python脚本改变私有文档的状态 ::
+
+         from Products.CMFCore.utils import getToolByName
+         urltool = getToolByName(context, "portal_url")
+         portal  = urltool.getPortalObject()
+         document = getattr(portal, "my_document")
+         review_state = document.portal_workflow.getInfoFor(document, "review_state", "")
+         print "The initial state is: " + review_state + "\n"
+
+         if not review_state in ("rejected", "retracted", "private"):
+           document.portal_workflow.doActionFor(document, "hide", comment="")
+           review_state = document.portal_workflow.getInfoFor(document, "review_state", "")
+           print "The final state is: " + review_state + "\n"
+         return printed
+
+
+下面是一个工作流操作的例子，
+管理工作流一章介绍了自定义工作流，但那一章还没有介绍到脚本，
+因此在这里补充一个以脚本定制工作流的例子。
+原文可以查看 http://plone.org/documentation/how-to/object-with-parent-state 。
+
+对于简单的内容发布网站而言，
+可以将文件夹中内容的初始工作流状态设置为与父对象一致，
+这样只要设好几个文件夹的初始状态就可以控制其中所新建内容的状态，
+这就是这个例子定制的目的。
+
+首先至Zope管理界面中找到portal_workflow/plone_workflow并选择scripts标签页，
+在其中添加一个脚本，命名为setState，并设置一个参数state_change，内容如下：
+
+::
+
+   # set state to state of container
+   # called by intialTransition upon creation of an object
+
+   obj = state_change.object
+
+   # get the parent state
+   parent = obj.aq_parent
+   try: 
+     parentState = context.portal_workflow.getInfoFor(parent, 'review_state')
+   except:
+     # use default state of object if no review_state available for parent object
+     parentState = context.portal_workflow.getInfoFor(obj, 'review_state')
+
+   # get possible transitions for object in current state
+   actions = context.portal_workflow.getActionsFor(obj)
+   transitions = []
+   for item in actions:
+       if item.has_key('transition'):
+         transitions.append(item['transition'])
+
+   # find transition that brings us to the state of parent object
+   for item in transitions:
+     if item.new_state_id == parentState:
+       context.portal_workflow.doActionFor(obj, item.id)
+
+可以看到，这段内容首先获得父对象的工作流状态，
+然后将新添加对象的状态设为与其一致。
+
+然后是将这个脚本用在工作流中，这在Zope管理界面中操作如下：
+
+- 在plone_workflow中增加一个转换(transition)，命名为intialTransition，
+  触发条件设为automatic，目标状态设为visible，在script中选择上面定义的setState。
+
+- 再给plone_workflow增加一个初始状态(state)，
+  就是命名为initialState的状态，并设置为缺省状态。
+
+这样设置之后，对于私有文件夹中创建的内容缺省就是私有状态，
+已发布文件夹中创建的内容缺省就是已发布状态，
+这样的设置比较适合简单的管理方式的网站需求。
+
+发送邮件 (MailHost)
+---------------------------
+在Plone站点根上有一个MailHost对象，使用这个对象可以发送邮件。
+
+可使用secureSend方法发送邮件，这是它在源代码里面的声明::
+
+          security.declareProtected(use_mailhost_services, 'secureSend')
+          def secureSend(self, message, mto=None, mfrom=None, subject='[No Subject]',
+                         mcc=None, mbcc=None, subtype='plain', charset='utf-8',
+                         debug=False, **kwargs)
+
+由此可知它是use_mailhost_services权限所保护的，在站点上一般只有管理员有这个权限，
+解决方法是在脚本中使用这个方法并给脚本设置 proxy 为管理员。
+
+下面是一个示例，从context上获取到MailHost对象，并准备一些参数::
+
+          mailhost = context.MailHost
+          message = """这是一个例子, 发送看看.
+
+                      特别是看看中文支持情况如何？
+
+                      收到了吗？
+                      """
+          mto = "YOUR_NAME@gmail.com"
+          mfrom = "MY_NAME@zopen.cn"
+          subject = "测试邮件"
+
+发送邮件::
+
+          mailhost.secureSend(message, mto=mto, mfrom=mfrom,
+            subject=subject + '(secureSend)', charset="utf-8")
+
+MailHost还有一个传统的发送邮件的接口是send，但它不支持中文，
+在新的代码中应该使用secureSend替换。
+
+..
+ 内容类型注册表 (portal_types)
+ ---------------------------------
+ .. list-table:: portal_types
+   :header-rows: 1
+
+   * - 调用形式
+     - 说明
+   * - portal_types.listTypeInfo(container=None )
+     - 某个文件夹下可添加的内容类型清单
+
+Plone工具 (plone_utils)
+------------------------
+
+.. list-table:: 【表 17.18】Plone工具的常用操作
+   :header-rows: 1
+
+   * - 调用形式
+     - 说明
+   * - normalizeString
+     - 对字符串进行正规化，指过滤掉字符串中的非法字符并转换为小写
+   * - getSiteEncoding
+     - 获取站点设置的编码信息
+   * - sendto
+     - 使用sendto_template模板发送邮件
+   * - getIconFor
+     - 获取该对象类型的图标
+   * - urlparse, urlunparse
+     - 这是从urllib中导入的方法，在解析URL时很有用
+   * - pretty_title_or_id
+     - 比Zope提供的title_or_id返回一个更为灵活的标题，
+       它会尝试调用对象的Title或者getId等多种方法以找到一个更好地描述对象的字符串
+   * - editMetadata
+     - 编辑对象的元数据，
+       这个函数可以一次编辑一个对象的多个元数据信息
+
+Plone模板中可用的全局变量
+===============================
+在Plone模板开发中由Plone定义了很多全局变量，
+合理使用这些全局变量能够简化模板开发。
+
+注意，与Plone2.5以前的版本在global_defines中定义全局变量比起来，
+在Plone2.5中将这些全局变量改在视图中定义，
+对应着文件系统上的CMFPlone/browser/plone.py文件。
+
+.. csv-table:: 【表 17.19】Plone脚本开发常用的全局变量
+  :header: id, 说明
+
+   portal, Plone站点对象
+   portal_url, "Plone站点的URL字符串, 如自定义css文件可以用到字符串表达式： string:$portal_url/base.css"
+   mtool, portal_membership工具
+   putils, plone_utils工具
+   wtool, portal_workflow工具
+   ifacetool, portal_interface工具
+   syntool, portal_syndication工具
+   portal_title, Plone站点标题
+   object_title, 当前对象标题，即context/title
+   member, 当前登录用户，这是一个portal_membership上返回的对象
+   checkPermission, portal_membership上的检查权限函数
+   membersfolder, 站点的成员文件夹
+   isAnon, 判断当前是否有用户已登录的逻辑值
+   actions, portal_actions工具的调用listFilteredActionsFor(context)的结果
+   keyed_actions, 一个以类型和id为二维下标的字典
+   user_actions, 用户类的动作
+   workflow_actions, 工作流类的动作
+   folder_actions, 文件夹的动作
+   global_actions, 全局类的动作
+   portal_tabs, 站点面首标签页的动作
+   wf_state, 当前对象的审阅状态
+   portal_properties, portal_properties工具
+   site_properties, site_properties工具
+   ztu, ZTUtils模块
+   isFolderish, 判断当前对象是否为类文件夹对象
+   slots_mapping, 经过预处理的左右列面板信息的一个字典
+   here_url, 当前URL，也可以从context/absolute_url上读到
+   default_language, 站点缺省语言
+   language, 如果当前的请求上有设置语言，则使用请求上的，否则使用default_language
+   is_editable, 布尔值，检验当前登录用户有没有对当前对象的编辑权限
+   isLocked, 布尔值，检查当前对象是否被WebDAV锁住了
+   isRTL, 布尔值，检查当前语言是否是一个从右至左写的语言
+   visible_ids, 布尔值，判断是否应该向当前用户显示英文id
+   current_page_url, 当前的包含查询字符串的URL
+   isContextDefaultPage, 布尔值，判断当前对象是否是其所在文件夹对象的缺省页面
+   isStructuralFolder, 判断当前对象是否是一个结构式的文件夹
+   Iterator, 一个用于产生单个整数迭代器的工厂类
+   tabindex, 这是Iterator迭代器对象，通常用于产生tabindex顺序属性
+   uniqueItemIndex, 一个用于帮助产生唯一id的函数
+
+除此之外，还有如portal_object与portal变量是相同的，但是已经标记为过时了，
+过时的变量在plone.py中都有标记，在新的模板开发不应该使用。
+
+.. csv-table:: 【表 17.20】Plone视图中可用变量或方法
+  :header: id, 说明
+
+   isStructuralFolder, 判断是否为结构式文件夹
+   getCurrentFolder, 获取当前对象所在的文件夹
+   isDefaultPageInFolder, 判断对象是否是所在文件夹对象的缺省页面
+   isFolderOrFolderDefaultPage, 判断是否本身是文件夹或是文件夹的缺省页面
+   getParentObject, 获取父对象
+   getCurrentFolderUrl, 获取当前文件夹的URL
+   toLocalizedTime, 转换时间为当地显示格式
+   getCurrentUrl, 得到当前调用对象的URL
+   getCurrentObjectUrl, 如果当前页面是所在文件夹的缺省页面则返回文件夹的URL，否则返回当前对象URL
+
+..
+   visibleIdsEnabled, 检查
+   isPortalOrPortalDefaultPage,
+   getViewTemplateId,
+   keyFilteredActions,
+   isRightToLeft,
+
+更多引用参考
+============
+实际上Zope/Plone提供了非常丰富的可调用接口，本附录只列举出了最常用的一些，
+更多的信息可以参考以下这几个网址：
+
+- http://www.zope.org/Documentation/Books/ZopeBook/2_6Edition/AppendixB.stx
+  这是Zope网站上提供的所有Zope可调用API的全面参考，也是成熟的ZopeBook2.6版的一篇附录。
+  注意这是ZopeBook书籍的版本号，并不是直接对应着Zope2.6版。
+- http://www.plope.com/Books/2_7Edition/AppendixB.stx
+  这是在Plope网站上组织的ZopeBook2.7版本的ZopeAPI参考，它的内容目前还在维护中，
+  但针对最新的Zope版本(Zope2.9以后)比ZopeBook2.6版有一些更新。
+- http://api.plone.org/
+  这里是Plone站点上的API参考，上面有Plone、Archetypes和CMF的API参考。

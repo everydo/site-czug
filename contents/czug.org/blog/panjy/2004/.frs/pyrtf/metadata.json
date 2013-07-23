@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "pyrtf"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "小试了一把PyRTF，动态生成RTF文件", 
+        "modified": "2005-04-07 17:18:11", 
+        "title": "使用PyRTF的生成RTF文件"
+    }
+}

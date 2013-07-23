@@ -1,0 +1,14 @@
+{
+    "main": {
+        "mimetype": "text/x-rst", 
+        "contenttype": "Document"
+    }, 
+    "dublin": {
+        "creators": [
+            "users.benky"
+        ], 
+        "created": "2007-07-06T08:07:34Z", 
+        "modified": "2007-10-23T11:43:48Z", 
+        "title": "Zope上的Python脚本编程"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "banide-plone-biandexiang-douban-yiyangkuai-er"
+    }, 
+    "dublin": {
+        "creators": [
+            "eishn"
+        ], 
+        "description": "", 
+        "modified": "2006-12-04 17:25:26", 
+        "title": "把你的 Plone 变得像 Douban 一样快(二)"
+    }
+}

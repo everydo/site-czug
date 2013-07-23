@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "Zope-2_7_1-released"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "zope 2.7.1是zope2.7的补丁版本", 
+        "modified": "2004-06-23 12:45:08", 
+        "title": "zope 2.7.1发布"
+    }
+}

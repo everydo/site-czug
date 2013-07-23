@@ -1,0 +1,19 @@
+<p>Plone如何支持中文？Structured Text如何支持中文？这些问题在论坛和邮件中不断出现。</p>
+<p>润普发布这个包，就是为了解决这个问题。用最简单的方式让Zope和Plone支持中文：您只需要把解压缩后的目录拷贝到Products目录就行了！</p>
+<p>他能做什么？</p>
+
+<ul>
+<li>Plone、CMFCollector的中文搜索</li>
+<li>Structured Text的中文支持</li>
+<li>中文ID支持</li>
+<li>...</li>
+
+</ul>
+<p>他不能做什么？</p>
+
+<ul>
+<li>对于已经创建的Plone站点，他不能自动修复支持中文。他仅仅对安装ZopeChinaPak之后建立的Plone站点有效。</li>
+<li>不能自动安装Localizer和TranslationService，这个还是得大家自己手工安装。</li>
+
+</ul>
+<p>在<a href="http://www.zope.org/Members/panjunyong/ZopeChinaPak">这里</a>下载</p>

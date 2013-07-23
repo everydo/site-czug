@@ -1,0 +1,13 @@
+{
+    "main": {
+        "contenttype": "Folder"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "存放新闻", 
+        "modified": "2005-12-12 09:15:39", 
+        "title": "新闻"
+    }
+}

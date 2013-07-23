@@ -1,0 +1,183 @@
+<p>出处： <a href="http://www.javaeye.com/wiki/Django-book/733-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E4%BA%94%E7%AB%A0%EF%BC%9A%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%A4%E4%BA%92:%E6%A8%A1%E5%9E%8B">http://www.javaeye.com/wiki/Django-book/733-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E4%BA%94%E7%AB%A0%EF%BC%9A%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%A4%E4%BA%92:%E6%A8%A1%E5%9E%8B</a></p>
+  
+  <h1 style="margin:25px 0 10px 10px">翻译www.djangobook.com之第五章：与数据库交互:模型 
+    
+  </h1>
+  <div class="content">
+    <span style="color: red"><strong>The Django Book：第5章 与数据库交互:模型</strong></span><br /><br />第3章我们谈到了用Django构建动态网站，设置视图和URL配置<br />如我们所说，试图负责逻辑和返回应答，例子中我们计算了当前的日期和时间<br />现在的Web程序中常常和数据库打交道<br />一个数据库驱动的网站在后台连接数据库服务器，得到并显示很好的格式化的Web页面<br />同样，网站也可以提供给访问者也具有操作数据库的功能<br />许多复杂的网站以上两种功能的结合，如Amazon.com就是一个数据库驱动的站点<br />每一个产品页面都是Amazon数据库格式后的HTML，你访问页面也就是间接访问数据库<br />Django很适合数据库驱动的网站，通过Python它提供强大的数据库访问能力<br />这章将讲述Django的数据库层<br /><br /><strong>在视图里进行数据库查询的“哑”方式</strong><br />前一章讲到通过在视图里硬编码HTML来输出HTML的“哑”方式，在视图里也有得到数据库数据的“哑”方式<br />这很简单，只是使用一些Python库执行SQL查询并且处理结果<br />在下面的例子里我们使用MySQLdb库(可以在如下地址得到<a href="http://sourceforge.net/projects/mysql-python" target="_blank">http://sourceforge.net/projects/mysql-python</a>)<br />来连接MySQL数据库，得到一些记录来填充模板，并显示到Web页面上：<br /><pre name="code" class="java">from django.shortcuts import render_to_response
+import MySQLdb
+
+def book_list(request):
+    db = MySQLdb.connect(user='me', db='mydb', passwd='secret', host='localhost')
+    cursor = db.cursor()
+    cursor.execute('SELECT name FROM books ORDER BY name')
+    names = [row[0] for row in cursor.fetchall()]
+    db.close()
+    return render_to_response('book_list.html', {'names': names})</pre><br />这个方法可以工作，但是马上一些问题出来了：<br />1，我们把数据库连接的参数硬编码到代码里面了，理想状况下它们应该存储在Django配置里面<br />2，我们必须写一些样板文件代码，如建立连接，创建cursor，执行语句和关闭连接等<br />细想状况下，我们应该只需指出我们需要什么结果<br />3，它把我们和MySQL绑在一起，如果我们想切换到PostgreSQL<br />我们必须使用不同的数据库适配器psycopg，改变数据库连接参数以及考虑重写SQL语句<br />理想状况下数据库服务器应该是抽象的，替换数据库应该只在一个地方设置<br />你可能会想，Django的数据库层的目标应该是解决这些问题，下面简单看看怎样用Django数据库API重写上面代码：<br /><pre name="code" class="java">from django.shortcuts import render_to_response
+from mysite.books.models import Book
+
+def book_list(request):
+    books = Book.objects.order_by('name')
+    return render_to_response('book_list.html', {'books': books})</pre><br />我们在本章稍后解释这些代码，现在先感觉一下它的样子<br /><br /><strong>MTV开发模式</strong><br />在我们专研更多的代码之前，让我们先花点时间考虑一些Django Web程序的整体设计<br />前面的章节我们提到，Django设计来鼓励松耦合和分离程序模块<br />如果你遵循这个哲学，改变一部分代码而不影响其它模块是很容易做到的<br />例如在视图方法里，我们讨论了使用模板来分离业务逻辑和呈现逻辑的重要性<br />在数据库层的数据访问逻辑我们将遵循同样的哲学<br />数据访问，业务逻辑和呈现逻辑组成常说的“Model View Controller”(MVC)软件架构模式<br />“Model”指数据访问层，“View”指系统中选择什么来呈现以及怎样呈现的部分<br />“Controller”则指系统中通过用户输入决定使用哪个视图及访问必要的模型的部分<br />采用MVC,MTV等缩写只是便于开发人员沟通<br />Django遵循了MVC模式，它可以被称位MVC框架，下面是M,V,C在Django中的位置：<br />1，M，数据据访问部分，通过Django的数据库层处理，也就是本章所讲述的内容<br />2，V，选择数据并决定怎样呈现的部分，通过视图和模板来处理<br />3，C，控制部分通过Django框架本身的URL配置和对Python方法的调用来处理<br />因为“C”是Django框架本身处理而导致Django大部分精彩的东西在于模型，模板和视图<br />所以Django被称位MTV框架：<br />1，M，代表模型，是数据访问层，它包含了关于数据的一切东西，怎样得到数据，怎样验证数据，<br />它具有什么行为以及数据之间的关系<br />2，T，代表模板，是展现层，它包含了呈现相关的决策，如内容怎样在Web页面中显示以及其它类型的文档<br />3，V，代表视图，是业务逻辑层，它包含了访问模型的逻辑和选择合适的模板<br />你可以认为视图是模型和模板的桥梁<br />如果你对MVC框架熟悉，如Ruby on Rails，你可以把Django的视图想象成“controllers”，<br />把Django的模板想象成“views”，这是对MVC的不同解释造成的不幸的混乱<br />在Django关于MVC的解释中，“view”描述呈现给用户的数据<br />没有必要弄清数据怎样显示，而是描述哪个数据应该被呈现<br />对比而言，Ruby on Rails以及类似的框架建议controller的工作包括决定哪个数据显示给用户，<br />视图严格的决定数据怎样显示，而不是决定哪个数据来显示<br />每一个解释都不比另一个正确，最重要的事情是理解底层的概念<br /><br /><strong>配置数据库</strong><br />所有的哲学牢记在心之后，让我们开始发掘Django的数据库层<br />首先我们注意一些细小的配置，我们需要告诉Django使用哪个数据库和怎样连接它<br />我们假设你已经有了一个数据库服务器，启动它并创建一个database(使用CREATE DATABASE语句)<br />SQLite是一个特例，不需要创建database，因为SQLite在文件系统上使用单独的文件存储数据<br />和上一章的TEMPLATE_DIRS一样，数据库配置在Django配置文件里面，默认是settings.py<br /><pre name="code" class="java">DATABASE_ENGINE = ''
+DATABASE_NAME = ''
+DATABASE_USER = ''
+DATABASE_PASSWORD = ''
+DATABASE_HOST = ''
+DATABASE_PORT = ''
+</pre><br />我们来看看每个配置是什么意思：<br />1，DATABASE_ENGINE告诉Django使用哪个数据库引擎，如果你使用数据库和Django工作的话，<br />DATABASE_ENGINE必须是下面的字符串集合：<br /><div class="quote_title">引用</div><div class="quote_div"><br />设置&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 数据库&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 需要的适配器<br />postgresql&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PostgreSQL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; psycopg version 1.x, <a href="http://initd.org/projects/psycopg1" target="_blank">http://initd.org/projects/psycopg1</a><br /><br />postgresql_psycopg2&nbsp;&nbsp;&nbsp; PostgreSQL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; psycopg version 2.x, <a href="http://initd.org/projects/psycopg2" target="_blank">http://initd.org/projects/psycopg2</a><br /><br />mysql&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MySQL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MySQLdb, <a href="http://sourceforge.net/projects/mysql-python" target="_blank">http://sourceforge.net/projects/mysql-python</a><br /><br />sqlite3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SQLite No adapter needed if using Python 2.5+ Otherwise, pysqlite, <a href="http://initd.org/tracker/pysqlite" target="_blank">http://initd.org/tracker/pysqlite</a><br /><br />ado_mssql&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Microsoft SQL Server&nbsp;&nbsp; adodbapi version 2.0.1+, <a href="http://adodbapi.sourceforge.net/" target="_blank">http://adodbapi.sourceforge.net/</a><br /><br />oracle&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Oracle&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cx_Oracle, <a href="http://www.python.net/crew/atuining/cx_Oracle/" target="_blank">http://www.python.net/crew/atuining/cx_Oracle/</a><br /></div><br />注意不管你使用什么数据库，你都需要安装相应的数据库适配器，每个适配器在网上都是免费的<br />2，DATABASE_NAME告诉Django数据库名字是什么，如果你使用SQLite，<br />指出数据库文件的完整的文件系统路径，如'/home/django/mydata.db'<br />3，DATABASE_USER告诉Django你连接数据库的用户名，如果你使用SQLite，这项为空<br />4，DATABASE_PASSWORD告诉Django你连接数据库的密码，如果你使用SQLite或者你的密码为空，则这项为空<br />5，DATABASE_HOST告诉Django你连接数据库的主机，如果你的数据库和Django安装在同一台计算机上，则这项为空<br />如果你使用SQLite，这项为空<br />MySQL在这里很特殊，如果这项的值以'/'开头并且你使用MySQL，MySQL会通过Unix socket连接特殊的socket<br />例如DATABASE_HOST ＝ '/var/run/mysql/'<br />如果你使用MySQL但这项的值不是以'/'开头，那么这项的值就假设为所连接的主机<br />6，DATABASE_PORT告诉Django连接数据库的端口，如果你使用SQLite，则这项为空<br />否则，如果这项为空，底层的数据库适配器会使用给的数据库的默认端口<br />大部分情况下默认端口即可<br />一旦你输入了这项设置，测试一下你的配置<br />首先在你第2章创建的mysite项目目录下运行python manage.py shell<br />你将会看到进入了Python交互环境，但是眼睛是会骗人的！<br />它和普通的python有一个重要的不同，普通的python命令进入的是Python shell，<br />但是前者告诉Django在启动shell前使用哪个settings文件<br />这是做数据库查询的主要前提，Django需要知道使用哪个settings文件来得到数据库连接信息<br />在后台，python manage.py shell设置了DJANGO_SETTINGS_MODULE环境变量<br />后面我们会解释它的微妙之处，先让我们测试一下数据库配置：<br />&gt;&gt;&gt; from django.db import connnection<br />&gt;&gt;&gt; cursor = connection.cursor()<br />如果什么事情都没有发生，则你的数据库配置对了<br />否则，检查错误信息作为线索，看看哪里出错了，下面是一些常见的错误:<br /><pre name="code" class="java">
+错误信息                                                    解决方法 
+You haven’t set the DATABASE_ENGINE setting yet.
+设置DATABASE_ENGINE而不是为空
+
+Environment variable DJANGO_SETTINGS_MODULE is undefined.
+运行command python manage.py shell而不是python
+
+Error loading __ module: No module named __.
+你还没有安装数据库相关的适配器(如psycopg或MySQLdb)
+
+__ isn’t an available database backend.
+将你的DATABASE_ENGINE设置为合法的数据库引擎，你是不是敲错字母了？
+
+database __ does not exist
+更改DATABASE_NAME指向一个存在的数据库，或者执行CREATE DATABASE语句来创建它
+
+role __ does not exist
+更改DATABASE_USER指向一个存在的user，或者在数据库中创建一个user
+
+could not connect to server
+确认DATABASE_HOST和DATABASE_PORT设置正确，以及确认数据库正在运行
+</pre><br /><br /><strong>你的第一个app</strong><br />既然你验证了数据库连接正确，现在就来创建一个Django app<br />Django app是一些Django代码，包括模型和视图，它们在同一个Python包下面，代表了一个完整的Django程序<br />在这里值得解释一下术语，因为这容易使初学者弄糊涂<br />我们第2章已经创建了一个project，那么project和app的区别是什么呢？区别就是配置和代码：<br />1，一个project是许多Django app的集合的实例，加上那些app的的配置<br />技术上来说，一个project唯一的前提是它提供一个settings文件，里面定义了数据库连接信息，<br />安装的app，TEMPLATE_DIRS等等<br />2，一个app是Django的可移动功能集，通常包括模型和视图，存在于一个单独的Python包里面<br />例如，Django含有几个app，如commenting系统和自动的admin界面<br />关键要注意的是它们是可移动并且可以在不同的project重用<br />没有严格的规定怎样安排和计划你的Django代码，它是很灵活的<br />如果你在构建一个单独的网站，你可能只使用一个app<br />如果你在构建一个复杂的站点，你可能想把它分成几个app，这样你就可以在以后分别重用他们<br />在前面我们的例子中证明我们确实根本不需要创建app，我们只是创建了一个viws.py文件<br />然后在里面写视图方法并设置我们的URL配置指向这些方法，我们不需要“apps”<br />但是，有一点需要重视app惯例，如果你使用Django的数据库层(模型)，你必须创建Django app<br />模型必须存在于app，所以为了开始写模型，我们将创建一个新的app<br />在前面创建的mysite目录下面，运行下面的命令来创建一个新的app：<br />python manage.py startapp books<br />这个命令不会造成任何输出，但它在mysite目录下创建了一个books目录，让我们看看它的内容：<br />books/<br />&nbsp;&nbsp;&nbsp; __init__.py<br />&nbsp;&nbsp;&nbsp; models.py<br />&nbsp;&nbsp;&nbsp; views.py<br />这些文件将包含这个app的模型和视图<br />用你最喜欢的文本编辑器看看models.py和views.py，它们都是空的，除了models.py里一个import<br />这是你的Django app的空白区<br /><br /><strong>用Python定义模型</strong><br />我们前面讨论到，MTV中的M代表模型<br />一个Django模型用Python代码描述了你的数据库中的数据<br />它是你的数据结构，相当于SQL的CREATE TABLE语句，除了在Python中它比数据库定义包含的内容更多<br />Django在后台使用模型来执行SQL代码并返回方便的Python数据结构来表示你的数据库表的行<br />Django也使用模型来描述一些高级概念，这些SQL是做不到的<br />如果你对数据库很熟悉，你可能马上会想到既在Python中又在SQL中定义数据模型岂不是很多余？<br />Django采用这种工作方式有几个原因：<br />1，自省要求过度并且不完美<br />为了提供方便的数据访问API，Django需要知道数据库结构，有两种方式达到这个目标<br />一是在Python里显式的描述数据，一是运行时内省数据库来决定数据模型<br />第二种方式看起来更干净，因为表的元数据仅仅存在于一个地方，但这会导致几个问题<br />第一，运行时内省数据库显然要求过度<br />如果每次Web请求都需要内省数据库，即使Web服务器已经初始化，这也会导致的过度的等级不可接受<br />(有些人认为这个过度的等级可以接受，但Django的开发者目标是打败尽可能多的过度框架，<br />所以这个方案使Django成功的在速度上快于其它的高级框架)第二，一些数据库特别是旧版本的MySQL<br />并不把足够的元数据存储起来，所以就导致不能进行准确和完整的自省<br />2，写Python代码是快乐的，保持所有的事情用Python来做可以减少你大脑作切换的时间<br />如果你保持一个单独的开发环境和心智尽可能久，它将是你非常的高效<br />写SQL，然后Python，然后又SQL是很令人心烦的<br />3，让数据模型存储在代码里而不是你的数据库会使你更容易控制你的模型版本<br />这样你可以很轻松的跟踪你的数据的更改<br />4，SQL仅仅允许关于数据结构的某一级别的元数据<br />例如，大部分数据库系统并不提供专门的数据类型来支持e-mail地址或者url<br />Django模型则可以，高级数据类型的优点是更高的生产率和更易重用的代码<br />5，SQL在不同的数据库平台不一致，例如，如果你正在发布你一个Web程序<br />发布一个Python模块来描述数据结构会比分开为MySQL，PostgreSQL和SQLite写CREATE TABLE语句更高效<br />尽管如此，这个方法的一个缺点是Python代码所做的事情可能超出实际上数据库里的数据的范围<br />如果你更改了Django模型，你需要在你的数据库做同样的改动做保持数据库和模型一致<br />本章后面我们将详细解释解决此问题的策略<br />最后，我们必须指出的是Django包含了一个辅助工具来通过现存的数据库生成模型<br />这对于迅速接管和运行遗留数据很有帮助<br /><br /><strong>你的第一个模型</strong><br />这一章我们将关注book/author/publisher数据结构，它们是众所周知的<br />我们将支持一下概念，域和关系：<br />1，一个author有一个salutation(如Mr.或Mrs.)，一个first name，一个last name，一个e-mail地址和一个头像photo<br />2，一个publisher有一个name，一个street地址，一个city，一个state/province，一个country和一个Web site<br />3，一个book有一个title和一个publication date，一个或多个authors(many-to-many)，一个单独的publisher(one-to-many)<br />在Django中第一步是使用Python代码描述上面的数据库结构，在startapp命令创建的models.py中输入下面的内容：<br /><pre name="code" class="java">
+from django.db import models
+
+class Publisher(models.Model):
+    name = models.CharField(maxlength=30)
+    address = models.CharField(maxlength=50)
+    city = models.CharField(maxlength=60)
+    state_province = models.CharField(maxlength=30)
+    country = models.CharField(maxlength=50)
+    website = models.URLField()
+
+class Author(models.Model):
+    salutation = models.CharField(maxlength=10)
+    first_name = models.CharField(maxlength=30)
+    last_name = models.CharField(maxlength=40)
+    email = models.EmailField()
+    headshot = models.ImageField(upload_to='/tmp')
+
+class Book(models.Model):
+    title = models.CharField(maxlength=100)
+    authors = models.ManyToManyField(Author)
+    publisher = models.ForeignKey(Publisher)
+    publication_date = models.DateField()
+</pre><br />这章我们会谈到模型语法和选项，让我们先来快速的看看这些代码来得到基本的印象<br />要注意的第一点是每个模型都是django.db.models.Model的子类<br />它们的父类Model包含了让这些对象具有与数据库交互能力的机制<br />这样一来我们的模型只负责定义自己的域就行了，语法相当简洁紧凑<br />不管相信与否，这就是通过Django进行数据访问的所有代码<br />一个模型通常域一个数据库表对应，而每个属性和数据库表的一列对应<br />属性名对应列名，属性的类型(如CharField)对应数据库列类型<br />例如Publisher模型对应了下面的表(假设使用PostgreSQL的CREATE TABLE语法)：<br /><pre name="code" class="java">
+CREATE TABLE "books_publisher" (
+    "id" serial NOT NULL PRIMARY KEY,
+    "name" varchar(30) NOT NULL,
+    "address" varchar(50) NOT NULL,
+    "city" varchar(60) NOT NULL,
+    "state_province" varchar(30) NOT NULL,
+    "country" varchar(50) NOT NULL,
+    "website" varchar(200) NOT NULL
+);
+</pre><br />事实上Django自己可以生成CREAT TABLE语句，我们一会再看<br />一个类对应一个数据库表的特例是多对多关系，我们的例子中Book有一个ManyToManyField叫作authors<br />这表明book拥有一个或多个authors，但是Book表并没有authors列<br />Django创建了一个附加的多对多连接表来处理books到authors的映射<br />最后注意的是我们没有在任何一个模型中显示的定义主键<br />除非你自己定义一个主键，Django会自动为每个模型生成一个integer主键域id<br />每个Django模型都必须有一个单列的主键<br /><br /><strong>安装模型</strong><br />写完代码，下面让我们来创建数据库表<br />第一步是在Django中激活这些模型，需要把books这个app添加到settings文件的apps列表<br />编辑settings.py，查找INSTALLED_APPS设置<br />INSTALLED_APPS告诉Django哪些apps是活动的，默认时如下所示：<br /><pre name="code" class="java">
+INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+)
+</pre><br />先用(#)把这些strings注释掉，后面我们再激活和讨论它们<br />然后添加'mysite.books'到INSTALLED_APPS列表，最后如下所示：<br /><pre name="code" class="java">
+INSTALLED_APPS = (
+    #'django.contrib.auth',
+    #'django.contrib.contenttypes',
+    #'django.contrib.sessions',
+    #'django.contrib.sites',
+    'mysite.books',
+)
+</pre><br />别忘了最后的逗号<br />顺便说一下，本书作者习惯与在元组的元素后面都加上逗号，无论元组是否只有一个元素<br />这可以避免忘记加逗号，加了也不会罚款<br />'mysite.books'指我们正在工作的books app<br />INSTALLED_APPS中的每个app都用完整的Python PATH来表示，即包的PATH，用小数点分隔来指向app包<br />Django app已经在settings文件激活，我们可以在数据库中创建表了<br />首先通过如下的命令验证一下模型：python manage.py validate<br />validate命令检查我们的模型语法和逻辑正确与否<br />如果一切正常，我们会看到0 errors found的信息<br />否则，确认你的模型代码输入正确，error输出会给你有用的信息来帮你找到错误的代码<br />任何时候你认为你的模型代码有问题都可以运行python manage.py validate来捕捉模型错误<br />如果你的模型是合法的，运行下面的命令为books app的模型生成CREATE TABLE语句<br />(如果你使用Unix会有五颜六色的语法高亮)：python manage.py sqlall books<br />这个命令中，books是app的名字，运行完命令，你会看到下面的信息：<br /><pre name="code" class="java">
+BEGIN;
+CREATE TABLE "books_publisher" (
+    "id" serial NOT NULL PRIMARY KEY,
+    "name" varchar(30) NOT NULL,
+    "address" varchar(50) NOT NULL,
+    "city" varchar(60) NOT NULL,
+    "state_province" varchar(30) NOT NULL,
+    "country" varchar(50) NOT NULL,
+    "website" varchar(200) NOT NULL
+);
+CREATE TABLE "books_book" (
+    "id" serial NOT NULL PRIMARY KEY,
+    "title" varchar(100) NOT NULL,
+    "publisher_id" integer NOT NULL REFERENCES "books_publisher" ("id"),
+    "publication_date" date NOT NULL
+);
+CREATE TABLE "books_author" (
+    "id" serial NOT NULL PRIMARY KEY,
+    "salutation" varchar(10) NOT NULL,
+    "first_name" varchar(30) NOT NULL,
+    "last_name" varchar(40) NOT NULL,
+    "email" varchar(75) NOT NULL,
+    "headshot" varchar(100) NOT NULL
+);
+CREATE TABLE "books_book_authors" (
+    "id" serial NOT NULL PRIMARY KEY,
+    "book_id" integer NOT NULL REFERENCES "books_book" ("id"),
+    "author_id" integer NOT NULL REFERENCES "books_author" ("id"),
+    UNIQUE ("book_id", "author_id")
+);
+CREATE INDEX books_book_publisher_id ON "books_book" ("publisher_id");
+COMMIT;
+</pre><br />注意以下几点：<br />1，表明自动由app名(books)和小写的模型名－publisher，book和author组成<br />你可以覆盖这个行为，我们本章后面会看到<br />2，前面提到，Django自动给每个表添加主键id域，你也可以覆盖这点<br />3，习惯约束上Django会在外键域的名字后面添加“_id”，你已经猜到了，你也可以覆盖这点<br />4，外键关系由显式的REFERENCES语句来完成<br />5，这些CREATE TABLE语句是针对你使用的数据库生成的，所以数据库专有的域类型如<br />aotu_increment(MySQL)，serial(PostgreSQL)，或者integer primary key(SQLite)会自动为你处理<br />类似的如表名的引号是使用单引号还是双引号也一样，这个例子是使用的PostgreSQL语法<br />sqlall命令事实上并没有接触数据库或建表，它仅仅将输出打印到屏幕上<br />所以如果你问它，你可以看到DJango将执行什么<br />如果你愿意，你可以复制粘贴这些SQL到你数据库客户端或者使用Unix管道来直接传递它<br />尽管如此，Django提供一个简单的方式来把这些SQL提交数据库<br />像下面这样运行syncdb命令：python manage.py syncdb<br />你会看到如下信息：<br />Creating table books_publisher<br />Creating table books_book<br />Creating table books_author<br />Installing index for books.Book model<br />syncdb简单的把你的模型同步到数据库<br />它检查数据库和你的INSTALLED_APPS中的所有app的所以模型，看看是否有些表已经存在，如果表不存在就创建表<br />注意syncdb不会同步改动或删除了的模型，如果你改动或删除了一个模型，syncdb不会更新数据库(待会儿讨论这个)<br />如果你再运行一次python manage.py syncdb，不会发生任何事情<br />因为你没有添加模型到books app或添加到INSTALLED_APPS中的任何app<br />因此运行python manage.py syncdb是一直安全的，它不会把事情弄糟<br />如果你感兴趣，进入你的数据库服务器的命令行客户端看看Django创建的数据库表<br />你可以手动运行命令行客户端如PostgreSQL的psql，或者运行python manage.py dbshell<br />基于你的DATABASE_SERVER设置，后者将计算出运行哪个命令行客户端，也更方便<br /><br /><strong>数据访问基础</strong><br />一旦你创建了一个模型，Django自动提供高级Python API给这些模型工作<br />运行python manage.py shell然后输入下面的代码试试：<br /><pre name="code" class="java">
+&gt;&gt;&gt; from books.models import Publisher
+&gt;&gt;&gt; p = Publisher(name='Apress', address='2560 Ninth St.',
+...     city='Berkeley', state_province='CA', country='U.S.A.',
+...     website='http://www.apress.com/')
+&gt;&gt;&gt; p.save()
+&gt;&gt;&gt; p = Publisher(name="O'Reilly", address='10 Fawcett St.',
+...     city='Cambridge', state_province='MA', country='U.S.A.',
+...     website='http://www.oreilly.com/')
+&gt;&gt;&gt; p.save()
+&gt;&gt;&gt; publisher_list = Publisher.objects.all()
+&gt;&gt;&gt; publisher_list
+[&lt;Publisher: Publisher object&gt;, &lt;Publisher: Publisher object&gt;]
+</pre><br />虽然只有几行代码，确达到了很多目的，精彩的部分是：<br />1，创建一个对象只需import合适的模型类并通过给每个域传递值来初始化它<br />2，调用save()方法来将一个对象保存到数据库，后台Django在这里执行了一条INSERT SQL语句<br />3，使用Publisher.objects属性从数据库得到对象，使用Publisher.objects.all()得到Publisher所有的对象列表<br />后台Django在这里执行了一条SELECT SQL语句<br />实际上你可以通过Django数据库API做很多事情，但是我们先来看一个小麻烦<br /><br /><strong>添加模型的string显示</strong><br />上面的例子中，当我们打印publishers列表时我们得到的都是一些无用的信息，我们很难将Publisher对象区别开：<br />[&lt;Publisher: Publisher object&gt;, &lt;Publisher: Publisher object&gt;]<br />我们可以通过给Publisher对象添加一个__str__()方法来轻松解决这个问题<br />__str__()方法告诉Python怎样显示对象的string显示，你可以动手来看看给三个模型添加__str__()：<br /><pre name="code" class="java">
+class Publisher(models.Model):
+    name = models.CharField(maxlength=30)
+    address = models.CharField(maxlength=50)
+    city = models.CharField(maxlength=60)
+    state_province = models.CharField(maxlength=30)
+    country = models.CharField(maxlength=50)
+    website = models.URLField()
+
+    def __str__(self):
+        return self.name
+
+class Author(models.Model):
+    salutation = models.CharField(maxlength=10)
+    first_name = models.CharField(maxlength=30)
+    last_name = models.CharField(maxlength=40)
+    email = models.EmailField()
+    headshot = models.ImageField(upload_to='/tmp')
+
+    def __str__(self):
+        return '%s %s' % (self.first_name, self.last_name)
+
+class Book(models.Model):
+    title = models.CharField(maxlength=100)
+    authors = models.ManyToManyField(Author)
+    publisher = models.ForeignKey(Publisher)
+    publication_date = models.DateField()
+
+    def __str__(self):
+        return self.title
+</pre><br />你可以看到，__str__()方法为了返回一个string显示可以做任何它需要做的事情<br />这里Publisher和Book的__str__()方法简单的返回了对象的name和title<br />但是Author的__str__()更复杂一点，返回了first_name和last_name的组合<br />__str__()唯一的条件是返回一个string，如果不返回string的话如返回一个integer<br />Python会触发一个TypeError异常，并带有“__str__ returned non-string”信息<br />为了让改动生效，退出Python然后使用python manage.py shell命令重新进入<br />(这是让代码改动生效的最简单的方式)<br />现在，Publisher列表对象更容易理解：<br /><pre name="code" class="java">
+&gt;&gt;&gt; from books.models import Publisher
+&gt;&gt;&gt; publisher_list = Publisher.objects.all()
+&gt;&gt;&gt; publisher_list
+[&lt;Publisher: Apress&gt;, &lt;Publisher: O'Reilly&gt;]
+</pre><br />确认你定义的任何模型都有一个__str__()方法，不仅是使在你自己使用交互环境时更方便<br />也因为当Django在几个地方需要显示对象时会使用__str__()的输出<br />最后，注意__str__()是给模型添加行为的好习惯<br />一个Django模型描述的不仅仅是一个对象数据库表结构，它也描述了对象知道怎样去做的功能<br />__str__()就是这样的功能的一个例子，一个模型知道怎样显示它自己<br /><br /><strong>创建和修改对象</strong><br /><span style="color: red"><strong>This chapter is not yet finished.</strong></span>[list][img][/img]
+  </div>
+
+  
+
+  

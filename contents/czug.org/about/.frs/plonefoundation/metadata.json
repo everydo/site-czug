@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "id": "plonefoundation"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Plone基金是让Plone产品和Plone用户受益的一个非盈利的组织.", 
+        "modified": "2006-09-15 08:44:56", 
+        "title": "Plone基金"
+    }
+}

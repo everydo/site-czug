@@ -1,0 +1,109 @@
+BODY {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px
+	FONT: 12px "Lucida Grande",Verdana,Lucida,Helvetica,Arial,ËÎÌå,sans-serif; COLOR: #333333; font-size-adjust: none; 
+}
+TABLE {
+	FONT-SIZE: 12px; line-height:22px;
+}
+A {
+	BACKGROUND-COLOR: transparent
+}
+IMG {
+	VERTICAL-ALIGN: middle; BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+}
+P {
+	margin: 0 0 0.75em 0;line-height: 1.5em;; LINE-HEIGHT: 22px; font-size:12px; 
+}
+
+P IMG {
+	MARGIN: 0px; BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+}
+
+HR {
+    border-top: dashed 1pt gray;
+	border-bottom:0px;
+	border-left:0px;
+	border-right:0px;
+}
+H1 ,
+H2 ,
+H3 ,
+H4 ,
+H5 ,
+H6 {
+	MARGIN: 0.75em 0px 0.25em;
+}
+H1 A ,
+H2 A ,
+H3 A ,
+H4 A ,
+H5 A ,
+H6 A {
+	TEXT-DECORATION: none
+}
+H1 {
+	FONT-SIZE: 160%
+}
+H2 {
+	FONT-SIZE: 150%
+}
+H3 {
+	FONT-WEIGHT: bold; FONT-SIZE: 125%; BORDER-BOTTOM-STYLE: none
+}
+H4 {
+	FONT-WEIGHT: bold; FONT-SIZE: 110%; BORDER-BOTTOM-STYLE: none
+}
+H5 {
+	FONT-WEIGHT: bold; FONT-SIZE: 100%; BORDER-BOTTOM-STYLE: none
+}
+H6 {
+	FONT-WEIGHT: bold; BORDER-BOTTOM-STYLE: none
+}
+UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; LINE-HEIGHT: 22px; PADDING-TOP: 0px
+}
+OL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; LINE-HEIGHT: 1.5em; PADDING-TOP: 0px
+}
+LI {
+	MARGIN-BOTTOM:0px;
+}
+DT {
+	FONT-WEIGHT: bold
+}
+DD {
+	MARGIN-BOTTOM: 1em; LINE-HEIGHT: 1.5em
+}
+abbr {
+	CURSOR: help; BACKGROUND-COLOR: transparent
+}
+ACRONYM {
+	CURSOR: help; BACKGROUND-COLOR: transparent
+}
+.explain {
+	CURSOR: help; BACKGROUND-COLOR: transparent
+}
+abbr .explain {
+	BORDER-BOTTOM-STYLE: none
+}
+Q {
+	FONT-SIZE: 120%; FONT-STYLE: italic; FONT-FAMILY: Baskerville, Georgia, serif
+}
+BLOCKQUOTE {
+	PADDING-LEFT: 0.5em; MARGIN-LEFT: 0px
+}
+CODE {
+	PADDING-RIGHT: 0.1em; PADDING-LEFT: 0.1em; FONT-SIZE: 120%; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; FONT-FAMILY: Monaco, "Courier New", Courier, monospace
+}
+TT {
+	PADDING-RIGHT: 0.1em; PADDING-LEFT: 0.1em; FONT-SIZE: 120%; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; FONT-FAMILY: Monaco, "Courier New", Courier, monospace
+}
+PRE {
+	PADDING-RIGHT: 1em; PADDING-LEFT: 1em; FONT-SIZE: 100%; PADDING-BOTTOM: 1em; OVERFLOW: auto; PADDING-TOP: 1em; FONT-FAMILY: Monaco, "Courier New", Courier, monospace
+}
+INS {
+	COLOR: green; TEXT-DECORATION: none
+}
+DEL {
+	COLOR: red; TEXT-DECORATION: line-through
+}

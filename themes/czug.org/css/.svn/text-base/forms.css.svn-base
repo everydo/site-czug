@@ -1,0 +1,141 @@
+TEXTAREA {
+	BORDER-RIGHT: #ddd 1px solid; BORDER-TOP: #666 1px solid; BACKGROUND: url(/@@/img/input_background.gif) white repeat-x; FONT: 100% Monaco, "Courier New", Courier, monospace; BORDER-LEFT: #666 1px solid; WIDTH: 100%; BORDER-BOTTOM: #ddd 1px solid
+}
+INPUT {
+	VISIBILITY: visible; VERTICAL-ALIGN: middle; FONT-FAMILY: fontFamily
+}
+.noborder {
+	BACKGROUND: none transparent scroll repeat 0% 0%; MARGIN: 0px; BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+}
+.documentEditable  .noborder {
+	BACKGROUND: none transparent scroll repeat 0% 0%; MARGIN: 0px; BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+}
+UNKNOWN {
+	BACKGROUND: none transparent scroll repeat 0% 0%; MARGIN: 0px; BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+}
+#searchGadget {
+	
+}
+BUTTON {
+	PADDING-RIGHT: 1px; PADDING-LEFT: 1px; VISIBILITY: visible; PADDING-BOTTOM: 1px; VERTICAL-ALIGN: middle; CURSOR: pointer; PADDING-TOP: 1px; FONT-FAMILY: fontFamily
+}
+SELECT {
+	VERTICAL-ALIGN: top
+}
+FORM {
+	MARGIN: 0px; BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+}
+FIELDSET {
+	PADDING-RIGHT: 1em; PADDING-LEFT: 1em; PADDING-BOTTOM: 1em; MARGIN: 1em 0em; WIDTH: auto; LINE-HEIGHT: 1.5em; PADDING-TOP: 0em
+}
+LEGEND {
+	PADDING-RIGHT: 0.5em; PADDING-LEFT: 0.5em; FONT-SIZE: 90%; PADDING-BOTTOM: 0.5em; PADDING-TOP: 0.5em
+}
+LABEL {
+	FONT-WEIGHT: bold
+}
+OPTGROUP {
+	PADDING-LEFT: 0.25em; FONT-WEIGHT: bold; COLOR: #999; FONT-STYLE: normal
+}
+OPTION {
+	COLOR: black
+}
+OPTGROUP OPTION {
+	PADDING-RIGHT: 0.25em; PADDING-LEFT: 1em; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+}
+DL.enableFormTabbing DD {
+	MARGIN-LEFT: 0px; PADDING-TOP: 2em
+}
+#login-form {
+	MARGIN: 0px auto; WIDTH: 30em
+}
+#login-form .field {
+	CLEAR: none
+}
+#login-form INPUT {
+	FONT-SIZE: 150%
+}
+#login-form INPUT.context {
+	PADDING-RIGHT: 10px; BACKGROUND-POSITION: 9px 5px; PADDING-LEFT: 20px; MARGIN-BOTTOM: 1em; PADDING-BOTTOM: 1px; PADDING-TOP: 1px
+}
+#forgotten-password {
+	FLOAT: right; MARGIN: 0px 1em; WIDTH: 35%
+}
+.standalone {
+	PADDING-RIGHT: 1px; PADDING-LEFT: 15px; PADDING-BOTTOM: 1px; CURSOR: pointer; PADDING-TOP: 1px
+}
+.documentEditable  .standalone {
+	PADDING-RIGHT: 1px; PADDING-LEFT: 15px; PADDING-BOTTOM: 1px; CURSOR: pointer; PADDING-TOP: 1px
+}
+.context {
+	PADDING-RIGHT: 1px; PADDING-LEFT: 15px; BACKGROUND: url(/@@/img/linkTransparent.gif) no-repeat 9px 1px; PADDING-BOTTOM: 1px; CURSOR: pointer; PADDING-TOP: 1px
+}
+.formControls .actionButtons .button {
+	PADDING-RIGHT: 1px; PADDING-LEFT: 15px; BACKGROUND: url(/@@/img/linkTransparent.gif) no-repeat 9px 1px; PADDING-BOTTOM: 1px; CURSOR: pointer; PADDING-TOP: 1px
+}
+.documentEditable  .context {
+	PADDING-RIGHT: 1px; PADDING-LEFT: 15px; BACKGROUND: url(/@@/img/linkTransparent.gif) no-repeat 9px 1px; PADDING-BOTTOM: 1px; CURSOR: pointer; PADDING-TOP: 1px
+}
+.destructive {
+	PADDING-RIGHT: 1px; PADDING-LEFT: 15px; PADDING-BOTTOM: 1px; CURSOR: pointer; PADDING-TOP: 1px
+}
+.documentEditable  .destructive {
+	PADDING-RIGHT: 1px; PADDING-LEFT: 15px; PADDING-BOTTOM: 1px; CURSOR: pointer; PADDING-TOP: 1px
+}
+INPUT.searchButton {
+	PADDING-RIGHT: 1px; PADDING-LEFT: 19px; PADDING-BOTTOM: 1px; CURSOR: pointer; PADDING-TOP: 1px
+}
+.searchSection {
+	MARGIN-TOP: 0.25em
+}
+.searchSection LABEL:hover {
+	
+}
+.field {
+	CLEAR: both; LEFT: 0px; MARGIN: 0px 1em 1em 0px; TOP: 0px
+}
+.field .field {
+	MARGIN: 0px
+}
+.fieldRequired {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 8px; BACKGROUND: url(/@@/img/required.gif) no-repeat left center; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+}
+.fieldUploadFile {
+	DISPLAY: none; MARGIN-RIGHT: 0.75em; TEXT-ALIGN: right
+}
+.fieldTextFormat {
+	MARGIN-RIGHT: 0.75em; TEXT-ALIGN: right
+}
+.formHelp {
+	FONT-SIZE: 90%; MARGIN: 0px 0px 0.2em 2em
+}
+.formHelp:hover {
+	CURSOR: default
+}
+DIV.error {
+	BORDER-RIGHT: #d00 1px solid; PADDING-RIGHT: 0.5em; BORDER-TOP: #d00 1px solid; PADDING-LEFT: 0.5em; PADDING-BOTTOM: 0.5em; MARGIN: 0px 0px 1em; BORDER-LEFT: #d00 1px solid; WIDTH: 95%; PADDING-TOP: 0.5em; BORDER-BOTTOM: #d00 1px solid; BACKGROUND-COLOR: #fdc
+}
+.error .fieldRequired {
+	COLOR: #d00
+}
+#archetypes-fieldname-title INPUT {
+	FONT-WEIGHT: normal; FONT-SIZE: 160%; WIDTH: 99%; FONT-FAMILY: headingFontFamily
+}
+INPUT#form.title {
+	FONT-WEIGHT: normal; FONT-SIZE: 160%; WIDTH: 99%; FONT-FAMILY: headingFontFamily
+}
+#archetypes-fieldname-description TEXTAREA {
+	FONT: bold 100% fontFamily
+}
+TEXTAREA#form.description {
+	FONT: bold 100% fontFamily
+}
+INPUT.inputLabelActive {
+	
+}
+TEXTAREA#form.description {
+	WIDTH: 99%; HEIGHT: 6em
+}
+TR.selected {
+	BACKGROUND-COLOR: #ffa
+}

@@ -1,0 +1,20 @@
+
+ <p><br />
+ 在Plone 2.0.1正准备发布的时候, 发现一个安全漏洞, 因此, 直接发布了Plone 2.0.2版本.<br />
+ <br />
+ 改动不多, 主要的有:</p><br />
+
+ <ol>
+  <li>&nbsp;去除了"故作聪明"的autofocus, 不会在你输入表单的时候,
+  focus从当前输入栏跳走了</li>
+
+  <li>对zope2.6有更好的支持</li>
+
+  <li>邮件安全漏洞的补丁</li>
+ </ol>
+
+ <p>这个版本的下载在<a href="http://plone.org/download">这里</a><br />
+ <br />
+ 另外, 伴随Plone2.0.2发布的, 还有CMF的新版本<a href="http://zope.org/Members/tseaver/cmf-1.4.4-release">CMF
+ 1.4.4</a></p><br />
+ <br />

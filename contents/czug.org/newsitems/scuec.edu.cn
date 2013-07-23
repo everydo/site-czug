@@ -1,0 +1,4 @@
+<p>经过三个月的努力用Plone搭建的一个校园网站：<a href="http://www.scuec.edu.cn">中南民族大学</a></p>
+<p>网站经过修改，已成功通过校领导认可，现正式发布。</p>
+<p>在此十分感谢CZUG、ZOPE和PLONE社­区各位人士的大力支持和帮助，特别要感谢潘俊勇先生的贡献和帮助­，有了CZUG、ZOPE和PLONE社区的众多产品才使我能够­建立起如此功能强大的网站。</p>
+<p>网站用ZPhotoSlides展示校园风景，用sdotNews支持多用协同­发布新闻，使用PloneArtical作为带图片和附件的新闻­，用PloneExtendedNavigation灵活定制导­航内容，用CMFContentPanels组织页面内容。 </p>

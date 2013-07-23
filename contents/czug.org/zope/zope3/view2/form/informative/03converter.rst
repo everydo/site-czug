@@ -1,0 +1,647 @@
+==============
+Data Converter
+==============
+
+.. Contents::
+.. sectnum::
+
+The data converter is the component that converts an internal data value as
+described by a field to an external value as required by a widget and vice
+versa. The goal of the converter is to avoid field and widget proliferation
+solely to handle different types of values. The purpose of fields is to
+describe internal data types and structures and that of widgets to provide one
+particular mean of input.
+
+The only two discriminators for the converter are the field and the widget.
+
+Let's look at the ``Int`` field to ``TextWidget`` converter as an example:
+
+  >>> import zope.schema
+  >>> age = zope.schema.Int(
+  ...     __name__='age',
+  ...     title=u'Age',
+  ...     min=0)
+
+  >>> from z3c.form.testing import TestRequest
+  >>> from z3c.form import widget
+  >>> text = widget.Widget(TestRequest())
+
+  >>> from z3c.form import converter
+  >>> conv = converter.FieldDataConverter(age, text)
+
+The field data converter is a generic data converter that can be used for all
+fields that implement ``IFromUnicode``. If, for example, a ``Date`` field
+-- which does not provide ``IFromUnicode`` -- is passed in, then a type error
+is raised:
+
+  >>> converter.FieldDataConverter(zope.schema.Date(), text)
+  Traceback (most recent call last):
+  ...
+  TypeError: Field must provide ``IFromUnicode``.
+
+A named field will tell it's name:
+
+  >>> converter.FieldDataConverter(zope.schema.Date(__name__="foobar"), text)
+  Traceback (most recent call last):
+  ...
+  TypeError: Field ``foobar`` must provide ``IFromUnicode``.
+
+
+However, the ``FieldDataConverter`` is registered for ``IField``, since many
+fields (like ``Decimal``) for which we want to create custom converters
+provide ``IFromUnicode`` more specifically than their characterizing interface
+(like ``IDecimal``).
+
+The converter can now convert any integer to a the value the test widget deals
+with, which is an ASCII string:
+
+  >>> conv.toWidgetValue(34)
+  u'34'
+
+When the missing value is passed in, an empty string should be returned:
+
+  >>> conv.toWidgetValue(age.missing_value)
+  u''
+
+Of course, values can also be converted from a widget value to field value:
+
+  >>> conv.toFieldValue('34')
+  34
+
+An empty string means simply that the value is missing and the missing value
+of the field is returned:
+
+  >>> age.missing_value = -1
+  >>> conv.toFieldValue('')
+  -1
+
+Of course, trying to convert a non-integer string representation fails in a
+conversion error:
+
+  >>> conv.toFieldValue('3.4')
+  Traceback (most recent call last):
+  ...
+  ValueError: invalid literal for int(): 3.4
+
+Also, the conversion to the field value also validates the data; in this case
+negative values are not allowed:
+
+  >>> conv.toFieldValue('-34')
+  Traceback (most recent call last):
+  ...
+  TooSmall: (-34, 0)
+
+That's pretty much the entire API. When dealing with converters within the
+component architecture, everything is a little bit simpler. So let's register
+the converter:
+
+  >>> import zope.component
+  >>> zope.component.provideAdapter(converter.FieldDataConverter)
+
+Once we ensure that our widget is a text widget, we can lookup the adapter:
+
+  >>> import zope.interface
+  >>> from z3c.form import interfaces
+  >>> zope.interface.alsoProvides(text, interfaces.ITextWidget)
+
+  >>> zope.component.getMultiAdapter((age, text), interfaces.IDataConverter)
+  <FieldDataConverter converts from Int to Widget>
+
+For field-widgets there is a helper adapter that makes the lookup even
+simpler:
+
+  >>> zope.component.provideAdapter(converter.FieldWidgetDataConverter)
+
+After converting our simple widget to a field widget,
+
+  >>> fieldtext = widget.FieldWidget(age, text)
+
+we can now lookup the data converter adapter just by the field widget itself:
+
+  >>> interfaces.IDataConverter(fieldtext)
+  <FieldDataConverter converts from Int to Widget>
+
+
+Number Data Converters
+----------------------
+
+As hinted on above, the package provides a specific data converter for each of
+the three main numerical types: ``int``, ``float``, ``Decimal``. Specifically,
+those data converters support full localization of the number formatting.
+
+  >>> age = zope.schema.Int()
+  >>> intdc = converter.IntegerDataConverter(age, text)
+  >>> intdc
+  <IntegerDataConverter converts from Int to Widget>
+
+Since the age is so small, the formatting is trivial:
+
+  >>> intdc.toWidgetValue(34)
+  u'34'
+
+But if we increase the number, the grouping seprator will be used:
+
+  >>> intdc.toWidgetValue(3400)
+  u'3,400'
+
+An empty string is returned, if the missing value is passed in:
+
+  >>> intdc.toWidgetValue(None)
+  u''
+
+Of course, parsing these outputs again, works as well:
+
+  >>> intdc.toFieldValue(u'34')
+  34
+
+But if we increase the number, the grouping seprator will be used:
+
+  >>> intdc.toFieldValue(u'3,400')
+  3400
+
+Luckily our parser is somewhat forgiving, and even allows for missing group
+characters:
+
+  >>> intdc.toFieldValue(u'3400')
+  3400
+
+If an empty string is passed in, the missing value of the field is returned:
+
+  >>> intdc.toFieldValue(u'')
+
+Finally, if the input does not match at all, then a validation error is
+returned:
+
+  >>> intdc.toFieldValue(u'fff')
+  Traceback (most recent call last):
+  ...
+  FormatterValidationError:
+      (u'The entered value is not a valid integer literal.', u'fff')
+
+The formatter validation error derives from the regular validation error, but
+allows you to specify the message that is output when asked for the
+documentation:
+
+  >>> err = converter.FormatterValidationError(u'Something went wrong.', None)
+  >>> err.doc()
+  u'Something went wrong.'
+
+Let's now look at the float data converter.
+
+  >>> rating = zope.schema.Float()
+  >>> floatdc = converter.FloatDataConverter(rating, text)
+  >>> floatdc
+  <FloatDataConverter converts from Float to Widget>
+
+Again, you can format and parse values:
+
+  >>> floatdc.toWidgetValue(7.43)
+  u'7.43'
+  >>> floatdc.toWidgetValue(10239.43)
+  u'10,239.43'
+
+  >>> floatdc.toFieldValue(u'7.43')
+  7.4299999999999997
+  >>> floatdc.toFieldValue(u'10,239.43')
+  10239.43
+
+The error message, however, is customized to the floating point:
+
+  >>> floatdc.toFieldValue(u'fff')
+  Traceback (most recent call last):
+  ...
+  FormatterValidationError:
+      (u'The entered value is not a valid decimal literal.', u'fff')
+
+The decimal converter works like the other two before.
+
+  >>> money = zope.schema.Decimal()
+  >>> decimaldc = converter.DecimalDataConverter(money, text)
+  >>> decimaldc
+  <DecimalDataConverter converts from Decimal to Widget>
+
+Formatting and parsing should work just fine:
+
+  >>> import decimal
+
+  >>> decimaldc.toWidgetValue(decimal.Decimal('7.43'))
+  u'7.43'
+  >>> decimaldc.toWidgetValue(decimal.Decimal('10239.43'))
+  u'10,239.43'
+
+  >>> decimaldc.toFieldValue(u'7.43')
+  Decimal("7.43")
+  >>> decimaldc.toFieldValue(u'10,239.43')
+  Decimal("10239.43")
+
+Again, the error message, is customized to the floating point:
+
+  >>> floatdc.toFieldValue(u'fff')
+  Traceback (most recent call last):
+  ...
+  FormatterValidationError:
+      (u'The entered value is not a valid decimal literal.', u'fff')
+
+
+Date Data Converter
+-------------------
+
+Since the ``Date`` field does not provide ``IFromUnicode``, we have to provide
+a custom data converter. This default one is not very sophisticated and is
+inteded for use with the text widget:
+
+  >>> date = zope.schema.Date()
+
+  >>> ddc = converter.DateDataConverter(date, text)
+  >>> ddc
+  <DateDataConverter converts from Date to Widget>
+
+Dates are simply converted to ISO format:
+
+  >>> import datetime
+  >>> bday = datetime.date(1980, 1, 25)
+
+  >>> ddc.toWidgetValue(bday)
+  u'80/01/25'
+
+If the date is the missing value, an empty string is returned:
+
+  >>> ddc.toWidgetValue(None)
+  u''
+
+The converter only knows how to convert this particular format back to a
+datetime value:
+
+  >>> ddc.toFieldValue(u'80/01/25')
+  datetime.date(1980, 1, 25)
+
+By default the converter converts missing input to missin_input value:
+
+  >>> ddc.toFieldValue(u'') is None
+  True
+
+If the passed in string cannot be parsed, a formatter validation error is
+raised:
+
+  >>> ddc.toFieldValue(u'8.6.07')
+  Traceback (most recent call last):
+  ...
+  FormatterValidationError: ("The datetime string did not match the pattern
+                              u'yy/MM/dd'.", u'8.6.07')
+
+Time Data Converter
+-------------------
+
+Since the ``Time`` field does not provide ``IFromUnicode``, we have to provide
+a custom data converter. This default one is not very sophisticated and is
+inteded for use with the text widget:
+
+  >>> time = zope.schema.Time()
+
+  >>> tdc = converter.TimeDataConverter(time, text)
+  >>> tdc
+  <TimeDataConverter converts from Time to Widget>
+
+Dates are simply converted to ISO format:
+
+  >>> noon = datetime.time(12, 0, 0)
+
+  >>> tdc.toWidgetValue(noon)
+  u'12:00'
+
+The converter only knows how to convert this particular format back to a
+datetime value:
+
+  >>> tdc.toFieldValue(u'12:00')
+  datetime.time(12, 0)
+
+By default the converter converts missing input to missin_input value:
+
+  >>> tdc.toFieldValue(u'') is None
+  True
+
+
+Datetime Data Converter
+-----------------------
+
+Since the ``Datetime`` field does not provide ``IFromUnicode``, we have to
+provide a custom data converter. This default one is not very sophisticated
+and is inteded for use with the text widget:
+
+  >>> dtField = zope.schema.Datetime()
+
+  >>> dtdc = converter.DatetimeDataConverter(dtField, text)
+  >>> dtdc
+  <DatetimeDataConverter converts from Datetime to Widget>
+
+Dates are simply converted to ISO format:
+
+  >>> bdayNoon = datetime.datetime(1980, 1, 25, 12, 0, 0)
+
+  >>> dtdc.toWidgetValue(bdayNoon)
+  u'80/01/25 12:00'
+
+The converter only knows how to convert this particular format back to a
+datetime value:
+
+  >>> dtdc.toFieldValue(u'80/01/25 12:00')
+  datetime.datetime(1980, 1, 25, 12, 0)
+
+By default the converter converts missing input to missin_input value:
+
+  >>> dtdc.toFieldValue(u'') is None
+  True
+
+
+Timedelta Data Converter
+------------------------
+
+Since the ``Timedelta`` field does not provide ``IFromUnicode``, we have to
+provide a custom data converter. This default one is not very sophisticated
+and is inteded for use with the text widget:
+
+  >>> timedelta = zope.schema.Timedelta()
+
+  >>> tddc = converter.TimedeltaDataConverter(timedelta, text)
+  >>> tddc
+  <TimedeltaDataConverter converts from Timedelta to Widget>
+
+Dates are simply converted to ISO format:
+
+  >>> allOnes = datetime.timedelta(1, 3600+60+1)
+
+  >>> tddc.toWidgetValue(allOnes)
+  u'1 day, 1:01:01'
+
+The converter only knows how to convert this particular format back to a
+datetime value:
+
+  >>> tddc.toFieldValue(u'1 day, 1:01:01')
+  datetime.timedelta(1, 3661)
+
+By default the converter converts missing input to missin_input value:
+
+  >>> tddc.toFieldValue(u'') is None
+  True
+
+
+FileUpload Data Converter
+-------------------------
+
+Since the ``Bytes`` field can contain a FileUpload object, we have to make
+sure we can convert FileUpload objects to bytes too.
+
+  >>> import z3c.form.browser.file
+  >>> fileWidget = z3c.form.browser.file.FileWidget(TestRequest())
+  >>> bytes = zope.schema.Bytes()
+
+  >>> fudc = converter.FileUploadDataConverter(bytes, fileWidget)
+  >>> fudc
+  <FileUploadDataConverter converts from Bytes to FileWidget>
+
+Bytes are converted to unicode:
+
+  >>> simple = 'foobar'
+  >>> fudc.toFieldValue(simple)
+  u'foobar'
+
+The converter can also convert FileUpload objects. Setup a fields storage
+stub...
+
+  >>> class FieldStorageStub:
+  ...     def __init__(self, file):
+  ...         self.file = file
+  ...         self.headers = {}
+  ...         self.filename = 'foo.bar'
+
+build a FileUpload...
+
+  >>> import cStringIO
+  >>> from zope.publisher.browser import FileUpload
+  >>> myfile = cStringIO.StringIO('File upload contents.')
+  >>> aFieldStorage = FieldStorageStub(myfile)
+  >>> myUpload = FileUpload(aFieldStorage)
+
+and try to convert:
+
+  >>> fudc.toFieldValue(myUpload)
+  'File upload contents.'
+
+By default the converter converts missing input to missin_input value:
+
+  >>> fudc.toFieldValue(u'') is None
+  True
+
+If we get a emtpy filename for a fileupload, we also get the missing_value,
+but this means there was a error somewhere in the upload, normaly yo are
+not able to uppload a file without a filename:
+
+  >>> class EmptyFilenameFieldStorageStub:
+  ...     def __init__(self, file):
+  ...         self.file = file
+  ...         self.headers = {}
+  ...         self.filename = ''
+  >>> myfile = cStringIO.StringIO('')
+  >>> aFieldStorage = EmptyFilenameFieldStorageStub(myfile)
+  >>> myUpload = FileUpload(aFieldStorage)
+  >>> bytes = zope.schema.Bytes()
+  >>> fudc = converter.FileUploadDataConverter(bytes, fileWidget)
+  >>> fudc.toFieldValue(myUpload) is None
+  True
+
+There is also a ValueError if we don't get a seekable file from the
+FieldStorage during the upload:
+
+  >>> myfile = ''
+  >>> aFieldStorage = FieldStorageStub(myfile)
+  >>> myUpload = FileUpload(aFieldStorage)
+  >>> bytes = zope.schema.Bytes()
+  >>> fudc = converter.FileUploadDataConverter(bytes, fileWidget)
+  >>> fudc.toFieldValue(myUpload) is None
+  Traceback (most recent call last):
+  ...
+  ValueError: (u'Bytes data is not a file object', ...AttributeError...)
+
+When the file upload widget is not used and a text-based widget is desired,
+then the regular field data converter will be chosen. Using a text widget,
+however, must be setup manually in the form with code like this::
+
+  fields['bytesField'].widgetFactory = TextWidget
+
+
+Sequence Data Converter
+-----------------------
+
+For widgets and fields that work with choices of a sequence, a special data
+converter is required that works with terms. A prime example is a choice
+field. Before we can use the converter, we have to register the terms adapter:
+
+  >>> from z3c.form import term
+  >>> zope.component.provideAdapter(term.ChoiceTerms)
+
+Let's now create a choice field and a widget:
+
+  >>> from zope.schema.vocabulary import SimpleVocabulary
+
+  >>> gender = zope.schema.Choice(
+  ...     vocabulary = SimpleVocabulary([
+  ...              SimpleVocabulary.createTerm(0, 'm', u'male'),
+  ...              SimpleVocabulary.createTerm(1, 'f', u'female'),
+  ...              ]) )
+
+  >>> from z3c.form import widget
+  >>> seqWidget = widget.SequenceWidget(TestRequest())
+  >>> seqWidget.field = gender
+
+We now use the field and widget to instantiate the converter:
+
+  >>> sdv = converter.SequenceDataConverter(gender, seqWidget)
+
+We can now convert a real value to a widget value, which will be the term's
+token:
+
+  >>> sdv.toWidgetValue(0)
+  ['m']
+
+The result is always a sequence, since sequence widgets only deal collections
+of values. Of course, we can convert the widget value back to an internal
+value:
+
+  >>> sdv.toFieldValue(['m'])
+  0
+
+Sometimes a field is not required. In those cases, the internalvalue is the
+missing value of the field. The converter interprets that as no value being
+selected:
+
+  >>> gender.missing_value = 'missing'
+
+  >>> sdv.toWidgetValue(gender.missing_value)
+  []
+
+If "no value" has been specified in the widget, the missing value
+of the field is returned:
+
+  >>> sdv.toFieldValue([u'--NOVALUE--'])
+  'missing'
+
+An empty list will also cause the missing value to be returned:
+
+  >>> sdv.toFieldValue([])
+  'missing'
+
+
+Collection Sequence Data Converter
+----------------------------------
+
+For widgets and fields that work with a sequence of choices, another data
+converter is required that works with terms. A prime example is a list
+field. Before we can use the converter, we have to register the terms adapter:
+
+  >>> from z3c.form import term
+  >>> zope.component.provideAdapter(term.CollectionTerms)
+
+Let's now create a set field and a widget:
+
+  >>> genders = zope.schema.List(value_type=gender)
+  >>> seqWidget = widget.SequenceWidget(TestRequest())
+  >>> seqWidget.field = genders
+
+We now use the field and widget to instantiate the converter:
+
+  >>> csdv = converter.CollectionSequenceDataConverter(genders, seqWidget)
+
+We can now convert a real value to a widget value, which will be the term's
+token:
+
+  >>> csdv.toWidgetValue([0])
+  ['m']
+
+The result is always a sequence, since sequence widgets only deal collections
+of values. Of course, we can convert the widget value back to an internal
+value:
+
+  >>> csdv.toFieldValue(['m'])
+  [0]
+
+For some field, like the ``Set``, the collection type is a tuple. Sigh. In
+these cases we use the last entry in the tuple as the type to use:
+
+  >>> genders = zope.schema.Set(value_type=gender)
+  >>> seqWidget = widget.SequenceWidget(TestRequest())
+  >>> seqWidget.field = genders
+
+  >>> csdv = converter.CollectionSequenceDataConverter(genders, seqWidget)
+
+  >>> csdv.toWidgetValue(set([0]))
+  ['m']
+
+  >>> csdv.toFieldValue(['m'])
+  set([0])
+
+Getting Terms
+~~~~~~~~~~~~~
+
+As an optimization of this converter, the converter actually does not look up
+the terms itself but uses the widget's ``terms`` attribute. If the terms are
+not yet retrieved, the converter will ask the widget to do so when in need.
+
+So let's see how this works when getting the widget value:
+
+  >>> seqWidget = widget.SequenceWidget(TestRequest())
+  >>> seqWidget.field = genders
+
+  >>> seqWidget.terms
+
+  >>> csdv = converter.CollectionSequenceDataConverter(genders, seqWidget)
+  >>> csdv.toWidgetValue([0])
+  ['m']
+
+  >>> seqWidget.terms
+  <z3c.form.term.CollectionTerms object ...>
+
+The same is true when getting the field value:
+
+  >>> seqWidget = widget.SequenceWidget(TestRequest())
+  >>> seqWidget.field = genders
+
+  >>> seqWidget.terms
+
+  >>> csdv = converter.CollectionSequenceDataConverter(genders, seqWidget)
+  >>> csdv.toFieldValue(['m'])
+  set([0])
+
+  >>> seqWidget.terms
+  <z3c.form.term.CollectionTerms object ...>
+
+
+Boolean to Single Checkbox Data Converter
+-----------------------------------------
+
+The conversion from any field to the single checkbox widget value is a special
+case, because it has to be defined what selecting the value means. In the case
+of the boolean field, "selected" means ``True`` and if unselected, ``False``
+is returned:
+
+  >>> boolField = zope.schema.Bool()
+
+  >>> bscbx = converter.BoolSingleCheckboxDataConverter(boolField, seqWidget)
+  >>> bscbx
+  <BoolSingleCheckboxDataConverter converts from Bool to SequenceWidget>
+
+Let's now convert boolean field to widget values:
+
+  >>> bscbx.toWidgetValue(True)
+  ['selected']
+  >>> bscbx.toWidgetValue(False)
+  []
+
+Converting back is equally simple:
+
+  >>> bscbx.toFieldValue(['selected'])
+  True
+  >>> bscbx.toFieldValue([])
+  False
+
+Note that this widget has no concept of missing value, since it can only
+represent two states by desgin.

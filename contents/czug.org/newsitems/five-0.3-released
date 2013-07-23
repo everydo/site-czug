@@ -1,0 +1,17 @@
+<p><a href="http://www.zope.org/Members/infrae/news/five_0_3_released">英文新闻稿</a></p>
+<p>Five是由<a href="http://www.infrae.nl/">Infrae公司</a>开发的一个产品，这个产品目前已经进入产品阶段，是在zope2中使用zope3技术的标准组件了。</p>
+<p>新版本的最大特性是支持Zope 3 风格的添加和编辑表单. 这一特性是由主持CPS的<a href="http://www.nuxeo.com/en/">Nuxeo公司</a>开发的。</p>
+<p>目前，可在Zope2中使用Zope3的如下技术：</p>
+
+<ul>
+<li>Zope 3 interfaces</li>
+<li>adapters</li>
+<li>pages (views), including skins, layers and resources</li>
+<li>edit and add forms, based on schemas</li>
+<li>ZCML</li>
+
+</ul>
+<p>Five 0.3 可在这里下载:</p>
+<p><a href="http://codespeak.net/z3/five/releases/Five-0.3.tgz">http://codespeak.net/z3/five/releases/Five-0.3.tgz</a></p>
+<p>更多关于Five 的信息可在项目网站中获得:</p>
+<p><a href="http://codespeak.net/z3/five/">http://codespeak.net/z3/five/</a></p>

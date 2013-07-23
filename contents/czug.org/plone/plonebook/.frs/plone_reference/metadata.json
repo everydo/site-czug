@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Image", 
+        "id": "plone_reference"
+    }, 
+    "dublin": {
+        "creators": [
+            "blueszhao"
+        ], 
+        "description": "", 
+        "modified": "2004-03-10 09:30:54", 
+        "title": "网站设置"
+    }
+}

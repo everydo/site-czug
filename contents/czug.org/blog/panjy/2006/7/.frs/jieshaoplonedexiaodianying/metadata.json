@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "jieshaoplonedexiaodianying"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "还是来自Sean Kelly，Plone社区的supperstar", 
+        "modified": "2006-07-20 10:07:04", 
+        "title": "介绍Plone的小电影"
+    }
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<metadata xmlns="http://plone.org/ns/archetypes/" xmlns:cmf="http://cmf.zope.org/namespaces/default/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xmp="adobe:ns:meta">
+    <dc:title>
+zope3史话
+	</dc:title>
+	<dc:description>
+zope3的发展历史，主要特性，竞争产品
+	</dc:description>
+</metadata>

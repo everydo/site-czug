@@ -1,0 +1,197 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-1" class="anchor"/><p class="line867"><a href="/moin/WeiZhong/2006-01-18">Python精要参考第二章</a> <span id="line-2" class="anchor"/><span id="line-3" class="anchor"/></p><p class="line867"><a href="/moin/WeiZhong/2006-01-17">Python 精要参考(第二版)</a> <span id="line-4" class="anchor"/>Python Essential Reference， Second Edition 译文 <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/></p><p class="line874">原著:David M Beazley <span id="line-7" class="anchor"/>出版商: New Riders Publishing <span id="line-8" class="anchor"/><span id="line-9" class="anchor"/></p><p class="line874">初译: Feather andelf@gmail，com <span id="line-10" class="anchor"/>修正补充: <a href="/moin/WeiZhong">WeiZhong</a> weizhong2004@gmail，com <span id="line-11"
+class="anchor"/></p><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-bc347fc7a99eaf5746337957d4b077d19ff48d86">第二章 语法及代码约定</a><ol><li><a href="#head-c7827bbd905227938e8693317b89f7b25643d621">行结构/缩进</a></li><li><a href="#head-d8a28c156c9cb683982a6feb327f1cdb6ce022c0">标识符及保留字</a></li><li><a href="#head-f195087933bf14fb1b3957d4e39fb9e24bf2d258">数字/文字</a></li><li><a href="#head-96f6de4d079a5953817ac1a34286da44798d03d7">运算符、分隔符及特殊符号</a></li><li><a href="#head-926639abad0139302f730c8cc2d61dab104e1207">文档字符串</a></li></ol></li></ol></div> <span id="line-12" class="anchor"/><span id="line-13" class="anchor"/><p class="line867">
+</p><h1 id="head-bc347fc7a99eaf5746337957d4b077d19ff48d86">1. 第二章 语法及代码约定</h1>
+<span id="line-14" class="anchor"/><span id="line-15" class="anchor"/><p class="line874">本章讲述了Python程序的语法和代码约定。 <span id="line-16" class="anchor"/>本章的主题有行结构，语句分组，保留字，字符串，运算符，token等等，另外对如何使用 Unicode 字符串也做了详细的描述。 <span id="line-17" class="anchor"/><span id="line-18" class="anchor"/></p><p class="line867">
+</p><h2 id="head-c7827bbd905227938e8693317b89f7b25643d621">1.1. 行结构/缩进</h2>
+<span id="line-19" class="anchor"/><span id="line-20" class="anchor"/><p class="line874">程序中的每个语句都以换行符结束。特别长的语句可以使用续行符(\)来分成几个短小的行，如下例: <span id="line-21" class="anchor"/><span id="line-22" class="anchor"/></p><pre>import math
+<span id="line-23" class="anchor"/>a = math，cos(3*(x-n)) + \
+<span id="line-24" class="anchor"/>    math，sin(3*(y-n))
+<span id="line-25" class="anchor"/></pre><span id="line-26" class="anchor"/><p class="line874">当你定义一个三引号字符串、列表、tuple 或者字典的时候不需要续行符来分割语句。及就是说，在程序中，凡是圆括号(，，，)、方括号[，，，]、花括号{，，，}及三引号字符串内的部分均不需要使用续行符。 <span id="line-27" class="anchor"/><span id="line-28" class="anchor"/></p><p class="line874">缩进被用来指示不同的代码块，比如函数的主体代码块，条件执行代码块，循环体代码块及类定义代码块。缩进的空格(制表符)数目可以是任意的，但是在整个块中的缩进必须一致: <span id="line-29" class="anchor"/><span id="line-30" class="anchor"/><span id="line-31" class="anchor"/><span id="line-32" class="anchor"/><span id="line-33" class="anchor"/><span id="line-34" class="anchor"/><span id="line-35"
+class="anchor"/><span id="line-36" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-369aeda0eaf0933a019d33b76ffdee2e26777b1a_000\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-369aeda0eaf0933a019d33b76ffdee2e26777b1a_000', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-369aeda0eaf0933a019d33b76ffdee2e26777b1a_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">if</span> <span class="ID">a</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>   <span class="ID">statement1</span>     <span class="Comment"># 缩进一致，正确！</span></span>
+<span class="line"><span class="LineNumber">   3 </span>   <span class="ID">statement2</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">else</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>   <span class="ID">statement3</span></span>
+<span class="line"><span class="LineNumber">   6 </span>     <span class="ID">statement4</span>   <span class="Comment">#缩进不一致，错误！</span><span class="Text"/></span>
+</pre></div><p class="line867"><span id="line-37" class="anchor"/></p><pre>如果块中只有很少的语句，那么你也可以把它们放置在同一行:
+<span id="line-38" class="anchor"/>
+<span id="line-39" class="anchor"/>if a:  statement1
+<span id="line-40" class="anchor"/>else:  statement2
+<span id="line-41" class="anchor"/>
+<span id="line-42" class="anchor"/>要表示一个空的块或是空的主体，使用 pass语句:
+<span id="line-43" class="anchor"/>
+<span id="line-44" class="anchor"/>if a:
+<span id="line-45" class="anchor"/>   pass
+<span id="line-46" class="anchor"/>else:
+<span id="line-47" class="anchor"/>   statements
+<span id="line-48" class="anchor"/></pre><span id="line-49" class="anchor"/><p class="line874">尽管允许用制表符指示缩进，我还是要说这是一个不好的习惯。 <span id="line-50" class="anchor"/>坚决不要混合使用制表符和空格来缩进，这会给你带来意想不到的麻烦。建议你在每个缩进层次中使用单个制表符或两个或四个空格。运行 Python的时候使用 -t 参数，如果python 发现存在制表符和空格混用，它就显示警告信息，若使用 -tt 参数 python 则会在遇到混用情况时引发<tt class="backtick">TabError</tt>异常。 <span id="line-51" class="anchor"/><span id="line-52" class="anchor"/></p><p
+class="line874">分号(;)可以把多个语句放在同一行中，只有一个语句的行也可以用分号来结束。 <span id="line-53" class="anchor"/><span id="line-54" class="anchor"/></p><p class="line874">#指示这是一个延长至行末的注释，但是包在字符串内的#没有这个功能。 <span id="line-55" class="anchor"/><span id="line-56" class="anchor"/></p><p class="line874">最后要说明的，解释器会忽略所有的空白行(非交互模式下)。 <span id="line-57" class="anchor"/><span id="line-58" class="anchor"/></p><p class="line867">
+</p><h2 id="head-d8a28c156c9cb683982a6feb327f1cdb6ce022c0">1.2. 标识符及保留字</h2>
+<span id="line-59" class="anchor"/><span id="line-60" class="anchor"/><p class="line874">标识符是用于识别变量、函数、类、模块以及其他对象的名字，标识符可以包含字母、数字及下划线(_)，但是必须以一个非数字字符开始。字母仅仅包括ISO-Latin字符集中的A–Z和a–z。标识符是大小写敏感的，因此 FOO和foo是两个不同的对象。特殊符号，如$、%、@等，不能用在标识符中。另外，如 if，else，for 等单词是保留字，也不能将其用作标识符。下面的表列出了所有的保留字符: <span id="line-61" class="anchor"/><span id="line-62" class="anchor"/></p><pre>and             elif                    global                  or
+<span id="line-63" class="anchor"/>assert          else                    if                      pass
+<span id="line-64" class="anchor"/>break           except                  import                  print
+<span id="line-65" class="anchor"/>class           exec                    in                      raise
+<span id="line-66" class="anchor"/>continue        finally                 is                      return
+<span id="line-67" class="anchor"/>def             for                     lambda                  try
+<span id="line-68" class="anchor"/>del             from                    not                     while
+<span id="line-69" class="anchor"/></pre><span id="line-70" class="anchor"/><p class="line862">以下划线开始或者结束的标识符通常有特殊的意义。例如以一个下划线开始的标识符(如 <tt class="backtick">_foo</tt>)不能用from module import *语句导入。前后均有两个下划线的标识符，如<tt class="backtick">__init__</tt>，被特殊方法保留。前边有两个下划线的标识符，如<tt class="backtick">__bar</tt>，被用来实现类私有属性，这个将在第七章--类与面向对象编程中讲到。通常情况下，应该避免使用相似的标识符。 <span id="line-71" class="anchor"/><span id="line-72" class="anchor"/></p><p class="line867">
+</p><h2 id="head-f195087933bf14fb1b3957d4e39fb9e24bf2d258">1.3. 数字/文字</h2>
+<span id="line-73" class="anchor"/><span id="line-74" class="anchor"/><p class="line874">Python中有四种内建的数值类型:整数、长整数、浮点数和复数。 <span id="line-75" class="anchor"/><span id="line-76" class="anchor"/></p><p class="line874">象1234这样的数被解析为一个十进制的整数。要指定一个八进制或者十六进制的整数，在一个合法的八进制数前加上 0 或者在一个合法的16进制数前加上 0x 就可以了。(如 0644 和 0x100fea8)。 在一个整数后面加上字母 l 或 L系统就认为这是一个长整数(如
+1234567890L)。与受机器字长限制整数类型不同，长整数可以是任何长度(只受内存大小限制)。象123.34和1.2334e+02这样的数被解析为浮点数。一个整数或者浮点数加上后缀 J 或者 j 就构成了一个复数的虚部，你可以用一个实数加上一个虚部创建一个复数，比如 1.2 + 12.34J。 <span id="line-77" class="anchor"/><span id="line-78" class="anchor"/></p><p class="line874">Python目前支持两种类型的字符串: <span id="line-79" class="anchor"/><span id="line-80" class="anchor"/></p><p class="line874">8位字符数据 (ASCII) <span id="line-81" class="anchor"/><span id="line-82" class="anchor"/></p><p class="line874">16位宽字符数据  (Unicode)
+<span id="line-83" class="anchor"/><span id="line-84" class="anchor"/></p><p class="line862">最常用的是ASCII字符串，因为这个字符集刚好只用一个字节就可以字符集中的任意一个字符。通常情况下，ASCII串用单引号(')，双引号(")，或者三引号(<tt class="backtick">''' 或 """</tt>)来定义。字符串前后的引号类型必须一致。反斜杠(\)用来转义特殊字符，比如换行符、反斜杠本身、引号以及其他非打印字符。Table 2.1中列出了公认的特殊字符的表示方法，无法识别的转义字符串将被原样保留(包括前边的反斜杠)。此外，字符串可以包含嵌入的空字节和二进制数据。三引号字符串中可以包含不必转义的换行符和引号。 <span id="line-85"
+class="anchor"/><span id="line-86" class="anchor"/></p><p class="line874">Table 2.1 Standard Character Escape Codes <span id="line-87" class="anchor"/><span id="line-88" class="anchor"/></p><div><table style="width: 50%;"><tbody><tr>  <td style="text-align: center;" colspan="2"><p class="line891"><strong>标准特殊字符</strong></p></td>
+</tr>
+<tr>  <td><span id="line-89" class="anchor"/><p class="line862">字符 </p></td>
+<td><p class="line862">  描述</p></td>
+</tr>
+<tr>  <td><span id="line-90" class="anchor"/><p class="line862"> \ </p></td>
+<td><p class="line862">续行符</p></td>
+</tr>
+<tr>  <td><span id="line-91" class="anchor"/><p class="line862">\\ </p></td>
+<td><p class="line862"> 反斜杠</p></td>
+</tr>
+<tr>  <td><span id="line-92" class="anchor"/><p class="line862">\'</p></td>
+<td><p class="line862">单引号</p></td>
+</tr>
+<tr>  <td><span id="line-93" class="anchor"/><p class="line862">\"</p></td>
+<td><p class="line862">双引号</p></td>
+</tr>
+<tr>  <td><span id="line-94" class="anchor"/><p class="line862">\a</p></td>
+<td><p class="line862">Bell(音箱发出吡的一声)</p></td>
+</tr>
+<tr>  <td><span id="line-95" class="anchor"/><p class="line862">\b</p></td>
+<td><p class="line862">退格符</p></td>
+</tr>
+<tr>  <td><span id="line-96" class="anchor"/><p class="line862">\e</p></td>
+<td><p class="line862">Escape</p></td>
+</tr>
+<tr>  <td><span id="line-97" class="anchor"/><p class="line862">\0</p></td>
+<td><p class="line862">Null(空值)</p></td>
+</tr>
+<tr>  <td><span id="line-98" class="anchor"/><p class="line862">\n</p></td>
+<td><p class="line862">换行符，等价于\x0a和\cJ</p></td>
+</tr>
+<tr>  <td><span id="line-99" class="anchor"/><p class="line862">\v</p></td>
+<td><p class="line862">垂直制表符，等价于\x0b和\cK</p></td>
+</tr>
+<tr>  <td><span id="line-100" class="anchor"/><p class="line862">\t</p></td>
+<td><p class="line862">水平制表符，等价于\x09和\cI</p></td>
+</tr>
+<tr>  <td><span id="line-101" class="anchor"/><p class="line862">\r</p></td>
+<td><p class="line862">回车符，等价于\x0d和\cM</p></td>
+</tr>
+<tr>  <td><span id="line-102" class="anchor"/><p class="line862">\f</p></td>
+<td><p class="line862">换页符，等价于\x0c和\cL</p></td>
+</tr>
+<tr>  <td><span id="line-103" class="anchor"/><p class="line862">\OOO</p></td>
+<td><p class="line862">八进制值(000-377)</p></td>
+</tr>
+<tr>  <td><span id="line-104" class="anchor"/><p class="line862">\xhh</p></td>
+<td><p class="line862">十六进制值(x00-xff)</p></td>
+</tr>
+<tr>  <td><span id="line-105" class="anchor"/><p class="line862">\un</p></td>
+<td><p class="line862">Unicode字符值，n是四个十六进制数字表示的Unicode字符</p></td>
+</tr>
+</tbody></table></div><span id="line-106" class="anchor"/><p class="line867"><span id="line-107" class="anchor"/></p>Unicode 字符串用来表示多字节国际字符集，它包括65，536个字符。Unicode字符使用u或者U前缀来定义，例如`a = u"hello"`。在Unicode字符集中，每一个字符用一个16位整数来表示。Unicode字符使用 U+XXXX 这种形式来表示，XXXX是一个由 4 个十六进制数字组成的16进制数。(注意:
+这种记法只是一个表示Unicode字符的习惯，并不是Python的语法)。例如U+0068是Unicode字符字母h(在Latin-1字符集中，你可以发现Unicode字符集的前256个字符与Lation-1的对应字符编码完全相同)。当Unicode字符串被赋值时普通字符和特殊字符都直接转换成Unicode字符序数(在[U+0000， U+00FF]中)。例如，字符串"hello\n"映射为ASCII时是:0x68， 0x65， 0x6c， 0x6c， 0x6f， 0x0a，当使用u"hello\n"转换为Unicode字符串时是:U+0068， U+0065， U+006C， U+006C， U+006F， U+000A.任意Unicode字符都可以使用\uXXXX来定义，\uXXXX必须位于一个Unicode字符串中，例如:
+<pre>
+<span id="line-108" class="anchor"/>
+<span id="line-109" class="anchor"/>s = u"\u0068\u0065\u006c\u006c\u006f\u000a"
+<span id="line-110" class="anchor"/>
+</pre>
+<span id="line-111" class="anchor"/>在Python 的较老版本中，\xXXXX字节序列被用来定义Unicode字符(这与系统识别Unicode字符方式有关)。虽然现在仍然允许这样做，我仍然建议你最好采用新的表示方法。（因为旧的表示方法随时可能废止。）另外，八进制代码\OOO也可以用来定义在[U+0000， U+01FF]中的Unicode字符。
+<span id="line-112" class="anchor"/>
+<span id="line-113" class="anchor"/>Unicode字符不能通过使用 UTF-8或者UTF-16编码中的原始字节序列来定义。例如，UTF-8编码的字符串 u'M\303\274ller' 建立的七个字符，用Unicode表示为+004D， U+00C3， U+00BC， U+006C， U+006C， U+0065， U+0072，这并不是你想要的结果。这是因为在UTF-8中，多字节序列\303\274用来代表U+00FC，而不是U+00C3， U+00BC。更多关于Unicode编码细节你可以阅读第三章--"类型和对象"，第四章--"运算符和表达式"，第九章--"输入和输出".
+<span id="line-114" class="anchor"/>
+<span id="line-115" class="anchor"/>你可以给一个字符串加上前缀r或者R，例如 `r'\n\"'`，这些字符串被称为原始字符串，因为里边几乎所有的特殊字符都会原封不动地留下。不过原始字符串并不能以一个单独的反斜杠结尾(例如 r"\")。如果原始字符串使用ur或者UR前缀来定义的话，\uXXXX仍然会被解析为Unicode字符。如果你不想这样，你可以在它前边再加一个反斜杠，例如ur"\\u1234"，它定义了一个含有7个字符的字符串。需要注意的是，定义原始Unicode字符串时，r必须在u之后。
+<span id="line-116" class="anchor"/>
+<span id="line-117" class="anchor"/>邻近的字符串(被空格或者续行符分割)，例如 "hello" 'world' 会被Python自动连结为一个字符串 "helloworld"。无论是普通字符串，Unicode字符串，还是自然字符串，都会自动连结。当然，只要这些字符串中有一个是Unicode字符串，那最终连结的结果也将是一个Unicode字符串。比如 "s1" u"s2" 就会产生 u"s1s2"。这个过程的细节你可以阅读第四章和附录A(the Python library).
+<span id="line-118" class="anchor"/>
+<span id="line-119" class="anchor"/>如果Python在 -U 命令行参数下运行，所有的字符都会被解析为Unicode。
+<span id="line-120" class="anchor"/>
+<span id="line-121" class="anchor"/>方括号[...]定义一个列表，圆括号(...)定义一个元组，花括号{...}定义一个字典:
+<pre>
+<span id="line-122" class="anchor"/>
+<span id="line-123" class="anchor"/> a = [ 1， 3.4， 'hello' ]           # A list
+<span id="line-124" class="anchor"/> b = ( 10， 20， 30 )                # A tuple
+<span id="line-125" class="anchor"/> c = { 'a': 3， 'b':42 }            # A dictionary
+<span id="line-126" class="anchor"/></pre><span id="line-127" class="anchor"/><span id="line-128" class="anchor"/><span id="line-129" class="anchor"/><p class="line867">
+</p><h2 id="head-96f6de4d079a5953817ac1a34286da44798d03d7">1.4. 运算符、分隔符及特殊符号</h2>
+<span id="line-130" class="anchor"/><span id="line-131" class="anchor"/><p class="line874">Python 目前支持以下运算符: <span id="line-132" class="anchor"/><span id="line-133" class="anchor"/></p><pre>+       -       *       **      //      /       %       <<      >>      &       |       ^
+<span id="line-134" class="anchor"/>+=      -=      *=      **=     //=     /=      %=      <<=     >>=     &=      |=      ^=
+<span id="line-135" class="anchor"/>~       <       >       <=      >=      ==      !=      <>
+<span id="line-136" class="anchor"/></pre><span id="line-137" class="anchor"/><p class="line874">下边的这些可以作为表达式，列表，字典，以及语句不同部分的分隔符号: <span id="line-138" class="anchor"/><span id="line-139" class="anchor"/></p><pre>(    )      [    ]      {    }      ,      :      .      `      =      ;
+<span id="line-140" class="anchor"/></pre><span id="line-141" class="anchor"/><p class="line874">比如，等号(=)，作为对象名和所分配值之间的分隔符;逗号(,)用来分隔函数参数、列表或tuple中的元素;小数点(.)用在浮点数和扩展切片操作中的省略符(...)， <span id="line-142" class="anchor"/><span id="line-143" class="anchor"/></p><p class="line874">下边这些特殊符号也在语句中使用: <span id="line-144" class="anchor"/><span id="line-145" class="anchor"/></p><p class="line874">'     "     #     \ @ <span id="line-146" class="anchor"/><span id="line-147" class="anchor"/></p><p
+class="line867"><span id="line-148" class="anchor"/></p><pre>注：Python 2.4 中新增了 @ 符号用作函数修饰符 ---Wei Zhong
+<span id="line-149" class="anchor"/></pre><span id="line-150" class="anchor"/><span id="line-151" class="anchor"/><p class="line874">字符$、?不能在程序语句中出现，但是可以出现在字符串中。 <span id="line-152" class="anchor"/><span id="line-153" class="anchor"/></p><p class="line867">
+</p><h2 id="head-926639abad0139302f730c8cc2d61dab104e1207">1.5. 文档字符串</h2>
+<span id="line-154" class="anchor"/><span id="line-155" class="anchor"/><p class="line862">如果一个模块、类、或函数体的第一个语句是未命名一个字符串，该字符串就自动成为该对象的文档字符串<tt class="backtick">( DocStrings )</tt>,如下例: <span id="line-156" class="anchor"/><span id="line-157" class="anchor"/><span id="line-158" class="anchor"/><span id="line-159" class="anchor"/><span id="line-160" class="anchor"/><span id="line-161" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-d8171965aad5256c2fa17f8e28fca9589789b18e_001\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-d8171965aad5256c2fa17f8e28fca9589789b18e_001', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-d8171965aad5256c2fa17f8e28fca9589789b18e_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">def</span> <span class="ID">fact</span><span class="Operator">(</span><span class="ID">n</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="String">"This function computes a factorial"</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ResWord">if</span> <span class="Operator">(</span><span class="ID">n</span> <span class="Operator"><=</span> <span class="Number">1</span><span class="Operator">)</span><span class="Operator">:</span> <span class="ResWord">return</span> <span class="Number">1</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">else</span><span class="Operator">:</span> <span class="ResWord">return</span> <span class="ID">n</span><span class="Operator">*</span><span class="ID">fact</span><span class="Operator">(</span><span class="ID">n</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-162" class="anchor"/><p class="line862">代码浏览及文档生成工具经常用到文档字符串。通过访问一个对象的<tt class="backtick">__doc__</tt>属性，你可以得到文档字符串: <span id="line-163" class="anchor"/><span id="line-164" class="anchor"/></p><pre>这个 __doc__ 属性竟然是可写的。--WeiZhong
+<span id="line-165" class="anchor"/></pre><span id="line-166" class="anchor"/><p class="line867"><span id="line-167" class="anchor"/></p><pre>>>> print fact._ _doc_ _
+<span id="line-168" class="anchor"/>This function computes a factorial
+<span id="line-169" class="anchor"/>>>>
+<span id="line-170" class="anchor"/></pre><span id="line-171" class="anchor"/><p class="line874">文档字符串的缩进必须与定义中的其他语句一致。此外，在不同行出现的多个未命名字符串不会自动连结成一个字符串，即使他们紧挨着。(注意:返回的文档字符串仅仅是第一个字符串，这与前边讲到的字符串的自动连结有所不同，注意区别)。 <span id="line-172" class="anchor"/><span id="bottom" class="anchor"/></p></div>

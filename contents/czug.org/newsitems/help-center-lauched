@@ -1,0 +1,119 @@
+<a href="/docs/plone/helpcenter/helpcenter_view">                            <img src="/helpcenter_icon.gif" title="Help Center" height="16" width="16" />Plone帮助中心</a> 已经启用！<br />
+<br />
+这个<a href="/docs/plone/helpcenter/helpcenter_view">帮助中心</a>包括：常见问题(FAQ)、Howto、教程、错误参考、术语表等多个部分。应该可以比较全面的记录Plone的各种文档。<br />
+<br />
+Plone帮助中心将逐渐替代现在的一些Wiki文档。<br />
+<br />
+<b>CZUG的丰富依靠大家的力量。</b>使用这个帮助中心，我们可以很方便的协同建设Plone中文文档。任何登录用户都可以提交文档到帮助中心，网站管理人员可以审核这些文档。审核通过后即可发布。<br />
+<br />
+<b>如果大家在论坛中、在其他网站，发现了比较好的文章，欢迎整理后贴上来，最终受益的是我们自己！</b><br />
+<br />
+这个帮助中心的一个说明：<br />
+<br />
+<dl>
+<dt>常见问题 (FAQ)</dt><dd>
+            <p>
+            FAQ 是一个短小的问题，和1-2段文字的回答. 您可以在一个FAQ区域添加多个问题，通过分组归类到不同的小节中.
+            </p>
+
+            
+                FAQ 示例
+                <b>Question:</b> What is Plone?
+
+                <p>
+                <b>Answer:</b>
+                Plone is an open source Enterprise Content Management
+                System (ECM/CMS) that runs on top of Zope and CMF.
+                </p>
+            
+
+        </dd>
+</dl>
+
+
+    
+<dl>
+<dt>HowTo</dt><dd>
+            <p>
+            HowTo 是一个对如何实现某个事情的单页的描述, 但他是类似文件夹的形式, 这样可附加上文件/图片. 太长很简洁明了.
+            </p>
+
+            
+                典型的How-Tos
+
+                <ul><li>How to set up Plone with the Apache Web Server</li><li>How to change the tabs that appear at the top of the portal</li></ul>
+            
+        </dd>
+</dl>
+
+
+    
+<dl>
+<dt>教程</dt><dd>
+            <p>
+            教程是一个非常详细的多页文章. 教程更加深入，可能包含从任务的概念说明，到完成工作的操作步骤的各个阶段.
+            </p>
+
+            
+                Typical Tutorials
+
+                <ul><li>How to utilize workflows in your projects</li><li>Why separate content, logic and presentation?</li></ul>
+            
+        </dd>
+</dl>
+
+
+
+
+
+    
+<dl>
+<dt>帮助链接</dt><dd>
+            <p>
+                A help link is a link (either external or internal). It is
+    different than a standard Plone link in that it can have sections
+    and versions information.
+
+            </p>
+
+            
+                Typical Help Links
+
+                <ul><li>The Zope Book at zope.org</li><li>CSS reference manual at W3C</li></ul>
+            
+        </dd>
+</dl>
+
+
+    
+<dl>
+<dt>错误参考</dt><dd>
+            <p>
+                An error reference is meant to be the explanation of a particular error.
+            </p>
+
+            
+                Typical Error References
+
+                <ul><li>Expected sequence, got integer</li><li>FS Page Template has errors: Compilation failed</li></ul>
+            
+        </dd>
+</dl>
+
+    
+    
+<dl>
+<dt>词汇定义</dt><dd>
+            <p>
+                A glossary definition describes a particular term used as 
+                concisely as possible.
+            </p>
+
+            
+                Typical Glossary Definitions
+
+                <ul><li><b>CMF</b>: The Content Management Framework</li><li><b>Workflow</b>: A state machine structure used to model business processes</li></ul>
+            
+        </dd>
+</dl>
+<br />

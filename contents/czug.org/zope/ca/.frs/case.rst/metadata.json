@@ -1,0 +1,14 @@
+{
+    "main": {
+        "hidden_keys": [
+            "img", 
+            "__init__.pyc", 
+            "__init__.py"
+        ], 
+        "contenttype": "Document"
+    }, 
+    "dublin": {
+        "description": "通过一个PyGTK本地图形程序的例子，来介绍组件架构的综合使用", 
+        "title": "案例"
+    }
+}

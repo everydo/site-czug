@@ -1,0 +1,72 @@
+
+ <p>【2004/6/1，台北/台湾】世界最大管理软体厂商组合国际电脑股份有限公司(Computer Associates
+ International, Inc.; CA)在美国拉斯维加斯的CA World
+ 大会中，宣布了一连串与开放原始码社群的技术合作与策略联盟的行动，再度申明对开放原始码技术的承诺。这些具体的行动包括 :
+ <b>CA 将开放其产品Ingres (Ingres Enterprise Relational
+ Database)企业关联式资料库与Kernel Generalized Event
+ Management（KGME）的开放原始码</b>、<b>并发表整合开放原始码<span style="color: rgb(204, 0, 0);">Plone</span>文件管理引擎的BrightStor Document
+ Manager</b>、以及<b>与开放原始码社群Jboss和<span style="color: rgb(204, 0, 0);">Zop</span></b><b><span style="color: rgb(204, 0, 0);">e</span>的合作计画</b>。</p>
+
+ <p>当愈来愈多的新技术是以开放原始码软体的形式问世，CA也采行了开放创新模式（Open Innovation
+ Model；详见麻省理工学院Henry W. Chesbrough所撰写的「The Era of Open
+ Innovation」一文）。这项模式将推动所有内外部创新的积极分享、使用与支援，进而为客户建置最好的解决方案。以这项模式为基础，CA将针对既有
+ 与新兴的开放原始码计画，展开合作开发、推动及支援工作，除担任可靠的(trusted)贡献者角色，并将成为开放原始码社群的大力倡导者。</p>
+
+ <p>CA产品开发资深副总裁Mark
+ Barrenechea表示：「CA在软体开发一向采取合作作法，广纳来自客户、合作夥伴及其他业界领导者的意见。将这项作法延伸至开放原始码社群，有助于促进我们的开放创新，并可加速推出满足客户需求的管理软体解决方案。」</p>
+
+ <h1>主要的创新活动</h1>
+
+ <p><br />
+ 企业IT部门已经接受开放原始码软体，而且希望能从这些解决方案获得企业级的品质、延展性、功能性，以及技术支援。为充分发挥开放原始码社群的力量，CA也广为扩展其开发成果，以满足客户的需求。<br />
+
+ <br />
+ Linux版的Ingres企业关联式资料库(Ingres Enterprise Relational
+ Database)，将以CA的Trusted Open Source
+ License为基础，在90天内开放原始码。Ingres支援Linux版的OCFS（Oracle Cluster File
+ System）丛集支援，以及IBM的OpenDLM（Distributed Lock
+ Manager），可提供全新的丛集功能，让客户能以低成本的丛集平台达到延展性与可靠性的目标。 <span style="color: rgb(204, 0, 0);">BrightStor Document
+ Manager是BrightStor储存管理系列解决方案的新增功能，结合来自Plone的开放原始码技术与CA的BrightStor
+ Portal，可提供客户易于使用且具成本效益比的文件管理解决方案。 Ingres同时也将是第一个纳入Zope RDBMS
+ Persistence Engine的资料库。</span><br />
+ <br />
+ Barrenechea表示：「面临储存与资讯需求的持续成长，Ingres与Plone将为结构性与非结构性资料管理设立开放原始码标准。透过这一连串动作，CIO们不仅能善用可信的开放原始码，更能确保他们的资讯管理需求获得企业级的支援。」</p>
+
+ <h1>主要的开放原始码计画</h1>
+
+ <p><br />
+ CA也与开放原始码社群的其他商业性会员合作，协助推动可信的开放原始码技术的开发：<br />
+ <br />
+ CA与JBoss计画建置包含开放原始码软体在内的完整解决方案，以因应与J2EE式应用伺服 器相关的高效能关联式储存需求。
+ CA与Zope计画提供客户具延展性的开放原始码内容管理方案，除可相容于关联式资料库技术，还能满足企业在执行效能、资料保存与管理功能的需求。
+ CA正在开发并提出KGEM仪表的开放原始码。KGEM是一项全新的核心工具，让管理应用程式能以标准化的作法与Linux共同运作。目前，管理软体的介
+ 面已可内建于Linux流通版随同出货。
+ CA发表业界第一个开发原始码管理技术堆叠ijpl（ingres、java、python、linux），结合了Ingres的速度、Java与
+ Python的威力，以及Linux的品质，以加速管理软体的成长与创新。</p>
+
+ <h1>强力的相关社群支援</h1>
+
+ <p><br />
+ <br />
+ CA致力于支援开放原始码基金会与公司，以更进一步地促进开放原始码的开发与创新。CA是新成立的Plone
+ Foundation的创始会员，它的目的在于协助并加速Plone技术的成长与成熟。CA同时也是活跃于kernel.org、Open
+ Forum Europe、Open Group、Open Source Development Lab与Embedded
+ Linux Consortium的会员。<br />
+ <br />
+ Baroudi Bloor董事长暨研究总监Robin
+ Bloor表示：「开放原始码藉由Linux、Apache与Tomcat已为IT巿场带来巨大的改变。CA的一连串发表动作，更象征着关键任务的资料库
+ 与内容管理方案已被开放原始码所驱策。开放原始码透过主要软体供应商的支持，将有助于在企业应用的发展。」<br />
+ <br />
+ 针对CA对开放原始码社群的推动创新与支持，欲知更多详情，请造访CA网站<br />
+ <br />
+ ## 组合国际电脑股份有限公司(Computer Associates International, Inc.; NYSE:
+ CA)是全球最大的管理软体公司，提供企业管理IT环境所需的软体和服务，包括：基础架构、储存、安全管理、及应用程式生命周期管理等，以展现IT
+ 组织最佳效能、可靠度、及效率。CA创立于1976年，总部位于美国纽约州Islandia，客户群遍布全球一百多个国家。欲得知更多相关讯息，请造访
+ CA总部网址ca.com。 CA台湾电话为+886-2-27009218，网址ca.com.tw。<br />
+ <br />
+ (c) 2004 Computer Associates International, Inc. One Computer
+ Associates Plaza, Islandia, N.Y. 11749.
+ 本文所有提及之商标、商业名称、服务标示、标誌皆分属各公司所有。<br />
+ <br />
+ 来源： <a href="http://www.ca.com.tw/news/single_report.asp?store_id=3&amp;UBId=1&amp;theMain_id=630">
+ CA台湾网</a>&nbsp;&nbsp; 繁简转换：<a href="http://artvine.com.tw/images/uu2.htm">清藤书屋</a></p>

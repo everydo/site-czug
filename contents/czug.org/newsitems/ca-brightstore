@@ -1,0 +1,16 @@
+
+ <p>英文新闻：<a href="http://plone.org/newsitems/CABDMBETA">BrightStor Document
+ Manager r11.2 Beta</a><br />
+ <br />
+ BrightStor是CA公司基于Plone构建的文档管理软件，主要的特性包括：</p>
+ <ul>
+ <li><b>文档锁和版本管理(检入/检出)</b></li>
+ <li><b>全文搜索</b></li>
+ <li><b>批量取出和下载</b></li>
+ <li><b>LDAP 用户认证</b></li>
+ <li><b>将文档保存在文件系统或关系数据库中</b></li>
+ <li><b>通过备份，保护内容</b></li>
+ </ul>
+ <p>Beta测试受邀人员有限，在 <a href="http://supportconnectw.ca.com/public/ca_common_docs/cabetas-programlist.asp">
+ 这里</a>可参与。</p>
+<br />

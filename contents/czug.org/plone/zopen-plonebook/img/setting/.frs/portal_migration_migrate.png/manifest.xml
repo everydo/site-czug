@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<manifest xmlns="http://zopechina.com/ns/frs"
+           xmlns:tal="http://xml.zope.org/namespaces/tal"
+           contenttype="<bound method ATImage.getPortalTypeName of <ATImage at /58080_1/default.czug.edo/projects/341196/files/setting/portal_migration_migrate.png>>"
+           uid="9af455f8b5dbf9c098c7c43c5d24892a">
+
+
+    <entry type="primary_field"
+           name="image"
+           mimetype="image/png"
+           filename=""
+           fullpath=""/>
+
+
+    <entry type="xns"
+           name=""
+           mimetype="text/xml"
+           filename="portal_migration_migrate.png.xml"
+           fullpath="xns.xml"/>
+
+
+</manifest>

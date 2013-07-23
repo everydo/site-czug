@@ -1,0 +1,30 @@
+{
+    "main": {
+        "left_col": ".. navtree::\n   :root_depth: 2",
+        "hidden_keys": [
+            "include.rst", 
+            "MyProject"
+        ], 
+        "keys": [
+            "introduction.rst", 
+            "install.rst", 
+            "project.rst", 
+            "startup.rst", 
+            "urlmapping.rst", 
+            "traversal.rst", 
+            "urldispatch.rst", 
+            "views.rst", 
+            "templates.rst", 
+            "models.rst", 
+            "security.rst", 
+            "events.rst", 
+            "environment.rst", 
+            "unittesting.rst"
+        ], 
+        "contenttype": "Folder"
+    }, 
+    "dublin": {
+        "description": "Zope的一个分支轻量级框架，基于WSGI，类似pylons/django", 
+        "title": "bfg框架"
+    }
+}

@@ -1,0 +1,52 @@
+.. contents:: 章节目录
+
+Plone中文化方案
+==============================
+
+标准的Plone安装后,自动支持中文的界面. 但是不支持中文的全文检索. 结构化文本也不太支持中文. 
+
+1. 下载安装 `CJKSplitter`_ 的最新版本
+
+2. 下载安装 `ZopeChinaPak`_ 的最新版本
+
+3. 重新启动zope
+
+4. 让Plone的支持中文
+
+   如果是新建的Plone站点需要中文支持：
+
+   1. 访问ZMI
+
+      ZMI：Zope Management Interface，Zope管理界面。zope运行后，访问/manage, 进入ZMI
+
+   2. 在ZMI中右边的下拉列表中选择“Plone Site”
+
+   3. 输入Site的ID、标题等信息（注：暂时不要输入中文）, 选择'Default Chinese Plone'的个性化Plone设置.
+
+   4. 点击“Add Plone Site”
+
+   如果是先前已经建立的Plone站点需要进行中文化设置：
+
+   1. 在ZMI中点击portal_migration，进入升级和设置页面；
+   2. 点击setup链接中，进入设置页面；
+   3. 选择'ZopeChinaPak Setup'定制方法, 执行update 
+
+.. _CJKSplitter: http://www.czug.org/projects/CJKSplitter
+
+.. _ZopeChinaPak: http://www.czug.org/projects/ZopeChinaPak
+
+
+可选扩展
+==============================
+
+安装CJKCodecs中文编解码转换
+-----------------------------------
+
+python中文编辑解吗模块，可能在某些扩展模块中需要用到。
+
+1. 下载 http://cjkpython.i18n.org/
+
+2. 解压缩后，安装::
+
+    python setup.py install
+

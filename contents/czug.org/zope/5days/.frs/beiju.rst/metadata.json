@@ -1,0 +1,13 @@
+{
+    "main": {
+        "contenttype": "Document"
+    },
+    "dublin": {
+        "title": "zope的悲剧",
+        "description": "悲剧赋予英雄人物，好在演出还在进行中，Zope故事共同期待",
+        "creators": [
+            "pjy"
+        ],
+        "created": "2010-06-26 12:02:41.779639"
+    }
+}

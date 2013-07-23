@@ -1,0 +1,146 @@
+=====
+Terms
+=====
+
+.. Contents::
+.. sectnum::
+
+Terms are used to provide choices for sequence widgets or any other construct
+needing them. Since Zope 3 already has sources and vocabularies, the base
+terms class simply builds on them.
+
+Thus, let's create a vocabulary first:
+
+  >>> from zope.schema import vocabulary
+  >>> ratings = vocabulary.SimpleVocabulary([
+  ...     vocabulary.SimpleVocabulary.createTerm(0, '0', u'bad'),
+  ...     vocabulary.SimpleVocabulary.createTerm(1, '1', u'okay'),
+  ...     vocabulary.SimpleVocabulary.createTerm(2, '2', u'good')
+  ...     ])
+
+Now we can create the terms object:
+
+  >>> from z3c.form import term
+  >>> terms = term.Terms()
+  >>> terms.terms = ratings
+
+Getting a term from a given value is simple:
+
+  >>> terms.getTerm(0).title
+  u'bad'
+  >>> terms.getTerm(3)
+  Traceback (most recent call last):
+  ...
+  LookupError: 3
+
+When converting values from their Web representation back to the internal
+representation, we have to be able to look up a term by its token:
+
+  >>> terms.getTermByToken('0').title
+  u'bad'
+  >>> terms.getTerm('3')
+  Traceback (most recent call last):
+  ...
+  LookupError: 3
+
+However, often we just want the value so asking for the value that is
+represented by a token saves usually one line of code:
+
+  >>> terms.getValue('0')
+  0
+  >>> terms.getValue('3')
+  Traceback (most recent call last):
+  ...
+  LookupError: 3
+
+You can also iterate through all terms:
+
+  >>> [entry.title for entry in terms]
+  [u'bad', u'okay', u'good']
+
+Or ask how many terms you have in the first place:
+
+  >>> len(terms)
+  3
+
+Finally the API allows you to check whether a particular value is available in
+the terms:
+
+  >>> 0 in terms
+  True
+  >>> 3 in terms
+  False
+
+Now, there are several terms implementations that were designed for particular
+fields. Within the framework, terms are used as adapters with the follwoing
+discriminators: context, request, form, field, and widget.
+
+The first terms implementation is for ``Choice`` fields:
+
+  >>> import zope.schema
+
+  >>> ratingField = zope.schema.Choice(
+  ...     title=u'Rating',
+  ...     vocabulary=ratings)
+
+  >>> terms = term.ChoiceTerms(None, None, None, ratingField, None)
+  >>> [entry.title for entry in terms]
+  [u'bad', u'okay', u'good']
+
+Sometimes choice fields only specify a vocabulary name and the actual
+vocabulary is looked up at run time.
+
+  >>> ratingField2 = zope.schema.Choice(
+  ...     title=u'Rating',
+  ...     vocabulary='Ratings')
+
+Initially we get an error because the "Ratings" vocabulary is not defined:
+
+  >>> terms = term.ChoiceTerms(None, None, None, ratingField2, None)
+  Traceback (most recent call last):
+  ...
+  VocabularyRegistryError: unknown vocabulary: 'Ratings'
+
+Let's now register the vocabulary under this name:
+
+  >>> def RatingsVocabulary(obj):
+  ...     return ratings
+
+  >>> from zope.schema import vocabulary
+  >>> vr = vocabulary.getVocabularyRegistry()
+  >>> vr.register('Ratings', RatingsVocabulary)
+
+We should now be able to get all terms as before:
+
+  >>> terms = term.ChoiceTerms(None, None, None, ratingField2, None)
+  >>> [entry.title for entry in terms]
+  [u'bad', u'okay', u'good']
+
+A similar terms implementation exists for a ``Bool`` field:
+
+  >>> truthField = zope.schema.Bool()
+
+  >>> terms = term.BoolTerms(None, None, None, truthField, None)
+  >>> [entry.title for entry in terms]
+  [u'yes', u'no']
+
+In case you don't like the choice of 'yes' and 'no' for the labels, we
+can subclass the ``BoolTerms`` class to control the display labels.
+
+  >>> class MyBoolTerms(term.BoolTerms):
+  ...   trueLabel = u'True'
+  ...   falseLabel = u'False'
+
+  >>> terms = MyBoolTerms(None, None, None, truthField, None)
+  >>> [entry.title for entry in terms]
+  [u'True', u'False']
+
+Finally, there is a terms adapter for all collections:
+
+  >>> ratingsField = zope.schema.List(
+  ...     title=u'Ratings',
+  ...     value_type=ratingField)
+
+  >>> terms = term.CollectionTerms(None, None, None, ratingsField, None)
+  >>> [entry.title for entry in terms]
+  [u'bad', u'okay', u'good']

@@ -1,0 +1,5 @@
+<p>苦等Plone，终于发布了Plone1.0.2.</p>
+<p>这个版本，主要对界面做了小的调整。更加详细的说明，参见<a href="http://plone.org/Members/limi/news/plone-1.0.2-release">此处</a>。</p>
+<p>BTW, 我更加看好的是即将要发布的Plone1.1，这个版本才是更cool的版本，archetypes、CMFMember等产品都将在这个版本中实现。</p>
+<p>archetypes使得plone的内容构件十分简单；并且将轻松支持word等任意格式文件的html转换和全文检索。</p>
+<p>CMFMember则将所有的成员转换为内容，可扩展成员的属性（如单位、电话号码等），并支持工作流（禁止、使能、公开、隐藏）</p>

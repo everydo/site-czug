@@ -1,0 +1,35 @@
+
+ <p>我们<a href="http://www.zopechina.com">润普公司</a>,
+ 荣幸的发布CMFContentPanels 1.7版本.<br />
+ <br />
+ CMFContentPanels是一个Plone上的复合页面产品, 您可以使用这个产品,
+ 直接在web上"所见即所得"的制作负责的组合动态页面.</p>
+
+ <p><span class="link-external"><a href="http://zope.org/Members/panjunyong/CMFContentPanels/swpackage_view">
+ 英文产品主页</a></span> | <a href="../projects/CMFContentPanels">中文产品主页</a>
+ |<span class="link-external"><a href="http://zope.org/Members/panjunyong/CMFContentPanels/contentpanels-1_7/contentpanels-1_7.tgz">
+ 下载</a></span></p>
+
+ <h1>新的特性</h1>
+
+ <ol>
+  <li>直接将整contentpanels设置为Plone的左右列. 你不需要到ZMI中调整左右列了!</li>
+
+  <li>界面简化, 整理(使用下拉菜单了)</li>
+
+  <li>更多的viewlets</li>
+
+  <li style="list-style-type: none; list-style-image: none; list-style-position: outside;">
+  <ol>
+    <li>支持PloneChat</li>
+
+    <li>支持mxmDynamicPage<br /></li>
+   </ol>
+  </li>
+
+  <li>本地的事件和新闻</li>
+
+  <li>性能更好</li>
+
+  <li>支持css定制.<br /></li>
+ </ol>

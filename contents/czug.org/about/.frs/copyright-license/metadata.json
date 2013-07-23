@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "id": "copyright-license"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Zope/Plone版权和许可信息", 
+        "modified": "2006-09-15 08:44:39", 
+        "title": "版权和许可"
+    }
+}

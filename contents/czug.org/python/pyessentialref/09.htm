@@ -1,0 +1,314 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-989a5e5971b402808a358c11d948224b0772f4d0">第九章 输入输出</a><ol><li><a href="#head-bbd07399463b904ed3bb79fb84f8c5228d4b6e4c">读取参数及环境变量</a></li><li><a href="#head-e1172ac867be481d52993a386988d0d22b81a556">文件</a></li><li><a href="#head-a3a3ccdcb402fbcfca940e73e66bd06ac64d0124">标准输入,标准输出和标准错误</a></li><li><a href="#head-4067a3adec1c04be8bd62c5657b0df57d85dea6a">print语句</a></li><li><a href="#head-1cb74ada519c3d4a394d9c273932c69e443a01f3">对象持久化</a></li><li><a href="#head-2738a8523baaecf30323668950fa1c23beb74c7f">Unicode I/O</a><ol><li><a href="#head-61d7029f44fb5b278fefe0d3fdded750594994c9">Unicode
+数据编码</a></li><li><a href="#head-af387604411745eec942be27dfc87d99dfc8ef32">Unicode 字符属性</a></li></ol></li></ol></li></ol></div> <span id="line-2" class="anchor"/>
+<h1 id="head-989a5e5971b402808a358c11d948224b0772f4d0">1. 第九章 输入输出</h1>
+<span id="line-3" class="anchor"/><p class="line874">本章的主题是Python的输出输出细节：命令行参数、环境变量、文件I/O、Unicode及对象持久化。 <span id="line-4" class="anchor"/><span id="line-5" class="anchor"/></p><p class="line867">
+</p><h2 id="head-bbd07399463b904ed3bb79fb84f8c5228d4b6e4c">1.1. 读取参数及环境变量</h2>
+<span id="line-6" class="anchor"/><p class="line874">当解释器启动时，命令行参数就被放入 sys.argv 这个列表中。列表的第一个元素是程序的名字，后面的元素是你提供的命令行参数。下面的程序展示了如何访问命令行参数: <span id="line-7" class="anchor"/><span id="line-8" class="anchor"/><span id="line-9" class="anchor"/><span id="line-10" class="anchor"/><span id="line-11" class="anchor"/><span id="line-12" class="anchor"/><span id="line-13" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-32d468f23d264d8e1c450b66c07750472d03dbe5_000\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-32d468f23d264d8e1c450b66c07750472d03dbe5_000', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-32d468f23d264d8e1c450b66c07750472d03dbe5_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment"># printopt.py </span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="Comment"># 打印出所有命令行参数</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"/><span class="ResWord">import</span> <span class="ID">sys</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">for</span> <span class="ID">i</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="ID">len</span><span class="Operator">(</span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">argv</span><span class="Operator">)</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ResWord">print</span> <span class="String">"sys.argv[%d] = %s"</span> <span class="Operator">%</span> <span class="Operator">(</span><span class="ID">i</span><span class="Operator">,</span> <span class="ID">sys</span><span class="Operator">.</span><span class="ID">argv</span><span class="Operator">[</span><span class="ID">i</span><span class="Operator">]</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-14" class="anchor"/><p class="line874">运行该程序，结果如下: <span id="line-15" class="anchor"/><span id="line-16" class="anchor"/></p><pre>% python printopt.py foo bar -p
+<span id="line-17" class="anchor"/>sys.argv[0] = printopt.py
+<span id="line-18" class="anchor"/>sys.argv[1] = foo
+<span id="line-19" class="anchor"/>sys.argv[2] = bar
+<span id="line-20" class="anchor"/>sys.argv[3] = -p
+<span id="line-21" class="anchor"/>%
+<span id="line-22" class="anchor"/></pre><span id="line-23" class="anchor"/><p class="line874">通过访问os.envirom字典可以访问环境变量，如下例： <span id="line-24" class="anchor"/><span id="line-25" class="anchor"/><span id="line-26" class="anchor"/><span id="line-27" class="anchor"/><span id="line-28" class="anchor"/><span id="line-29" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-c62ef5ac491e9742a7c0840485cbd6d059876d63_001\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-c62ef5ac491e9742a7c0840485cbd6d059876d63_001', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-c62ef5ac491e9742a7c0840485cbd6d059876d63_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">os</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">path</span> <span class="Operator">=</span> <span class="ID">os</span><span class="Operator">.</span><span class="ID">environ</span><span class="Operator">[</span><span class="String">"PATH"</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">user</span> <span class="Operator">=</span> <span class="ID">os</span><span class="Operator">.</span><span class="ID">environ</span><span class="Operator">[</span><span class="String">"USER"</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">editor</span> <span class="Operator">=</span> <span class="ID">os</span><span class="Operator">.</span><span class="ID">environ</span><span class="Operator">[</span><span class="String">"EDITOR"</span><span class="Operator">]</span><span class="Text"/></span>
+</pre></div><span id="line-30" class="anchor"/><p class="line874">要更改环境变量， 直接设定 os.environ 变量或使用 os.putenv() 函数。如下例： <span id="line-31" class="anchor"/><span id="line-32" class="anchor"/><span id="line-33" class="anchor"/><span id="line-34" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-351fb3b2ca55bd64233fabe20268f53c59828230_002\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-351fb3b2ca55bd64233fabe20268f53c59828230_002', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-351fb3b2ca55bd64233fabe20268f53c59828230_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">os</span><span class="Operator">.</span><span class="ID">environ</span><span class="Operator">[</span><span class="String">"FOO"</span><span class="Operator">]</span> <span class="Operator">=</span> <span class="String">"BAR"</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">os</span><span class="Operator">.</span><span class="ID">putenv</span><span class="Operator">(</span><span class="String">"FOO"</span><span class="Operator">,</span><span class="String">"BAR"</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-35" class="anchor"/><span id="line-36" class="anchor"/><p class="line867">
+</p><h2 id="head-e1172ac867be481d52993a386988d0d22b81a556">1.2. 文件</h2>
+<span id="line-37" class="anchor"/><span id="line-38" class="anchor"/><p class="line874">内建函数 open(name [,mode])  打开或创建文件，就象下面这样： <span id="line-39" class="anchor"/><span id="line-40" class="anchor"/><span id="line-41" class="anchor"/><span id="line-42" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-2c80a61eb0f7823c3bae162ce648d15eb4965fce_003\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-2c80a61eb0f7823c3bae162ce648d15eb4965fce_003', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-2c80a61eb0f7823c3bae162ce648d15eb4965fce_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">f</span> <span class="Operator">=</span> <span class="ID">open</span><span class="Operator">(</span><span class="String">'foo'</span><span class="Operator">)</span>        <span class="Comment"># 以读取模式打开 'foo'</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">f</span> <span class="Operator">=</span> <span class="ID">open</span><span class="Operator">(</span><span class="String">'foo'</span><span class="Operator">,</span><span class="String">'w'</span><span class="Operator">)</span>    <span class="Comment"># 以写模式打开 'foo'</span><span class="Text"/></span>
+</pre></div><span id="line-43" class="anchor"/><p class="line874">文件模式 'r' 表示读， 'w' 表示写， 'a' 表示在文件末尾添加内容。 模式字符后面允许跟一个 'b' 表示访问的是二进制数据，比如 'rb' 或 'wb'。对 UNIX(或Linux)这个'b'有没有无关紧要，对 Windows 平台则有积极意义。如果你很关心代码的可移植性，那就最好总是加上这个'b'。另外，还有一种更新模式，你只要在读写模式后增加一个'+'就可以使用这种模式，如'r+' 或 'w+'。当一个文件以更新模式打开，你就可以对这个文件进行读写操作。只要在任何读取操作之前刷新所有的输出缓冲就不会有问题。如果一个文件以 'w+'
+模式打开，它的长度就度截为 0。 <span id="line-44" class="anchor"/><span id="line-45" class="anchor"/></p><p class="line874">open() 返回一个文件对象，它支持下表中列出的方法 <span id="line-46" class="anchor"/><span id="line-47" class="anchor"/></p><p class="line867"><strong>表 9.1. 文件方法</strong> <span id="line-48" class="anchor"/><span id="line-49" class="anchor"/></p><pre>方法                      描述
+<span id="line-50" class="anchor"/>f.read([n])               读取至多 n 字节
+<span id="line-51" class="anchor"/>f.readline([n])           读取一行中的前 n 字符。如果 n 被省略，就读取整行
+<span id="line-52" class="anchor"/>f.readlines()             读取所有的行并返回一个包含所有行的列表
+<span id="line-53" class="anchor"/>f.xreadlines()            返回一个迭代器，每次迭代返回文件的一个新行
+<span id="line-54" class="anchor"/>f.write(s)                将字符串 s 写入文件
+<span id="line-55" class="anchor"/>f.writelines(l)           将列表 l 中的所有字符串写入文件
+<span id="line-56" class="anchor"/>f.close()                 结束文件
+<span id="line-57" class="anchor"/>f.tell()                  返回当前的文件指针
+<span id="line-58" class="anchor"/>f.seek(offset [, where])  定位到一个新的文件位置
+<span id="line-59" class="anchor"/>f.isatty()                如果 f 是一个交互式终端则返回 1
+<span id="line-60" class="anchor"/>f.flush()                 刷新输出缓冲区
+<span id="line-61" class="anchor"/>f.truncate([size])        如果文件长于 size 就截短它至 size 大小
+<span id="line-62" class="anchor"/>f.fileno()                返回一个整型的文件描述符
+<span id="line-63" class="anchor"/>f.readinto(buffer ,nbytes)读取 n 字节数据至一个 buffer 对象。
+<span id="line-64" class="anchor"/></pre><span id="line-65" class="anchor"/><p class="line874">除非给 read() 方法一个可选的长度参数，它就会读取整个文件并将文件内容作为一个字符串返回。 <span id="line-66" class="anchor"/>readline() 返回下一行，包含换行字符。如果在调用 readline() 方法时提供一个长度参数 n，若 n 大于该行长度，则返回前 n 个字节。该行剩下的部分并不会被丢弃，在下次读取操作时会被返回。 <span id="line-67" class="anchor"/>readlines() 方法读取所有行，并将这些行作为一个 list 返回。readline() 和 readlines()
+会自动处理换行在不同平台的表示。(众所周知的 '\n','\r','\r\n')  <span id="line-68" class="anchor"/>xreadlines() 返回一个迭代器，允许用迭代的方式得到文件的每一行。下面是一个使用 xreadlines()的例子： <span id="line-69" class="anchor"/><span id="line-70" class="anchor"/><span id="line-71" class="anchor"/><span id="line-72" class="anchor"/><span id="line-73" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-6b1ad6523937a2e8f7ece433c82f3e0c53269e25_004\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-6b1ad6523937a2e8f7ece433c82f3e0c53269e25_004', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-6b1ad6523937a2e8f7ece433c82f3e0c53269e25_004" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">for</span> <span class="ID">line</span> <span class="ResWord">in</span> <span class="ID">f</span><span class="Operator">.</span><span class="ID">xreadlines</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="Comment"># Do something with line </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"/>   <span class="Operator">.</span><span class="Operator">.</span><span class="Operator">.</span><span class="Text"/></span>
+</pre></div><span id="line-74" class="anchor"/><p class="line874">write() 方法将一个字符串写入文件。 <span id="line-75" class="anchor"/>writelines() 将一个字符串列表中的所有元素顺序写入文件。以上所有操作，字符串中均可包含二进制数据。 <span id="line-76" class="anchor"/>seek(offset[,where])用来随机存取文件的任一部分。offset是偏移量，where是可选的位置参数(默认值为0，表示文件开始位置)。 <span id="line-77"
+class="anchor"/>如果where的值是1，表示当前位置。如果where是2表示文件结束位置。fileno()返回一个打开文件的整型文件描述编号，有些模块在进行低层次I/O操作时会用到。在支持单个文件超过2GB容量的机器上，seek() 和 tell() 使用长整数. 不过要允许这个特性可能需要重新配置并重新编译Python解释器。 <span id="line-78" class="anchor"/><span id="line-79" class="anchor"/></p><p class="line874">文件对象还有下面的数据属性： <span id="line-80" class="anchor"/><span id="line-81" class="anchor"/></p><p class="line874">属性            描述 <span id="line-82"
+class="anchor"/>f.closed        表示文件状态的布尔值: 0 表示文件打开， 1 表示已关闭。 <span id="line-83" class="anchor"/>f.mode          文件打开模式 <span id="line-84" class="anchor"/>f.name          open()函数打开的文件名 否则，它就是一个表示文件来源的字符串 <span id="line-85" class="anchor"/>f.softspace     这是一个布尔值 在使用 print 语句时表示在打印另一个值之前，是否要先打印一个空白符。若用类来模仿文件操作则必须提供这样一个可写的属性，并将其初始化为0。 <span id="line-86" class="anchor"/><span id="line-87" class="anchor"/></p><p
+class="line867">
+</p><h2 id="head-a3a3ccdcb402fbcfca940e73e66bd06ac64d0124">1.3. 标准输入,标准输出和标准错误</h2>
+<span id="line-88" class="anchor"/><span id="line-89" class="anchor"/><p class="line874">Python解释器提供三种标准文件对象,标准输入,标准输出,以及标准错误。(即sys模块中的sys.stdin, sys.stdout和 sys.stderr对象). stdin对象为解释器提供输入字符流。stdout对象接收 print 语句产生的输出. stderr对象接收出错信息. 通常stdin被映射到用户键盘输入,而stdout和stderr产生屏幕输出. <span id="line-90" class="anchor"/><span id="line-91" class="anchor"/></p><p
+class="line874">用上一节介绍的方法就可以实现原始的用户输入/输出.下边的函数从标准输入读取一行文本，然后返回这行文本: <span id="line-92" class="anchor"/><span id="line-93" class="anchor"/><span id="line-94" class="anchor"/><span id="line-95" class="anchor"/><span id="line-96" class="anchor"/><span id="line-97" class="anchor"/><span id="line-98" class="anchor"/><span id="line-99" class="anchor"/><span id="line-100" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-31f5ca0750c38b533b744bdaa073113fc8bf4eb9_005\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-31f5ca0750c38b533b744bdaa073113fc8bf4eb9_005', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-31f5ca0750c38b533b744bdaa073113fc8bf4eb9_005" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">def</span> <span class="ID">gets</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ID">text</span> <span class="Operator">=</span> <span class="String">""</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ResWord">while</span> <span class="Number">1</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>       <span class="ID">c</span> <span class="Operator">=</span> <span class="ID">sys</span><span class="Operator">.</span><span class="ID">stdin</span><span class="Operator">.</span><span class="ID">read</span><span class="Operator">(</span><span class="Number">1</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   5 </span>       <span class="ID">text</span> <span class="Operator">=</span> <span class="ID">text</span> <span class="Operator">+</span> <span class="ID">c</span></span>
+<span class="line"><span class="LineNumber">   6 </span>       <span class="ResWord">if</span> <span class="ID">c</span> <span class="Operator">==</span> <span class="String">'\n'</span><span class="Operator">:</span> <span class="ResWord">break</span></span>
+<span class="line"><span class="LineNumber">   7 </span>    <span class="ResWord">return</span> <span class="ID">text</span><span class="Text"/></span>
+</pre></div><span id="line-101" class="anchor"/><p class="line874">内建函数raw_input(prompt)也可以从stdin中读取并保存内容: <span id="line-102" class="anchor"/><span id="line-103" class="anchor"/><span id="line-104" class="anchor"/><span id="line-105" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-18a41a2ae0835ba96dcf63f8383ff290682de07d_006\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-18a41a2ae0835ba96dcf63f8383ff290682de07d_006', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-18a41a2ae0835ba96dcf63f8383ff290682de07d_006" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">s</span> <span class="Operator">=</span> <span class="ID">raw_input</span><span class="Operator">(</span><span class="String">"type something : "</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">print</span> <span class="String">"You typed '%s'"</span> <span class="Operator">%</span> <span class="Operator">(</span><span class="ID">s</span><span class="Operator">,</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-106" class="anchor"/><p class="line862">最后要说的是，键盘中断(通常是Ctrl+C)会引发<tt class="backtick">KeyboardInterrupt</tt>异常,该异常可以被异常处理语句捕获并处理。 <span id="line-107" class="anchor"/><span id="line-108" class="anchor"/></p><p class="line862">只要需要，sys.stdout、 sys.stdin及sys.stderr的值均可以使用其它文件对象进行替换。这样 print 语句和 raw_input 函数都会使用新值。在解释器启动时，sys.stdout, sys.stdin及sys.stderr可以分别使用sys.<span class="u">stdout</span>,
+sys.<span class="u">stdin</span>, 和 sys.<span class="u">stderr</span>这三个名字来访问。 <span id="line-109" class="anchor"/><span id="line-110" class="anchor"/></p><p class="line874">注意某些场合 sys.stdout, sys.stdin及sys.stderr的默认值会被改变(通常程序运行在一个集成环境时).例如,当在IDLE下运行Python代码时, sys.stdin会被开发环境提供的一个行为类似文件对象的对象代替.在这样的场合,低层方法如read(),seek()可能会失效. <span id="line-111" class="anchor"/><span id="line-112" class="anchor"/></p><pre>《Python In a
+Nutshell》(2003)
+<span id="line-113" class="anchor"/>10.7.1 标准输出及标准错误
+<span id="line-114" class="anchor"/>sys 模块有 stdout 和 stderr 属性, 这是用于输出的两个文件对象。 除非你使用某种 shell 重定向，输出内容将总是发送到执行脚本的终端上。当然现在几乎没有什么真正的终端了:这个所谓的终端通常是一个支持文本输入输出的窗口(比方windows下的一个 控制台 或unix下 一个 xterm 窗口).
+<span id="line-115" class="anchor"/></pre><span id="line-116" class="anchor"/><span id="line-117" class="anchor"/><p class="line867">
+</p><h2 id="head-4067a3adec1c04be8bd62c5657b0df57d85dea6a">1.4. print语句</h2>
+<span id="line-118" class="anchor"/><span id="line-119" class="anchor"/><p class="line874">print语句将一个或多个对象的字符串表示输出到stdout对象. print可以能用逗号分割的一系列对象: <span id="line-120" class="anchor"/><span id="line-121" class="anchor"/></p><pre>print "The values are", x, y, z
+<span id="line-122" class="anchor"/></pre><span id="line-123" class="anchor"/><p class="line874">解释器对每个对象调用str()函数来产生最终输出内容，然后再将这些字符串用空格连接起来,并在字符串最后添加一个换行符，最后输出到stdout对象.不过当 print 语句的最后有一个逗号时，就会用一个空格代替输出字符串最后的换行。 <span id="line-124" class="anchor"/><span id="line-125" class="anchor"/><span id="line-126" class="anchor"/><span id="line-127" class="anchor"/><span id="line-128" class="anchor"/><span id="line-129"
+class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-06879d983f2001615b04725d47ecc40135b354c9_007\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-06879d983f2001615b04725d47ecc40135b354c9_007', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-06879d983f2001615b04725d47ecc40135b354c9_007" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">print</span> <span class="String">"The values are "</span><span class="Operator">,</span> <span class="ID">x</span><span class="Operator">,</span> <span class="ID">y</span><span class="Operator">,</span> <span class="ID">z</span><span class="Operator">,</span> <span class="ID">w</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"># 也可以使用两个print语句来打印出相同的字符</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"/><span class="ResWord">print</span> <span class="String">"The values are "</span><span class="Operator">,</span> <span class="ID">x</span><span class="Operator">,</span> <span class="ID">y</span><span class="Operator">,</span>   <span class="Comment"># Omits trailing newline</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">print</span> <span class="ID">z</span><span class="Operator">,</span> <span class="ID">w</span><span class="Text"/></span>
+</pre></div><span id="line-130" class="anchor"/><p class="line874">在第四章--操作符和表达式中介绍过的字符格式运算(%)能够实现字符串格式输出: <span id="line-131" class="anchor"/><span id="line-132" class="anchor"/></p><pre>print "The values are %d %7.5f %s" % (x,y,z) # 格式化输出/输入
+<span id="line-133" class="anchor"/></pre><span id="line-134" class="anchor"/><p class="line862">通过对 print 语句添加 >>file 修饰能够将输出内容重定向到 file 文件对象.(file是一个可写的文件对象): <span id="line-135" class="anchor"/><span id="line-136" class="anchor"/><span id="line-137" class="anchor"/><span id="line-138" class="anchor"/><span id="line-139" class="anchor"/><span id="line-140" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-6f736fb45c9bd7615f046b49f1fab5f026647b18_008\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-6f736fb45c9bd7615f046b49f1fab5f026647b18_008', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-6f736fb45c9bd7615f046b49f1fab5f026647b18_008" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">f</span> <span class="Operator">=</span> <span class="ID">open</span><span class="Operator">(</span><span class="String">"output"</span><span class="Operator">,</span><span class="String">"w"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">print</span> <span class="Operator">>></span><span class="ID">f</span><span class="Operator">,</span> <span class="String">"hello world"</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Operator">.</span><span class="Operator">.</span><span class="Operator">.</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">f</span><span class="Operator">.</span><span class="ID">close</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-141" class="anchor"/><p class="line874">将格式输出与三引号字符串相结合是输出特殊文本的有效方式。假设你需要批量发送一些固定格式的短小信件,包含姓名,项目名,以及一个数字，象下面这样: <span id="line-142" class="anchor"/><span id="line-143" class="anchor"/></p><pre>Dear Mr. Bush,
+<span id="line-144" class="anchor"/>Please send back my blender or pay me $50.00.
+<span id="line-145" class="anchor"/>
+<span id="line-146" class="anchor"/>                                     Sincerely yours,
+<span id="line-147" class="anchor"/>
+<span id="line-148" class="anchor"/>                                     Joe Python User
+<span id="line-149" class="anchor"/></pre><span id="line-150" class="anchor"/><p class="line874">象下面这样做就OK: <span id="line-151" class="anchor"/><span id="line-152" class="anchor"/><span id="line-153" class="anchor"/><span id="line-154" class="anchor"/><span id="line-155" class="anchor"/><span id="line-156" class="anchor"/><span id="line-157" class="anchor"/><span id="line-158" class="anchor"/><span id="line-159" class="anchor"/><span id="line-160" class="anchor"/><span
+id="line-161" class="anchor"/><span id="line-162" class="anchor"/><span id="line-163" class="anchor"/><span id="line-164" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-4a591aafac2e934ce43c7cbfe38f1af0b363e43f_009\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-4a591aafac2e934ce43c7cbfe38f1af0b363e43f_009', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-4a591aafac2e934ce43c7cbfe38f1af0b363e43f_009" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">form</span> <span class="Operator">=</span> <span class="String">"""\</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="String">Dear %(name)s,</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="String">Please send back my %(item)s or pay me $%(amount)0.2f.</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="String"/></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="String">                                     Sincerely yours,</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="String"/></span>
+<span class="line"><span class="LineNumber">   7 </span><span class="String">                                     Joe Python User</span></span>
+<span class="line"><span class="LineNumber">   8 </span><span class="String">"""</span></span>
+<span class="line"><span class="LineNumber">   9 </span><span class="ResWord">print</span> <span class="ID">form</span> <span class="Operator">%</span> <span class="Operator">{</span> <span class="String">'name'</span><span class="Operator">:</span> <span class="String">'Mr. Bush'</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  10 </span>               <span class="String">'item'</span><span class="Operator">:</span> <span class="String">'blender'</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  11 </span>               <span class="String">'amount'</span><span class="Operator">:</span> <span class="Number">50.00</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  12 </span>             <span class="Operator">}</span><span class="Text"/></span>
+</pre></div><span id="line-165" class="anchor"/><p class="line874">在输出多行多项目文本时,该方法简单有效,并且条理清晰。 <span id="line-166" class="anchor"/><span id="line-167" class="anchor"/></p><p class="line867">
+</p><h2 id="head-1cb74ada519c3d4a394d9c273932c69e443a01f3">1.5. 对象持久化</h2>
+<span id="line-168" class="anchor"/><span id="line-169" class="anchor"/><p class="line874">将一个对象内容保存到一个文件中，当再次需要该对象时通过读取这个文件重新生成该对象是很用的。你可以写一对函数通过读取和写入特定格式数据实现该功能，不过Python提供的 Pickle 和 shelve 模块可能是更好的选择. <span id="line-170" class="anchor"/><span id="line-171" class="anchor"/></p><p class="line874">Pickle 模块的 dump 方法可以方便的把一个对象保存到一个文件中.例如: <span
+id="line-172" class="anchor"/><span id="line-173" class="anchor"/></p><p class="line874">import Pickle <span id="line-174" class="anchor"/>object = someObject() <span id="line-175" class="anchor"/>f = open(filename,'w') <span id="line-176" class="anchor"/>Pickle.dump(object, f)      # 保存对象 <span id="line-177" class="anchor"/><span id="line-178" class="anchor"/></p><p class="line874">之后可以用 load 方法重新得到该对象: <span id="line-179"
+class="anchor"/><span id="line-180" class="anchor"/></p><p class="line874">import Pickle <span id="line-181" class="anchor"/>f = open(filename,'r') <span id="line-182" class="anchor"/>object = Pickle.load(f)   # 恢复对象 <span id="line-183" class="anchor"/><span id="line-184" class="anchor"/></p><p class="line874">shelve模块与Pickle做类似的工作,不过它将对象数据保存在一个字典格式的文本数据库中: <span id="line-185" class="anchor"/><span id="line-186"
+class="anchor"/><span id="line-187" class="anchor"/><span id="line-188" class="anchor"/><span id="line-189" class="anchor"/><span id="line-190" class="anchor"/><span id="line-191" class="anchor"/><span id="line-192" class="anchor"/><span id="line-193" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-2e74dda8cabf770bc1c11ee3595c46b8699a2a26_010\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-2e74dda8cabf770bc1c11ee3595c46b8699a2a26_010', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-2e74dda8cabf770bc1c11ee3595c46b8699a2a26_010" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">shelve</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">object</span> <span class="Operator">=</span> <span class="ID">someObject</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">dbase</span> <span class="Operator">=</span> <span class="ID">shelve</span><span class="Operator">.</span><span class="ID">open</span><span class="Operator">(</span><span class="ID">filename</span><span class="Operator">)</span>    <span class="Comment"># 打开数据库</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">dbase</span><span class="Operator">[</span><span class="String">'key'</span><span class="Operator">]</span> <span class="Operator">=</span> <span class="ID">object</span>            <span class="Comment"># 将对象保存在数据库中</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="Operator">.</span><span class="Operator">.</span><span class="Operator">.</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ID">object</span> <span class="Operator">=</span> <span class="ID">dbase</span><span class="Operator">[</span><span class="String">'key'</span><span class="Operator">]</span>            <span class="Comment"># 恢复对象</span></span>
+<span class="line"><span class="LineNumber">   7 </span><span class="ID">dbase</span><span class="Operator">.</span><span class="ID">close</span><span class="Operator">(</span><span class="Operator">)</span>                    <span class="Comment"># 关闭数据库</span><span class="Text"/></span>
+</pre></div><span id="line-194" class="anchor"/><p class="line874">*注意*:只有支持序列化的对象才可以被保存在文件中。绝大多数Python对象都支持序列化。某些用于特殊目的的对象,例如用来维护系统内部状态的文件等，这样的对象是不能用这种方法来恢复的。关于Pickle和shelve模块的更多细节，参见附录A. <span id="line-195" class="anchor"/><span id="line-196" class="anchor"/></p><p class="line867">
+</p><h2 id="head-2738a8523baaecf30323668950fa1c23beb74c7f">1.6. Unicode I/O</h2>
+<span id="line-197" class="anchor"/><p class="line874">在系统内部，Unicode 字符串被表示为一个16位整数序列，8-bit 字符串则是一个字节序列, 绝大多数字符串操作被扩展为能够处理更宽范围的字符值。只要 Unicode 字符串被转换为字节流，就必然会产生一系列问题(需要解决)。首先,要考虑现有软件的兼容性, 对那些仅支持 ASCII或其它 8-bit的软件来说，将 Unicode字符串转化为 ASCII字符串是较好的方法。其次, 16-bit
+字符占用两个字节，字节顺序问题虽然比较无聊但必须考虑。对一个Unicode字符 U+HHLL 来说, 小端法编码方案将低位字节放在前面, 即 LL HH；大端法编码方案则将高位字节放在前面,即 HH LL. 就因为这么点问题, 不指定编码方案，你就无法将原始 Unicode 数据写入文件. <span id="line-198" class="anchor"/><span id="line-199" class="anchor"/></p><p class="line874">要解决这些问题, 只能根据特定的编码规则将 Unicode 字符串进行客观表示。这些规则定义了如何将 Unicode
+字符表示为字节序列。在第四章, 针对 unicode()及 s.encode() 首先介绍了编码规则。举例来说： <span id="line-200" class="anchor"/><span id="line-201" class="anchor"/><span id="line-202" class="anchor"/><span id="line-203" class="anchor"/><span id="line-204" class="anchor"/><span id="line-205" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-4939813ad31d9ebba5a15eb7e3f4bde6464cbdba_011\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-4939813ad31d9ebba5a15eb7e3f4bde6464cbdba_011', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-4939813ad31d9ebba5a15eb7e3f4bde6464cbdba_011" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="String">u"M\u00fcller"</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="String">"Hello World"</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">c</span> <span class="Operator">=</span> <span class="ID">a</span><span class="Operator">.</span><span class="ID">encode</span><span class="Operator">(</span><span class="String">'utf-8'</span><span class="Operator">)</span>     <span class="Comment"># Convert a to a UTF-8 string </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">d</span> <span class="Operator">=</span> <span class="ID">unicode</span><span class="Operator">(</span><span class="ID">b</span><span class="Operator">)</span>            <span class="Comment"># Convert b to a Unicode string</span><span class="Text"/></span>
+</pre></div><span id="line-206" class="anchor"/><p class="line874">codecs 模块用类似的技术解决了 Unicode 的输入输出问题。 codecs 模块拥有一系列转换函数依据不同的编码方案完成字节数据和 Unicode 字符串的转换。通过调用 codecs.lookup(encoding) 函数来选择一种编码方案。这个函数返回一个包括四个元素的 tuple (enc_func, decode_func, stream_reader, stream_writer ). 举例来说: <span id="line-207" class="anchor"/><span id="line-208"
+class="anchor"/><span id="line-209" class="anchor"/><span id="line-210" class="anchor"/><span id="line-211" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-6f7a3580cd0c5fce04436a7494ba3e0ddf7f9cbb_012\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-6f7a3580cd0c5fce04436a7494ba3e0ddf7f9cbb_012', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-6f7a3580cd0c5fce04436a7494ba3e0ddf7f9cbb_012" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">codecs</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Operator">(</span><span class="ID">utf8_encode</span><span class="Operator">,</span> <span class="ID">utf8_decode</span><span class="Operator">,</span> <span class="ID">utf8_reader</span><span class="Operator">,</span> <span class="ID">utf8_writer</span><span class="Operator">)</span> <span class="Operator">=</span><span class="Error">
+</span><span class="Error">\</span></span>
+<span class="line"><span class="LineNumber">   3 </span>          <span class="ID">codecs</span><span class="Operator">.</span><span class="ID">lookup</span><span class="Operator">(</span><span class="String">'utf-8'</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-212" class="anchor"/><p class="line862">enc_func (u [,errors ]) 函数接受一个 Unicode 字符串 u ，返回值是tuple(s , len).其中 s 是转码后的 8-bit 字符串(内容为 u 的一部分或全部),  len 是被成功转换的 Unicode 字符数. decode_func(s [,errors]) 函数接受一个 8-bit 字符串，返回值是 tuple(u, len)。其中 u 是一个 Unicode字符串(内容为 s 的一部分或全部)，len 是被成功转换的字符数。errors
+决定转化过程中的错误如何处理，它的值可能是 'strict' 或 'ignore' 或 'replace'。若是 'strict'模式, 编码错误将引发<tt class="backtick"> UnicodeError</tt> 异常。 若是 'ignore' 模式, 编码错误将被忽略。若是 'replace' 模式，无法转换的编码将被替换为 '?' 字符(Unicode字符U+FFFD或8-bit字符 '?')。 <span id="line-213" class="anchor"/><span id="line-214" class="anchor"/></p><p class="line874">stream_reader
+用来对文件对象进行封装，以支持 Unicode 数据读取. 调用 stream_reader (file) 返回封装后的文件对象，它的 read(), readline(), 及 readlines() 方法支持读取 Unicode 字符串数据. stream_writer 用来对文件对象进行封装，以支持将 Unicode 字符串写入文件。调用 stream_writer(file) 返回封装后的文件对象，它的 write() 和 writelines() 方法将 Unicode 字符串按给定的编码转换为字节流写入文件中。 <span id="line-215" class="anchor"/><span
+id="line-216" class="anchor"/></p><p class="line874">下面的例子演示了如何使用这些方法处理 UTF-8 编码的 Unicode 数据: <span id="line-217" class="anchor"/><span id="line-218" class="anchor"/><span id="line-219" class="anchor"/><span id="line-220" class="anchor"/><span id="line-221" class="anchor"/><span id="line-222" class="anchor"/><span id="line-223" class="anchor"/><span id="line-224" class="anchor"/><span
+id="line-225" class="anchor"/><span id="line-226" class="anchor"/><span id="line-227" class="anchor"/><span id="line-228" class="anchor"/><span id="line-229" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-6f7486ecbc3710059578459b126a5b5c4b950dd4_013\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-6f7486ecbc3710059578459b126a5b5c4b950dd4_013', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-6f7486ecbc3710059578459b126a5b5c4b950dd4_013" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment"># 输出 Unicode 数据到文件</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="ID">ustr</span> <span class="Operator">=</span> <span class="String">u'M\u00fcller'</span>         <span class="Comment"># 一个Unicode 字符串</span></span>
+<span class="line"><span class="LineNumber">   3 </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">outf</span> <span class="Operator">=</span> <span class="ID">utf8_writer</span><span class="Operator">(</span><span class="ID">open</span><span class="Operator">(</span><span class="String">'foo'</span><span class="Operator">,</span><span class="String">'w'</span><span class="Operator">)</span><span class="Operator">)</span>
+<span class="Comment"># 创建 UTF-8 字节流</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ID">outf</span><span class="Operator">.</span><span class="ID">write</span><span class="Operator">(</span><span class="ID">ustr</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ID">outf</span><span class="Operator">.</span><span class="ID">close</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span></span>
+<span class="line"><span class="LineNumber">   8 </span><span class="Comment"># 从一个文件读取 unicode 数据 </span></span>
+<span class="line"><span class="LineNumber">   9 </span><span class="Comment"/><span class="ID">infile</span> <span class="Operator">=</span> <span class="ID">utf8_reader</span><span class="Operator">(</span><span class="ID">open</span><span class="Operator">(</span><span class="String">'bar'</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span><span class="ID">ustr</span> <span class="Operator">=</span> <span class="ID">infile</span><span class="Operator">.</span><span class="ID">read</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span><span class="ID">infile</span><span class="Operator">.</span><span class="ID">close</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-230" class="anchor"/><p class="line862">当处理 Unicode文件时, 数据编码通常内嵌在文件本身当中。举例来说，XML 解析器根据文件的前几个字节'<?xml ...>' 来判断文件编码. 如果最初的四个值是 3C 3F 78 6D ('<?xm'), 就认为编码是 UTF-8. 如果最初的四个值是 00 3C 00 3F 或 3C 00 3F 00, 就认为编码是 UTF-16 大端表示方案 或 UTF-16 小端表示方案。 文档编码可能出现在 MIME
+头或者做为其它文档元素的一个属性。举例来说： <span id="line-231" class="anchor"/><span id="line-232" class="anchor"/></p><pre><?xml ... encoding="ISO-8859-1" .... ?>
+<span id="line-233" class="anchor"/></pre><span id="line-234" class="anchor"/><span id="line-235" class="anchor"/><p class="line874">用类似下面的代码来读取文档的编码： <span id="line-236" class="anchor"/><span id="line-237" class="anchor"/><span id="line-238" class="anchor"/><span id="line-239" class="anchor"/><span id="line-240" class="anchor"/><span id="line-241" class="anchor"/><span
+id="line-242" class="anchor"/><span id="line-243" class="anchor"/><span id="line-244" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-1d4779def99fead6ab1094816a25478a15805b26_014\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-1d4779def99fead6ab1094816a25478a15805b26_014', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-1d4779def99fead6ab1094816a25478a15805b26_014" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">f</span> <span class="Operator">=</span> <span class="ID">open</span><span class="Operator">(</span><span class="String">"somefile"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"># Determine encoding </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"/><span class="Operator">.</span><span class="Operator">.</span><span class="Operator">.</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="Operator">(</span><span class="ID">encoder</span><span class="Operator">,</span><span class="ID">decoder</span><span class="Operator">,</span><span class="ID">reader</span><span class="Operator">,</span><span class="ID">writer</span><span class="Operator">)</span> <span class="Operator">=</span> <span
+class="ID">codecs</span><span class="Operator">.</span><span class="ID">lookup</span><span class="Operator">(</span><span class="ID">encoding</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ID">f</span> <span class="Operator">=</span> <span class="ID">reader</span><span class="Operator">(</span><span class="ID">f</span><span class="Operator">)</span>    <span class="Comment"># Wrap file with Unicode reader </span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ID">data</span> <span class="Operator">=</span> <span class="ID">f</span><span class="Operator">.</span><span class="ID">read</span><span class="Operator">(</span><span class="Operator">)</span>  <span class="Comment"># Read Unicode data </span></span>
+<span class="line"><span class="LineNumber">   7 </span><span class="ID">f</span><span class="Operator">.</span><span class="ID">close</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-245" class="anchor"/><p class="line867">
+</p><h3 id="head-61d7029f44fb5b278fefe0d3fdded750594994c9">1.6.1. Unicode 数据编码</h3>
+<span id="line-246" class="anchor"/><p class="line874">表 9.2 列出了codecs模块中目前正在使用的所有编码 <span id="line-247" class="anchor"/><span id="line-248" class="anchor"/></p><p class="line867"><strong>表 9.2. codecs 模块中的全部编码器</strong> <span id="line-249" class="anchor"/><span id="line-250" class="anchor"/></p><pre>编码                              描述
+<span id="line-251" class="anchor"/>'ascii'                         ASCII 编码
+<span id="line-252" class="anchor"/>'latin-1', 'iso-8859-1'         Latin-1 或 ISO-8859-1 编码
+<span id="line-253" class="anchor"/>'utf-8'                         8-bit 变长编码
+<span id="line-254" class="anchor"/>'utf-16'                        16-bit 变长编码
+<span id="line-255" class="anchor"/>'utf-16-le'                     UTF-16, 显式小端编码方案
+<span id="line-256" class="anchor"/>'utf-16-be'                     UTF-16, 显式大端编码方案
+<span id="line-257" class="anchor"/>'unicode-escape'                和 u"string " 格式相同
+<span id="line-258" class="anchor"/>'raw-unicode-escape'            和 ur"string "格式相同
+<span id="line-259" class="anchor"/></pre><span id="line-260" class="anchor"/><span id="line-261" class="anchor"/><p class="line874">下面的段落描述了各种编码的细节： <span id="line-262" class="anchor"/><span id="line-263" class="anchor"/></p><p class="line874">'ascii' 编码: <span id="line-264" class="anchor"/><span id="line-265" class="anchor"/></p><p class="line874">'ascii' 编码,
+字符值的范围被限制在[0,0x7f] 和 [U+0000, U+007F]。超出这个范围的任何字符都是非法的。 <span id="line-266" class="anchor"/><span id="line-267" class="anchor"/></p><p class="line874">'iso-8859-1' 或 'latin-1' 编码: <span id="line-268" class="anchor"/><span id="line-269" class="anchor"/></p><p class="line874">字符可以是任意的 8-bit 值([0,0xff] 及 [U+0000, U+00FF]). 取值范围 [0,0x7f]
+内的字符对应 ASCII 字符集，取值范围 [0x80,0xff] 内的字符对应 ISO-8859-1 或 扩展 ASCII 字符集。超出 [0,0xff] 取值范围的任何字符都会造成错误。 <span id="line-270" class="anchor"/><span id="line-271" class="anchor"/></p><p class="line874">'utf-8' 编码: <span id="line-272" class="anchor"/><span id="line-273" class="anchor"/></p><p class="line874">UTF-8
+是一种变长编码，它能表示所有的Unicode字符。一个单独的字节用来表示值为 0–127 的 ASCII 字符。所有其它字符均被表示为多字节序列(双字节或3字节)。这些字节的编码见下表 <span id="line-274" class="anchor"/><span id="line-275" class="anchor"/></p><pre>Unicode 字符              Byte 0                    Byte 1                  Byte 2
+<span id="line-276" class="anchor"/>U+0000 - U+007F          0nnnnnnn
+<span id="line-277" class="anchor"/>U+007F - U+07FF          110nnnnn                  10nnnnnn
+<span id="line-278" class="anchor"/>U+0800 - U+FFFF          1110nnnn                  10nnnnnn                 10nnnnnn
+<span id="line-279" class="anchor"/></pre><span id="line-280" class="anchor"/><span id="line-281" class="anchor"/><p class="line874">对两字节序列, 第一个字节的前三个比特总是 110. 对三字节序列, 第一个字节的前三个比特总是 1110. 多字节序列的所有后来字节的前两个比特都是 10。 <span id="line-282" class="anchor"/><span id="line-283" class="anchor"/></p><p class="line862">UTF-8
+格式一个字符最多可以使用六个字节。 Python 中, 四字节 UTF-8 序列被称为代理对，用来对一对 Unicode 字符进行编码。 这一对字符的取值都在[U+D800, U+DFFF]范围内并组合成一个 20-bit 的值. 代理对这样编码:四字节序列 111100nn 10nnnnnn 10nnmmmm 10mmmmmm 被编码成这样一对： U+D800 + N , U+DC00 + M , 其中 N 是高10位， M 是低十位。五字节和六字节 UTF-8 序列(开始位分别为 111110 和 1111110)
+用来对32比特值的Unicode字符进行编码。Python目前不支持五字节和六字节UTF-8序列。如果数据流中存在这样的数据会引发 <tt class="backtick">UnicodeError</tt> 异常。 <span id="line-284" class="anchor"/><span id="line-285" class="anchor"/></p><p class="line862">UTF-8 编码对旧程序支持的相当好. 首先，标准 ASCII 字符的编码没有发生任何改变。这意味着 UTF-8 编码的 ASCII 字符串与传统的 ASCII
+字符串完全相同。其次， UTF-8 编码的多字节序列未内嵌 null 字节。这样现有的基于 C 库的软件和程序所使用的 null-结尾的 8-bit 字符串可以与 UTF-8 字符串相容. 最后，UTF-8 编码 保留了字符串的字典顺序。也就是说如果 a 和 b 是 Unicode 字符串并且 a < b, 则当 a 和 b被转化为UTF-8编码后， a < b 仍然成立。因此，写给 ASCII 字符串的排序算法及其它与顺序有关的算法也一样可以工作在 UTF-8 编码上。
+<span id="line-286" class="anchor"/><span id="line-287" class="anchor"/></p><p class="line874">'utf-16' , 'utf-16-be' , and 'utf-16-le' 编码: <span id="line-288" class="anchor"/><span id="line-289" class="anchor"/></p><p class="line874">UTF-16 是一种变长16位编码，其中 Unicode 被记录为 16-bit 值。如果未指定字节顺序，则默认为大端法编码方案。另外，一个特殊的字符 U+FEFF
+可以用来显式的标记UTF-16 数据流的字节顺序。.大端编码方案, U+FEFF 字符表示 zero-width nonbreaking space, 而 U+FFFE 则是一个非法的 Unicode字符。因此，编码器可以使用这个字节顺序 FE FF 或 FF FE 来判断字节顺序。当读取 Unicode 数据时,Python会自动移去这个标志。 <span id="line-290" class="anchor"/><span id="line-291" class="anchor"/></p><p class="line874">'utf-16-be' 编码 显式指定届UTF-16
+大端编码(big endian), 'utf-16-le' 显式指定 UTF-16 小端编码(little ending)。 <span id="line-292" class="anchor"/><span id="line-293" class="anchor"/></p><p class="line874">尽管已经有多种 UTF-16 的扩展以支持更多字符，目前的 Python 并不支持任何这样的扩展。 <span id="line-294" class="anchor"/><span id="line-295" class="anchor"/></p><p class="line874">'unicode-escape' 及
+'raw-unicode-escape' 编码: <span id="line-296" class="anchor"/><span id="line-297" class="anchor"/></p><p class="line874">这些编码方法被用来转换 Unicode 字符串到 Python使用的 Unicode 字符串及原始Unicode字符串。举例来说： <span id="line-298" class="anchor"/><span id="line-299" class="anchor"/><span id="line-300" class="anchor"/><span id="line-301" class="anchor"/></p><div lang="en"
+dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-aefa0239738658dc6935b99a96d6e486a8a1bc3b_015\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-aefa0239738658dc6935b99a96d6e486a8a1bc3b_015', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-aefa0239738658dc6935b99a96d6e486a8a1bc3b_015" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">s</span> <span class="Operator">=</span> <span class="String">u'\u14a8\u0345\u2a34'</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">t</span> <span class="Operator">=</span> <span class="ID">s</span><span class="Operator">.</span><span class="ID">encode</span><span class="Operator">(</span><span class="String">'unicode-escape'</span><span class="Operator">)</span>   <span class="Comment">#t = '\u14a8\u0345\u2a34'</span><span
+class="Text"/></span>
+</pre></div><span id="line-302" class="anchor"/><p class="line867">
+</p><h3 id="head-af387604411745eec942be27dfc87d99dfc8ef32">1.6.2. Unicode 字符属性</h3>
+<span id="line-303" class="anchor"/><p class="line874">除了实现输入输出之外, 使用 Unicode 的程序必然会有测试 Unicode 字符属性的需要（是否大小写、是否数字、是否空白等等）。 unicodedata 模块提供了这些 unicode字符数据库。. 常规字符属性可以通过 unicodedata.category(c) 函数得到. 例如, unicodedata.category(u"A") 返回 'Lu', 表示这个字符是一个大写字符。更多关于Unicode
+字符数据库及 unicodedata 模块的细节，请参阅附录A。 <span id="line-304" class="anchor"/><span id="bottom" class="anchor"/></p></div>

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "id": "website"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "网站的日常维护、升级，内容整理、权限等。要求对知识管理和内容管理有经验。 ", 
+        "modified": "2004-03-05 16:27:31", 
+        "title": "网站维护团队"
+    }
+}

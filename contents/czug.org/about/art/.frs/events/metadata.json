@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "id": "events"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "一些活动的组织", 
+        "modified": "2005-10-07 11:58:55", 
+        "title": "活动"
+    }
+}

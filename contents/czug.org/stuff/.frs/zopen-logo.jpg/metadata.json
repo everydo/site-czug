@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Image", 
+        "id": "zopen-logo.jpg"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "", 
+        "modified": "2006-08-17 14:01:49", 
+        "title": "zopen-logo.jpg"
+    }
+}

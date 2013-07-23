@@ -1,0 +1,15 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "left_col": ".. navtree::\n   :root_depth: 3",
+        "hidden_keys": ["left_col.rst", "index.rst"]
+    }, 
+    "dublin": {
+        "creators": [
+            "Zoomq"
+        ], 
+        "description": "在下本是个GNU技术旁观者，只想静静欣赏自由软件森林中列强并举的盛事！\r\n然而，常在河边行怎能不湿脚？---我来也！！！\r\n", 
+        "modified": "2007-10-28 15:36:38", 
+        "title": "Zoomq's Blog"
+    }
+}

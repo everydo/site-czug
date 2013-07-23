@@ -1,0 +1,26 @@
+{
+    "main": {
+        "hidden_keys": [
+            "img", 
+            "__init__.pyc", 
+            "__init__.py"
+        ], 
+        "keys": [
+            "getstarted.rst", 
+            "example.rst", 
+            "interface.rst", 
+            "adapter.rst", 
+            "utility.rst", 
+            "adapter2.rst", 
+            "zope.rst", 
+            "case.rst", 
+            "reference.rst", 
+            "component-architecture.tex"
+        ], 
+        "contenttype": "Folder"
+    }, 
+    "dublin": {
+        "description": "创建项目；安装新建的项目，准备开发；运行测试；运行应用；项目结构；MyProject项目和包；", 
+        "title": "创建一个bfg项目"
+    }
+}

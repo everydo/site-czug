@@ -1,0 +1,12 @@
+{
+    "main": {
+        "contenttype": "Document"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "", 
+        "title": "Python 绝对简明手册"
+    }
+}

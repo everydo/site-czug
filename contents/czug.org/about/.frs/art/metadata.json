@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "id": "art"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "存放一些图片", 
+        "modified": "2005-12-14 15:03:26", 
+        "title": "图片库"
+    }
+}

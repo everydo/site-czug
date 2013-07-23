@@ -1,0 +1,14 @@
+{
+    "main": {
+        "mimetype": "text/x-rst", 
+        "contenttype": "Document"
+    }, 
+    "dublin": {
+        "creators": [
+            "users.benky"
+        ], 
+        "created": "2007-07-06T02:19:05Z", 
+        "modified": "2007-10-21T05:25:23Z", 
+        "title": "深入Plone设置与管理"
+    }
+}

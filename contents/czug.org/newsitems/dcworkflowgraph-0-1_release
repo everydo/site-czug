@@ -1,0 +1,14 @@
+<p>我们 <a href="http://www.zopechina.com">润普公司</a> 在此发布DCWorkflowGraph的第一个版本。</p>
+<p>这个产品能够以图形化的方式显示DCWorkflow中定义的流程，安装后，您可以看到如下的流程图：</p>
+<p><img src="http://plone.org/Members/panjunyong/dcworkflowgraph.jpg" /></p>
+<p><a href="http://zope.org/Members/panjunyong/DCWorkflowGraph">产品主页</a> |
+<a href="http://zope.org/Members/panjunyong/DCWorkflowGraph/DCWorkflowGraph_0_1/DCWorkflowGraph_0_1.tgz">下载</a></p>
+<p>注，DCWorkflowGraph吸取了如下产品的代码和构思：</p>
+
+<ul>
+<li>Siden da Silva's <a href="http://awkly.org/Members/sidnei/weblog_storage/blog_27014">dcworkfow2dot.py</a></li>
+<li><a href="http://xiru.org/Members/xiru/weblog_storage/blog_79598">DCWorkflow dot graphs</a></li>
+<li><a href="http://www.openflow.it/wwwopenflow/Download/OpenFlowEditor_0_4.tgz">OpenFlowEditor</a></li>
+<li><a href="http://cvs.sourceforge.net/viewcvs.py/collective/DCWorkflowDump/">DCWorkflowDump</a></li>
+
+</ul>

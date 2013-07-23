@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "News_Item.2003-03-23.1336"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "CMFContentPanels是一个类似CMFPortlets的产品，他能够把多个CMF内容以面板的形式组织成一个复杂的页面。CMFContentPanels将布局信息存放在内容中，因此更具可用性。", 
+        "modified": "2003-03-23 18:18:51", 
+        "title": "润普发布Plone的内容仪表板CMFContentPanels！"
+    }
+}

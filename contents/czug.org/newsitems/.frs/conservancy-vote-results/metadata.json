@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "conservancy-vote-results"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "根据Plone基金成员的投票结果，Conservancy建议得到通过。", 
+        "modified": "2004-12-09 17:40:44", 
+        "title": "Plone基金Conservancy(版权保护)投票结果揭晓"
+    }
+}

@@ -1,0 +1,364 @@
+<p>出处： <a href="http://www.javaeye.com/wiki/Django-book/729-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E5%8D%81%E7%AB%A0%EF%BC%9A%E6%B7%B1%E5%85%A5%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E">http://www.javaeye.com/wiki/Django-book/729-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E5%8D%81%E7%AB%A0%EF%BC%9A%E6%B7%B1%E5%85%A5%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E</a></p>
+  
+  <h1 style="margin:25px 0 10px 10px">翻译www.djangobook.com之第十章：深入模板引擎 
+    
+  </h1>
+  <div class="content">
+    <span style="color: red"><strong>The Django Book：第10章 深入模板引擎</strong></span><br />大多数时候你是以模板作者的角色来与Django的模板语言交互<br />本章更深的潜入到Django模板系统的五脏六腑，如果你需要扩展模板系统或者只是对它怎样工作好奇，读读它<br />如果你在另一个程序的一部分使用Django模板系统，即不使用该框架的其它部分，确认你阅读了本文档后面的配置部分<br /><br /><strong>基础</strong><br />模板是一个文本文档，或者一个普通使用Django模板语言标记的Python字符串，模板可以保护块标签或者变量<br />块标签是模板中完成某些事情的标志<br />这个定义很模糊，例如，块标签可以输出内容，处理控制结构("if"语句或者"for"循环)，从数据库得到数据或者允许<br />访问其它模板标签，块标签用{%和%}包围:<br /><pre name="code" class="java">
+{% if is_logged_in %}
+  Thanks for logging in!
+{% else %}
+  Please log in.
+{% endif %}
+</pre><br />变量是模板中输出值的标志<br />变量标签用{{和}}包围:<br />My first name is {{ first_name }}. My last name is {{ last_name }}.<br />context是传递给模板的"名字"-&gt;"值"的映射(类似于Python字典)<br />模板渲染通过用context值替代变量"洞"并执行块标签来渲染context<br /><br /><strong>使用模板对象</strong><br />最低级的使用Python模板系统只需两步:<br />1，把原始模板代码编辑到一个Template对象<br />2，使用一个给定的context调用Template对象的render()方法<br /><br /><strong>编译字符串</strong><br />创建Template对象的最简单的方法是直接初始化它，构造函数使用原始模板代码作为它的参数:<br /><pre name="code" class="java">
+&gt;&gt;&gt; from django.template import Template
+&gt;&gt;&gt; t = Template("My name is {{ my_name }}.")
+&gt;&gt;&gt; print t
+&lt;django.template.Template object at 0x1150c70&gt;
+</pre><br />在幕后系统仅仅当你创建Template对象时解析一次你的原始代码，然后由于性能的关系模板在内部作为"节点"结构存储<br />甚至解析本身也是非常快的，大部分的解析通过调用一个单独而简短的正则表达式来处理<br /><br /><strong>渲染context</strong><br />一旦你拥有一个编译过的Template对象，你可以使用它渲染一个context或者很多context<br />Context构造函数使用一个映射变量名和变量值的字典作为它的可选参数<br />使用context调用Template对象的render()方法来"填充"模板:<br /><pre name="code" class="java">
+&gt;&gt;&gt; from django.template import Context, Template
+&gt;&gt;&gt; t = Template("My name is {{ my_name }}.")
+
+&gt;&gt;&gt; c = Context({"my_name": "Adrian"})
+&gt;&gt;&gt; t.render(c)
+"My name is Adrian."
+
+&gt;&gt;&gt; c = Context({"my_name": "Dolores"})
+&gt;&gt;&gt; t.render(c)
+"My name is Dolores."
+</pre><br />变量名必须由字母A-Z,数字0-9，下划线或小数点组成<br />在模板渲染中小数点有特殊的意义，变量名中的小数点表示查询，当模板系统在变量名里遇到小数点时，它尝试一些<br />可能的选项，例如变量{{ foo.bar }}可能扩展为下面的任何一种:<br />字典查询:foo["bar"]<br />属性查询:foo.bar<br />方法调用:foo.bar()<br />列表索引查询:foo[bar]<br />模板系统使用可以工作的第一种查询方式，这是短路逻辑，下面是一些例子:<br /><pre name="code" class="java">
+&gt;&gt;&gt; from django.template import Context, Template
+&gt;&gt;&gt; t = Template("My name is {{ person.first_name }}.")
+
+&gt;&gt;&gt; d = {"person": {"first_name": "Joe", "last_name": "Johnson"}}
+&gt;&gt;&gt; t.render(Context(d))
+"My name is Joe."
+
+&gt;&gt;&gt; class Person:
+...     def __init__(self, first_name, last_name):
+...         self.first_name, self.last_name = first_name, last_name
+...
+&gt;&gt;&gt; p = Person("Ron", "Nasty")
+&gt;&gt;&gt; t.render(Context({"person": p}))
+"My name is Ron."
+
+&gt;&gt;&gt; class Person2:
+...     def first_name(self):
+...         return "Samantha"
+...
+&gt;&gt;&gt; p = Person2()
+&gt;&gt;&gt; t.render(Context({"person": p}))
+"My name is Samantha."
+
+&gt;&gt;&gt; t = Template("The first stooge in the list is {{ stooges.0 }}.")
+&gt;&gt;&gt; c = Context({"stooges": ["Larry", "Curly", "Moe"]})
+&gt;&gt;&gt; t.render(c)
+"The first stooge in the list is Larry."
+</pre><br />方法查询比其它查询类型稍微复杂一点，下面是需要记住的一些事情:<br />1，在方法查询时当方法触发一个异常，这个异常会一直传播，除非异常有一个值为True的silent_variable_failure属性<br />如果异常确实有这个属性，变量将会被渲染为空字符串，例如:<br /><pre name="code" class="java">
+&gt;&gt;&gt; t = Template("My name is {{ person.first_name }}.")
+
+&gt;&gt;&gt; class Person3:
+...     def first_name(self):
+...         raise AssertionError("foo")
+...
+&gt;&gt;&gt; p = Person3()
+&gt;&gt;&gt; t.render(Context({"person": p}))
+Traceback (most recent call last):
+...
+AssertionError: foo
+
+&gt;&gt;&gt; class SilentAssertionError(AssertionError):
+...     silent_variable_failure = True
+...
+&gt;&gt;&gt; class Person4:
+...     def first_name(self):
+...         raise SilentAssertionError("foo")
+...
+&gt;&gt;&gt; p = PersonClass4()
+&gt;&gt;&gt; t.render(Context({"person": p}))
+"My name is ."
+</pre><br />注意所有的Django数据库API中的DoesNotExist异常的基类django.core.exceptions.ObjectDoesNotExist有这个属性并且<br />值为True，所有如果你通过Django模型对象使用Django模板，任何DoesNotExist异常都将会静静的失败<br />2，方法调用仅仅当方法没有必需的参数时才会工作，否则系统继续下一个查询类型(列表索引查询)<br />3，显然，一些方法有副作用，允许模板系统访问它们则是很愚蠢的安全漏洞<br />一个好例子是每个Django模型对象的delete()方法，模板系统不应该允许做像这样的事情:<br /><pre name="code" class="java">
+I will now delete this valuable data. {{ data.delete }}
+</pre><br />在方法上设置一个方法属性alters_data来预防这点，如果这个属性为True则模板系统不会执行这个方法:<br /><pre name="code" class="java">
+def sensitive_function(self):
+    self.database_record.delete()
+sensitive_function.alters_data = True
+</pre><br />例如，Django模型对象动态生成的delete()和save()方法会自动得到alters_data=True设置<br /><br /><strong>如何处理非法变量</strong><br />通常，如果变量不存在，模板系统会插入TEMPLATE_STRING_IF_INVALID设置，它默认为空<br />只有当TEMPLATE_STRING_IF_INVALID设置为默认值的时候适用于非法变量的过滤器才会被使用<br />如果TEMPLATE_STRING_IF_INVALID被设置为其它任何值，变量过滤器都会被忽略<br />这个行为对if，for和regroup模板标签稍微不同，如果非法变量提供给这些模板标签，变量将为被解析为None<br />过滤器在这些模板标签中会一直对非法变量适用<br /><br /><strong>和Context对象玩玩</strong><br />大多数时候你将通过传递给Context()一个完全赋值的字典来初始化Context对象，但是一旦它初始化了，你可以使用标准<br />字典语法对Context对象添加和删除项:<br /><pre name="code" class="java">
+&gt;&gt;&gt; c = Context({"foo": "bar"})
+&gt;&gt;&gt; c['foo']
+'bar'
+&gt;&gt;&gt; del c['foo']
+&gt;&gt;&gt; c['foo']
+''
+&gt;&gt;&gt; c['newvariable'] = 'hello'
+&gt;&gt;&gt; c['newvariable']
+'hello'
+</pre><br />而且，Context对象是一个stack，你可以push()和pop()额外的context到stack中去，所有的设置操作放在stack的最高<br />context里，得到操作时会搜索stack(自顶向下)直到发现值<br />如果你pop()的太多的话它将触发django.template.ContextPopException<br />这里是这些多级别工作的一个例子:<br /><pre name="code" class="java">
+# Create a new blank context and set a simple value:
+&gt;&gt;&gt; c = Context()
+&gt;&gt;&gt; c['foo'] = 'first level'
+
+# Push a new context onto the stack:
+&gt;&gt;&gt; c.push()
+&gt;&gt;&gt; c['foo'] = 'second level'
+
+# The value of "foo" is now what we set at the second level:
+&gt;&gt;&gt; c['foo']
+'second level'
+
+# After popping a layer off, the old value is still there:
+&gt;&gt;&gt; c.pop()
+&gt;&gt;&gt; c['foo']
+'first level'
+
+# If we don't push() again, we'll overwrite existing values:
+&gt;&gt;&gt; c['foo'] = 'overwritten'
+&gt;&gt;&gt; c['foo']
+'overwritten'
+
+# There's only one context on the stack, so pop()ing will fail:
+&gt;&gt;&gt; c.pop()
+Traceback (most recent call last):
+...
+django.template.ContextPopException
+</pre><br />下面你会看到，把Context当成stack在一些自定义模板标签里非常易用<br /><br /><strong>RequestContext和context处理器</strong><br />Django有一个特殊的Context类，django.template.RequestContext，它比普通的django.template.Context稍微复杂一点<br />第一个区别是它把HttpRequest对象(参考附录8)作为它的第一个参数:<br /><pre name="code" class="java">
+c = RequestContext(request, {
+    'foo': 'bar',
+})
+</pre><br />第二个区别是它根据你的TEMPLATE_CONTEXT_PROCESSORS设置自动使用一些变量给context赋值<br />TEMPLATE_CONTEXT_PROCESSORS设置一些叫做context processors的元组，context processors使用request对象作为它们<br />的参数并且返回一个合并到context的项的字典，默认TEMPLATE_CONTEXT_PROCESSORS设置为:<br /><pre name="code" class="java">
+("django.core.context_processors.auth",
+ "django.core.context_processors.debug",
+ "django.core.context_processors.i18n")
+</pre><br />每个processor按顺序工作，即，如果一个processor添加一个变量到context里，第二个processor会添加一个同名的变量<br />第二个会覆盖第一个，默认processors在下面解释<br />你也可以给RequestContext传递一个额外processors的列表，使用可选的第三个参数processors<br />这个例子中RequestContext实例得到一个ip_address变量:<br /><pre name="code" class="java">
+def ip_address_processor(request):
+    return {'ip_address': request.META['REMOTE_ADDR']}
+
+def some_view(request):
+    # ...
+    return RequestContext(request, {
+        'foo': 'bar',
+    }, processors=[ip_address_processor])
+</pre><br />这里是每个默认processor做的事情:<br />django.core.context_processors.auth<br />如果TEMPLATE_CONTEXT_PROCESSORS包含这个processor，每个RequestContext将会包含下面三个变量:<br />user<br />一个表示当前登录的用户的django.contrib.auth.models.User实例或者如果客户没登录时表示一个AnonymousUser实例<br />messages<br />一个当前登录用户的messages列表(字符串)，在幕后它为每个request调用request.user.get_and_delete_messages()<br />这个方法在数据库收集和删除用户的messages，注意messages通过user.add_message()设置<br />perms<br />一个表示当前登录的用户的permissions的django.core.context_processors.PermWrapper实例<br />参考第12章关于users，permissions和messages的更多信息<br />django.core.context_processors.debug<br />这个processor把测试信息放到模板层，它在下面的前提下工作:<br />1，DEBUG设置为True<br />2，request来自于INTERNAL_IPS设置中的IP地址<br />如果这些条件都符合，则下面的变量将被设置:<br />debug<br />设置为True则你可以在模板中测试你是否处于DEBUG模式<br />sql_queries<br />一个{'sql': ..., 'time': ...}字典的列表，它表示目前为止在请求时发生的每一个SQL查询以及所用的时间<br />这个列表通过query排序<br />django.core.context_processors.i18n<br />如果这个processor允许使用，则每个RequestContext将包含下面两个变量:<br />LANGUAGES<br />LANGUAGES设置的值<br />LANGUAGE_CODE<br />表示request.LANGUAGE_CODE，如果它存在的话，否则将为LANGUAGE_CODE设置的值<br />附录5有更多关于这两个设置的信息<br />django.core.context_processors.request<br />如果允许使用它，则每个RequestContext将包含一个request变量，表示当前的HttpRequest对象<br />注意这个processor默认不允许使用，你将不得不自己激活它<br /><br /><strong>载入模板</strong><br />通常你会把模板存储在你的文件系统的文件中(或者在其它地方，如果你些了自定义的模板载入器)而不是自己使用低级<br />Template API，Django根据你的模板载入设置(参看下面的"载入器类型")在几个地方搜索模板目录，但是最基本的指定<br />模板目录的方式是使用TEMPLATE_DIRS设置，它应该被设置为一个包含你的模板目录的完整路径的列表或元组:<br /><pre name="code" class="java">
+TEMPLATE_DIRS = (
+    "/home/html/templates/lawrence.com",
+    "/home/html/templates/default",
+)
+</pre><br />你的模板可以放在任何你需要的地方，只要目录和模板对于Web服务器可读，它们可以有一个你想要的后缀，例如.html<br />或者.txt或者根本没有后缀，注意这些路径应该使用Unix样式的前斜线，甚至在Windows上也如此<br /><br /><strong>Python API</strong><br />Django有两种从文件载入模板的方式:<br />django.template.loader.get_template(template_name)<br />get_template使用给定的名字返回编译过的模板(一个Template对象)<br />如果模板不存在则触发djang.template.TemplateDoesNotExist异常<br />django.template.loader.select_template(template_name_list)<br />select_template很像get_template，除了它使用模板名列表作为参数并返回列表中存在的第一个模板<br />例如，如果我们调用get_template('story_detail.html')并且设置了上面的TEMPLATE_DIRS，则下面是Django按顺序<br />查找的文件:<br />/home/html/templates/lawrence.com/story_detail.html<br />/home/html/templates/default/story_detail.html<br />如果你调用select_template(['story_253_detail.html', 'story_detail.html'])，则下面是Django查找的文件:<br />/home/html/templates/lawrence.com/story_253_detail.html<br />/home/html/templates/default/story_253_detail.html<br />/home/html/templates/lawrence.com/story_detail.html<br />/home/html/templates/default/story_detail.html<br />当Django找到一个存在的模板，它就是停止搜索<br />小贴士:<br />你可以使用select_template()来得到超级灵活的模板能力，例如，如果你写了一个新闻故事并想让一些故事拥有自定义<br />模板，你可以像这样使用select_template(['story_%s_detail.html' % story.id, 'story_detail.html'])<br />这将允许你为一些单独的故事使用自定义模板，并给那些没有自定义模板的故事提供一个fallback模板<br /><br /><strong>使用子目录</strong><br />很可能需要也推荐在模板目录的子目录组织模板，习惯用法士给每个Django app创建子目录，并在子目录里创建子目录<br />使用你自己的智慧来做这件事，把所有的模板存放在根目录下会十分凌乱<br />为了载入一个子目录的模板，只需像这样使用一个斜线:<br /><pre name="code" class="java">
+get_template('news/story_detail.html')
+</pre><br />而且，使用UNIX风格的前斜线，甚至在Windows上也是这样<br /><br /><strong>模板载入器</strong><br />Django默认默认从文件系统载入模板，但是Django也有几个其它的知道怎样从其它源载入模板的模板载入器<br />这些其它的模板载入器默认不可用，但是你可以通过编辑TEMPLATE_LOADERS设置来激活它们<br />TEMPLATE_LOADERS应该是一个字符串的元组，其中每个字符串表示一个模板载入器，Django自带这些模板载入器:<br />django.template.loaders.filesystem.load_template_source<br />根据TEMPLATE_DIRS从文件系统载入模板，默认可用<br />django.template.loaders.app_directories.load_template_source<br />在文件系统中从Django的apps载入模板，对于INSTALLED_APPS中的每个app，载入器寻找templates子目录，如果该目录<br />存在，Django则会在该目录下寻找模板，这意味着你可以在单独的app里存储模板，这也让使用默认模板发布Django<br />apps很容易，例如，如果INSTALLED_APPS包含('myproject.polls', 'myproject.music')，则get_template('foo.html')<br />将会按下列顺序查找模板:<br />/path/to/myproject/polls/templates/foo.html<br />/path/to/myproject/music/templates/foo.html<br />注意载入器第一次import时使用了优化，它把INSTALLED_APPS的templates子目录列表缓存起来<br />该载入器默认可使用<br />django.template.loaders.eggs.load_template_source<br />和上面的app_directories很类似，但是它从Python的eggs而不是文件系统载入模板<br />该载入器默认不可用，如果你使用eggs发布你的app，则你需要激活它<br />Django根据TEMPLATE_LOADERS设置按顺序使用模板载入器，它将使用每个载入器寻找模板直到找到一个匹配的<br /><br /><strong>扩展模板系统</strong><br />尽管Django模板语言自带一些默认标签和过滤器，你可能想写你自己的，这是很容易的<br />首先，在Django的app包的合适位置创建一个templatetags包，它应该和models.py，views.py等在同一级，例如:<br /><pre name="code" class="java">
+polls/
+    models.py
+    templatetags/
+    views.py
+</pre><br />添加两个文件到templatetags包，一个__init__.py文件(来告诉Python这是一个包含Python代码的模块)和一个包含你<br />自定义的标签/过滤器定义的文件，后者的文件名是你将在后面用来载入标签的名字，例如，如果你的自定义标签或者<br />过滤器在一个叫ppll_extras.py文件里，你可以在模板里做下面的事情:<br /><pre name="code" class="java">
+{% load poll_extras %}
+</pre><br />{% load %}标签查看你的INSTALLED_APPS设置并且只允许在已安装的Django apps里面载入模板库<br />这是一个安全特性，它允许你在一个单独的计算机里为许多模板库保存Python代码并且不需要对每个Django安装激活对<br />它们的访问，如果你写了一个不依赖于任何特殊的模型/视图的模板库，则有一个只包含了一个templatetags包的Django<br />app是可以的，对你在templatetags包里面放置了多少模块没有限制，只需记住{% load %}语句将为给定的Python模块名<br />载入标签/过滤器，而不是app名<br />一旦你创建了Python模块，你将只需写一点Python代码，这取决于你在写过滤器还是标签<br />为了让标签库合法，模块应该包含一个模块级的变量叫register，它是一个template.Library实例，所有的标签和过滤器<br />都在它里面注册，所以，在你的模块最顶端加上下面的代码:<br /><pre name="code" class="java">
+from django import template
+
+register = template.Library()
+</pre><br />在幕后，你可以阅读Django默认过滤器和标签的源代码来作为例子，它们分别在django/template/defaultfilters.py和<br />django/template/defaulttags.py，而django.contrib也包含了许多例子<br /><br /><strong>写自定义模板过滤器</strong><br />自定义过滤器只是有一到两个参数的Python方法，参数为:<br />1，变量的值(输入)<br />2，参数的值，它可以有默认值，也可以空出来不要它<br />例如，在过滤器{{ var|foo:"bar" }}中，过滤器foo将被传入变量var和参数"bar"<br />过滤器方法应该一直返回一些东西，它们不应该触发异常而应该静静的失败，如果有错误，它们应该要么返回原始输入<br />或者要么返回一个空字符串，无论哪个都有意义，这里是一个过滤器定义的例子:<br /><pre name="code" class="java">
+def cut(value, arg):
+    "Removes all values of arg from the given string"
+    return value.replace(arg, '')
+</pre><br />这里是过滤器怎样使用的例子:<br /><pre name="code" class="java">
+{{ somevariable|cut:"0" }}
+</pre><br />大部分过滤器没有参数，这种情况下，只需把参数从你的方法里剔除掉:<br /><pre name="code" class="java">
+def lower(value): # Only one argument.
+    "Converts a string into all lowercase"
+    return value.lower()
+</pre><br />当你已经写好一个过滤器定义，你需要用你的Library实例注册它来让它对于Django的模板语言可用:<br /><pre name="code" class="java">
+register.filter('cut', cut)
+register.filter('lower', lower)
+</pre><br />Library.filter()方法有两个参数:<br />1，filter的名字(字符串)<br />2，编译方法(一个Python方法，而不是方法名)<br />如果你使用Python2.4及以上，你可以把register.filter()当成装饰器来使用:<br /><pre name="code" class="java">
+@register.filter(name='cut')
+def cut(value, arg):
+    return value.replace(arg, '')
+
+@register.filter
+def lower(value):
+    return value.lower()
+</pre><br />如果你像上面第二个例子一样不写name参数，Django将使用方法名作为过滤器名<br /><br /><strong>写自定义模板标签</strong><br />标签比过滤器更复杂一点，因为标签几乎可以做任何事情<br /><br /><strong>快速概览</strong><br />本章上面描述了模板系统怎样以两个步骤工作:编译和渲染，为了定义一个自定义模板标签，你需要告诉Django当它到达<br />你的标签时怎样管理这两步<br />当Django编译一个模板时，它把原始模板文本分开成一些"节点"，每个节点都是django.template.Node的实例并且有一个<br />render()方法，这样一个编译好的模板就是一个简单的Node对象的列表<br />当你对一个编译好的模板调用render()时，模板使用给定的context对它的节点列表中的每个Node调用render()方法<br />结果都被连接在一起来组成模板的输出，这样，为了定义一个自定义模板标签，你需要指定原始模板标签怎样转换成一个<br />Node(编译方法)和节点的render()方法做了些什么<br /><br /><strong>写编译方法</strong><br />对模板解析器遇到的每个模板标签，它都使用标签内容和解析器对象本身调用一个Python方法，这个方法负责根据标签<br />内容返回一个Node实例，例如，让我们写一个模板标签{% current_time %}来根据标签里给定的参数和strftime语法显示<br />当前的日期和时间并格式化它们(参考<a href="http://www.python.org/doc/current/lib/module-time.html#l2h-1941" target="_blank">http://www.python.org/doc/current/lib/module-time.html#l2h-1941</a><br />关于strftime语法的信息)，在其它任何事情之前决定标签语法是个好注意，在我们这里的情况中则应该像这样:<br /><pre name="code" class="java">
+&lt;p&gt;The time is {% current_time "%Y-%m-%d %I:%M %p" %}.&lt;/p&gt;
+</pre><br />注意，这个模板标签重复了，Django默认的{% now %}标签做了同样的任何并且有更简洁的语法，这个只是一个例子<br />为了解析它，方法应该得到参数并且创建一个Node对象:<br /><pre name="code" class="java">
+from django import template
+
+def do_current_time(parser, token):
+    try:
+        # split_contents() knows not to split quoted strings.
+        tag_name, format_string = token.split_contents()
+    except ValueError:
+        raise template.TemplateSyntaxError("%r tag requires a single argument" % token.contents[0])
+    return CurrentTimeNode(format_string[1:-1])
+</pre><br />事实上这里有许多东西:<br />1，parser时模板解析对象，我们这个例子中不需要它<br />2，token.contents是标签的原始内容，在我们的例子中，它为'current_time "%Y-%m-%d %I:%M %p"'<br />3，token.split_contents()方法基于空格分开参数并且保持引号里的字符串在一起，最直接的token.contents.split()<br />不是很健壮，因为它会天真的分开所有的空格，包括引号字符串里的空格，一直使用token.split_contents()是个好主意<br />4，这个方法负责对任何语法错误使用有用信息触发django.template.TemplateSyntaxError异常<br />5，不要在你的错误信息里硬编码标签名，因为这会耦合标签名和你的方法，token.contents.split()[0]将一直是你的<br />标签名，甚至当标签没有参数时也是如此<br />6，方法返回一个包含节点需要知道的关于此标签的任何东西的CurrentTimeNode(我们下面将创建它)，在这里，它只是<br />传递"%Y-%m-%d %I:%M %p"参数，模板标签里开头和结尾的引号会通过format_string[1:-1]去掉<br />7，模板标签编译方法必须返回一个Node子类，所有其它任何返回值都是错误的<br />8，解析是非常低级的，我们已经在这个解析系统上通过写一些小框架来试验过了(使用例如EBNF语法的技术)，但是那些<br />试验让模板引擎非常变得慢，而低级解析是很快的<br /><br /><strong>写模板节点</strong><br />写自定义模板的第二步是定义一个含有render()方法的Node子类，继续上面的例子，我们需要定义CurrentTimeNode:<br /><pre name="code" class="java">
+import datetime
+
+class CurrentTimeNode(template.Node):
+
+    def __init__(self, format_string):
+        self.format_string = format_string
+
+    def render(self, context):
+        return datetime.datetime.now().strftime(self.format_string)
+</pre><br />这两个方法(__init__和render)直接映射了模板处理的两个步骤(编译和渲染)，这样，初始化方法只需存储后面将使用的<br />字符串的格式，然后render()方法做真正的工作<br />像模板过滤器一样，这些渲染方法应该静静的失败而不是触发错误，模板标签允许触发错误的时候只在编译期间<br /><br /><strong>注册标签</strong><br />最后你需要使用你的模块的Library实例注册标签，上面在"写自定义过滤器"提到了:<br /><pre name="code" class="java">
+register.tag('current_time', do_current_time)
+</pre><br />tag()方法使用两个参数:<br />1，模板标签名(字符串)，如果空着不写，则将使用编译方法名<br />2，编译方法<br />类似过滤器注册，也可以在Python2.4及以上使用装饰器:<br /><pre name="code" class="java">
+@register.tag(name="current_time")
+def do_current_time(parser, token):
+    # ...
+
+@register.tag
+def shout(parser, token):
+    # ...
+</pre><br />如果像上面第二个例子一样不写name参数，Django将使用方法名作为标签名<br /><br /><strong>在context里设置变量</strong><br />上面的例子简单的输出一个值，通常设置模板变量而不是输出值会更有用，这里是一个CurrentTimeNode的更新版本，设置<br />一个模板变量current_time而不是输出它:<br /><pre name="code" class="java">
+class CurrentTimeNode2(template.Node):
+
+    def __init__(self, format_string):
+        self.format_string = format_string
+
+    def render(self, context):
+        context['current_time'] = datetime.datetime.now().strftime(self.format_string)
+        return ''
+</pre><br />注意render()返回空字符串，render()应该一直返回字符串输出，所以如果所有的模板标签做的都是设置变量，render()<br />应该返回一个空字符串，这里是你怎样使用新版本的标签:<br /><pre name="code" class="java">
+{% current_time "%Y-%M-%d %I:%M %p" %}
+&lt;p&gt;The time is {{ current_time }}.&lt;/p&gt;
+</pre><br />但是CurrentTimeNode2有一个问题，变量名current_time是硬编码的，这意味着你将需要确认你的模板不会在别的地方<br />使用{{ current_time }}，因为{% current_time %}将盲目的覆盖掉这个变量值<br />一个更干净的解决方案是让模板标签指定输出变量名:<br /><pre name="code" class="java">
+{% get_current_time "%Y-%M-%d %I:%M %p" as my_current_time %}
+&lt;p&gt;The current time is {{ my_current_time }}.&lt;/p&gt;
+</pre><br />为了这样做你需要重整编译方法和Node类:<br /><pre name="code" class="java">
+import re
+
+class CurrentTimeNode3(template.Node):
+
+    def __init__(self, format_string, var_name):
+        self.format_string = format_string
+        self.var_name = var_name
+
+    def render(self, context):
+        context[self.var_name] = datetime.datetime.now().strftime(self.format_string)
+        return ''
+
+def do_current_time(parser, token):
+    # This version uses a regular expression to parse tag contents.
+    try:
+        # Splitting by None == splitting by spaces.
+        tag_name, arg = token.contents.split(None, 1)
+    except ValueError:
+        raise template.TemplateSyntaxError("%r tag requires arguments" % token.contents[0])
+
+    m = re.search(r'(.*?) as (\w+)', arg)
+    if m:
+        format_string, var_name = m.groups()
+    else:
+        raise template.TemplateSyntaxError("%r tag had invalid arguments" % tag_name)
+
+    if not (format_string[0] == format_string[-1] and format_string[0] in ('"', "'")):
+        raise template.TemplateSyntaxError("%r tag's argument should be in quotes" % tag_name)
+
+    return CurrentTimeNode3(format_string[1:-1], var_name)
+</pre><br />现在，do_current_time()得到格式化字符串和变量名，并把它们都传递给CurrentTimeNode3<br /><br /><strong>解析直到另一个块标签</strong><br />模板标签可以作为块包含其它标签来工作，例如标准的{% comment %}标签隐藏所有的东西直到{% endcomment %}<br />为了像这样创建一个模板标签，在你的编译方法里使用parser.parse()<br />下面是标准的{% comment %}标签的实现:<br /><pre name="code" class="java">
+def do_comment(parser, token):
+    nodelist = parser.parse(('endcomment',))
+    parser.delete_first_token()
+    return CommentNode()
+
+class CommentNode(template.Node):
+    def render(self, context):
+        return ''
+</pre><br />parser.parse()使用一个块标签名的元组来解析，它返回一个django.template.NodeList实例，这个实例是解析器在元组<br />中的任何标签名前遇到的所有Node对象的列表，上面的例子中，nodelist则为{% comment %}和{% endcomment %}之间的<br />所有节点的列表，不包括{% comment %}和{% endcomment %}本身，在parser.parse()调用之后，解析器还没有"销毁"<br />{% endcomment %}标签，所有代码需要显式调用parser.delete_first_token()来避免标签被处理两次<br />然后CommentNode.render()简单的返回一个空字符串，在{% comment %}和{% endcomment %}之间的所有内容都被忽略<br /><br /><strong>解析直到另一个块标签并且保存内容</strong><br />在上一个例子中，do_comment()丢弃了任何{% comment %}和{% endcomment %}之间的内容，可以在块标签的代码里做<br />一些事情来替代它，例如这里是一个自定义标签{% upper %}来使它和{% endupper%}之间的所有内容变成大写:<br /><pre name="code" class="java">
+{% upper %}
+    This will appear in uppercase, {{ your_name }}.
+{% endupper %}
+</pre><br />上一个例子中，我们使用parser.parse()，这次我们把nodelist的结果传递给Node:<br /><pre name="code" class="java">
+@register.tag
+def do_upper(parser, token):
+    nodelist = parser.parse(('endupper',))
+    parser.delete_first_token()
+    return UpperNode(nodelist)
+
+class UpperNode(template.Node):
+
+    def __init__(self, nodelist):
+        self.nodelist = nodelist
+
+    def render(self, context):
+        output = self.nodelist.render(context)
+        return output.upper()
+</pre><br />这里唯一的新概念是UpperNode.render()里面的self.nodelist.render(context)<br />参考{% if %}，{% for %}，{% ifequal %}和{% ifchanged %}得到更复杂的渲染的例子<br />它们位于django/template/defaulttags.py<br /><br /><strong>简单标签的捷径</strong><br />许多模板标签使用一个单独的参数，一个字符串或者一个模板变量引用，并且在对输入参数和一些其它信息处理后返回<br />一个字符串，例如，我们上面写的current_time标签就是这种类型，我们给定一个格式化字符串，它返回字符串的时间<br />为了简化创建这种类型的标签，Django提供了一个辅助方法simple_tag，这个方法是django.template.Library的方法，<br />它接受一个参数，在render方法里包装它以及其它必要的信息并且在模板系统注册它<br />这样我们开始的current_time方法可以这样重写:<br /><pre name="code" class="java">
+def current_time(format_string):
+    return datetime.datetime.now().strftime(format_string)
+
+register.simple_tag(current_time)
+</pre><br />在Python2.4中装饰器语法也工作:<br /><pre name="code" class="java">
+@register.simple_tag
+def current_time(token):
+    ...
+</pre><br />关于simple_tag辅助方法需要注意的一些事情：<br />1，只有单独一个参数传递给我们的方法<br />2，我们的方法调用时它检查必需数量的参数已经传递过来了，所以我们不需要做这件事<br />3，参数周围的引号(如果有的话)已经被剔除，所以我们只是接受一个普通的字符串<br /><br /><strong>引入标签</strong><br />另一个常见类型的模板标签是通过渲染另一个模板显示一些数据，例如Django的admin界面使用自定义模板标签来显示<br />"添加/更改"表单页面底部的按钮，这些按钮一直看起来一样，但是链接目标根据正在被编辑的对象而改变<br />它们是使用一个被当前对象的细节填充的小模板的完美的例子，这种类型的标签称为引入标签<br />通过例子写引入标签很可能是最好的方式，让我们为一个简单的多选择Poll对象写一个输出选择的标签<br />我们像下面这样使用这个标签:<br /><pre name="code" class="java">
+{% show_results poll %}
+</pre><br />输出则可能像这样:<br /><pre name="code" class="java">
+&lt;ul&gt;
+  &lt;li&gt;First choice&lt;/li&gt;
+  &lt;li&gt;Second choice&lt;/li&gt;
+  &lt;li&gt;Third choice&lt;/li&gt;
+&lt;/ul&gt;
+</pre><br />首先我们定义使用参数并对结果生成数据字典的方法，注意我们仅仅需要返回一个字典，而不是其它复杂的东西<br />它将在模板中作为context使用:<br /><pre name="code" class="java">
+def show_results(poll):
+    choices = poll.choice_set.all()
+    return {'choices': choices}
+</pre><br />然后我们创建渲染标签输出的模板，继续我们的例子，模板很简单:<br /><pre name="code" class="java">
+&lt;ul&gt;
+{% for choice in choices %}
+    &lt;li&gt; {{ choice }} &lt;/li&gt;
+{% endfor %}
+&lt;/ul&gt;
+</pre><br />最后我们通过对一个Library对象调用inclusion_tag()方法来创建并注册引入标签<br />继续我们的例子，如果上面的模板在一个叫polls/result_snippet.html的文件中，我们将像这样注册标签:<br /><pre name="code" class="java">
+register.inclusion_tag('polls/result_snippet.html')(show_results)
+</pre><br />Python2.4装饰器语法也可以很好的工作，所以我们可以这样重写:<br /><pre name="code" class="java">
+@register.inclusion_tag('results.html')
+def show_results(poll):
+    ...
+</pre><br />有时候你的引入标签需要访问父模板中的context，为了解决这个问题，Django为引入标签提供了一个takes_context选项<br />如果你在创建模板标签时指定了takes_context，标签将没有必需的参数，底层的Python方法将有一个参数，就是当标签<br />被调用时的模板context，例如，你写了一个引入标签，它将一直在包含指向主页的home_link和home_title变量的<br />context中使用，这里是Python方法可能的样子:<br /><pre name="code" class="java">
+@register.inclusion_tag('link.html', takes_context=True)
+def jump_link(context):
+    return {
+        'link': context['home_link'],
+        'title': context['home_title'],
+    }
+</pre><br />注意方法的第一个参数必须叫context<br />模板link.html可能包含的内容:<br /><pre name="code" class="java">
+Jump directly to &lt;a href="{{ link }}"&gt;{{ title }}&lt;/a&gt;.
+</pre><br />然后，你想使用这个自定义标签的任何时候，载入它的库并调用它而不需任何参数即可，像这样:<br /><pre name="code" class="java">
+{% jump_link %}
+</pre><br />注意当你使用takes_context=True时，没有必要给模板标签传递参数，它自动得到context<br /><br /><strong>写自定义模板载入器</strong><br />Django内建的模板载入器通常包含了你所有的模板载入需求，但是如果你需要特殊的载入逻辑，则写你自己的模板载入器<br />也相当容易，一个模板载入器(TEMPLATE_LOADERS设置中的每一个条目)被期望为使用下面接口的可调用方法:<br />load_template_source(template_name, template_dirs=None)<br />template_name参数是要载入的模板名(传递给loader.get_template或者loader.select_template())，template_dirs是<br />可选的用来替代TEMPLATE_DIRS搜索的字典列表<br />如果一个载入器可以成功载入一个模板，它将返回一个元组:(template_source, template_path)，这里template_source<br />是被模板引擎编译的模板字符串，template_path是我们载入的模板的路径，这个路径肯女冠显示给用户来做测试目的<br />所以它应该迅速识别出模板从哪里载入<br />如果载入器不能载入一个模板，它将触发django.template.TemplateDoesNotExist异常<br />每个载入器方法也应该有一个is_usable方法属性，它是一个告知模板引擎该载入器是否在当前Python安装可用的布尔值<br />例如，如果pkg_resources模块没有安装，eggs载入器(它可以从Python eggs载入模板)将设置is_usable为False，因为<br />pkg_resources对从eggs读取数据是必需的<br />一个例子将阐明这一切，这里是一个从ZIP文件载入模板的模板载入器方法，它使用自定义设置，TEMPLATE_ZIP_FILES而<br />不是TEMPLATE_DIRS作为搜索路径，并且期望路径中的每一项都是一个包含模板的ZIP文件:<br /><pre name="code" class="java">
+import zipfile
+from django.conf import settings
+from django.template import TemplateDoesNotExist
+
+def load_template_source(template_name, template_dirs=None):
+    """Template loader that loads templates from a ZIP file."""
+
+    # Lookup ZIP file list from settings if it's not already given.
+    if template_zipfiles is None:
+        template_zipfiles = getattr(settings, "TEMPLATE_ZIP_FILES", [])
+
+    # Try each ZIP file in TEMPLATE_ZIP_FILES.
+    for fname in template_zipfiles:
+        try:
+            z = zipfile.ZipFile(fname)
+            source = z.read(template_name)
+        except (IOError, KeyError):
+            continue
+
+        # We found a template, so return the source.
+        template_path = "%s:%s" % (fname, template_name)
+        return (source, template_path)
+
+    # If we reach here, the template couldn't be loaded
+    raise TemplateDoesNotExist(template_name)
+
+# This loader is always usable (since zipfile is a Python standard library function)
+load_template_source.is_usable = True
+</pre><br />如果我们想使用这个载入器的唯一剩下的步骤是把它添加到TEMPLATE_LOADERS设置中<br />如果我们把这些代码放到一个叫myproject.zip_loader的模块中，然后我们向TEMPLATE_LOADERS添加<br />myproject.zip_loader.load_template_source<br /><br /><strong>使用内建的模板参考</strong><br />Django的admin界面包含了对给定站点的所有可得到的模板标签和过滤器的完全参考，它被设计成一个Django程序员给<br />模板开发人员的工具，进入你的admin界面然后点击页面右上部分的"Documentation"链接来看看它<br />参考分为四个部分:标签，过滤器，模型和视图<br />标签和过滤器部分描述了所有的内建标签(事实上，下面的标签和过滤器参考直接来直于那些页面)和一些自定义标签或<br />过滤器库，视图页面是最有价值的，你的站点的每个URL在这里都有一个单独的条目，点击一个URL将显示:<br />1，生成这个视图的视图方法的名字<br />2，视图所做的事情的简短描述<br />3，context或者一个在视图模板中的变量列表<br />4，这个视图所用的模板名<br />每个视图文档页面也有一个你可以用来从任何页面跳转到这个视图文档页面的收藏夹<br />因为基于Django的站点通常使用数据库对象，文档页面的模型部分描述了系统中的每个类型的对象以及对象的所有域<br />总的来看，文档页面应该告诉你给定模板的每个标签，过滤器，变量和对象<br /><br /><strong>使用独立模式配置模板系统</strong><br />注意，这个部分只有那些试图在另一个程序中把模板系统当作输出组件来使用的人们感兴趣，如果你把模板系统当作<br />Django程序的一部分来使用，则这里没有适合你的东西<br />通常Django会从它自己默认的配置文件和DJANGO_SETTINGS_MODULE环境变量里模块的设置载入所有它需要的配置信息<br />但是如果你单独使用模板系统而不用Django其它部分，环境变量方式就不是很方便，因为你可能想和程序中其它配置<br />一致而不是处理设置文件然后再通过环境变量指向它们<br />你可以使用附录5中的配置选项指南来解决这个问题<br />简单的import模板系统的合适部分然后在你调用模板方法前使用你想指定的设置调用django.conf.settings.configure()<br />你可能想考虑至少设置TEMPLATE_DIRS(如果你将使用模板载入器)，DEFAULT_CHARSET(尽管默认的utf-8可能非常好)和<br />TEMPLATE_DEBUG，所有的设置都在附录5中描述了，任何以TEMPLATE_开头的设置都显然是你感兴趣的
+  </div>
+
+  
+
+  

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zope3-interface-ca"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "接口（Interface）是Zope3的编程基础技术，组件架构(Component Architecture)是Zope的设计模型。", 
+        "modified": "2004-09-24 03:42:28", 
+        "title": "学习Zope3：接口和组件架构"
+    }
+}

@@ -1,0 +1,46 @@
+<p>背景说明：</p>
+<dl>
+<dt>O'Reilly Network</dt>
+<dd>知名IT出版和媒体商，大家应该都读过他们出的计算机书吧...</dd>
+<dt>COMDEX</dt>
+<dd>美国最大的IT展览盛会，每年(或者每两年)举办一次</dd>
+<dt>采访原因</dt>
+<dd>Plone如选O'Reilly Network在去年COMDEX会议上举办的开源产品宣讲, 并且超过其他著名的开源项目，如Eclipse, OpenOffice, KDE and Gnome，获得第一名</dd>
+<dt>采访文章</dt>
+<dd>在<a href="http://osdir.com/Article199.phtml">这里</a></dd>
+</dl>
+<p>采访内容：</p>
+<p><strong>为什么要启动plone项目？</strong></p>
+<p>(概要，Zope和CMF都是非常cool的东西，但是界面不好，疏远了用户；Plone项目启动，就是要亲近最终用户的)</p>
+<p><strong>Limi</strong>: Zope was lacking a good-looking, functional piece of UI software - the technology was very good, but no consistent, approachable products existed (IMHO, of course). People were struggling with very basic concepts when they started with Zope, something they shouldn't have to do.</p>
+<p>The itch was customer projects that required content management and we were tired of doing the same things over and over again. Classic tale, really.</p>
+<p><strong>Runyan</strong>: Zope's CMF (Content Management Framework) was a pretty interesting piece of software, like most Zope software, but it lacked a functional interface. It was made for people to customize, but most opensource developers don't care about looks only about functionality. So we started off making a skin on top of the CMF. Shortly after doing work we realized that we would need to add lots of functionality to CMF because it had many short-comings; after all it is a framework not a product. Basically, Plone and the CMF attempts to address some issues Zope has had for years.</p>
+<p><strong>Limi</strong>: It provides workflow, Dublin Core metadata, etc.</p>
+<p><strong>Runyan</strong>: ...How to re-use and customize services.</p>
+<p><strong>Limi</strong>: ...Component architecture.</p>
+<p><strong>Runyan</strong>: So, until CMF there was no structure/policy for products to communicate with each other. </p>
+<p><strong>OSDir</strong>: So, Plone works on top of Zope's CMF and makes Zope easier to work with?</p>
+<p><strong>Runyan</strong>: Exactly - by providing higher level services to developers. So, we sort of started out making a customization of the CMF - but realized for usability's sake that it lacked quite a few things. Zope was the Wild West of Object Persistence and Publishing before the CMF. </p>
+<p><strong>内容管理Content Management，这个词被赋予了太多的含义，是应该比较含糊的词，在Plone中，你怎么看内容管理的</strong></p>
+<p>(内容管理是在计算机系统中对内容整个生命周期的管理、创建的过程，使用一组工具完成，其中一个工具是网站的内容管理（CMS），这一块是Plone完成。)</p>
+<p>Runyan: Great question. I see CM as the process of managing, creating, and lifecycling content throughout a computer system. Managing is composed of tools. One of those tools that's inherent with a Web Content Management System (CMS) is the web interface. This is where Plone started.</p>
+<p>（Plone最初是想用来做内部应用的，但是很快就扩展导网站发布和门户服务了。）</p>
+<p>Limi: The initial use case that drove Plone was intranet applications - but it quickly extended to web publishing and portal services too. Steve: So, Plone is used by normal people managing web content and by developers to get at the inner workings of Zope and the Zope CMF.</p>
+<p>Limi: We do all the boring stuff you hate doing. </p>
+<p><strong>Plone位于投票的首位，而不是PHP-Nuke，或者Cocoon，人们为什么要选择基于zope的plone系统，你能说一下原因吗？</strong></p>
+<p>(Plone面向最终用户;Coccon着力一个开发框架;PHP-Nuke则是开发人员关心的，他使得人们能够插入很多模块，建立一个混合的PHP－Nuke网站。对我们的来说，Cocoon太底层，而PHP-Nuke则太不底层。)</p>
+<p><strong>Runyan</strong>: Plone has focused a lot of attention towards end-user experience. Cocoon (the last time I looked) was focusing on framework concerns. PHP-Nuke (the last time I looked) was focusing on developer concerns; enabling people to plug-in a few modules together to get a hybrid PHP-Nuke site. Cocoon is too generic and PHP-Nuke is not generic enough for our needs.</p>
+<p>（Plone同时也试图建立一个通用的web用户界面，就像大名鼎鼎的wxWindows或者QT一样。这样使得能够使得一直的、可用的界面。大多数开发人员希望我们能够有现成的很好的UI策略，这样他们就不必太担心了）</p>
+<p><strong>Limi</strong>: Plone also tries to create a generic web UI (kind of like wxWindows or QT) that makes it easy to generate consistent, usable UI in browser format. Most developers are very happy that we have good UI policies in place, so they don't have to worry about that.</p>
+<p>（我们社区中开发人员，大多数是从Java迁移过来，他们希望获得一个通往成功的快速路径。Plone着眼于开发人员所关心的哪些东西。大多数人不希望在去写一个注册和登录的系统。到目前为止，我们很少有从PHP世界中迁移过来的开发人员，可能因为他们的目标不同吧）</p>
+<p>Runyan: Almost all developers (immigrants) we get are Java developers who are wanting a quick path to victory. Plone addresses quite a bit of the concerns that most developers have. When I say Plone I mean Plone and its technology stack (CMF/Zope/Python). Most people don't want to write "yet another registration system". Up until now, we've have very few immigrants from the PHP world, mostly because their goals are very different.</p>
+<p>（java太罗嗦了，太复杂了）</p>
+<p>Limi: We're kind of the middle ground, where you want sound design decisions software-wise and not just a collection of scripts - but think Java is a bit too verbose and cumbersome to work with.</p>
+<p>（Plone很容易定制）</p>
+<p>Runyan: CMF comes with registration components (and lots of other components) that are easily swapped out (if you need to). And Plone puts the gloss on the components so that people can keep a nice UI on their customizations. </p>
+<p><strong>去年你和开发人员都干了些什么呢？</strong></p>
+<p>(优化和交流)</p>
+<p>Runyan: Lots of polish and mind share.</p>
+<p>（构建社区）</p>
+<p>Limi: And community building. </p>
+<p>太多了，大家<a href="http://osdir.com/Article199.phtml">自己看吧...</a></p>

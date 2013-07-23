@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "visual-wiki"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Wiki的可视化，是最近wiki努力的一个方向。", 
+        "modified": "2005-04-22 12:31:00", 
+        "title": "可视化的wiki"
+    }
+}

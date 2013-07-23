@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "javascript-http"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "IE和mozilla均支持在ECMAScript中发送http请求。这样不必频繁刷新页面，可完成非常动态的页面。", 
+        "modified": "2005-01-24 20:31:43", 
+        "title": "在ECMAScript中发送http请求"
+    }
+}

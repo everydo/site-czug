@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "hailanduan-plone-xian"
+    }, 
+    "dublin": {
+        "creators": [
+            "eishn"
+        ], 
+        "description": "还记得我们的老朋友 Trolltech 吗?", 
+        "modified": "2007-01-08 14:53:12", 
+        "title": "海缆断 Plone 现"
+    }
+}

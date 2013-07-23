@@ -1,0 +1,530 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-6a3bc4ef1e50a1465e4e096032da7fc06d4c3e42">第六章 函数与函数编程</a><ol><li><a href="#head-e871f54a97ef847e5f5f3b4f7ea4a0c8fde20bb6">函数</a></li><li><a href="#head-f71862e2240c8a9d34d0fb1bbe19355c99003b31">参数传递和返回值</a></li><li><a href="#head-599ac60a1f42fffd3b86a42d7fda7069f1da89af">作用域规则</a></li><li><a href="#head-c9a851987035be23a131469f47c30d6c7bb1a400">递归</a></li><li><a href="#head-5aad4ab22989eb7d3abdc688b600dc96ac1ccf7f">apply()函数</a></li><li><a href="#head-d64f92304529af7b013da3d180e5b4e961312531">lambda操作符</a></li><li><a href="#head-54833ae8c524412616c1963063e210c8c98068b6">map(), zip(), reduce(),
+和filter()</a></li><li><a href="#head-d13f5405707543620fb4fa273048a2547c22a55b">列表内涵</a></li><li><a href="#head-51853bca214776b0ae418d690a25b85ca9a96177">eval(), exec, execfile(),和compile()</a></li></ol></li></ol></div> <span id="line-2" class="anchor"/>
+<h1 id="head-6a3bc4ef1e50a1465e4e096032da7fc06d4c3e42">1. 第六章 函数与函数编程</h1>
+<span id="line-3" class="anchor"/><span id="line-4" class="anchor"/><p class="line874">为便于代码维护，绝大多数子程序都被分解并重新组织为函数以使代码模块化。 <span id="line-5" class="anchor"/>在Python中定义一个函数很简单,Python从其它函数编程语言中借鉴了很多有用的思路用来简化某些特定任务。本章的主题是函数,匿名函数,函数编程特性及eval()与execfile() 函数和exec语句.还详细描述了列表内涵(list comprehensions),一个强大的列表构建方法. <span id="line-6" class="anchor"/><span id="line-7" class="anchor"/></p><p class="line867">
+</p><h2 id="head-e871f54a97ef847e5f5f3b4f7ea4a0c8fde20bb6">1.1. 函数</h2>
+<span id="line-8" class="anchor"/><span id="line-9" class="anchor"/><p class="line874">函数使用def语句定义: <span id="line-10" class="anchor"/><span id="line-11" class="anchor"/><span id="line-12" class="anchor"/><span id="line-13" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-638ad5b5acd0cd7867515a1197393a04be469f84_000\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-638ad5b5acd0cd7867515a1197393a04be469f84_000', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-638ad5b5acd0cd7867515a1197393a04be469f84_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">def</span> <span class="ID">add</span><span class="Operator">(</span><span class="ID">x</span><span class="Operator">,</span><span class="ID">y</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">return</span> <span class="ID">x</span><span class="Operator">+</span><span class="ID">y</span><span class="Text"/></span>
+</pre></div><span id="line-14" class="anchor"/><p class="line862">要调用一个函数,只要使用函数名加上小括号括起来的参数表就可以了,例如 <tt class="backtick">a = add(3,4)</tt>. 参数的顺序和个数必须和函数定义中的相匹配.否则会引发<tt class="backtick">TypeError</tt>异常. <span id="line-15" class="anchor"/><span id="line-16" class="anchor"/></p><p class="line874">定义函数的时可以使用参数默认值，如: <span id="line-17" class="anchor"/><span id="line-18" class="anchor"/></p><p class="line867"><tt class="backtick">def foo(x,y,z = 42):</tt> <span id="line-19" class="anchor"/><span id="line-20"
+class="anchor"/></p><p class="line874">若函数定义中有存在默认值的参数,这个参数就是可选参数. <span id="line-21" class="anchor"/><span id="line-22" class="anchor"/></p><p class="line874">默认参数的值在函数定义的时候就被决定,并且不会改变,例如: <span id="line-23" class="anchor"/><span id="line-24" class="anchor"/><span id="line-25" class="anchor"/><span id="line-26" class="anchor"/><span id="line-27" class="anchor"/><span id="line-28" class="anchor"/><span id="line-29" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-a0aca893cf0512efc34cfe5ed08cdfbfbfaad673_001\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-a0aca893cf0512efc34cfe5ed08cdfbfbfaad673_001', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-a0aca893cf0512efc34cfe5ed08cdfbfbfaad673_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="Number">10</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">def</span> <span class="ID">foo</span><span class="Operator">(</span><span class="ID">x</span> <span class="Operator">=</span> <span class="ID">a</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ResWord">print</span> <span class="ID">x</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="Number">5</span>               <span class="Comment"># Reassign 'a'.</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ID">foo</span><span class="Operator">(</span><span class="Operator">)</span>               <span class="Comment"># Prints '10' (默认值没有改变)</span><span class="Text"/></span>
+</pre></div><span id="line-30" class="anchor"/><p class="line874">但是,若使用可变对象作为默认参数值,则会有意料之外的情况发生: <span id="line-31" class="anchor"/><span id="line-32" class="anchor"/><span id="line-33" class="anchor"/><span id="line-34" class="anchor"/><span id="line-35" class="anchor"/><span id="line-36" class="anchor"/><span id="line-37" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-8418a8c5c68e589c62e63dc21ee24afc47d1f66b_002\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-8418a8c5c68e589c62e63dc21ee24afc47d1f66b_002', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-8418a8c5c68e589c62e63dc21ee24afc47d1f66b_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="Number">10</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">def</span> <span class="ID">foo</span><span class="Operator">(</span><span class="ID">x</span> <span class="Operator">=</span> <span class="ID">a</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ResWord">print</span> <span class="ID">x</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">a</span><span class="Operator">.</span><span class="ID">append</span><span class="Operator">(</span><span class="Number">20</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ID">foo</span><span class="Operator">(</span><span class="Operator">)</span>              <span class="Comment"># Prints '[10, 20]'</span><span class="Text"/></span>
+</pre></div><span id="line-38" class="anchor"/><p class="line874">如果最后一个参数名前有星号(*),函数就可以接受可变数量的参数,这些不定数量的参数将做为一个元组传递给函数: <span id="line-39" class="anchor"/><span id="line-40" class="anchor"/><span id="line-41" class="anchor"/><span id="line-42" class="anchor"/><span id="line-43" class="anchor"/><span id="line-44" class="anchor"/><span id="line-45" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-bf0220ac4182ea6902897e2f2ce62764acc077bf_003\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-bf0220ac4182ea6902897e2f2ce62764acc077bf_003', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-bf0220ac4182ea6902897e2f2ce62764acc077bf_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">def</span> <span class="ID">fprintf</span><span class="Operator">(</span><span class="ID">file</span><span class="Operator">,</span> <span class="ID">fmt</span><span class="Operator">,</span> <span class="Operator">*</span><span class="ID">args</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ID">file</span><span class="Operator">.</span><span class="ID">write</span><span class="Operator">(</span><span class="ID">fmt</span> <span class="Operator">%</span> <span class="ID">args</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="Comment"># fprintf.args 被赋值为 (42, "hello world", 3.45)</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="Comment"/><span class="ID">fprintf</span><span class="Operator">(</span><span class="ID">out</span><span class="Operator">,</span><span class="String">"%d %s %f"</span><span class="Operator">,</span> <span class="Number">42</span><span class="Operator">,</span> <span class="String">"hello world"</span><span class="Operator">,</span> <span class="Number">3.45</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-46" class="anchor"/><p class="line874">在这个例子中,所有剩下的参数都被放入一个元组,赋值给args. 使用*args还可以把元组args传递给另个函数: <span id="line-47" class="anchor"/><span id="line-48" class="anchor"/><span id="line-49" class="anchor"/><span id="line-50" class="anchor"/><span id="line-51" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-818123963ea8872025e895c5094db179f6c4916a_004\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-818123963ea8872025e895c5094db179f6c4916a_004', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-818123963ea8872025e895c5094db179f6c4916a_004" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">def</span> <span class="ID">printf</span><span class="Operator">(</span><span class="ID">fmt</span><span class="Operator">,</span> <span class="Operator">*</span><span class="ID">args</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>        <span class="Comment"># Call another function and pass along args</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"/>        <span class="ID">fprintf</span><span class="Operator">(</span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">stdout</span><span class="Operator">,</span> <span class="ID">fmt</span><span class="Operator">,</span> <span class="Operator">*</span><span class="ID">args</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-52" class="anchor"/><p class="line874">你也可以明确给每个形参名字绑定一个特定值(这称为关键字参数),然后传递给一个函数，如下: <span id="line-53" class="anchor"/><span id="line-54" class="anchor"/><span id="line-55" class="anchor"/><span id="line-56" class="anchor"/><span id="line-57" class="anchor"/><span id="line-58" class="anchor"/><span id="line-59" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-a980e149c70b82f26a6e2bc5ef049ad9cbcc2a95_005\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-a980e149c70b82f26a6e2bc5ef049ad9cbcc2a95_005', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-a980e149c70b82f26a6e2bc5ef049ad9cbcc2a95_005" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">def</span> <span class="ID">foo</span><span class="Operator">(</span><span class="ID">w</span><span class="Operator">,</span><span class="ID">x</span><span class="Operator">,</span><span class="ID">y</span><span class="Operator">,</span><span class="ID">z</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">print</span> <span class="ID">w</span><span class="Operator">,</span><span class="ID">x</span><span class="Operator">,</span><span class="ID">y</span><span class="Operator">,</span><span class="ID">z</span></span>
+<span class="line"><span class="LineNumber">   3 </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="Comment">#以关键字参数形式调用函数</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="Comment"/><span class="ID">foo</span><span class="Operator">(</span><span class="ID">x</span><span class="Operator">=</span><span class="Number">3</span><span class="Operator">,</span> <span class="ID">y</span><span class="Operator">=</span><span class="Number">22</span><span class="Operator">,</span> <span class="ID">w</span><span class="Operator">=</span><span class="String">'hello'</span><span class="Operator">,</span> <span class="ID">z</span><span
+class="Operator">=</span><span class="Operator">[</span><span class="Number">1</span><span class="Operator">,</span><span class="Number">2</span><span class="Operator">]</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-60" class="anchor"/><p class="line862">使用这种方式调用函数,参数可以是任意顺序(不必与定义时顺序相同).但是,除非你省略的参数有默认值,否则你必须显式的给函数中所有形参名字指定一个值.如果是省略了某个必须的参数或你提供了一个函数定义中不存在的形参名字,就会引发<tt class="backtick">TypeError</tt>异常. <span id="line-61" class="anchor"/><span id="line-62" class="anchor"/></p><p class="line874">传统的参数与关键字参数可以在同一个函数调用中混合使用,一个前提是必须先给出固定位置的参数,例如: <span id="line-63"
+class="anchor"/><span id="line-64" class="anchor"/></p><pre>foo('hello', 3, z=[1,2], y=22)
+<span id="line-65" class="anchor"/></pre><span id="line-66" class="anchor"/><p class="line874">如果一个函数定义中的最后一个形参有 ** （双星号）前缀,所有正常形参之外的其他的关键字参数都将被放置在一个字典中传递给函数,例如: <span id="line-67" class="anchor"/><span id="line-68" class="anchor"/><span id="line-69" class="anchor"/><span id="line-70" class="anchor"/><span id="line-71" class="anchor"/><span id="line-72" class="anchor"/><span id="line-73" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-3294f9a5a9bd5dcd9c26a543a20d18d41eea16a3_006\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-3294f9a5a9bd5dcd9c26a543a20d18d41eea16a3_006', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-3294f9a5a9bd5dcd9c26a543a20d18d41eea16a3_006" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">def</span> <span class="ID">spam</span><span class="Operator">(</span><span class="Operator">**</span><span class="ID">parms</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">print</span> <span class="String">"You supplied the following args:"</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ResWord">for</span> <span class="ID">k</span> <span class="ResWord">in</span> <span class="ID">parms</span><span class="Operator">.</span><span class="ID">keys</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>        <span class="ResWord">print</span> <span class="String">"%s = %s"</span> <span class="Operator">%</span> <span class="Operator">(</span><span class="ID">k</span><span class="Operator">,</span> <span class="ID">parms</span><span class="Operator">[</span><span class="ID">k</span><span class="Operator">]</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ID">spam</span><span class="Operator">(</span><span class="ID">x</span><span class="Operator">=</span><span class="Number">3</span><span class="Operator">,</span> <span class="ID">a</span><span class="Operator">=</span><span class="String">"hello"</span><span class="Operator">,</span> <span class="ID">foobar</span><span class="Operator">=</span><span class="Operator">(</span><span class="Number">2</span><span class="Operator">,</span>
+<span class="Number">3</span><span class="Operator">)</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-74" class="anchor"/><span id="line-75" class="anchor"/><p class="line874">常规参数，*参数及**参数可以同时使用，这时**参数必须位于参数表的最后: <span id="line-76" class="anchor"/><span id="line-77" class="anchor"/><span id="line-78" class="anchor"/><span id="line-79" class="anchor"/><span id="line-80" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-ccd0373dbb488ee12bff382270e639b0ad5506ba_007\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-ccd0373dbb488ee12bff382270e639b0ad5506ba_007', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-ccd0373dbb488ee12bff382270e639b0ad5506ba_007" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment"># Accept variable number of positional or keyword arguments</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="ResWord">def</span> <span class="ID">spam</span><span class="Operator">(</span><span class="ID">x</span><span class="Operator">,</span> <span class="Operator">*</span><span class="ID">args</span><span class="Operator">,</span> <span class="Operator">**</span><span class="ID">keywords</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ResWord">print</span> <span class="ID">x</span><span class="Operator">,</span> <span class="ID">args</span><span class="Operator">,</span> <span class="ID">keywords</span><span class="Text"/></span>
+</pre></div><span id="line-81" class="anchor"/><p class="line874">使用**关键字语法也可以把关键字参数传递给另一个函数，如: <span id="line-82" class="anchor"/><span id="line-83" class="anchor"/><span id="line-84" class="anchor"/><span id="line-85" class="anchor"/><span id="line-86" class="anchor"/><span id="line-87" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-34a88bee436fea5a604d127fa0d90b41fcc82687_008\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-34a88bee436fea5a604d127fa0d90b41fcc82687_008', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-34a88bee436fea5a604d127fa0d90b41fcc82687_008" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">def</span> <span class="ID">callfunc</span><span class="Operator">(</span><span class="ID">func</span><span class="Operator">,</span> <span class="Operator">*</span><span class="ID">args</span><span class="Operator">,</span> <span class="Operator">**</span><span class="ID">kwargs</span><span class="Operator">)</span><span
+class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">print</span> <span class="ID">args</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ResWord">print</span> <span class="ID">kwargs</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ID">func</span><span class="Operator">(</span><span class="Operator">*</span><span class="ID">args</span><span class="Operator">,</span> <span class="Operator">**</span><span class="ID">kwargs</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-88" class="anchor"/><p class="line874">从Python 2.1开始,函数和方法可以拥有任意的属性,例如: <span id="line-89" class="anchor"/><span id="line-90" class="anchor"/><span id="line-91" class="anchor"/><span id="line-92" class="anchor"/><span id="line-93" class="anchor"/><span id="line-94" class="anchor"/><span id="line-95" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-d45d038442b9608b7d247d6a2cb511896da8a90b_009\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-d45d038442b9608b7d247d6a2cb511896da8a90b_009', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-d45d038442b9608b7d247d6a2cb511896da8a90b_009" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">def</span> <span class="ID">foo</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">print</span> <span class="String">"Hello world"</span></span>
+<span class="line"><span class="LineNumber">   3 </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">foo</span><span class="Operator">.</span><span class="ID">secure</span> <span class="Operator">=</span> <span class="Number">1</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ID">foo</span><span class="Operator">.</span><span class="ID">private</span> <span class="Operator">=</span> <span class="Number">1</span><span class="Text"/></span>
+</pre></div><span id="line-96" class="anchor"/><p class="line867"><span id="line-97" class="anchor"/></p><pre>       注意：这仅仅是自定义函数的特权，内建函数或者类的方法是没有这种行为的。 --WeiZhong
+<span id="line-98" class="anchor"/></pre><span id="line-99" class="anchor"/><span id="line-100" class="anchor"/><p class="line862">函数的属性被储存在一个字典中(函数的 <tt class="backtick">__dict__</tt> 属性). <span id="line-101" class="anchor"/><span id="line-102" class="anchor"/></p><p
+class="line874">某些特定应用程序如语法分析器或网络应用程序需要在一个函数中携带附加信息，函数属性完美的满足了这一需求.在Python2.1之前,只能用文档字符串来储存这些信息（这有很大的局限性，比如只能存储字符串对象，并且有违文档字符串功能的初衷). <span id="line-103" class="anchor"/><span id="line-104" class="anchor"/></p><p class="line867">
+</p><h2 id="head-f71862e2240c8a9d34d0fb1bbe19355c99003b31">1.2. 参数传递和返回值</h2>
+<span id="line-105" class="anchor"/><span id="line-106" class="anchor"/><p class="line874">当调用一个函数时,它的参数是按引用传递给.如果函数的实参一个可变对象(如列表或字典)，则函数内对该对象的修改将会影响到函数之外。例如: <span id="line-107" class="anchor"/><span id="line-108" class="anchor"/><span id="line-109" class="anchor"/><span id="line-110" class="anchor"/><span id="line-111" class="anchor"/><span id="line-112" class="anchor"/><span id="line-113"
+class="anchor"/><span id="line-114" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-007a55b5b70e7914f897b7c3f34f0a8a436c2498_010\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-007a55b5b70e7914f897b7c3f34f0a8a436c2498_010', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-007a55b5b70e7914f897b7c3f34f0a8a436c2498_010" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="Number">1</span><span class="Operator">,</span><span class="Number">2</span><span class="Operator">,</span><span class="Number">3</span><span class="Operator">,</span><span class="Number">4</span><span
+class="Operator">,</span><span class="Number">5</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">def</span> <span class="ID">foo</span><span class="Operator">(</span><span class="ID">x</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ID">x</span><span class="Operator">[</span><span class="Number">3</span><span class="Operator">]</span> <span class="Operator">=</span> <span class="Operator">-</span><span class="Number">55</span>    <span class="Comment"># 修改 x 中的一个元素</span></span>
+<span class="line"><span class="LineNumber">   4 </span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ID">foo</span><span class="Operator">(</span><span class="ID">a</span><span class="Operator">)</span>            <span class="Comment"># 传递 a</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">print</span> <span class="ID">a</span>           <span class="Comment"># 显示 [1,2,3,-55,5]</span><span class="Text"/></span>
+</pre></div><span id="line-115" class="anchor"/><p class="line874">return语句用于从函数中返回一个对象。如果没有指定返回对象或者return语句被省略,则会返回一个None对象.如果要返回多个值，可以通过返回一个元组或其它包含对象来完成。 <span id="line-116" class="anchor"/><span id="line-117" class="anchor"/><span id="line-118" class="anchor"/><span id="line-119" class="anchor"/><span id="line-120" class="anchor"/><span id="line-121" class="anchor"/><span
+id="line-122" class="anchor"/><span id="line-123" class="anchor"/><span id="line-124" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-5547ce6fe2ec07e336eafa6242a281f92400ee2d_011\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-5547ce6fe2ec07e336eafa6242a281f92400ee2d_011', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-5547ce6fe2ec07e336eafa6242a281f92400ee2d_011" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">def</span> <span class="ID">factor</span><span class="Operator">(</span><span class="ID">a</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ID">d</span> <span class="Operator">=</span> <span class="Number">2</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ResWord">while</span> <span class="Operator">(</span><span class="ID">d</span> <span class="Operator"><=</span> <span class="Operator">(</span><span class="ID">a</span><span class="Operator">/</span><span class="Number">2</span><span class="Operator">)</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>        <span class="ResWord">if</span> <span class="Operator">(</span><span class="Operator">(</span><span class="ID">a</span><span class="Operator">/</span><span class="ID">d</span><span class="Operator">)</span><span class="Operator">*</span><span class="ID">d</span> <span class="Operator">==</span> <span class="ID">a</span><span class="Operator">)</span><span
+class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>              <span class="ResWord">return</span> <span class="Operator">(</span><span class="Operator">(</span><span class="ID">a</span><span class="Operator">/</span><span class="ID">d</span><span class="Operator">)</span><span class="Operator">,</span><span class="ID">d</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ID">d</span> <span class="Operator">=</span> <span class="ID">d</span> <span class="Operator">+</span> <span class="Number">1</span></span>
+<span class="line"><span class="LineNumber">   7 </span>    <span class="ResWord">return</span> <span class="Operator">(</span><span class="ID">a</span><span class="Operator">,</span><span class="Number">1</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-125" class="anchor"/><p class="line874">如果返回值是一个元组，可以通过下面的方式来将返回值一次赋给多个独立变量: <span id="line-126" class="anchor"/><span id="line-127" class="anchor"/><span id="line-128" class="anchor"/><span id="line-129" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-5134f67974abb24297d6480355e3e694f18ce846_012\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-5134f67974abb24297d6480355e3e694f18ce846_012', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-5134f67974abb24297d6480355e3e694f18ce846_012" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">x</span><span class="Operator">,</span><span class="ID">y</span> <span class="Operator">=</span> <span class="ID">factor</span><span class="Operator">(</span><span class="Number">1243</span><span class="Operator">)</span>    <span class="Comment"># 返回的值被赋值给
+x 和 y.</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Operator">(</span><span class="ID">x</span><span class="Operator">,</span><span class="ID">y</span><span class="Operator">)</span> <span class="Operator">=</span> <span class="ID">factor</span><span class="Operator">(</span><span class="Number">1243</span><span class="Operator">)</span>  <span class="Comment"># 同样的效果</span><span
+class="Text"/></span>
+</pre></div><span id="line-130" class="anchor"/><span id="line-131" class="anchor"/><p class="line867">
+</p><h2 id="head-599ac60a1f42fffd3b86a42d7fda7069f1da89af">1.3. 作用域规则</h2>
+<span id="line-132" class="anchor"/><span id="line-133" class="anchor"/><p
+class="line862">当一个函数开始运行,就会创建一个新的局部名字空间。该名字空间用来存放函数的形参名字及该函数中所使用的全部局部变量名。当解析一个变量名时,解释器首先在这个局部名字空间中搜索.如果没有找到,再接着搜索全局名字空间.一个函数的全局名字空间就是定义该函数的模块.如果在全局名字空间中还没有找到匹配,解释器接着在内建名字空间中搜索.若仍然找不到这个变量名,则引发<tt class="backtick">NameError</tt>异常. <span
+id="line-134" class="anchor"/><span id="line-135" class="anchor"/></p><p class="line874">名字空间的一个特性是：在函数内部即使有一个变量与一个全局变量同名，也各不相干（因为它们位于不同的名字空间）.例如下边的代码: <span id="line-136" class="anchor"/><span id="line-137" class="anchor"/><span id="line-138" class="anchor"/><span id="line-139" class="anchor"/><span id="line-140" class="anchor"/><span id="line-141"
+class="anchor"/><span id="line-142" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-20a711fc6cc270504d31426ccfe1ca220f2c013a_013\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-20a711fc6cc270504d31426ccfe1ca220f2c013a_013', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-20a711fc6cc270504d31426ccfe1ca220f2c013a_013" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="Number">42</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">def</span> <span class="ID">foo</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ID">a</span> <span class="Operator">=</span> <span class="Number">13</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">foo</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">print</span> <span class="ID">a</span><span class="Text"/></span>
+</pre></div><span id="line-143" class="anchor"/><p class="line874">尽管我们在函数 foo 中修改了变量 a 的值,这个例子返回的结果仍然是 42 .如果一个变量在函数内部被赋值,则它一定是这个函数的局部变量(除非事先使用了 global 关键字)。在函数foo中的变量 a 其实是一个全新的值为 13 的对象，与函数外的 a 是不同的对象. 要在函数内部使用全局变量, 你应该在函数内使用global语句.
+global语句明确的声明一个或多个变量(如果有多个变量，以逗号分隔这些变量)属于全局名字空间. 例如: <span id="line-144" class="anchor"/><span id="line-145" class="anchor"/><span id="line-146" class="anchor"/><span id="line-147" class="anchor"/><span id="line-148" class="anchor"/><span id="line-149" class="anchor"/><span id="line-150" class="anchor"/><span id="line-151" class="anchor"/></p><div lang="en"
+dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-5d9d00797d826ee834b97caa45b2f014e58be3fc_014\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-5d9d00797d826ee834b97caa45b2f014e58be3fc_014', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-5d9d00797d826ee834b97caa45b2f014e58be3fc_014" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="Number">42</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">def</span> <span class="ID">foo</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ResWord">global</span> <span class="ID">a</span>        <span class="Comment"># 'a' 在全局名字空间</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ID">a</span> <span class="Operator">=</span> <span class="Number">13</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ID">foo</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">print</span> <span class="ID">a</span><span class="Text"/></span>
+</pre></div><span id="line-152" class="anchor"/><p class="line874">所有的Python版本都允许嵌套的函数定义.但在Python 2.1之前的版本,嵌套函数并未提供嵌套作用域.因此在老版本的Python中，嵌套函数的运行结果有可能与你的预期不同。比如下面这个例子,虽然它是合法的,但在Python2.0中，它的执行并不象你想象的那样: <span id="line-153" class="anchor"/><span id="line-154" class="anchor"/><span
+id="line-155" class="anchor"/><span id="line-156" class="anchor"/><span id="line-157" class="anchor"/><span id="line-158" class="anchor"/><span id="line-159" class="anchor"/><span id="line-160" class="anchor"/><span id="line-161" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-c26648707c48d6bbb8779efb31f5d81519802226_015\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-c26648707c48d6bbb8779efb31f5d81519802226_015', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-c26648707c48d6bbb8779efb31f5d81519802226_015" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">def</span> <span class="ID">bar</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>  <span class="ID">x</span> <span class="Operator">=</span> <span class="Number">10</span></span>
+<span class="line"><span class="LineNumber">   3 </span>  <span class="ResWord">def</span> <span class="ID">spam</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">:</span>            <span class="Comment"># 嵌套函数定义</span></span>
+<span class="line"><span class="LineNumber">   4 </span>       <span class="ResWord">print</span> <span class="String">'x is '</span><span class="Operator">,</span> <span class="ID">x</span>  <span class="Comment"># 在bar()的全局名字空间中寻找x</span></span>
+<span class="line"><span class="LineNumber">   5 </span>  <span class="ResWord">while</span> <span class="ID">x</span> <span class="Operator">></span> <span class="Number">0</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>       <span class="ID">spam</span><span class="Operator">(</span><span class="Operator">)</span>            <span class="Comment"># 若在Python2.0中运行该代码 程序会报错 : NameError on 'x'</span></span>
+<span class="line"><span class="LineNumber">   7 </span>       <span class="ID">x</span> <span class="Operator">-=</span> <span class="Number">1</span><span class="Text"/></span>
+</pre></div><span id="line-162" class="anchor"/><p class="line862">在Python2.1之前的版本中,当嵌套函数spam()运行时,它的全局名字空间会与bar()相同,都是函数被定义的模块.所以spam()无法得到它希望得到的bar()名字空间中的变量,这就引发了<tt class="backtick">NameError</tt>异常. <span id="line-163" class="anchor"/><span id="line-164" class="anchor"/></p><p
+class="line862">从Python 2.1开始支持嵌套作用域(这样,上边的例子就会正常运行)：解释器将首先在局部名字空间中搜索变量名,然后一层层向外搜索，最后搜索全局名字空间和内建名字空间。注意嵌套范围在Python 2.1是一个可选的功能,只有当你的程序包含<tt class="backtick"> from __future__ import nested_scopes
+</tt>时才启用该功能.(具体细节参见在第十章--运行环境).另外,如果你需要考虑和较老Python版本的兼容性,那么就应该避免使用嵌套函数. <span id="line-165" class="anchor"/><span id="line-166" class="anchor"/></p><pre>        注：Python 2.4中该功能已经是内建功能，不需要做那个 from __future__ import nested_scopes 操作了 --WeiZhong
+<span id="line-167" class="anchor"/></pre><span id="line-168" class="anchor"/><span id="line-169" class="anchor"/><p class="line862">如果一个局部变量在它被赋值之前使用,会引发一个<tt class="backtick">UnboundLocalError</tt>异常,例如: <span id="line-170" class="anchor"/><span id="line-171" class="anchor"/><span id="line-172" class="anchor"/><span id="line-173"
+class="anchor"/><span id="line-174" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-ac2397bd3b0e8d866b9ad37e10204c6d4ca096f1_016\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-ac2397bd3b0e8d866b9ad37e10204c6d4ca096f1_016', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-ac2397bd3b0e8d866b9ad37e10204c6d4ca096f1_016" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">def</span> <span class="ID">foo</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">print</span> <span class="ID">i</span>       <span class="Comment"># 导致UnboundLocalError exception异常</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ID">i</span> <span class="Operator">=</span> <span class="Number">0</span><span class="Text"/></span>
+</pre></div><span id="line-175" class="anchor"/><span id="line-176" class="anchor"/><p class="line867">
+</p><h2 id="head-c9a851987035be23a131469f47c30d6c7bb1a400">1.4. 递归</h2>
+<span id="line-177" class="anchor"/><span id="line-178" class="anchor"/><p class="line862">Python对递归函数调用的次数作了限制.函数 sys.getrecursionlimit()返回当前允许的最大递归次数,而函数sys.setrecursionlimit()可以改变该函数的返回值.默认的最大递归次数为1000.当一个函数递归次数超过最大递归次数时,就会引发<tt class="backtick">RuntimeError</tt>异常.
+<span id="line-179" class="anchor"/><span id="line-180" class="anchor"/></p><p class="line867">
+</p><h2 id="head-5aad4ab22989eb7d3abdc688b600dc96ac1ccf7f">1.5. apply()函数</h2>
+<span id="line-181" class="anchor"/><span id="line-182" class="anchor"/><p class="line867"><tt class="backtick">apply(func [, args [, kwargs ]])</tt> 函数用于当函数参数已经存在于一个元组或字典中时间接的调用函数. args是一个包含将要提供给函数的按位置传递的参数的元组. 如果省略了args,任何参数都不会被传递.
+kwargs是一个包含关键字参数的字典.下面的语句效果是一样的: <span id="line-183" class="anchor"/><span id="line-184" class="anchor"/><span id="line-185" class="anchor"/><span id="line-186" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-f53550a28eb8336bac2bbc772c48843a62e17531_017\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-f53550a28eb8336bac2bbc772c48843a62e17531_017', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-f53550a28eb8336bac2bbc772c48843a62e17531_017" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">foo</span><span class="Operator">(</span><span class="Number">3</span><span class="Operator">,</span><span class="String">"x"</span><span class="Operator">,</span> <span
+class="ID">name</span><span class="Operator">=</span><span class="String">'Dave'</span><span class="Operator">,</span> <span class="ID">id</span><span class="Operator">=</span><span class="Number">12345</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">apply</span><span class="Operator">(</span><span class="ID">foo</span><span class="Operator">,</span> <span class="Operator">(</span><span class="Number">3</span><span class="Operator">,</span><span class="String">"x"</span><span class="Operator">)</span><span
+class="Operator">,</span> <span class="Operator">{</span> <span class="String">'name'</span><span class="Operator">:</span> <span class="String">'Dave'</span><span class="Operator">,</span> <span class="String">'id'</span><span class="Operator">:</span> <span class="Number">12345</span> <span class="Operator">}</span><span
+class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-187" class="anchor"/><p class="line874">在Python较老的版本里, apply()是在当参数已经位于元组或字典中时调用函数的唯一机制.不过现在,你还可以使用更直接更简单的方式,如下: <span id="line-188" class="anchor"/><span id="line-189" class="anchor"/><span id="line-190" class="anchor"/><span id="line-191"
+class="anchor"/><span id="line-192" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-ffcfc46641a6873e48387ba8cfd41ebe4d9c1347_018\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-ffcfc46641a6873e48387ba8cfd41ebe4d9c1347_018', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-ffcfc46641a6873e48387ba8cfd41ebe4d9c1347_018" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="Operator">(</span><span class="Number">3</span><span class="Operator">,</span><span class="String">"x"</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="Operator">{</span> <span class="String">'name'</span> <span class="Operator">:</span> <span class="String">'Dave'</span><span class="Operator">,</span> <span class="String">'id'</span><span
+class="Operator">:</span> <span class="Number">12345</span> <span class="Operator">}</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">foo</span><span class="Operator">(</span><span class="Operator">*</span><span class="ID">a</span><span class="Operator">,</span><span class="Operator">**</span><span class="ID">b</span><span class="Operator">)</span>     <span class="Comment">#
+与上边的代码相同</span><span class="Text"/></span>
+</pre></div><span id="line-193" class="anchor"/><p class="line867">
+</p><h2 id="head-d64f92304529af7b013da3d180e5b4e961312531">1.6. lambda操作符</h2>
+<span id="line-194" class="anchor"/><span id="line-195" class="anchor"/><p class="line874">lambda语句用来创建一个匿名函数(没和名字绑定的函数): <span id="line-196" class="anchor"/><span id="line-197" class="anchor"/></p><p class="line867"><tt class="backtick">lambda args: expression</tt> <span id="line-198"
+class="anchor"/><span id="line-199" class="anchor"/></p><p class="line874">args是一个用逗号分隔的参数, expressin是一个调用这些参数的表达式,例如: <span id="line-200" class="anchor"/><span id="line-201" class="anchor"/><span id="line-202" class="anchor"/><span id="line-203" class="anchor"/></p><div lang="en" dir="ltr"
+class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-02a8a230a0ad27a3e866b00828587fa0866edc5d_019\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-02a8a230a0ad27a3e866b00828587fa0866edc5d_019', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-02a8a230a0ad27a3e866b00828587fa0866edc5d_019" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="ResWord">lambda</span> <span class="ID">x</span><span class="Operator">,</span><span
+class="ID">y</span> <span class="Operator">:</span> <span class="ID">x</span><span class="Operator">+</span><span class="ID">y</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">print</span> <span class="ID">a</span><span class="Operator">(</span><span class="Number">2</span><span class="Operator">,</span><span class="Number">3</span><span class="Operator">)</span>              <span class="Comment">#
+打印出 5</span><span class="Text"/></span>
+</pre></div><span id="line-204" class="anchor"/><p class="line874">lambda定义的代码必须是一个合法的表达式.多重语句和其他非表达式语句(如print, for, while等)不能出现在lambda语句中. lambda表达式也遵循和函数一样的作用域规则.   <span id="line-205" class="anchor"/><span id="line-206"
+class="anchor"/></p><pre>        lambda 已经是过时的语句，即将被废除。 --WeiZhong
+<span id="line-207" class="anchor"/></pre><span id="line-208" class="anchor"/><span id="line-209" class="anchor"/><p class="line867">
+</p><h2 id="head-54833ae8c524412616c1963063e210c8c98068b6">1.7. map(), zip(), reduce(), 和filter()</h2>
+<span id="line-210" class="anchor"/><span id="line-211" class="anchor"/><p class="line874">t = map(func, s )函数将序列s中的每个元素传递给func函数做参数, 函数的返回值组成了列表 t. 即t[i] = func(s[i]). 需要注意的是, func函数必须有只有一个参数,例如: <span id="line-212" class="anchor"/><span id="line-213"
+class="anchor"/><span id="line-214" class="anchor"/><span id="line-215" class="anchor"/><span id="line-216" class="anchor"/><span id="line-217" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-d8c06e94cb073ea214f86a5fd3f66bb189ab4c53_020\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-d8c06e94cb073ea214f86a5fd3f66bb189ab4c53_020', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-d8c06e94cb073ea214f86a5fd3f66bb189ab4c53_020" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="Number">1</span><span class="Operator">,</span>
+<span class="Number">2</span><span class="Operator">,</span> <span class="Number">3</span><span class="Operator">,</span> <span class="Number">4</span><span class="Operator">,</span> <span class="Number">5</span><span class="Operator">,</span> <span class="Number">6</span><span
+class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">def</span> <span class="ID">foo</span><span class="Operator">(</span><span class="ID">x</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ResWord">return</span> <span class="Number">3</span><span class="Operator">*</span><span class="ID">x</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="ID">map</span><span class="Operator">(</span><span class="ID">foo</span><span class="Operator">,</span><span class="ID">a</span><span class="Operator">)</span>
+<span class="Comment"># b = [3, 6, 9, 12, 15, 18]</span><span class="Text"/></span>
+</pre></div><span id="line-218" class="anchor"/><p class="line874">上边的例子中的函数也可以用匿名函数来创建: <span id="line-219" class="anchor"/><span id="line-220" class="anchor"/><span id="line-221" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-cc818fe76756ca194238b178d00bd216879541a9_021\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-cc818fe76756ca194238b178d00bd216879541a9_021', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-cc818fe76756ca194238b178d00bd216879541a9_021" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="ID">map</span><span class="Operator">(</span><span
+class="ResWord">lambda</span> <span class="ID">x</span><span class="Operator">:</span> <span class="Number">3</span><span class="Operator">*</span><span class="ID">x</span><span class="Operator">,</span> <span class="ID">a</span><span class="Operator">)</span>   <span
+class="Comment"># b = [3, 6, 9, 12, 15, 18]</span><span class="Text"/></span>
+</pre></div><span id="line-222" class="anchor"/><p class="line874">map ()函数也可以用于多个列表,如 t = map(func, s1, s2, ..., sn ). 如果是这种形式,t中的每个元素 t [i ] = func(s1[i ], s2[i ], ..., sn[i ]) .func函数的形参个数必须和列表的个数(n)相同,结果与s1,s2, ...
+sn中的最长的列表的元素个数相同.在计算过程中,短的列表自动用None扩充为统一长度的列表. <span id="line-223" class="anchor"/><span id="line-224" class="anchor"/></p><p class="line874">如果函数func为None,则func就被当成是恒等函数处理。这样函数就返回一个包含元组的列表: <span
+id="line-225" class="anchor"/><span id="line-226" class="anchor"/><span id="line-227" class="anchor"/><span id="line-228" class="anchor"/><span id="line-229" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-77f249441f0dbdca8b75649e31386b3a52a8d312_022\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-77f249441f0dbdca8b75649e31386b3a52a8d312_022', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-77f249441f0dbdca8b75649e31386b3a52a8d312_022" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="Operator">[</span><span
+class="Number">1</span><span class="Operator">,</span><span class="Number">2</span><span class="Operator">,</span><span class="Number">3</span><span class="Operator">,</span><span class="Number">4</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="Number">100</span><span class="Operator">,</span><span class="Number">101</span><span
+class="Operator">,</span><span class="Number">102</span><span class="Operator">,</span><span class="Number">103</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">c</span> <span class="Operator">=</span> <span class="ID">map</span><span class="Operator">(</span><span class="ID">None</span><span class="Operator">,</span> <span
+class="ID">a</span><span class="Operator">,</span> <span class="ID">b</span><span class="Operator">)</span>   <span class="Comment"># c = [(1,100), (2,101), (3,102), (4,103)]</span><span class="Text"/></span>
+</pre></div><span id="line-230" class="anchor"/><p class="line874">上边这个例子也可以用 zip(s1 , s2 , ..., sn ) 函数来完成. zip()用来将几个序列组合成一个包含元组的序列,序列中的每个元素t[i ] = (s1[i ], s2[i ], ..., sn[i ]). 与map()不同的是,
+zip()函数将所有较长的序列序列截的和最短序列一样长: <span id="line-231" class="anchor"/><span id="line-232" class="anchor"/><span id="line-233" class="anchor"/><span id="line-234" class="anchor"/><span id="line-235" class="anchor"/></p><div lang="en"
+dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-ccf8c2d96bab1585770bd278131bebf5fe7079a5_023\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-ccf8c2d96bab1585770bd278131bebf5fe7079a5_023', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-ccf8c2d96bab1585770bd278131bebf5fe7079a5_023" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">d</span> <span class="Operator">=</span> <span class="Operator">[</span><span
+class="Number">1</span><span class="Operator">,</span><span class="Number">2</span><span class="Operator">,</span><span class="Number">3</span><span class="Operator">,</span><span class="Number">4</span><span class="Operator">,</span><span
+class="Number">5</span><span class="Operator">,</span><span class="Number">6</span><span class="Operator">,</span><span class="Number">7</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">e</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="Number">10</span><span class="Operator">,</span><span
+class="Number">11</span><span class="Operator">,</span><span class="Number">12</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">f</span> <span class="Operator">=</span> <span class="ID">zip</span><span class="Operator">(</span><span class="ID">d</span><span class="Operator">,</span><span
+class="ID">e</span><span class="Operator">)</span>   <span class="Comment"># f = [(1,10), (2,11), (3,12)]</span><span class="Text"/></span>
+</pre></div><span id="line-236" class="anchor"/><p class="line874">reduce(func , s
+)函数从一个序列收集信息,然后只返回一个值(例如求和,最大值,等).它首先以序列的前两个元素调用函数,再将返回值和第三个参数作为参数调用函数,依次执行下去,返回最终的值. func函数有且只有两个参数.例如: <span id="line-237" class="anchor"/><span
+id="line-238" class="anchor"/><span id="line-239" class="anchor"/><span id="line-240" class="anchor"/><span id="line-241" class="anchor"/><span id="line-242" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-22e2138782d539f9c345ea88d99eb004e0141fae_024\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-22e2138782d539f9c345ea88d99eb004e0141fae_024', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-22e2138782d539f9c345ea88d99eb004e0141fae_024" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">def</span> <span class="ID">sum</span><span
+class="Operator">(</span><span class="ID">x</span><span class="Operator">,</span><span class="ID">y</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">return</span> <span class="ID">x</span><span class="Operator">+</span><span class="ID">y</span></span>
+<span class="line"><span class="LineNumber">   3 </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="ID">reduce</span><span class="Operator">(</span><span class="ID">sum</span><span
+class="Operator">,</span> <span class="ID">a</span><span class="Operator">)</span>   <span class="Comment"># b = (((1+2)+3)+4) = 10</span><span class="Text"/></span>
+</pre></div><span id="line-243" class="anchor"/><p class="line874">filter(func ,s)是个序列过虑器，它使用func()函数来过滤s中的元素。使func返回值为false的元素被丢弃，其它的存入filter函数返回的列表中,例如: <span id="line-244"
+class="anchor"/><span id="line-245" class="anchor"/><span id="line-246" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-b5cf1f86512d1d9783ec0578a638e1f661d7363d_025\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-b5cf1f86512d1d9783ec0578a638e1f661d7363d_025', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-b5cf1f86512d1d9783ec0578a638e1f661d7363d_025" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">c</span> <span class="Operator">=</span> <span
+class="ID">filter</span><span class="Operator">(</span><span class="ResWord">lambda</span> <span class="ID">x</span><span class="Operator">:</span> <span class="ID">x</span> <span class="Operator"><</span>
+<span class="Number">4</span><span class="Operator">,</span> <span class="ID">a</span><span class="Operator">)</span>   <span class="Comment"># c = [1, 2, 3]</span><span class="Text"/></span>
+</pre></div><span id="line-247" class="anchor"/><span id="line-248" class="anchor"/><p class="line874">如果函数func为None,则func就被当成是恒等函数处理。这样,函数就返回序列s中值为True的元素. <span
+id="line-249" class="anchor"/><span id="line-250" class="anchor"/></p><p class="line867">
+</p><h2 id="head-d13f5405707543620fb4fa273048a2547c22a55b">1.8. 列表内涵</h2>
+<span id="line-251" class="anchor"/><span id="line-252" class="anchor"/><p class="line874">列表内涵可以代替许多调用map()和filter()函数的操作.列表内涵的一般形式是: <span id="line-253" class="anchor"/><span
+id="line-254" class="anchor"/></p><pre>[表达式 for item1 in 序列1
+<span id="line-255" class="anchor"/>            for item2 in 序列2
+<span id="line-256" class="anchor"/>            ...
+<span id="line-257" class="anchor"/>            for itemN in 序列N
+<span id="line-258" class="anchor"/>            if 条件表达式]
+<span id="line-259" class="anchor"/></pre><span id="line-260" class="anchor"/><p class="line874">上边的例子等价于: <span id="line-261" class="anchor"/><span id="line-262" class="anchor"/><span id="line-263"
+class="anchor"/><span id="line-264" class="anchor"/><span id="line-265" class="anchor"/><span id="line-266" class="anchor"/><span id="line-267" class="anchor"/><span id="line-268" class="anchor"/></p><div
+lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-2bf68218f0a12e311c22ed87ead55e43d9946edd_026\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-2bf68218f0a12e311c22ed87ead55e43d9946edd_026', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-2bf68218f0a12e311c22ed87ead55e43d9946edd_026" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">s</span> <span class="Operator">=</span>
+<span class="Operator">[</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">for</span> <span class="ID">item1</span> <span class="ResWord">in</span> <span class="ID">sequence1</span><span
+class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ResWord">for</span> <span class="ID">item2</span> <span class="ResWord">in</span> <span
+class="ID">sequence2</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>        <span class="Operator">.</span><span class="Operator">.</span><span class="Operator">.</span></span>
+<span class="line"><span class="LineNumber">   5 </span>           <span class="ResWord">for</span> <span class="ID">itemN</span> <span class="ResWord">in</span> <span
+class="ID">sequenceN</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>               <span class="ResWord">if</span> <span class="ID">condition</span><span class="Operator">:</span> <span
+class="ID">s</span><span class="Operator">.</span><span class="ID">append</span><span class="Operator">(</span><span class="ID">expression</span><span class="Operator">)</span><span
+class="Text"/></span>
+</pre></div><span id="line-269" class="anchor"/><p class="line874">Listing 6.1 中的例子可以帮助你理解列表内涵 <span id="line-270" class="anchor"/><span id="line-271" class="anchor"/></p><p
+class="line867"><strong>Listing 6.1 列表内涵</strong> <span id="line-272" class="anchor"/><span id="line-273" class="anchor"/><span id="line-274" class="anchor"/><span id="line-275"
+class="anchor"/><span id="line-276" class="anchor"/><span id="line-277" class="anchor"/><span id="line-278" class="anchor"/><span id="line-279" class="anchor"/><span id="line-280"
+class="anchor"/><span id="line-281" class="anchor"/><span id="line-282" class="anchor"/><span id="line-283" class="anchor"/><span id="line-284" class="anchor"/><span id="line-285"
+class="anchor"/><span id="line-286" class="anchor"/><span id="line-287" class="anchor"/><span id="line-288" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-9e8f518eb4c4de70d904817c6c8937c10deecb79_027\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-9e8f518eb4c4de70d904817c6c8937c10deecb79_027', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-9e8f518eb4c4de70d904817c6c8937c10deecb79_027" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span
+class="ID">math</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="Operator">[</span><span
+class="Operator">-</span><span class="Number">3</span><span class="Operator">,</span><span class="Number">5</span><span class="Operator">,</span><span
+class="Number">2</span><span class="Operator">,</span><span class="Operator">-</span><span class="Number">10</span><span class="Operator">,</span><span
+class="Number">7</span><span class="Operator">,</span><span class="Number">8</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="String">'abc'</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">c</span> <span class="Operator">=</span> <span class="Operator">[</span><span
+class="Number">2</span><span class="Operator">*</span><span class="ID">s</span> <span class="ResWord">for</span> <span class="ID">s</span> <span class="ResWord">in</span> <span
+class="ID">a</span><span class="Operator">]</span>          <span class="Comment"># c = [-6,10,4,-20,14,16]</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ID">d</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="ID">s</span> <span
+class="ResWord">for</span> <span class="ID">s</span> <span class="ResWord">in</span> <span class="ID">a</span> <span class="ResWord">if</span> <span class="ID">s</span> <span
+class="Operator">>=</span> <span class="Number">0</span><span class="Operator">]</span>  <span class="Comment"># d = [5,2,7,8]</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ID">e</span> <span class="Operator">=</span> <span class="Operator">[</span><span
+class="Operator">(</span><span class="ID">x</span><span class="Operator">,</span><span class="ID">y</span><span class="Operator">)</span> <span class="ResWord">for</span> <span
+class="ID">x</span> <span class="ResWord">in</span> <span class="ID">a</span>         <span class="Comment"># e = [(5,'a'),(5,'b'),(5,'c'),</span></span>
+<span class="line"><span class="LineNumber">   7 </span>           <span class="ResWord">for</span> <span class="ID">y</span> <span class="ResWord">in</span> <span
+class="ID">b</span>         <span class="Comment">#      (2,'a'),(2,'b'),(2,'c'),</span></span>
+<span class="line"><span class="LineNumber">   8 </span>           <span class="ResWord">if</span> <span class="ID">x</span> <span class="Operator">></span> <span
+class="Number">0</span><span class="Operator">]</span>          <span class="Comment">#      (7,'a'),(7,'b'),(7,'c'),</span></span>
+<span class="line"><span class="LineNumber">   9 </span>                              <span class="Comment">#      (8,'a'),(8,'b'),(8,'c')]</span></span>
+<span class="line"><span class="LineNumber">  10 </span><span class="Comment"/><span class="ID">f</span> <span class="Operator">=</span> <span class="Operator">[</span><span
+class="Operator">(</span><span class="Number">1</span><span class="Operator">,</span><span class="Number">2</span><span class="Operator">)</span><span class="Operator">,</span>
+<span class="Operator">(</span><span class="Number">3</span><span class="Operator">,</span><span class="Number">4</span><span class="Operator">)</span><span
+class="Operator">,</span> <span class="Operator">(</span><span class="Number">5</span><span class="Operator">,</span><span class="Number">6</span><span
+class="Operator">)</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">  11 </span><span class="ID">g</span> <span class="Operator">=</span> <span class="Operator">[</span><span
+class="ID">math</span><span class="Operator">.</span><span class="ID">sqrt</span><span class="Operator">(</span><span class="ID">x</span><span class="Operator">*</span><span
+class="ID">x</span><span class="Operator">+</span><span class="ID">y</span><span class="Operator">*</span><span class="ID">y</span><span class="Operator">)</span>       <span
+class="Comment"># f = [2.23606, 5.0, 7.81024]</span></span>
+<span class="line"><span class="LineNumber">  12 </span>     <span class="ResWord">for</span> <span class="ID">x</span><span class="Operator">,</span><span class="ID">y</span>
+<span class="ResWord">in</span> <span class="ID">f</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">  13 </span><span class="ID">h</span> <span class="Operator">=</span> <span class="ID">reduce</span><span
+class="Operator">(</span><span class="ResWord">lambda</span> <span class="ID">x</span><span class="Operator">,</span><span class="ID">y</span><span class="Operator">:</span>
+<span class="ID">x</span><span class="Operator">+</span><span class="ID">y</span><span class="Operator">,</span>   <span class="Comment"># 平方根的和</span></span>
+<span class="line"><span class="LineNumber">  14 </span>           <span class="Operator">[</span><span class="ID">math</span><span class="Operator">.</span><span
+class="ID">sqrt</span><span class="Operator">(</span><span class="ID">x</span><span class="Operator">*</span><span class="ID">x</span><span class="Operator">+</span><span
+class="ID">y</span><span class="Operator">*</span><span class="ID">y</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span>            <span class="ResWord">for</span> <span class="ID">x</span><span class="Operator">,</span><span
+class="ID">y</span> <span class="ResWord">in</span> <span class="ID">f</span><span class="Operator">]</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-289" class="anchor"/><p
+class="line874">提供给列表内涵的序列不必等长，因为系统内部使用嵌套的一系列for循环来迭代每个序列中的每个元素，然后由if从句处理条件表达式,若条件表达式为真,计算表达式的值并放入到列表内涵返回的序列中.
+if从句是可选的. <span id="line-290" class="anchor"/><span id="line-291" class="anchor"/></p><p class="line862">当使用列表内涵来构建包含元组的列表时,元组的值必须放在括号里.例如
+<tt class="backtick">[(x,y) for x in a for y in b]</tt>是一个合法的语句,而<tt class="backtick">[x,y for x in a for y in b]</tt>则不是. <span id="line-292" class="anchor"/><span
+id="line-293" class="anchor"/></p><p class="line874">最后,你应该注意在一个列表内涵中定义的变量是与列表内涵本身有同样的作用域,在列表内涵计算完成后会继续存在.例如 [x for x in a]
+会覆盖内涵外先前定义的x ,最终 x 的值会是 a 中的最后一个元素的值. <span id="line-294" class="anchor"/><span id="line-295" class="anchor"/></p><p class="line867">
+</p><h2 id="head-51853bca214776b0ae418d690a25b85ca9a96177">1.9. eval(), exec, execfile(),和compile()</h2>
+<span id="line-296" class="anchor"/><span id="line-297" class="anchor"/><p class="line874">eval(str [,globals [,locals
+]])函数将字符串str当成有效Python表达式来求值，并返回计算结果。 <span id="line-298" class="anchor"/><span id="line-299" class="anchor"/></p><p class="line874">同样地,
+exec语句将字符串str当成有效Python代码来执行.提供给exec的代码的名称空间和exec语句的名称空间相同. <span id="line-300" class="anchor"/><span id="line-301" class="anchor"/></p><p
+class="line874">最后，execfile(filename [,globals [,locals ]])函数可以用来执行一个文件,看下面的例子: <span id="line-302" class="anchor"/><span id="line-303"
+class="anchor"/></p><pre>        >>> eval('3+4')
+<span id="line-304" class="anchor"/>        7
+<span id="line-305" class="anchor"/>        >>> exec 'a=100'
+<span id="line-306" class="anchor"/>        >>> a
+<span id="line-307" class="anchor"/>        100
+<span id="line-308" class="anchor"/>        >>> execfile(r'c:\test.py')
+<span id="line-309" class="anchor"/>        hello,world!
+<span id="line-310" class="anchor"/>        >>>
+<span id="line-311" class="anchor"/></pre><span id="line-312" class="anchor"/><span id="line-313" class="anchor"/><p
+class="line874">默认的，eval(),exec,execfile()所运行的代码都位于当前的名字空间中. eval(), exec,和
+execfile()函数也可以接受一个或两个可选字典参数作为代码执行的全局名字空间和局部名字空间. 例如: <span id="line-314" class="anchor"/><span id="line-315" class="anchor"/><span
+id="line-316" class="anchor"/><span id="line-317" class="anchor"/><span id="line-318" class="anchor"/><span id="line-319" class="anchor"/><span id="line-320"
+class="anchor"/><span id="line-321" class="anchor"/><span id="line-322" class="anchor"/><span id="line-323" class="anchor"/><span id="line-324" class="anchor"/><span
+id="line-325" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-35fcd0d4f44116f6acfa023ac2b2be739afd0ed3_028\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-35fcd0d4f44116f6acfa023ac2b2be739afd0ed3_028', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-35fcd0d4f44116f6acfa023ac2b2be739afd0ed3_028" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span
+class="ID">globals</span> <span class="Operator">=</span> <span class="Operator">{</span><span class="String">'x'</span><span class="Operator">:</span> <span
+class="Number">7</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   2 </span>           <span class="String">'y'</span><span class="Operator">:</span> <span
+class="Number">10</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   3 </span>           <span class="String">'birds'</span><span class="Operator">:</span> <span
+class="Operator">[</span><span class="String">'Parrot'</span><span class="Operator">,</span> <span class="String">'Swallow'</span><span
+class="Operator">,</span> <span class="String">'Albatross'</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   4 </span>          <span class="Operator">}</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ID">locals</span> <span class="Operator">=</span> <span class="Operator">{</span> <span
+class="Operator">}</span></span>
+<span class="line"><span class="LineNumber">   6 </span></span>
+<span class="line"><span class="LineNumber">   7 </span><span class="Comment"># 将上边的字典作为全局和局部名称空间</span></span>
+<span class="line"><span class="LineNumber">   8 </span><span class="Comment"/><span class="ID">a</span> <span class="Operator">=</span> <span
+class="ID">eval</span><span class="Operator">(</span><span class="String">"3*x + 4*y"</span><span class="Operator">,</span> <span class="ID">globals</span><span
+class="Operator">,</span> <span class="ID">locals</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span><span class="ResWord">exec</span> <span class="String">"for b in birds: print b"</span> <span
+class="ResWord">in</span> <span class="ID">globals</span><span class="Operator">,</span> <span class="ID">locals</span>   <span class="Comment">#
+注意这里的语法</span></span>
+<span class="line"><span class="LineNumber">  10 </span><span class="ID">execfile</span><span class="Operator">(</span><span class="String">"foo.py"</span><span
+class="Operator">,</span> <span class="ID">globals</span><span class="Operator">,</span> <span class="ID">locals</span><span class="Operator">)</span><span
+class="Text"/></span>
+</pre></div><span id="line-326" class="anchor"/><span id="line-327" class="anchor"/><p
+class="line862">如果你省略了一个或者两个名称空间参数,那么当前的全局和局部名称空间就被使用.如果一个函数体内嵌嵌套函数或lambda匿名函数时,同时又在函数主体中使用exec或execfile()函数时，
+由于牵到嵌套作用域，会引发一个<a href="/moin/SyntaxError" class="nonexistent">SyntaxError</a>异常.（此段原文:If you omit one or both namespaces, the current
+values of the global and local namespaces are used. Also,due to issues related to nested scopes, the use of exec or execfile() inside a function body may result
+in a <a href="/moin/SyntaxError" class="nonexistent">SyntaxError</a> exception if that function also contains nested function definitions or uses the lambda
+operator.） <span id="line-328" class="anchor"/><span id="line-329" class="anchor"/></p><pre>        在Python2.4中俺未发现可以引起异常 --WeiZhong
+<span id="line-330" class="anchor"/></pre><span id="line-331" class="anchor"/><span id="line-332" class="anchor"/><p
+class="line874">注意例子中exec语句的用法和eval(), execfile()是不一样的. exec是一个语句(就象print或while), 而eval()和execfile()则是内建函数. <span id="line-333"
+class="anchor"/><span id="line-334" class="anchor"/></p><pre>        exec(str) 这种形式也被接受，但是它没有返回值。 --WeiZhong
+<span id="line-335" class="anchor"/></pre><span id="line-336" class="anchor"/><p
+class="line874">当一个字符串被exec,eval(),或execfile()执行时,解释器会先将它们编译为字节代码，然后再执行.这个过程比较耗时,所以如果需要对某段代码执行很多次时,最好还是对该代码先进行预编译,这样就不需要每次都编译一遍代码，可以有效提高程序的执行效率。
+<span id="line-337" class="anchor"/><span id="line-338" class="anchor"/></p><p class="line874">compile(str ,filename ,kind )函数将一个字符串编译为字节代码,
+str是将要被编译的字符串, filename是定义该字符串变量的文件，kind参数指定了代码被编译的类型-- 'single'指单个语句, 'exec'指多个语句, 'eval'指一个表达式.
+cmpile()函数返回一个代码对象，该对象当然也可以被传递给eval()函数和exec语句来执行,例如: <span id="line-339" class="anchor"/><span id="line-340"
+class="anchor"/><span id="line-341" class="anchor"/><span id="line-342" class="anchor"/><span id="line-343" class="anchor"/><span id="line-344"
+class="anchor"/><span id="line-345" class="anchor"/><span id="line-346" class="anchor"/><span id="line-347" class="anchor"/></p><div lang="en" dir="ltr"
+class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-7aa187a4683423d30c2327c6f1b2c095e4ca15f0_029\', 1, 1);" \
+class="codenumbers">切換行號<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-7aa187a4683423d30c2327c6f1b2c095e4ca15f0_029', 1, 1);" href="#">切換行號</a>
+<pre lang="en" id="CA-7aa187a4683423d30c2327c6f1b2c095e4ca15f0_029" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span
+class="ID">str</span> <span class="Operator">=</span> <span class="String">"for i in range(0,10): print i"</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">c</span> <span class="Operator">=</span> <span
+class="ID">compile</span><span class="Operator">(</span><span class="ID">str</span><span class="Operator">,</span><span
+class="String">''</span><span class="Operator">,</span><span class="String">'exec'</span><span class="Operator">)</span>      <span
+class="Comment"># 编译为字节代码对象</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">exec</span> <span class="ID">c</span>
+<span class="Comment"># 执行</span></span>
+<span class="line"><span class="LineNumber">   4 </span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ID">str2</span> <span class="Operator">=</span> <span class="String">"3*x +
+4*y"</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ID">c2</span> <span class="Operator">=</span> <span
+class="ID">compile</span><span class="Operator">(</span><span class="ID">str2</span><span class="Operator">,</span> <span
+class="String">''</span><span class="Operator">,</span> <span class="String">'eval'</span><span class="Operator">)</span>  <span
+class="Comment"># 编译为表达式</span></span>
+<span class="line"><span class="LineNumber">   7 </span><span class="ID">result</span> <span class="Operator">=</span> <span
+class="ID">eval</span><span class="Operator">(</span><span class="ID">c2</span><span class="Operator">)</span>               <span
+class="Comment"># 执行</span><span class="Text"/></span>
+</pre></div><span id="line-348" class="anchor"/><span id="bottom" class="anchor"/></div>

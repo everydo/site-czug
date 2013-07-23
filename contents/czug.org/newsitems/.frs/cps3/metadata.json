@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "cps3"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "CPS做为zope上的一个重要内容管理系统分支，在法国政府部门使用广泛，并得到资助。CPS3是下一代的CPS。", 
+        "modified": "2004-03-12 02:35:08", 
+        "title": "CPS3正式发布"
+    }
+}

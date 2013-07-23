@@ -1,0 +1,78 @@
+  
+  <h1 style="margin:25px 0 10px 10px">翻译www.djangobook.com之第二十章：安全 
+    
+  </h1>
+  <div class="content">
+    <span style="color: red"><strong>The Django Book：第20章 安全</strong></span><br /><br />internet是令人惊恐的地方<br />在过去的几年里，internet恐怖故事几乎持续出现在新闻中，我们看到病毒以惊人的速度传播，大量危及安全的计算机被当<br />作武器，从未结束的武装与垃圾邮件作战，以及许多从危及安全的网站鉴别盗窃的报导<br /><br />作为好的web开发人员，打击这些黑暗势力是我们的责任，每个web开发人员需要把安全作为基本的web编程方面，不幸的是，<br />安全问题看起来很棘手--攻击者只需要找到一个单独的弱点，但是防御者必须保护每个单独的方面<br /><br />Django尝试减轻这个难点，它设计来自动为你防护许多常见的新手(甚至有经验的)web开发人员容易犯的安全错误，理解这些<br />问题是什么仍然很重要，Django怎样保护你，以及--更重要的--你让你的代码更安全的步骤<br />但是，首先，一个重要的不承诺:我们决不是这个领域的专家，所以我们不会尝试全面的解释每个弱点，相反，我们将给出适<br />合Django的安全问题的一个简短的大纲<br /><br /><strong>web安全的主题</strong><br />如果你只从本章学习到一件事情，则让它为这个:<br />从不--在任何情况下--信任浏览器的数据<br />你从来不知道在HTTP连接的另一端是谁，它可能是一个你的用户，但是它也可能很容易为一个寻找漏洞的攻击者或小脚本<br />来自于浏览器的任何类型的数据需要被当作是偏执狂的一副健康良药，它保护"in band"的数据--即从web表单提交的数据--<br />和"out of band"--即HTTP头部，cookies，以及其他请求信息，欺骗通常浏览器自动添加的请求元数据是很微不足道的<br />本章讨论的每个弱点都直接来自于信任来自于线上的数据然后在使用它之前清除数据失败，你应该让不断的问"数据来自于何<br />处?"成为一般实践<br /><br /><strong>SQL注射</strong><br />SQL注射是一个常见的开拓，攻击者改变Web页面参数(例如GET/POST数据或URLs)来插入天真的Web程序直接在它的数据库执行<br />的任意的SQL片段，这可能是在疯狂世界里最危险的--不幸的是它是最常见的--弱点<br />这个弱点最容易出现在当用户手动输入结构化SQL时，例如，设想写一个方法来从一个联系搜索页面收集联系信息列表，为了<br />防止在你的系统里读取每个单独的邮件时遇到垃圾邮件，我们将强迫用户在我们提供他们的email地址前输入某人的用户名:<br /><pre name="code" class="java">
+def user_contacts(request):
+    user = request.GET['username']
+    sql = "SELECT * FROM user_contacts WHERE username = '%s';" % username
+    # execute the SQL here...
+</pre><br />注意，这个例子中，以及下面所有类似的"不要做这个"的例子中，我们故意保留了大部分用来让方法真正工作的代码，我们<br />不会让这些代码在某人偶然取走它们时工作<br />尽管起初这看起来不危险，但它真的是这样<br />首先，保护我们的整个邮件列表的尝试将以一个聪明的结构化查询失败，考虑如果一个攻击者输入"' OR 'a'='a"到查询框里<br />这种情况下，字符串插补将构建的查询将为:<br /><pre name="code" class="java">
+SELECT * FROM user_contacts WHERE username = '' OR 'a' = 'a';
+</pre><br />由于我们在该字符串里允许不安全的SQL，攻击者添加的OR子句确保每个单独的行都返回<br />尽管如此，这是最小的引起惊慌的攻击，设想一下如果攻击者提交"'; DELETE FROM user_contacts WHERE 'a' = 'a"将发生<br />什么，我们将得到这个完整的查询:<br /><pre name="code" class="java">
+SELECT * FROM user_contacts WHERE username = ''; DELETE FROM user_contacts WHERE 'a' = 'a';
+</pre><br />呀!我们的联系列表哪里去了?<br /><br /><strong>解决方案</strong><br />尽管这个问题很阴险并且有时很难发现，解决方案却很简单:从不信任用户提交的数据，并且当传递给SQL时一直escape它<br />Django数据库API为你做这个，它根据你使用的数据库服务器(例如PostgreSQL，MySQL)的引号惯例自动escape所有特殊的SQL<br />参数，例如，在这个API调用中:<br /><pre name="code" class="java">
+foo.get_list(bar__exact="' OR 1=1")
+</pre><br />Django将相应的escape输入，结果是像这样的语句:<br /><pre name="code" class="java">
+SELECT * FROM foos WHERE bar = '\' OR 1=1'
+</pre><br />这是完全无害的<br />这适合所有的Django数据库API，带有一些额外情况:<br />1，extra()方法的where参数(参考附录XXX)，该参数设计时接受原始SQL<br />2，使用低级数据库API来手动进行查询<br />对于其中每种情况，很容易让你自己受保护，每种情况下，避免字符串插补有利于传递"绑定参数"，即，这部分我们开始的<br />例子应该被写成:<br /><pre name="code" class="java">
+from django.db import connection
+
+def user_contacts(request):
+    user = request.GET['username']
+    sql = "SELECT * FROM user_contacts WHERE username = %s;"
+    cursor = connection.cursor()
+    cursor.execute(sql, [user])
+    # ... do something with the results
+</pre><br />低级execute方法使用SQL字符串和%s placeholders，并且自动escape和插入作为第二个参数传递的列表参数，你应该一直以<br />这种方式构建自定义的SQL<br />不幸的是，你不能在SQL的每个地方使用绑定参数，它们不允许作为标识符(即表名或者列名)，这样，如果你需要，如从一个<br />POST变量动态构建表的列表，你将需要在你的代码里escape该名字，Django提供了一个方法django.db.backend.quote_name<br />它将根据当前数据库的引号scheme来escape标识符<br /><br /><strong>跨站点脚本(XSS)</strong><br />很可能最常见的web弱点，跨站点脚本，或者XSS，在渲染到HTML之前失败于正确的escape用户提交的内容的web程序里发现<br />这允许攻击者恶意的插入任意的通常是script标签格式的HTML<br />攻击者通常使用XSS攻击来窃取cookie和session信息，或者骗取用户提供私有信息给错误的人(也叫phishing)<br />这种类型的攻击可以采用一些不同的形式，并且有几乎无限的改变方式，所以我们将只看看一个典型的例子，让我们看看一<br />个非常简单的"hello world"视图:<br /><pre name="code" class="java">
+def say_hello(request):
+    name = request.GET.get('name', 'world')
+    return render_to_response("hello.html", {"name" : name})
+</pre><br />这个视图简单的从GET参数读取一个名字并传递名字给hello.html模板，我们可能像这样为该视图写一个模板:<br /><pre name="code" class="java">
+&lt;h1&gt;Hello, {{ name }}!&lt;/h1&gt;
+</pre><br />所以如果我们访问http://example.com/hello/name=Jacob，渲染的页面将包含:<br /><pre name="code" class="java">
+&lt;h1&gt;Hello, Jacob!&lt;/h1&gt;
+</pre><br />但是等等--如果我们访问<br /><pre name="code" class="java">
+http://example.com/hello/name=&lt;i&gt;Jacob&lt;/i&gt;
+</pre><br />会发生什么?<br />则我们会得到:<br /><pre name="code" class="java">
+&lt;h1&gt;Hello, &lt;i&gt;Jacob&lt;/i&gt;!&lt;/h1&gt;
+</pre><br />当然，攻击者不会使用像i标签的东西，他可以包含整个HTML集来用任意内容截取你的页面，这种类型的攻击被用来欺骗用户<br />输入数据到看起来像它们的银行网站，但是事实上是把你的帐号信息发送给攻击者的XSS-截取表单<br />如果你把存储该数据在数据库中并且后面在你的站点上显示则会更糟<br />例如，在某点上MySpace被发现对于这种类型的XSS攻击有弱点，用户插入javascript到他的当你访问他的profile页面时自动<br />添加他为你的朋友的profile里，几天之内他有了几百万的朋友<br />现在，这可能听起来良好，但是记住该攻击者让他的代码--而不是MySpace的--运行在你的电脑里，这违反了对于信任MySpa<br />ce上面的所有代码都是事实上由MySpace所写的假设<br />MySpace非常幸运这些恶意的代码没有自动删除访问者的帐号，更改他们的密码，用垃圾邮件淹没站点，或者其他任何该弱点<br />释放的恶梦般的情形<br />的情形<br /><br /><strong>解决方案</strong><br />解决方案非常简单:一直escape任何可能来自于用户的内容，如果我们像这样简单的重写我们的模板:<br /><pre name="code" class="java">
+&lt;h1&gt;Hello, {{ name|escape }}!&lt;/h1&gt;
+</pre><br />则我们不再易受攻击了，你应该当在你的站点上显示用户提交的内容时一直使用escape标签(或者一个相似物)<br />为什么Django不为你做这些?<br />修改Django来自动escape所有显示在模板中的变量是一个频繁出现在Django开发人员邮件列表中的讨论主题<br />目前为止，Django的模板避免了这种行为，因为它敏锐而不可见的更改了应该很直接的行为(显示变量)，这是个狡猾的问题<br />和一个很难评价的平衡，添加隐藏的行为与Django的核心理念相悖(以及Python的，对于这种问题)，但是安全同等重要<br />然而，也存在公平的机会使得Django在未来添加某种形式的自动escape(或者几乎自动escape)行为，它将一直比本书更新<br />(特别是最终树版本)<br />即使Django添加了这个特性，你应该仍然一直保有考虑"该数据从哪里来?"的习惯，没有一直100%保护你的站点免受XSS攻击<br />的自动解决方案<br /><br /><strong>跨站点请求伪造(CSRF)</strong><br />CSRF当恶意网站欺骗用户未知的从一个他们已经认证的站点载入一个URL时发生--这样，就可以使用他们的认证状态<br />Django由内劲攻击来防护这种类型的攻击，攻击本身和那些工具在第15章进行了详述<br /><br /><strong>Session伪造/截取</strong><br />这是一个特殊的攻击，而不是对用户的session数据的一般类型的攻击，它可以有一些不同的形式:<br />1，中间人攻击，其中攻击者当它在有线(或者无线)网络上游走时窃听session数据<br />2，Session伪造，其中攻击者使用伪造的session ID(可能通过中间人攻击获得)来假装为另外一个用户<br />这前两种的例子是在咖啡店的攻击者使用无线网络来获取一个session cookie，然后他可以使用这个cookie来模仿原始用户<br />3，cookie伪造攻击，其中攻击者覆盖存储在cookie中的假定只读的数据，第12章详细解释了cookies怎样工作，其中一个突<br />出点是对浏览器和恶意用户在你不知情的情况下更改cookies是微不足道的<br />网站存储类似于IsLoggedIn=1或者甚至LoggedInAsUser=jacob的cookie有很长的历史，开拓这种类型的攻击者太容易了<br />但是对于在更微妙的级别，信任任何存储在cookie中的东西从不是个好主意，你从不知道谁正在翻找它们<br />4，Session定置，其中攻击者欺骗用户设置或者重设他们的session ID<br />例如，PHP允许session标识符在URL中传递(即http://example.com/?PHPSESSID=fa90197ca25f6ab40bb1374c510d7a32)，欺骗<br />用户点击一个硬编码了session ID的链接的攻击者将导致用户采用该session<br />这被用在phishing攻击中来欺骗用户输入个人信息到攻击者所有的帐号，它可以稍后登录该帐号并得到那些数据<br />5，Session下毒，其中攻击者注射潜在危险的数据到用户的session中--通常通过一个用户提交来设置session数据的web表单<br />一个规范的例子是站点在cookie中存储简单的用户喜好(例如页面背景颜色)，攻击者可以欺骗用户点击一个连接来提交一个<br />事实上包含XSS攻击的"颜色"，如果这个颜色没有escape(参考上面的)用户可能再次注射恶毒的代码到用户环境<br /><br /><strong>解决方案</strong><br />有一些可以防止遭受这些攻击的一般原则:<br />1，从不允许session信息包含在URL中<br />Django的session框架(参考第12章)简单的不允许session包含在URL中<br />2，不要在cookies中直接存储数据，相反，存储映射到存储在后端的session数据的session ID<br />如果你使用Django内建的session框架(即request.session)，它可以自动为你处理，session框架使用的唯一的cookie是一个<br />单独的session ID，所有的session数据存储在数据库中<br />3，如果你在模板中显示session数据记得escape它，参考上面的XSS部分，并且记得它适合任何用户创建的内容，你应该把<br />session信息当作用户创建的<br />4，预防任何可能的攻击者窃取session IDs<br />尽管几乎不可能检测到某人在窃取session ID，Django确实有内建的强力的session攻击的防护，Session IDs存储为哈希(而<br />不是连续的数字)，这防止了强力攻击，并且如果用户尝试一个不存在的sessino ID时用户将一直得到一个新的session ID，<br />这防止了session定置<br />注意这些原则和工具中没有一个防止了中间人攻击，这种类型的攻击几乎无法检测，如果你的站点允许登录用户看到一些类<br />型的敏感数据，你应该一直通过HTTPS来服务站点，而且，如果你有一个允许SSL的站点，你应该设置SESSION_COOKIE_SECURE<br />设置为True，这将使Django只通过HTTPS发送session cookie<br /><br /><strong>E-mail头部注射</strong><br />SQL注射的很少有人知道的姐妹e-mail头部注射窃取email发送web表单并使用它们来发送垃圾邮件，任何从web表单数据构建<br />email头部的形式都是这种类型的攻击<br />让我们看看规范的许多站点的联系人表单，通常它email一个硬编码的email地址，所以第一眼看来没有垃圾邮件滥用的攻击<br />尽管如此，大部分的这种表单也允许用户输入他自己的email主题(还有一个发送地址，有时候一些其他域)，这个主题域被<br />用来构建email信息的主题头部<br />如果当构建email信息时头部没有escape，攻击者可以使用类似于"hello\ncc:spamvictim@example.com"(这里\n是换行字符)<br />这将使得构建的email头部变成:<br /><pre name="code" class="java">
+To: hardcoded@example.com
+Subject: hello
+cc: spamvictim@example.com
+</pre><br />和SQL注射一样，如果我们信任用户给定的主题行，我们将允许他后见一些恶意的头部，则它们可以使用我们的联系表单来<br />发送垃圾邮件<br /><br /><strong>解决方案</strong><br />我们可以用我们预防SQL注射同样的方式来防止这种攻击:一直escape或者验证用户提交的内容<br />Django内建的mail方法(位于django.core.mail)简单的不允许用于构建头部(发送和接受地址以及主题)的任何域中有换行<br />如果你尝试使用django.core.mail.send_mail和一个包含换行的主题，Django将触发BadHeaderError异常<br />如果你决定使用发送email的其他方法，你将需要确认头部的换行导致出错或者被清除，你可能想检查django.core.mail中的<br />SafeMIMEText类来看看Django怎样做这件事<br /><br /><strong>目录穿越</strong><br />目录穿越使另一个注射风格的攻击，其中恶意的用户欺骗文件系统代码来读和/或写web服务器应该不允许访问的文件<br />一个例子可能为一个从硬盘读文件而不清除文件名的视图:<br /><pre name="code" class="java">
+def dump_file(request):
+    filename = request.GET["filename"]
+    filename = os.path.join(BASE_PATH, filename)
+    content = open(filename).read()
+
+    # ...
+</pre><br />尽管它看起来限制了文件访问为访问BASE_PATH(通过使用os.path.join)下面的文件，如果攻击者传递一个包含..(这是两个<br />句点，UNIX对"父目录"的捷径)的filename，他可以访问BASE_PATH"之上"的文件，他发现正确数量的小数点来成功访问只是<br />时间问题，比如../../../../../etc/passwd<br />读取文件而不正确的escape的东西对于此问题是易受攻击的，写文件的视图只是易受攻击，但结果加倍可怕<br />另一个该问题的改变位于基于URL或者其他请求信息动态载入模块的代码中，一个宣扬良好的例子来自于Ruby on Rails世界<br />在2006中期之前，Rails使用类似于http://example.com/person/poke/1的URLs来直接载入模块和调用方法，结果是细心组织<br />的URL可能自动载入任何的代码，包括一个数据库重置脚本!<br /><br /><strong>解决方案</strong><br />如果你的代码需要基于用户输入读写文件，你需要非常小心的清除请求路径来确保攻击者不能从你限制访问的基本目录逃离<br />注意，不需要说，你应该从不写可以读取硬盘任何位置的代码<br />怎样做这个escape的好例子位于Django内建的静态内容服务视图(位于django.views.static)，这里是相关的代码:<br /><pre name="code" class="java">
+import os
+import posixpath
+
+# ...
+
+path = posixpath.normpath(urllib.unquote(path))
+newpath = ''
+for part in path.split('/'):
+    if not part:
+        # strip empty path components
+        continue
+
+    drive, part = os.path.splitdrive(part)
+    head, part = os.path.split(part)
+    if part in (os.curdir, os.pardir):
+        # strip '.' amd '..' in path
+        continue
+
+    newpath = os.path.join(newpath, part).replace('\\', '/')
+</pre><br />Django本身不读文件(除非你使用static.serve方法，但是它被上面显示的代码保护)，所以这个弱点不会影响核心代码很多<br />另外，使用URL配置抽象意味着Django将从不载入你没有显示告诉它载入的代码，没有创建一个URL来导致Django载入没有在<br />URL配置里提到的东西的方式<br /><br /><strong>暴露出错信息</strong><br />在开发阶段，可以在你的浏览器里看到堆栈和出错信息是非常有用的，Django有特别让调试容易的非常"漂亮"和丰富的调试<br />信息<br />尽管如此，一旦站点上线的话如果这些错误还显示，它们有时候会无意的暴露帮助攻击者的你的代码或者配置的一些方面<br />而且，错误和堆栈信息对最终用户根本没有用处，如果你点代码触发了不可处理的异常，站点访问者应该不能看到完整的<br />堆栈信息--或者任何代码片段或者Python(面向程序员的)出错信息，相反，访问者应该看到友好的"该页面不可得到"信息<br />当然，自然开发者需要看到堆栈信息来在他们的代码中调试问题，所以框架应该从公众隐藏所有的出错信息，但是它应该<br />显示他们给受信任的站点开发人员<br /><br /><strong>解决方案</strong><br />Django有一个简单的标记来控制这些错误新的显示，如果DEBUG设置被设为True，错误信息将显示在浏览器中，否则Django<br />将渲染返回一个HTTP500("内部服务器错误")信息并渲染一个你提供的错误模板，这个错误模板被称作500.html，并且应该<br />位于一个你的模板目录的根目录<br />既然开发人员仍然需要看到上线站点生成的错误信息，对于任何这种方式处理的错误将把完整的堆栈信息发送email给在<br />ADMINS设置中给定的任何地址<br />在Apache和mod_python下部署的用户应该也确认他们在他们的Apache配置文件里设置了PythonDebug Off，这将确保任何在<br />Django有机会载入之前发生的错误都将不会显示给公众<br /><br /><strong>最后一句话</strong><br />希望所有这些关于安全问题的探讨不会太有胁迫感，是这样，web可以是一个疯狂和野蛮的世界，但是通过一丁点的远见，你<br />可以有一个难以置信的安全网站<br />记住web安全是一个不断改变的领域，如果你在阅读本书的最终树版本，确保检查更多更新的对于已发现的新弱点的安全资源<br />事实上，每个月或者每星期花费一些时间来研究和保持当前状态的web程序安全一直是个好主意，这是很小的投资，但是你得<br />到对你的站点和用户的保护是无价的<br />我们缺失了什么东西?有一些你认为我们应该在本章讲到的其他安全弱点?我们有一些错误?在本段留下注释来让我们知道!
+  </div>
+
+  
+
+  

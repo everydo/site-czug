@@ -1,0 +1,15 @@
+{
+    "main": {
+        "left_col": ".. navtree::\n   :root_depth: 2",
+        "hidden_keys": [
+            "img", 
+            "__init__.pyc", 
+            "__init__.py"
+        ], 
+        "contenttype": "Folder"
+    }, 
+    "dublin": {
+        "description": "用户、组、角色、权限", 
+        "title": "用户和权限"
+    }
+}

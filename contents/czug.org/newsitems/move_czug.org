@@ -1,0 +1,22 @@
+大家可能发现现在CZUG.org越来越慢了，而注册用户数目，现在已经快到700了（当然并行的用户很少）。<br />
+<br />
+而现在CZUG.org 的网络硬件环境却十分的可怜：他只是一台落在同事家里的PIII PC，内存也只有320M<br />
+<br />
+现在CZUG.org准备鸟枪换炮了，当然还不准备换大炮，先走一步换小炮吧 ;-)<br />
+<br />
+我们准备购买新的服务器主机托管：<br />
+<br />
+我们准备购买如下的宝德600R的1U机架入门级服务器：<br />
+<ul>
+  <li>P4 2.6G</li>
+  <li>主板为：<a href="http://www.intel.com/design/servers/s875wp1-e/index.htm?iid=ipp_srvr+mthrbds_s875wp1e_srvr&amp;" class="prodlink">Intel® Entry
+        Server Board S875WP1-E</a>, 支持800M外频，S-ATA硬盘，ECC-DDA内存<br />
+    </li>
+  <li>内存：512M ECC-DDA内存<br />
+  </li>
+  <li>硬盘：80G * 2，RAID 1镜像</li>
+</ul>
+主机托管想先在某个IDC的二级代理下面先租上半年（5M带宽）。之后如果不能满足带宽要求的话，再考虑升级到更高的带宽。<br />
+<br />
+升级可能在月底前完成，大家对我们的选择有意见吗？<br />
+<br />

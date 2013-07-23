@@ -1,0 +1,178 @@
+<p>出处： <a href="http://www.javaeye.com/wiki/Django-book/730-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E4%B9%9D%E7%AB%A0:%20Generic%20views">http://www.javaeye.com/wiki/Django-book/730-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E4%B9%9D%E7%AB%A0:%20Generic%20views</a></p>
+  
+  <h1 style="margin:25px 0 10px 10px">翻译www.djangobook.com之第九章: Generic views 
+    
+  </h1>
+  <div class="content">
+    <span style="color: red"><strong>The Django Book: 第9章 Generic views</strong></span><br /><br />这又是一个本书重现的主题:最坏的情况下，web开发是无聊和乏味的<br />目前为止我们讲到Django怎样试图在模型和模板层去除单调乏味，但是web开发人员也在视图层感到厌倦<br />Django的generic views就是开发来解除这个痛苦的，它在视图开发上采用了一些常用的惯例和模式，<br />并且把视图开发抽象出来，以致你可以在数据之上用不多的代码迅速的写常见的视图<br />事实上，前面章节中几乎每个视图例子都可以用generic views重写<br />Django包含generic views来做下面的事情:<br />1，处理常见的简单任务:重定向到不同的页面和渲染给定的模板<br />2，显示列表和一个单独对象的细节页面，例如Django文档首页和单独的文档页面就是这种形式<br />(<a href="http://www.djangoproject.com/documentation" target="_blank">http://www.djangoproject.com/documentation</a>)从第5章开始的视图可以很容易的使用<br />generic views重写，我们下面将做这件事<br />3，在year/month/day存档页面显示基于日期的对象，相关的细节以及最近的页面，Django的weblog<br />(<a href="http://www.djangoproject.com/weblog" target="_blank">http://www.djangoproject.com/weblog</a>)的year，month和day存档就是用基于此构建的<br />以及ljworld.com的新闻存档等等<br />4，允许用户使用授权或不使用授权来创建，编辑，删除对象<br />总的来说，这些视图提供了容易的接口来处理开发人员遇到的最常见的任务<br /><br /><strong>使用generic views</strong><br />所有的这些视图被用来在你的URL配置文件里创建配置字典并把这些字典作为第3个参数传递给一个给定的模式<br />例如下面是一个简单的在djangoproject.com上写blog的weblog app的URL配置:<br /><pre name="code" class="java">
+from django.conf.urls.defaults import *
+from django_website.apps.blog.models import Entry
+
+info_dict = {
+    'queryset': Entry.objects.all(),
+    'date_field': 'pub_date',
+}
+
+urlpatterns = patterns('django.views.generic.date_based',
+   (r'^(?P&lt;year&gt;\d{4})/(?P&lt;month&gt;[a-z]{3})/(?P&lt;day&gt;\w{1,2})/(?P&lt;slug&gt;[-\w]+)/$', 'object_detail', dict(info_dict, slug_field='slug')),
+   (r'^(?P&lt;year&gt;\d{4})/(?P&lt;month&gt;[a-z]{3})/(?P&lt;day&gt;\w{1,2})/$',                  'archive_day',   info_dict),
+   (r'^(?P&lt;year&gt;\d{4})/(?P&lt;month&gt;[a-z]{3})/$',                                   'archive_month', info_dict),
+   (r'^(?P&lt;year&gt;\d{4})/$',                                                       'archive_year',  info_dict),
+   (r'^/?$',                                                                     'archive_index', info_dict),
+)
+</pre><br />你可以看到，这个URL配置在info_dict里定义了一些选项，'queryset'传递一个QuerySet的对象给generic view使用(这里的<br />情况下，传递的是所有的Entry对象)，并且告诉generic view哪个模型正在被使用，对于每个generic view剩下的参数都通过<br />URL配置里的命名参数捕获得到<br />这就是Django的weblog的所有视图代码!剩下的唯一的事情就是写模板<br />每个generic view需要一些关键字参数，记住上面的例子中，参数可以来自于URL模式(如month，day，year等等)，也可以来<br />自于额外的信息字典(如queryset，date_field等等)<br />大部分generic views需要queryset键，它是一个QuerySet实例，参考附录3的数据库API得到更多关于QuerySet对象的信息<br />大部分视图也需要一个可选的extra_context字典，你可以通过它传递任意辅助信息到视图中去<br />在extra_context字典中的值可以是方法或者其它对象，方法在传递到模板之前会计算出值<br /><br /><strong>"简单的" generic views</strong><br />django.views.generic.simple模块包含了简单的处理一些常见情况的视图:不需要视图逻辑时渲染模板和处理重定向<br /><br /><strong>渲染模板</strong><br />django.views.generic.simple.direct_to_template渲染一个给定的模板，并把在URL里捕获的参数组成字典作为{{ params }}<br />模板变量传递给它<br />例子:<br />给定下面的URL模式:<br /><pre name="code" class="java">
+urlpatterns = patterns('django.views.generic.simple',
+    (r'^foo/$',             'direct_to_template', {'template': 'foo_index.html'}),
+    (r'^foo/(?P&lt;id&gt;\d+)/$', 'direct_to_template', {'template': 'foo_detail.html'}),
+)
+</pre><br />对/foo/的请求将渲染foo_index.html模板，对/foo/15/的请求则渲染foo_detail.html并有一个context变量{{ params.id }}值为15<br />必需的参数:<br />template<br />使用的模板的完整名<br /><br /><strong>重定向到另一URL</strong><br />django.views.generic.simple.redirect_to重定向到另一个URL，给定的URL可能包含字典样式的string格式，它将插入到URL<br />如果给定的URL是None，Django将返回一个HTTP 410(不可用)信息<br />例子:<br />下面的例子从/foo/&lt;id&gt;/重定向到/bar/&lt;id&gt;/:<br /><pre name="code" class="java">
+urlpatterns = patterns('django.views.generic.simple',
+    ('^foo/(?p&lt;id&gt;\d+)/$', 'redirect_to', {'url': '/bar/%(id)s/'}),
+)
+</pre><br />下面的例子对/bar/的请求返回一个410 HTTP错误:<br /><pre name="code" class="java">
+urlpatterns = patterns('django.views.generic.simple',
+    ('^bar/$', 'redirect_to', {'url': None}),
+)
+</pre><br />必需的参数:<br />url<br />重定向到的URL地址，它是一个string，或者None将返回410 HTTP(不可用)应答<br /><br /><strong>更复杂的generic views</strong><br />尽管简单generic views很有用，但Django的generic views真正强大之处来自于允许你使用很少的代码构建常见的CRUD(增/删/查<br />/改)页面的更复杂的视图<br />这些视图分为下列这些不同的类型:<br />1，List/detail视图，它提供对象列表和单独对象细节的页面(例如地点列表和单独的一个地点的信息页面)<br />2，Date-based视图，它提供year/month/day样式的以日期为中心的信息页面<br />3，Create/update/delete视图，它允许你快速创建增，删，改对象的视图<br /><br /><strong>通用的可选参数</strong><br />allow_empty<br />一个布尔值，指定没有对象时是否显示页面，如果它是False并且没有对象，视图将触发404错误而不是显示空页面，默认是False<br />context_processors<br />一个视图模板的template-context processors列表，参考第10章得到更多template context processors的信息<br />extra_context<br />一个添加到模板context的字典值，它默认为空字典，如果字典中的一个值可以调用，generic view将在渲染模板前调用它<br />mimetype<br />用来生成结果文档的MIME类型，默认为DEFAULT_MIME_TYPE设置的值<br />template_loader<br />当载入模板时使用的模板载入器，默认为django.template.loader，参考第10章得到更多关于模板载入器的信息<br />template_name<br />渲染页面时使用的完整的模板名，它可以让你覆盖来自于QuerySet的默认模板名<br />template_object_name<br />指定在模板context中的模板变量名，默认为'object'，视图列表列出不止一个对象时将在此变量值后添加'_list'<br /><br /><strong>列表/细节generic views</strong><br />列表-细节generic views(在django.views.generic.list_detail模块中)处理常见的在一个视图里显示<br />一个列表的项目和显示单独的一项的细节视图<br />我们看看简单的第5章和第6章的简单的book/author/publisher对象:<br /><pre name="code" class="java">
+class Publisher(models.Model):
+    name = models.CharField(maxlength=30)
+    address = models.CharField(maxlength=50)
+    city = models.CharField(maxlength=60)
+    state_province = models.CharField(maxlength=30)
+    country = models.CharField(maxlength=50)
+    website = models.URLField()
+
+class Author(models.Model):
+    salutation = models.CharField(maxlength=10)
+    first_name = models.CharField(maxlength=30)
+    last_name = models.CharField(maxlength=40)
+    email = models.EmailField()
+    headshot = models.ImageField()
+
+class Book(models.ModelField):
+    title = models.CharField(maxlength=100)
+    authors = models.ManyToManyField(Author)
+    publisher = models.ForeignKey(Publisher)
+    publication_date = models.DateField()
+</pre><br />我们也需要和一个URL模块工作，如果你在跟着做，你可以配置bookstore.urls的骨架:<br /><pre name="code" class="java">
+from django.conf.urls.defaults import *
+from django.views.generic import list_detail, date_based, create_update
+from bookstore.models import Publisher, Author, Book
+
+urlpatterns = patterns('',
+    # We'll add URL patterns here.
+)
+</pre><br />我们将用generic views把这些搭建起来<br /><br /><strong>对象列表</strong><br />django.views.generic.list_detail.object_list视图用来创建一个显示对象列表的页面<br />例子:<br />我们可以使用object_list视图来显示一个简单的bookstore中authors的列表<br />首先，我们需要为generic view创建一个info字典，把下面的代码加到bookstore/urls.py文件:<br /><pre name="code" class="java">
+author_list_info = {
+    'queryset' :   Author.objects.all(),
+    'allow_empty': True,
+}
+</pre><br />然后，我们需要注册这个视图到某一个URL，我们可以通过在patterns里加入这个URL配置:<br /><pre name="code" class="java">
+    (r'authors/$', list_detail.object_list, author_list_info)
+</pre><br />我们只需为generic view制作一个模板来渲染即可，既然我们没有提供template_name参数，Django将<br />猜测模板的名字，这里将是bookstore/author_list.html，参考下面更多细节<br />必需的参数:<br />queryset<br />用来列表的对象的QuerySet<br />可选的参数:<br />paginate_by<br />你个指出每一页多少对象应该被显示的整数，如果这项被给定，视图将使用paginate_by分页<br />视图将希望得到一个包含了从零开始索引页数的page查询字符串参数(通过GET)，或者一个在<br />URL配置里指定的page变量，参看下面的"分页的注意点"<br />另外，这个视图可以使用上面描述的任何通用参数：<br />allow_empty<br />context_processors<br />extra_context<br />mimetype<br />template_loader<br />template_name<br />template_object_name<br />模板名:<br />如果template_name没有被指定，视图将默认使用(app_label)/(model_name)_list.html<br />app标签和模型名字两者都来自于queryset参数，app标签是模型定义所在的app的名字，模型名字则是<br />模型类的名字的小写版本<br />所以当我们把Author.objects.all()作为queryset传递时，app标签将是bookstore，模型名则是author<br />这意味着默认的模板将是bookstore/author_list.html<br />模板context:<br />除了extra_context，模板的context将包括:<br />object_list<br />对象的列表，这个变量的名字取决于template_object_name参数，而后者默认是'object'<br />如果template_object_name是'foo'，则这个变量的名字就是foo_list<br />is_paginated<br />一个boolean值，它表示结果是否分页<br />特别的，当可得到的对象的数量小于或等于paginate_by时，它的值被设为False<br />如果结果是分页的，context将包含以下额外变量<br />results_per_page<br />每页对象的数量(和paginate_by参数一样)<br />has_next<br />一个boolean值，它表示是否有下一页<br />has_previous<br />一个boolean值，它表示是否有上一页<br />page<br />当前页的页数，它是一个整数，从1开始<br />next<br />下一页的页数，它是一个整数，如果没有下一页，它还是一个整数并表示理论上的下一页页数，从1开始<br />previous<br />上一页的页数，它是一个整数，从1开始<br />pages<br />总页数，它是一个整数<br />hits<br />所有页面的对象的总数，不仅仅是当前页<br />分页的注意点:<br />如果pagenate_by被指定，Django将对结果分页，你可以通过下面两种方式在URL指定页数<br />1,在URL配置里使用page参数，例如一个URL配置:<br /><pre name="code" class="java">
+    (r'^objects/page(?P&lt;page&gt;[0-9]+)/$', 'object_list', dict(info_dict))
+</pre><br />2,通过page查询字符串参数传递页数，例如一个URL:<br /><pre name="code" class="java">
+/objects/?page=3
+</pre><br />两种方式中page都是从1开始而不是从0开始，所以第一个页面将表示为页面1<br /><br /><strong>细节视图</strong><br />django.views.generic.list_detail.object_detail提供了一个单独对象的细节视图<br />例子:<br />扩展上面的例子，我们可以为给定的author创建一个细节视图，像下面这样提供一个info字典:<br /><pre name="code" class="java">
+author_detail_info = {
+    "queryset" : Author.objects.all(),
+    "template_object_name" : "author",
+}
+</pre><br />我们可以使用下面的URL模式:<br /><pre name="code" class="java">
+    (r'^authors/(?P&lt;object_id&gt;\d+)/$', list_detail.object_detail, author_detail_info),
+</pre><br />渲染bookstore/author_detail.html模板来显示一个给定的author的细节<br />在这个模板中，Author对象本身将会被放置到{{ author }}变量中<br />必需的参数:<br />queryset<br />用来搜索对象的QuerySet<br />或者<br />object_id<br />对象的主键域的值<br />或者<br />slug<br />给定对象的slug值，如果你传递这个域，slug_field参数也是必需的<br />可选的参数:<br />slug_field<br />对象中包含slug的域的名字，如果你使用slug参数，则它是必需的，如果你使用object_id参数则不能要<br />这个参数<br />template_name_field<br />对象中代表使用的模板的名字的域的名字，这可以让你在数据中存储模板名字<br />换句话说，如果你的对象有一个'the_template'域并且该域包含一个字符串'foo.html'，你把<br />template_name_field设置为the_template，则这个对象的generic view将使用模板'foo.html'<br />这有点思路缠绕的感觉，但是在某些情况下很有用<br />这个视图也可以使用下面的通用参数:<br />context_processors<br />extra_context<br />mimetype<br />template_loader<br />template_name<br />template_object_name<br />模板名:<br />如果没指定template_name和template_name_field，本视图默认使用(app_label)/(model_name)_detail.html<br />模板context<br />除了extra_context，模板的context是<br />object<br />对象，这个变量的名字取决于template_object_name参数，默认是'object'，如果template_object_name<br />是'foo'，这个变量的名字就是foo<br /><br /><strong>基于日期的generic views</strong><br />基于日期的generic views通常用来为基于日期的资料提供一套"存档"页面，考虑一个报纸的year/month/day存档，或者类似于<br />本章开始描述的Django官方blog的blog<br />下面这个例子我们将使用Book对象并且构建一种通过year,month和day发表日期来浏览books的方式<br />注意对于这些视图中的每一个我们都必须告诉Django我们想要查看的日期的域的名字，我们必须提供这个信息，因为模型可能<br />包含了多个date或datetime域<br /><br /><strong>到未来去</strong><br />默认这些视图忽略具有未来日期的对象，这意味着如果你试图访问一个未来的存档页面，即使那一天有对象发表，Django也将<br />自动显示404(找不到页面)错误<br />这样的话，你可以发表具有日期的对象，它们直到过了发表日期才会显示给公众<br />但是，对于不同类型的基于日期的对象而言这可能不合适(例如显示即将发生的事件的日程表)<br />对于这些视图，设置allow_future选项为True即可，用户就可以访问"未来"的存档页面<br /><br /><strong>存档首页</strong><br />django.views.generic.date_based_archive_index视图提供了一个通过日期显示最近的对象的顶级首页<br />例子:<br />一个典型的publisher可能想把最近发表的books设为语法高亮，我们可以使用archive_index视图来做这件事，下面是info dict:<br /><pre name="code" class="java">
+book_info = {
+    "queryset"   : Book.objects.all(),
+    "date_field" : "publication_date"
+}
+</pre><br />相应的URL配置:<br /><pre name="code" class="java">
+    (r'^books/$', date_based.archive_index, book_info),
+</pre><br />必需的参数:<br />date_field<br />在QuerySet的模型中的DateField或者DateTimeField的名字，基于日期的存档使用它来决定页面上的对象<br />queryset<br />存档处理的QuerySet的对象<br />可选参数:<br />allow_future<br />一个布尔值，它指定是否在这个页面引入"未来"的对象，上面提到了<br />num_latest<br />传递到模板context的最近的对象数目，默认为15<br />这个视图也可以使用这些通用的参数(上面列出了):<br />allow_empty<br />context_processors<br />extra_context<br />mimetype<br />template_loader<br />template_name<br />模板名:<br />如果template_name没有指定，视图将默认使用(app_label)/(model_name)_archive.html<br />模板context:<br />除了extra_context，模板的context为如下列表:<br />date_list<br />datetime.date对象的列表，表示对应queryset的所有具有对象的years，他们排反序<br />例如，如果你有一个从2003到2006的blog列表，这个列表将包含4个datetime.date对象:每年一个<br />latest<br />系统中的num_latest个对象，通过date_field排倒序<br />例如如果num_latest为10，latest将为queryset中的最近的10个对象<br /><br /><strong>年存档</strong><br />django.views.generic.date_based.archive_year视图提供一个每年的存档页面，显示一个给定year的所有可得到的months<br />例子:<br />继续我们的例子，我们想添加一种在一个给定的year查看所有发表的books的方式<br />我们可以继续使用上面例子中的book_info字典，但是这一次我们把它包装到archive_year视图:<br /><pre name="code" class="java">
+    (r'^books/(?P&lt;year&gt;\d{4})/?$', date_based.archive_year, book_info),
+</pre><br />既然每年都可能有很多很多books发表，我们不会在这个页面显示他们，而只是显示可得到books的years列表<br />很方便的是，这是Django默认做的事情，我们可以使用mak_object_list参数改变它，参考下面的内容<br />必需的参数<br />date_field<br />同上<br />queryset<br />存档处理的QuerySet的对象<br />year<br />存档处理的4个数字的year(通常从URL参数得到)<br />可选参数:<br />make_object_list<br />一个布尔值，它指定了是否得到这一年的完整的对象列表并传递给模板，如果为True，对象列表将在模板中作为object_list来<br />得到(object_list名字可能不同，参考下面的"模板context"中关于object_list的信息)，默认为False<br />allow_future<br />一个布尔值，它指定是否在该页面引入"未来"对象，上面提到了<br />这个视图也可能使用这些通用参数(上面提到了):<br />allow_empty<br />context_processors<br />extra_context<br />mimetype<br />template_loader<br />template_name<br />template_object_name<br />模板名:<br />如果template_name没有指定，视图将默认使用(app_label)/(model_name)_archive_year.html<br />模板context:<br />除了extra_context，模板的context将为:<br />date_list<br />datetime.date对象的列表，表示在一个给定year的根据queryset的所有可得到对象的months，升序<br />year<br />一个给定的year，为一个4字符的string<br />object_list<br />如果make_object_list参数为True，它将设置为一个给定year的通过date_field排序的所有可得到的对象<br />这个变量的名字取决于template_objects_name参数，后者默认为'object'<br />如果template_object_name为'foo'，则这个变量的名字为foo_list<br />如果make_object_list为False，则object_list将作为一个空list传递给模板<br /><br /><strong>月存档</strong><br />django.views.generic.date_based.archive_month视图提供一个每月存档页面来显示一个给定月份的所有对象<br />例子:<br />继续我们的例子，创建一个month视图将看起来很熟悉:<br /><pre name="code" class="java">
+    (r'^(?P&lt;year&gt;\d{4})/(?P&lt;month&gt;[a-z]{3})/$', date_based.archive_month, book_info),
+</pre><br />必需的参数:<br />year<br />存档处理的4数字的year(一个字符串)<br />month<br />存档处理的月份，通过month_format参数来格式化<br />queryset<br />存档处理的QuerySet的对象<br />date_field<br />在QuerySet的模型中的DateField或者DateTimeField的名字，基于日期的存档使用它来决定页面上的对象<br />可选参数:<br />month_format<br />一个规定了month参数使用什么格式的格式字符串，它应该遵循Python的time.strftime语法<br />(在<a href="http://www.python.org/doc/current/lib/module-time.html#l2h-1941" target="_blank">http://www.python.org/doc/current/lib/module-time.html#l2h-1941</a>查看Python的strftime文档)<br />它默认设为"%b"，表示3个字母的月份缩写(即"jan"，"feb"等等)，可以使用"%m"来更改它而使用数字<br />allow_future<br />一个布尔值，指定是否在页面中引入"未来"的对象，上面提到了<br />这个视图也可以使用这些通用的参数(上面提到了):<br />allow_empty<br />context_processors<br />extra_context<br />mimetype<br />template_loader<br />template_name<br />template_object_name<br />模板名<br />如果template_name没有指定，视图默认使用(app_label)/(model_name)_archive_month.html模板<br />模板context<br />除了extra_context，模板的context将为:<br />month<br />表示给定的月份的datetime.date对象<br />next_month<br />表示下个月第一天的datetime.date对象，如果下个月在未来，它将为None<br />previous_month<br />表示上个月第一天的datetime.date对象，不像next_month，它永远不会为None<br />object_list<br />给定月份的可得到的对象列表，这个变量的名字取决于template_object_name参数，后者默认为'object'<br />如果template_object_name为'foo'，这个变量名则为foo_list<br /><br /><strong>星期存档</strong><br />django.views.generic.date_based.archive_week视图显示一个给定星期的所有对象<br />注意，Django认为一个星期从星期日开始，因为Python也这样认为<br />例子:<br />你开始看这里的模式了没?<br /><pre name="code" class="java">
+    (r'^(?P&lt;year&gt;\d{4})/(?P&lt;week&gt;\d{2})/$', date_based.archive_week, book_info),
+</pre><br />必需的参数:<br />year<br />存档处理的4数字的year(一个字符串)<br />week<br />存档处理一年的星期(一个字符串)<br />queryset<br />存档处理的QuerySet的对象<br />date_field<br />QuerySet的模型中的DateField或者DateTimeField的名字，基于日期的存档使用它来决定页面上显示的对象<br />可选参数:<br />allow_future<br />一个布尔值，指定是否在页面中引入"未来"的对象，上面提到了<br />这个视图也可以使用这些通用的参数(上面提到了):<br />allow_empty<br />context_processors<br />extra_context<br />mimetype<br />template_loader<br />template_name<br />template_object_name<br />模板名<br />如果template_name没有指定，这个视图将默认使用(app_label)/(model_name)_archive_week.html<br />模板context<br />除了extra_context，这个模板的context将为:<br />week<br />表示给定的星期的第一天的datetime.date对象<br />object_list<br />给定的星期的可得到的对象的列表，这个变量的名字取决于template_object_name参数，或者默认为'object'<br />如果template_object_name为'foo'，则这个变量的名字为foo_list<br /><br /><strong>天存档</strong><br />django.views.generiv.date_based.archive_day视图提供了显示一个给定天的所有对象的页面<br />例子:<br /><pre name="code" class="java">
+    (r'^(?P&lt;year&gt;\d{4})/(?P&lt;month&gt;[a-z]{3})/(?P&lt;day&gt;\d{2})/$', date_based.archive_day, book_info),
+</pre><br />必需的参数:<br />year<br />存档处理的4数字的year(一个字符串)<br />month<br />存档处理的月份，通过month_format参数来格式化<br />day<br />存档处理的天，通过day_format参数格式化<br />queryset<br />存档处理的QuerySet的对象<br />date_field<br />QuerySet的模型的DateField或者DateTimeField的名字，基于日期的存档使用它来决定页面上显示的对象<br />可选参数:<br />month_format<br />一个规定了month参数使用的格式的格式化字符串，参考上面解释的细节<br />day_format<br />类似于month_format，但是它与day参数工作，默认为"%d"(十进制数字的月份的一天，01-31)<br />allow_future<br />一个布尔值，指定了页面中是否引入"future"对象，上面提到了<br />这个视图也可以使用这些通用的参数(上面提到了):<br />allow_empty<br />context_processors<br />extra_context<br />mimetype<br />template_loader<br />template_name<br />template_object_name<br />模板名<br />如果template_name没有指定，这个视图将默认使用(app_label)/(model_name)_archive_day.html<br />模板context<br />除了extra_context，模板的context将为:<br />day<br />表示给定的天的datetime.date对象<br />next_day<br />表示下一天的datetime.date对象，如果下一天在未来，它将为None<br />previous_day<br />表示上一天的datetime.date对象，不像next_day，它永远不会是None<br />object_list<br />给定天的可得到的对象列表，这个变量的名字取决于template_object_name参数，后者默认为'object'<br />如果template_object_name为'foo'，这个变量的名字则为foo_list<br /><br /><strong>今天的存档</strong><br />django.views.generic.date_based.archive_today视图显示了今天的所有对象，它与archive_day一模一样，除了year/month/day<br />参数不再被使用，而是使用今天的日期<br /><br /><strong>基于日期的细节页面</strong><br />django.views.generic.date_based.object_detail视图显示了一个呈现一个单独对象的页面，它与object_detail页面在URL上不同<br />object_detail视图使用像/entries/(slug)/的URL，而这个使用像/entries/2006/aug/27/(slug)/的URL<br />注意，如果你在使用基于日期的细节页面是在URL上有slugs，你可能也想在slug域上使用unique_for_date选项来验证slugs不会<br />在一个单独的天重复，参考附录2得到unique_for_date的细节<br />例子:<br />这个例子和上面的例子稍微不同，我们需要提供一个对象ID或者一个slug来让Django查找到对象<br />既然我们正在使用的对象没有slug域，我们将使用稍微丑陋的基于ID的URL<br />在实践中我们推荐使用slug域，但是为了途简单我们这里只是使它跑起来<br />让我们配置下面的URL:<br /><pre name="code" class="java">
+    (r'^(?P&lt;year&gt;\d{4})/(?P&lt;month&gt;[a-z]{3})/(?P&lt;day&gt;\d{2})/(?P&lt;object_id&gt;[\w-]+)/$', date_based.object_detail, book_info),
+</pre><br />必需的参数:<br />year<br />对象的4个数字的year(一个字符串)<br />month<br />通过month_format参数格式化的对象的month<br />day<br />通过day_format参数格式化的对象的day<br />queryset<br />包含对象的QuerySet<br />date_field<br />QuerySet的模型的DateField或者DateTimeField的名字，generic view使用它根据year，month和day来查找对象<br />object_id<br />对象的主键域的值<br />或者slug<br />给定对象的slug，如果你传递这个域，slug_field参数(参看下面)也是必需的<br />可选参数<br />allow_future<br />一个布尔值，它指定是否在页面中引入"未来"对象，上面提到了<br />day_format<br />类似于month_format，但是与day参数工作，默认为"%d"(十进制数字的month的day，01-31)<br />month_format<br />一个规定了month参数使用什么格式的格式化字符串，参考上面解释的细节<br />slug_field<br />对象包含的slug的域的名字，如果你使用slug参数，则它是必需的，但是如果你使用object_id参数它则不能使用<br />template_name_field<br />模板名使用的对象中的域的名字，它让你在数据中存储模板名字，换句话说，如果你的对象有一个'the_template'域并且值为<br />'foo.html'字符串，并且你设置template_name_field为'the_template'，则这个对象的generic view将使用'foo.html'模板<br />这很绕，但是某些情况下很有用<br />这个视图也可以使用这些通用的参数(上面提到了):<br />context_processors<br />extra_context<br />mimetype<br />template_loader<br />template_name<br />template_object_name<br />模板名<br />如果template_name没有指定，视图将默认使用(app_label)/(model_name)_detail.html<br />模板context<br />除了extra_context，模板的context将为:<br />object<br />表示那个对象，这个变量的名字取决于template_object_name参数，后者默认为'object'<br />如果template_object_name为'foo'，则这个变量的名字为foo<br /><br /><strong>创建/更新/删除generic views</strong><br />注意，这些视图会在Django的架构修订完成后有稍许改变(目前在开发django.newforms)，这个部分有随之更新<br />django.views.generic.create_update模块包含了一些增，删，改对象的方法<br /><br /><strong>创建对象视图</strong><br />django.views.generic.create_update.create_object视图显示一个创建对象，包含验证错误(如果有错误)的重新显示以及保存<br />对象的表单，它使用Django模型的自动manipulators<br />这些视图如果通过GET访问则都会显示表单，通过POST访问则会处理请求的动作(增/删/改)<br />注意，这些视图对安全都没有太多好主意，尽管有一个login_required属性来限制访问，但这是最好的情况了<br />例如，它们不会检查编辑对象的用户是创建该对象的同一用户，也不会验证任何类别的权限<br />尽管如此，大多数时候这些特性可以通过对generic view写一个小的包装来完成，参考下面的"扩展generic view"得到更多信息<br />例子:<br />如果我们想允许用户在数据库创建新的books，我们可以做下面的事情:<br /><pre name="code" class="java">
+    (r'^books/create/$', create_update.create_object, {'model' : Book}),
+</pre><br />必需的参数:<br />model<br />表单将创建的对象的Django模型<br />注意，这个视图使用将创建的模型而不是QuerySet(上面的list/detail/date-based视图使用)<br />可选参数:<br />post_save_redirect<br />在保存对象之后视图将返回的URL，默认为object.get_absolute_url()<br />post_save_redirect<br />可能包含字典字符串格式，而不是对象的域属性，例如你可以使用post_save_redirect="/polls/%(slug)s/"<br />login_required<br />一个布尔值，指定用户是否必须登录来查看页面和保存更改，它牵涉到了Django的认证系统，默认为False<br />如果它是True，一个没有登录的用户尝试访问该页面或者保存表单，Django将重定向到/accounts/login/<br />这个视图也可以使用这些通用的参数(上面提到了):<br />context_processors<br />extra_context<br />template_loader<br />template_name<br />模板名<br />如果template_name没有指定，视图将默认使用(app_label)/(model_name)_form.html模板<br />模板context<br />除了extra_context,模板的context将为:<br />form<br />一个表示用来编辑对象的表单的FormWrapper实例，它让你在模板系统中轻松得到表单域<br />例如，如果模型有name和address两个域:<br /><pre name="code" class="java">
+&lt;form action="" method="post"&gt;
+&lt;p&gt;&lt;label for="id_name"&gt;Name:&lt;/label&gt; {{ form.name }}&lt;/p&gt;
+&lt;p&gt;&lt;label for="id_address"&gt;Address:&lt;/label&gt; {{ form.address }}&lt;/p&gt;
+&lt;/form&gt;
+</pre><br />参考第7章来得到更多关于表单的信息<br /><br /><strong>更新对象视图</strong><br />django.views.generic.create_update.update_object视图几乎和上面的create_object视图一样，但是这个允许编辑一个已经<br />存在的对象而不是创建一个新的对象<br />例子:<br />继续上面的例子，我们可以配置URL来提供一个单独的book的编辑界面:<br /><pre name="code" class="java">
+    (r'^books/edit/(?P&lt;object_id&gt;\d+)/$', create_update.update_object, {'model' : Book}),
+</pre><br />必须的参数:<br />model<br />表单将编辑的Django模型<br />object_id<br />对象的主键域的值<br />或者slug<br />给定对象的slug，如果你传递这个域，slug_field参数(下面提到)也是必需的<br />可选参数:<br />slug_field<br />对象中包含slug的域的名字，如果你使用slug参数，这个参数则是必需的，但是如果你使用object_id参数就不能使用它<br />另外，这个视图也可以使用上面的创建对象视图同样的可选参数，加上template_object_name这个通用参数<br />模板名<br />这个视图使用和创建视图相同的默认模板名(app_label)/(model_name)_form.html<br />模板context<br />除了extra_context，模板的context将为:<br />form<br />表示编辑对象的表单的FormWrapper实例，参考上面的创建对象来得到更多关于这个值的信息<br />object<br />被编辑的对象(如果你提供了template_object_name参数，这个参数可能会命名不同)<br /><br /><strong>删除对象视图</strong><br />django.views.generic.create_update.delete_object视图和上面两个很类似<br />如果这个视图通过GET访问，它将显示一个确认页面(即"do you really want to delete this object?")<br />如果这个视图通过POST提交，这个对象将没有确认而被删除掉<br />所有的参数和更新对象视图一样，context也如此<br />这个视图的模板名为(app_label)/(model_name)_confirm_delete.html<br /><br /><strong>扩展generic views</strong><br />毫无疑问，使用generic views的确可以加快开发速度，尽管如此，在大部分项目中，会出现generic views不能满足的情况<br />确实，新的Django开发人员最常问的问题是怎样让generic views处理更宽广的情形<br />幸运的是，几乎这些情况中的每一种都有方法来简单的继承generic views来处理大量的用例，这些情况通常有如下几个模式<br /><br /><strong>添加额外的context</strong><br />通常你只需在generic view种显示一些额外的信息，例如，考虑显示一个book和它所有publishers的列表的细节页面<br />object_detail这个generic view把book传递给context，但是看起来没有方法在模板种得到一个publishers列表<br />但是，所有的generic views使用一个额外选项参数extra_context，它是一个额外对象的字典并将被添加到模板的context中<br />所以，我们使用下面这样的info dict来提供book的publishers列表:<br /><pre name="code" class="java">
+book_info = {
+    "queryset"   : Book.objects.all(),
+    "date_field" : "publication_date",
+    "extra_context" : {
+        "publisher_list" : Publisher.objects.all(),
+    }
+}
+</pre><br />它将把{{ publisher_list }}变量传递到模板context中去，这个模式可以用来为generic view传递任何信息到模板，非常便利<br /><br /><strong>使用包装方法的更复杂的过滤器</strong><br />另一个常见的需求是通过URL中的键来过滤给定的列表对象，例如，我们提供一个通过title浏览books的接口<br />我们想提供/books/by-title/a/，/books/by-title/b/等等形式的URL，每个字母为一个列表页面<br />问题看起来generic view没有从URL阅读变量的方法，如果我们包装一个URL模式来匹配这些URL到object_list视图，我们将得到<br />26个显示book的页面(每个页面有一个不同的queryset参数)，这很愚蠢<br />正确的技术涉及到给generic view写一个简单的"包装器"方法<br />在我们的字母表浏览的例子中，我们先在URL配置中添加一点东西:<br /><pre name="code" class="java">
+from bookstore.views import browse_alphabetically
+
+urlpatterns = patterns('',
+    # ...
+    (r'^books/by-title/([a-z])/$', browse_alphabetically)
+)
+</pre><br />你可以看到，它包装了browse_aplhabetically方法的一系列URL，所以让我们看看这个方法怎么写:<br /><pre name="code" class="java">
+from bookstore.models. import Book
+from django.views.generic import list_detail
+
+def browse_alphabetically(request, letter):
+    return list_detail.object_list(
+        request,
+        queryset = Book.objects.filter(title__istartswith=letter),
+        template_name = "bookstore/browse_alphabetically.html",
+        extra_context = {
+            'letter' : letter,
+        }
+    )
+</pre><br />就是这个!<br />它会工作，因为对于generic views没有任何特别的东西，它们只是Python方法<br />像其它任何视图方法一样，generic views期望一些参数并返回HttpResponse对象<br />这样，非常容易就可以对一个generic view包装一个小方法来在前面或后面做额外的工作，处理generic view额外的事情<br />注意，上面的例子中我们传递在extra_context中显示的当前的字母，包装是个好主意，它让模板知道当前哪个字母正在被浏览<br />同时也注意一下，我们传递了自定义的模板的名字，否则它将使用和"vanilla" object_list一样的模板，这将引起冲突<br /><br /><strong>处理额外的工作</strong><br />最后一个常见的模式，让我们看看在调用generic view之前和之后做一些额外的工作<br />假想我们在Author对象有一个last_accessed域，我们使用它来记录某人最后一次查看该author的时间，<br />object_detail这个generic view当然不知道这个域的任何事情，但是再一次的我们可以很轻松的写自定义的视图来让这个域更新<br />首先，我们需要修改author detail的URL配置来指向一个自定义视图:<br /><pre name="code" class="java">
+from bookstore.views import author_detail
+
+urlpatterns = patterns('',
+    #...
+    (r'^authors/(?P&lt;author_id&gt;d+)/$', author_detail),
+)
+</pre><br />然后我们写我们自己的包装方法:<br /><pre name="code" class="java">
+import datetime
+from bookstore.models import Author
+from django.views.generic import list_detail
+from django.shortcuts import get_object_or_404
+
+def author_detail(request, author_id):
+    # Look up the Author (and raise a 404 if she's not found)
+    author = get_object_or_404(Author, pk=author_id)
+
+    # Record the last accessed date
+    author.last_accessed = datetime.datetime.now()
+    author.save()
+
+    # Show the detail page
+    return list_detail.object_detail(
+        request,
+        queryset = Author.objects.all(),
+        object_id = author_id,
+    )
+</pre><br />注意这些代码不会工作，直到你向你的Author模型添加last_accessed域<br />我们可以使用类似的习惯用法来转换generic view返回的应答，如果我们向提供一个可以下载authros列表的普通文本的版本<br />我们可以像下面这样使用视图:<br /><pre name="code" class="java">
+def author_list_plaintext(request):
+    response = list_detail.object_list(
+        queryset = Author.objects.all(),
+        mimetype = "text/plain",
+        template_name = "bookstore/author_list.txt"
+    )
+    response["Content-Disposition"] = "attachment; filename=authors.txt"
+    return response
+</pre><br />它会工作，因为generic views返回简单的HttpResponse对象，而这个对象可以被当成字典来设置HTTP头部<br />顺便说一下，这个Content-Disposition逻辑会指示浏览器下载并保存页面而不是在浏览器里显示它<br /><br /><strong>下一步是什么?</strong><br />到现在为止，我们已经认为模板引擎是你用来渲染context的最固定不变的工具<br />这是对的，大部分情况下你只是这样认为，但是模板引擎事实上扩展性很强<br />下一章我们将深入Django的模板，带你领略它被扩展的最酷的方式<br />同志，向前!
+  </div>
+
+  
+
+  

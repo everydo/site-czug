@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zope3－zcml"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "通过ZCML，系统管理员可使用文件系统的代码来配置、组装各个组件，构建一个系统。", 
+        "modified": "2004-09-23 16:56:55", 
+        "title": "学习Zope3：Zope配置标记语言ZCML"
+    }
+}

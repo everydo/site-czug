@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "czug-blog-launched"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Blog.czug.org是czug提供的一个Blog服务网。采用SimpleBlog构建。", 
+        "modified": "2004-07-30 16:36:59", 
+        "title": "blog.czug.org开张"
+    }
+}

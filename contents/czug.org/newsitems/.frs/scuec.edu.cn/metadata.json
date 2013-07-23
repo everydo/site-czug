@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "scuec.edu.cn"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "这应该是第一个采用plone的教育网大学主页网站", 
+        "modified": "2005-07-15 09:02:09", 
+        "title": "中南民族大学新版网站采用Plone平台建设"
+    }
+}

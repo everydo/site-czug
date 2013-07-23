@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "archetypes-1.3-release"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Archetypes是Plone的扩展开发框架，1.3版本是近1年的不懈努力后发布的。", 
+        "modified": "2004-10-05 15:55:34", 
+        "title": "Archetypes 1.3发布！"
+    }
+}

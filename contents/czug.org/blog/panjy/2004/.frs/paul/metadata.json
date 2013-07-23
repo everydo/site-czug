@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "paul"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "看到了paul的照片，和想象不同", 
+        "modified": "2005-10-22 14:44:37", 
+        "title": "paul everitt"
+    }
+}

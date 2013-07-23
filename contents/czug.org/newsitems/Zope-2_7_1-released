@@ -1,0 +1,22 @@
+
+ <p><br />
+ <a href="http://zope.org/Products/Zope/2.7.1/Zope-2_7_1-released">zope
+ 2.7.1发布了</a> ，根据他的<a href="http://www.zope.org/Products/Zope/2.7.1/CHANGES.txt">更改记录</a>，有如下几点特性：</p><br />
+
+
+ <ol>
+  <li>ZCatalog处理更加 safe and predictable.&nbsp;
+  建立索引时，错误的地方全部记录下来，而不是简单的抛出异常；而且可以查看当前索引建立的进展情况！</li>
+
+  <li>改善了对大文件的支持，引入了stream iterator，不必把大文件全部读入内存中。<br />
+  最近发布的<a href="http://plone.org/newsitems/LocalFS_1_3_andreas" title="EasyLeading.org is happy to announce the release of LocalFS 1.3">
+  <img src="http://plone.org/newsitem_icon.gif" alt="" title="News" longdesc="" height="16" width="16" /> LocalFS for Zope 2.7.1
+       released</a>，就是利用这个特点，支持大文件的处理。更多参考改进建议： <a href="%20http://dev.zope.org/Wikis/DevSite/Proposals/FasterStaticContentServing">
+  FasterStaticContentServing</a></li>
+
+  <li>另外，我比较关注的海量数据的索引情况下，根本打不开catalog的index页面的bug，也解决了：）</li>
+
+  <li>还有，restructuredtext，开始使用最新版本的docutils了。</li>
+
+  <li>....<br /></li>
+ </ol>

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "youjiandaoblogdewangguankaitong"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "这个帖子就是通过发送邮件发布的。\r\n", 
+        "modified": "2005-12-27 01:26:37", 
+        "title": "邮件到Blog的网关开通！"
+    }
+}

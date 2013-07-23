@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<metadata xmlns="http://plone.org/ns/archetypes/" xmlns:cmf="http://cmf.zope.org/namespaces/default/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xmp="adobe:ns:meta">
+    <dc:title>
+Views
+	</dc:title>
+	<dc:description>
+用函数定义视图；把视图映射为URL;Model接口；view zcml；请求类型；安全性；转向；静态内容
+	</dc:description>
+	<field id="hidden_keys">
+	  "img","__init__.pyc","__init__.py"
+	</field>
+	<field id="keys">
+"getstarted.rst",  "example.rst", "interface.rst", "adapter.rst", "utility.rst", "adapter2.rst", "zope.rst", "case.rst", "reference.rst", "component-architecture.tex"
+	</field>
+</metadata>

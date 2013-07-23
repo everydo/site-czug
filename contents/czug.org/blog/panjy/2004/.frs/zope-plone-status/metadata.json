@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zope-plone-status"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "本文是为CPUG成立第一会议发言的准备稿。zope产品和社区发展现状，社区zope2/zope3/cmf/plone/ecm项目介绍\r\n", 
+        "modified": "2006-05-11 16:12:46", 
+        "title": "Zope和Plone的发展现状"
+    }
+}

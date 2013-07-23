@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zopeduixiangwenjianxitong-ofs-dejigehookhanshu"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "这个几个函数非常索然无味，而且在后续版本会过时。", 
+        "modified": "2006-06-01 21:07:04", 
+        "title": "Zope对象文件系统(OFS)的几个hook函数"
+    }
+}

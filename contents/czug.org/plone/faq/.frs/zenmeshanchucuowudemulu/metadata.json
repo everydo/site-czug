@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zenmeshanchucuowudemulu"
+    }, 
+    "dublin": {
+        "creators": [
+            "gonefish"
+        ], 
+        "description": "当您站点有很多目录的时候，而且有时会经常移动或更改。当您操作后发现该目录有时还是显示，但它实际上不存在。最后返回是错误信息。", 
+        "modified": "2006-02-19 01:13:27", 
+        "title": "怎么删除错误的目录?"
+    }
+}

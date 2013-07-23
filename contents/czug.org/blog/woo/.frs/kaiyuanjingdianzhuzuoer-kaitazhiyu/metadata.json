@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "kaiyuanjingdianzhuzuoer-kaitazhiyu"
+    }, 
+    "dublin": {
+        "creators": [
+            "woo"
+        ], 
+        "description": "by Eric S. Raymond\r\n转摘自 http://www.aka.org.cn/Docs/homesteading/index.html", 
+        "modified": "2006-07-14 12:56:34", 
+        "title": "开源经典著作二:开拓智域"
+    }
+}

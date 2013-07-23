@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "dojo-javascriptgongjubao"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "在这个Ajax潮流袭来的年代， dojo_ 是否可成为我们的依靠？", 
+        "modified": "2006-06-01 16:30:47", 
+        "title": "dojo：javascript工具包"
+    }
+}

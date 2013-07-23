@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<manifest xmlns="http://zopechina.com/ns/frs"
+           xmlns:tal="http://xml.zope.org/namespaces/tal"
+           contenttype="<bound method ATImage.getPortalTypeName of <ATImage at /58080_1/default.czug.edo/projects/341196/files/introduce/internet-web-browser.png>>"
+           uid="9c9962089bf07f37fcc89b8f2b496a69">
+
+
+    <entry type="primary_field"
+           name="image"
+           mimetype="image/png"
+           filename=""
+           fullpath=""/>
+
+
+    <entry type="xns"
+           name=""
+           mimetype="text/xml"
+           filename="internet-web-browser.png.xml"
+           fullpath="xns.xml"/>
+
+
+</manifest>

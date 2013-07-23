@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "contentpanels-1-7-1-out"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "这个产品用于在Plone上构建复合页面", 
+        "modified": "2004-07-01 09:57:13", 
+        "title": "CMFContentPanels 1.7.1 发布!"
+    }
+}

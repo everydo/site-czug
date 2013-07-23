@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Folder",
+        "hidden_keys":["fetch.py"],
+        "keys":["installing_python", "getting_to_know_python", "native_data_types", "power_of_introspection", "object_oriented_framework", "file_handling", "regular_expressions", "html_processing", "xml_processing", "scripts_and_streams", "http_web_services", "soap_web_services", "unit_testing", "unit_testing", "refactoring", "functional_programming", "dynamic_functions", "performance_tuning"]
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "深入 Python, Dive Into Python 中文版", 
+        "title": "《深入Python》"
+    }
+}

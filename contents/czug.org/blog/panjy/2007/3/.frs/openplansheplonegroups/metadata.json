@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "openplansheplonegroups"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "openplans和plonegroups都是基于Plone技术的、有资助的群组协作项目。", 
+        "modified": "2007-03-29 09:26:03", 
+        "title": "openplans和plonegroups"
+    }
+}

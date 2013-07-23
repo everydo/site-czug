@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "cjksplitter-0_7_3-released"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "CJKSplitter让Zope支持中日韩搜索，是一个ZCTextIndex的断字模块。", 
+        "modified": "2005-07-05 08:23:04", 
+        "title": "CJKSplitter 0.7.3 发布!"
+    }
+}

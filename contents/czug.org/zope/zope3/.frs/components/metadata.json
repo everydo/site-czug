@@ -1,0 +1,15 @@
+{
+    "main": {
+        "left_col": ".. navtree::\n   :root_depth: 2",
+        "hidden_keys": [
+            "img", 
+            "__init__.pyc", 
+            "__init__.py"
+        ], 
+        "contenttype": "Folder"
+    }, 
+    "dublin": {
+        "description": "使用zope3组件宝藏", 
+        "title": "常用组件选讲"
+    }
+}

@@ -1,0 +1,148 @@
+  
+  <h1 style="margin:25px 0 10px 10px">翻译www.djangobook.com之第十九章：国际化 
+    
+  </h1>
+  <div class="content">
+    <span style="color: red"><strong>The Django Book：第19章 国际化</strong></span><br /><br />Django在代码和模板中对文本国际化有完整的支持，这里解释了它怎样工作<br /><br /><strong>概览</strong><br />国际化的目标是允许单独的Web程序以多种语言提供内容和功能<br />你，Django开发人员，可以通过添加少量的钩子到你的Python代码和模板中来达到此目的，这些钩子称为翻译字符串，它们<br />告诉Django:"如果此文本可以用那种语言翻译得到，这些文本应该被翻译成最终用户的语言"<br />Django根据用户的语言选择采用这些钩子来翻译Web apps<br />本质上，Django做两件事情:<br />1，它让开发者和模板作者指定他们apps的哪部分应该被翻译<br />2，它使用这些钩子来根据用户的语言选择为特别的用户翻译Web apps<br /><br />怎样国际化你的app:分三步<br />1，在你Python代码和模板中嵌入翻译字符串<br />2，用你想支持的语言得到那些字符串的翻译<br />3，在你的Django设置中激活位置中间件<br />在幕后，Django的翻译机器使用标准的Python自带的gettext模块<br /><br /><strong>如果你不需要国际化</strong><br />Django的国际化钩子默认打开，这意味着在框架的某些地方有一些i18n相关的过度，如果你不使用国际化，你应该花两秒钟<br />来在你的settings文件钟设置USE_I18N = False，如果USE_I18N设置为False，则Django将做一些优化而不是载入国际化机器<br />你可能将也想从你的TEMPLATE_CONTEXT_PROCESSORS设置中删除'django.core.context_processors.i18n'<br /><br /><strong>怎样指定翻译字符串</strong><br />翻译字符串指定了"该文本应该被翻译"，这些字符串可以在你的Python代码和模板中出现，标记翻译字符串是你的责任，系<br />统只能翻译它知道的字符串<br /><br /><strong>用Python代码</strong><br /><br />标准翻译<br />通过使用方法_()指定翻译字符串(是的，方法名是下划线字符)，该方法可以在任何Python模块全局得到，你不需要import它<br />在这个例子中，文本"Welcome to my site."标记为翻译字符串:<br /><pre name="code" class="java">
+def my_view(request):
+    output = _("Welcome to my site.")
+    return HttpResponse(output)
+</pre><br />方法django.utils.translation.gettext()等同于_()，这个例子和前面的一样:<br /><pre name="code" class="java">
+from django.utils.translation import gettext
+def my_view(request):
+    output = gettext("Welcome to my site.")
+    return HttpResponse(output)
+</pre><br />翻译可以在计算后的值上工作，这个例子和前面的两个一样:<br /><pre name="code" class="java">
+def my_view(request):
+    words = ['Welcome', 'to', 'my', 'site.']
+    output = _(' '.join(words))
+    return HttpResponse(output)
+</pre><br />翻译可以在变量上工作，这里的例子和上面的也一样:<br /><pre name="code" class="java">
+def my_view(request):
+    sentence = 'Welcome to my site.'
+    output = _(sentence)
+    return HttpResponse(output)
+</pre><br />(上面两个例子中使用变量或计算值的警告是Django的翻译-字符串-检测工具make-messages.py不能找到这些字符串，等会介<br />绍make-messages更多的内容)<br />你传递给_()或gettext()的字符串可以通过Python标准命名字符串插补语法指定来采用placeholders，例如:<br /><pre name="code" class="java">
+def my_view(request, n):
+    output = _('%(name)s is my name.') % {'name': n}
+    return HttpResponse(output)
+</pre><br />该技术让语言专有的翻译对placeholder文本重新排序，例如，一个英语翻译可能为"Adrian is my name."，而西班牙翻译可<br />能为"Me llamo Adrian."--在翻译文本后面放置placeholder(名字)而不是在它之前<br />出于这个原因，你应该使用命名字符串插补(例如%(name)s) 而不是位置插补(例如%s或者%d)，如果你使用位置插补，翻译将<br />不能重排placeholder文本<br /><br />标记字符串为不操作<br />使用django.utils.translation.gettext_noop()方法来标记字符串为翻译字符串而不翻译它，字符串在后面从一个变量翻译<br />如果你有常量字符串并且应该将其用源语言存储因为他们在系统或用户上交换的话则使用它--例如数据库中的字符串--但是<br />应该在最后的可能点被及时翻译，例如当字符串显示给用户时<br /><br />迟翻译<br />使用django.utils.translation.gettext_lazy()方法来迟翻译字符串--当值被访问而不是当gettext_lazy()方法被调用时<br />例如，为了翻译模型的help_text，做下面的事情:<br /><pre name="code" class="java">
+from django.utils.translation import gettext_lazy
+
+class MyThing(models.Model):
+    name = models.CharField(help_text=gettext_lazy('This is the help text'))
+</pre><br />这个例子中，gettext_lazy()存储了该字符串的迟引用--而不是真实的翻译，翻译本身将当字符串用于字符串context时完成<br />例如模板在Django的admin站点渲染时<br />如果你不喜欢冗长的名字gettext_lazy，你可以像这样给它别名为_(下划线):<br /><pre name="code" class="java">
+from django.utils.translation import gettext_lazy as _
+
+class MyThing(models.Model):
+    name = models.CharField(help_text=_('This is the help text'))
+</pre><br />在Django模型中一直使用迟翻译，为域名和表名添加翻译也是个好主意，这意味着在Meta类中显式的写verbose_name和verbo<br />se_name_plural选项，通过:<br /><pre name="code" class="java">
+from django.utils.translation import gettext_lazy as _
+
+class MyThing(models.Model):
+    name = models.CharField(_('name'), help_text=_('This is the help text'))
+    class Meta:
+        verbose_name = _('my thing')
+        verbose_name_plural = _('mythings')
+</pre><br /><br />复数形式<br />使用django.utils.translation.ngettext()方法来指定复数的消息，例如:<br /><pre name="code" class="java">
+from django.utils.translation import ngettext
+def hello_world(request, count):
+    page = ngettext('there is %(count)d object', 'there are %(count)d objects', count) % {
+        'count': count,
+    }
+    return HttpResponse(page)
+</pre><br />ngettext使用三个参数:单一的翻译字符串，复数形式的翻译字符串和对象的数量(它作为count变量被传递给翻译语言)<br /><br /><strong>用模板代码</strong><br />在Django模板中使用翻译使用两个模板标签和一个与Python代码中稍微不同的语法，为了让你的模板访问这些标签，把<br />{% load i18n %}放置在你的模板的顶端<br />{% trans %}模板标签翻译常量字符串或者变量内容:<br /><pre name="code" class="java">
+&lt;title&gt;{% trans "This is the title." %}&lt;/title&gt;
+</pre><br />如果你只想为翻译标记一个值，但是稍后从一个变量翻译它，可以使用noop选项:<br /><pre name="code" class="java">
+&lt;title&gt;{% trans "value" noop %}&lt;/title&gt;
+</pre><br />在{% trans %}中使用模板变量式不可一的--只有单引号或双引号的常量字符串是允许的，如果你的翻译需要变量(placehold<br />ers)，使用{% blocktrans %}，例如:<br /><pre name="code" class="java">
+{% blocktrans %}This will have {{ value }} inside. {% endblocktrans %}
+</pre><br />为了翻译模板表达式--比如使用模板过滤器--你需要在翻译块中绑定表达式到本地变量来使用:<br /><pre name="code" class="java">
+{% blocktrans with value|filter as myvar %}
+This will have {{ myvar }} inside.
+{% endblocktrans %}
+</pre><br />如果你需要在一个blocktrans标签里绑定多于一个表达式，用and分隔:<br /><pre name="code" class="java">
+{% blocktrans with book|title as book_t and author|title as author_t %}
+This is {{ book_t }} by {{ author_t }}
+{% endblocktrans %}
+</pre><br />对于复数，用{% plural %}标签指定单数和复数形式并在{% blocktrans %}和{% endblocktrans %}中显示，例如:<br /><pre name="code" class="java">
+{% blocktrans count list|count as counter %}
+There is only one {{ name }} object.
+{% plural %}
+There are {{ counter }} {{ name }} objects.
+{% endblocktrans %}
+</pre><br />内部所有的块和内嵌翻译使用合适的gettext/ngettext调用<br />每个RequestContext可以访问两个翻译专有的变量:<br />1，LANGUAGES是元组的列表，其中第一个元素为语言代码，第二个元素为语言名(用该语言)<br />2，LANGUAGE_CODE是当前用户选择的语言，作为字符串，例如:en-us(参考下面的"怎样发现语言选择")<br />3，LANGUAGE_BIDI是当前语言的方向，如果为True，它为从右到左的语言，例如希伯来和阿拉伯语，如果为False则它是从左<br />到右的语言，例如英语，法语，德语等等<br />如果你不使用RequestContex扩展，你可以用三个标签得到这些值:<br />{% get_current_language as LANGUAGE_CODE %}<br />{% get_available_languages as LANGUAGES %}<br />{% get_current_language_bidi as LANGUAGE_BIDI %}<br />这些标签也需要{% load i18n %}<br />翻译钩子也可以在任何接受常量字符串的模板块标签中得到，这种情况下，只需使用_()语法来指定翻译字符串，例如:<br /><pre name="code" class="java">
+{% some_special_tag _("Page not found") value|yesno:_("yes,no") %}
+</pre><br />这种情况下，标签和过滤器将看到已经翻译的字符串，所以它们不需要知道翻译<br /><br /><strong>怎样创建语言文件</strong><br />一旦你标记你的字符串来稍后翻译，你需要写(或者获得)语言翻译本身，这里解释了它怎样工作<br /><br />消息文件<br />第一步是为一个新语言创建一个消息文件，消息文件是普通文本文件，它表示一个单独的语言，保护所有可得到的翻译字符<br />串以及它们应该怎样用给定语言呈现，消息文件有一个.po文件扩展名<br />Django自带一个工具bin/make-messages.py，它自动创建和维护这些文件<br />为了创建或更新消息文件，运行这个命令:<br />bin/make-messages.py -l de<br />这里的de是对于消息文件你想创建的语言代码，这里的语言代码为位置格式，例如，对巴西为pt_BR对奥地利德国则为de_AT<br />该脚步应该运行于下面三个地方中的一个:<br />1，django根目录(不是Subversion检出，但是通过$PYTHONPATH链接的或者位于该路径其他位置的地方)<br />2，你的Django项目的根目录<br />3，你的Django app的根目录<br />该脚步运行于整个Django源代码树并抽出所有标记为翻译的字符串，它在目录conf/locale创建(或更新)消息文件，在de例子<br />中，文件则为conf/locale/de/LC_MESSAGES/django.po<br />它运行于你的项目源代码树或你的程序源代码树，它将做同样的事情，但是位置目录的位置为locale/LANG/LC_MESSAGES(注<br />意缺少conf前缀)<br />没有gettext?<br />如果你没有安装gettext工具，make-messages.py将创建空文件，如果是这种情况，安装gettext工具或者只是复制英语消息<br />文件(conf/locale/en/LC_MESSAGES/django.po)并使用它作为开始点，它只是一个空的翻译文件<br />.po文件格式是直接的，每个.po文件保护一些元速据，例如翻译维护者的联系信息，但是文件的大部分内容是消息列表--简<br />单的翻译字符串和特殊语言的真实的翻译文本映射<br />例如，如果你的Django app包含文本"Welcome to my site."的翻译字符串，像这样:<br /><pre name="code" class="java">
+_("Welcome to my site.")
+</pre><br />然后make-messages.py将创建一个包含下面消息片断的.po文件:<br /><pre name="code" class="java">
+#: path/to/python/module.py:23
+msgid "Welcome to my site."
+msgstr ""
+</pre><br />一个快速的解释:<br />1，msgid是翻译字符串，它以源显示，不要更改它<br />2，msgstr你放置语言专有的翻译，它以空开始，所以更改它是你的责任，确认你在你的翻译中保持引号<br />3，方便起见，每个消息包含翻译字符串收集的文件名和行号<br />长消息是特殊情况，这里msgstr(或msgid)后面的第一个字符串是空字符串，内容本身则在下几行以每行一个字符串来写，这<br />些字符串直接连接，不要忘了字符串中结尾的空格，否则，它们会没有空格连在一起<br />注意你的字符集<br />当用你最喜欢的文本编辑器创建.po文件时，首先编辑字符集行(搜索"CHARSET")并设置它为你将使用来编辑内容的字符集<br />通常utf-8应该为大部分语言工作，但是gettext应该处理任何你给它的字符集<br />运行下面的命令来为新的翻译字符串重新检查所有源代码和模板并为所有语言更新所有的消息文件:<br />make-messages.py -a<br /><br />编译消息文件<br />在你创建你的消息文件之后--并且每次你更改它时--你将需要编译它成更有效的形式，通过gettext使用，通过bin/compile<br />-messages.py工具完成这个<br />该工具对所有可得到的.po文件运行并创建.mo文件，.mo文件是优化的二进制文件来让gettext使用，在同一目录你可以运行<br />make-messages.py，像这样运行compile-messages.py:<br />bin/compile-messages.py<br />就这样，你的翻译已经可以使用<br /><br /><strong>Django怎样发现语言选择</strong><br />一旦你准备了你的翻译--或者，如果你只想使用Django自带的翻译--你将只需要为你的app激活翻译<br />在幕后，Django有一个非常灵活的模型来决定哪个语言应该使用--安装宽度，为特殊的用户，或者两者<br />为了设置安装宽度的语言选择，在你的settings文件设置LANGUAGE_CODE，Django使用该语言作为默认翻译--如果没有其他<br />翻译者找到翻译则作该最终尝试<br />如果所有你想做的只是用你的本地语言运行Django，并且一个语言文件对你的语言可得到，所有你需要做的只是设置LANGUA<br />GE_CODE<br />如果你想让每个单独的用户指定哪个语言他想选择，使用LocaleMiddleware，LocaleMiddleware允许基于从请求的数据做语<br />言选择，它为每个用户自定义内容<br />为了使用LocaleMiddleware，添加'django.middleware.locale.LocaleMddleware'到你的MIDDLEWARE_CLASSES设置，因为中<br />间件的顺序有关系，你应该遵循下列指示:<br />1，确认它是首先安装的中间件中的一个<br />2，它应该在SessionMiddleware后面，因为LocaleMiddleware使用session数据<br />3，如果你使用CacheMiddleware，把LocaleMiddleware放在它后面<br />例如，你的MIDDLEWARE_CLASSES可能看起来像这样:<br /><pre name="code" class="java">
+MIDDLEWARE_CLASSES = (
+   'django.contrib.sessions.middleware.SessionMiddleware',
+   'django.middleware.locale.LocaleMiddleware',
+   'django.middleware.common.CommonMiddleware',
+)
+</pre><br />LocaleMiddleware通过该算法尝试决定用户的语言选择:<br />1，首先，它在当前用户的session中寻找django_language键<br />2，失败的话，它寻找叫django_language的cookie<br />3，失败的话，它寻找Accept-Language HTTP头部，该头部通过你的浏览器发送并且告诉服务器你选择哪个语言，通过优先级<br />排序，Django尝试头部中的每个语言直到它找到一个可以得到翻译的语言<br />4，失败的话，它使用全局的LANGUAGE_CODE设置<br />注意:<br />1，在这些地方中的每一个，语言选择被期望为标准语言格式，作为一个字符擦，例如，巴西为pt-br<br />2，如果基本语言可以得到但是指定的子语言不能，Django使用基本语言，例如，用户指定de-at(奥地利德国)但是Django只<br />有de可得到，则Django使用de<br />3，只有在LANGUAGES设置中列出的语言可以被选择，如果你想限制语言选择为提供的语言的子集(因为你的程序不提供所有这<br />些语言)，设置LANGUAGS为一个语言列表，例如:<br /><pre name="code" class="java">
+LANGUAGES = (
+  ('de', _('German')),
+  ('en', _('English')),
+)
+</pre><br />这个例子限制可得到语言为选择德语和英语(已经任何子语言，如de-ch或en-us)<br />4，如果你定义一个自定义LANGUAGES设置，和前面解释的一样，标记语言为翻译字符串是可以的--但是使用"假的"gettext()<br />方法，而不是django.utils.translation中的，你应该从不在你的settings文件中import django.utils.translation，因为<br />该模块本身依赖于settings，并且它不会导致循环import<br />解决方案是使用"假的"gettext()方法，这里是一个settings文件的例子:<br /><pre name="code" class="java">
+gettext = lambda s: s
+
+LANGUAGES = (
+    ('de', gettext('German')),
+    ('en', gettext('English')),
+)
+</pre><br />使用该排列，make-messages.py将仍然为翻译寻找和标记这些字符串，但是翻译不会在运行时发生--所以你将需要记住在真<br />实的gettext()中在运行时用使用LANGUAGES的代码包装语言<br />5，LocaleMiddleware只能选择有Django提供的基本翻译的语言，如果你想为你的没有Django的源代码树中的翻译集的程序<br />提供翻译，你将想至少提供该语言的基本的翻译，例如，Django使用技术上的消息IDs来翻译日期和时间格式--所以你将至少<br />需要那些让系统正确工作的翻译<br />一个好的开始点是复制英语的.po文件并至少翻译技术消息--可能也有验证消息<br />技术消息IDs很容易识别，它们都是大写的，你不像其他消息一样翻译消息ID，你对提供的英语值提供正确的本地变量，例如<br />使用DATETIME_FORMAT(或者DATE_FORMAT或者TIME_FORMAT)，它将为你想用你的语言使用的格式字符串，格式等同于now模板<br />标签使用的格式字符串<br />一旦LocaleMiddleware决定了用户的选择，它使该选择可以为每个请求对象作为request.LANGUAGE_CODE得到，在你的视图<br />代码中免费度却该值，这里是一个简单的例子:<br /><pre name="code" class="java">
+def hello_world(request, count):
+    if request.LANGUAGE_CODE == 'de-at':
+        return HttpResponse("You prefer to read Austrian German.")
+    else:
+        return HttpResponse("You prefer to read another language.")
+</pre><br />注意，对于静态(无中间件)翻译，语言位于settings.LANGUAGE_CODE，对于动态(中间件)翻译它位于request.LANGUAGE_CODE<br /><br /><strong>set_language重定向视图</strong><br />方便起见，Django自带一个视图django.views.i18n.set_language，它设置用户的语言选择并重定向回到前一页面<br />通过添加下列行到你的URL配置来激活该视图:<br /><pre name="code" class="java">
+(r'^i18n/', include('django.conf.urls.i18n')),
+</pre><br />(注意该例子使视图可以在/i18n/setlang/得到)<br />该视图期望通过GET方法得到，并有一个language参数设置在查询字符串里，如果session支持是允许的，该视图在用户的ses<br />sion中保存语言选择，否则，它在django_language cookie里保存语言选择<br />在设置了语言选择之后，Django按下面的算法重定向用户:<br />1，Django在查询字符串里查找next参数<br />2，如果它不存在，或者为空，Django尝试Referer头部中的URL<br />3，如果它为空--比方说如果用户浏览器禁止了该头部--然后用户将被重定向到/(站点的根)作为退路<br />这里是HTML模板代码的例子:<br /><pre name="code" class="java">
+&lt;form action="/i18n/setlang/" method="get"&gt;
+&lt;input name="next" type="hidden" value="/next/page/" /&gt;
+&lt;select name="language"&gt;
+{% for lang in LANGUAGES %}
+&lt;option value="{{ lang.0 }}"&gt;{{ lang.1 }}&lt;/option&gt;
+{% endfor %}
+&lt;/select&gt;
+&lt;input type="submit" value="Go" /&gt;
+&lt;/form&gt;
+</pre><br /><br /><strong>在你自己的项目中使用翻译</strong><br />Django按下面的算法查找翻译:<br />1，首先，它在被调用的视图的程序目录查找locale目录，如果它找到选择语言的翻译，则翻译将被安装<br />2，然后，它在项目目录查找locale目录，如它找到一个翻译，则该翻译将被安装<br />3，最后，它在django/conf/locale检查基本的翻译<br />这种方式下，你可以写包含自己的翻译的程序，并且你可以在你的项目路径中覆盖基本翻译，或者你可以构建一个包含一些<br />apps的大型项目并把所有的翻译放置于一个巨大的项目消息文件，选择权在你手中<br />注意<br />如果你在使用手动配置的settings，由于Django失去计算项目目录位置的能力，项目目录中的locale目录将不被检测(Django<br />通常使用settings文件的位置来决定这点，如果你手动配置你的settings则settings文件不存在)<br />所有的消息文件仓库以同样的方式组织，它们是:<br />1，$APPPATH/locale/(language)/LC_MESSAGES/django.(po|mo)<br />2，$PROJECTPATH/locale/(language)/LC_MESSAGES/django.(po|mo)<br />3，在你的settings文件中所有的在LOCALE_PATHS中列出的路径以该顺序搜索(language)/LC_MESSAGES/django.(po|mo)<br />4，$PYTHONPATH/django/conf/locale/(language)/LC_MESSAGES/django.(po|mo)<br />为了创建消息文件，你和Django消息文件使用相同的make-messages.py工具，你只需在正确的地方--在conf/locale(源代码<br />树的情况下)或者locale/(app消息或项目消息情况下)目录所在的位置，你使用相同的compile-messages.py来生成gettext<br />使用的二进制django.mo文件<br />程序消息文件有些难以发现--它们需要LocaleMiddleware，如果你不使用该中间件，则只有Django消息文件和项目消息文件<br />将被处理<br />最后，你应该思考一下你的翻译文件的结构，如果你的程序需要递送给其他用户并且将在其他项目里使用，你可能像使用app<br />专有的翻译，但是使用app专有的翻译和项目翻译可能产生怪异的make-messages问题:make-messages将穿越当前路径下所有<br />的目录这样可能把消息IDs放置到已经在程序消息文件的项目消息文件中<br />最简单的方式是把不是项目的一部分的程序存储在项目树外面(这样则携带它们自己的翻译)，这种方式下，项目级别的make-<br />messages将只翻译连接到你的外在项目的字符串而不是单独发布的字符串<br /><br /><strong>翻译和JavaScript</strong><br />添加翻译到JavaScript产生一些问题:<br />1，JavaScript代码不能访问gettext实现<br />2，JavaScript代码不能访问.po或者.mo文件，它们需要通过服务器递送<br />3，JavaScript的翻译目录应该尽可能小<br />Django提供这些问题的一个集成方案:它传递翻译给JavaScript，所以你可以在JavaScript里调用gettext等等<br /><br />javascript_catalog视图<br />这些问题的主要解决方案是javascript_catalog视图，它使用模仿gettext接口的方式发送JavaScript代码库，加上一个翻译<br />字符串数组，这些翻译字符串来自于程序，项目或者Django代码，根据你在info_dict或URL里指定的东西<br />你像这样来使用它:<br /><pre name="code" class="java">
+js_info_dict = {
+    'packages': ('your.app.package',),
+}
+
+urlpatterns = patterns('',
+    (r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),
+)
+</pre><br />在packages里的每个字符串应该为Python小数点包语法(和在INSTALLED_APPS里的字符串格式一样)并且应该引用包含locale<br />目录的包，如果你指定多个包，所有这些目录合并为一个目录，如果你有使用不同程序的字符串的JavaScript的话这很有用<br />你可以通过把包放在URL模式里来让该视图变得动态:<br /><pre name="code" class="java">
+urlpatterns = patterns('',
+    (r'^jsi18n/(?P&lt;packages&gt;\S+?)/$, 'django.views.i18n.javascript_catalog'),
+)
+</pre><br />通过这个，你在URL里指定了通过'+'号分隔的包名列表，如果你的页面使用来自于不同apps的代码并且它经常改变并且你不<br />想将其放在一个大的目录文件里的话这非常有用，出于安全考虑，这些值只能为django.conf或者INSTALLED_APPS设置中的<br />包<br /><br />使用JavaScript翻译目录<br />为了使用该目录，只需像这样抽取动态生成的脚本:<br /><pre name="code" class="java">
+&lt;script type="text/javascript" src="/path/to/jsi18n/"&gt;&lt;/script&gt;
+</pre><br />这解释了admin怎样得到从服务器得到翻译目录，当目录载入时，你的JavaScript代码可以使用标准的gettext接口来访问它<br /><pre name="code" class="java">
+document.write(gettext('this is to be translated'));
+</pre><br />甚至有一个ngettext接口和一个字符串插补方法:<br /><pre name="code" class="java">
+d = {
+    count: 10
+};
+s = interpolate(ngettext('this is %(count)s object', 'this are %(count)s objects', d.count), d);
+</pre><br />该interpolate方法支持位置插补和命名插补，所以上面的内容可以这样写:<br /><pre name="code" class="java">
+s = interpolate(ngettext('this is %s object', 'this are %s objects', 11), [11]);
+</pre><br />插补语法借助于Python，你不应该总使用字符串插补:它仍然是JavaScript，所以代码将不得不做重复的正则表达式替换，这<br />不像在Python中做字符串插补那么快，所以当你真正需要它时才使用它(例如，与ngettext工作来生成正确的复数形式)<br /><br />创建JavaScript翻译目录<br />你使用其他Django翻译目录同样的方式来创建和更新翻译目录--使用make-messages.py工具，唯一的区别是你需要像这样提<br />供一个-d djangojs参数:<br /><pre name="code" class="java">
+make-messages.py -d djangojs -l de
+</pre><br />这将为德语的JavaScript创建或更新翻译目录，在更新翻译目录之后，像普通Django翻译目录一样运行compile-messages.py<br /><br /><strong>熟悉gettext的用户注意</strong><br />如果你了解gettext，你可能注意到Django做翻译的这些特性:<br />1，字符串领域为django或者djangojs，字符串领域用来区分不同的存储数据于通用消息文件库(通常在/usr/share/locale/)<br />的程序，django领域被python和模板翻译字符串使用并且载入到全局翻译目录，djangojs领域只被JavaScript翻译目录用来<br />确认它们尽可能小<br />2，Django只使用gettext和gettext_noop，这是因为Django内部一直使用DEFAULT_CHARSET字符串，对ugettext没有很多使用<br />因为你一直需要生成utf-8<br />3，Django不单独使用xgettext，它使用xgettext和msgfmt的Python包装器，这主要是为了方便
+  </div>
+
+  
+
+  

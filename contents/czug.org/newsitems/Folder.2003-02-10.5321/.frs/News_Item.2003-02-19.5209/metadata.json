@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "News_Item.2003-02-19.5209"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "为方便朋友们学习，润普发布Plone的Unicode中文支持方案，沉淀Plone的中文本地化知识。", 
+        "modified": "2003-02-19 12:55:57", 
+        "title": "润普发布Plone的Unicode中文支持方案"
+    }
+}

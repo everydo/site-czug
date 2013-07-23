@@ -1,0 +1,5 @@
+description: "本指南将会教会你，如何以DIYPloneStyle为基础，为plone2.1创建一个定制的样式产品，它将利用新的资源注册表机制来注册资源，并向门户添加一个皮肤选择项。\r\
+  \n（声明：本指南英文版权归原作者所有，中文译文归\"润普公司\"(http://www.zopechina.com)所有，未经允许不得用于商业用途）"
+exclude: []
+order: []
+title: 'DIYPloneStyle: 为plone2.1创建定制外观'

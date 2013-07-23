@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Image", 
+        "id": "test.svg"
+    }, 
+    "dublin": {
+        "creators": [
+            "eishn"
+        ], 
+        "description": "", 
+        "modified": "2006-11-01 13:27:19", 
+        "title": "test.svg"
+    }
+}

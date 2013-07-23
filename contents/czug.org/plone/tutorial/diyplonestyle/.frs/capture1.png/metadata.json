@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Image", 
+        "id": "capture1.png"
+    }, 
+    "dublin": {
+        "creators": [
+            "chenq"
+        ], 
+        "description": "当使用基本例子的时候，DIYPloneStyle的效果应该和这个屏幕快照一样。", 
+        "modified": "2005-11-14 14:31:51", 
+        "title": "DIYPloneStyle初始安装的屏幕快照"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zope-vs-plone"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Zope和Plone直接的相互关系是什么样的?", 
+        "modified": "2006-02-19 01:10:23", 
+        "title": "Zope和Plone的关系是什么？"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "ajax"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "发现了Ajax这个新的名词，也就是：在web上通过javascript，使用异步的xmlhttp请求，实现无刷新的web界面。", 
+        "modified": "2005-06-09 09:09:35", 
+        "title": "Ajax: web应用的新方法"
+    }
+}

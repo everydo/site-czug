@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "organization"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "介绍项目的代码版本库、故障报告、交流讨论方法等", 
+        "modified": "2006-09-15 08:46:51", 
+        "title": "CZUG项目组织方法"
+    }
+}

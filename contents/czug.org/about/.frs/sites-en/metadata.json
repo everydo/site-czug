@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "id": "sites-en"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "英文的zope/plone技术站点", 
+        "modified": "2004-03-04 09:56:19", 
+        "title": "英文站点"
+    }
+}

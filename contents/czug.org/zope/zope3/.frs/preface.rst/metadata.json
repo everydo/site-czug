@@ -1,0 +1,14 @@
+{
+    "main": {
+        "hidden_keys": [
+            "img", 
+            "__init__.pyc", 
+            "__init__.py"
+        ], 
+        "contenttype": "Document"
+    }, 
+    "dublin": {
+        "description": "这本书的编写背景", 
+        "title": "前言"
+    }
+}

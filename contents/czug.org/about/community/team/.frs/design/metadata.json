@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "id": "design"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "负责plone的skin开发方面的内容，同时为czug设计一个（多个）新的skin。要求css和js比较强，有强的设计能力。", 
+        "modified": "2004-03-05 16:10:47", 
+        "title": "设计团队"
+    }
+}

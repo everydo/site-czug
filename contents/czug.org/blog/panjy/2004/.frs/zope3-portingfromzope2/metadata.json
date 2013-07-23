@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zope3-portingfromzope2"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "如何将Zope2的应用移植到Zope3", 
+        "modified": "2004-09-24 04:09:22", 
+        "title": "学习Zope3：从Zope2移植到Zope3"
+    }
+}

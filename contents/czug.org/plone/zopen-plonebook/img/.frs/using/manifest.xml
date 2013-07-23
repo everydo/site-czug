@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<manifest xmlns="http://zopechina.com/ns/frs"
+           xmlns:tal="http://xml.zope.org/namespaces/tal"
+           contenttype="<bound method ATBTreeFolder.getPortalTypeName of <ATBTreeFolder at /58080_1/default.czug.edo/projects/341196/files/using>>"
+           uid="1ee8a873efd90d276fd00a4f9b0b24e8">
+
+
+    <entry type="xns"
+           name=""
+           mimetype="text/xml"
+           filename="using.xml"
+           fullpath="xns.xml"/>
+
+
+</manifest>

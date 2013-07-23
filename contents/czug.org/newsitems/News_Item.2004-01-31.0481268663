@@ -1,0 +1,40 @@
+<p>解决了一大批故障，但是还没有完。如果您发现了网站的故障，请在<a href="/collector">这里报告</a>。<br />
+</p>
+<h1>故障一：不能注册</h1>
+
+前一阵子，陆续有人报告，czug不能正常注册，报告setMemberProperties错。<br />
+<br />
+一番跟踪查错候，找到了问题所在，并解决了，欢迎大家注册使用。<br />
+<br />
+问题的原因是：plone2中的homePageText.pt和Plone1中不兼容。<br />
+<b><br />
+homePageText.pt是干什么的？</b><br />
+用于定制完成大家的缺省个人主页的。在czug中，登录后为：<br />
+<pre>XXX的个人区主页<br /><br />&nbsp; 本页面是您加入到社区时，为您自动创建的一个页面。<br />&nbsp; 您可以安装自己的喜好，定制本页面。<br /><br />&nbsp; 如果想修改本页面内容，只需要选择页面上面的“编辑”标签即可！<br /><br />&nbsp; 站长"潘俊勇":/Members/panjy欢迎您的到来！让我们携手共建我们自己的社区家园！</pre>
+<br />
+<b>有什么不兼容？</b><br />
+plone1是一个python脚本，不需要传递参数，但plone2改为了使用zpt完成<br />
+<br />
+相关bug说明，我在这里报告了：<br />
+http://plone.org/collector/2478/collector_issue_contents<br />
+<h1>故障二: 查询报错</h1>
+查询的时候，居然报错：len(text)不能执行len()操作<br />
+发现报错在脚本cropText上，定制该脚本，加上一行：<br />
+text = str(text)<br />
+<br />
+从catalog中得到的数据居然不是string类型的，可能是catalog中的索引数据有些问题。<br />
+<br />
+<h1>故障三：新闻等页面无法打开</h1>
+发现archetypes中有一个小bug：<br />
+文件Referenceable.py中，方法_register, 71行:<br />
+<pre>&nbsp; if not reference_manager:</pre>
+应该改为：<br />
+<pre>&nbsp; if reference_manager is None:</pre>
+前者会自动调用BTreeFolder2中的objectCount函数。<br />
+<br />
+<h1>故障四：重新升级archetypes等products的时候报错</h1>
+<br />
+发现重新安装的时候，会做reindex，这时候，不会传递REQUEST参数，但是在zope2.7b3的/zope27/lib/python/Products/ZCatalog/ZCatalog.py中，方法resolve_url, 第783行，添加如下行：<br />
+<pre>if REQUEST is None: return None</pre>
+<br />
+

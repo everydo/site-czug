@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zope3-newsletter-2-1"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Zope 3 Newsletter: Volume 2 Issue 1, Zope3以及相关项目的最新进展", 
+        "modified": "2004-11-10 14:09:29", 
+        "title": "Zope3 新闻信2-1(Newsletter)"
+    }
+}

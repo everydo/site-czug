@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zopechinapak-0.4-release"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "ZopeChinaPak是Zope/CMF/Plone的一套中文支持补丁集合", 
+        "modified": "2004-08-25 23:54:10", 
+        "title": "ZopeChinaPak 0.4 发布！"
+    }
+}

@@ -1,0 +1,153 @@
+<p>web 2.0: 下一代软件的设计模式和商业模型</p>
+<p>从前一直认为所谓web 2.0，就是无意义的行销概念抄作口号，比较反感.</p>
+<p>但看到上面的这个解释，似乎触动了我的某根心弦，我有兴趣的阅读了来自 O'Reilly 的这篇 <a class="reference" href="http://www.oreillynet.com/pub/a/oreilly/tim/news/2005/09/30/what-is-web-20.html?page=1">英文Web2.0诠释文章</a> 。</p>
+<p>看下来，觉得这篇文章是所有新一代web创业者的必读经典文章。
+Web 2.0是总结web市场发展的实例，而总结的该如何利用web做生意，如何做软件产品的一些指导性的思想。</p>
+<p>当然也有一个 <a class="reference" href="http://www.enet.com.cn/article/2005/1122/A20051122474593.shtml">中文的版本</a> ，却漏掉了上面的解释.</p>
+<p>这个技术转换表单:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="42%" />
+<col width="58%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Web 1.0</th>
+<th class="head">Web 2.0</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>DoubleClick</td>
+<td>--&gt;  Google AdSense</td>
+</tr>
+<tr><td>Ofoto</td>
+<td>--&gt;  Flickr</td>
+</tr>
+<tr><td>Akamai</td>
+<td>--&gt;  BitTorrent</td>
+</tr>
+<tr><td>mp3.com</td>
+<td>--&gt;  Napster</td>
+</tr>
+<tr><td>Britannica Online</td>
+<td>--&gt;  Wikipedia</td>
+</tr>
+<tr><td>personal websites</td>
+<td>--&gt;  blogging</td>
+</tr>
+<tr><td>evite</td>
+<td>--&gt; upcoming.org and EVDB</td>
+</tr>
+<tr><td>domain name speculation</td>
+<td>--&gt;    search engine optimization</td>
+</tr>
+<tr><td>page views</td>
+<td>--&gt;    cost per click</td>
+</tr>
+<tr><td>screen scraping</td>
+<td>--&gt;    web services</td>
+</tr>
+<tr><td>publishing</td>
+<td>--&gt;    participation</td>
+</tr>
+<tr><td>CMS</td>
+<td>--&gt;    wikis</td>
+</tr>
+<tr><td>directories (taxonomy)</td>
+<td>--&gt;    tagging (&quot;folksonomy&quot;)</td>
+</tr>
+<tr><td>stickiness</td>
+<td>--&gt;    syndication</td>
+</tr>
+</tbody>
+</table>
+<p>看看这篇文章的几个标题：</p>
+<div class="contents pullqoute topic">
+<p class="topic-title first"><a id="contents" name="contents">Contents</a></p>
+<ul class="simple">
+<li><a class="reference" href="#web" id="id8" name="id8">1. web是一个新的平台</a></li>
+<li><a class="reference" href="#id3" id="id9" name="id9">2. 利用人民群众的智慧</a></li>
+<li><a class="reference" href="#intel-inside" id="id10" name="id10">3. 数据是真正的财富，另外一个Intel Inside</a></li>
+<li><a class="reference" href="#id4" id="id11" name="id11">4. 软件发布周期的终结</a></li>
+<li><a class="reference" href="#id5" id="id12" name="id12">5. 轻量型编程模型</a></li>
+<li><a class="reference" href="#id6" id="id13" name="id13">6. 软件超越单一设备</a></li>
+<li><a class="reference" href="#id7" id="id14" name="id14">7. 丰富的用户体验</a></li>
+</ul>
+</div>
+<div class="section">
+<h3><a class="toc-backref" href="#id8" id="web" name="web">1. web是一个新的平台</a></h3>
+<p>平台的力量是巨大的，平台总是打败应用程序。微软借助Windows平台曾经所向披靡。</p>
+<p>而web这个平台，则有所不同。他是一个没有所有者的系统，由一组协议、开放标准和对合作的共识来连结到一起。</p>
+<p>web这个平台的特性，决定了其实的运营模式，和传统的被专有软件所挟持的那个平台是不同的。
+它不可能被控制，</p>
+<p>“任何企图通过控制平台来推销应用程序的Web 2.0提供商，从定义上讲，已经丧失了这个平台的优越性。
+这并不是说锁定和竞争优势的机会不复存在了，而是说我们相信这种机会不是通过控制软件程序接口和协议来取得的。
+新的游戏规则正在浮现。那些能够理解这些新的游戏规则，而不是企图回到PC软件时代旧有规则的公司，才有可能在Web 2.0时代获得成功。”</p>
+<dl class="docutils">
+<dt>Netscape VS Google</dt>
+<dd><p class="first">Netscape还是要卖web的基本软件，想赚大钱，但都变成了免费。</p>
+<p>但平台变成了免费，真正的价值转为其上传递的服务。</p>
+<p class="last">而Google不卖软件，而是在上面提供各种服务。</p>
+</dd>
+<dt>Google的Adsense</dt>
+<dd>广告不在是在几个门户巨头上发布了，广告发行遍及互联网各个角落。</dd>
+<dt>BitTorrent</dt>
+<dd>不是提供集中的上传和下载。去中心化，每个客户端都是一个服务器。</dd>
+</dl>
+</div>
+<div class="section">
+<h3><a class="toc-backref" href="#id9" id="id3" name="id3">2. 利用人民群众的智慧</a></h3>
+<p>源于用户贡献的网络效应，是在Web 2.0时代中统治市场的关键。</p>
+<p>这个是老毛的群众路线观念的延伸...</p>
+<dl class="docutils">
+<dt>Yahoo分类目录</dt>
+<dd>第一个人民群众参与的网站分类目录</dd>
+<dt>Google的PageRank</dt>
+<dd>人民群众对链接的引用程度来说明其重要性</dd>
+<dt>eBay</dt>
+<dd>定位为交易环境的一个促成者</dd>
+<dt>Amazon</dt>
+<dd>大量的用户评价。在“用户参与”方面是想尽的各种花招。</dd>
+<dt>Wikipedia维基百科</dt>
+<dd>每个人都可以更改网页</dd>
+<dt>用户加标签</dt>
+<dd>类似del.icio.us和Flickr这样的网站，用户加标签是对原始数据信息的有效补充</dd>
+<dt>垃圾邮件协作过滤</dt>
+<dd>通过电子邮件用户对垃圾邮件的评判来决策</dd>
+<dt>病毒式营销</dt>
+<dd>不依赖广告来进行宣传, 而是口口相传.</dd>
+<dt>开源开发sourceforge.net</dt>
+<dd>peer production</dd>
+<dt>RSS</dt>
+<dd>另外一种动态信息发布渠道，是对静态链接的扩展。方便了Blog信息的发布。</dd>
+</dl>
+</div>
+<div class="section">
+<h3><a class="toc-backref" href="#id10" id="intel-inside" name="intel-inside">3. 数据是真正的财富，另外一个Intel Inside</a></h3>
+<p>软件会落伍，会淘汰，但是数据永远不会。</p>
+<p>Sina的Blog, 爱问等，都是在鼓励群众参与，从群众中获得数据。</p>
+</div>
+<div class="section">
+<h3><a class="toc-backref" href="#id11" id="id4" name="id4">4. 软件发布周期的终结</a></h3>
+<p>转而以服务的形式交付。</p>
+<ol class="arabic simple">
+<li>运营成为核心的竞争力</li>
+<li>永远测试版：用户参与开发</li>
+</ol>
+</div>
+<div class="section">
+<h3><a class="toc-backref" href="#id12" id="id5" name="id5">5. 轻量型编程模型</a></h3>
+<p>简单实用可能更好：</p>
+<ul class="simple">
+<li>松散的集成，而不是紧密的集成</li>
+<li>syndication 而不是 coordination，也就是发布数据，而不是怎么用这些数据</li>
+<li>可编程性和可混合性设计：通过开源软件装配来解决问题</li>
+</ul>
+</div>
+<div class="section">
+<h3><a class="toc-backref" href="#id13" id="id6" name="id6">6. 软件超越单一设备</a></h3>
+<p>iPod/iTunes组合是一个例子。软件在手机其他方面的扩展市场很大。</p>
+</div>
+<div class="section">
+<h3><a class="toc-backref" href="#id14" id="id7" name="id7">7. 丰富的用户体验</a></h3>
+<p>这也就是Google同志所引领的AJAX新潮流。</p>
+</div>

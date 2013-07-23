@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "News_Item.2003-03-21.5411"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "开放源代码就是这样，很快就形成百花开放的局面了，GB Splitter是一个基于TextIndex的一个断字程序。", 
+        "modified": "2003-03-21 12:01:24", 
+        "title": "GB Splitter也出来了"
+    }
+}

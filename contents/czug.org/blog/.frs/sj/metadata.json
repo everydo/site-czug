@@ -1,0 +1,15 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "left_col": ".. navtree::\n   :root_depth: 3",
+        "hidden_keys": ["left_col.rst", "index.rst"]
+    }, 
+    "dublin": {
+        "creators": [
+            "ryebread"
+        ], 
+        "description": "这里是我学习Zope、Python和Plone的天堂", 
+        "modified": "2004-11-19 16:51:17", 
+        "title": "霜剑的BLOG"
+    }
+}

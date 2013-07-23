@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "id": "marketing"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "推广zope/plone，保持czug和外部的良好关系。写一些原创的文章，在相关的刊物上发表，或者做一些公开的zope/plone讲演等，主要是增强zope/plone在国内的影响力。要求有一定的文字能力，对zope和plone有全面的认识，对opensource有正确的认识。", 
+        "modified": "2004-03-05 16:30:54", 
+        "title": "市场团队"
+    }
+}

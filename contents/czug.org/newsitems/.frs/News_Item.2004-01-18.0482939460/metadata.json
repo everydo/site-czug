@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "News_Item.2004-01-18.0482939460"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "美国航空航天局最近的勇气号成功登陆火星，而其网站正式使用Plone搭建！", 
+        "modified": "2004-01-18 13:59:01", 
+        "title": "NASA火星漫游者网站使用Plone搭建！"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zope-storage"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Zope支持使用多种方式来数据，而不仅仅使用一个单独的Data.fs文件", 
+        "modified": "2004-11-11 15:15:29", 
+        "title": "Zope的数据存储方式"
+    }
+}

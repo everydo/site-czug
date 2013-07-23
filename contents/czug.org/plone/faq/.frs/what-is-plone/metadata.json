@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "what-is-plone"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Plone到底是一个什么软件?", 
+        "modified": "2006-02-19 01:07:49", 
+        "title": "Plone是什么？"
+    }
+}

@@ -1,0 +1,83 @@
+<p class="discreet">
+如果您看到的这个页面，不是您所期望的网站，这表示这个站点才刚安装Plone。
+请不要联系Plone团队或者Plone的邮件列表。
+</p>
+
+<p>
+您首先应该访问
+<a href="plone_control_panel">站点设置区域</a>，设置您的站点。
+要熟悉Plone，可阅读一本
+<a href="http://plone.org/documentation/books">Plone书籍</a>,
+一定要去看看
+<a href="http://plone.org/products">插件产品</a>
+和
+<a href="http://plone.org/documentation">在线文档</a>.
+</p>
+
+<h2>快速开始</h2>
+
+<p>
+如果你是Plone的新手，这里有一些有益的提示:
+</p>
+
+<ul>
+    <li>
+    访问键 + 4 定位到实况搜索框 - 你可开始填写搜索词，不必离开键盘你就可以把握所有的信息。
+    要得知如何在您特定的浏览器中使用访问键，可参阅
+    <a href="accessibility-info">访问性页面</a>.
+    </li>
+    
+    <li>
+    Plone根据你的浏览器设置，自动显示所需的语言。如果你希望在Plone中更多的控制语言，
+    请在<a href="plone_control_panel">站点设置</a>中安装“Plone语言工具”。
+    如果您需要创建多语言的内容，请下载
+    <a href="http://plone.org/products/linguaplone">LinguaPlone</a>.
+    </li>
+    
+    <li>
+    您登陆系统后,您会发现内容有不同的颜色，这表示内容处于不同的工作流状态。
+    因此非常方便您识别内容的安全性和可见性。<a href="sitemap" target="_self">站点地图</a>中的颜色，
+    可用于可视化审查站点的安全性。
+    </li>
+    
+    <li>
+    如果您喜欢使用纯HTML，Structured Text 或 ReStructured Text标记语言，而不是可视化的编辑器，
+    您可在 <a href="plone_memberprefs_panel">您的设置</a> 中屏蔽.
+    </li> 
+</ul>
+
+<h2>更多信息</h2>
+
+<p>
+更多关于Plone的信息:
+</p>
+
+
+<p><a href="http://plone.org">Plone开源内容管理系统网站</a></p>
+<p><a href="http://czug.org">中文Zope/Plone社区</a></p>
+<p><a href="http://plone.org/documentation/whatsnew/2.5">Plone 2.5的最新特性</a></p>
+<p><a href="http://plone.org/documentation">Plone文档</a></p>
+<p><a href="http://plone.org/products">Plone插件产品</a></p>
+<p><a href="http://plone.org/contact">Plone邮件列表和支持论坛</a></p>
+<p><a href="http://plone.org/documentation/books">现有的Plone书籍</a> <span class="discreet">(推荐!)</span></p>
+<p><a href="http://plone.org/documentation/faq/server-recommendations">Plone服务器配置推荐</a></p>
+
+<p>
+Plone是基于Zope应用服务器的，使用Python编程语言。更多关于这些技术的信息:
+</p>
+
+<p><a href="http://www.zope.org">Zope社区</a></p>
+<p><a href="http://www.python.org">Python网站</a></p>
+
+<p>
+您使用Plone在做一些有趣的事情吗？比如非常大的站点部署、有趣的使用案例？
+<a href="&#0109;&#0097;&#0105;&#0108;&#0116;&#0111;&#0058;pr&#0064;plone.org">请告诉我们这些信息</a>!
+</p>
+
+<p>感谢您使用我们的产品!</p>
+
+<p>
+&mdash; <a class="link-plain" href="http://plone.org/about/team">Plone团队</a> 
+</p>
+
+<p class="discreet">Plone中文支持由 <a href="http://zopen.cn">上海润普网络信息技术有限公司</a> 荣誉贡献</p>

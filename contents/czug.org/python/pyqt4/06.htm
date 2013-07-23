@@ -1,0 +1,814 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-4" class="anchor"/><p class="line867"><strong> Dialogs in <a href="/moin/PyQt4" class="nonexistent">PyQt4</a> </strong> <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/></p><p class="line862">::-- <a href="/moin/zhuyj">zhuyj</a> [2008-06-16 09:48:48] </p><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-63ae94043930f7754023d393c3e4be623111aca3">Dialogs in PyQt4</a><ol><li><a href="#head-d8eed51ec9d8d3794fd6871720c82a7a81a5d1ba">Predefined Dialogs</a></li><li><a href="#head-65e9b44f6ee153774b7c6712ab8e1bed41175ba2">QColorDialog</a></li><li><a href="#head-4730e3474d2cff2395673b90fb0d74be420de88a">QFontDialog</a></li><li><a
+href="#head-9d74d59b63a8866eec6995ca0f1d6eb4bfe475e1">QFileDialog</a></li></ol></li></ol></div> <span id="line-7" class="anchor"/><span id="line-8" class="anchor"/><p class="line867">
+</p><h1 id="head-63ae94043930f7754023d393c3e4be623111aca3">1. Dialogs in PyQt4</h1>
+<span id="line-9" class="anchor"/><p class="line867"><strong><a href="/moin/PyQt4" class="nonexistent">PyQt4</a>中的对话框</strong> <span id="line-10" class="anchor"/><span id="line-11" class="anchor"/></p><p class="line867"><em> Dialog windows or dialogs are an indispensable part of most modern GUI applications. A dialog is defined as a conversation between two or more persons. In a computer application a dialog is a window which is used to "talk" to the application. A dialog is used to input data, modify data, change the application settings etc. Dialogs are important means of communication between a user and a computer program.</em> <span id="line-12" class="anchor"/><span id="line-13" class="anchor"/></p><ul><li style="list-style-type:
+none;">对话窗口和对话框是现代GUI应用程序中不可缺少的部分。对话的定义是两个或多个人之间的会话，在计算机程序中对话是一个与应用程序对话的窗口。对话可以用来完成输入数据，修改数据，改变应用程序设置等工作。对话是重要的人机通讯方法。 <span id="line-14" class="anchor"/></li></ul><p class="line867"><em> There are essentially two types of dialogs. Predefined dialogs and custom dialogs. </em> <span id="line-15" class="anchor"/><span id="line-16" class="anchor"/></p><ul><li style="list-style-type: none;">本质上存在两种对话，预定义对话和自定义对话。 <span id="line-17" class="anchor"/></li></ul><p class="line867">
+</p><h2 id="head-d8eed51ec9d8d3794fd6871720c82a7a81a5d1ba">1.1. Predefined Dialogs</h2>
+<span id="line-18" class="anchor"/><p class="line867"><strong>预定义对话</strong> <span id="line-19" class="anchor"/><span id="line-20" class="anchor"/></p><ul><li style="list-style-type: none;"><p class="line891"><em>QInputDialog</em> <em> The QInputDialog provides a simple convenience dialog to get a single value from the user. The input value can be a string, a number or an item from a list. </em> <span id="line-21" class="anchor"/><span id="line-22" class="anchor"/></p></li><li style="list-style-type: none;" class="gap">QInputDialog提供了一个简单方便的从用户处获取单一结果的对话。输入的结果可以是字符串，数字或者列表中的一项。 <span id="line-23" class="anchor"/></li></ul><p class="line867"><span id="line-24" class="anchor"/><span id="line-25" class="anchor"/><span
+id="line-26" class="anchor"/><span id="line-27" class="anchor"/><span id="line-28" class="anchor"/><span id="line-29" class="anchor"/><span id="line-30" class="anchor"/><span id="line-31" class="anchor"/><span id="line-32" class="anchor"/><span id="line-33" class="anchor"/><span id="line-34" class="anchor"/><span id="line-35" class="anchor"/><span id="line-36" class="anchor"/><span id="line-37" class="anchor"/><span id="line-38" class="anchor"/><span id="line-39" class="anchor"/><span id="line-40" class="anchor"/><span id="line-41" class="anchor"/><span id="line-42" class="anchor"/><span id="line-43" class="anchor"/><span id="line-44" class="anchor"/><span id="line-45" class="anchor"/><span id="line-46" class="anchor"/><span id="line-47" class="anchor"/><span id="line-48"
+class="anchor"/><span id="line-49" class="anchor"/><span id="line-50" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-1eb423f90e398a91d2c3864bef711782ff90d3ca_000\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-1eb423f90e398a91d2c3864bef711782ff90d3ca_000', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-1eb423f90e398a91d2c3864bef711782ff90d3ca_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#!/usr/bin/python</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="Comment"># inputdialog.py</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"/><span class="ResWord">import</span> <span class="ID">sys</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtGui</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtCore</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">class</span> <span class="ID">InputDialog</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QWidget</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   7 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">=</span><span class="ID">None</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QWidget</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setGeometry</span><span class="Operator">(</span><span class="Number">300</span><span class="Operator">,</span> <span class="Number">300</span><span class="Operator">,</span> <span class="Number">350</span><span class="Operator">,</span> <span class="Number">80</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setWindowTitle</span><span class="Operator">(</span><span class="String">'InputDialog'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">button</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QPushButton</span><span class="Operator">(</span><span class="String">'Dialog'</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">button</span><span class="Operator">.</span><span class="ID">setFocusPolicy</span><span class="Operator">(</span><span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">Qt</span><span class="Operator">.</span><span class="ID">NoFocus</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">button</span><span class="Operator">.</span><span class="ID">move</span><span class="Operator">(</span><span class="Number">20</span><span class="Operator">,</span> <span class="Number">20</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">connect</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">button</span><span class="Operator">,</span> <span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">SIGNAL</span><span class="Operator">(</span><span class="String">'clicked()'</span><span class="Operator">)</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">showDialog</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setFocus</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">label</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QLineEdit</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">label</span><span class="Operator">.</span><span class="ID">move</span><span class="Operator">(</span><span class="Number">130</span><span class="Operator">,</span> <span class="Number">22</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span>    <span class="ResWord">def</span> <span class="ID">showDialog</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  19 </span>        <span class="ID">text</span><span class="Operator">,</span> <span class="ID">ok</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QInputDialog</span><span class="Operator">.</span><span class="ID">getText</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="String">'Input Dialog'</span><span class="Operator">,</span> <span class="String">'Enter your name:'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ResWord">if</span> <span class="ID">ok</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  21 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">label</span><span class="Operator">.</span><span class="ID">setText</span><span class="Operator">(</span><span class="ID">unicode</span><span class="Operator">(</span><span class="ID">text</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  22 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QApplication</span><span class="Operator">(</span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">argv</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  23 </span><span class="ID">icon</span> <span class="Operator">=</span> <span class="ID">InputDialog</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  24 </span><span class="ID">icon</span><span class="Operator">.</span><span class="ID">show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  25 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">exec_</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-51" class="anchor"/><p class="line867"><em> The example has a button and a line edit widget. The button shows the input dialog for getting text values. The entered text will be displayed in the line edit widget.</em> <span id="line-52" class="anchor"/><span id="line-53" class="anchor"/></p><ul><li style="list-style-type: none;">这个例子有一个按钮和一个行编辑组件。点击按钮会生成获取文本结果的输入对话框。输入的文本将显示在行编辑组件中。 <span id="line-54" class="anchor"/></li></ul><p class="line867"><span id="line-55" class="anchor"/></p><pre> text, ok =
+QtGui.QInputDialog.getText(self, 'Input Dialog', 'Enter your name:')
+<span id="line-56" class="anchor"/></pre><span id="line-57" class="anchor"/><p class="line867"><em> This line displays the input dialog. The first string is a dialog title, the second one is a message within the dialog. The dialog returns the entered text and a boolean value. If we clicked ok button, the boolean value is true, otherwise false.</em> <span id="line-58" class="anchor"/><span id="line-59" class="anchor"/></p><ul><li style="list-style-type:
+none;">这一行显示输入对话框，第一个字符串是对话框标题，第二个是对话框中的提示信息。对话框返回输入的文本和一个布尔值。如果我们点击OK按钮，布尔值为真，否则为假。 <span id="line-60" class="anchor"/></li></ul><p class="line867"><em> Input Dialog</em> <span id="line-61" class="anchor"/><span id="line-62" class="anchor"/></p><p class="line867"><em> </em> <strong>Figure: Input Dialog</strong> <span id="line-63" class="anchor"/><span id="line-64" class="anchor"/></p><p class="line867">
+</p><h2 id="head-65e9b44f6ee153774b7c6712ab8e1bed41175ba2">1.2. QColorDialog</h2>
+<span id="line-65" class="anchor"/><p class="line867"><em> The QColorDialog provides a dialog widget for specifying colors.</em> <span id="line-66" class="anchor"/><span id="line-67" class="anchor"/></p><ul><li style="list-style-type: none;">QColorDialog提供了一个指定颜色的对话框组件。 <span id="line-68" class="anchor"/></li></ul><p class="line867"><span id="line-69" class="anchor"/><span id="line-70" class="anchor"/><span id="line-71" class="anchor"/><span id="line-72" class="anchor"/><span id="line-73" class="anchor"/><span id="line-74" class="anchor"/><span id="line-75" class="anchor"/><span
+id="line-76" class="anchor"/><span id="line-77" class="anchor"/><span id="line-78" class="anchor"/><span id="line-79" class="anchor"/><span id="line-80" class="anchor"/><span id="line-81" class="anchor"/><span id="line-82" class="anchor"/><span id="line-83" class="anchor"/><span id="line-84" class="anchor"/><span id="line-85" class="anchor"/><span id="line-86" class="anchor"/><span id="line-87" class="anchor"/><span id="line-88" class="anchor"/><span id="line-89" class="anchor"/><span id="line-90" class="anchor"/><span id="line-91" class="anchor"/><span id="line-92" class="anchor"/><span id="line-93"
+class="anchor"/><span id="line-94" class="anchor"/><span id="line-95" class="anchor"/><span id="line-96" class="anchor"/><span id="line-97" class="anchor"/><span id="line-98" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-c7e0aa67560abf04f34cd98e216dc2d051fa1e4c_001\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-c7e0aa67560abf04f34cd98e216dc2d051fa1e4c_001', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-c7e0aa67560abf04f34cd98e216dc2d051fa1e4c_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#!/usr/bin/python</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="Comment"># colordialog.py</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"/><span class="ResWord">import</span> <span class="ID">sys</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtGui</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtCore</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">class</span> <span class="ID">ColorDialog</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QWidget</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   7 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">=</span><span class="ID">None</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QWidget</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ID">color</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QColor</span><span class="Operator">(</span><span class="Number">0</span><span class="Operator">,</span> <span class="Number">0</span><span class="Operator">,</span> <span class="Number">0</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setGeometry</span><span class="Operator">(</span><span class="Number">300</span><span class="Operator">,</span> <span class="Number">300</span><span class="Operator">,</span> <span class="Number">250</span><span class="Operator">,</span> <span class="Number">180</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setWindowTitle</span><span class="Operator">(</span><span class="String">'ColorDialog'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">button</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QPushButton</span><span class="Operator">(</span><span class="String">'Dialog'</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">button</span><span class="Operator">.</span><span class="ID">setFocusPolicy</span><span class="Operator">(</span><span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">Qt</span><span class="Operator">.</span><span class="ID">NoFocus</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">button</span><span class="Operator">.</span><span class="ID">move</span><span class="Operator">(</span><span class="Number">20</span><span class="Operator">,</span> <span class="Number">20</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">connect</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">button</span><span class="Operator">,</span> <span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">SIGNAL</span><span class="Operator">(</span><span class="String">'clicked()'</span><span class="Operator">)</span><span class="Operator">,</span> <span class="ID">self</span><span
+class="Operator">.</span><span class="ID">showDialog</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setFocus</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">widget</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QWidget</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">widget</span><span class="Operator">.</span><span class="ID">setStyleSheet</span><span class="Operator">(</span><span class="String">"QWidget { background-color: %s }"</span></span>
+<span class="line"><span class="LineNumber">  19 </span>            <span class="Operator">%</span> <span class="ID">color</span><span class="Operator">.</span><span class="ID">name</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">widget</span><span class="Operator">.</span><span class="ID">setGeometry</span><span class="Operator">(</span><span class="Number">130</span><span class="Operator">,</span> <span class="Number">22</span><span class="Operator">,</span> <span class="Number">100</span><span class="Operator">,</span> <span class="Number">100</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span>    <span class="ResWord">def</span> <span class="ID">showDialog</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  22 </span>        <span class="ID">color</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QColorDialog</span><span class="Operator">.</span><span class="ID">getColor</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  23 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">widget</span><span class="Operator">.</span><span class="ID">setStyleSheet</span><span class="Operator">(</span><span class="String">"QWidget { background-color: %s }"</span></span>
+<span class="line"><span class="LineNumber">  24 </span>            <span class="Operator">%</span> <span class="ID">color</span><span class="Operator">.</span><span class="ID">name</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  25 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QApplication</span><span class="Operator">(</span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">argv</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  26 </span><span class="ID">cd</span> <span class="Operator">=</span> <span class="ID">ColorDialog</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  27 </span><span class="ID">cd</span><span class="Operator">.</span><span class="ID">show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  28 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">exec_</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-99" class="anchor"/><p class="line867"><em> The application example shows a push button and a QWidget. The widget background is set to black color. Using the QColorDialog, we can change it's background.</em> <span id="line-100" class="anchor"/><span id="line-101" class="anchor"/></p><ul><li style="list-style-type: none;">这个例子包含一个按钮和一个QWidget。插件的背景颜色被设置成黑色，利用QColorDialog我们可以改变它的背景颜色。 <span id="line-102" class="anchor"/></li></ul><p class="line867"><span id="line-103" class="anchor"/></p><pre> color =
+QtGui.QColorDialog.getColor()
+<span id="line-104" class="anchor"/></pre><span id="line-105" class="anchor"/><p class="line867"><em>  This line will pop up the QColorDialog.</em> <span id="line-106" class="anchor"/><span id="line-107" class="anchor"/></p><ul><li style="list-style-type: none;">这一行弹出QColorDialog。 <span id="line-108" class="anchor"/></li></ul><p class="line867"><span id="line-109" class="anchor"/></p><pre>self.widget.setStyleSheet("QWidget { background-color: %s }"
+<span id="line-110" class="anchor"/>     % color.name())
+<span id="line-111" class="anchor"/></pre><span id="line-112" class="anchor"/><p class="line867"><em> We change the background color using stylesheets.</em> <span id="line-113" class="anchor"/><span id="line-114" class="anchor"/></p><ul><li style="list-style-type: none;">我们用样式表改变背景颜色。 <span id="line-115" class="anchor"/></li></ul><p class="line867"><em> Color dialog</em> <span id="line-116" class="anchor"/><span id="line-117" class="anchor"/></p><p class="line867"><em> </em> <strong>Figure: Color dialog</strong> <span id="line-118" class="anchor"/><span id="line-119"
+class="anchor"/></p><p class="line867">
+</p><h2 id="head-4730e3474d2cff2395673b90fb0d74be420de88a">1.3. QFontDialog</h2>
+<span id="line-120" class="anchor"/><p class="line867"><em> The QFontDialog is a dialog widget for selecting font.</em> <span id="line-121" class="anchor"/><span id="line-122" class="anchor"/></p><ul><li style="list-style-type: none;">QFontDialog用来选择字体。 <span id="line-123" class="anchor"/></li></ul><p class="line867"><span id="line-124" class="anchor"/><span id="line-125" class="anchor"/><span id="line-126" class="anchor"/><span id="line-127" class="anchor"/><span id="line-128" class="anchor"/><span id="line-129" class="anchor"/><span id="line-130" class="anchor"/><span
+id="line-131" class="anchor"/><span id="line-132" class="anchor"/><span id="line-133" class="anchor"/><span id="line-134" class="anchor"/><span id="line-135" class="anchor"/><span id="line-136" class="anchor"/><span id="line-137" class="anchor"/><span id="line-138" class="anchor"/><span id="line-139" class="anchor"/><span id="line-140" class="anchor"/><span id="line-141" class="anchor"/><span id="line-142" class="anchor"/><span id="line-143" class="anchor"/><span id="line-144" class="anchor"/><span id="line-145" class="anchor"/><span id="line-146" class="anchor"/><span id="line-147"
+class="anchor"/><span id="line-148" class="anchor"/><span id="line-149" class="anchor"/><span id="line-150" class="anchor"/><span id="line-151" class="anchor"/><span id="line-152" class="anchor"/><span id="line-153" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-0535d8717186aadd7465de8e6980cca4c231ae40_002\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-0535d8717186aadd7465de8e6980cca4c231ae40_002', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-0535d8717186aadd7465de8e6980cca4c231ae40_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#!/usr/bin/python</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="Comment"># fontdialog.py</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"/><span class="ResWord">import</span> <span class="ID">sys</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtGui</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtCore</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">class</span> <span class="ID">FontDialog</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QWidget</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   7 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">=</span><span class="ID">None</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QWidget</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ID">hbox</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QHBoxLayout</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setGeometry</span><span class="Operator">(</span><span class="Number">300</span><span class="Operator">,</span> <span class="Number">300</span><span class="Operator">,</span> <span class="Number">250</span><span class="Operator">,</span> <span class="Number">110</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setWindowTitle</span><span class="Operator">(</span><span class="String">'FontDialog'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">button</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QPushButton</span><span class="Operator">(</span><span class="String">'Dialog'</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">button</span><span class="Operator">.</span><span class="ID">setFocusPolicy</span><span class="Operator">(</span><span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">Qt</span><span class="Operator">.</span><span class="ID">NoFocus</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">button</span><span class="Operator">.</span><span class="ID">move</span><span class="Operator">(</span><span class="Number">20</span><span class="Operator">,</span> <span class="Number">20</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">hbox</span><span class="Operator">.</span><span class="ID">addWidget</span><span class="Operator">(</span><span class="ID">button</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">connect</span><span class="Operator">(</span><span class="ID">button</span><span class="Operator">,</span> <span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">SIGNAL</span><span class="Operator">(</span><span class="String">'clicked()'</span><span class="Operator">)</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">showDialog</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">label</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QLabel</span><span class="Operator">(</span><span class="String">'Knowledge only matters'</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">label</span><span class="Operator">.</span><span class="ID">move</span><span class="Operator">(</span><span class="Number">130</span><span class="Operator">,</span> <span class="Number">20</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span>        <span class="ID">hbox</span><span class="Operator">.</span><span class="ID">addWidget</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">label</span><span class="Operator">,</span> <span class="Number">1</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setLayout</span><span class="Operator">(</span><span class="ID">hbox</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span>    <span class="ResWord">def</span> <span class="ID">showDialog</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  22 </span>        <span class="ID">font</span><span class="Operator">,</span> <span class="ID">ok</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QFontDialog</span><span class="Operator">.</span><span class="ID">getFont</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  23 </span>        <span class="ResWord">if</span> <span class="ID">ok</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  24 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">label</span><span class="Operator">.</span><span class="ID">setFont</span><span class="Operator">(</span><span class="ID">font</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  25 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QApplication</span><span class="Operator">(</span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">argv</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  26 </span><span class="ID">cd</span> <span class="Operator">=</span> <span class="ID">FontDialog</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  27 </span><span class="ID">cd</span><span class="Operator">.</span><span class="ID">show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  28 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">exec_</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-154" class="anchor"/><p class="line867"><em> In our example, we have a button and a label. With QFontDialog, we change the font of the label.</em> <span id="line-155" class="anchor"/><span id="line-156" class="anchor"/></p><ul><li style="list-style-type: none;">这个例子里，我们放志一个按钮和一个标签。利用QFontDialog我们可以修改标签的字体。 <span id="line-157" class="anchor"/></li></ul><p class="line867"><span id="line-158" class="anchor"/></p><pre> hbox.addWidget(self.label, 1)
+<span id="line-159" class="anchor"/></pre><span id="line-160" class="anchor"/><p class="line867"><em> We make the label resizable. It is necessary, because when we select a different font, the text may become larger. Otherwise the label might not be fully visible.</em> <span id="line-161" class="anchor"/><span id="line-162" class="anchor"/></p><ul><li style="list-style-type: none;">我们使得标签可以改变大小，这是必须的，因为如果我们选择一个不同的字体，文本可能会变大，标签就有可能无法完全显示所以的东西。 <span id="line-163" class="anchor"/></li></ul><p
+class="line867"><span id="line-164" class="anchor"/></p><pre> font, ok = QtGui.QFontDialog.getFont()
+<span id="line-165" class="anchor"/></pre><span id="line-166" class="anchor"/><p class="line867"><em> Here we pop up the font dialog.</em> <span id="line-167" class="anchor"/><span id="line-168" class="anchor"/></p><ul><li style="list-style-type: none;">这里我们弹出字体对话框。 <span id="line-169" class="anchor"/></li></ul><p class="line867"><span id="line-170" class="anchor"/></p><pre> if ok:
+<span id="line-171" class="anchor"/>     self.label.setFont(font)
+<span id="line-172" class="anchor"/></pre><span id="line-173" class="anchor"/><p class="line867"><em> If we clicked ok, the font of the label was changed.</em> <span id="line-174" class="anchor"/><span id="line-175" class="anchor"/></p><ul><li style="list-style-type: none;">如果我们点击ok，标签的字体将会变化。 <span id="line-176" class="anchor"/></li></ul><p class="line867"><em> Font dialog <span id="line-177" class="anchor"/></em> <span id="line-178" class="anchor"/><span id="line-179" class="anchor"/></p><ul><li style="list-style-type: none;"><p
+class="line891"><strong>Figure: Font dialog</strong> <span id="line-180" class="anchor"/><span id="line-181" class="anchor"/></p></li></ul><p class="line867">
+</p><h2 id="head-9d74d59b63a8866eec6995ca0f1d6eb4bfe475e1">1.4. QFileDialog</h2>
+<span id="line-182" class="anchor"/><p class="line867"><em> The QFileDialog is a dialog that allows users to select files or directories. The files can be selected for both opening or saving.</em> <span id="line-183" class="anchor"/><span id="line-184" class="anchor"/></p><ul><li style="list-style-type: none;">QFileDialog是允许用户选择文件和目录的对话框。可以为了打开和保存来选择文件。 <span id="line-185" class="anchor"/></li></ul><p class="line867"><span id="line-186" class="anchor"/><span id="line-187" class="anchor"/><span id="line-188" class="anchor"/><span
+id="line-189" class="anchor"/><span id="line-190" class="anchor"/><span id="line-191" class="anchor"/><span id="line-192" class="anchor"/><span id="line-193" class="anchor"/><span id="line-194" class="anchor"/><span id="line-195" class="anchor"/><span id="line-196" class="anchor"/><span id="line-197" class="anchor"/><span id="line-198" class="anchor"/><span id="line-199" class="anchor"/><span id="line-200" class="anchor"/><span id="line-201" class="anchor"/><span id="line-202" class="anchor"/><span id="line-203" class="anchor"/><span id="line-204" class="anchor"/><span
+id="line-205" class="anchor"/><span id="line-206" class="anchor"/><span id="line-207" class="anchor"/><span id="line-208" class="anchor"/><span id="line-209" class="anchor"/><span id="line-210" class="anchor"/><span id="line-211" class="anchor"/><span id="line-212" class="anchor"/><span id="line-213" class="anchor"/><span id="line-214" class="anchor"/><span id="line-215" class="anchor"/><span id="line-216" class="anchor"/><span id="line-217" class="anchor"/><span id="line-218" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-471d35258ce206362061b94d9c39616d2a4d5ee4_003\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-471d35258ce206362061b94d9c39616d2a4d5ee4_003', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-471d35258ce206362061b94d9c39616d2a4d5ee4_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#!/usr/bin/python</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="Comment"># openfiledialog.py</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"/><span class="ResWord">import</span> <span class="ID">sys</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtGui</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtCore</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">class</span> <span class="ID">OpenFile</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QMainWindow</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   7 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">=</span><span class="ID">None</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QMainWindow</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setGeometry</span><span class="Operator">(</span><span class="Number">300</span><span class="Operator">,</span> <span class="Number">300</span><span class="Operator">,</span> <span class="Number">350</span><span class="Operator">,</span> <span class="Number">300</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setWindowTitle</span><span class="Operator">(</span><span class="String">'OpenFile'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">textEdit</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QTextEdit</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setCentralWidget</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">textEdit</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">statusBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setFocus</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">exit</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QAction</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QIcon</span><span class="Operator">(</span><span class="String">'open.png'</span><span class="Operator">)</span><span class="Operator">,</span> <span class="String">'Open'</span><span class="Operator">,</span> <span
+class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ID">exit</span><span class="Operator">.</span><span class="ID">setShortcut</span><span class="Operator">(</span><span class="String">'Ctrl+O'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">exit</span><span class="Operator">.</span><span class="ID">setStatusTip</span><span class="Operator">(</span><span class="String">'Open new File'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">connect</span><span class="Operator">(</span><span class="ID">exit</span><span class="Operator">,</span> <span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">SIGNAL</span><span class="Operator">(</span><span class="String">'triggered()'</span><span class="Operator">)</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">showDialog</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span>        <span class="ID">menubar</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">menuBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ID">file</span> <span class="Operator">=</span> <span class="ID">menubar</span><span class="Operator">.</span><span class="ID">addMenu</span><span class="Operator">(</span><span class="String">'&File'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span>        <span class="ID">file</span><span class="Operator">.</span><span class="ID">addAction</span><span class="Operator">(</span><span class="ID">exit</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  22 </span>    <span class="ResWord">def</span> <span class="ID">showDialog</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  23 </span>        <span class="ID">filename</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QFileDialog</span><span class="Operator">.</span><span class="ID">getOpenFileName</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="String">'Open file'</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  24 </span>                    <span class="String">'/home'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  25 </span>        <span class="ID">file</span><span class="Operator">=</span><span class="ID">open</span><span class="Operator">(</span><span class="ID">filename</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  26 </span>        <span class="ID">data</span> <span class="Operator">=</span> <span class="ID">file</span><span class="Operator">.</span><span class="ID">read</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  27 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">textEdit</span><span class="Operator">.</span><span class="ID">setText</span><span class="Operator">(</span><span class="ID">data</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  28 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QApplication</span><span class="Operator">(</span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">argv</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  29 </span><span class="ID">cd</span> <span class="Operator">=</span> <span class="ID">OpenFile</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  30 </span><span class="ID">cd</span><span class="Operator">.</span><span class="ID">show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  31 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">exec_</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-219" class="anchor"/><p class="line867"><em> The example shows a menubar, centrally set text edit widget and a statusbar. The statusbar is shown only for desing purposes. The file menu item shows the QFileDialog which is used to select a file. The contents of the file are loaded into the text edit widget.</em> <span id="line-220" class="anchor"/><span id="line-221" class="anchor"/></p><ul><li style="list-style-type:
+none;">这个例子包括一个菜单栏，中间的文本编辑控件和一个状态栏。状态栏仅仅为了设计目的。file菜单弹出QFileDialog对话框用于选择一个文件，选中的文件将加载到文本编辑控件中。 <span id="line-222" class="anchor"/></li></ul><p class="line867"><span id="line-223" class="anchor"/></p><pre>class OpenFile(QtGui.QMainWindow):
+<span id="line-224" class="anchor"/>...
+<span id="line-225" class="anchor"/>        self.textEdit = QtGui.QTextEdit()
+<span id="line-226" class="anchor"/>        self.setCentralWidget(self.textEdit)
+<span id="line-227" class="anchor"/></pre><span id="line-228" class="anchor"/><p class="line867"><em> The example is based on the QMainWindow widget, because we centrally set the text edit widget. This is easily done with the QMainWindow widget, without resorting to layouts.</em> <span id="line-229" class="anchor"/><span id="line-230" class="anchor"/></p><ul><li style="list-style-type: none;">这个例子基于QMainWindow控件，我们居中设置了文本编辑组件，无须利用布局，使用QMainWindow可以很简单的完成。 <span id="line-231" class="anchor"/></li></ul><p
+class="line867"><span id="line-232" class="anchor"/></p><pre> filename = QtGui.QFileDialog.getOpenFileName(self, 'Open file','/home')
+<span id="line-233" class="anchor"/></pre><span id="line-234" class="anchor"/><p class="line867"><em> We pop up the QFileDialog. The first string in the getOpenFileName method is the caption. The second string specifies the dialog working directory. By default, the file filter is set to All files (*). </em> <span id="line-235" class="anchor"/><span id="line-236" class="anchor"/></p><ul><li style="list-style-type: none;">我们弹出QFileDialog，getOpenFileName方法的第一个字串是标题，第二个字串指明了对话框的工作目录，缺省的文件过滤被设置为所有文件(*)。 <span
+id="line-237" class="anchor"/></li></ul><p class="line867"><span id="line-238" class="anchor"/></p><pre> file=open(filename)
+<span id="line-239" class="anchor"/> data = file.read()
+<span id="line-240" class="anchor"/> self.textEdit.setText(data)
+<span id="line-241" class="anchor"/></pre><span id="line-242" class="anchor"/><p class="line867"><em> The selected file name is read and the contents of the file are set to the text edit widget. </em> <span id="line-243" class="anchor"/><span id="line-244" class="anchor"/></p><ul><li style="list-style-type: none;">被选中的文件被读取并且显示在文本编辑组件里。 <span id="line-245" class="anchor"/></li></ul><p class="line867"><em> File Dialog </em> <span id="line-246" class="anchor"/><span id="line-247" class="anchor"/></p><p class="line867"><strong>Figure:
+File dialog</strong> <span id="line-248" class="anchor"/><span id="line-249" class="anchor"/></p><p class="line867"/><div id="pagecomment">
+<a name="pagecomment1"/>
+<table border="0" class="pagecomment">
+<tbody><tr><td colspan="5" style="border-width: 1px; margin: 10px 0pt;">
+
+<script language="javascript">
+<!--
+function setCookie(name, value) {
+var today = new Date();
+var expire = new Date(today.getTime() + 60*60*24*365*1000);
+document.cookie = name + "=" + encodeURIComponent(value) + "; expires=" + expire.toGMTString() + "; path=/moin";
+}
+//-->
+</script>
+<form onsubmit="setCookie('PG2AUTHOR', this.comauthor.value);" method="post" name="comment" action="Dialogs_%E5%AF%B9%E8%AF%9D%E6%A1%86#pagecomment1">
+<table class="addcommentform">
+<tbody><tr>
+<td style="border-width: 0px; vertical-align: middle; font-size: 0.9em;"><textarea onblur="if (this.value=='') {this.value='Add your comment';};" onfocus="if (this.value=='Add your comment') {this.value='';};" style="font-size: 9pt;" cols="60" rows="4" name="comtext">Add your comment</textarea></td>
+<td style="border-width: 0px; font-size: 0.9em; vertical-align: bottom;"><input type="submit" style="font-size: 9pt; width: 6em; height: 3em;" value="保存" name="button_save"/></td>
+</tr>
+<tr><td style="border-width: 0px; vertical-align: middle; font-size: 0.9em;">
+Name<input type="text" onblur="if (this.value=='') {this.value='58';};" onfocus="if (this.value=='58') {this.value='';};" value="58" name="comauthor" maxlength="20" size="6" style="font-size: 9pt;"/>
+Password4deL<input type="password" onblur="if (this.value=='') {this.value='nim2';};" onfocus="if (this.value=='nim2') {this.value='';};" value="nim2" name="compasswd" maxlength="10" size="4" style="font-size: 9pt;"/>
+<input type="hidden" name="autopasswd" value="nim2"/>
+<input type="radio" value=";)" name="comicon"/><img width="15" height="15" title=";)" src="/htdocs/woodpecker/img/smile4.png" alt=";)"/>
+<input type="radio" value="=D" name="comicon"/>
+<input type="radio" value="=)" name="comicon"/>
+<input type="radio" value=":P" name="comicon"/>
+<input type="radio" value=":(|)" name="comicon"/>
+<input type="radio" value=":-|" name="comicon"/>
+<input type="radio" value=":(" name="comicon"/><img width="15" height="15" title=":(" src="/htdocs/woodpecker/img/sad.png" alt=":("/>
+<input type="radio" value="X-(" name="comicon"/><img width="15" height="15" title="X-(" src="/htdocs/woodpecker/img/angry.png" alt="X-("/>
+<input type="radio" value="B-)" name="comicon"/><img width="15" height="15" title="B-)" src="/htdocs/woodpecker/img/smile2.png" alt="B-)"/>
+
+</td>
+<td style="border-width: 0px; vertical-align: middle; text-align: right; font-size: 9pt;"/>
+</tr>
+</tbody></table>
+<input type="hidden" value="show" name="action"/>
+<input type="hidden" value="76" name="comrev"/>
+<input type="hidden" value="addcomment1" name="commentaction"/>
+</form>
+</td></tr>
+<tr><td style="border-width: 0px; height: 20px;" class="commentblankline" colspan="5"/></tr>
+<script language="javascript">
+<!--
+function requesttodeleteadmin1(delform, comkey) {
+if (confirm("Really delete this comment?")) {;
+delform.delkey.value = comkey;
+delform.delpasswd.value = "****";
+delform.submit();
+}
+}
+function requesttodelete1(delform, comkey) {
+var passwd = prompt("请输入一个密码!:", "");
+if(!(passwd == "" || passwd == null)) {
+delform.delkey.value = comkey;
+delform.delpasswd.value = passwd;
+delform.submit();
+}
+}
+//-->
+</script>
+<form method="post" action="Dialogs_%E5%AF%B9%E8%AF%9D%E6%A1%86#pagecomment1" name="delform1"/>
+<input type="hidden" name="action" value="show"/>
+<input type="hidden" value="****" name="delpasswd"/>
+<input type="hidden" value="" name="delkey"/>
+<input type="hidden" value="delcomment1" name="commentaction"/>
+
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">kamagra generico</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">qebftzdu, <a href="http://www.gamesforum.it/board/member.php?u=64037">acquisto cialis</a>, [url="http://www.gamesforum.it/board/member.php?u=64037"]acquisto cialis[/url], http://www.gamesforum.it/board/member.php?u=64037 acquisto cialis,  rngnlkfa, <a href="http://www.sportal.it/forum/member.php?u=1064">viagra quanto tempo prima</a>,
+[url="http://www.sportal.it/forum/member.php?u=1064"]viagra quanto tempo prima[/url], http://www.sportal.it/forum/member.php?u=1064 viagra quanto tempo prima,  rdqzksae, <a href="http://www.hwupgrade.it/forum/member.php?u=334579">viagra online vendita</a>, [url="http://www.hwupgrade.it/forum/member.php?u=334579"]viagra online vendita[/url], http://www.hwupgrade.it/forum/member.php?u=334579 viagra online vendita,  kfcsfbjs, <a
+href="http://www.carputer.it/member.php?u=11881">cialis barzellette</a>, [url="http://www.carputer.it/member.php?u=11881"]cialis barzellette[/url], http://www.carputer.it/member.php?u=11881 cialis barzellette,  svoyufya, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 00:21:54 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">kamagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">ynfttcog, <a href="http://www.gamesforum.it/board/member.php?u=64037">acquisto cialis</a>, [url="http://www.gamesforum.it/board/member.php?u=64037"]acquisto cialis[/url], http://www.gamesforum.it/board/member.php?u=64037 acquisto cialis,  yqwztlra, <a href="http://www.carputer.it/member.php?u=11878">kamagra scaduto</a>,
+[url="http://www.carputer.it/member.php?u=11878"]kamagra scaduto[/url], http://www.carputer.it/member.php?u=11878 kamagra scaduto,  znbqeigy, <a href="http://www.hwupgrade.it/forum/member.php?u=334480">acquisto viagra</a>, [url="http://www.hwupgrade.it/forum/member.php?u=334480"]acquisto viagra[/url], http://www.hwupgrade.it/forum/member.php?u=334480 acquisto viagra,  ddrcjqag, <a href="http://www.gamesforum.it/board/member.php?u=64020">kamagra
+tachicardia</a>, [url="http://www.gamesforum.it/board/member.php?u=64020"]kamagra tachicardia[/url], http://www.gamesforum.it/board/member.php?u=64020 kamagra tachicardia,  runhcwak, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 02:41:44 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis buy on line</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">zyvtiqlz, <a href="http://www.carputer.it/member.php?u=11878">acquisto kamagra originale</a>, [url="http://www.carputer.it/member.php?u=11878"]acquisto kamagra originale[/url], http://www.carputer.it/member.php?u=11878 acquisto kamagra originale,  uxgkpnex, <a href="http://www.sportal.it/forum/member.php?u=1065">levitra su internet</a>,
+[url="http://www.sportal.it/forum/member.php?u=1065"]levitra su internet[/url], http://www.sportal.it/forum/member.php?u=1065 levitra su internet,  puglbqqe, <a href="http://www.sportal.it/forum/member.php?u=1066">acquistare levitra in italia</a>, [url="http://www.sportal.it/forum/member.php?u=1066"]acquistare levitra in italia[/url], http://www.sportal.it/forum/member.php?u=1066 acquistare levitra in italia,  btaonkfa, <a
+href="http://www.sportal.it/forum/member.php?u=1068">farmacia kamagra</a>, [url="http://www.sportal.it/forum/member.php?u=1068"]farmacia kamagra[/url], http://www.sportal.it/forum/member.php?u=1068 farmacia kamagra,  ksmweath, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 05:01:12 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">levitra online forum</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">bbsyzfer ylsvqsqu jwxnizfo<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 07:16:58 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">levitra torino</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">ceexybii gsiokpvk byghsybn<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 09:33:49 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra on line</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">ouzkxqdj yiiprakh srnbqpjs<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 11:55:08 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title="B-)" src="/htdocs/woodpecker/img/smile2.png" alt="B-)"/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Steven Hopper</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">[url=http://30fpj2c5kz8g4wol.com/]tp0o3iolwb1zhxpb[/url]<br/>[link=http://hkasstoug4t7sajh.com/]m4a7xo61wh7m4ibq[/link]<br/><a href=http://iawiuhb406e4ssud.com/>ec978afgesak2igq</a><br/>http://lmp0319xr80wd10x.com/<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 12:54:19 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">kamagra mutuabile</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">fxzdbhsc xnyrotem xwgqopgb<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 14:13:07 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">levitra women</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">kqxczxas uthzlrbr cimygxxo<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 16:35:15 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Ordina cialis</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">wyzqxqwk coetiejp dhswimlo<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 19:00:30 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">kamagra nel ciclismo</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">zsecqjix qeiayrhf enbiugru<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 21:23:52 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra costo</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">zcwiqyac vvvuyqmd mcbpyzgu<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-07 23:45:23 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis uk online</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">svshoqiy nafqheew ggrxiibg<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-08 02:06:26 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra healthy man</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">vdrocvbw jqlkwrjl aqyrqtln<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-08 04:28:29 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">achat Levitra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">ymylgpub, <a href="http://www.blablaland.com/site/membres.php?p=449424">viagra</a>, [url="http://www.blablaland.com/site/membres.php?p=449424"]viagra[/url], http://www.blablaland.com/site/membres.php?p=449424 viagra,  tkgjfabi, <a href="http://www.feal.fr/index.php?topic=356">kamagra</a>, [url="http://www.feal.fr/index.php?topic=356"]kamagra[/url],
+http://www.feal.fr/index.php?topic=356 kamagra,  cmgvfdhk, <a href="http://forum.canardpc.com/member.php?u=21926">achat viagra</a>, [url="http://forum.canardpc.com/member.php?u=21926"]achat viagra[/url], http://forum.canardpc.com/member.php?u=21926 achat viagra,  nqwmyzds, <a href="http://forum.skins.be/members/325449-dincolobergstromlyhefe/">viagra</a>, [url="http://forum.skins.be/members/325449-dincolobergstromlyhefe/"]viagra[/url],
+http://forum.skins.be/members/325449-dincolobergstromlyhefe/ viagra,  cdluljim, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-09 11:50:28 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acheter viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">mqmvcscr, <a href="http://www.feal.fr/index.php?topic=357">kamagra prix</a>, [url="http://www.feal.fr/index.php?topic=357"]kamagra prix[/url], http://www.feal.fr/index.php?topic=357 kamagra prix,  fqsoyajs, <a href="http://www.feal.fr/index.php?topic=360">cialis</a>, [url="http://www.feal.fr/index.php?topic=360"]cialis[/url],
+http://www.feal.fr/index.php?topic=360 cialis,  ssvewbzh, <a href="http://forum.skins.be/members/325449-dincolobergstromlyhefe/">viagra</a>, [url="http://forum.skins.be/members/325449-dincolobergstromlyhefe/"]viagra[/url], http://forum.skins.be/members/325449-dincolobergstromlyhefe/ viagra,  bfwlnoek, <a href="http://www.feal.fr/index.php?topic=358">Levitra prix</a>, [url="http://www.feal.fr/index.php?topic=358"]Levitra prix[/url],
+http://www.feal.fr/index.php?topic=358 Levitra prix,  wiqzvroi, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-09 14:18:44 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">scqljgkm, <a href="http://fr.lutece.paris.fr/forums/user/profile/860.page">viagra</a>, [url="http://fr.lutece.paris.fr/forums/user/profile/860.page"]viagra[/url], http://fr.lutece.paris.fr/forums/user/profile/860.page viagra,  yfxvuvqo, <a href="http://www.feal.fr/index.php?topic=363">viagra</a>,
+[url="http://www.feal.fr/index.php?topic=363"]viagra[/url], http://www.feal.fr/index.php?topic=363 viagra,  pflgyjju, <a href="http://forum.skins.be/members/325449-dincolobergstromlyhefe/">achat viagra</a>, [url="http://forum.skins.be/members/325449-dincolobergstromlyhefe/"]achat viagra[/url], http://forum.skins.be/members/325449-dincolobergstromlyhefe/ achat viagra,  bsmdseqf, <a href="http://www.feal.fr/index.php?topic=358">Levitra</a>,
+[url="http://www.feal.fr/index.php?topic=358"]Levitra[/url], http://www.feal.fr/index.php?topic=358 Levitra,  mwswfktp, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-09 16:46:05 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title=";)" src="/htdocs/woodpecker/img/smile4.png" alt=";)"/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Pharmf973</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">Very nice site!<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-11 10:46:05 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra achat</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">fdjfbxjr, <a href="http://www.ducros.info/372/member.php?u=266">viagra generique</a>, [url="http://www.ducros.info/372/member.php?u=266"]viagra generique[/url], http://www.ducros.info/372/member.php?u=266 viagra generique,  sxuqmjri, <a href="http://forumv2.jpnp.org/member.php?u=17938">cialis</a>,
+[url="http://forumv2.jpnp.org/member.php?u=17938"]cialis[/url], http://forumv2.jpnp.org/member.php?u=17938 cialis,  arzxnunv, <a href="http://www.forum-ouvert.com/member.php?u=56671">france viagra</a>, [url="http://www.forum-ouvert.com/member.php?u=56671"]france viagra[/url], http://www.forum-ouvert.com/member.php?u=56671 france viagra,  zjffpisd, <a href="http://www.l2wh.com/forum/member.php?u=62543">france viagra</a>,
+[url="http://www.l2wh.com/forum/member.php?u=62543"]france viagra[/url], http://www.l2wh.com/forum/member.php?u=62543 france viagra,  yopbcsyt, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-14 06:08:52 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">generique cialis</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">zvheajdb, <a href="http://www.franconaute.org/forum/member.php?u=6951">viagra</a>, [url="http://www.franconaute.org/forum/member.php?u=6951"]viagra[/url], http://www.franconaute.org/forum/member.php?u=6951 viagra,  crxoqdzl, <a href="http://jm.bea.free.fr/forum/member.php?u=695">cialis sur le net</a>,
+[url="http://jm.bea.free.fr/forum/member.php?u=695"]cialis sur le net[/url], http://jm.bea.free.fr/forum/member.php?u=695 cialis sur le net,  derzuvjk, <a href="http://www.ducros.info/372/member.php?u=268">cialis generique</a>, [url="http://www.ducros.info/372/member.php?u=268"]cialis generique[/url], http://www.ducros.info/372/member.php?u=268 cialis generique,  iogertqk, <a href="http://www.l2wh.com/forum/member.php?u=62543">acheter viagra</a>,
+[url="http://www.l2wh.com/forum/member.php?u=62543"]acheter viagra[/url], http://www.l2wh.com/forum/member.php?u=62543 acheter viagra,  oxniosrj, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-14 08:33:31 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra acheter</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">ddlfbojd, <a href="http://forum.muc72.fr/member.php?u=3994">viagra prix</a>, [url="http://forum.muc72.fr/member.php?u=3994"]viagra prix[/url], http://forum.muc72.fr/member.php?u=3994 viagra prix,  lopbcvyy, <a href="http://www.ducros.info/372/member.php?u=266">viagra</a>, [url="http://www.ducros.info/372/member.php?u=266"]viagra[/url],
+http://www.ducros.info/372/member.php?u=266 viagra,  excuuaei, <a href="http://forumv2.jpnp.org/member.php?u=17930">viagra</a>, [url="http://forumv2.jpnp.org/member.php?u=17930"]viagra[/url], http://forumv2.jpnp.org/member.php?u=17930 viagra,  xhtcvzob, <a href="http://forum.canardpc.com/member.php?u=21985">cialis</a>, [url="http://forum.canardpc.com/member.php?u=21985"]cialis[/url], http://forum.canardpc.com/member.php?u=21985 cialis,  trhhwdkv,
+<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-14 11:00:39 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title="B-)" src="/htdocs/woodpecker/img/smile2.png" alt="B-)"/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Mercedes Logan</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">[url=http://30fpj2c5kz8g4wol.com/]tp0o3iolwb1zhxpb[/url]<br/>[link=http://hkasstoug4t7sajh.com/]m4a7xo61wh7m4ibq[/link]<br/><a href=http://iawiuhb406e4ssud.com/>ec978afgesak2igq</a><br/>http://lmp0319xr80wd10x.com/<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-14 13:23:41 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title=":(" src="/htdocs/woodpecker/img/sad.png" alt=":("/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Jefferey Noble</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">Video Straight College Men http://qinksex.com/xgs/2q<br/>12 Days Of Christmas Coloring Book http://qaifscd.com/cuo/1o<br/>Free Pictures Of Women Giving Birth http://gtaydpg.com/yqt/u<br/>2nd Grade Math Probability Worksheets http://qinksex.com/iqr/4l<br/>Ford Gran Torino Sur E.bay http://eufxkq.com/lbv/19<br/>Molds For Retaining Wall Blocks
+http://mucfslti.com/qpt/1z<br/>Homeworld 2 Key Generator http://zuckand.com/dwh/1c<br/>Shag And Bob Haircuts http://fxokfxj.com/apv/q<br/>Buddha Drawing Picture http://solpujppb.com/bjy/4c<br/>At The End Of The Day Lyrics http://dvumiyycm.com/iix/1j<br/>Name Search With Birthday http://cpbcgbhzs.com/zwl/45<br/>Worksheets In Elementary Reading http://zuckand.com/hnr/4h<br/>Free Womans Easy Sweater Pattern http://qaifscd.com/vwi/3p<br/>Free Happy
+Birthday Clipart Musical http://solpujppb.com/wer/1f<br/>Shout About Movies Download http://fxokfxj.com/xbm/2n<br/>Spike Is White Blood Cells http://cpbcgbhzs.com/2z<br/>Coniferous Food Web http://mucfslti.com/tfs/1u<br/>Hairy Men Pics http://qinksex.com/hml/2m<br/>Hannah Montana Coloring Pages Free http://dvumiyycm.com/btt/1d<br/>Free Powerpoint Scenery Backgrounds http://gtaydpg.com/azb/36<br/>Catalog Request Hunting
+http://eufxkq.com/cst/1d<br/>Online 3d Bloody Games http://solpujppb.com/opf/4c<br/>Shiny Gold Rom http://mucfslti.com/ckj/40<br/>Free Chinese Paper Lantern Pattern http://eufxkq.com/dgz/0<br/>Free Thanksgiving Letterheads http://gtaydpg.com/eii/d<br/>Cingular Text Art http://fxokfxj.com/dyv/22<br/>Disney Channel Games That So Raven http://zuckand.com/est/4c<br/>Dressing Room Hidden Cameras http://cpbcgbhzs.com/fti/2q<br/>God Of War Ares Battle
+Walkthrough http://dvumiyycm.com/iix/24<br/>Pillowcase Dress Patterns Free http://qinksex.com/qzx/h<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-17 23:28:01 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title=":(" src="/htdocs/woodpecker/img/sad.png" alt=":("/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Galen Burks</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">Prom Hairstyle Guy http://cidyzz.com/zgm/2f<br/>Michael Jordan Air Symbol http://dfnltqp.com/acd/v<br/>German Shepherd Stencils http://qwutitll.com/hyd/1q<br/>Jeep 401 For Sale http://ikdvqmi.com/ouh/1g<br/>Ibanez Les Paul 1977 http://uaudbwf.com/edu/m<br/>Diary Of A Women Giving Birth In Photos http://uytuytvru.com/uvb/2a<br/>Cold War - 1920
+http://nmipafrf.com/wps/1l<br/>Blue Book Value 1972 Ford Truck http://vkpehich.com/hza/12<br/>Sample Persuasive Apa Format http://dmmeye.com/rcj/1j<br/>Rtp Maker 2000 Download http://duouzoenh.com/fqg/2b<br/>Female Fighting Fan http://vkpehich.com/qbt/v<br/>Free Translation Romeo And Juliet http://duouzoenh.com/jzn/9<br/>Mako Vs Great White http://dfnltqp.com/fkj/22<br/>Tag Heuer Price http://uaudbwf.com/qth/1a<br/>Telling Time Kits
+http://ikdvqmi.com/yrk/2e<br/>Private Codes For Myspace http://nmipafrf.com/qqg/h<br/>Log Homes For Sale Tennessee http://dmmeye.com/szs/p<br/>Creative Ways To Ask Prom http://uytuytvru.com/fqs/1l<br/>22 Magnum Pistol For Sale http://qwutitll.com/ndt/s<br/>Reference Letter Dentist http://cidyzz.com/pbl/f<br/>Abby Winters Girls Central http://ikdvqmi.com/gce/29<br/>Chinchillas For Sale In Vermont http://dfnltqp.com/duj/2f<br/>History Of A Computer
+Monitor http://qwutitll.com/yzj/1l<br/>Megaman X4 Full Version http://vkpehich.com/tvz/1h<br/>Home Remedies Pass Random Drug Test http://duouzoenh.com/uax/1b<br/>Paper Snowflakes Outlines http://cidyzz.com/ios/1i<br/>Truck Valentine Box http://dmmeye.com/ffi/6<br/>Free Product Key To Word http://uaudbwf.com/qoa/1c<br/>Sample Wedding Invitation From Brother http://uytuytvru.com/njc/7<br/>Men Emerald Gold Birthstone Ring
+http://nmipafrf.com/uts/20<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-18 21:13:45 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acheter viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">jawxcfjf, <a href="http://www.elaborare.info/forum/vbulletin/member.php?u=65645viagra">achat viagra en ligne</a>, [url="http://www.elaborare.info/forum/vbulletin/member.php?u=65645viagra"]achat viagra en ligne[/url], http://www.elaborare.info/forum/vbulletin/member.php?u=65645viagra achat viagra en ligne,  yheejlrx, <a
+href="http://www.wolfdog.org/forum/member.php?u=6477cialis">achat cialis pas cher</a>, [url="http://www.wolfdog.org/forum/member.php?u=6477cialis"]achat cialis pas cher[/url], http://www.wolfdog.org/forum/member.php?u=6477cialis achat cialis pas cher,  zelvfqmj, <a href="http://www.lwita.com/vb/member.php?u=891cialis">cialis</a>, [url="http://www.lwita.com/vb/member.php?u=891cialis"]cialis[/url], http://www.lwita.com/vb/member.php?u=891cialis
+cialis,  cucknpnp, <a href="http://forum.lostpedia.com/member.php?u=33453cialis">cialis 10mg</a>, [url="http://forum.lostpedia.com/member.php?u=33453cialis"]cialis 10mg[/url], http://forum.lostpedia.com/member.php?u=33453cialis cialis 10mg,  cvpkommq, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-19 10:05:25 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acheter cialis sans </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">pkojnran, <a href="http://www.elaborare.info/forum/vbulletin/member.php?u=65646cialis">cialis prix</a>, [url="http://www.elaborare.info/forum/vbulletin/member.php?u=65646cialis"]cialis prix[/url], http://www.elaborare.info/forum/vbulletin/member.php?u=65646cialis cialis prix,  onnbafyz, <a
+href="http://www.wolfdog.org/forum/member.php?u=6477cialis">acheter cialis france</a>, [url="http://www.wolfdog.org/forum/member.php?u=6477cialis"]acheter cialis france[/url], http://www.wolfdog.org/forum/member.php?u=6477cialis acheter cialis france,  jpvfoomv, <a href="http://www.lwita.com/vb/member.php?u=891cialis">cialis</a>, [url="http://www.lwita.com/vb/member.php?u=891cialis"]cialis[/url], http://www.lwita.com/vb/member.php?u=891cialis
+cialis,  rrazxsve, <a href="http://forum.slysoft.com/member.php?u=49343cialis">cialis generique</a>, [url="http://forum.slysoft.com/member.php?u=49343cialis"]cialis generique[/url], http://forum.slysoft.com/member.php?u=49343cialis cialis generique,  ssmieyzc, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-19 14:51:03 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title="B-)" src="/htdocs/woodpecker/img/smile2.png" alt="B-)"/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Bennie Ward</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">Muscular And Skeletal System Interaction http://furwfpmm.com/pxh/m<br/>Human Body Parts Explanations http://dxpfkob.com/jpx/17<br/>Medical Office Manager Resume Sample http://jabqzhbs.com/cpo/f<br/>Old School The Movie Soundtrack http://wdfpuqebd.com/buk/17<br/>Myspace Unblockable Proxies http://xtfjsmse.com/ahm/1a<br/>Unique Screen Name
+http://vbbhqet.com/gao/e<br/>Setting Up Midi Drums http://vbbhqet.com/cnu/2e<br/>Myspace Clickable Generators http://xtfjsmse.com/azo/i<br/>Funny Letters Of Thank You http://lxzqodfiq.com/pxu/1f<br/>Free Printable Borders Certificates http://wrwpmnx.com/ego/14<br/>Led Color Paint http://dxpfkob.com/dhe/1b<br/>Kool-aid Hair Dye http://wdfpuqebd.com/wuj/2f<br/>Powerpoint Designs Lawyer http://icttrdaa.com/gau/v<br/>Pinewood Derby Car Design
+Patterns http://furwfpmm.com/rwh/1l<br/>Women And Men Suck http://jabqzhbs.com/jfu/o<br/>Free Zirconio Games http://jxgybydda.com/ydl/2f<br/>How To Write A Letter Mla Format http://lxzqodfiq.com/pxu/27<br/>Funny Nigger Pics http://icttrdaa.com/s<br/>Printable Hip Hop Dance Routine http://dxpfkob.com/ygv/1p<br/>Private Myspace Profile Code http://wrwpmnx.com/ego/1q<br/>Free Yugioh Gba Roms http://xtfjsmse.com/ktw/x<br/>Hemp Friendship Bracelets
+http://wdfpuqebd.com/bbp/1f<br/>Japan Nylon Gallery http://jxgybydda.com/plt/<br/>Watch Full Naruto Movie Free http://jabqzhbs.com/ftp/1o<br/>Recipes Leftover Pork Roast http://furwfpmm.com/xkl/1i<br/>How To Upload Music To Myspace Video http://vbbhqet.com/sts/1v<br/>Driver For Intel 443lx http://jxgybydda.com/26<br/>Italian Home Plans http://jabqzhbs.com/zhq/u<br/>Custom Pearl Paint http://furwfpmm.com/pxh/1b<br/>Paint Jobs On Surfboards
+http://wdfpuqebd.com/ueq/1l<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-19 22:38:54 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title="B-)" src="/htdocs/woodpecker/img/smile2.png" alt="B-)"/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Baron Solis</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">Picture Jackie Roberson http://lxzqodfiq.com/osy/n<br/>Realitykings.com Free Password http://wdfpuqebd.com/gau/1p<br/>Barrett .50 Airsoft http://jabqzhbs.com/edl/1i<br/>Business Letter Closings Uk http://furwfpmm.com/pln/1d<br/>Round Adirondack Table Plans http://xtfjsmse.com/zmo/2e<br/>Argument-research Paper Topics http://icttrdaa.com/siy/1o<br/>Free
+Ringtone Valkyrie Motorola http://xtfjsmse.com/<br/>Microsoft Office 07 Backgrounds http://furwfpmm.com/jww/2b<br/>Dog Scientific Name http://jxgybydda.com/oob/2f<br/>Sounds Effects Lake Free Mp3 http://wrwpmnx.com/bmp/1t<br/>Changing Spark Plugs Z3 http://vbbhqet.com/oeq/1v<br/>Code Generator For Star http://dxpfkob.com/nad/1l<br/>Blogger Scrapbook Templates http://lxzqodfiq.com/qpa/1<br/>Cliparts Star Wars http://jabqzhbs.com/jck/1x<br/>Belly
+Button Ring Infection Pictures http://wdfpuqebd.com/txg/t<br/>How To Fold An Origami Crane http://vbbhqet.com/aoz/10<br/>How To Make Home Made Crystal Meth http://furwfpmm.com/wkn/23<br/>Indian Fish Pictures http://icttrdaa.com/bel/1j<br/>Camping Demo Games http://jabqzhbs.com/oyr/1t<br/>Buddha Tattoo Picture http://wrwpmnx.com/gvh/f<br/>Washington Mutual Routing Number Miami http://xtfjsmse.com/ozh/1t<br/>Pictures Miniature Collies
+http://lxzqodfiq.com/ykf/1t<br/>Skateboarding Layouts For Myspace http://dxpfkob.com/ygv/1x<br/>Nissan Pathfinder Lifted http://wdfpuqebd.com/ktw/1p<br/>Video Female Physical Examination http://jxgybydda.com/htv/26<br/>Cubicle Christmas Decorating Ideas http://furwfpmm.com/zgh/c<br/>Watch Bones Online For Free http://icttrdaa.com/gau/d<br/>9th Grade Science Fair Ideas http://vbbhqet.com/qqg/1p<br/>Blank Southwest United States Map
+http://xtfjsmse.com/azo/2e<br/>Half Cut Hair http://jabqzhbs.com/zhq/n<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-20 03:26:24 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title="X-(" src="/htdocs/woodpecker/img/angry.png" alt="X-("/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Petra Cardenas</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">Cpt Codes Books http://bvykmvzgp.com/ifs/3<br/>Myspace Redneck Layout http://zffjbgyf.com/zlp/1r<br/>Tile Wall Guard http://xaowdn.com/the/25<br/>Myspace Private Picture Secret Code http://vqbdog.com/wqi/w<br/>Final Fantasy Cutscenes http://xeopicoh.com/ynd/1l<br/>Myspace Background Broncos http://dcfqgzfx.com/yca/1t<br/>Famous Scientists In Literature
+http://tmmzaui.com/lxy/1s<br/>Done Up Yamaha Rhino http://lahvkunv.com/ljq/24<br/>Athletic Quotes On Life http://bvykmvzgp.com/mda/27<br/>Msn Hotmail Crack http://tgycef.com/dkl/s<br/>Play Stratego Online http://ifbgqxyey.com/nvd/16<br/>Christian Bookmark Templates http://dcfqgzfx.com/mht/29<br/>Private Pics Myspace http://ifbgqxyey.com/czj/x<br/>Bleaching Hair To Beat Drug Test http://xaowdn.com/hci/1k<br/>Zuma Activation Code Free
+http://bvykmvzgp.com/1v<br/>Gothic Tattoo http://tgycef.com/wzd/1m<br/>Chevy Extended Network Myspace http://zffjbgyf.com/kci/4<br/>9 11 Dead Body Pictures http://xeopicoh.com/ukh/16<br/>Wife Picture Post http://vqbdog.com/ehw/1z<br/>Cute Black And White Love Pictures http://lahvkunv.com/dkv/2a<br/>Cause And Effect Unemployment Essay http://tmmzaui.com/mqc/1z<br/>Prom Dresses In Dudley http://ifbgqxyey.com/vhm/11<br/>Rent To Own - Calgary
+http://lahvkunv.com/tvz/k<br/>Cloning In Pokemon Ruby http://tgycef.com/g<br/>Hack Into Myspace Account http://tmmzaui.com/nif/1i<br/>Kids Valentine Text Messages http://xeopicoh.com/imt/c<br/>Fairy Face Paint Ideas http://vqbdog.com/tok/8<br/>Convert Php In Mp3 http://zffjbgyf.com/ope/2b<br/>Chris Brown Layouts http://bvykmvzgp.com/zlr/1i<br/>Cache Pageant Dress http://xaowdn.com/ngm/1w<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-21 03:46:48 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acquistare viagra ge</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">sfeeqmcw, <a href="http://www.euronics.it/forum/user/profile/14486.page">compra viagra online</a>, [url="http://www.euronics.it/forum/user/profile/14486.page"]compra viagra online[/url], http://www.euronics.it/forum/user/profile/14486.page compra viagra online,  sdholzni, <a href="http://forum.ffonline.it/member.php?u=22782">compra viagra</a>,
+[url="http://forum.ffonline.it/member.php?u=22782"]compra viagra[/url], http://forum.ffonline.it/member.php?u=22782 compra viagra,  qbmhicjf, <a href="http://forum.slysoft.com/member.php?u=49343cialis">cialis</a>, [url="http://forum.slysoft.com/member.php?u=49343cialis"]cialis[/url], http://forum.slysoft.com/member.php?u=49343cialis cialis,  ymrpdcgg, <a href="http://www.carputer.it/member.php?u=12074">comprare viagra</a>,
+[url="http://www.carputer.it/member.php?u=12074"]comprare viagra[/url], http://www.carputer.it/member.php?u=12074 comprare viagra,  fwhllcia, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-21 06:20:59 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra generico</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">culncium, <a href="http://gamesurf.tiscali.it/forum/member.php?u=38840cialis">cialis online</a>, [url="http://gamesurf.tiscali.it/forum/member.php?u=38840cialis"]cialis online[/url], http://gamesurf.tiscali.it/forum/member.php?u=38840cialis cialis online,  hytpmuhu, <a href="http://gaming.ngi.it/member.php?u=69544viagra">viagra</a>,
+[url="http://gaming.ngi.it/member.php?u=69544viagra"]viagra[/url], http://gaming.ngi.it/member.php?u=69544viagra viagra,  oivvzavb, <a href="http://forum.ffonline.it/member.php?u=22789">cialis online</a>, [url="http://forum.ffonline.it/member.php?u=22789"]cialis online[/url], http://forum.ffonline.it/member.php?u=22789 cialis online,  caqbctnk, <a href="http://forum.pcworld.it/member.php?u=33172viagra">comprare viagra in farmacia</a>,
+[url="http://forum.pcworld.it/member.php?u=33172viagra"]comprare viagra in farmacia[/url], http://forum.pcworld.it/member.php?u=33172viagra comprare viagra in farmacia,  uxarfsvg, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-21 12:19:09 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">comprare cialis senz</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">svyxkgmf, <a href="http://elearning.econ.univpm.it/user/view.php?id=3297">cialis</a>, [url="http://elearning.econ.univpm.it/user/view.php?id=3297"]cialis[/url], http://elearning.econ.univpm.it/user/view.php?id=3297 cialis,  bhdjcjou, <a href="http://teamsystemrocks.com/members/Maurizio-Ferri/default.aspx">comprare viagra su internet</a>,
+[url="http://teamsystemrocks.com/members/Maurizio-Ferri/default.aspx"]comprare viagra su internet[/url], http://teamsystemrocks.com/members/Maurizio-Ferri/default.aspx comprare viagra su internet,  wmemfofx, <a href="http://www.euronics.it/forum/user/profile/14500.page">cialis 20 mg</a>, [url="http://www.euronics.it/forum/user/profile/14500.page"]cialis 20 mg[/url], http://www.euronics.it/forum/user/profile/14500.page cialis 20 mg,  grnntlmp, <a
+href="http://www.kaboodle.com/camilloboni">acquistare viagra su internet</a>, [url="http://www.kaboodle.com/camilloboni"]acquistare viagra su internet[/url], http://www.kaboodle.com/camilloboni acquistare viagra su internet,  biooqebt, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-21 18:15:00 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis online</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">wzthjtqn, <a href="http://www.carputer.it/member.php?u=12103">compra cialis online</a>, [url="http://www.carputer.it/member.php?u=12103"]compra cialis online[/url], http://www.carputer.it/member.php?u=12103 compra cialis online,  xumtjgjz, <a href="http://www.lwita.com/vb/member.php?u=890viagra">viagra cialis</a>,
+[url="http://www.lwita.com/vb/member.php?u=890viagra"]viagra cialis[/url], http://www.lwita.com/vb/member.php?u=890viagra viagra cialis,  tbacusrt, <a href="http://www.elaborare.info/forum/vbulletin/member.php?u=65646cialis">comprare cialis</a>, [url="http://www.elaborare.info/forum/vbulletin/member.php?u=65646cialis"]comprare cialis[/url], http://www.elaborare.info/forum/vbulletin/member.php?u=65646cialis comprare cialis,  pfvoucjr, <a
+href="http://www.kaboodle.com/rudenzio">compra cialis online</a>, [url="http://www.kaboodle.com/rudenzio"]compra cialis online[/url], http://www.kaboodle.com/rudenzio compra cialis online,  eimmtjfk, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-22 00:12:46 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title="B-)" src="/htdocs/woodpecker/img/smile2.png" alt="B-)"/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Jennie Woods</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">Free Psp Iso Downloads http://ushwiuzu.com/zea/o<br/>Spanish Lesson Plan Template http://wzgnoedpm.com/aas/29<br/>Icp Myspace Backgrounds http://otgnaaaz.com/hey/1q<br/>Progress Report Writing Template http://qacqkvgga.com/ehh/0<br/>Medical Thank You Notes Samples http://yslznk.com/lbk/20<br/>Knit Kimono Sweater http://nocgce.com/grk/w<br/>Vermont Tree
+Picture http://utdzur.com/xab/k<br/>Bud Light Commericals http://jxbvphx.com/sfb/17<br/>Whose Picture Is On The Gold Dollar Coin http://jccwzqyr.com/oyo/22<br/>Math Vocabulary Ell http://ushwiuzu.com/zea/11<br/>Driver License In Saskatchewan http://reumpkfav.com/qpe/r<br/>Hp Photosmart 7550 Power Supply http://wzgnoedpm.com/xwt/3<br/>Loews Furniture Store http://yslznk.com/rrc/8<br/>Yugioh Play Free http://utdzur.com/6<br/>Templates To Make Paper
+Flowers http://nocgce.com/mbg/2g<br/>4l80e Transmission Conversion http://reumpkfav.com/kwt/27<br/>Transformation Male To Female http://jxbvphx.com/vgl/1x<br/>Map Of Karate Pressure Points http://otgnaaaz.com/qxp/2b<br/>Stihl Chainsaw Drawing http://qacqkvgga.com/opm/17<br/>Find A Person For Free In Ireland http://jccwzqyr.com/oyo/1o<br/>Poodle Clip Art http://ushwiuzu.com/pub/2a<br/>Free Borders For Scrapbooking
+http://nocgce.com/sef/4<br/>Triangle Fold Paper http://wzgnoedpm.com/tzl/2c<br/>Spelt Bread Recipes Bread Machine http://otgnaaaz.com/vkj/1v<br/>Sks Rifle Custom http://yslznk.com/hfa/h<br/>Unlock Code 8700c http://jxbvphx.com/sfb/g<br/>Reference Letter For Mba Sample http://jccwzqyr.com/zkj/2a<br/>Tourist Attractions From Alaska http://utdzur.com/plm/16<br/>40th Birthday Invitaion Sayings Cards http://reumpkfav.com/zbf/1n<br/>Cute Dog Beds
+http://ushwiuzu.com/nvm/n<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-22 05:15:36 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acquisto cialis in i</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">awmgztuh, <a href="http://gamesurf.tiscali.it/forum/member.php?u=38839viagra">compra viagra generico</a>, [url="http://gamesurf.tiscali.it/forum/member.php?u=38839viagra"]compra viagra generico[/url], http://gamesurf.tiscali.it/forum/member.php?u=38839viagra compra viagra generico,  pdkyndfk, <a
+href="http://forum.pcworld.it/member.php?u=33172viagra">viagra</a>, [url="http://forum.pcworld.it/member.php?u=33172viagra"]viagra[/url], http://forum.pcworld.it/member.php?u=33172viagra viagra,  vpxcxkuz, <a href="http://teamsystemrocks.com/members/Maurizio-Ferri/default.aspx">comprare viagra generico</a>, [url="http://teamsystemrocks.com/members/Maurizio-Ferri/default.aspx"]comprare viagra generico[/url],
+http://teamsystemrocks.com/members/Maurizio-Ferri/default.aspx comprare viagra generico,  qfsgzrqj, <a href="http://elearning.econ.univpm.it/user/view.php?id=3290">compra viagra generico</a>, [url="http://elearning.econ.univpm.it/user/view.php?id=3290"]compra viagra generico[/url], http://elearning.econ.univpm.it/user/view.php?id=3290 compra viagra generico,  wqcqibxt, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-22 09:13:22 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title=":(" src="/htdocs/woodpecker/img/sad.png" alt=":("/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Rob Cannon</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">Sample Menu Diabetic http://qacqkvgga.com/aou/l<br/>Hilarious Love Poems http://nocgce.com/dtv/2a<br/>Adult Sunday School Lessons Free http://jccwzqyr.com/r<br/>Download Gba Full Metal Alchemist http://jxbvphx.com/15<br/>Bookworm Free Online http://jxbvphx.com/pfg/j<br/>How Does Color Affect Society http://nocgce.com/grk/25<br/>University Of Texas
+Longhorn Buttons http://reumpkfav.com/rso/u<br/>Hand Saw Plans http://utdzur.com/phf/2f<br/>Media 6.4 Player Shim http://wzgnoedpm.com/rjw/6<br/>Airbrushed Shoes For Cheap http://qacqkvgga.com/nlg/1r<br/>Events 1993 http://jccwzqyr.com/wie/4<br/>Perfect Prime Rib Roast Rub http://ushwiuzu.com/hek/v<br/>86 Chevy Chevelle http://yslznk.com/16<br/>Get Well Soon Nascar Card http://otgnaaaz.com/krw/5<br/>Snow Tubing Tennesse
+http://reumpkfav.com/lrj/14<br/>Oregon Ranch Land For Sale http://utdzur.com/uov/20<br/>Island Barbie Coloring Print Pages http://ushwiuzu.com/izh/1v<br/>Canadian Urban Myths And Ghost Stories http://jccwzqyr.com/unx/1n<br/>Free Search By Address http://nocgce.com/zkl/1c<br/>Lady Sonia Free Account http://yslznk.com/ial/1v<br/>Receive Text Message Number Online http://qacqkvgga.com/zuo/4<br/>Military Vehicle For Sale Ontario
+http://otgnaaaz.com/omt/1c<br/>Free Teacher Birthday http://wzgnoedpm.com/bgx/6<br/>Alex Evening Wear http://jxbvphx.com/pqw/h<br/>New Bebo Proxy http://jxbvphx.com/fpj/5<br/>Printable Bible Hidden Object Games http://qacqkvgga.com/mgz/1o<br/>Florida Computers Shows http://wzgnoedpm.com/aas/1r<br/>Subaru Legacy 1995 Audio Wiring Diagram http://yslznk.com/jhm/x<br/>Puppet Skits For Black History http://ushwiuzu.com/hek/w<br/>Free Printable
+1099-misc http://utdzur.com/bpf/e<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-22 10:40:01 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">comprare cialis in i</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">dvqucmiy, <a href="http://elearning.econ.univpm.it/user/view.php?id=3297">cialis</a>, [url="http://elearning.econ.univpm.it/user/view.php?id=3297"]cialis[/url], http://elearning.econ.univpm.it/user/view.php?id=3297 cialis,  xzgkgzff, <a href="http://forum.ffonline.it/member.php?u=22782">comprare viagra senza ricetta</a>,
+[url="http://forum.ffonline.it/member.php?u=22782"]comprare viagra senza ricetta[/url], http://forum.ffonline.it/member.php?u=22782 comprare viagra senza ricetta,  nmowxzol, <a href="http://www.carputer.it/member.php?u=12103">cialis</a>, [url="http://www.carputer.it/member.php?u=12103"]cialis[/url], http://www.carputer.it/member.php?u=12103 cialis,  gaoluuuo, <a href="http://forum.pcworld.it/member.php?u=33176cialis">cialis 20 mg</a>,
+[url="http://forum.pcworld.it/member.php?u=33176cialis"]cialis 20 mg[/url], http://forum.pcworld.it/member.php?u=33176cialis cialis 20 mg,  ptskqvss, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-22 15:15:02 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title="X-(" src="/htdocs/woodpecker/img/angry.png" alt="X-("/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Gladys Johnson</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">Luba Free Pictures http://pjnmqqxb.com/uap/2d<br/>Humorous Wedding Anniversary Toasts http://qxuprfi.com/jan/1o<br/>Wave Wheel Of Fortune http://rtlyflozk.com/zvy/k<br/>Myspace Cowgirl Icons http://cwlagxzoy.com/uuz/1f<br/>Free Printable Horse Mask http://kdkbgi.com/aos/1c<br/>Samurai Armour Make http://qrdndfqk.com/asv/6<br/>Scrap Brass Price Ca
+http://enggxt.com/dfo/10<br/>Homemade Roundup Weed Killer http://kgngwupme.com/ixo/1n<br/>Picture Hound Chihuahua Mix http://fnuiuszj.com/unx/p<br/>Long Term Weather Orlando http://jfdqjnctg.com/ajj/1d<br/>Rubbish Truck For Sale In England http://qrdndfqk.com/vbi/6<br/>New Unblockable Proxies http://cwlagxzoy.com/hme/h<br/>Chipotle Nutrition Facts http://jfdqjnctg.com/oxt/q<br/>Weekly Planner Printable http://rtlyflozk.com/vum/1k<br/>Scrap Metal
+Prices For North Carolina http://pjnmqqxb.com/rlr/17<br/>High Heels Free Video Clips http://kgngwupme.com/awr/2b<br/>Finger Trample With High Heels http://enggxt.com/snj/2c<br/>Ecclesiastes Bible Study http://kdkbgi.com/yhe/k<br/>Reunion Heart Poem http://qxuprfi.com/jan/i<br/>Chinese Picture Rock http://fnuiuszj.com/liu/1y<br/>Adult Cartoons http://qxuprfi.com/ddb/2f<br/>Stacked Short Hair http://jfdqjnctg.com/ddv/a<br/>60's Clip Art
+http://rtlyflozk.com/vum/1b<br/>Free Printable Alphabet Stencils http://pjnmqqxb.com/ghz/22<br/>Cheat Code Heaven http://kgngwupme.com/pgh/<br/>Roller Coaster Tycoon Full Free Version http://qrdndfqk.com/vzt/18<br/>Clots In Legs During Pregnancy http://fnuiuszj.com/lfy/<br/>Wedding Cards English http://enggxt.com/kns/1v<br/>Pictures Of Cancer Hearts http://cwlagxzoy.com/w<br/>Cartoon Picture Of A Beaver
+http://kdkbgi.com/aos/1o<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-22 16:08:54 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis generique</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">kajvidgt, <a href="http://forum.travian.fr/member.php?u=64271">acheter cialis sur internet</a>, [url="http://forum.travian.fr/member.php?u=64271"]acheter cialis sur internet[/url], http://forum.travian.fr/member.php?u=64271 acheter cialis sur internet,  dwlfjmbs, <a href="http://www.commentdraguerunefille.com/forums/member.php?u=1583">cialis</a>,
+[url="http://www.commentdraguerunefille.com/forums/member.php?u=1583"]cialis[/url], http://www.commentdraguerunefille.com/forums/member.php?u=1583 cialis,  eesnowjk, <a href="http://www.heidelbergrepair.com/forums/member.php?u=725">cialis</a>, [url="http://www.heidelbergrepair.com/forums/member.php?u=725"]cialis[/url], http://www.heidelbergrepair.com/forums/member.php?u=725 cialis,  venepxyx, <a
+href="http://www.pso-world.com/forums/member.php?u=61054">viagra sur le net</a>, [url="http://www.pso-world.com/forums/member.php?u=61054"]viagra sur le net[/url], http://www.pso-world.com/forums/member.php?u=61054 viagra sur le net,  lyqdkiee, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-22 18:15:19 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis pas cher</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">dylywywj, <a href="http://www.heidelbergrepair.com/forums/member.php?u=724">viagra generique</a>, [url="http://www.heidelbergrepair.com/forums/member.php?u=724"]viagra generique[/url], http://www.heidelbergrepair.com/forums/member.php?u=724 viagra generique,  fuaxksgq, <a href="http://www.feal.fr/index.php?topic=958">achat viagra en ligne</a>,
+[url="http://www.feal.fr/index.php?topic=958"]achat viagra en ligne[/url], http://www.feal.fr/index.php?topic=958 achat viagra en ligne,  mhdficur, <a href="http://www.n-europe.com/forum/member.php?u=4435">cialis</a>, [url="http://www.n-europe.com/forum/member.php?u=4435"]cialis[/url], http://www.n-europe.com/forum/member.php?u=4435 cialis,  oeygunmm, <a href="http://fr.lutece.paris.fr/forums/user/profile/1195.page">acheter cialis france</a>,
+[url="http://fr.lutece.paris.fr/forums/user/profile/1195.page"]acheter cialis france[/url], http://fr.lutece.paris.fr/forums/user/profile/1195.page acheter cialis france,  rpyqpcnl, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-22 21:16:55 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title=";)" src="/htdocs/woodpecker/img/smile4.png" alt=";)"/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Pharmk429</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">Very nice site!<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-23 03:30:39 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title="X-(" src="/htdocs/woodpecker/img/angry.png" alt="X-("/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Garry Mccoy</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">Kate Spade Diaper Bag Knock Offs http://fzzpzb.com/rhm/17<br/>Happy Bunnies Pictures Desktops http://wstemr.com/wmj/2<br/>Get Myspace Password http://fzzpzb.com/zun/b<br/>Works Cited Observations http://aqvfuii.com/tju/k<br/>Gargoyle Slash Fanfiction http://exkoqtqpl.com/zos/2g<br/>Feet Mature Free http://wstemr.com/gru/t<br/>Colonial Times Acting
+http://zyktricg.com/qee/2e<br/>Elmo Valentine's Day Card http://exkoqtqpl.com/ayy/3<br/>Christmas Right Left Poem http://fzzpzb.com/jjp/d<br/>Daisy Clip Art Border http://zyktricg.com/qcg/j<br/>Anorexia Bulimia Tips How To http://wstemr.com/fxa/g<br/>Human Body Heart Color Pages http://aqvfuii.com/hpg/n<br/>English American Bulldog http://wstemr.com/jsn/2c<br/>Type Of Government Does The China Have http://zyktricg.com/qcg/1l<br/>Above Ground Pool
+With Deck http://fzzpzb.com/jnr/h<br/>Sweetheart Cherry Tree http://exkoqtqpl.com/qax/0<br/>Crush Tests Does He Like Me http://aqvfuii.com/gup/28<br/>Land For Sale Burnett Texas http://wstemr.com/xzp/k<br/>Convert English Latin http://exkoqtqpl.com/did/1p<br/>Free Pumpkin Face Cut Outs http://zyktricg.com/lry/2f<br/>Kitchen Tile In Washed River Rock http://aqvfuii.com/wpd/26<br/>Crazy People Cartoons http://fzzpzb.com/11<br/>Foot And Organ
+Diagram http://wstemr.com/pvh/12<br/>Hide My Playlist Codes http://aqvfuii.com/pen/1a<br/>Public Servants Thank You Poem http://exkoqtqpl.com/did/l<br/>Mario 64 Ds Action Replay Codes http://zyktricg.com/ucn/1a<br/>Old Truck Russian For Sale http://fzzpzb.com/jnr/1a<br/>Short Female Haircuts http://wstemr.com/pvh/1n<br/>Auto Trader Calgary http://fzzpzb.com/bep/2a<br/>65th Birthday Verses http://zyktricg.com/qcg/12<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-23 17:10:59 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title="B-)" src="/htdocs/woodpecker/img/smile2.png" alt="B-)"/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Stacia Mcclain</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">18 Inch Rim Sale http://jateslupg.com/moq/r<br/>Romance Novels Free To Read Online http://shdeng.com/euc/15<br/>Play Dj Game http://auqljye.com/hlt/z<br/>Adult Cavachon Picture http://tcgsxlpq.com/hgu/9<br/>Metric American Conversion http://aqkbykw.com/kuh/19<br/>Used Armored Truck For Sale http://vcnpmxuhn.com/cte/1k<br/>Hypnotized Women Videos
+http://tvmjkcjz.com/khg/d<br/>Star Trek Demos http://tfcyvatta.com/dph/x<br/>Asian Beds Cheap http://auqljye.com/kkx/26<br/>Toddler Old Online Card Games http://jateslupg.com/gpz/z<br/>How To Look On Private Myspace Pages http://tvmjkcjz.com/ife/2e<br/>Canada Blank Physical Map http://tcgsxlpq.com/hgu/5<br/>3rd Grade Printable Math Puzzles http://jxihfi.com/htv/n<br/>Kelly Blue Book For House Trailer http://sifjzbwi.com/yra/2f<br/>Avril Lavigne
+Lookups For Neopets http://tfcyvatta.com/xwz/1v<br/>Winnie Pooh Clip Art Borders http://aqkbykw.com/him/24<br/>Pain Under The Skin http://shdeng.com/twv/y<br/>Csi Myspace Graphics http://vcnpmxuhn.com/hkg/9<br/>Download Drivers Hp Scanjet 3970 http://sifjzbwi.com/naq/o<br/>Guys Dog Videos http://vcnpmxuhn.com/bvx/d<br/>Valentines Baby Poems http://jateslupg.com/tud/1v<br/>Game Creator Free Full Version http://jxihfi.com/fbm/1u<br/>Oklahoma Free
+Karaoke Online http://tvmjkcjz.com/pef/k<br/>Christmas Monologues http://shdeng.com/pyb/x<br/>Met Art Kristina http://aqkbykw.com/him/2f<br/>Bike Boat Rv Trader Calgary http://tfcyvatta.com/ows/1i<br/>Free Zip Code Map Austin Tx http://auqljye.com/aar/r<br/>Do Window Free Motokros Games http://tcgsxlpq.com/dmi/v<br/>Nys Department Of Motor Vechiles http://jxihfi.com/tii/1r<br/>24 Hour Diet Plan
+http://tfcyvatta.com/ows/2g<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-25 11:05:34 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title="B-)" src="/htdocs/woodpecker/img/smile2.png" alt="B-)"/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Lennie Duke</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">Car Crashes Bmw http://liayzpwmn.com/poo/1x<br/>Thanksgiving Hard Coloring Pages http://qsgyfq.com/1e<br/>How To Make Your Own Math Board Game http://dlunnwy.com/qoe/1k<br/>Ankle Bracelet Tattoos http://ovckbpik.com/bio/22<br/>Wall Panels Carved http://nuhpqrerb.com/mju/1e<br/>Interesting Fact About Iran http://scigreoxx.com/upf/0<br/>Shag Hairstyle
+For Curly Hair http://ehdbhk.com/vmh/12<br/>Dirty Feet Lick http://rrficf.com/dii/26<br/>Free Autocad Car Blocks http://itciskpu.com/vvm/j<br/>Cytherea Free Full Length Movie http://vnzyxldu.com/jfe/21<br/>Poem Pregnant Christmas http://liayzpwmn.com/zrt/u<br/>Pictures Of Infested Bowel http://dlunnwy.com/aut/6<br/>Skinny Women Gallery http://itciskpu.com/gev/1r<br/>Pictures Color On Black Hair http://rrficf.com/whp/l<br/>Free Deer Stand Plans
+Dyi http://scigreoxx.com/jxx/1q<br/>Funny Desktop Wallpaper http://ehdbhk.com/mzd/1l<br/>Dog Staph Infection Contagious http://nuhpqrerb.com/jmp/14<br/>Church Party Invitations http://ovckbpik.com/mss/x<br/>Free Movies Of Taylor Bow http://qsgyfq.com/pgh/2f<br/>Issues Of The Body In Art http://scigreoxx.com/jxx/26<br/>How To Make A Sword For A Cake http://liayzpwmn.com/rwy/19<br/>Test Words Per Minute Typing http://dlunnwy.com/szq/24<br/>World
+Events In 1994 http://qsgyfq.com/vmx/6<br/>Verses Wedding Thank You http://rrficf.com/dhr/o<br/>Diarrhea Early Pregnancy http://itciskpu.com/dwc/1n<br/>Triangular Pyramid Surface Area Formula http://nuhpqrerb.com/jwh/25<br/>Seahorse Tattoo Pics http://vnzyxldu.com/kwj/x<br/>Old Man Birthday Free Clipart http://ovckbpik.com/qzv/9<br/>Police Impound Auctions In San Diego http://ehdbhk.com/mrp/t<br/>Free Table Topics
+http://ovckbpik.com/uqb/c<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-25 22:01:28 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title="X-(" src="/htdocs/woodpecker/img/angry.png" alt="X-("/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Carleen Duffy</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">Road Map Of Bc And Washington http://dlunnwy.com/gvh/26<br/>Treasure Chest Wallpapers http://rrficf.com/kwi/1a<br/>Free House Quilt Block http://qsgyfq.com/ycr/q<br/>John Gotti Agnello http://ehdbhk.com/vtf/23<br/>Volvo Military Trucks http://nuhpqrerb.com/ntq/2e<br/>Propane Pro Wrestling http://liayzpwmn.com/djd/18<br/>Alltel Coupons For A Prepaid
+Cell Phone http://vnzyxldu.com/flr/18<br/>Exotic Fantasy Art http://ovckbpik.com/hbz/a<br/>Ladies Movies http://scigreoxx.com/zhq/1q<br/>Free Blank Gift Certificate Template http://dlunnwy.com/gvh/1i<br/>Build Wooden Deer Box Blind http://itciskpu.com/bpn/w<br/>Bible Black Revival Episode 1 http://rrficf.com/cfe/2f<br/>Humorous Wedding Readings http://qsgyfq.com/pgh/b<br/>Free Imvu Templates http://nuhpqrerb.com/yyn/t<br/>Cubic Feet To Square
+Yards http://liayzpwmn.com/zrt/d<br/>Fake Degree Templates http://ovckbpik.com/ogj/21<br/>Psp Tubes Disney Free http://vnzyxldu.com/<br/>1957 Chrysler Convertible For Sale http://ehdbhk.com/hnc/<br/>Unblock School Web http://scigreoxx.com/bmp/1i<br/>Raps Greatest Songs http://dlunnwy.com/aut/21<br/>Wall Mount Hamper http://itciskpu.com/cqk/1g<br/>Spanish Animal Poems http://vnzyxldu.com/jfe/e<br/>Rav4 Synthetic Oil
+http://ehdbhk.com/jxk/1r<br/>How To Hack People Private Myspace http://ovckbpik.com/iia/24<br/>Wiring Diagrams For 1965 Mustang http://scigreoxx.com/abv/f<br/>Left Hand Side Abdominal Pain http://nuhpqrerb.com/jwh/l<br/>Baja Bug For Sale Southern California http://dlunnwy.com/ejr/1x<br/>Pictures Of An Above Ground Pool Buried http://qsgyfq.com/pta/i<br/>Reference Letter In French http://itciskpu.com/isl/1a<br/>How To Write An Essay For Masters
+http://liayzpwmn.com/djd/s<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-26 10:19:57 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title="X-(" src="/htdocs/woodpecker/img/angry.png" alt="X-("/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Billy Nixon</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">Green Music Players For Myspace http://uaxcathzk.com/cpz/1v<br/>Free Obgyn Exam Video http://ilomycc.com/fjg/1g<br/>Women Corporal Punishment Pictures http://arsekuyv.com/kwr/1r<br/>Psp Tubes Disney Free http://fcpftpxnu.com/xwt/2g<br/>Peppers Recipe Pickled http://ggltwjp.com/qbq/18<br/>Hercules Tv Episodes Free Download
+http://uaxcathzk.com/pvf/1s<br/>Free Themes Adult http://ncjahbe.com/bph/6<br/>Algerian Font Free http://afjesvi.com/nfu/4<br/>Wonder Woman 305 http://lkjvnu.com/tul/5<br/>Ls1 Aircraft Engine http://opafvvyu.com/isp/17<br/>Hidden Shower Room Pics http://fsjdtkot.com/lxf/11<br/>Proxy Servers 4 Myspace http://ncjahbe.com/oaw/1e<br/>Blank Middle America Map http://lkjvnu.com/ymn/28<br/>Home Made Antenna For Tv http://arsekuyv.com/wbs/29<br/>Frogs
+Pictures Body http://ggltwjp.com/wmp/2a<br/>Bill Cosby Autobiography http://afjesvi.com/msi/d<br/>Free Racing Games For Nokia 5300 http://uaxcathzk.com/lwo/1u<br/>How To Install Car Battery http://opafvvyu.com/sjp/1u<br/>Gothic Victorian Dresses http://fsjdtkot.com/rsk/e<br/>Ping Pong Ball Launchers http://ilomycc.com/zyl/y<br/>Sample Strategic Communications Plan http://fcpftpxnu.com/pgu/25<br/>Hair Weave Sew In Instructions
+http://opafvvyu.com/lnk/1z<br/>Cheap Formal Dresses Delaware County http://ncjahbe.com/fhd/r<br/>Knitting Machine Baby Blanket http://lkjvnu.com/ymn/o<br/>Free Creation Coloring Pages http://ggltwjp.com/rsx/2<br/>Human Cell Pictures http://fsjdtkot.com/eoq/9<br/>A Speech For A Church Anniversary http://ilomycc.com/gym/1b<br/>Cairn Terriers Breeders In San Diego http://fcpftpxnu.com/zul/28<br/>Pokemon Yellow Gba Rom
+http://arsekuyv.com/drv/1l<br/>Samples Appraiser Comments Performance http://uaxcathzk.com/qoz/20<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-27 04:18:31 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title=";)" src="/htdocs/woodpecker/img/smile4.png" alt=";)"/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Pharmd293</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">Very nice site! cheap cialis http://opeyixa.com/rvqaax/4.html<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-27 07:56:53 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title=":(" src="/htdocs/woodpecker/img/sad.png" alt=":("/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Stacy Reynolds</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">How To Write Movie And Book Reviews http://ggltwjp.com/sbr/2a<br/>Dobermans Sale Colorado http://uaxcathzk.com/lwo/16<br/>Free Woven Templates http://lkjvnu.com/zka/2h<br/>Make A Baby Online http://opafvvyu.com/kww/2<br/>Tribal Spider Web Tattoo http://fsjdtkot.com/oju/24<br/>Straight Older Bears http://fcpftpxnu.com/xms/1z<br/>How To Bypass Windows Xp
+Pro Setup Key http://ncjahbe.com/evt/3<br/>Thigh High Boots Distributors http://afjesvi.com/uyu/1e<br/>World Biggest Carrier http://arsekuyv.com/wbs/1r<br/>Lever Action Rifles For Sale http://ilomycc.com/wue/8<br/>Free Arrest Warrants Search http://uaxcathzk.com/zlm/1n<br/>Columbia Missouri Zip Code Map http://fsjdtkot.com/eoq/11<br/>Atwood Furnace Parts http://ggltwjp.com/wmz/2e<br/>Hacking Accounts Free http://lkjvnu.com/vsg/27<br/>Yamaha Vk
+540 http://opafvvyu.com/isp/1c<br/>Free Clarinet Rap Music Sheet http://fcpftpxnu.com/zul/15<br/>Blue Nose Pitbull For Sale http://arsekuyv.com/fjn/y<br/>Ocean Floor Animations http://afjesvi.com/wxv/19<br/>Old Movies Bittorrent http://ncjahbe.com/tbw/1m<br/>Pots For Kids Rooms http://ilomycc.com/zyl/1e<br/>Free Simple Apron Patterns http://fcpftpxnu.com/xfa/t<br/>Duval County Jail http://afjesvi.com/wss/1q<br/>Stuff Aim Profiles
+http://ggltwjp.com/hzt/24<br/>Buy Orexis Online http://opafvvyu.com/fmq/9<br/>Camo Default Layouts For Myspace http://arsekuyv.com/a<br/>Free Coloring Pictures Of Baby Pooh http://lkjvnu.com/hrw/d<br/>Practice Capt Of Math http://uaxcathzk.com/lwo/1x<br/>Starcraft Sound Bites http://ilomycc.com/lzq/w<br/>Freeware Convert Audible To http://ncjahbe.com/raw/9<br/>Battlefield 1942 Cd Key Gen http://fsjdtkot.com/lxf/1p<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-27 09:34:52 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title=":(" src="/htdocs/woodpecker/img/sad.png" alt=":("/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">azqklkl</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">4xNc68  <a href="http://kadkgyahsxbq.com/">kadkgyahsxbq</a>, [url=http://pidbmrunmxgn.com/]pidbmrunmxgn[/url], [link=http://rzvhnwuzrqxn.com/]rzvhnwuzrqxn[/link], http://lzqvlxdjekqy.com/<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-27 13:41:01 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title="X-(" src="/htdocs/woodpecker/img/angry.png" alt="X-("/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Scott Rowe</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">Download Free Dvd Decrypter Full Version http://biybdcwgt.com/lae/j<br/>Met-art Jade Video http://ecorxi.com/ioe/f<br/>How Water Affects Plants Growing http://ucyorwdhw.com/nlh/11<br/>How Much Does Brad Pitt Weigh http://pnjypxhy.com/ske/1a<br/>Free Product Key Codes http://ozssmt.com/tvb/f<br/>Celtic Knot Trinity http://dyqwegkul.com/tyw/1j<br/>Seven
+Letter Words That Start With Z http://muxoaqpws.com/1g<br/>Hummer And Pinewood Derby http://szroramer.com/jgf/1d<br/>Homemade Novelty Gifts http://jiisclfb.com/frd/2a<br/>Pictures Cell Analogy http://yqfddj.com/yge/18<br/>Canterbury Tale Skipper http://jiisclfb.com/vht/2f<br/>Island Myspace Countdown http://biybdcwgt.com/ilb/1z<br/>Women In See Through Knickers http://dyqwegkul.com/fpo/u<br/>Stephen King Short Story Online
+http://muxoaqpws.com/pst/x<br/>Ram File Converter Freeware http://ozssmt.com/ndy/1<br/>Furniture Recycle In Calgary http://ucyorwdhw.com/cdp/15<br/>Adult Stories http://szroramer.com/cnr/g<br/>Java Hotmail Hack http://pnjypxhy.com/4<br/>Black Women Smoking Pics http://ecorxi.com/gam/28<br/>Free Halo Demo http://yqfddj.com/ayq/16<br/>Free Simcity Full http://biybdcwgt.com/ueg/n<br/>Cvp Normal Range http://pnjypxhy.com/cru/28<br/>Free Cross Stitch
+Pattern Of Leaf http://dyqwegkul.com/jek/t<br/>Dobermans Sale Colorado http://yqfddj.com/wyv/k<br/>Free Stained Glass Pattern Of A Cross http://szroramer.com/byd/1x<br/>Free Mobile Scripts http://muxoaqpws.com/naa/19<br/>Truck Game Multiplayer http://jiisclfb.com/hlg/i<br/>Free Wicked Sheet Music http://ecorxi.com/gnn/2e<br/>Scale Myspace Image http://ucyorwdhw.com/cxr/6<br/>Truth Or Dare Games In Public
+http://ozssmt.com/ndy/13<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-27 21:57:28 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title="X-(" src="/htdocs/woodpecker/img/angry.png" alt="X-("/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Chad Levine</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">Songs To Make Love To http://muxoaqpws.com/naa/1h<br/>Free Promotion Letter http://ozssmt.com/wpg/1b<br/>French Lesson Plans Preschool http://pnjypxhy.com/cru/x<br/>Funny Articles For Kids http://ucyorwdhw.com/igw/3<br/>38 Pistol For Sale http://dyqwegkul.com/dyz/23<br/>Hairpin Crochet Pattern http://muxoaqpws.com/fuw/1f<br/>Watch Sky High The Movie
+Free Online http://biybdcwgt.com/dpp/1d<br/>Piano Music The Hulk http://jiisclfb.com/frd/1r<br/>Dodge Chargers For Sale In Ireland http://ecorxi.com/ofk/1o<br/>Peerless Trailer Parts http://szroramer.com/cck/1p<br/>Latin Root For Look http://yqfddj.com/hua/2f<br/>Game Design Your Own Skatepark http://ozssmt.com/duz/h<br/>Mn Sales Tax Calculation http://yqfddj.com/smo/u<br/>Rialta Used For Sale http://dyqwegkul.com/tyw/1v<br/>How To Make A Window
+Sill http://pnjypxhy.com/cbr/19<br/>South Park Soundboard 2 http://ucyorwdhw.com/qkf/1p<br/>Credit Union Campaign http://biybdcwgt.com/adz/1a<br/>Boneless Pork Ribs Boiling http://jiisclfb.com/phs/v<br/>Pics Of Brazil Chicks http://ecorxi.com/gam/q<br/>Hair Removal With Neet http://muxoaqpws.com/rcr/v<br/>Download Iso Dreamcast http://szroramer.com/nav/1v<br/>Circulatory System Video http://ucyorwdhw.com/zha/1d<br/>Wedding Bible Verses
+http://pnjypxhy.com/qtz/g<br/>Pony Games Free http://muxoaqpws.com/fuw/21<br/>Lost Without You Lyrics http://ecorxi.com/xrr/1t<br/>Knit Jester Baby Hat http://dyqwegkul.com/qhm/2d<br/>Religious Easter Cards To Make http://jiisclfb.com/cmv/s<br/>Leonardo Da Vinci Invention The Wheel http://yqfddj.com/gnb/8<br/>Words That Begin With Sir http://biybdcwgt.com/wkh/1b<br/>Printable Pictures In Desktop http://ozssmt.com/cqw/1q<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-28 04:58:48 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">rfhqanhd, <a href="http://www.customxp.net/forum/member.php?u=34963">viagra</a>, [url="http://www.customxp.net/forum/member.php?u=34963"]viagra[/url], http://www.customxp.net/forum/member.php?u=34963 viagra,  srtblxmk, <a href="http://www.mangaitalia.it/invision/index.php?showuser=29732">viagra online</a>,
+[url="http://www.mangaitalia.it/invision/index.php?showuser=29732"]viagra online[/url], http://www.mangaitalia.it/invision/index.php?showuser=29732 viagra online,  thattsay, <a href="http://forum.ffonline.it/member.php?u=22834">viagra</a>, [url="http://forum.ffonline.it/member.php?u=22834"]viagra[/url], http://forum.ffonline.it/member.php?u=22834 viagra,  kgemougg, <a href="http://forums.montrealracing.com/members/rembouf-57026.html">viagra
+discount</a>, [url="http://forums.montrealracing.com/members/rembouf-57026.html"]viagra discount[/url], http://forums.montrealracing.com/members/rembouf-57026.html viagra discount,  huwonzvp, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-28 10:19:38 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">nwcqiigy, <a href="http://www.e-bahut.com/user/48286-terrenehunsbergeruy/">achat viagra en france</a>, [url="http://www.e-bahut.com/user/48286-terrenehunsbergeruy/"]achat viagra en france[/url], http://www.e-bahut.com/user/48286-terrenehunsbergeruy/ achat viagra en france,  qrzosgzl, <a href="http://forum.zebulon.fr/index.php?showuser=213343">viagra
+prix</a>, [url="http://forum.zebulon.fr/index.php?showuser=213343"]viagra prix[/url], http://forum.zebulon.fr/index.php?showuser=213343 viagra prix,  scccfmhb, <a href="http://www.arte-arezzo.it/moodle/user/view.php?id=1177&ampcourse=1">cialis online</a>, [url="http://www.arte-arezzo.it/moodle/user/view.php?id=1177&ampcourse=1"]cialis online[/url], http://www.arte-arezzo.it/moodle/user/view.php?id=1177&ampcourse=1 cialis online,  imqtwmck, <a
+href="http://www.rattidellasabina.it/forums/index.php?showuser=2318">comprare cialis online</a>, [url="http://www.rattidellasabina.it/forums/index.php?showuser=2318"]comprare cialis online[/url], http://www.rattidellasabina.it/forums/index.php?showuser=2318 comprare cialis online,  wajwoleg, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-28 13:21:58 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">achat viagra en lign</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">vlkoqgxk, <a href="http://www.gametronik.com/forum/index.php?showuser=54375">acheter cialis france</a>, [url="http://www.gametronik.com/forum/index.php?showuser=54375"]acheter cialis france[/url], http://www.gametronik.com/forum/index.php?showuser=54375 acheter cialis france,  lkdhpgzm, <a
+href="http://www.numerama.com/forum/user/75811-quennel-lebrun/">acheter cialis en pharmacie</a>, [url="http://www.numerama.com/forum/user/75811-quennel-lebrun/"]acheter cialis en pharmacie[/url], http://www.numerama.com/forum/user/75811-quennel-lebrun/ acheter cialis en pharmacie,  qqmggwae, <a href="http://www.stade.fr/forum/member.php?u=31578">acheter cialis en pharmacie</a>, [url="http://www.stade.fr/forum/member.php?u=31578"]acheter cialis en
+pharmacie[/url], http://www.stade.fr/forum/member.php?u=31578 acheter cialis en pharmacie,  frsmnltr, <a href="http://www.studiorientali.it/forum/index.php?showuser=4934">viagra</a>, [url="http://www.studiorientali.it/forum/index.php?showuser=4934"]viagra[/url], http://www.studiorientali.it/forum/index.php?showuser=4934 viagra,  etmuqout, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-28 16:21:40 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra pfizer</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">mytyjget, <a href="http://www.gametronik.com/forum/index.php?showuser=54375">acheter cialis en pharmacie</a>, [url="http://www.gametronik.com/forum/index.php?showuser=54375"]acheter cialis en pharmacie[/url], http://www.gametronik.com/forum/index.php?showuser=54375 acheter cialis en pharmacie,  aztiwjyw, <a
+href="http://forum.zebulon.fr/index.php?showuser=213352">cialis</a>, [url="http://forum.zebulon.fr/index.php?showuser=213352"]cialis[/url], http://forum.zebulon.fr/index.php?showuser=213352 cialis,  ioglzyun, <a href="http://www.stade.fr/forum/member.php?u=31563">achat viagra</a>, [url="http://www.stade.fr/forum/member.php?u=31563"]achat viagra[/url], http://www.stade.fr/forum/member.php?u=31563 achat viagra,  irctsvpj, <a
+href="http://www.arte-arezzo.it/moodle/user/view.php?id=1176&ampcourse=1">viagra</a>, [url="http://www.arte-arezzo.it/moodle/user/view.php?id=1176&ampcourse=1"]viagra[/url], http://www.arte-arezzo.it/moodle/user/view.php?id=1176&ampcourse=1 viagra,  aniflpqx, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-28 19:22:15 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title="B-)" src="/htdocs/woodpecker/img/smile2.png" alt="B-)"/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Reginald Cobb</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">Saltbox Houses Interior http://cguueae.com/ycb/23<br/>Free Leg Warmers Crocheted Patterns http://epmuon.com/woc/11<br/>Diana Photos Crash http://slfsbiv.com/dgz/2c<br/>Indian Male Bodybuilders http://otxweur.com/nzf/1j<br/>Free Runescape Auto Wood http://rifeul.com/qmm/1e<br/>Haircut Pictures - Women http://naxkeh.com/juz/s<br/>Iep Reading
+Comprehension http://xvrsgor.com/zxs/27<br/>Wives For Black Men http://slfsbiv.com/wli/9<br/>Wiring Diagrams 1999 Dodge Truck http://epmuon.com/gti/1m<br/>Kids Draw Pulls http://cguueae.com/eaq/10<br/>Free Printable House Leases http://nsswufd.com/pkj/23<br/>Big Origami Dragon http://bvgiinmn.com/wlc/g<br/>Men's Name Starting With Go http://ynbqhdhjk.com/jeq/1c<br/>Sample Of Wedding Bulletins http://xvrsgor.com/ohg/1q<br/>Forgiveness In Love
+Short Stories http://nsswufd.com/qxz/1b<br/>Create Your Own Jeopardy Game http://epmuon.com/rkx/n<br/>Virtual Pet For Your Myspace http://otxweur.com/l<br/>Need For Speed Most Wanted Music Code http://cguueae.com/clw/m<br/>Catan Registration Key http://slfsbiv.com/njj/a<br/>Leopard Print Tattoo http://ynbqhdhjk.com/bkc/2<br/>Office 2002 Product Key http://rifeul.com/xmt/1e<br/>Get Well Sayings Humor http://naxkeh.com/1s<br/>Semi Truck Games
+http://bvgiinmn.com/jdx/11<br/>Husqvarna Rifle Sale http://naxkeh.com/pnl/1b<br/>How To Make A Ragtime Quilts http://slfsbiv.com/olz/k<br/>Lowrider Game Online Free http://epmuon.com/hji/r<br/>Aluminum Boat Mods http://xvrsgor.com/ajc/1l<br/>Ancient Greek Invections http://bvgiinmn.com/nfy/1i<br/>Ovarian Dermoid Cyst http://cguueae.com/eaq/27<br/>Blue Book Price Guide Canada http://ynbqhdhjk.com/bkf/c<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-28 21:30:54 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acquistare viagra on</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">tdebftgo, <a href="http://www.rattidellasabina.it/forums/index.php?showuser=2315">acquistare viagra</a>, [url="http://www.rattidellasabina.it/forums/index.php?showuser=2315"]acquistare viagra[/url], http://www.rattidellasabina.it/forums/index.php?showuser=2315 acquistare viagra,  mgjahkiy, <a
+href="http://www.mangaitalia.it/invision/index.php?showuser=29736">cialis online</a>, [url="http://www.mangaitalia.it/invision/index.php?showuser=29736"]cialis online[/url], http://www.mangaitalia.it/invision/index.php?showuser=29736 cialis online,  ugygxllm, <a href="http://www.customxp.net/forum/member.php?u=34969">achat cialis en ligne</a>, [url="http://www.customxp.net/forum/member.php?u=34969"]achat cialis en ligne[/url],
+http://www.customxp.net/forum/member.php?u=34969 achat cialis en ligne,  iobiriya, <a href="http://www.arte-arezzo.it/moodle/user/view.php?id=1177&ampcourse=1">compra cialis online</a>, [url="http://www.arte-arezzo.it/moodle/user/view.php?id=1177&ampcourse=1"]compra cialis online[/url], http://www.arte-arezzo.it/moodle/user/view.php?id=1177&ampcourse=1 compra cialis online,  idmhwelc, <br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-28 22:22:37 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title="X-(" src="/htdocs/woodpecker/img/angry.png" alt="X-("/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Alonzo Raymond</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">One Night With Paris Streaming http://yrdxicezj.com/ftu/1h<br/>Next Door Nikki Wedding http://lplmjnmm.com/zeh/22<br/>Myspace Color Codes Text Box http://knwqmixp.com/aoq/i<br/>Mom Son Fuking http://blukla.com/cor/1a<br/>Budget Template Form Free http://yrdxicezj.com/lrx/1h<br/>Free Printable Financial Statement Form http://wezpaks.com/jmk/1s<br/>1935
+Ford Sedan For Sale http://ffdnjb.com/1o<br/>Christian Wedding Invitation Wording http://sqnpdkpp.com/vyh/f<br/>Codes For Final Fantasy On Psp http://ycbiekrgm.com/smo/2c<br/>Quotes On 50th Wedding Anniversary http://dlqafy.com/csu/a<br/>Rat Trap Car Plans http://llkooqsw.com/yvm/s<br/>Window Xp Pro Sp2 Bypass Activation http://ffdnjb.com/irb/2e<br/>Renal Dogs Symptoms http://wezpaks.com/bsb/10<br/>Hidden Cameras In Hotel Rooms
+http://ycbiekrgm.com/iax/29<br/>Sample Business Christmas Letters http://sqnpdkpp.com/buw/h<br/>Thyroid Symptoms Potassium http://lplmjnmm.com/erv/m<br/>The World Of Tunisian Crochet http://knwqmixp.com/dzd/1f<br/>Maltese Rescue Florida http://llkooqsw.com/fxi/9<br/>Limewire Song Download http://blukla.com/uob/1m<br/>Picturers Wet Wedding http://yrdxicezj.com/ayp/1y<br/>Hp 2000c User Manual http://dlqafy.com/ehd/21<br/>Windows Xp Activation Key
+Change http://dlqafy.com/csu/l<br/>Christian Quote http://wezpaks.com/src/v<br/>No Shoes In House Free Printable Sign http://knwqmixp.com/lhr/9<br/>Pokemon Colosseum Gba Download http://llkooqsw.com/kgh/5<br/>Wheeled Box Plans http://blukla.com/vih/<br/>Life For A Family In The 13 Colonies http://sqnpdkpp.com/tev/s<br/>Womens Legs Spread Open http://ycbiekrgm.com/lvo/x<br/>Mother Son Relations http://yrdxicezj.com/leb/4<br/>Prime Outlet
+Ellingtong http://ffdnjb.com/uag/x<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-30 16:11:24 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title="B-)" src="/htdocs/woodpecker/img/smile2.png" alt="B-)"/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Roxann Serrano</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">Knit Patterns Argyle Mittens http://knwqmixp.com/rrz/11<br/>Watch Spawn Free http://wezpaks.com/u<br/>Pokemon Ruby Gameshark Code http://ycbiekrgm.com/wyl/13<br/>Argumentative Reaserch Paper Topics http://knwqmixp.com/rqg/y<br/>Animated Start Backgrounds For Myspace http://ffdnjb.com/jqv/r<br/>Time Zones Charts http://yrdxicezj.com/ghm/2b<br/>Dare Or
+Truth http://sqnpdkpp.com/tev/p<br/>Diane Crash Photos http://blukla.com/god/1t<br/>Proxy Server Site http://dlqafy.com/urh/<br/>Homemade Viking Costume http://lplmjnmm.com/pfz/4<br/>How To Dance In A Club Free Videos http://llkooqsw.com/xle/b<br/>Bud Light Logo http://knwqmixp.com/sjx/v<br/>School Closings Daviess County Kentucky http://lplmjnmm.com/ngb/1n<br/>Marilyn Monroe Quotes For Myspace http://blukla.com/qhf/1x<br/>Senior Graduation Poems
+http://sqnpdkpp.com/ota/2d<br/>Copper Scrap Price Kalamazoo Michigan http://llkooqsw.com/saq/2d<br/>Fatal Car Accident Photos And Stories http://yrdxicezj.com/z<br/>Female Animated Christmas Gifs http://wezpaks.com/rju/k<br/>1st Grade Math Games Algebra http://ffdnjb.com/zpk/15<br/>Alabama State Police Cars For Sale http://ycbiekrgm.com/cas/15<br/>Lesson Plans For Life Of Pi http://dlqafy.com/lax/k<br/>Baby With Blanket Clipart
+http://wezpaks.com/mro/o<br/>Clip On Ring Guard http://ffdnjb.com/uag/16<br/>Dc Talk Myspace Code http://ycbiekrgm.com/wwd/9<br/>Mistaken Yahoo Messenger http://sqnpdkpp.com/xyx/g<br/>Clipart Geo Tracker http://lplmjnmm.com/17<br/>Virtual Games Websites http://dlqafy.com/flm/1s<br/>Free Baltimore Patterns To Print http://llkooqsw.com/uek/k<br/>Tall Woman Lifting http://yrdxicezj.com/vgt/1f<br/>Cmc Concrete Mold
+http://knwqmixp.com/qcm/25<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-30 21:39:54 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title=":(" src="/htdocs/woodpecker/img/sad.png" alt=":("/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Pasquale Dawson</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">3d Pokemon Online Rpg For Free http://uaqhho.com/vlf/14<br/>Business Form Example http://mhycko.com/kjo/2<br/>Lady Sonia Clip http://nvxxkhypq.com/rlh/s<br/>Brown Hair Highlights Pictures http://mhycko.com/xoz/f<br/>Samurai Tattoo Pics http://tremgj.com/dbc/o<br/>Philippine Newspapers And Tabloids http://howojwpvu.com/oxp/s<br/>Treadmill Proform J6
+http://planieki.com/tgn/0<br/>1955 Chevy Truck For Sale http://nhckupmar.com/pqu/h<br/>Rocking Chair Slipcovers http://nvxxkhypq.com/axg/v<br/>My Cache Prom Dress http://uaqhho.com/sms/o<br/>Salary Increment Letter Specimen http://omtcblnof.com/obe/7<br/>Voluptuous Women Art http://qqrzxn.com/kjb/29<br/>Ear Wax Removal Kansas City http://byxirrff.com/nvr/1u<br/>Poop Desktop Pet http://omtcblnof.com/voq/y<br/>Five Dollar Bill Twin Towers
+http://byxirrff.com/cls/9<br/>Average Nursing Salary In France http://howojwpvu.com/brp/11<br/>Spiderman 3 Pictures For Coloring http://nhckupmar.com/slz/24<br/>Horse Extended Network Banner http://mhycko.com/dwf/p<br/>Red Nose Blood Pit Bull http://planieki.com/npb/1n<br/>Free Online Games Disney Channel.com http://uaqhho.com/gfj/2d<br/>Acer Desktop Backgrounds http://qqrzxn.com/rpv/1p<br/>White Camo Myspace Layouts
+http://nvxxkhypq.com/1r<br/>Industrial Pictures http://tremgj.com/pec/10<br/>In Memory Decals For Car http://uaqhho.com/c<br/>Quotes From Lennie In Of Mice And Men http://byxirrff.com/wni/w<br/>Free Hawaiian Translation http://qqrzxn.com/esl/1d<br/>Brick Colored Interior Paint http://tremgj.com/slu/28<br/>Free Ticket Template For Charity Event http://howojwpvu.com/arw/1o<br/>Crib Suppliers In Canada http://mhycko.com/isw/j<br/>Letter Introduction
+Teacher Parent http://planieki.com/zmc/l<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-09-01 04:42:19 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title="X-(" src="/htdocs/woodpecker/img/angry.png" alt="X-("/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Millie Rhodes</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">Hello Kitty Jewelry Myspace Layouts http://qgyhyl.com/etp/h<br/>Letter Recommendation Doctor http://fzjjdczkl.com/bvm/1p<br/>Name Mean Atone http://josprarg.com/pmf/1j<br/>Effect Of Lincoln Assassination http://snfmfc.com/bcs/1l<br/>Tagging Printable Stencils http://snfmfc.com/bhw/1y<br/>Train Schedules Of Paris http://qgyhyl.com/wgi/f<br/>Myspace
+Peace Sign Layouts http://hgtqefniw.com/frz/t<br/>Dragonball Z Gba Roms http://ecjljflwe.com/hzk/28<br/>Pic Of Indian Teepees http://hghhvws.com/sqv/1t<br/>3d Online Cat Games http://lroujtl.com/tqj/v<br/>Free Mp3 Hymns http://josprarg.com/hwk/14<br/>Chemistry Essay Topics http://fzjjdczkl.com/hgf/27<br/>How Long Are Drugs Visible In Your Blood http://ujxdtpmad.com/qkr/1i<br/>Bead Loom Instructions http://fdsekb.com/ekq/3<br/>Free Number Word
+Worksheets http://josprarg.com/bxm/e<br/>Power Ranger Spd Online Games http://ujxdtpmad.com/ywq/1q<br/>Flower Coloring Sheets http://lroujtl.com/ans/1t<br/>Famous People From Arizona http://hghhvws.com/upd/d<br/>Black And White Pictures For Paint Jobs http://fdsekb.com/ooq/21<br/>Rome Total War Nocd http://qgyhyl.com/lmj/1q<br/>Rental Agreement California House http://ecjljflwe.com/xvv/2<br/>Swat 2 Flash Game
+http://hgtqefniw.com/rzt/2a<br/>Writing Medical School Reference Letters http://fzjjdczkl.com/ckp/28<br/>1955 Ford Vin http://snfmfc.com/jwr/y<br/>Secret Plot Manga Download Free http://fzjjdczkl.com/ckp/14<br/>Free Clip Art Phoenix Bird http://lroujtl.com/ans/1b<br/>Map Of Cars For San Andreas Xbox http://ujxdtpmad.com/1e<br/>Ford Mustang 68 For Sale In California http://qgyhyl.com/uhl/m<br/>Phone Practical Jokes
+http://snfmfc.com/dsy/6<br/>Chinese Party Invitations http://hghhvws.com/rdc/1z<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-09-01 21:44:15 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title=":(" src="/htdocs/woodpecker/img/sad.png" alt=":("/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">Peggy Valencia</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">Poem To Deceased Mother http://tcldfpk.com/llg/1x<br/>Party Sandwiches And Photos http://cjuajqca.com/uvc/1v<br/>For Sale In Snow Plows In New York http://pvzoqnki.com/znd/21<br/>Chinese Funny Cartoon http://tadzedml.com/xkb/14<br/>Napkin Folding Directions http://rnmivyqnr.com/bhy/1d<br/>Famous Female Speeches Short http://cjuajqca.com/hrw/q<br/>City
+Backgrounds Myspace http://rnmivyqnr.com/wye/g<br/>Nc Richest People http://tcldfpk.com/vpv/1y<br/>Reading Dodge Vin http://pvzoqnki.com/nze/<br/>Famous French Food http://tadzedml.com/bpo/1b<br/>Ghost Emoticon Yahoo http://rnmivyqnr.com/zgv/1c<br/>Cars Afghan Pattern http://tcldfpk.com/cob/17<br/>1975 Dodge Dart Sport http://cjuajqca.com/ohy/6<br/>Pictures Of Long Shag Hairstyles http://tadzedml.com/lua/1u<br/>Free Printables Sequence Pictures
+http://pvzoqnki.com/kre/1t<br/>Free Cartoon Wedding Pictures http://tcldfpk.com/czt/1s<br/>Doubletree Cookie Recipe http://rnmivyqnr.com/hdn/21<br/>Runescape Auto Strength Trainer Download http://cjuajqca.com/add/12<br/>Microsoft Office 2000 Cd-keys http://tadzedml.com/dtk/11<br/>Free Butterfly Tattoo http://pvzoqnki.com/nze/26<br/>Free Outlook Stationary Christmas http://tcldfpk.com/gfo/1c<br/>Labelled Frontal Diagram Of Human Brain
+http://tadzedml.com/ifm/2b<br/>Halo 2 Free Demo Dl http://pvzoqnki.com/hsv/1z<br/>Funny Birthday 18th http://cjuajqca.com/hev/z<br/>Prince - Do Me Baby Mp3 Free Downloading http://rnmivyqnr.com/aqa/y<br/>Gerstner Plans Tool Box http://cjuajqca.com/uxp/<br/>Biker Birthday Quotes http://rnmivyqnr.com/aqa/p<br/>Svr Caws 2008 http://tadzedml.com/xkb/1a<br/>Do Logic Problems On Line http://pvzoqnki.com/fsa/1x<br/>Buggy Frame Plans
+http://tcldfpk.com/sfy/f<br/><br/>对话框<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-09-03 17:53:46 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"><img width="15" height="15" title="X-(" src="/htdocs/woodpecker/img/angry.png" alt="X-("/></td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">qzolngvdaf</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">lZ8jZM  <a href="http://wcwjnudizjcs.com/">wcwjnudizjcs</a>, [url=http://hgscnkjoovgc.com/]hgscnkjoovgc[/url], [link=http://pzbvmouhuodf.com/]pzbvmouhuodf[/link], http://liuqxluwabam.com/<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-09-04 10:48:55 <font style="font-size: 8pt;">
+</font></td></tr>
+</tbody></table>
+</div> <span id="line-250" class="anchor"/><span id="bottom" class="anchor"/></div>

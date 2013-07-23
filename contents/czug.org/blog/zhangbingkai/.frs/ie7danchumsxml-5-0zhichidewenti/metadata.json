@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "ie7danchumsxml-5-0zhichidewenti"
+    }, 
+    "dublin": {
+        "creators": [
+            "zhangbingkai"
+        ], 
+        "description": "", 
+        "modified": "2007-02-01 11:14:48", 
+        "title": "IE7弹出MSXML 5.0支持的问题"
+    }
+}

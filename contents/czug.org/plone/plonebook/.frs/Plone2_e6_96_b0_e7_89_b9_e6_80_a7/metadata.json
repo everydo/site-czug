@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "Plone2_e6_96_b0_e7_89_b9_e6_80_a7"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "相对于Plone 1.0，Plone 2.0增加了哪些新特性？", 
+        "modified": "2006-02-20 17:14:27", 
+        "title": "Plone2新特性"
+    }
+}

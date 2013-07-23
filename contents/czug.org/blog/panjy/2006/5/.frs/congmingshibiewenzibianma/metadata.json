@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "congmingshibiewenzibianma"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "有多少人，被编码所困惑...", 
+        "modified": "2006-05-06 18:40:47", 
+        "title": "聪明识别文字编码"
+    }
+}

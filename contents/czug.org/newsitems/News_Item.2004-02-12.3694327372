@@ -1,0 +1,17 @@
+<br />
+看到ZopeChinaPak在<a href="http://www.zope.org.tw">台湾zope用户组</a>上做为了标准的Plone介绍产品, 顿生责任之心. 我有义务继续发布更高质量的ZopeChinaPak ;-)<br />
+<br />
+同时, 广大zope人, 目前还处于没有直接的plone中文解决方案的苦恼境界. 我希望这个产品能够逐步摆脱这个局面.<br />
+<br />
+这个产品有什么新特性?<br />
+<br />
+<ol>
+  <li>自动在ZMI中设置management_page_charset属性，支持在ZMI中查看中文。</li>
+  <li>使用了Plone的customisePolicy，创建Plone站点的时候，选择Default Chinese Plone即可。</li>
+</ol>
+欢迎大家提出反馈意见.<br />
+<br />
+参考:<br />
+<br />
+<a href="http://www.czug.org/projects/ZopeChinaPak">中文ZopeChinaPak项目页面</a>&nbsp; | <a href="http://zope.org/Members/panjunyong/ZopeChinaPak">英文产品页面</a>&nbsp; |&nbsp; <a href="http://www.czug.org/docs/plone/plonebook/X_e5_ae_89_e8_a3_85Plone2/wikipage_view">支持中文的Plone2的安装</a><br />
+<br />

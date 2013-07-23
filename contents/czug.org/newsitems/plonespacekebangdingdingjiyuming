@@ -1,0 +1,18 @@
+
+<p class="portalMessage">由于免费站点迁移到了 <a class="reference" href="http://www.lupaworld.com/">Lupa</a> 的服务器上, 现暂停顶级域名映射服务。</p>
+
+<p><a class="reference" href="http://plonespace.net">plonespace</a>提供支持顶级域名映射的服务。在plonespace上建立了站点的用户需要此服务可
+<a class="reference" href="http://plonespace.net/contact-info">联系plonespace开发团队</a>
+。我们会将您提供的顶级域名在 plonespace服务器中做好映射。</p>
+
+<p>具体方法为：</p>
+
+<ol class="arabic simple">
+<li>告知您的顶级域名和plonespace的域名</li>
+
+<li>我们设置完成后会通知您</li>
+
+<li>需要您调整您的顶级域名指向，可采用CNAME的记录，直接指向到您的plonespace域名</li>
+</ol>
+
+当然，此服务仍然是免费的服务，plonespace开发团队不做任何商业承诺。<br />

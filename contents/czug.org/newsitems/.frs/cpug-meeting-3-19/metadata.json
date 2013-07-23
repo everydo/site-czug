@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "cpug-meeting-3-19"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "华东Python爱好者聚会邀请, 华东Python/Zope/Plone爱好者三月十九日将再次聚会上海烟雨江南茶艺吧。 ", 
+        "modified": "2006-03-16 01:34:01", 
+        "title": "华东Python/Zope/Plone爱好者3月19日再聚上海烟雨江南"
+    }
+}

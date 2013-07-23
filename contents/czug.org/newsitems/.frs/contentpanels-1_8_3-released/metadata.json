@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "contentpanels-1_8_3-released"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "使用CMFContentPanels(复合面板页面)，您无需编程，直接在页面上选择不同内容不同视图，以面板的形式拼装成复杂的动态页面。", 
+        "modified": "2005-04-15 15:34:54", 
+        "title": "CMFContentPanels 1.8.3发布"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "dui163youxiangdezhichi"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Plone中居然不能发信到163的邮箱，谁之过错", 
+        "modified": "2006-06-16 16:23:37", 
+        "title": "对163邮箱的支持"
+    }
+}

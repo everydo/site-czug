@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zopex3-out"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "经过近3年的开发，Zope 3开发团队骄傲地宣布Zope X3 3.0.0最终版.", 
+        "modified": "2004-11-09 04:40:44", 
+        "title": "Zope X3 3.0.0最终版发布！"
+    }
+}

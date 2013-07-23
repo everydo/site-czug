@@ -1,0 +1,24 @@
+
+首先，这个版本修正了大量自Plone
+2.0.5升级的bug，我们对升级代码进行了大量优化。<br />
+<p>这样，从Plone
+2.0.5的升级过程更加容易了，limi编写了一个<a href="http://plone.org/documentation/migration/2.1" target="_self">Plone 2.1升级教程</a>。</p>
+
+<p>这个版本，修正了大约<a href="http://trac.plone.org/plone/milestone/2.1.2" target="_self">300个问题</a>，因此这个版本更加趋向“无缺陷产品”。</p>
+
+<p>总之，这个版本是Plone
+2.1系列中一个非常稳定和优美的版本，如果你还没有从Plone
+2.0.x升级，你一定要试一下这个版本。</p>
+
+<br />
+相关链接：<br />
+<ul>
+<li><a href="http://plone.org/news/plone-2.1.2-released" target="_self">Plone2.1.2英文发布新闻</a></li>
+
+<li><a href="http://plone.org/download" target="_self">下载页面</a></li>
+
+<li><a href="http://plone.org/products/plone/releases/2.1.2" target="_self">完整的更改日志</a></li>
+
+<li><a href="http://plone.org/documentation/whatsnew/2.1" target="_self">Plone 2.1的新特性</a><br />
+</li>
+</ul>

@@ -1,0 +1,5 @@
+description: zope3的发展历史，主要特性，竞争产品
+exclude: [img]
+order: [background.rst, whyzope3.rst, competers.rst, zpublisher.rst, site.rst, getstarted.rst,
+  getting-started.rst, buildout.rst, development-tools.tex]
+title: zope3介绍

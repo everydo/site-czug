@@ -1,0 +1,34 @@
+<p>我们 <a href="http://www.zopechina.com">润普公司</a>，在此发布CMFContentPanels的新版本。</p>
+<p>从这个版本起，我们把中文名更改为“复合面板页面”，这样更加直观和便于理解。</p>
+<h2>本版本的新特性</h2>
+
+<ul>
+<li>完全国际化</li>
+<li>新添加意大利翻译，谢谢Enzo Cesanelli</li>
+<li>面板中的条目不再打开新的窗口</li>
+<li>更好的文档，新加了FAQ</li>
+<li>面板的标题现在可以链接到内容(谢谢Marc Lindahl)</li>
+<li>调整优化了 查询集 的面板视图(再次感谢Marc Lindahl)</li>
+<li>源代码回到<a href="http://sf.net/projects/collective">collective</a></li>
+<li>更多的面板视图:
+<ul>
+<li>文件夹内容清单</li>
+<li>不同的文件夹清单视图(目前隐藏，你可以激活他) 感谢Nate Aune</li>
+
+</ul>
+</li>
+<li>添加新的面板时，你可选择使用那个视图</li>
+<li>删除不必要的一些视图，改变了Review List视图的权限.</li>
+<li>解决了很多bug</li>
+
+</ul>
+<h2>截图</h2>
+
+<ul>
+<li><a href="http://plone.org/Members/panjunyong/ContentPanels/overview.jpg/image_view">多页、多列、带嵌入的复合面板页面</a></li>
+<li><a href="http://plone.org/Members/panjunyong/ContentPanels/config_view.jpg/image_view">配置布局</a></li>
+<li><a href="http://plone.org/Members/panjunyong/ContentPanels/add-panel.jpg/image_view">添加新的面板</a></li>
+
+</ul>
+<p>这个版本中，我们得到了社区的大量反馈和帮助，在此感谢他们！我们将继续把这个产品做好！</p>
+<p><a href="http://zope.org/Members/panjunyong/CMFContentPanels/swpackage_view">产品主页</a> | <a href="http://zope.org/Members/panjunyong/CMFContentPanels/CMFContentPanels%201.6/contentpanels-1_6RC1.tgz">下载</a></p>

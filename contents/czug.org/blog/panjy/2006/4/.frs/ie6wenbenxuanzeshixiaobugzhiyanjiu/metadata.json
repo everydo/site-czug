@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "ie6wenbenxuanzeshixiaobugzhiyanjiu"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "BUG表现", 
+        "modified": "2006-04-07 17:08:41", 
+        "title": "IE6文本选择失效bug之研究"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "http-request-methods"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "介绍HTTP请求的方法Mothod. ", 
+        "modified": "2004-12-29 08:10:47", 
+        "title": "HTTP请求的方法"
+    }
+}

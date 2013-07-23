@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "opensource"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "CZUG不仅仅是一个技术网站，他面向市场，希望成为最终用户、开发和设计人员、服务提供商共同平台。", 
+        "modified": "2004-06-10 03:25:18", 
+        "title": "CZUG的目标"
+    }
+}

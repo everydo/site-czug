@@ -1,0 +1,20 @@
+Zope2.7和Zope2.6.4同时正式发布。<br />
+Zope社区中同时维护两个版本，次数应该不多。<br />
+<br />
+http://zope.org/Products/Zope/2.6.4/zope_2_6_4_announce<br />
+http://zope.org/Products/Zope/2.7.0/zope_2_7_0_announce<br />
+<br />
+Zope2.7是一个较大的变化，支持最新版本的python2.3；Zope2.6.4只能支持python2.1;<br />
+Zope2.7在安装上做了巨大的变化，采用了configure/make/make install的标准linux安装方法。<br />
+<br />
+Zope的配置也改变了从前使用参数的方法，统一采用了类似Apache的配置文件。（这使得Zope的配置更加灵活，但同时也更复杂...）<br />
+<br />
+Zope2.7集成了DBTab这个产品，使得zope的存储架构更加灵活，支持分布式的存储。<br />
+Zope2.7也集成了BDBStorage，这个存储方式采用BerkeleyDB，支持增量备份。<br />
+<br />
+Zope2.7最近在安全性方面也做了较大的调整。<br />
+<br />
+<p>一个遗憾是，这两个版本都和著名的产品<b>VerboseSecurity</b>不兼容。需要卸载这个产品。<br />
+</p>
+<p>Zope2.7出来了，zope2.8还会远吗？ ;-)<br />
+</p>

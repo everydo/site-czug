@@ -1,0 +1,43 @@
+:作者: Alexander Limi
+:原文: <a href="http://plone.org/documentation/whatsnew/2.0/usability">http://plone.org/documentation/whatsnew/2.0/usability</a>
+:翻译: 赵玉勇
+:版本: $Revision: 1.5 $
+:版权: 
+
+.. contents:: 目录
+
+更容易发布内容
+==================================================
+
+.. image:: <a href="http://plone.org/documentation/whatsnew/2.0/publish-menu.png">http://plone.org/documentation/whatsnew/2.0/publish-menu.png</a>
+
+
+在Plone 2中，使用下拉菜单方式，更容易进行发布内容对象或者改变其工作状态的操作。
+
+更容易添加内容
+==================================================
+
+.. image:: <a href="http://plone.org/documentation/whatsnew/2.0/add-menu.png">http://plone.org/documentation/whatsnew/2.0/add-menu.png</a>
+
+
+在任何可以添加内容的地方，用户都可以通过在下拉菜单中选择内容类型的方式，添加新的内容。
+
+
+更容易协作：文档内容级的权限控制
+==================================================
+
+.. image:: <a href="http://plone.org/documentation/whatsnew/2.0/sharing.png">http://plone.org/documentation/whatsnew/2.0/sharing.png</a>
+
+
+相对于以前版本中基于文件夹的访问权限控制，在Plone 2中可以对单个内容的设置访问权限。
+
+这样权限控制更加灵活，不一定非得在文件夹上设置访问权限了。
+
+
+更容易协作：针对组的访问权限控制
+==================================================
+
+Plone 2也支持对单个内容或者文件夹支持设置用户组的访问权限，对于协同工作的支持更强了。
+
+
+**下一节 <a href="http://members.czug.org/plone/plonebook/X_e7_94_a8_e6_88_b7_e7_95_8c_e9_9d_a2" title="" style="background-color:;">用户界面</a> >>>**

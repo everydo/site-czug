@@ -1,0 +1,614 @@
+<p>出处： <a href="http://www.javaeye.com/wiki/Django-book/734-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E5%9B%9B%E7%AB%A0%EF%BC%9ADjango%E6%A8%A1%E6%9D%BF%E7%B3%BB%E7%BB%9F">http://www.javaeye.com/wiki/Django-book/734-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E5%9B%9B%E7%AB%A0%EF%BC%9ADjango%E6%A8%A1%E6%9D%BF%E7%B3%BB%E7%BB%9F</a></p>
+  
+  <h1 style="margin:25px 0 10px 10px">翻译www.djangobook.com之第四章：Django模板系统 
+    
+  </h1>
+  <div class="content">
+    <span style="color: red"><strong>The Django Book：第4章 Django模板系统</strong></span><br /><br />revised by <a href="http://xin-wang.javaeye.com/" target="_blank">xin_wang</a><br /><br />前面的章节我们看到如何在视图中返回HTML，但是HTML是硬编码在Python代码中的<br />这会导致几个问题：<br />1，显然，任何页面的改动会牵扯到Python代码的改动<br />网站的设计改动会比Python代码改动更频繁，所以如果我们将两者分离开会更方便<br />2，其次，写后台Python代码与设计HTML是不同的工作，更专业的Web开发应该将两者分开<br />页面设计者和HTML/CSS程序员不应该编辑Python代码，他们应该与HTML打交道<br />3，程序员写Python代码同时页面设计者写HTML模板会更高效，而不是一个人等待另一个人编辑同样的文件<br />因此，使用Django的模板系统分离设计和Python代码会更干净更易维护<br /><br /><strong>模板系统基础</strong><br />Django模板是一个string文本，它用来分离一个文档的展现和数据<br />模板定义了placeholder和表示多种逻辑的tags来规定文档如何展现<br />通常模板用来输出HTML，但是Django模板也能生成其它基于文本的形式<br />让我们来看看一个简单的模板例子：<br /><pre name="code" class="java">&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Ordering notice&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;p&gt;Dear {{ person_name }},&lt;/p&gt;
+&lt;p&gt;Thanks for placing an order from {{ company }}. It's scheduled to
+ship on {{ ship_date|date:"F j, Y" }}.&lt;/p&gt;
+&lt;p&gt;Here are the items you've ordered:&lt;/p&gt;
+&lt;ul&gt;
+{% for item in item_list %}
+&lt;li&gt;{{ item }}&lt;/li&gt;
+{% endfor %}
+&lt;/ul&gt;
+{% if ordered_warranty %}
+&lt;p&gt;Your warranty information will be included in the packaging.&lt;/p&gt;
+{% endif %}
+&lt;p&gt;Sincerely,&lt;br /&gt;{{ company }}&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre><br />这个模板本质上是HTML，但是夹杂了一些变量和模板标签：<br />1，用{{}}包围的是变量，如{{person_name}}，这表示把给定变量的值插入，如何指定这些变量的值我们即将说明<br />2，用{%%}包围的是块标签，如{%if ordered_warranty%}<br />块标签的含义很丰富，它告诉模板系统做一些事情<br />在这个例子模板中包含两个块标签:for标签表现为一个简单的循环结构，让你按顺序遍历每条数据<br />if标签则表现为逻辑的if语句<br />在这里，上面的标签检查ordered_warranty变量的值是否为True<br />如果是True，模板系统会显示{%if ordered_warranty%}和{%endif%}之间的内容<br />否则，模板系统不会显示这些内容<br />模板系统也支持{%else%}等其它逻辑语句<br />3，上面还有一个过滤器的例子，过滤器是改变变量显示的方式<br />上面的例子中{{ship_date|date:"F j, Y"}}把ship_date变量传递给过滤器<br />并给date过滤器传递了一个参数“F j, Y”，date过滤器以给定参数的形式格式化日期<br />类似于Unix，过滤器使用管道字符“|”<br />Django模板支持多种内建的块标签，并且你可以写你自己的标签<br /><br /><strong>使用模板系统</strong><br />在Python代码中使用模板系统，请按照下面的步骤：<br />1，用模板代码创建一个Template对象<br />Django也提供指定模板文件路径的方式创建Template对象<br />2，使用一些给定变量context调用Template对象的render()方法<br />这将返回一个完全渲染的模板，它是一个string，其中所有的变量和块标签都会根据context得到值<br /><br /><strong>创建模板对象</strong><br />最简单的方式是直接初始化它，Template类在django.template模块中，初始化方法需要一个参数<br />下面进入Python交互环境看看：<br /><pre name="code" class="java">&gt;&gt;&gt; from django.template import Template
+&gt;&gt;&gt; t = Template("My name is {{my_name}}.")
+&gt;&gt;&gt; print t</pre><br />你将看到如下信息<br /><pre name="code" class="java">&lt;django.template.Template object at 0xb7d5f24c&gt;</pre><br />0xb7d5f24c每次都会改变，但是无所谓，它是Template对象的Python“identity”<br />在这本书中，我们会在Python的交互式会话环境中展示一些示例。当你看到三个大于号'&gt;&gt;&gt;'，就可以确定是在交互环境中了。<br />如果你从本书中拷贝代码，记得不要拷贝这些大于号。<br />当你创建Template对象，模板系统会编译模板代码，并准备渲染<br />如果你的模板代码有语法错误，调用Template()方法会触发TemplateSyntaxError异常<br /><pre name="code" class="java">&gt;&gt;&gt; from django.template import Template
+&gt;&gt;&gt; t = Template('{%notatag%}')
+Traceback (most recent call last):
+    File "&lt;stdin&gt;", line 1, in ?
+    ...
+   django.template.TemplateSyntaxError: Invalid block tag: 'notatag'</pre><br />系统触发TemplateSyntaxError异常可能出于以下情况：<br />1，不合法的块标签<br />2，合法块标签接受不合法的参数<br />3，不合法的过滤器<br />4，合法过滤器接受不合法的参数<br />5，不合法的模板语法<br />6，块标签没关<br /><br /><strong>渲染模板</strong><br />一旦你拥有一个Template对象，你可以通过给一个context来给它传递数据<br />context是一个变量及赋予的值的集合，模板使用它来得到变量的值，或者对于块标签求值<br />这个context由django.template模块的Context类表示<br />它的初始化函数有一个可选的参数：一个映射变量名和变量值的字典<br />通过context调用Template对象的render()方法来填充模板，例如：<br /><pre name="code" class="java">&gt;&gt;&gt; from django.template import Context, Template
+&gt;&gt;&gt; t = Template("My name is {{name}}.")
+&gt;&gt;&gt; c = Context({"name": "Stephane"})
+&gt;&gt;&gt; t.render(c)
+'My name is Stephane.'</pre><br />变量名必须以字母(A-Z或a-z)开始，可以包含数字，下划线和小数点，变量名大小写敏感<br />下面是一个模板编译和渲染的例子，使用这章开始时的模板例子：<br /><pre name="code" class="java">&gt;&gt;&gt; from django.template import Template, Context
+&gt;&gt;&gt; raw_template = """&lt;p&gt;Dear {{ person_name }},&lt;/p&gt;
+...
+... &lt;p&gt;Thanks for ordering {{ product }} from {{ company }}. It's scheduled to
+... ship on {{ ship_date|date:"F j, Y" }}.&lt;/p&gt;
+...
+... {% if ordered_warranty %}
+... &lt;p&gt;Your warranty information will be included in the packaging.&lt;/p&gt;
+... {% endif %}
+...
+... &lt;p&gt;Sincerely,&lt;br /&gt;{{ company }}&lt;/p&gt;"""
+&gt;&gt;&gt; t = Template(raw_template)
+&gt;&gt;&gt; import datetime
+&gt;&gt;&gt; c = Context({'person_name': 'John Smith',
+...     'product': 'Super Lawn Mower',
+...     'company': 'Outdoor Equipment',
+...     'ship_date': datetime.date(2009, 4, 2),
+...     'ordered_warranty': True})
+&gt;&gt;&gt; t.render(c)
+"&lt;p&gt;Dear John Smith,&lt;/p&gt;\n\n&lt;p&gt;Thanks for ordering Super Lawn Mower from Outdoor Equipment.
+It's scheduled to ship on April 2, 2009.&lt;/p&gt;\n\n&lt;p&gt;Your warranty information will be included
+in the packaging.&lt;/p&gt;\n\n\n&lt;p&gt;Sincerely,&lt;br /&gt;Outdoor Equipment&lt;/p&gt;"</pre><br />让我们来看看都做了些什么：<br />1，我们import Template和Context类，它们都在django.template模块里面<br />2，我们把模板文本存储在raw_template变量里，我们使用"""来构建string，它可以跨越多行<br />3，我们创建模板对象t，并给Template类的初始化函数传递raw_template变量<br />4，我们从Python的标准库import datetime模块，下面会用到它<br />5，我们创建一个context对象c，它的初始化函数使用一个映射变量名和变量值的字典<br />例如我们指定person_name的值为'John Smith'，product的值为'Super Lawn Mower'等等<br />6，最后，我们调用模板对象的render()方法，参数为context对象c<br />这将返回渲染后的模板，将模板中的变量值替换并计算块标签的结果<br />如果你刚接触Python，你可能会问为什么输出中包含了新行字符'\n'而不是换行<br />这是因为Python交互环境中调用t.render(c)会显示string的representation而不是string的值<br />如果你想看到换行而不是'\n'，使用print t.render(c)即可<br />上面是使用Django模板系统的基础，只是创建一个模板对象和context对象然后调用render()方法<br />同一个模板，多个context的情况：<br />一旦你创建了一个模板对象，你可以渲染多个context，例如：<br /><pre name="code" class="java">&gt;&gt;&gt; from django.template import Template, Context
+&gt;&gt;&gt; t = Template('Hello, {{ name }}')
+&gt;&gt;&gt; print t.render(Context({'name': 'John'}))
+Hello, John
+&gt;&gt;&gt; print t.render(Context({'name': 'Julie'}))
+Hello, Julie
+&gt;&gt;&gt; print t.render(Context({'name': 'Pat'}))
+Hello, Pat</pre><br />无论何时，你使用同一个模板来渲染多个context的话，创建一次Template对象然后调用render()多次会更高效<br /><pre name="code" class="java"># Bad
+for name in ('John', 'Julie', 'Pat'):
+    t = Template('Hello, {{ name }}')
+    print t.render(Context({'name'： name}))
+# Good
+t = Template('Hello, {{ name }}')
+for name in ('John', 'Julie', 'Pat'):
+    print t.render(Context({'name': name}))</pre><br />Django的模板解析非常快，在后台，大部分的解析通过一个单独的对正则表达式的调用来做<br />这与基于XML的模板引擎形成鲜明对比，XML解析器比Django的模板渲染系统慢很多<br /><br /><strong>Context变量查找</strong><br />上面的例子中，我们给模板context传递了简单的值，大部分是string，以及一个datetime.date<br />尽管如此，模板系统优雅的处理更复杂的数据结构，如列表，字典和自定义对象<br />在Django模板系统中处理复杂数据结构的关键是使用(.)字符<br />使用小数点来得到字典的key，属性，对象的索引和方法<br />下面通过例子来解释，通过(.)访问字典的key：<br /><pre name="code" class="java">&gt;&gt;&gt; from django.template import Template, Context
+&gt;&gt;&gt; person = {'name': 'Sally', 'age': '43'}
+&gt;&gt;&gt; t = Template('{{ person.name }} is {{ person.age }} years old.')
+&gt;&gt;&gt; c= Context({'person': person})
+&gt;&gt;&gt; t.render(c)
+'Sally is 43 years old.'</pre><br />通过(.)来访问对象的属性：<br /><pre name="code" class="java">&gt;&gt;&gt; from django.template import Template, Context
+&gt;&gt;&gt; import datetime
+&gt;&gt;&gt; d = datetime.date(1993, 5, 2)
+&gt;&gt;&gt; d.year
+1993
+&gt;&gt;&gt; d.month
+5
+&gt;&gt;&gt; d.day
+2
+&gt;&gt;&gt; t = Template('The month is {{ date.month }} and the year is {{ date.year }}.')
+&gt;&gt;&gt; c = Context({'date': d})
+&gt;&gt;&gt; t.render(c)
+'The month is 5 and the year is 1993.'</pre><br />下面的例子使用一个自定义类：<br /><pre name="code" class="java">&gt;&gt;&gt; from django.template import Template, Context
+&gt;&gt;&gt; class Person(object):
+...    def __init__(self, first_name, last_name):
+...        self.first_name, self.last_name = first_name, last_name
+&gt;&gt;&gt; t = Template('Hello, {{ person.first_name }} {{ person.last_name }}.')
+&gt;&gt;&gt; c = Context({'person': Person('John', 'Smith')})
+&gt;&gt;&gt; t.render(c)
+'Hello, John Smith.'</pre><br />小数点也可以用来调用列表的索引：<br /><pre name="code" class="java">&gt;&gt;&gt; from django.template import Template, Context
+&gt;&gt;&gt; t = Template('Item 2 is {{ items.2 }}.')
+&gt;&gt;&gt; c = Contexst({'items': ['apples', 'bananas', 'carrots']})
+&gt;&gt;&gt; t.render(c)
+'Item 2 is carrots.'</pre><br />负数的列表索引是不允许的，例如模板变量{{ items.-1 }}将触发TemplateSyntaxError<br />最后小数点还可以用来访问对象的方法，例如Python的string有upper()和isdigit()方法：<br /><pre name="code" class="java">&gt;&gt;&gt; from django.template import Template, Context
+&gt;&gt;&gt; t = Template('{{ var }} -- {{var.upper }} -- {{ var.isdigit }}')
+&gt;&gt;&gt; t.render(Context({'var': 'hello'}))
+'hello -- HELLO -- False'
+&gt;&gt;&gt; t.render(Context({'var': '123'}))
+'123 - 123 - True'</pre><br />注意，调用方法时你不能加括号，你也不能给方法传递参数<br />你只能调用没有参数的方法，后面我们会解释这些<br />总结一下，当模板系统遇到变量名里有小数点时会按以下顺序查找：<br />1，字典查找，如foo["bar"]<br />2，属性查找，如foo.bar<br />3，方法调用，如foo.bar()<br />3，列表的索引查找，如foo[bar]<br />小数点可以多级纵深查询，例如{{ person.name.upper }}表示字典查询person['name']然后调用upper()方法<br /><pre name="code" class="java">&gt;&gt;&gt; from django.template import Template, Context
+&gt;&gt;&gt; person = {'name': 'Sally', 'age': '43'}
+&gt;&gt;&gt; t = Template('{{ person.name.upper }} is {{ person.age }} years old.')
+&gt;&gt;&gt; c = Context({'person': person})
+&gt;&gt;&gt; t.render(c)
+'SALLY is 43 years old.'</pre><br /><br /><strong>关于方法调用</strong><br />方法调用要比其他的查询稍微复杂一点，下面是需要记住的几点：<br />1，在方法查询的时候，如果一个方法触发了异常，这个异常会传递从而导致渲染失<br />败，但是如果异常有一个值为True的silent_variable_failure属性，这个变量会渲染成空string：<br /><pre name="code" class="java">&gt;&gt;&gt; t = Template("My name is {{ person.first_name }}.")
+&gt;&gt;&gt; class PersonClas3:
+...     def first_name(self):
+...         raise AssertionError, "foo"
+&gt;&gt;&gt; p = PersonClass3()
+&gt;&gt;&gt; t.render(Context({"person": p}))
+Traceback (most recent call last):
+...
+AssertionError: foo
+&gt;&gt;&gt; class SilentAssetionError(AssertionError):
+...     silent_variable_failure = True
+&gt;&gt;&gt; class PersonClass4:
+...     def first_name(self):
+...         raise SilentAssertionError
+&gt;&gt;&gt; p = PersonClass4()
+&gt;&gt;&gt; t.render(Context({"person": p}))
+"My name is ."</pre><br />2，方法调用仅仅在它没有参数时起作用，否则系统将继续查找下一个类型(列表索引查询)<br />3，显然一些方法有副作用，让系统访问它们是很愚蠢的，而且很可能会造成安全性问<br />题。<br />例如你有一个BankAccount对象，该对象有一个delete()方法，模板系统不应该允许做下面的事情<br />I will now delete this valuable data. {{ account.delete }}<br />为了防止这种状况，可以在方法里设置一个方法属性alters_data<br />如果设置了alters_data=True的话模板系统就不会执行这个方法：<br /><pre name="code" class="java">def delete(self):
+    # Delete the account
+delete.alters_data = True</pre><br /><br /><strong>不合法的变量怎样处理</strong><br />默认情况下如果变量不存在，模板系统会把它渲染成空string，例如：<br /><pre name="code" class="java">&gt;&gt;&gt; from django.template import Template, Context
+&gt;&gt;&gt; t = Template('Your name is {{ name }}.')
+&gt;&gt;&gt; t.render(Context())
+'Your name is .'
+&gt;&gt;&gt; t.render(Context({'var': 'hello'}))
+'Your name is .'
+&gt;&gt;&gt; t.render(Context({'NAME': 'hello'}))
+'Your name is .'
+&gt;&gt;&gt; t.render(Context({'Name': 'hello'}))
+'Your name is .'</pre><br />系统会静悄悄地显示错误的页面，而不是产生一个异常，因为这种情况通常是人为的错误。<br />在现实情形下，一个web站点因为一个模板代码语法的错误而变得不可用是不可接受的。<br />我们可以通过设置Django配置更改Django的缺省行为，第10章扩展模板引擎会我们会讨论这个<br /><br /><strong>玩玩Context对象</strong><br />大多数情况下你初始化Context对象会传递一个字典给Context()<br />一旦你初始化了Context，你可以使用标准Python字典语法增减Context对象的items：<br /><pre name="code" class="java">&gt;&gt;&gt; from django.template import Context
+&gt;&gt;&gt; c = Context({"foo": "bar"})
+&gt;&gt;&gt; c['foo']
+'bar'
+&gt;&gt;&gt; del c['foo']
+&gt;&gt;&gt; c['foo']
+''
+&gt;&gt;&gt; c['newvariable'] = 'hello'
+&gt;&gt;&gt; c['newvariable']
+'hello'</pre><br />Context对象是一个stack，你可以push()和pop()<br />如果你pop()的太多的话它将触发django.template.ContextPopException：<br /><pre name="code" class="java">&gt;&gt;&gt; c = Context()
+&gt;&gt;&gt; c['foo'] = 'first level'
+&gt;&gt;&gt; c.push()
+&gt;&gt;&gt; c['foo'] = 'second level'
+&gt;&gt;&gt; c['foo']
+'second level'
+&gt;&gt;&gt; c.pop()
+&gt;&gt;&gt; c['foo']
+'first level'
+&gt;&gt;&gt; c['foo'] = 'overwritten'
+&gt;&gt;&gt; c['foo']
+'overwritten'
+&gt;&gt;&gt; c.pop()
+Traceback (most recent call last):
+...
+django.template.ContextPopException</pre><br />第10章你会看到使用Context作为stack自定义模板标签<br /><br /><strong>模板标签和过滤器基础</strong><br />我们已经提到模板系统使用内建的标签和过滤器<br />这里我们看看常见的，附录6包含了完整的内建标签和过滤器，你自己熟悉那个列表来了解可以做什么是个好主意<br /><br /><strong>if/else</strong><br />{% if %}标签计算一个变量值，如果是“true”，即它存在、不为空并且不是false的boolean值<br />系统则会显示{% if %}和{% endif %}间的所有内容：<br /><pre name="code" class="java">{% if today_is_weekend %}
+    &lt;p&gt;Welcome to the weekend!&lt;/p&gt;
+{% else %}
+    &lt;p&gt;Get back to work.&lt;/p&gt;
+{% endif %}</pre><br />{% if %}标签接受and，or或者not来测试多个变量值或者否定一个给定的变量，例如：<br /><pre name="code" class="java">{% if athlete_list and coach_list %}
+    Both athletes and coaches are available.
+{% endif %}
+{% if not athlete_list %}
+    There are no athletes.
+{% endif %}
+{% if athlete_list or coach_list %}
+    There are some athletes or some coaches.
+{% endif %}
+{% if not athlete_list or coach_list %}
+    There are no athletes or there are some coaches.
+{% endif %}
+{% if athlete_list and not coach_list %}
+    There are some athletes and absolutely no coaches.
+{% endif %}</pre><br />{% if %}标签不允许同一标签里同时出现and和or，否则逻辑容易产生歧义，例如下面的标签是不合法的：<br /><pre name="code" class="java">{% if athlete_list and coach_list or cheerleader_list %}</pre><br />如果你想结合and和or来做高级逻辑，只需使用嵌套的{% if %}标签即可：<br /><pre name="code" class="java">{% if athlete_list %}
+    {% if coach_list or cheerleader_list %}
+        We have athletes, and either coaches or cheerleaders!
+    {% endif %}
+{% endif %}</pre><br />多次使用同一个逻辑符号是合法的：<br /><pre name="code" class="java">{% if athlete_list or coach_list or parent_list or teacher_list %}</pre><br />没有{% elif %}标签，使用嵌套的{% if %}标签可以做到同样的事情：<br /><pre name="code" class="java">{% if athlete_list %}
+    &lt;p&gt;Here are the athletes: {{ athlete_list }}.&lt;/p&gt;
+{% else %}
+    &lt;p&gt;No athletes are available.&lt;/p&gt;
+    {% if coach_list %}
+        &lt;p&gt;Here are the coaches: {{ coach_list }}.&lt;/p&gt;
+    {% endif %}
+{% endif %}</pre><br />确认使用{% endif %}来关闭{% if %}标签，否则Django触发TemplateSyntaxError<br /><br /><strong>for</strong><br />{% for %}标签允许你按顺序遍历一个序列中的各个元素<br />Python的for语句语法为for X in Y，X是用来遍历Y的变量<br />每次循环模板系统都会渲染{% for %}和{% endfor %}之间的所有内容<br />例如，显示给定athlete_list变量来显示athlete列表：<br /><pre name="code" class="java">&lt;ul&gt;
+{% for athlete in athlete_list %}
+    &lt;li&gt;{{ athlete.name }}&lt;/li&gt;
+{% endfor %}
+&lt;/ul&gt;</pre><br />在标签里添加reversed来反序循环列表：<br /><pre name="code" class="java">{% for athlete in athlete_list reversed %}
+...
+{% endfor %}
+{% for %}标签可以嵌套：
+{% for country in countries %}
+    &lt;h1&gt;{{ country.name }}&lt;/h1&gt;
+    &lt;ul&gt;
+    {% for city in country.city_list %}
+        &lt;li&gt;{{ city }}&lt;/li&gt;
+    {% endfor %}
+    &lt;/ul&gt;
+{% endfor %}</pre><br />系统不支持中断循环，如果你想这样，你可以改变你想遍历的变量来使得变量只包含你想遍历的值<br />类似的，系统也不支持continue语句，本章后面的“哲学和限制”会解释设计的原则<br />{% for %}标签内置了一个forloop模板变量，这个变量含有一些属性可以提供给你一些关于循环的信息<br />1，forloop.counter表示循环的次数，它从1开始计数，第一次循环设为1，例如：<br /><pre name="code" class="java">{% for item in todo_list %}
+    &lt;p&gt;{{ forloop.counter }}: {{ item }}&lt;/p&gt;
+{% endfor %}</pre><br />2，forloop.counter0类似于forloop.counter，但它是从0开始计数，第一次循环设为0<br />3，forloop.revcounter表示循环中剩下的items数量，第一次循环时设为items总数，最后一次设为1<br />4，forloop.revcounter0类似于forloop.revcounter，但它是表示的数量少一个，即最后一次循环时设为0<br />5，forloop.first当第一次循环时值为True，在特别情况下很有用：<br /><pre name="code" class="java">{% for object in objects %}
+    {% if forloop.first %}&lt;li class="first"&gt;{% else %}&lt;li&gt;{% endif %}
+    {{ object }}
+    &lt;/li&gt;
+{% endfor %}</pre><br />6，forloop.last当最后一次循环时值为True<br /><pre name="code" class="java">{% for link in links %}{{ link }}{% if not forloop.last %} | {% endif %}{% endfor %}</pre><br />7，forloop.parentloop在嵌套循环中表示父循环的forloop：<br /><pre name="code" class="java">{% for country in countries %}
+    &lt;table&gt;
+    {% for city in country.city_list %}
+        &lt;tr&gt;
+            &lt;td&gt;Country #{{ forloop.parentloop.counter }} &lt;/td&gt;
+            &lt;td&gt;City #{{ forloop.counter }}&lt;/td&gt;
+            &lt;td&gt;{{ city }}&lt;/td&gt;
+        &lt;/tr&gt;
+    {% endfor %}
+    &lt;/table&gt;
+{% endfor %}</pre><br />富有魔力的forloop变量只能在循环中得到，当模板解析器到达{% endfor %}时forloop就消失了<br />如果你的模板context已经包含一个叫forloop的变量，Django会用{% for %}标签替代它<br />Django会在for标签的块中覆盖你定义的forloop变量的值<br />在其他非循环的地方，你的forloop变量仍然可用<br />我们建议模板变量不要使用forloop，如果你需要这样做来访问你自定义的forloop，你可以使用forloop.parentloop<br /><br /><strong>ifequal/ifnotequal</strong><br />Django模板系统并不是一个严格意义上的编程语言，所以它并不允许我们执行Python语句<br />（我们会在‘哲学和限制‘一节详细讨论）。<br />然而在模板语言里比较两个值并且在他们一致的时候显示一些内容，确实是一个在常见不过的需求了——所以Django提供了ifequal标签。<br />{% ifequal %}比较两个值，如果相等，则显示{% ifequal %}和{% endifequal %}之间的所有内容：<br /><pre name="code" class="java">{% ifequal user currentuser %}
+    &lt;h1&gt;Welcome!&lt;/h1&gt;
+{% endifequal %}</pre><br />参数可以是硬编码的string，单引号和双引号均可，下面的代码是合法的：<br /><pre name="code" class="java">{% ifequal section 'sitenews' %}
+    &lt;h1&gt;Site News&lt;/h1&gt;
+{% endifequal %}
+{% ifequal section "community" %}
+    &lt;h1&gt;Community&lt;/h1&gt;
+{% endifequal %}</pre><br />和{% if %}一样，{% ifequal %}标签支持{% else %}<br /><pre name="code" class="java">{% ifequal section 'sitenews' %}
+    &lt;h1&gt;Site News&lt;/h1&gt;
+{% else %}
+    &lt;h1&gt;No News Here&lt;/h1&gt;
+{% endifequal %}</pre><br />其它的模板变量，strings，integers和小数都可以作为{% ifequal %}的参数：<br /><pre name="code" class="java">{% ifequal variable 1 %}
+{% ifequal variable 1.23 %}
+{% ifequal variable 'foo' %}
+{% ifequal variable "foo" %}</pre><br />其它的Python类型，如字典、列表或booleans不能硬编码在{% ifequal %}里面，下面是不合法的：<br /><pre name="code" class="java">{% ifequal variable True %}
+{% ifequal variable [1, 2, 3,]%}
+{% ifequal variable {'key': 'value'} %</pre><br />如果你需要测试某个变量是true或false，用{% if %}即可<br /><br /><strong>注释</strong><br />和HTML或编程语言如Python一样，Django模板语言允许注释{# #}，如：<br /><pre name="code" class="java">{# This is a comment #}</pre><br />模板渲染时注释不会输出，一个注释不能分成多行<br />下面的模板渲染时会和模板中的内容一样，注释标签不会解析成注释<br />This is a {# comment goes here<br />and spans another line #}<br />test.<br /><br /><strong>过滤器</strong><br />本章前面提到，模板过滤器是变量显示前转换它们的值的方式，看起来像下面这样：<br /><pre name="code" class="java">{{ name|lower }}</pre><br />这将显示通过lower过滤器过滤后{{ name }}变量的值，它将文本转换成小写<br />使用(|)管道来申请一个过滤器<br />过滤器可以串成链，即一个过滤器的结果可以传向下一个<br />下面是escape文本内容然后把换行转换成p标签的习惯用法：<br /><pre name="code" class="java">{{ my_text|escape|linebreaks }}</pre><br />有些过滤器需要参数，需要参数的过滤器的样子：<br /><pre name="code" class="java">{{ bio|truncatewords:"30" }}</pre><br />这将显示bio标量的前30个字，过滤器参数一直使用双引号<br />下面是一些最重要的过滤器：<br />1，addslashed，在任何后斜线，单引号，双引号前添加一个后斜线<br />当你把一些文本输出到一个JavaScript字符串时这会十分有用<br />2，date，根据一个格式化string参数来格式化date或datetime对象，例如：<br /><pre name="code" class="java">{{ pub_date|date:"F j, Y" }}</pre><br />格式化string会在附录6定义<br />3，escape，避免给定的string里出现and符，引号，尖括号<br />当你处理用户提交的数据和确认合法的XML和XHTML数据时这将很有用<br />escape将作如下的一些转换：<br /><pre name="code" class="java">
+Converts &amp; to &amp;amp;amp;
+Converts &lt; to &amp;amp;lt;
+Converts &gt; to &amp;amp;gt;
+Converts "(双引号) to &amp;amp;quot;
+Converts '(单引号) to &amp;amp;#39;
+</pre><br />4，length，返回值的长度，你可以在一个list或string上做此操作<br />或者在任何知道怎样决定自己的长度的Python对象上做此操作(即有一个__len__()方法的对象)<br /><br /><strong>哲学和限制</strong><br />现在我们对于Django地模板系统有了一个感性的认识，下面我们将指出一些有意为之的限制和它工作的哲学<br />不像其他Web程序组件，程序员对模板系统的意见非常不一致<br />一个很有意思的事实：Python至少拥有数十个——如果没有上百个——的开源模板语言实现，而且看来每一个都是因为其创造者认为现有的模板不能满足他们的要求。<br />（事实上，据说写一个自己的模板系统是已经成了Python开发者必经的仪式了。如果你还没有写过自己的模板系统，试试看吧，真是很有意思。）<br />所以，Django的第一个哲学就是Django不强求你使用它的模板语言<br />Django的目标是提供一个full-stack框架，提供所有必须的web开发模块进行高效开发<br />很多时候，使用Django的模板系统很方便，但不强求你使用它<br />下面的“在视图中使用模板”一节我们会看到在Django中使用另一套模板语言，它同样简单易用<br />但我们仍强烈需要Django的模板语言的工作方式，模板系统深植于World Online和Django发明者的<br />Web开发方式中，下面是其中一些哲学：<br />1，业务逻辑应该和呈现逻辑分离<br />模板系统应该只负责控制显示和显示相关的逻辑我们视模板为一种控制显示和显示相关逻辑的工具，仅此而已。模板系统的功能就止于此。<br />基于这个原因，Django模板无法直接调用Python代码。在Django模板里，所有的程序设计活动都止于对标签的使用。<br />虽然你可以自定义模板标签来做任意的事情，但Django自己的模板标签不允许执行Python代码。<br />2，语法应该和HTML/XML解耦<br />Django的模板系统采用非HTML格式，如普通的文本，有些其它的模板语言是基于XML的<br />XML的格式容易输错，并且XML的模板解析速度也容易变得很慢而难以接受<br />3，页面设计者被假定为熟悉HTML代码<br />Django模板系统没有设计成可以在Dreamweaver等WYSISYG编辑器中显示良好<br />这类编辑器有很多限制，Django希望模板作者直接编辑HTML时感到舒适<br />4，页面设计者被假定为不是Python程序员<br />模板系统的作者意识到大部分Web页面的模板是页面设计者写的而不是Python程序员写的<br />他们不具备Python知识，但Django也允许模板用Python来写，它提供了一种直接编写Python代码<br />来扩展模板系统的方法(第10章会介绍更多)<br />5，目标不是发明一种编程语言<br />目标只是提供足够的编程功能，如分支和循环等决定呈现相关的逻辑用<br />由于上述的设计哲学，Django模板系统产生如下限制：<br />1，模板不能设置和改变变量的值<br />可以通过自定义模板标签来达到这个目标(I参看第10章)，但是内置Django模板标签不允许这样做<br />2，模板不能调用原生Python代码<br />但是也可以通过自定义标签来做这件事情<br /><br /><strong>在视图里使用模板</strong><br />我们已经学习了使用模板系统的基础，现在我们来在前一章中的current_datetime视图中使用它：<br /><pre name="code" class="java">
+from django.http import HttpResponse
+import datetime
+
+def current_datetime(request):
+    now = datetime.datetime.now()
+    html = "&lt;html&gt;&lt;body&gt;It is now %s.&lt;/body&gt;&lt;/html&gt;" % now
+    return HttpResponse(html)
+</pre><br />让我们把这个试图改成Django模板系统的做法，首先你可能想这样做：<br /><pre name="code" class="java">
+from django.template import Template, Context
+from django.http import HttpResponse
+import datetime
+
+def current_datetime(request):
+    now = datetime.datetime.now()
+    t = Template("&lt;html&gt;&lt;body&gt;It is now {{ current_date }}.&lt;/body&gt;&lt;/html&gt;")
+    html = t.render(Context({'current_date': now}))
+    return HttpResponse(html)
+</pre><br />这当然用到了模板系统，但它并没有解决我们本章开始介绍的问题，模板仍然嵌在Python代码里面<br />让我们通过把模板放在一个单独的文件里来解决它，一个简陋的方式就是把模板保存在文件系统中然后使用Python内建的文件读取功能得到模板的内容，下面来看看这样做的例子：<br /><pre name="code" class="java">
+from django.template import Template, Context
+from django.http import HttpResponse
+import datetime
+
+def current_datetime(request):
+    now = datetime.datetime.now()
+    # Simple, "dumb" way of saving templates on the filesystem.
+    # This doesn't account for missing files!
+    fp = open('/home/djangouser/templates/mytemplate.html')
+    t = Template(fp.read())
+    fp.close()
+    html = t.render(Context({'current_date': now}))
+    return HttpResponse(html)
+</pre><br />这种方式非常不优雅“<br />1，它不会处理丢失的文件，如果mytemplate.html不存在或者不可读，调用open()将触发IOError异常<br />2，它硬编码了你的模板位置，如果你使用这个技术来处理每个视图方法，你就会重复复制模板的位置<br />3，它引入了许多无聊代码，调用open(),fp.reand()和fp.close()需要很多输入而且毫无创造性<br />为了解决这个问题，我们将使用模板载入和模板目录<br /><br /><strong>模板载入</strong><br />Django提供了方便和强大的API来从硬盘载入模板，从而减少调用模板和模板本身的冗余<br />为了使用Django的模板载入API，首先你需要在settings文件里告诉Django你把模板放在哪<br />Django的settings文件时存放你的Django实例的配置的地方，它是一个简单的具有<br />模块级变量的Python模块，其中每个设置都是一个变量<br />当你运行django-admin.py startproject mysite时脚本会为你创建一个默认的settings文件settings.py<br />看看这个文件的内容，它包含了像下面这样的变量：<br /><pre name="code" class="java">
+DEBUG = True
+TIME_ZONE = 'America/Chicago'
+USE_I18N = True
+ROOT_URLCONF = 'mysite.urls'
+</pre><br />它把自己解释的很清楚，这些设置和对应的值是简单的Python变量<br />由于settings文件仅仅是一个普通的Python模块，你可以在设置新变量前做类似于检查某个变量的值等动态的事情，这将避免你的settings文件出现Python语法错误<br />这也意味着你应该避免在settings文件里面出现Python的语法错误<br />后面我们会深入讲解settings文件，现在先来看看TEMPLATE_DIRS设置，它告诉Django的模板载入机制在哪里寻找模板<br />默认情况下它是一个空的元组，选择一个你喜欢的存放模板的地方并添加到TEMPLATE_DIRS中去：<br /><pre name="code" class="java">
+TEMPLATE_DIRS = (
+    '/home/django/mysite/templates',
+)
+</pre><br />需要注意的一些事情：<br />1，你可以指定任何目录，只要那个目录下的目录和模板对于你的Web服务器运行时的用户是可读的<br />如果你找不到一个放置模板的位置，我们推荐你在Django工程目录下创建一个templates目录<br />2，不要忘了模板目录最后的逗号，Python需要逗号来区分单元素元组和括号括起来的语句<br />这是新手经常犯的错误，如果你想避免这个错误，可以用列表来替代元组，单元素列表不需要结尾的逗号<br /><pre name="code" class="java">
+TEMPLATE_DIRS = [
+    '/home/django/mysite/templates'
+]
+</pre><br />元组比列表略微高效，所以我们推荐使用元组<br />3，使用绝对路径很简单，如果你想更灵活和松耦合，你可利用Django的settings文件是简单的Python代码<br />这点来动态构建TEMPLATE_DIRS内容，例如：<br /><pre name="code" class="java">
+import os.path
+
+TEMPLATE_DIRS = (
+    os.path.join(os.path.dirname(__file__), 'templates'),
+)
+</pre><br />这个例子使用了富有魔力的Python变量__file__，它会被自动设成当前代码所在的Python模块的文件名<br />4，如果你使用Windows，加上硬盘号并使用Unix风格的前斜线而不是后斜线，例如：<br /><pre name="code" class="java">
+TEMPLATE_DIRS = (
+    'C:/www/django/templates',
+)
+</pre><br />设置好TEMPLATE_DIRS，下一步就是使用Django的模板载入功能而不是硬编码模板路径来测试代码<br />让我们回到current_datetime视图看看：<br /><pre name="code" class="java">
+from django.template.loader import get_template
+from django.template import Context
+from django.http import HttpResponse
+import datetime
+
+def current_datetime(request):
+    now = datetime.datetime.now()
+    t = get_template('current_datetime.html')
+    html = t.render(Context({'current_date': now}))
+    return HttpResponse(html)
+</pre><br />这个例子中我们使用了django.template.loarder.get_template()方法而不是从文件系统手动载入模板<br />get_template()方法使用模板名作为参数，算出模板在文件系统的什么地方，打开它并返回编译好的Template对象<br />如果get_template()方法不能找到给定名字的模板，它将触发TemplateDoesNotExist异常<br />为了看看到底是什么样子，启动Djang server，打开浏览器访问<a href="http://127.0.0.1:8000/now/" target="_blank">http://127.0.0.1:8000/now/</a><br />假设你的DEBUG设为True并且你没有创建current_datetime.html模板，你将看到一个高亮显示<br />TemplateDoesNotExist异常的出错页面<br />出错页面和第3章那个很类似，但它还有一个“Template-loader postmortem”部分<br />这个部分告诉你Django尝试载入哪个模板以及每个尝试失败了的原因(如“File does not exist”)<br />当你尝试debug模板载入错误时这些信息是非常有价值的<br />如同你能在出错信息中看到的一样，Django试图把TEMPLATE_DIRS中设置的值和传入get_template()方法的模板名字组合起来查找模板文件。<br />如果你的TEMPLATE_DIRS中包含'/home/django/templates'，最后查找到的文件可能像这样：'/home/django/templates/current_datetime.html.'<br />接下来，在你的模板目录下创建current_datetime.html文件并使用如下的模板代码：<br /><pre name="code" class="java">
+&lt;html&gt;&lt;body&gt;It is now {{ current_date }}.&lt;/body&gt;&lt;/html&gt;
+</pre><br />刷新浏览器页面你将看到完整渲染的页面<br /><br /><strong>render_to_response()</strong><br />Django提供了一个捷径来使用一行代码完成载入模板，填充Context，渲染模板，返回HttpResponse对象的工作<br />这就是render_to_response()，它在django.shortcuts模块下<br />大部分情况下，你都会使用render_to_response()而不是手动完成上述的事情<br />下面是利用render_to_response()把current_datetime重写后的例子：<br /><pre name="code" class="java">
+from django.shortcuts import render_to_response
+import datetime
+
+def current_datetime(request):
+    now = datetime.datetime.now()
+    return render_to_response('current_datetime.html', {'current_date': now})
+</pre><br />多么不同啊!我们来看看这些代码:<br />1，我们不在import get_template,Template,Context或者HttpResponse<br />相反，我们import django.shortcuts.render_to_response，import datetime仍然存在<br />2，使用current_datetime方法，我们仍然计算now，但载入模板，创建context，渲染模板和<br />创建HttpResponse全部被render_to_response()替换，render_to_response返回HttpResponse对象<br />render_to_response()的第一个参数应该是使用的模板名，对应到模板目录的相对路径<br />第二个参数如果有的话应该是一个用来创建Context的字典<br />如果你不提供第二个参数，render_to_response()将使用一个空的字典<br /><br /><strong>locals()小技巧</strong><br />看看最近的current_datetime：<br /><pre name="code" class="java">
+def current_datetime(request):
+    now = datetime.datetime.now()
+    return render_to_response('current_datetime.html', {'current_date': now})
+</pre><br />这个例子中你会发现你自己计算一些值后存储在变量中(例如now)并传递给模板<br />懒程序员可能会觉得有点繁琐，既要给临时变量取名又要给模板变量取名<br />这不仅仅是冗余，这是过度输入<br />如果你很懒或者你想保持代码整洁，使用Python内建的locals()方法<br />locals()返回一个包含当前作用域里面的所有变量和它们的值的字典，上面的代码可以重写：<br /><pre name="code" class="java">
+def current_datetime(request):
+    current_date = datetime.datetime.now()
+    return render_to_response('current_datetime.html', locals())
+</pre><br />这里我们传递locals()的值而不是手动指定context字典，locals()包含了所有定义在当前方法的变量<br />而且，我们把now变量重命名为current_date，因为模板需要的是这个变量名<br />这个例子中locals()不会给你太大改善，但这个技术可以帮你少敲键盘<br />使用locals()需要注意的是它包含了所有当前变量，可能包括比你的模板想访问的更多的变量<br />上面的例子中，locals()也包括request变量，这依赖于你的程序<br />最后要注意的是locals()导致了一点点开销，因为Python不得不动态创建字典<br />如果你手动指定context字典则可以避免这项开销<br /><br /><strong>get_template()的子目录</strong><br />将所有的模板都放在同一个目录下是很笨的方式，你可能想把模板存放模板目录的子目录下<br />这是可以的，事实上我们推荐这样做，并且一些其它高级Django特性，如第9章会提到的generic view系统<br />也希望这样的模板结构作为默认的惯例用法<br />达到这点很容易，如果你希望访问子目录下的模板，只需在模板名前面添加子目录名和斜线即可：<br /><pre name="code" class="java">
+t = get_template('dateapp/current_datetime.html')
+</pre><br />因为render_to_response()是对get_template()的小包装，你可以在它身上作同样的事情<br />对子目录的深度并没有限制，Windows用户注意使用前斜线而不是后斜线，get_template()使用Unix风格文件名<br /><br /><strong>include模板标签</strong><br />我们已经学习了模板载入机制，我们要介绍一个利用这个机制的内建标签:{% include %}<br />这个标签允许你引入另一个模板的内容，标签的参数是你想引入的模板的名字，名字可以是变量，<br />也可以是单引号或双引号表示的string<br />下面两个例子引入了模板nav.html的内容，这表示单引号和双引号都是允许的：<br /><pre name="code" class="java">
+{% include 'nav.html' %}
+{% include "nav.html" %}
+</pre><br />下面的例子引入了includes/nav.html模板：<br /><pre name="code" class="java">
+{% include 'includes/nav.html' %}
+</pre><br />下面的例子引入了一个名字存在于template_name变量中的模板：<br /><pre name="code" class="java">
+{% include template_name %}
+</pre><br />和get_template()一样，请求的模板名前面会加上TEMPLATE_DIRS<br />如果被引入的模板中包含任何的模板代码，如标签和变量等，它将用父模板的context计算它们<br />如果给定的模板名不存在，Django将做下面两件事情中的一件：<br />1，如果DEBUG设置为True，你将看到一个TemplateDoesNotExist异常的错误页面<br />2，如果DEBUG设置为False，标签将什么也不显示<br /><br /><strong>模板继承</strong><br />我们的模板例子现在还是HTML片断，但是真实世界你将使用Django模板系统输出完整的HTML页面<br />这将导致常见的Web开发问题：怎样减少一个常见页面区域的重复和冗余(如全站导航)？<br />解决这个问题的经典方式是使用服务器端引入和导向，你可以在你的HTML里面嵌套另一个页面<br />Django确实也支持这种方式，上面介绍的{% include %}模板标签就是这种方案<br />但是解决这个问题的更好的方式是Django的更优雅的方式模板继承<br />本质上来说，模板继承使你能够构建一个“骨架”模板，里面包含你的网站的通用部分，并且在里面<br />定义子模板可以覆盖的“块”，让我们看看前面的例子，编辑current_datetime.html文件：<br /><pre name="code" class="java">
+&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;title&gt;The current time&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;My helpful timestamp site&lt;/h1&gt;
+    &lt;p&gt;It is now {{ current_date }}.&lt;/p&gt;
+
+    &lt;hr&gt;
+    &lt;p&gt;Thanks for visiting my site.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre><br />看起来不错，但是当我们为另一个视图创建另一个模板时(如hours_ahead视图)，如果我们想再创建<br />一个完整的合法的HTML模板，我们将创建下面的内容：<br /><pre name="code" class="java">
+&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;title&gt;Future time&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;My helpful timestamp site&lt;/h1&gt;
+    &lt;p&gt;In {{ hour_offset }} hour(s), it will be {{ next_time }}.&lt;/p&gt;
+
+    &lt;hr&gt;
+    &lt;p&gt;Thanks for visiting my site.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre><br />显然我们重复了很多HTML内容，想象一下，如果我们在每个页面都有一些样式表，导航条，JavaScript...<br />我们将会在每个模板加入重复的HTML内容<br />这个问题的服务器端解决方案是取出模板中通用的部分然后存放在一个单独的模板中，然后被每个模板引入<br />可能你会把它们存放在一个叫header.html中：<br /><pre name="code" class="java">
+&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+</pre><br />可能还需把底下的东西存在一个叫footer.html的文件中：<br />&lt;hr&gt;<br />&nbsp;&nbsp;&nbsp; &lt;p&gt;Thanks for visiting my site.&lt;/p&gt;<br />&lt;/body&gt;<br />&lt;/html&gt;<br />使用基于引入的策略，头和尾很容易，但是中间的东西就很混乱<br />例子中，每个页面有一个title<br /><pre name="code" class="java">
+&lt;h1&gt;My helpful timestamp site&lt;/h1&gt;
+</pre><br />但是title不能放到hear.html中，因为每个页面中的title是不同的<br />Django的模板继承系统解决了这种问题，你可以认为它是服务器引入的“相反”版本<br />我们定义不同的部分而不是定义相同的部分<br />第一步是建立基本模板，即你的子模板的框架，下面是一个基本模板的例子：<br /><pre name="code" class="java">
+&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;title&gt;{% block title %}{% endblock %}&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;My helpful timestamp site&lt;/h1&gt;
+    {% block content %}{% endblock %}
+    {% block footer %}
+    &lt;hr&gt;
+    &lt;p&gt;Thanks for visiting my site.&lt;/p&gt;
+    {% endblock %}
+&lt;/body&gt;
+&lt;/html&gt;
+</pre><br />我们把这个模板叫做base.html，它定义了我们用来在其它页面使用的基本HTML框架<br />现在就是子模板覆盖的工作了，要么添加内容，要么不改变块的内容<br />(如果你在照着例子做，把base.html保存到模板目录下)<br />这里我们使用了{% block %}模板标签，它告诉模板引擎一个子模板可能覆盖模板的这部分内容<br />既然我们有了基本模板，下面我们来编辑current_datetme.html来使用它：<br /><pre name="code" class="java">
+{% extends "base.html" %}
+
+{% block title %}The current time{% endblock %}
+
+{% block content %}
+&lt;p&gt;It is now {{ current_date }}.&lt;/p&gt;
+{% endblock %}
+</pre><br />同时我们也创建一个hours_ahead模板来使用基本模板：<br /><pre name="code" class="java">
+{% extends "base.html" %}
+
+{% block title %}Future time{% endblock %}
+
+{% block content %}
+&lt;p&gt;In {{ hour_offset }} hour(s), it will be {{ next_time }}.&lt;/p&gt;
+{% endblock %}
+</pre><br />这样是不是更美观一些？每个模板只包含属于自己的代码，根本没有冗余<br />如果你想做整个网站的改动，只需要更改base.html即可，其它的模板也会立即响应改动<br />它是这样工作的：<br />1，当你载入模板current_datetime.html，模板引擎发现{% extends %}标签，注意到这是一个子模板<br />模板引擎马上载入父模板base.html<br />2，模板引擎在base.html里发现了3个{% block %}标签，就用子模板的内容替换了这些块<br />于是我们定义的{% block title %}和{% block content %}被使用<br />注意，既然子模板没有定义footer块，那么模板系统直接使用父模板的值<br />父模板里{% block %}标签的内容一直可以作为后援方案<br />你可以使用任意等级的继承，使用继承的常用方式是按以下三个步骤：<br />1，创建base.html模板来掌控你的网站的整体外观，它的内容很少改变<br />2，为你的网站创建base_SECTION.html模板，例如，base_photos.html，base_forum.html<br />这些模板继承base.html并且包括部分专有的风格和设计<br />3，为每个类别的页面创建单独的模板，例如论坛页面护着照片图库页面<br />这些模板继承相应的部分模板<br />这个方法最大化了代码重用并且很容易向公用区域添加东西，例如部分专有的导航<br />下面是一些关于模板继承的小提示：<br />1，如果在模板里使用{% extends %}的话，这个标签必须在所有模板标签的最前面，否则模板继承不工作<br />2，通常基本模板里的{% block %}越多越好，子模板不必定义所有的父block，钩子越多越好<br />3，如果你在很多模板里复制代码，很可能你应该把这些代码移动到父模板里<br />4，如果你需要得到父模板的块内容，{{ block.super }}变量可以帮你完成工作<br />当你需要给父块添加内容而不是取代它的时候这就很有用<br />5，不能在同一模板里定义多个同名的{% block %}，因为块标签同时在两个地方工作，不仅仅<br />在子模板中，而且在父模板中也填充内容，如果子模板有两个同名的标签，父模板将不能决定<br />使用哪个块内容来使用<br />6，你给{% extends %}传递的模板名同样会被get_template()使用，所以会加上TEMPLATE_DIRS设置<br />7，大部分情况下，{% extends %}的参数是string，但是也可以是变量，如果知道运行时才知道<br />父模板的名字，这可以帮助你做一些很cool的动态内容<br /><br /><strong>练习</strong><br />下面是一些巩固你所学本章知识的练习，这里我们介绍了一些新的技巧<br />1，你有一个音乐家和他们的音乐的列表，它们存储在一个字典的列表里，并且硬编码在你的视图模块<br />(通常我们使用数据库来存放这些数据，但是目前我们还没讲到Django的数据库层)，列表如下：<br /><pre name="code" class="java">
+MUSICIANS = [
+    {'name': 'Django Reinhardt', 'genre': 'jazz'},
+    {'name': 'Jimi Hendrix',     'genre': 'rock'},
+    {'name': 'Louis Armstrong',  'genre': 'jazz'},
+    {'name': 'Pete Townsend',    'genre': 'rock'},
+    {'name': 'Yanni',            'genre': 'new age'},
+    {'name': 'Ella Fitzgerald',  'genre': 'jazz'},
+    {'name': 'Wesley Willis',    'genre': 'casio'},
+    {'name': 'John Lennon',      'genre': 'rock'},
+    {'name': 'Bono',             'genre': 'rock'},
+    {'name': 'Garth Brooks',     'genre': 'country'},
+    {'name': 'Duke Ellington',   'genre': 'jazz'},
+    {'name': 'William Shatner',  'genre': 'spoken word'},
+    {'name': 'Madonna',          'genre': 'pop'},
+]
+</pre><br />写一个Django视图来显示HTML的table，列表中的每个音乐家按顺序显示为一行<br />每行有两列，分别显示音乐家名字和他的音乐<br />2，一旦完成上述任务，把table中音乐是jazz或者rock的音乐家的名字样式设为粗体<br />使用style="font-weight: bold;"来修饰td格<br />3，一旦完成上述任务：给名字为一个字的音乐家的名字后加上星号<br />并且在页面上添加脚注“* Pretentious”前面的粗体字不变<br />4，下面有3个模板，请你设计继承关系并且尽可能多的去除冗余<br />模板1：<br /><pre name="code" class="java">
+&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;link rel="stylesheet" href="default.css" type="text/css"&gt;
+    &lt;title&gt;My to-do list&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1 id="top"&gt;Latest tasks&lt;/h1&gt;
+    {% if task_list %}
+        &lt;ul&gt;
+        {% for task in task_list %}&lt;li&gt;{{ task }}&lt;/li&gt;{% endfor %}
+        &lt;/ul&gt;
+    {% else %}
+        &lt;p&gt;You have no tasks.&lt;/p&gt;
+    {% endif %}
+    &lt;hr&gt;
+    &lt;p&gt;&lt;a href="#top"&gt;Back to top&lt;/a&gt;.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre><br />模板2：<br /><pre name="code" class="java">
+&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;title&gt;Task: {{ task.title }} | To-do list&lt;/title&gt;
+    &lt;link rel="stylesheet" href="default.css" type="text/css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1 id="top"&gt;{{ task.title }}&lt;/h1&gt;
+    &lt;p&gt;{{ task.description }}&lt;/p&gt;
+    &lt;hr&gt;
+    &lt;p&gt;&lt;a href="#top"&gt;Back to top&lt;/a&gt;.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre><br />模板3：<br /><pre name="code" class="java">
+&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;title&gt;Completed tasks | To-do list&lt;/title&gt;
+    &lt;link rel="stylesheet" href="default.css" type="text/css"&gt;
+    &lt;script type="text/javascript" src="completed.js"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1 id="top"&gt;{{ task.title }}&lt;/h1&gt;
+    &lt;p&gt;{{ task.description }}&lt;/p&gt;
+    &lt;hr&gt;
+    &lt;p&gt;&lt;a href="#top"&gt;Back to top&lt;/a&gt;.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre><br /><br /><strong>练习答案</strong><br />1，下面是一个可能的视图实现：<br /><pre name="code" class="java">
+from django.shortcuts import render_to_response
+
+MUSICIANS = [
+    # ...
+]
+
+def musician_list(request):
+    return render_to_response('musician_list.html', {'musicians': MUSICIANS})
+</pre><br />以及模板：<br /><pre name="code" class="java">
+&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;title&gt;Musician list&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;table&gt;
+    &lt;tr&gt;&lt;th&gt;Musician&lt;/th&gt;&lt;th&gt;Genre&lt;/th&gt;&lt;/tr&gt;
+    {% for musician in musicians %}
+        &lt;tr&gt;
+        &lt;td&gt;{{ musician.name }}&lt;/td&gt;
+        &lt;td&gt;{{ musician.genre }}&lt;/td&gt;
+        &lt;/tr&gt;
+    {% endfor %}
+    &lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre><br />2，笨拙的方式是使用在模板中使用{% ifequal %}，视图和上面的保持不变，模板如下：<br /><pre name="code" class="java">
+{% for musician in musicians %}
+    &lt;tr&gt;
+    &lt;td {% ifequal musician.genre 'jazz' %}style="font-weight: bold;"{% endifequal %}
+        {% ifequal musician.genre 'rock' %}style="font-weight: bold;"{% endifequal %}&gt;
+      {{ musician.name }}
+    &lt;/td&gt;
+    &lt;td&gt;{{ musician.genre }}&lt;/td&gt;
+    &lt;/tr&gt;
+{% endfor %}
+</pre><br />这显得很罗嗦而且容易出错，Django模板系统的关键是知道显示什么<br />因为模板没有完备的编程语言环境的能力，在视图里做尽可能多的业务逻辑更重要<br />这样一来，更清晰的解决问题的方式就是预处理音乐家的名字是否粗体<br />毕竟这是业务逻辑而不是呈现逻辑，呈现逻辑指出怎样显示特殊的类别而不是决定哪些类别是特殊的<br />这是很重要的区别，下面是视图的代码：<br /><pre name="code" class="java">
+def musician_list(request):
+    musicians = []
+    for m in MUSICIANS:
+        musicians.append({
+            'name': m['name'],
+            'genre': m['genre'],
+            'is_important': m['genre'] in ('rock', 'jazz'),
+        })
+    return render_to_response('musician_list.html', {'musicians': musicians})
+</pre><br />然后这样使用模板代码：<br /><pre name="code" class="java">
+{% for musician in musicians %}
+    &lt;tr&gt;
+    &lt;td{% if musician.is_important %} style="font-weight: bold;"{% endif %}&gt;
+      {{ musician.name }}
+    &lt;/td&gt;
+    &lt;td&gt;{{ musician.genre }}&lt;/td&gt;
+    &lt;/tr&gt;
+{% endfor %}
+</pre><br />看看这个模板是不是更清晰？这比通常情况更复杂，通常你会和数据库对象打交道，而数据库对象<br />会有自定义方法(如is_important())，下一章我们会讲到数据库对象<br />3，同上一题很类似，解决方法也很类似，关键是预处理音乐家是否需要在名字后面加星号<br />这属于业务逻辑，它属于视图，下面是视图的一种实现：<br /><pre name="code" class="java">
+def musician_list(request):
+    musicians = []
+    for m in MUSICIANS:
+        musicians.append({
+            'name': m['name'],
+            'genre': m['genre'],
+            'is_important': m['genre'] in ('rock', 'jazz'),
+            'is_pretentious': ' ' not in m['name'],
+        })
+    return render_to_response('musician_list.html', {'musicians': musicians})
+</pre><br />我们使用' ' not in m['name']表达式，如果m['name']不包含空格就返回True，你也可以使用.find()方法：<br /><pre name="code" class="java">
+'is_pretentious': m['name'].find(' ') == -1
+</pre><br />注意我们调用的是is_pretentious而不是has_asterisk，因为使用星号是由呈现层来决定的<br />我们使用下面的模板代码：<br /><pre name="code" class="java">
+{% for musician in musicians %}
+    &lt;tr&gt;
+    &lt;td{% if musician.is_important %} style="font-weight: bold;"{% endif %}&gt;
+      {{ musician.name }}{% if musician.is_pretentious %}*{% endif %}
+    &lt;/td&gt;
+    &lt;td&gt;{{ musician.genre }}&lt;/td&gt;
+    &lt;/tr&gt;
+{% endfor %}
+</pre><br />别忘了模板底部加上“* Pretentious.”<br />为了加分，你应该成为专家而仅当至少有一个被修饰的音乐家时显示“* Pretentious”脚注<br />想下面这样决定视图里是否有被修饰的音乐家<br /><pre name="code" class="java">
+def musician_list(request):
+    musicians = []
+    has_pretentious = False
+    for m in MUSICIANS:
+        if ' ' not in m['name']:
+            has_pretentious = True
+        musicians.append({
+            'name': m['name'],
+            'genre': m['genre'],
+            'is_important': m['genre'] in ('rock', 'jazz'),
+            'is_pretentious': ' ' not in m['name'],
+        })
+    return render_to_response('musician_list.html', {
+        'musicians': musicians,
+        'has_pretentious': has_pretentious,
+    })
+</pre><br />我们多传递一个模板变量has_pretentious，这样在模板中使用它：<br /><pre name="code" class="java">
+{% if has_pretentious %}* Pretentious{% endif %}
+</pre><br />4，这里是基本模板的一种实现：<br /><pre name="code" class="java">
+&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"&gt;
+    &lt;html lang="en"&gt;
+    &lt;head&gt;
+        &lt;link rel="stylesheet" href="default.css" type="text/css"&gt;
+        &lt;title&gt;{% block title %}{% endblock %}&lt;/title&gt;
+        {% block extrahead %}{% endblock %}
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1 id="top"&gt;{% block headline %}{% endblock %}&lt;/h1&gt;
+        {% block content %}{% endblock %}
+        &lt;hr&gt;
+        &lt;p&gt;&lt;a href="#top"&gt;Back to top&lt;/a&gt;.&lt;/p&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
+</pre><br />模板1：<br /><pre name="code" class="java">
+{% extends "base.html" %}
+
+{% block title %}My to-do list{% endblock %}
+
+{% block headline %}Latest tasks{% endblock %}
+
+{% block content %}
+{% if task_list %}
+    &lt;ul&gt;
+    {% for task in task_list %}&lt;li&gt;{{ task }}&lt;/li&gt;{% endfor %}
+    &lt;/ul&gt;
+{% else %}
+    &lt;p&gt;You have no tasks.&lt;/p&gt;
+{% endif %}
+{% endblock %}
+</pre><br />模板2：<br /><pre name="code" class="java">
+{% extends "base.html" %}
+
+{% block title %}Task: {{ task.title }} | To-do list{% endblock %}
+
+{% block headline %}{{ task.title }}{% endblock %}
+
+{% block content %}&lt;p&gt;{{ task.description }}&lt;/p&gt;{% endblock %}
+</pre><br />模板3：<br /><pre name="code" class="java">
+{% extends "base.html" %}
+
+{% block title %}Completed tasks | To-do list{% endblock %}
+
+{% block extrahead %}&lt;script type="text/javascript" src="completed.js"&gt;{% endblock %}
+
+{% block headline %}{{ task.title }}{% endblock %}
+
+{% block content %}&lt;p&gt;{{ task.description }}&lt;/p&gt;{% endblock %}
+</pre><br />注意我们喜欢在几个{% block %}部分之间放置一个空行，但这只是个人风格<br />子模板中{% block %}标签以外的任何内容都不会被渲染
+  </div>
+
+  
+
+  

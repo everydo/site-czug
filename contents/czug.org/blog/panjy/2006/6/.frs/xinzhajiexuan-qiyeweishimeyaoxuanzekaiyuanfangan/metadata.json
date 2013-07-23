@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "xinzhajiexuan-qiyeweishimeyaoxuanzekaiyuanfangan"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "有个朋友来信询问，企业为什么要选择开源的Plone方案。", 
+        "modified": "2006-06-28 11:02:25", 
+        "title": "信札节选：企业为什么要选择开源方案？"
+    }
+}

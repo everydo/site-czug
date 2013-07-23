@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "mail-line-wrap"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "实际中经常需要进行文字折行(word-wrap)处理，典型的应用是对邮件文本的自动折行，中文支持颇为不易，这里介绍一个python的实现算法。", 
+        "modified": "2004-12-12 11:11:01", 
+        "title": "文字折行算法的中文支持"
+    }
+}

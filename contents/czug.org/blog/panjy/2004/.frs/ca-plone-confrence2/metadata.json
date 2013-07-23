@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "ca-plone-confrence2"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "如题", 
+        "modified": "2004-08-06 11:29:49", 
+        "title": "CA是第二次Plone大会的主要资助方"
+    }
+}

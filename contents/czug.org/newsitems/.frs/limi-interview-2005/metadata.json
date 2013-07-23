@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "limi-interview-2005"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "作为一个研究项目的一部分，Alexander Limi就Plone的历史、社区和未来接受了采访。", 
+        "modified": "2005-09-14 23:28:26", 
+        "title": "对Plone创始人Limi的采访"
+    }
+}

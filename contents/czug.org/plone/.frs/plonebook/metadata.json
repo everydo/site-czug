@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "id": "plonebook"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "即PloneBook，Plone的用户文档，适合plone的网站开发定制管理人员使用", 
+        "modified": "2006-02-20 17:01:06", 
+        "title": "Plone 过时文档"
+    }
+}

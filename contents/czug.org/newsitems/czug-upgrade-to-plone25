@@ -1,0 +1,29 @@
+
+<p>经过不懈努力，现在CZUG.org已经升级至：</p>
+
+<ul>
+<li>Python 2.4.x</li>
+
+<li>Zope 2.9.x</li>
+
+<li>Plone 2.5.x</li>
+</ul>
+
+网站的用户数据仍然保存在LDAP服务器中，现在采用Plone 2.5的PlonePAS +
+LDAPMultiPluggins进行连接。<br />
+<br />
+同时对网站的内容进行了部分调整，包括:<br />
+<ul>
+<li>完善首页</li>
+
+<li>完善zope/plone文档区，提供更加友好的提示说明<br />
+</li>
+
+<li>将过时的产品区迁移到Plone区的<a href="../plone/products">插件产品栏目</a>中，便于大家补充维护一些优秀的产品信息。</li>
+
+<li>对论坛Ploneboad进行了汉化</li>
+</ul>
+
+czug的内容的整理任务是长期的，我们会不断完善。<br />
+<br />
+社区成员的积极参与是我们czug不断成长的直接动力。如果大家在使用过程中发现任何问题，或者有什么建议，或者希望参与维护和优化czug网站内容，请<a href="../../contact-info">和我们联系</a>。我们非常欢迎您的参与！

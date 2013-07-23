@@ -1,0 +1,5 @@
+description: '我是CZUG.org的站长，我专注：Zope/Plone等开源系统，内容管理系统(CMS). 联系我: panjunyong at gmail
+  dot com'
+exclude: [left_col.rst, index.rst]
+order: []
+title: 潘俊勇的Blog

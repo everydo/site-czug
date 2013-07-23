@@ -1,0 +1,33 @@
+{
+    "main": {
+        "contenttype": "Folder",
+        "hidden_keys":["f.py"],
+        "keys":["pr01.htm",
+                "pr02.htm",
+		"ch01.htm",
+		"ch02.htm",
+		"ch03.htm",
+		"ch04.htm",
+		"ch05.htm",
+		"ch06.htm",
+		"ch07.htm",
+		"ch08.htm",
+		"ch09.htm",
+		"ch10.htm",
+		"ch11.htm",
+		"ch12.htm",
+		"ch13.htm",
+		"ch14.htm",
+		"ch15.htm",
+		"ch16.htm",
+		"ch17.htm",
+		"ch18.htm"]
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "如果你是wxPython初学者，你一定会想从第一部分开始。第一章至第三章帮助您夯实wxPython相关概念的坚实基础。第六章则对构建合理大小程序的步骤进行了完整回顾。第五章介绍如何让代码更易于管理的方法，第四章提供了一些协助进行调试、编写wxPython应用的工具。当你开始编写自己的 wxPython程序时，你就已经开始使用第二部分讨论的API了——我们试图按照功能进行组织章节内容，以方便您查找有用的主题。", 
+        "title": "《活学活用wxPython》"
+    }
+}

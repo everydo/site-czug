@@ -1,0 +1,228 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-87310dff5bd8ab893989521783a7d5fa51ba80eb">处理基本的图像</a><ol><li><a href="#head-f24ac95e6e540c86276dccff1990116a528cfbdb">使用图像工作</a><ol><li><a href="#head-84a7aef9154cc0bea9612e0a92f7ea04f62f52d0">如何载入图像？</a></li><li><a href="#head-be6a292d197c9c0cc260c49fc96d50e479a8d8f8">我们能够对图像作些什么？</a></li></ol></li></ol></li></ol></div> <span id="line-2" class="anchor"/><span id="line-3" class="anchor"/><p class="line867">
+</p><h1 id="head-87310dff5bd8ab893989521783a7d5fa51ba80eb">1. 处理基本的图像</h1>
+<span id="line-4" class="anchor"/><span id="line-5" class="anchor"/><span id="line-6" class="anchor"/><p class="line867"><strong>本章内容：</strong> <span id="line-7" class="anchor"/><span id="line-8" class="anchor"/></p><ul><li>装载图像和创建图像对象 <span id="line-9" class="anchor"/><span id="line-10" class="anchor"/></li><li class="gap">创建设备上下文 <span id="line-11" class="anchor"/><span id="line-12" class="anchor"/></li><li class="gap">绘制到设备上下文 <span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></li><li class="gap">绘制文本到设备上下文 <span id="line-15" class="anchor"/><span id="line-16" class="anchor"/></li><li class="gap">管理画刷、画笔和设备坐标 <span id="line-17" class="anchor"/><span id="line-18" class="anchor"/></li></ul><p
+class="line862">任何用户界面工具的最基本的行为就是在屏幕上绘制。在最基本的层面上来说，定义在<tt>wxPython</tt>中的每个窗口部件都是由发送给屏幕的一系列命令构成的。那些绘制命令是否是在<tt>wxPython</tt>代码库中，这依赖于相关窗口部件对于本地操作系统是否是本地化的或完全由<tt>wxPython</tt>所定义的。在这一章，我们将给你展示如何在基本绘制命令层面上控制<tt>wxPython</tt>。我们也将给你展示如何管理和显示其它的图形化元素如图像和字体。 <span id="line-19" class="anchor"/><span id="line-20" class="anchor"/></p><p class="line862">被<tt>wxPython</tt>用于绘制的主要的概念是设备上下文（<tt>device context</tt>）。设备上下文使用一个标准的<tt>API</tt>来管理对设备（如屏幕或打印机）的绘制。设备上下文类用于最基本的绘制功能，如绘制一条直线、曲线或文本。 <span id="line-21" class="anchor"/><span
+id="line-22" class="anchor"/><span id="line-23" class="anchor"/></p><p class="line867">
+</p><h2 id="head-f24ac95e6e540c86276dccff1990116a528cfbdb">1.1. 使用图像工作</h2>
+<span id="line-24" class="anchor"/><span id="line-25" class="anchor"/><span id="line-26" class="anchor"/><p class="line862">大多数的应用程序都需要载入至少一个图像，这些图像存储在外部的文件中。样例包括工具栏图片、光标、图标、启始画面或仅仅用于装饰以增加一些时髦感的图像。传统上，使用图像工作的复杂性是不得不处理用于储存图像的不同的图片文件格式。幸运的是，<tt>wxPython</tt>内部为你做了所有的这些。你将使用相同的抽象概念来处理任何图像，而不用关心它的原始格式。 <span id="line-27" class="anchor"/><span id="line-28" class="anchor"/></p><p class="line862">在随后的几节中，我们将讨论<tt>wxPython</tt>用来管理图像的那么抽象概念，这包括大尺寸图像(<tt>large</tt>-<tt>scale images)</tt>，以及光标图像。你将看到如何装载图像到你的程序中，然后如何操作它们。 <span id="line-29" class="anchor"/><span
+id="line-30" class="anchor"/><span id="line-31" class="anchor"/></p><p class="line867">
+</p><h3 id="head-84a7aef9154cc0bea9612e0a92f7ea04f62f52d0">1.1.1. 如何载入图像？</h3>
+<span id="line-32" class="anchor"/><span id="line-33" class="anchor"/><span id="line-34" class="anchor"/><p class="line862">在<tt>wxPython</tt>中，图像处理是一个双主管系统，与平台无关的图像处理由类<tt>wx.Image</tt>管理，而与平台有关的图像处理由类<tt>wx.Bitmap</tt>管理。实际上，意思就是外部文件格式由<tt>wx.Image</tt>装载和保存，而<tt>wx.Bitmap</tt>负责将图像显示到屏幕。图12.1显示了不同图像和位图的创建，按照不同的文件类型读入。 <span id="line-35" class="anchor"/><span id="line-36" class="anchor"/></p><p class="line862">要从一个文件载入一个图像，使用<tt>wx.Image</tt>的构造函数： <span id="line-37" class="anchor"/><span id="line-38" class="anchor"/></p><p class="line867"><span id="line-39" class="anchor"/><span id="line-40" class="anchor"/></p><div lang="en" dir="ltr"
+class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-794690e8c1bfa491a56dca820549f3e723f94586_000\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-794690e8c1bfa491a56dca820549f3e723f94586_000', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-794690e8c1bfa491a56dca820549f3e723f94586_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Image</span><span class="Operator">(</span><span class="ID">name</span><span class="Operator">,</span> <span class="ID">type</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">BITMAP_TYPE_ANY</span><span class="Operator">,</span> <span class="ID">index</span><span class="Operator">=</span><span class="Operator">-</span><span
+class="Number">1</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-41" class="anchor"/><span id="line-42" class="anchor"/><p class="line867"><strong>图12.1</strong> <span id="line-43" class="anchor"/><span id="line-44" class="anchor"/></p><p class="line867"><img title="attachment:w12.1.gif" src="/moin/WxPythonInAction/ChapterTwelve?action=AttachFile&amp;do=get&amp;target=w12.1.gif" class="attachment"/> <span id="line-45" class="anchor"/><span id="line-46" class="anchor"/><span id="line-47" class="anchor"/></p><p
+class="line862">参数<tt>name</tt>是图像文件的名字，参数<tt>type</tt>（类型）是处理器类型。<tt>type</tt>的<tt>ID</tt>可以是<tt>wx.BITMAP_TYPE_ANY</tt>或表12.1中的一个。如果你使用<tt>wx.BITMAP_TYPE_ANY</tt>，那么<tt>wxPython</tt>将试图自动检测该文件的类型。如果你使用一个特定的文件类型，那么<tt>wxPython</tt>将使用该类型转换这个文件。例12.1显示了如何使用<tt>wx.BITMAP_TYPE_ANY</tt>来载入图像。 <span id="line-48" class="anchor"/><span id="line-49" class="anchor"/><span id="line-50" class="anchor"/></p><p class="line867"><strong>例12.1</strong> <span id="line-51"
+class="anchor"/><strong>载入并缩放简单图像</strong> <span id="line-52" class="anchor"/><span id="line-53" class="anchor"/><span id="line-54" class="anchor"/><span id="line-55" class="anchor"/><span id="line-56" class="anchor"/><span id="line-57" class="anchor"/><span id="line-58" class="anchor"/><span id="line-59" class="anchor"/><span id="line-60" class="anchor"/><span id="line-61" class="anchor"/><span id="line-62" class="anchor"/><span id="line-63" class="anchor"/><span id="line-64" class="anchor"/><span id="line-65" class="anchor"/><span id="line-66" class="anchor"/><span id="line-67"
+class="anchor"/><span id="line-68" class="anchor"/><span id="line-69" class="anchor"/><span id="line-70" class="anchor"/><span id="line-71" class="anchor"/><span id="line-72" class="anchor"/><span id="line-73" class="anchor"/><span id="line-74" class="anchor"/><span id="line-75" class="anchor"/><span id="line-76" class="anchor"/><span id="line-77" class="anchor"/><span id="line-78" class="anchor"/><span id="line-79" class="anchor"/><span id="line-80" class="anchor"/><span id="line-81" class="anchor"/><span id="line-82" class="anchor"/><span id="line-83" class="anchor"/><span id="line-84"
+class="anchor"/><span id="line-85" class="anchor"/><span id="line-86" class="anchor"/><span id="line-87" class="anchor"/><span id="line-88" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-15dafcb839af4169943852b16f80eb38375a26b7_001\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-15dafcb839af4169943852b16f80eb38375a26b7_001', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-15dafcb839af4169943852b16f80eb38375a26b7_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">filenames</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="String">"image.bmp"</span><span class="Operator">,</span> <span class="String">"image.gif"</span><span class="Operator">,</span> <span class="String">"image.jpg"</span><span class="Operator">,</span> <span class="String">"image.png"</span> <span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   4 </span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">class</span> <span class="ID">TestFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">=</span><span class="String">"Loading Images"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">p</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Panel</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">fgs</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">FlexGridSizer</span><span class="Operator">(</span><span class="ID">cols</span><span class="Operator">=</span><span class="Number">2</span><span class="Operator">,</span> <span class="ID">hgap</span><span class="Operator">=</span><span class="Number">10</span><span class="Operator">,</span> <span class="ID">vgap</span><span class="Operator">=</span><span class="Number">10</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ResWord">for</span> <span class="ID">name</span> <span class="ResWord">in</span> <span class="ID">filenames</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  12 </span>            <span class="Comment">#1 从文件载入图像</span></span>
+<span class="line"><span class="LineNumber">  13 </span><span class="Comment"/>            <span class="ID">img1</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Image</span><span class="Operator">(</span><span class="ID">name</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">BITMAP_TYPE_ANY</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span></span>
+<span class="line"><span class="LineNumber">  15 </span>            <span class="Comment"># Scale the oiginal to another wx.Image</span></span>
+<span class="line"><span class="LineNumber">  16 </span><span class="Comment"/>            <span class="ID">w</span> <span class="Operator">=</span> <span class="ID">img1</span><span class="Operator">.</span><span class="ID">GetWidth</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span>            <span class="ID">h</span> <span class="Operator">=</span> <span class="ID">img1</span><span class="Operator">.</span><span class="ID">GetHeight</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span>            <span class="ID">img2</span> <span class="Operator">=</span> <span class="ID">img1</span><span class="Operator">.</span><span class="ID">Scale</span><span class="Operator">(</span><span class="ID">w</span><span class="Operator">/</span><span class="Number">2</span><span class="Operator">,</span> <span class="ID">h</span><span class="Operator">/</span><span class="Number">2</span><span class="Operator">)</span><span class="Comment">#2 缩小图像</span></span>
+<span class="line"><span class="LineNumber">  19 </span></span>
+<span class="line"><span class="LineNumber">  20 </span>            <span class="Comment">#3 转换它们为静态位图部件</span></span>
+<span class="line"><span class="LineNumber">  21 </span><span class="Comment"/>            <span class="ID">sb1</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">StaticBitmap</span><span class="Operator">(</span><span class="ID">p</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">BitmapFromImage</span><span class="Operator">(</span><span class="ID">img1</span><span
+class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  22 </span>            <span class="ID">sb2</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">StaticBitmap</span><span class="Operator">(</span><span class="ID">p</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">BitmapFromImage</span><span class="Operator">(</span><span class="ID">img2</span><span class="Operator">)</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  23 </span></span>
+<span class="line"><span class="LineNumber">  24 </span>            <span class="Comment"># and put them into the sizer</span></span>
+<span class="line"><span class="LineNumber">  25 </span><span class="Comment"/>            <span class="ID">fgs</span><span class="Operator">.</span><span class="ID">Add</span><span class="Operator">(</span><span class="ID">sb1</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  26 </span>            <span class="ID">fgs</span><span class="Operator">.</span><span class="ID">Add</span><span class="Operator">(</span><span class="ID">sb2</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  27 </span></span>
+<span class="line"><span class="LineNumber">  28 </span>        <span class="ID">p</span><span class="Operator">.</span><span class="ID">SetSizerAndFit</span><span class="Operator">(</span><span class="ID">fgs</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  29 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Fit</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  30 </span></span>
+<span class="line"><span class="LineNumber">  31 </span></span>
+<span class="line"><span class="LineNumber">  32 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  33 </span><span class="ID">frm</span> <span class="Operator">=</span> <span class="ID">TestFrame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  34 </span><span class="ID">frm</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  35 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-89" class="anchor"/><span id="line-90" class="anchor"/><p class="line862">上面的代码应该很简单。代码开始是我们想要载入的图像文件的名字，我们使用<tt>wx.BITMAP_TYPE_ANY</tt>类型标记指示<tt>wxPython</tt>去断定图像文件的格式，而用不着我们操心。然后我们使用图像的方法将图像缩小一半，并将图像转换为位图。 <span id="line-91" class="anchor"/><span id="line-92" class="anchor"/></p><p class="line862">你也可以显示地指定图像文件的格式，在下一节，我们将显示<tt>wxPython</tt>所支持的图像文件格式。 <span id="line-93" class="anchor"/><span id="line-94" class="anchor"/><span
+id="line-95" class="anchor"/></p><p class="line867"><strong>指定一个图像文件格式</strong> <span id="line-96" class="anchor"/><span id="line-97" class="anchor"/></p><p class="line862">图像由所用的图像处理器管理。一个图像处理器是<tt>wx.ImageHandler</tt>的一个实例，它为管理图像格式提供了一个插入式的结构。在通常的情况下，你不需要考虑图像处理器是如何工作的。你所需要知道的是每个处理器都有它自己唯一的<tt>wxPython</tt>标识符，用以载入相关格式的文件。表12.1列出了所支持的格式。 <span id="line-98" class="anchor"/><span id="line-99" class="anchor"/><span id="line-100" class="anchor"/></p><p
+class="line867"><strong>表12.1 <tt>wxPython</tt>支持的图像文件格式</strong> <span id="line-101" class="anchor"/><span id="line-102" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line862">处理器类</p></td>
+<td><p class="line862">类型标记</p></td>
+<td><p class="line862">说明</p></td>
+</tr>
+<tr>  <td><span id="line-103" class="anchor"/><p class="line891"><tt>wx.ANIHandler</tt></p></td>
+<td><p class="line891"><tt>wx.BITMAP_TYPE_ANI</tt></p></td>
+<td><p class="line862">动画光标格式。这个处理器只载入图像而不保存它们。</p></td>
+</tr>
+<tr>  <td><span id="line-104" class="anchor"/><p class="line891"><tt>wx.BMPHandler</tt></p></td>
+<td><p class="line891"><tt>wx.BITMAP_TYPE_BMP</tt></p></td>
+<td><p class="line891"><tt>Windows</tt>和<tt>OS</tt>/2位图格式。</p></td>
+</tr>
+<tr>  <td><span id="line-105" class="anchor"/><p class="line891"><tt>wx.CURHandle</tt></p></td>
+<td><p class="line891"><tt>wx.BITMAP_TYPE_CUR</tt></p></td>
+<td><p class="line891"><tt>Windows</tt>光标 图标格式。</p></td>
+</tr>
+<tr>  <td><span id="line-106" class="anchor"/><p class="line891"><tt>wx.GIFHandler</tt></p></td>
+<td><p class="line891"><tt>wx.BITMAP_TYPE_GIF</tt></p></td>
+<td><p class="line862">图形交换格式。由于版权限制，这个处理器不保存图像。</p></td>
+</tr>
+<tr>  <td><span id="line-107" class="anchor"/><p class="line891"><tt>wx.ICOHandler</tt></p></td>
+<td><p class="line891"><tt>wx.BITMAP_TYPE_ICO</tt></p></td>
+<td><p class="line891"><tt>Windows</tt>图标格式。</p></td>
+</tr>
+<tr>  <td><span id="line-108" class="anchor"/><p class="line891"><tt>wx.IFFHandler </tt></p></td>
+<td><p class="line891"><tt>wx.BITMAP_TYPE_IFF</tt></p></td>
+<td><p class="line862">交换文件格式。这个处理器只载入图像，它不保存它们。</p></td>
+</tr>
+<tr>  <td><span id="line-109" class="anchor"/><p class="line891"><tt>wx.JPEGHandler </tt></p></td>
+<td><p class="line891"><tt>wx.BITMAP_TYPE_JPEG</tt></p></td>
+<td><p class="line862">联合图形专家组格式。</p></td>
+</tr>
+<tr>  <td><span id="line-110" class="anchor"/><p class="line891"><tt>wx.PCXHandler </tt></p></td>
+<td><p class="line891"><tt>wx.BITMAP_TYPE_PCX</tt></p></td>
+<td><p class="line891"><tt>PC</tt>画刷格式。当以这种格式保存时，<tt>wxPython</tt>计算在这个图像中的不同颜色的数量。如果可能的话，这个图像被保存为一个8位图像（也就是说，如果它有256种或更少的颜色）。否则它保存为24位。</p></td>
+</tr>
+<tr>  <td><span id="line-111" class="anchor"/><p class="line891"><tt>wx.PNGHandler </tt></p></td>
+<td><p class="line891"><tt>wx.BITMAP_TYPE_PNG</tt></p></td>
+<td><p class="line862">便携式网络图形格式。</p></td>
+</tr>
+<tr>  <td><span id="line-112" class="anchor"/><p class="line891"><tt>wx.PNMHandler </tt></p></td>
+<td><p class="line891"><tt>wx.BITMAP_TYPE_PNM</tt></p></td>
+<td><p class="line862">只能载入<tt>ASCII</tt>或原始的<tt>RGB</tt>图像。图像被该处理器保存为原始的<tt>RGB</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-113" class="anchor"/><p class="line891"><tt>wx.TIFFHandler </tt></p></td>
+<td><p class="line891"><tt>wx.BITMAP_TYPE_TIF</tt></p></td>
+<td><p class="line862">标签图像文件格式。</p></td>
+</tr>
+<tr>  <td><span id="line-114" class="anchor"/><p class="line891"><tt>wx.XPMHandler </tt></p></td>
+<td><p class="line891"><tt>wx.BITMAP_TYPE_XPM</tt></p></td>
+<td><p class="line891"><tt>XPixMap</tt>格式。</p></td>
+</tr>
+<tr>  <td><span id="line-115" class="anchor"/><p class="line862">自动 </p></td>
+<td><p class="line891"><tt>wx.BITMAP_TYPE_ANY</tt></p></td>
+<td><p class="line862">自动检测使用的格式，然后调用相应的处理器。</p></td>
+</tr>
+</tbody></table></div><span id="line-116" class="anchor"/><span id="line-117" class="anchor"/><p class="line862">要使用一个<tt>MIME</tt>类型来标识文件，而不是一个处理器类型<tt>ID</tt>的话，请使用函数<tt>wx.ImageFromMime(name, mimetype, index</tt>=-1)，其中的<tt>name</tt>是文件名，<tt>mimetype</tt>是有关文件类型的字符串。参数<tt>index</tt>表示在图像文件包含多个图像的情况下要载入的图像的索引。这仅仅被<tt>GIF, ICO,
+</tt>和<tt>TIFF</tt>处理器使用。默认值-1表示选择默认的图像，被<tt>GIF</tt>和<tt>TIFF</tt>处理顺解释为每一个图像（<tt>index</tt>=0），被<tt>ICO</tt>处理器解释为最大且最多色彩的一个。 <span id="line-118" class="anchor"/><span id="line-119" class="anchor"/><span id="line-120" class="anchor"/></p><p class="line867"><strong>创建<tt>image</tt>（图像）对象</strong> <span id="line-121" class="anchor"/><span id="line-122" class="anchor"/></p><p
+class="line867"><tt>wxPython</tt>使用不同的全局函数来创建不同种类的<tt>wx.Image</tt>对象。要创建一个有着特定尺寸的空图像，使用函数<tt>wx.EmptyImage(width,height)</tt>——在这个被创建的图像中所有的像素都是黑色。要创建从一个打开的流或<tt>Python</tt>文件类对象创建一个图像，使用<tt>wx.ImageFromStream(stream,type</tt>=<tt>wx.BITMAP_TYPE_ANY,
+index</tt>=-1)。有时，根据一个原始的<tt>RGB</tt>数据来创建一个图像是有用的，这使用<tt>wx.ImageFromData(width,height,data)</tt>，<tt>data</tt>是一个字符串，每套连续的三个字符代表一个像素的红，绿，蓝的组分。这个字符串的大小应该是<tt>width</tt>*<tt>height</tt>*3。 <span id="line-123" class="anchor"/><span id="line-124" class="anchor"/><span id="line-125" class="anchor"/></p><p class="line867"><strong>创建<tt>bitmap</tt>（位图）对象</strong> <span id="line-126" class="anchor"/><span id="line-127" class="anchor"/></p><p
+class="line862">有几个方法可以创建一个位图对象。其中最基本的<tt>wx.Bitmap</tt>构造函数是 <span id="line-128" class="anchor"/><tt>wx.Bitmap(name, type</tt>=<tt>wx.BITMAP_TYPE_ANY)</tt>。参数<tt>name</tt>是一个文件名，<tt>type</tt>可以是表12.1中的一个。如果<tt>bitmap</tt>类能够本地化地处理这个文件格式，那么它就处理，否则这个图像将自动地经由<tt>wx.Image</tt>载入并被转换为一个<tt>wx.Bitmap</tt>实例。 <span id="line-129" class="anchor"/><span id="line-130" class="anchor"/></p><p
+class="line862">你可以使用方法<tt>wx.EmptyBitmap(width,height,depth</tt>=-1)来创建一个空的位图——参数<tt>width</tt>和<tt>height</tt>是位图的尺度，<tt>depth</tt>是结果图像的颜色深度。有两个函数使你能够根据原始的数据来创建一个位图。函数<tt>wx.BitmapFromBits(bits, width, height,
+depth</tt>=-1)创建一个位图，参数<tt>bits</tt>是一个<tt>Python</tt>字节列表。这个函数的行为依赖于平台。在大多数平台上，<tt>bits</tt>要么是1要么是0，并且这个函数创建一个单色的位图。在<tt>Windows</tt>平台上，数据被直接传递给<tt>Windows</tt>的<tt>API</tt>函数<tt>CreateBitmap()</tt>。函数<tt>wxBitmapFromXPMData(listOfStrings)</tt>一个<tt>Python</tt>字符串列表作为一个参数，以<tt>XPM</tt>格式读该字符串。 <span id="line-131" class="anchor"/><span id="line-132" class="anchor"/></p><p
+class="line862">通过使用<tt>wx.Bitmap</tt>的构造函数<tt>wx.BitmapFromImage(image,
+depth</tt>=-1)，你可以将一个图像转换为一个位图。参数<tt>image</tt>是一个实际<tt>wx.Image</tt>对象，<tt>depth</tt>是结果位图的颜色深度。如果这个深度没有指定，那么使用当前显示器的颜色深度。你可以使用函数<tt>wx.ImageFromBitmap(bitmap)</tt>将位图转回为一个图像，通过传递一个实际的<tt>wx.Bitmap</tt>对象。在例12.1中，位图对象的创建使用了位图的构造函数，然后被用于构建<tt>wx.StaticBitmap</tt>窗口部件，这使得它们能够像别的<tt>wxPython</tt>项目一样被放入一个容器部件中。 <span id="line-133" class="anchor"/><span id="line-134"
+class="anchor"/><span id="line-135" class="anchor"/><span id="line-136" class="anchor"/></p><p class="line867">
+</p><h3 id="head-be6a292d197c9c0cc260c49fc96d50e479a8d8f8">1.1.2. 我们能够对图像作些什么？</h3>
+<span id="line-137" class="anchor"/><span id="line-138" class="anchor"/><span id="line-139" class="anchor"/><p class="line862">一旦你在<tt>wxPython</tt>中使用了图像，你就可以使用许多有用的方法来处理它，并且可以写一些强大的图像处理脚本。 <span id="line-140" class="anchor"/><span id="line-141" class="anchor"/></p><p class="line862">你可以使用<tt>GetWidth()</tt>和<tt>GetHeight()</tt>方法来查询图像的尺寸。你也可以使用方法<tt>GetRed(x, y), GetGreen(x, y), </tt>和<tt>GetBlue(x,
+y)</tt>方法得到任意象素点的颜色值。这些颜色方法的返回值是一个位于0~255之间的整数（用C的术语，它是一个无符号整数，但是这个区别在<tt>Python</tt>中没有多大的意义）。同样，你能够使用<tt>SetRGB(x, y, red, green, blue)</tt>来设置一个像素点的颜色，其中的x和y是这个像素点的坐标，颜色的取值位于0~255之间。 <span id="line-142" class="anchor"/><span id="line-143" class="anchor"/></p><p
+class="line862">你可以使用<tt>GetData()</tt>方法得到一大块区域中的所有数据。<tt>GetData()</tt>方法的返回值是一个大的字符串，其中的每个字符代表一个<tt>RGB</tt>元组，并且每个字符都可被认为是一个0~255之间整数值。这些值是有顺序的，第一个是位于像素点(0,0)的红色值，接下来的是位于像素点(0,0)的绿色值，然后是位于像素点(0,0)的蓝色值。再接下来的三个是像素点(0,1)的颜色值，如此等等。这个算法可以使用下面的<tt>Python</tt>伪代码来定义： <span id="line-144" class="anchor"/><span id="line-145" class="anchor"/><span id="line-146"
+class="anchor"/><span id="line-147" class="anchor"/><span id="line-148" class="anchor"/><span id="line-149" class="anchor"/><span id="line-150" class="anchor"/><span id="line-151" class="anchor"/><span id="line-152" class="anchor"/><span id="line-153" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-0180df606db88b7b03f801d29a542c267e763c31_002\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-0180df606db88b7b03f801d29a542c267e763c31_002', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-0180df606db88b7b03f801d29a542c267e763c31_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">def</span> <span class="ID">GetData</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ID">result</span> <span class="Operator">=</span> <span class="String">""</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ResWord">for</span> <span class="ID">y</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">GetHeight</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>        <span class="ResWord">for</span> <span class="ID">x</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">GetWidth</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>            <span class="ID">result</span><span class="Operator">.</span><span class="ID">append</span><span class="Operator">(</span><span class="ID">chr</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">GetRed</span><span class="Operator">(</span><span class="ID">x</span><span class="Operator">,</span><span class="ID">y</span><span class="Operator">)</span><span class="Operator">)</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   6 </span>            <span class="ID">result</span><span class="Operator">.</span><span class="ID">append</span><span class="Operator">(</span><span class="ID">chr</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">GetGreen</span><span class="Operator">(</span><span class="ID">x</span><span class="Operator">,</span><span class="ID">y</span><span class="Operator">)</span><span class="Operator">)</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>            <span class="ID">result</span><span class="Operator">.</span><span class="ID">append</span><span class="Operator">(</span><span class="ID">chr</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">GetBlue</span><span class="Operator">(</span><span class="ID">x</span><span class="Operator">,</span><span class="ID">y</span><span class="Operator">)</span><span class="Operator">)</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>    <span class="ResWord">return</span> <span class="ID">result</span><span class="Text"/></span>
+</pre></div><span id="line-154" class="anchor"/><p class="line862">当使用对应的<tt>SetData(data)</tt>方法读取类似格式的<tt>RGB</tt>字符串值时，有两件事需要知道。第一，<tt>SetData(data)</tt>方法不执行范围或边界检查，以确定你读入的字符串的值是否在正确的范围内或它的长度是否是给定图像的尺寸。如果你的值不正确，那么该行为是未定义的。第二，由于底层是C++代码管理内在，所以将<tt>GetData()</tt>的返回值传递给<tt>SetData()</tt>是一个坏的方法——你应该构造一个新的字符串。 <span id="line-155" class="anchor"/><span id="line-156"
+class="anchor"/></p><p class="line862">图像数据字符串可以很容易地与别的<tt>Python</tt>类型作相互的转换，这使得很容易以整数的形式来访问和处理它，诸如数组或数字类型。例如，如果你太久的注视一个东西会损伤眼睛一样，试试这样： <span id="line-157" class="anchor"/><span id="line-158" class="anchor"/><span id="line-159" class="anchor"/><span id="line-160" class="anchor"/><span id="line-161" class="anchor"/><span id="line-162" class="anchor"/><span id="line-163" class="anchor"/><span id="line-164" class="anchor"/></p><div
+lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-f317c7c476b967b29abe1d658a60b7a16f2308b7_003\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-f317c7c476b967b29abe1d658a60b7a16f2308b7_003', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-f317c7c476b967b29abe1d658a60b7a16f2308b7_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">array</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">img</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">EmptyImage</span><span class="Operator">(</span><span class="Number">100</span><span class="Operator">,</span><span class="Number">100</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="ID">array</span><span class="Operator">.</span><span class="ID">array</span><span class="Operator">(</span><span class="String">'B'</span><span class="Operator">,</span> <span class="ID">img</span><span class="Operator">.</span><span class="ID">GetData</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">for</span> <span class="ID">i</span> <span class="ResWord">in</span> <span class="ID">range</span><span class="Operator">(</span><span class="ID">len</span><span class="Operator">(</span><span class="ID">a</span><span class="Operator">)</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ID">a</span><span class="Operator">[</span><span class="ID">i</span><span class="Operator">]</span> <span class="Operator">=</span> <span class="Operator">(</span><span class="Number">25</span><span class="Operator">+</span><span class="ID">i</span><span class="Operator">)</span> <span class="Operator">%</span> <span class="Number">256</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ID">img</span><span class="Operator">.</span><span class="ID">SetData</span><span class="Operator">(</span><span class="ID">a</span><span class="Operator">.</span><span class="ID">tostring</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-165" class="anchor"/><p class="line862">表12.2定义了一些<tt>wx.Image</tt>的方法，这些方法执行简单的图像处理。 <span id="line-166" class="anchor"/><span id="line-167" class="anchor"/></p><p class="line874">这些方法只是图像处理的开始部分。在接下来的部分，我们将给你展示两个方法，它们处理透明和半透明图像这一更复杂的主题。 <span id="line-168" class="anchor"/><span id="line-169" class="anchor"/><span id="line-170" class="anchor"/></p><p class="line867"><strong>表12.2
+<tt>wx.Image</tt>的图像处理方法</strong> <span id="line-171" class="anchor"/><span id="line-172" class="anchor"/></p><p class="line867"><tt>ConvertToMono(r, g, b)</tt>：返回一个与原尺寸一致的<tt>wx.Image</tt>，其中所有颜色值为(<tt>r, g, b)</tt>的像素颜色改为白色，其余为黑色。原图像未改变。 <span id="line-173" class="anchor"/><span id="line-174" class="anchor"/></p><p
+class="line867"><tt>Mirror(horizontally</tt>=<tt>True)</tt>：返回原图像的一个镜像图像。如果<tt>horizontally</tt>参数是<tt>True</tt>，那么镜像图像是水平翻转了的，否则是垂直翻转了的。原图像没有改变。 <span id="line-175" class="anchor"/><span id="line-176" class="anchor"/></p><p class="line867"><tt>Replace(r1, g1, b1, r2, g2, b2)</tt>：改变调用该方法的图像的所有颜色值为<tt>r1, g1, b1</tt>的像素的颜色为<tt>r2, g2, b2</tt>。 <span id="line-177" class="anchor"/><span id="line-178" class="anchor"/></p><p
+class="line867"><tt>Rescale(width, height)</tt>：改变图像的尺寸为新的宽度和高度。原图像也作了改变，并且颜色按比例地调整到新的尺寸。 <span id="line-179" class="anchor"/><span id="line-180" class="anchor"/></p><p class="line867"><tt>Rotate(angle, rotationCentre, interpolating</tt>=<tt>True,
+offestAfterRotation</tt>=<tt>None)</tt>：返回旋转原图像后的一个新的图像。参数<tt>angle</tt>是一个浮点数，代表所转的弧度。<tt>rotationCentre</tt>是一个<tt>wx.Point</tt>，代表旋转的中心。如果<tt>interpolating</tt>为<tt>True</tt>，那么一个较慢而精确的算法被使用。<tt>offsetAfterRotation</tt>是一个坐标点，表明在旋转后图像应该移位多少。任何未被覆盖的空白像素将被设置为黑色，或如果该图像有一个遮罩色，设置为遮罩色（<tt>mask color</tt>）。 <span id="line-181" class="anchor"/><span id="line-182"
+class="anchor"/></p><p class="line867"><tt>Rotate90(clockwise</tt>=<tt>True)</tt>：按照参数<tt>clockwise</tt>的布尔值，控制图像按顺或逆时针方向作90度的旋转。 <span id="line-183" class="anchor"/><span id="line-184" class="anchor"/></p><p class="line867"><tt>Scale(width, height)</tt>：返回一个原图像的拷贝，并按比例改变为新的宽度和高度。 <span id="line-185" class="anchor"/><span id="line-186" class="anchor"/><span id="line-187" class="anchor"/></p><p
+class="line867"><strong>设置图像的遮罩以指定一个透明的图像</strong> <span id="line-188" class="anchor"/><span id="line-189" class="anchor"/></p><p class="line862">图像遮罩是图像中的一个特殊的颜色集，当图像显示在其它显示部分之上时，它扮演透明度的角色。你可以使用<tt>SetMaskColor(red, green, blue)</tt>方法来设置一个图像遮罩，其中的<tt>red, green,
+blue</tt>定义图像遮罩的颜色。如果你想关闭遮罩，可以使用<tt>SetMask(False)</tt>，重置使用<tt>SetMask(True)</tt>。方法<tt>HasMask()</tt>返回与当前遮罩状态相关的一个布尔值。你也可以使用方法<tt>SetMaskFromImage(mask, mr, mg, mb)</tt>根据同一尺寸的另一图像设置遮罩——在这种情况下，遮罩被定义为在遮罩<tt>wx.Image</tt>中有着颜色<tt>mr, mg,
+mb</tt>的所有像素，而不管在主图像中那些像素是什么颜色。这使得你在创建一个遮罩中有了很大的灵活性，因为你不必再担心在你原图像中的像素的颜色。你可以使用<tt>GetMaskRed()</tt>，<tt>GetMaskGreen(), </tt>和<tt>GetMaskBlue()</tt>获取遮罩色。如果一个有遮罩的图像被转换为一个<tt>wx.Bitmap</tt>，那么遮罩被自动转换为一个<tt>wx.Mask</tt>对象并赋给该位图。 <span id="line-190" class="anchor"/><span id="line-191" class="anchor"/><span id="line-192" class="anchor"/></p><p
+class="line867"><strong>设置<tt>alpha</tt>值来指定一个透明的图像</strong> <span id="line-193" class="anchor"/><span id="line-194" class="anchor"/></p><p
+class="line867"><tt>alpha</tt>值是指定一个透明或部分透明图像的另一个方法。每个像素都有一个<tt>alpha</tt>值，取值位于0（如果图像在该像素是完全透明的）到255（如果图像在该像素点是完全不透明的）之间。你可以使用<tt>SetAlphaData(data)</tt>方法来设置<tt>alpha</tt>值，它要求类似于<tt>SetData()</tt>的字符串字节值，但是每个像素只有一个值。和<tt>SetData()</tt>一样，<tt>SetAlphaData()</tt>不进行范围检查。你可以使用<tt>HasAlpha()</tt>来看是否设置了<tt>alpha</tt>值，你也可以使用<tt>GetAlphaData()</tt>来得到全部的数据集。你也可以使用<tt>SetAlpha(x,
+y, alpha)</tt>来设定一个特定的像素的<tt>alpha</tt>值，并使用<tt>GetAlpha(x, y)</tt>来得到该值。 <span id="line-195" class="anchor"/><span id="line-196" class="anchor"/></p><p class="line862">与<tt>wx.Image</tt>的图像处理功能相对照，<tt>wx.Bitmap</tt>的相对少些。几乎所有<tt>wx.Bitmap</tt>的方法都是简单得得到诸如宽度、高度和颜色深度这类的属性。 <span id="line-197" class="anchor"/><span id="bottom" class="anchor"/></p></div>

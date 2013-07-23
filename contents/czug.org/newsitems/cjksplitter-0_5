@@ -1,0 +1,22 @@
+CJKSplitter0.5由<a href="http://www.zopechina.com">润普公司</a>荣誉出品。<br />
+<br />
+这个产品使得zope能够更好的支持中文，新版本的特性包括：<br />
+<br />
+<ul>
+  <li>支持多种编码，包括gbk/gb2312/gb18030/mbcs/big5/unicode/utf-8等，安装这个产品将包括三个ZCTextIndex的断字模块：</li>
+  <ul>
+    <li>'CJK splitter' : 支持unicode/utf-8编码，此断字方法和0.1版本兼容</li>
+    <li>'CJK GB splitter' : 支持unicode/gb18030/gbk/gb2312/mbcs 编码.</li>
+    <li>'CJK BIG5 splitter' : 支持unicode/big5/mbcs编码<br />
+    </li>
+  </ul>
+  <li>支持Archetypes最新版本中的unicode存储方法，自动识别处理unicode编码</li>
+  <li>非法的字符处理，避免出现exception</li>
+  <li>使用unicode进行存储，节省中文存储空间</li>
+  <li>支持英文模糊查询，如，可查 zop*<br />
+</li>
+  <li>更加精确的CJK字符判断</li>
+  <li>更好的文档（谢谢bjorn）</li>
+</ul>
+详见：<br />
+<a href="http://www.zope.org/Members/panjunyong/CJKSplitter">英文产品页面</a> | <a href="http://www.czug.org/projects/CJKSplitter">中文项目页面</a> | <a href="http://zope.org/Members/panjunyong/CJKSplitter/CJKSplitter-0_5/cjksplitter-0_5.tgz">下载</a><br />

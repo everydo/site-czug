@@ -1,0 +1,30 @@
+
+ <p>最近一直有人抱怨czug.org性能不佳，遂决定升级网站。(<span style="color: rgb(255, 0, 0);">目前czug上的注册用户已经超过1000人</span>
+ <span style="color: rgb(255, 0, 0);">!</span>)<br />
+ <br />
+ czug从前的网站架构为简单的apache + zope的结构，而目前则进行了调整。主要思路为：</p>
+
+ <ul>
+  <li>网站的静态部分，采用squid等cache服务器进行加速</li>
+
+  <li>网站的动态部分，采用ZEO技术，使用多个zope server进行群集，提升动态处理性能<br /></li>
+ </ul>
+
+ <p>系统配置结构为：</p>
+ <pre>
+                    Internet
+                       |
+                     Squid               --&gt; Squid进行web加速，对外的唯一入口
+            ___________|__________
+           |                      |
+   ________|_____________       Apache   --&gt; Apache提供其他的动/静态服务
+  |                      |     
+ZopeAppServer1     ZopeAppServer2        --&gt; 2个zope应用服务器群集
+  |______________________|
+        |           |
+ZEOStorageSever1 ZEOStorageServer2       --&gt; 数据库分布存储（DBTab）
+</pre>
+
+ <p>这个配置还在不断的优化中，如果大家在使用过程，发现什么问题，请及时和我联系：ｐａｎｊｙ＠ｃｚｕｇ．ｏｒｇ</p>
+
+ <p>参考：<a href="../about/website/CZUG.org/document_view">czug.org的配置</a></p>

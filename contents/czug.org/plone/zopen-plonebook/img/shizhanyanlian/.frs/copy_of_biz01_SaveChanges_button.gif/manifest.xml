@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<manifest xmlns="http://zopechina.com/ns/frs"
+           xmlns:tal="http://xml.zope.org/namespaces/tal"
+           contenttype="<bound method ATImage.getPortalTypeName of <ATImage at /58080_1/default.czug.edo/projects/341196/files/shizhanyanlian/copy_of_biz01_SaveChanges_button.gif>>"
+           uid="6b623050130dbe464fc7c45217f78b49">
+
+
+    <entry type="primary_field"
+           name="image"
+           mimetype="image/png"
+           filename=""
+           fullpath=""/>
+
+
+    <entry type="xns"
+           name=""
+           mimetype="text/xml"
+           filename="copy_of_biz01_SaveChanges_button.gif.xml"
+           fullpath="xns.xml"/>
+
+
+</manifest>

@@ -1,0 +1,327 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-1" class="anchor"/><p class="line867">
+</p><h1 id="head-3b41b6f9803d96aa40082a44d8ca1be774ddf043">1. 第七章 类及面向对象编程</h1>
+<span id="line-2" class="anchor"/><span id="line-3" class="anchor"/><p class="line874">类是用来创建数据结构和新类型对象的主要机制.本章的主题就是类,面向对象编程和设计不是本章的重点。本章假定你具有数据结构的背景知识及一定的面向对象的编程经验(其它面向对象的语言，比如java,c++).(参见第三章,类型和对象 了解对象这个术语及其内部实现的附加信息) <span id="line-4" class="anchor"/><span id="line-5" class="anchor"/></p><pre>WeiZhong补充：
+<span id="line-6" class="anchor"/>    这本书出版于2001年，虽然Python有极佳的向下兼容性，但我们应该学习最新的知识。本章很多地方已经明显过时，为了保证大家学到新的知识并维持这本书的完整性，我会在必要的地方说明哪些地方已经过时，哪些地方新增了功能。
+<span id="line-7" class="anchor"/>    Python从2.2起引入了new-style对象模型，以逐步替代已经使用多年的classic对象模型。
+<span id="line-8" class="anchor"/>    由于 classic class 已经行将废止，所以我对本章的例子均作为了适当的修改以支持 new-style对象模型。
+<span id="line-9" class="anchor"/></pre><span id="line-10" class="anchor"/><p class="line862">参考文档:《Python In a Nutshell》中的一节<a href="/moin/PyNewStyleClass">Python中的新型类及其实例</a> <span id="line-11" class="anchor"/>
+</p><h2 id="head-20df7e09781f2eb34c3df7847589c8e2e727f989">1.1. class语句</h2>
+<span id="line-12" class="anchor"/><span id="line-13" class="anchor"/><p class="line874">一个类定义了一系列与其实例对象密切关联的属性.典型的属性包括变量(也被称为类变量)和函数(又被称为方法). <span id="line-14" class="anchor"/><span id="line-15" class="anchor"/></p><p class="line874">class语句用来定义一个类.类的主体中语句在类定义同时执行.(如 Listing 7.1) <span id="line-16" class="anchor"/><span id="line-17" class="anchor"/></p><p class="line867"><strong>Listing 7.1 类</strong> <span id="line-18" class="anchor"/><span id="line-19" class="anchor"/><span id="line-20" class="anchor"/><span id="line-21" class="anchor"/><span id="line-22" class="anchor"/><span id="line-23" class="anchor"/><span id="line-24" class="anchor"/><span id="line-25" class="anchor"/><span id="line-26"
+class="anchor"/><span id="line-27" class="anchor"/><span id="line-28" class="anchor"/><span id="line-29" class="anchor"/><span id="line-30" class="anchor"/><span id="line-31" class="anchor"/><span id="line-32" class="anchor"/><span id="line-33" class="anchor"/><span id="line-34" class="anchor"/><span id="line-35" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-9e9263f625838401ac66df16141fa4d997877a0f_000\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-9e9263f625838401ac66df16141fa4d997877a0f_000', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-9e9263f625838401ac66df16141fa4d997877a0f_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">class</span> <span class="ID">Account</span><span class="Operator">(</span><span class="ID">object</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>     <span class="String">"一个简单的类"</span></span>
+<span class="line"><span class="LineNumber">   3 </span>     <span class="ID">account_type</span> <span class="Operator">=</span> <span class="String">"Basic"</span></span>
+<span class="line"><span class="LineNumber">   4 </span>     <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span><span class="ID">name</span><span class="Operator">,</span><span class="ID">balance</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>         <span class="String">"初始化一个新 Account 实例"</span></span>
+<span class="line"><span class="LineNumber">   6 </span>         <span class="ID">self</span><span class="Operator">.</span><span class="ID">name</span> <span class="Operator">=</span> <span class="ID">name</span></span>
+<span class="line"><span class="LineNumber">   7 </span>         <span class="ID">self</span><span class="Operator">.</span><span class="ID">balance</span> <span class="Operator">=</span> <span class="ID">balance</span></span>
+<span class="line"><span class="LineNumber">   8 </span>     <span class="ResWord">def</span> <span class="ID">deposit</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span><span class="ID">amt</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   9 </span>         <span class="String">"存款"</span></span>
+<span class="line"><span class="LineNumber">  10 </span>         <span class="ID">self</span><span class="Operator">.</span><span class="ID">balance</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">balance</span> <span class="Operator">+</span> <span class="ID">amt</span></span>
+<span class="line"><span class="LineNumber">  11 </span>     <span class="ResWord">def</span> <span class="ID">withdraw</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span><span class="ID">amt</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  12 </span>         <span class="String">"取款"</span></span>
+<span class="line"><span class="LineNumber">  13 </span>         <span class="ID">self</span><span class="Operator">.</span><span class="ID">balance</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">balance</span> <span class="Operator">-</span> <span class="ID">amt</span></span>
+<span class="line"><span class="LineNumber">  14 </span>     <span class="ResWord">def</span> <span class="ID">inquiry</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  15 </span>         <span class="String">"返回当前余额"</span></span>
+<span class="line"><span class="LineNumber">  16 </span>         <span class="ResWord">return</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">balance</span><span class="Text"/></span>
+</pre></div><span id="line-36" class="anchor"/><p class="line867">
+</p><h2 id="head-5ad96bca864b253d3134a139d6677359345f8411">1.2. 访问类属性</h2>
+<span id="line-37" class="anchor"/><p class="line874">类对象作为一个名字空间，存放在类定义语句运行时创建的对象.例如,Account里的内容可以这样访问: <span id="line-38" class="anchor"/><span id="line-39" class="anchor"/></p><pre>Account.account_type
+<span id="line-40" class="anchor"/>Account.__init__
+<span id="line-41" class="anchor"/>Account.deposit
+<span id="line-42" class="anchor"/>Account.withdraw
+<span id="line-43" class="anchor"/>Account.inquiry
+<span id="line-44" class="anchor"/></pre><span id="line-45" class="anchor"/><p class="line874">需要注意的是, class语句并不创建类的实例(例如上边的例子,并没有创建任何帐户).它用来定义所有实例都应该有的属性. <span id="line-46" class="anchor"/><span id="line-47" class="anchor"/></p><p class="line874">在类中定义的常规方法的第一个参数总是该类的实例,通常这个参数记为self。你也可能用其它任何合法的变量名，不过为了符合惯例，你最好还是用self. 类中定义的变量,即类变量，如account_type, 它被所有该类的实例共享.
+虽然类定义了一个名字空间,但这个名字空间并不是为类主体中的代码服务的.因此在类中引用一个类的属性必须使用类的全名: <span id="line-48" class="anchor"/><span id="line-49" class="anchor"/><span id="line-50" class="anchor"/><span id="line-51" class="anchor"/><span id="line-52" class="anchor"/><span id="line-53" class="anchor"/><span id="line-54" class="anchor"/><span id="line-55" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-324c0a12647925d1e7248d0ce536587204e44613_001\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-324c0a12647925d1e7248d0ce536587204e44613_001', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-324c0a12647925d1e7248d0ce536587204e44613_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">class</span> <span class="ID">Foo</span><span class="Operator">(</span><span class="ID">object</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">def</span> <span class="ID">bar</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>        <span class="ResWord">print</span> <span class="String">"bar!"</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">def</span> <span class="ID">spam</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">bar</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span>     <span class="Comment"># 错误,引发NameError</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ID">Foo</span><span class="Operator">.</span><span class="ID">bar</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span> <span class="Comment"># 合法的</span><span class="Text"/></span>
+</pre></div><span id="line-56" class="anchor"/><span id="line-57" class="anchor"/><p class="line874">最后，你不能定义一个不操作实例的方法: <span id="line-58" class="anchor"/><span id="line-59" class="anchor"/><span id="line-60" class="anchor"/><span id="line-61" class="anchor"/><span id="line-62" class="anchor"/><span id="line-63" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-d3dd1884c15b5297c2ca66f539c1f1a8c896ee12_002\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-d3dd1884c15b5297c2ca66f539c1f1a8c896ee12_002', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-d3dd1884c15b5297c2ca66f539c1f1a8c896ee12_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">class</span> <span class="ID">Foo</span><span class="Operator">(</span><span class="ID">object</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">def</span> <span class="ID">add</span><span class="Operator">(</span><span class="ID">x</span><span class="Operator">,</span><span class="ID">y</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>        <span class="ResWord">return</span> <span class="ID">x</span><span class="Operator">+</span><span class="ID">y</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="ID">Foo</span><span class="Operator">.</span><span class="ID">add</span><span class="Operator">(</span><span class="Number">3</span><span class="Operator">,</span><span class="Number">4</span><span class="Operator">)</span>      <span class="Comment"># TypeError. 需要一个类实例作为第一个参数</span><span class="Text"/></span>
+</pre></div><span id="line-64" class="anchor"/><p class="line874">======================================================================================= <span id="line-65" class="anchor"/><span id="line-66" class="anchor"/></p><p class="line862">以下为<a href="/moin/WeiZhong">WeiZhong</a>增补部分： <span id="line-67" class="anchor"/><strong>静态方法和类方法(Python2.2以上)</strong> <span id="line-68" class="anchor"/><span id="line-69" class="anchor"/></p><ul><li>静态方法: <span id="line-70" class="anchor"/><span id="line-71"
+class="anchor"/>可以直接被类或类实例调用。它没有常规方法那样的特殊行为（绑定、非绑定、默认的第一个参数规则等等）。你完全可以将静态方法当成一个用属性引用方式调用的普通函数。任何时候定义静态方法都不是必须的（静态方法能实现的功能都可以通过定义一个普通函数来实现）. 有些程序员认为，当有一堆函数仅仅为某一特定类编写时，将这些函数包装成静态这种方式可以提供使用上的一致性。 <span id="line-72" class="anchor"/><span id="line-73" class="anchor"/></li></ul><p class="line874">根据python2.4最新提供的新语法，你可以用下面的方式创建一个静态方法： <span id="line-74" class="anchor"/><span
+id="line-75" class="anchor"/></p><pre>class AClass(object):
+<span id="line-76" class="anchor"/>    @staticmethod       #静态方法修饰符，表示下面的方法是一个静态方法
+<span id="line-77" class="anchor"/>    def astatic(  ): print 'a static method'
+<span id="line-78" class="anchor"/>anInstance = AClass(  )
+<span id="line-79" class="anchor"/>AClass.astatic(  )                    # prints: a static method
+<span id="line-80" class="anchor"/>anInstance.astatic(  )                # prints: a static method
+<span id="line-81" class="anchor"/></pre><span id="line-82" class="anchor"/><p class="line874">注:staticmethod是一个内建函数,用来将一个方法包装成静态方法,在2.4以前版本,只能用下面这种方式定义一个静态方法(不再推荐使用): <span id="line-83" class="anchor"/><span id="line-84" class="anchor"/></p><pre>class AClass(object):
+<span id="line-85" class="anchor"/>    def astatic(  ): print 'a static method'
+<span id="line-86" class="anchor"/>    astatic=staticmethod(astatic)
+<span id="line-87" class="anchor"/></pre><span id="line-88" class="anchor"/><p class="line874">这种方法在函数定义本身比较长时经常会忘记后面这一行. <span id="line-89" class="anchor"/><span id="line-90" class="anchor"/></p><ul><li>类方法 <span id="line-91" class="anchor"/><span id="line-92" class="anchor"/>一个类方法就可以通过类或它的实例来调用的方法, 不管你是用类来调用这个方法还是类实例调用这个方法,该方法的第一个参数总是定义该方法的类对象。 <span id="line-93" class="anchor"/><span id="line-94" class="anchor"/>记住:方法的第一个参数都是类对象而不是实例对象.  <span
+id="line-95" class="anchor"/><span id="line-96" class="anchor"/>按照惯例,类方法的第一个形参被命名为 cls. 任何时候定义类方法都不是必须的（类方法能实现的功能都可以通过定义一个普通函数来实现,只要这个函数接受一个类对象做为参数就可以了）. <span id="line-97" class="anchor"/><span id="line-98" class="anchor"/>你可以象下面这样来生成一个类方法: <span id="line-99" class="anchor"/></li></ul><p class="line867"><span id="line-100" class="anchor"/></p><pre>class ABase(object):
+<span id="line-101" class="anchor"/>    @classmethod        #类方法修饰符
+<span id="line-102" class="anchor"/>    def aclassmet(cls): print 'a class method for', cls.__name__
+<span id="line-103" class="anchor"/>class ADeriv(ABase): pass
+<span id="line-104" class="anchor"/>bInstance = ABase(  )
+<span id="line-105" class="anchor"/>dInstance = ADeriv(  )
+<span id="line-106" class="anchor"/>ABase.aclassmet(  )               # prints: a class method for ABase
+<span id="line-107" class="anchor"/>bInstance.aclassmet(  )           # prints: a class method for ABase
+<span id="line-108" class="anchor"/>ADeriv.aclassmet(  )              # prints: a class method for ADeriv
+<span id="line-109" class="anchor"/>dInstance.aclassmet(  )           # prints: a class method for ADeriv
+<span id="line-110" class="anchor"/></pre><span id="line-111" class="anchor"/><p class="line874">注:classmethod是一个内建函数,用来将一个方法封装成类方法,在2.4以前版本,你只能用下面的方式定义一个类方法: <span id="line-112" class="anchor"/><span id="line-113" class="anchor"/></p><pre>class AClass(object):
+<span id="line-114" class="anchor"/>    def aclassmethod(cls): print 'a class method'
+<span id="line-115" class="anchor"/>    aclassmethod=classmethod(aclassmethod)
+<span id="line-116" class="anchor"/></pre><span id="line-117" class="anchor"/><p class="line874">并没有人要求必须封装后的方法名字必须与封装前一致,但建议你总是这样做(如果你使用python2.4版本以下时). <span id="line-118" class="anchor"/>这种方法在函数定义本身比较长时经常会忘记后面这一行. <span id="line-119" class="anchor"/><span id="line-120" class="anchor"/></p><p class="line874">======================================================================================= <span id="line-121" class="anchor"/><span id="line-122" class="anchor"/></p><p
+class="line874">增补部分至此结束 <span id="line-123" class="anchor"/><span id="line-124" class="anchor"/></p><p class="line867">
+</p><h2 id="head-80da26261777ad83d68f0c140ffe7e68f49b8667">1.3. 类实例</h2>
+<span id="line-125" class="anchor"/><span id="line-126" class="anchor"/><p class="line862">像调用函数一样调用类，可以得到类的实例。生成实例的过程会自动调用类的<tt class="backtick">__init__</tt>方法（如果你的类定义了这个方法的话）。 <span id="line-127" class="anchor"/><span id="line-128" class="anchor"/><span id="line-129" class="anchor"/><span id="line-130" class="anchor"/><span id="line-131" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-495fea33d24d4d702bd6e57b934b164e925abc1a_003\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-495fea33d24d4d702bd6e57b934b164e925abc1a_003', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-495fea33d24d4d702bd6e57b934b164e925abc1a_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment"># 创建一些帐户</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="ID">a</span> <span class="Operator">=</span> <span class="ID">Account</span><span class="Operator">(</span><span class="String">"Guido"</span><span class="Operator">,</span> <span class="Number">1000.00</span><span class="Operator">)</span>     <span class="Comment"># 调用 Account.__init__(a,"Guido",1000.00)</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="ID">Account</span><span class="Operator">(</span><span class="String">"Bill"</span><span class="Operator">,</span> <span class="Number">100000000000L</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-132" class="anchor"/><p class="line874">实例创建之后,就可以使用点(.)操作符来访问它的属性和方法: <span id="line-133" class="anchor"/><span id="line-134" class="anchor"/><span id="line-135" class="anchor"/><span id="line-136" class="anchor"/><span id="line-137" class="anchor"/><span id="line-138" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-6788c904b71062cf40f897d0f5c8e15460e6cd3a_004\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-6788c904b71062cf40f897d0f5c8e15460e6cd3a_004', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-6788c904b71062cf40f897d0f5c8e15460e6cd3a_004" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span><span class="Operator">.</span><span class="ID">deposit</span><span class="Operator">(</span><span class="Number">100.00</span><span class="Operator">)</span>        <span class="Comment"># 调用 Account.deposit(a,100.00)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">b</span><span class="Operator">.</span><span class="ID">withdraw</span><span class="Operator">(</span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">maxint</span><span class="Operator">)</span>   <span class="Comment"># 调用 Account.withdraw(b,sys.maxint)</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">name</span> <span class="Operator">=</span> <span class="ID">a</span><span class="Operator">.</span><span class="ID">name</span>            <span class="Comment"># 得到帐户名称</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">print</span> <span class="ID">a</span><span class="Operator">.</span><span class="ID">account_type</span>     <span class="Comment"># 显示帐户类型</span><span class="Text"/></span>
+</pre></div><span id="line-139" class="anchor"/><p class="line862">在系统内部,每个类实例都拥有一个字典(即实例的 <tt class="backtick">__dict__</tt> 属性,在第三章中有介绍).这个字典包含每个实例的信息.例如: <span id="line-140" class="anchor"/><span id="line-141" class="anchor"/></p><pre>>>> print a.__dict__
+<span id="line-142" class="anchor"/>{'balance': 1100.0, 'name': 'Guido'}
+<span id="line-143" class="anchor"/>>>> print b.__dict__
+<span id="line-144" class="anchor"/>{'balance': 97852516353L, 'name': 'Bill'}
+<span id="line-145" class="anchor"/></pre><span id="line-146" class="anchor"/><p class="line862">若一个实例的属性被修改,这个字典也随之改变.上例中，属性通过Account类中定义的方法<tt class="backtick">__init()__</tt>, deposit(),以及withdraw()中对self变量赋值被改变. <span id="line-147" class="anchor"/>不过对于类实例可以随时添加私有属性。 <span id="line-148" class="anchor"/><span id="line-149" class="anchor"/></p><pre>a.number = 123456    # 把 'number' 加入到 a.__dict__
+<span id="line-150" class="anchor"/></pre><span id="line-151" class="anchor"/><p class="line862">属性的赋值总是发生在实例字典中,而属性访问则比属性赋值复杂一些。当访问一个属性的时候,解释器首先在实例的字典中搜索，若找不到则去创建这个实例的类的字典中搜索，若还找不到就到类的基类中搜索(在后边 '继承' 一节中会讲到)，如果还找不到最后会尝试调用类的<tt class="backtick">__getattr__</tt>方法来获取属性值(若类中定义了该方法的话).如果这个过程也失败,则引发<tt class="backtick">AttributeError</tt>异常 <span id="line-152" class="anchor"/><span
+id="line-153" class="anchor"/></p><p class="line867">
+</p><h2 id="head-9afed1766954f9574699bc96b2ad4369d92d2676">1.4. 引用记数与实例销毁</h2>
+<span id="line-154" class="anchor"/><span id="line-155" class="anchor"/><p class="line862">所有实例都是引用记数的.若一个实例引用记数变成零,该实例就被销毁.当实例将被销毁前,解释器会搜索该对象的 <tt class="backtick">__del__</tt>方法并调用它。但在实际应用中,极少有需要给一个类定义<tt class="backtick">__del__</tt>方法, 除非这个对象在销毁前需要执行一些清除操作(如关闭文件,断开网络,或者释放其他系统资源).即使是在这种情况下,依赖<tt
+class="backtick">__del__()</tt>来执行清除和关闭操作也是危险的，因为不能保证在解释器关闭时会自动调用这个方法.更好的选择是定义一个close()方法,在需要时显式的调用这个方法来执行这个过程. <span id="line-156" class="anchor"/>最后注意一点, 如果一个实例拥有<tt class="backtick">__del__</tt>方法，则它永远不会被Python的垃圾收集器回收(这也是不推荐定义 <tt class="backtick">__del__()</tt>的理由).关于垃圾回收请参阅附录A中的gc模块。 <span id="line-157" class="anchor"/><span id="line-158" class="anchor"/></p><p
+class="line862">有时会使用del语句来删除对象的引用，如果这导致该对象引用记数变为零,就会自动调用<tt class="backtick">__del__()</tt>. del语句并不直接调用<tt class="backtick">__del__()</tt>. <span id="line-159" class="anchor"/><span id="line-160" class="anchor"/></p><p class="line867">
+</p><h2 id="head-54ca5e92f513cb889c946cadc3aa111496826058">1.5. 继承</h2>
+<span id="line-161" class="anchor"/><span id="line-162" class="anchor"/><p class="line874">继承(Inheritance)是创建新类的机制之一,它通过一个已有类进行修改和扩充来生成新类。这个原始的类被称为基类(base class)或超类(superclass).新生成的类称为该类的派生类(derived class)或子类(subclass).当通过继承创建一个类时,它会自动'继承'在基类中定义的属性。一个子类也可以重新定义父类中已有的属性或定义新的属性. <span id="line-163" class="anchor"/><span id="line-164" class="anchor"/></p><p
+class="line874">Python支持多继承，如果一个类有多个父类，在class语句中就使用逗号来分隔这个父类列表。例如: <span id="line-165" class="anchor"/><span id="line-166" class="anchor"/><span id="line-167" class="anchor"/><span id="line-168" class="anchor"/><span id="line-169" class="anchor"/><span id="line-170" class="anchor"/><span id="line-171" class="anchor"/><span id="line-172" class="anchor"/><span id="line-173" class="anchor"/><span id="line-174" class="anchor"/><span id="line-175" class="anchor"/><span id="line-176" class="anchor"/><span
+id="line-177" class="anchor"/><span id="line-178" class="anchor"/><span id="line-179" class="anchor"/><span id="line-180" class="anchor"/><span id="line-181" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-bef112467cf8647663093438186df88eb36a2497_005\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-bef112467cf8647663093438186df88eb36a2497_005', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-bef112467cf8647663093438186df88eb36a2497_005" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">class</span> <span class="ID">D</span><span class="Operator">(</span><span class="ID">oject</span><span class="Operator">)</span><span class="Operator">:</span> <span class="ResWord">pass</span>                    <span class="Comment">#D继承自object</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">class</span> <span class="ID">B</span><span class="Operator">(</span><span class="ID">D</span><span class="Operator">)</span><span class="Operator">:</span>                             <span class="Comment">#B是D的子类</span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ID">varB</span> <span class="Operator">=</span> <span class="Number">42</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">def</span> <span class="ID">method1</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ResWord">print</span> <span class="String">"Class B : method1"</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">class</span> <span class="ID">C</span><span class="Operator">(</span><span class="ID">D</span><span class="Operator">)</span><span class="Operator">:</span>                             <span class="Comment">#C也是D的子类</span></span>
+<span class="line"><span class="LineNumber">   7 </span>    <span class="ID">varC</span> <span class="Operator">=</span> <span class="Number">37</span></span>
+<span class="line"><span class="LineNumber">   8 </span>    <span class="ResWord">def</span> <span class="ID">method1</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ResWord">print</span> <span class="String">"Class C : method1"</span></span>
+<span class="line"><span class="LineNumber">  10 </span>    <span class="ResWord">def</span> <span class="ID">method2</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ResWord">print</span> <span class="String">"Class C : method2"</span></span>
+<span class="line"><span class="LineNumber">  12 </span><span class="ResWord">class</span> <span class="ID">A</span><span class="Operator">(</span><span class="ID">B</span><span class="Operator">,</span><span class="ID">C</span><span class="Operator">)</span><span class="Operator">:</span>                           <span class="Comment">#A是B和C的子类</span></span>
+<span class="line"><span class="LineNumber">  13 </span>    <span class="ID">varA</span> <span class="Operator">=</span> <span class="Number">3.3</span></span>
+<span class="line"><span class="LineNumber">  14 </span>    <span class="ResWord">def</span> <span class="ID">method3</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ResWord">print</span> <span class="String">"Class A : method3"</span><span class="Text"/></span>
+</pre></div><span id="line-182" class="anchor"/><p class="line862">当搜索在基类中定义的某个属性时，Python采用深度优先的原则、按照子类定义中的基类顺序进行搜索。**注意**（new-style类已经改变了这种行为）。上边例子中，如果访问<tt class="backtick"> A.varB </tt>,就会按照A-B-D-C-D这个顺序进行搜索，只要找到就停止搜索.若有多个基类定义同一属性的情况,则只使用第一个被找到属性值: <span id="line-183" class="anchor"/><span id="line-184" class="anchor"/><span id="line-185" class="anchor"/><span id="line-186" class="anchor"/><span
+id="line-187" class="anchor"/><span id="line-188" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-9c140987183294cf3fc37ae25c770c9652ebc9d8_006\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-9c140987183294cf3fc37ae25c770c9652ebc9d8_006', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-9c140987183294cf3fc37ae25c770c9652ebc9d8_006" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="ID">A</span><span class="Operator">(</span><span class="Operator">)</span>            <span class="Comment"># 创建 'A' 的实例</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">a</span><span class="Operator">.</span><span class="ID">method3</span><span class="Operator">(</span><span class="Operator">)</span>        <span class="Comment"># 调用 A.method3(a)</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">a</span><span class="Operator">.</span><span class="ID">method1</span><span class="Operator">(</span><span class="Operator">)</span>        <span class="Comment"># 调用 B.method1(c)</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">a</span><span class="Operator">.</span><span class="ID">varB</span>             <span class="Comment"># 得到 B.varB</span><span class="Text"/></span>
+</pre></div><span id="line-189" class="anchor"/><p class="line867"><strong>重要提示：新旧对象模型的差异:</strong> <span id="line-190" class="anchor"/><span id="line-191" class="anchor"/></p><pre>    注意：Python 中现在有两种对象模型均在使用中即classic对象模型和new-style对象模型，也有两种类：classic class 及 new-style class
+<span id="line-192" class="anchor"/>    在classic对象模型中,方法和属性按 从左至右 深度优先 的顺序查找（上文中已经提到）.显然,当多个父类继承自同一个基类时,这会产生我们不想要的结果.
+<span id="line-193" class="anchor"/>    就上例来说,D是一个new-style类（继承自object），B和C是D的子类, 而A是B和C的子类,如果按classic对象模型(原文中的提到的对象模型)的属性查找规则是搜索顺序是 A-B-D-C-D. 由于Python先查找D后查找C,即使C对D中的属性进行了重定义,也只能使用D中定义的版本.这是classic数据模型的固有问题,在实际应用中会造成一些麻烦.为了解决这个及其它一些问题，Python从2.2版本开始引入new-style对象模型。
+<span id="line-194" class="anchor"/>
+<span id="line-195" class="anchor"/>    在new-style对象模型中,所有内建类型均是object的直接或间接子类. new-style对象模型改变了传统对象模型中的解析顺序,上面的例子我已经改写为new-style类,因此,这个例子实际的搜索顺序是 A-B-C-D.
+<span id="line-196" class="anchor"/>
+<span id="line-197" class="anchor"/>    每个内建类型及new-style类均内建有一个特殊的只读属性 __mro__,这是一个tuple,它保存着方法解析类型. 只能通过类来引用 __mro__(通过实例无法访问).
+<span id="line-198" class="anchor"/>                        --WeiZhong Added@20060210
+<span id="line-199" class="anchor"/></pre><span id="line-200" class="anchor"/><p class="line874">如果一个子类定义了一个和基类具有相同名称的属性,则子类的实例将使用子类中定义的属性.如果需要访问原来的属性,则必须使用全名来限制访问区域: <span id="line-201" class="anchor"/><span id="line-202" class="anchor"/><span id="line-203" class="anchor"/><span id="line-204" class="anchor"/><span id="line-205" class="anchor"/><span id="line-206" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-7fce03a9df0fb56a16a818fa96f908aa1bf89673_007\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-7fce03a9df0fb56a16a818fa96f908aa1bf89673_007', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-7fce03a9df0fb56a16a818fa96f908aa1bf89673_007" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">class</span> <span class="ID">D</span><span class="Operator">(</span><span class="ID">A</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>   <span class="ResWord">def</span> <span class="ID">method1</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>       <span class="ResWord">print</span> <span class="String">"Class D : method1"</span></span>
+<span class="line"><span class="LineNumber">   4 </span>       <span class="ID">A</span><span class="Operator">.</span><span class="ID">method1</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span>            <span class="Comment"># 调用基类属性</span><span class="Text"/></span>
+</pre></div><span id="line-207" class="anchor"/><p class="line862">需要注意的一点是子类实例的初始化.当一个子类实例被创建时, 基类的 <tt class="backtick">__init__()</tt>方法并不会被自动调用.也就是子类必须自力更生来解决实例的初始化.例如: <span id="line-208" class="anchor"/><span id="line-209" class="anchor"/><span id="line-210" class="anchor"/><span id="line-211" class="anchor"/><span id="line-212" class="anchor"/><span id="line-213" class="anchor"/><span id="line-214" class="anchor"/><span
+id="line-215" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-e62a24f684c9854b125f5e383c4067a512ed35eb_008\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-e62a24f684c9854b125f5e383c4067a512ed35eb_008', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-e62a24f684c9854b125f5e383c4067a512ed35eb_008" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">class</span> <span class="ID">D</span><span class="Operator">(</span><span class="ID">A</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">args1</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>        <span class="Comment"># 初始化基类</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="Comment"/>        <span class="ID">A</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="Comment"># 初始化自己</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="Comment"/>        <span class="Operator">.</span><span class="Operator">.</span><span class="Operator">.</span><span class="Text"/></span>
+</pre></div><span id="line-216" class="anchor"/><p class="line867"><tt class="backtick">__del__()</tt> 与 <tt class="backtick">__init__()</tt> 类似. <span id="line-217" class="anchor"/><span id="line-218" class="anchor"/></p><p class="line867">
+</p><h2 id="head-bbae0c074811447c3059ef9c55affb97d70cfbff">1.6. 多态</h2>
+<span id="line-219" class="anchor"/><span id="line-220" class="anchor"/><p class="line862">Python通过上文中提到的属性查询规则来实现多态.当使用obj.method() 来访问一个方法时,方法的搜索顺序为:实例的 <tt class="backtick">__dict__</tt> 属性,实例的类定义,基类. <span id="line-221" class="anchor"/>第一个被找到的方法被执行。 <span id="line-222" class="anchor"/><span id="line-223" class="anchor"/></p><p class="line867">
+</p><h2 id="head-1c274e897b27f5772bbb85d5981718be4390b3be">1.7. 数据隐藏</h2>
+<span id="line-224" class="anchor"/><span id="line-225" class="anchor"/><p class="line874">默认情况下,所有的属性都是'公开'的.这意味着一个类的所有属性均可不受任何限制的访问.这也意味着基类中定义的所有内容都能被子类继承。 <span id="line-226" class="anchor"/>在面向对象编程实践中，这种行为是我们不希望的。因为它不但暴露了对象的内部实现，而且容易在派生类对象及基类对象之间产生名字空间冲突。 <span id="line-227" class="anchor"/><span id="line-228" class="anchor"/></p><p
+class="line862">要解决这个问题,只需要在类中将需要隐藏的属性名字以两个下划线开头,例如 <tt class="backtick">__Foo</tt>。这样系统会自动实时生成一个新的名字 <tt class="backtick">_Classname__Foo</tt> 并用于内部使用。这样在某种程度上就提供了私有属性(其实这个 <tt class="backtick">_Classname__Foo</tt> 仍然是不受限制访问的嘿嘿),也解决了名字空间冲突的问题.例如: <span id="line-229" class="anchor"/><span id="line-230" class="anchor"/><span id="line-231" class="anchor"/><span
+id="line-232" class="anchor"/><span id="line-233" class="anchor"/><span id="line-234" class="anchor"/><span id="line-235" class="anchor"/><span id="line-236" class="anchor"/><span id="line-237" class="anchor"/><span id="line-238" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-74d9bf5be89c73a6222cc354932f672b2ee9ba73_009\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-74d9bf5be89c73a6222cc354932f672b2ee9ba73_009', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-74d9bf5be89c73a6222cc354932f672b2ee9ba73_009" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">class</span> <span class="ID">A</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>   <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>      <span class="ID">self</span><span class="Operator">.</span><span class="ID">__X</span> <span class="Operator">=</span> <span class="Number">3</span>        <span class="Comment"># self._A__X</span></span>
+<span class="line"><span class="LineNumber">   4 </span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">class</span> <span class="ID">B</span><span class="Operator">(</span><span class="ID">A</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>   <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   7 </span>      <span class="ID">A</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>      <span class="ID">self</span><span class="Operator">.</span><span class="ID">__X</span> <span class="Operator">=</span> <span class="Number">37</span>       <span class="Comment"># self._B__X</span><span class="Text"/></span>
+</pre></div><span id="line-239" class="anchor"/><p class="line862">这是一个小技巧,并没有真正阻止访问一个类的*私有*属性.如果已知一个类的名称和它某个私有属性的名称,我们还是可以使用<tt class="backtick">_Classname__Foo</tt> 来访问到这个属性.(这不是bug,因为在某些特定的场合这非常有用,比如调试时,所以系统一直保留这个所谓的*问题*) <span id="line-240" class="anchor"/><span id="line-241" class="anchor"/></p><p class="line867">
+</p><h2 id="head-2d330c82baf745bbd355a8202b3078ac85b17aa5">1.8. 操作符重载</h2>
+<span id="line-242" class="anchor"/><span id="line-243" class="anchor"/><p class="line874">用户自定义对象可以通过在类中实现特殊方法(第三章中已介绍)来重载Python内建操作符.例如 Listing 7.2 中的类,它使用标准的数学运算符实现了复数的运算及类型转换. <span id="line-244" class="anchor"/><span id="line-245" class="anchor"/></p><p class="line867"><strong>Listing 7.2 数学运算及类型转换</strong> <span id="line-246" class="anchor"/><span id="line-247" class="anchor"/><span
+id="line-248" class="anchor"/><span id="line-249" class="anchor"/><span id="line-250" class="anchor"/><span id="line-251" class="anchor"/><span id="line-252" class="anchor"/><span id="line-253" class="anchor"/><span id="line-254" class="anchor"/><span id="line-255" class="anchor"/><span id="line-256" class="anchor"/><span id="line-257" class="anchor"/><span id="line-258" class="anchor"/><span id="line-259" class="anchor"/><span id="line-260"
+class="anchor"/><span id="line-261" class="anchor"/><span id="line-262" class="anchor"/><span id="line-263" class="anchor"/><span id="line-264" class="anchor"/><span id="line-265" class="anchor"/><span id="line-266" class="anchor"/><span id="line-267" class="anchor"/><span id="line-268" class="anchor"/><span id="line-269" class="anchor"/><span id="line-270" class="anchor"/><span id="line-271" class="anchor"/><span id="line-272" class="anchor"/><span
+id="line-273" class="anchor"/><span id="line-274" class="anchor"/><span id="line-275" class="anchor"/><span id="line-276" class="anchor"/><span id="line-277" class="anchor"/><span id="line-278" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-31e7b590ca7ea5eec419d05fe21dcc502980db35_010\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-31e7b590ca7ea5eec419d05fe21dcc502980db35_010', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-31e7b590ca7ea5eec419d05fe21dcc502980db35_010" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">class</span> <span class="ID">Complex</span><span class="Operator">(</span><span class="ID">object</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span><span class="ID">real</span><span class="Operator">,</span><span class="ID">imag</span><span class="Operator">=</span><span class="Number">0</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">real</span> <span class="Operator">=</span> <span class="ID">float</span><span class="Operator">(</span><span class="ID">real</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">imag</span> <span class="Operator">=</span> <span class="ID">float</span><span class="Operator">(</span><span class="ID">imag</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ResWord">def</span> <span class="ID">__repr__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ResWord">return</span> <span class="String">"Complex(%s,%s)"</span> <span class="Operator">%</span> <span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">real</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">imag</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>    <span class="ResWord">def</span> <span class="ID">__str__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ResWord">return</span> <span class="String">"(%g+%gj)"</span> <span class="Operator">%</span> <span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">real</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">imag</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>    <span class="Comment"># self + other</span></span>
+<span class="line"><span class="LineNumber">  10 </span><span class="Comment"/>    <span class="ResWord">def</span> <span class="ID">__add__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span><span class="ID">other</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ResWord">return</span> <span class="ID">Complex</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">real</span> <span class="Operator">+</span> <span class="ID">other</span><span class="Operator">.</span><span class="ID">real</span><span class="Operator">,</span> <span class="ID">self</span><span
+class="Operator">.</span><span class="ID">imag</span> <span class="Operator">+</span> <span class="ID">other</span><span class="Operator">.</span><span class="ID">imag</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>    <span class="Comment"># self - other</span></span>
+<span class="line"><span class="LineNumber">  13 </span><span class="Comment"/>    <span class="ResWord">def</span> <span class="ID">__sub__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span><span class="ID">other</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ResWord">return</span> <span class="ID">Complex</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">real</span> <span class="Operator">-</span> <span class="ID">other</span><span class="Operator">.</span><span class="ID">real</span><span class="Operator">,</span> <span class="ID">self</span><span
+class="Operator">.</span><span class="ID">imag</span> <span class="Operator">-</span> <span class="ID">other</span><span class="Operator">.</span><span class="ID">imag</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span>    <span class="Comment"># -self</span></span>
+<span class="line"><span class="LineNumber">  16 </span><span class="Comment"/>    <span class="ResWord">def</span> <span class="ID">__neg__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ResWord">return</span> <span class="ID">Complex</span><span class="Operator">(</span><span class="Operator">-</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">real</span><span class="Operator">,</span> <span class="Operator">-</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">imag</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span>    <span class="Comment"># other + self</span></span>
+<span class="line"><span class="LineNumber">  19 </span><span class="Comment"/>    <span class="ResWord">def</span> <span class="ID">__radd__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span><span class="ID">other</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ResWord">return</span> <span class="ID">Complex</span><span class="Operator">.</span><span class="ID">__add__</span><span class="Operator">(</span><span class="ID">other</span><span class="Operator">,</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span>    <span class="Comment"># other - self</span></span>
+<span class="line"><span class="LineNumber">  22 </span><span class="Comment"/>    <span class="ResWord">def</span> <span class="ID">__rsub__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span><span class="ID">other</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  23 </span>        <span class="ResWord">return</span> <span class="ID">Complex</span><span class="Operator">.</span><span class="ID">__sub__</span><span class="Operator">(</span><span class="ID">other</span><span class="Operator">,</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  24 </span>    <span class="Comment"># 将其他数值类型转换为复数</span></span>
+<span class="line"><span class="LineNumber">  25 </span><span class="Comment"/>    <span class="ResWord">def</span> <span class="ID">__coerce__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span><span class="ID">other</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  26 </span>        <span class="ResWord">if</span> <span class="ID">isinstance</span><span class="Operator">(</span><span class="ID">other</span><span class="Operator">,</span><span class="ID">Complex</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  27 </span>            <span class="ResWord">return</span> <span class="ID">self</span><span class="Operator">,</span><span class="ID">other</span></span>
+<span class="line"><span class="LineNumber">  28 </span>        <span class="ResWord">try</span><span class="Operator">:</span>   <span class="Comment"># 检测是否可以被转换为浮点数</span></span>
+<span class="line"><span class="LineNumber">  29 </span>            <span class="ResWord">return</span> <span class="ID">self</span><span class="Operator">,</span> <span class="ID">Complex</span><span class="Operator">(</span><span class="ID">float</span><span class="Operator">(</span><span class="ID">other</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  30 </span>        <span class="ResWord">except</span> <span class="ID">ValueError</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  31 </span>            <span class="ResWord">pass</span><span class="Text"/></span>
+</pre></div><span id="line-279" class="anchor"/><p class="line874">在这个例子中,有一些值得研究的地方: <span id="line-280" class="anchor"/><span id="line-281" class="anchor"/></p><ul><li style="list-style-type: none;"><p class="line862">首先<tt class="backtick">__repr__()</tt> 用于返回对象的表达式字符串表示,这个返回字符串可以用于再次得到该对象.在本例中,会创建一个类似"Complex(r,i)"的字符串.另外<tt
+class="backtick">__str__()</tt>方法创建一个字符串用于较美观的输出。(通常用于print语句) <span id="line-282" class="anchor"/><span id="line-283" class="anchor"/></p><p class="line862">然后,要处理复数在运算符左边或右边这两种情况,必须同时提供 <tt class="backtick">__op__()和 __rop__()</tt>方法. <span id="line-284" class="anchor"/><span id="line-285" class="anchor"/></p><p class="line862">最后, <tt class="backtick">__ceorco__</tt>
+方法用于处理混合类型运算.在本例中,其他的数值类型均被转换为复数,这样才可以继续进行复数的运算. <span id="line-286" class="anchor"/><span id="line-287" class="anchor"/></p></li></ul><p class="line867">
+</p><h2 id="head-8451b9a7ca64faad200ff147a6272d359bab18ad">1.9. 类,类型,和成员检测</h2>
+<span id="line-288" class="anchor"/><span id="line-289" class="anchor"/><p class="line862">目前,类型和类是分开的.内建类型,如列表和字典是不能被继承的,类也不能定义一个新类型.事实上,所有的类定义都属于<a href="/moin/ClassType" class="nonexistent">ClassType</a>类型,同样地,类的实例属于<a href="/moin/InstanceType" class="nonexistent">InstanceType</a>类型.所以,下面这个表达式对于两个类永远为真(即使这两个实例是由不同的类创建的): <span id="line-290"
+class="anchor"/>type(a) == type(b) <span id="line-291" class="anchor"/><span id="line-292" class="anchor"/></p><pre>        Python 2.4 已经支持内建类型的继承，类与类型还有差别，但越来越微妙了。
+<span id="line-293" class="anchor"/>        对 new-style 类来说，类的实例并不是 InstanceType 类型。它的类型与类的名字有关。也因此，对new-style类来说，上面的等式只有同一个类的两个不同实例才为真。 --WeiZhong
+<span id="line-294" class="anchor"/></pre><span id="line-295" class="anchor"/><p class="line874">内建函数isinstance(obj ,cname)用来测试obj对象是否是cname的实例。.如果是,函数就返回True.例如: <span id="line-296" class="anchor"/><span id="line-297" class="anchor"/><span id="line-298" class="anchor"/><span id="line-299" class="anchor"/><span id="line-300" class="anchor"/><span id="line-301" class="anchor"/><span id="line-302" class="anchor"/><span
+id="line-303" class="anchor"/><span id="line-304" class="anchor"/><span id="line-305" class="anchor"/><span id="line-306" class="anchor"/><span id="line-307" class="anchor"/><span id="line-308" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-38421a2c2b39acb06f842a9010dede19e6d22a23_011\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-38421a2c2b39acb06f842a9010dede19e6d22a23_011', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-38421a2c2b39acb06f842a9010dede19e6d22a23_011" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">class</span> <span class="ID">A</span><span class="Operator">(</span><span class="ID">object</span><span class="Operator">)</span><span class="Operator">:</span> <span class="ResWord">pass</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">class</span> <span class="ID">B</span><span class="Operator">(</span><span class="ID">A</span><span class="Operator">)</span><span class="Operator">:</span> <span class="ResWord">pass</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">C</span><span class="Operator">(</span><span class="ID">object</span><span class="Operator">)</span><span class="Operator">:</span> <span class="ResWord">pass</span></span>
+<span class="line"><span class="LineNumber">   4 </span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="ID">A</span><span class="Operator">(</span><span class="Operator">)</span>          <span class="Comment"># 'A'的实例</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="ID">B</span><span class="Operator">(</span><span class="Operator">)</span>          <span class="Comment"># 'B'的实例 </span></span>
+<span class="line"><span class="LineNumber">   7 </span><span class="ID">c</span> <span class="Operator">=</span> <span class="ID">C</span><span class="Operator">(</span><span class="Operator">)</span>          <span class="Comment"># 'C'的实例 </span></span>
+<span class="line"><span class="LineNumber">   8 </span></span>
+<span class="line"><span class="LineNumber">   9 </span><span class="ID">isinstance</span><span class="Operator">(</span><span class="ID">a</span><span class="Operator">,</span><span class="ID">A</span><span class="Operator">)</span>  <span class="Comment"># 返回 True</span></span>
+<span class="line"><span class="LineNumber">  10 </span><span class="ID">isinstance</span><span class="Operator">(</span><span class="ID">b</span><span class="Operator">,</span><span class="ID">A</span><span class="Operator">)</span>  <span class="Comment"># 返回 True, B 源自 A</span></span>
+<span class="line"><span class="LineNumber">  11 </span><span class="ID">isinstance</span><span class="Operator">(</span><span class="ID">b</span><span class="Operator">,</span><span class="ID">C</span><span class="Operator">)</span>  <span class="Comment"># 返回 False, C 与 A 没有派生关系</span><span class="Text"/></span>
+</pre></div><span id="line-309" class="anchor"/><p class="line874">同样地,内建函数issubclass(A ,B)用来测试类A是否是类B的子类: <span id="line-310" class="anchor"/><span id="line-311" class="anchor"/></p><pre>issubclass(B,A)   # 返回 True
+<span id="line-312" class="anchor"/>issubclass(C,A)   # 返回 False
+<span id="line-313" class="anchor"/>issubclass(A,A)   # 永远返回True
+<span id="line-314" class="anchor"/></pre><span id="line-315" class="anchor"/><p class="line874">isinstance()函数也可以用于检查任意内建类型: <span id="line-316" class="anchor"/><span id="line-317" class="anchor"/><span id="line-318" class="anchor"/><span id="line-319" class="anchor"/><span id="line-320" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-6f3ee0f7c91ff31b17edb7e1675655e58a00505f_012\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-6f3ee0f7c91ff31b17edb7e1675655e58a00505f_012', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-6f3ee0f7c91ff31b17edb7e1675655e58a00505f_012" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">types</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">isinstance</span><span class="Operator">(</span><span class="Number">3</span><span class="Operator">,</span> <span class="ID">types</span><span class="Operator">.</span><span class="ID">IntType</span><span class="Operator">)</span>     <span class="Comment"># 返回 True</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">isinstance</span><span class="Operator">(</span><span class="Number">3</span><span class="Operator">,</span> <span class="ID">types</span><span class="Operator">.</span><span class="ID">FloatType</span><span class="Operator">)</span>   <span class="Comment"># 返回 False</span><span class="Text"/></span>
+</pre></div><span id="line-321" class="anchor"/><p class="line874">这是一个被推荐的类型检查方法,这样类型和类的差别就可以忽略. <span id="line-322" class="anchor"/></p><hr/><p class="line874"> <span id="line-323" class="anchor"/>::-andelf(Feather) 修改了个别排版错误 <span id="line-324" class="anchor"/><span id="bottom" class="anchor"/></p></div>

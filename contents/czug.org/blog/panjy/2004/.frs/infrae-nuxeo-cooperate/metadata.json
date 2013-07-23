@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "infrae-nuxeo-cooperate"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "随着Five 0.3的发布，最近Infrae和Nuxeo在Zope3技术上开始逐渐活跃起来。", 
+        "modified": "2005-03-18 10:13:39", 
+        "title": "Infrae和Nuxeo在Zope 3技术上展开合作"
+    }
+}

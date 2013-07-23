@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "helpcentertutorialpage.2005-08-08.9928423593"
+    }, 
+    "dublin": {
+        "creators": [
+            "honeyday"
+        ], 
+        "description": "将编辑好的po文件应用到被汉化的产品中。", 
+        "modified": "2005-08-08 11:08:19", 
+        "title": "应用po文件"
+    }
+}

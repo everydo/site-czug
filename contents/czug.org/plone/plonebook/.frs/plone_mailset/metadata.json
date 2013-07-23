@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Image", 
+        "id": "plone_mailset"
+    }, 
+    "dublin": {
+        "creators": [
+            "blueszhao"
+        ], 
+        "description": "", 
+        "modified": "2004-03-10 09:30:54", 
+        "title": "邮件设置管理界面"
+    }
+}

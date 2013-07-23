@@ -1,0 +1,15 @@
+{
+    "main": {
+        "mimetype": "text/x-rst", 
+        "contenttype": "Document", 
+        "id": "front-page"
+    }, 
+    "dublin": {
+        "creators": [
+            "admin"
+        ], 
+        "description": "祝贺! 您已经成功安装了Plone.", 
+        "modified": "2007-07-05 14:42:12", 
+        "title": "欢迎来到Plone"
+    }
+}

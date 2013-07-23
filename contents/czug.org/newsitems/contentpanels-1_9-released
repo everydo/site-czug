@@ -1,0 +1,15 @@
+<p><a href="http://plone.org/products/cmfcontentpanels/releases/1.9">英文产品页面</a> 
+| 
+<a href="http://www.zopechina.com/products/CMFContentPanels">中文产品页面</a>
+|
+<a href="http://plone.org/products/cmfcontentpanels/releases/1.9/contentpanels-1_9.tgz">下载</a></p>
+<p><img src="http://plone.org/products/cmfcontentpanels/releases/1.9/screenshot" /></p>
+<p>新版本的主要新特性包括：</p>
+
+<ul>
+<li>RSS聚合视图： 提供RSS链接地址和显示数量，就可在复合面板页面中显示RSS内容。RSS的结果使用网站根目录下的RSSCache进行缓存. 注意，需要实现安装feedparser(http://feedparser.org).</li>
+<li>简单文本的视图：可添加任意的HTML文本到contentpanels中，而无需新创建其他的内容。</li>
+<li>新为投票器MPoll提供视图</li>
+<li>其他的最新修改等视图，均支持显示数量的设置。</li>
+
+</ul>

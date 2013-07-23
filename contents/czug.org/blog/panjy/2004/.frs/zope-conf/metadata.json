@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zope-conf"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "罗列zope配置文件的一些机关", 
+        "modified": "2005-01-02 14:33:00", 
+        "title": "zope.conf的一些小机关"
+    }
+}

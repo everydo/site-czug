@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "plone-foundation-created"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Plone社区宣布Plone基金（Plone Foundation）正式成立！Plone基金是一个将使Plone社区Plone产品受益的非盈利性组织.", 
+        "modified": "2004-06-12 06:05:58", 
+        "title": "Plone基金成立"
+    }
+}

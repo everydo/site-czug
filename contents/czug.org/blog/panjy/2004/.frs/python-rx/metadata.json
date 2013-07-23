@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "python-rx"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "正则表达式(Regular Expression)是文字处理的利器, Python对其有良好的支持", 
+        "modified": "2004-12-03 12:23:23", 
+        "title": "Python的正则表达式"
+    }
+}

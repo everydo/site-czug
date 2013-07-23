@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "disable-registrations"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "如何禁止网站的注册功能", 
+        "modified": "2006-02-19 01:39:05", 
+        "title": "如何取消新用户注册功能"
+    }
+}

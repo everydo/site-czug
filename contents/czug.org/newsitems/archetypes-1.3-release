@@ -1,0 +1,19 @@
+
+ <p>英文新闻：<a href="http://plone.org/newsitems/at1.3-final">Archetypes 1.3.0
+ final released</a><br />
+ <br />
+ Archetypes对于Plone的意义重大，1.3版本是近一年来的一个稳定版本。<br />
+ <br />
+ 主要的改变包括：</p>
+ <ul>
+ <li>更高的安全性</li>
+ <li>新的引用实现机制</li>
+ <li>分离的MimetypesRegistry</li>
+ <li>大量的修补.</li>
+ <li>改正了至少三处可能的内存泄漏. 现在引用计数在数千此访问后仍然能够保持稳定.</li>
+ <li>所有的以at打头的属性保留为内部使用的目的.</li>
+ </ul>
+ <p><a href="http://sourceforge.net/project/showfiles.php?group_id=75272&package_id=75683&release_id=271833">
+ 下载</a>&nbsp; <a href="http://plone.org/documentation/archetypes/">文档</a>&nbsp; 更<a href="http://sourceforge.net/project/shownotes.php?release_id=271833">改历史</a></p>
+<br />
+ 

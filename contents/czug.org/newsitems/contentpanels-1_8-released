@@ -1,0 +1,35 @@
+<p><strong>链接</strong>:</p>
+<p><a href="http://members.plone.org/Members/panjunyong/ContentPanels/contentpanels-1_8.tgz">下载</a>
+| 
+<a href="http://members.plone.org/Members/panjunyong/ContentPanels/howto">屏幕截图</a>
+|
+<a href="http://cvs.sourceforge.net/viewcvs.py/collective/CMFContentPanels">源代码</a></p>
+<p><strong>1.8版的新特性</strong></p>
+
+<ul>
+<li>重新改写viewlet选择的弹出窗口:
+<ul>
+<li>界面更干净，更容易使用</li>
+<li>更容易调试Viewlet</li>
+
+</ul>
+</li>
+<li>自带的Viewlets都可在最新的Plone下工作。</li>
+<li>在左右列上的viewlet上，当用户有权编辑时，方便起见，添加了到该复合面板的链接.</li>
+<li>完全中文化和国际化</li>
+<li>删除一些没有用的viewlets</li>
+<li>更多的界面调整</li>
+
+</ul>
+<p><strong>1.7.3版的新特性</strong> </p>
+
+<ul>
+<li>删除复合面板的时候，自动删除left_slot/right_slot的设置</li>
+<li>调整内嵌复合面板的支持bug</li>
+<li>新的Brazilian Portuguese 语言翻译. 感谢Luciano De Fazio(http://www.camaracatanduva.sp.gov.br )</li>
+<li>解决bug：复合面板位于左右列的时候，CSS失效。</li>
+<li>新的图片viewlet，感谢Peter Shute (NUW)</li>
+<li>支持mxmDynamicPage</li>
+
+</ul>
+<p>CMFContentPanels是一个开源产品，由<a href="htttp://www.zopechina.com">润普公司</a>贡献到社区。</p>

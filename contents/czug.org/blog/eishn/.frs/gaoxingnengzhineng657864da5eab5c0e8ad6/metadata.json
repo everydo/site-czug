@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "gaoxingnengzhineng657864da5eab5c0e8ad6"
+    }, 
+    "dublin": {
+        "creators": [
+            "eishn"
+        ], 
+        "description": "關於高性能智能數據庫, 他的定義, 組成, 以及實現。", 
+        "modified": "2006-07-18 14:29:59", 
+        "title": "高性能智能數據庫導論"
+    }
+}

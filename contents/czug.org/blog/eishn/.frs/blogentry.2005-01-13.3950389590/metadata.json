@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "blogentry.2005-01-13.3950389590"
+    }, 
+    "dublin": {
+        "creators": [
+            "eishn"
+        ], 
+        "description": "简单地探讨一下 Python 中的 import，它的用法。这是第二篇。", 
+        "modified": "2005-01-15 10:40:21", 
+        "title": "import 初探之二 —— __import__() 、reload() 及受限脚本"
+    }
+}

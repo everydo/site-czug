@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "mod_python"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "和其他的web开发不同，mod_python利用了apache，通过python提供了一个多功能、快速、可扩展的web应用开发方法。", 
+        "modified": "2004-10-09 00:17:16", 
+        "title": "mod_python: 让Python和Apache集成"
+    }
+}

@@ -1,0 +1,174 @@
+  
+  <h1 style="margin:25px 0 10px 10px">翻译www.djangobook.com之第十五章：贡献的其它子框架 
+    
+  </h1>
+  <div class="content">
+    <span style="color: red"><strong>The Django Book：第15章 贡献的其它子框架</strong></span><br /><br />Python的众多力量中的一个是它的"电池导入"哲学，当你安装了Python，它自带了一个巨大的常用模块"标准库"，你不需要<br />下载任何其它东西就可以立即开始使用，Django打算遵循这个哲学，它包含了它自己的对常用Web开发任务有用的附加标准库<br />本章就讲述这些附加物<br /><br /><strong>关于标准库</strong><br />Django的标准库位于django.contrib，其中每个子包都是一个单独部分的附属功能，这些包没有必要互相关联，但是有些<br />django.contrib子包可能需要其它包<br />在django.contrib里功能类型没有硬性需求，其中有些包包含模型(这样就需要在你的数据库安装数据库表)，其它的包含单<br />独的中间件或模板标签<br />django.contrib包的共有特性是:如果你删除整个django.contrib包，你仍然可以无误的使用Django的基本功能，当Django<br />开发人员往框架添加新功能时，他们使用该规则来决定新功能应该位于django.contrib还是别的地方<br />django.contrib包含了如下包:<br />1，admin--自动admin站点，参考第6章<br />2，auth--Django的认证框架，参考第12章<br />3，comments--一个注释框架，参考第13章<br />4，contenttypes--一个深入内容类型的框架，其中每个安装的Django模型是单独的内容类型，参考下面的"内容类型"<br />5，csrf--防止跨站点请求伪造(Cross Site Request Forgeries)，参考下面的"CSRF预防"<br />6，flatpages--在数据库管理简单的"平坦的"HTML，参考下面的"Flatpages"<br />7，formtools--Django表单的高级抽象工具，参考下面的"表单工具"<br />8，humanize--一些Django模板过滤器，对于给数据添加"人类感观"很有用，参考下面的"使数据人性华"<br />9，markup--一些Django模板过滤器，它们实现了一些常用的标记语言，参考下面的"标记过滤器"<br />10，redirects--一个管理重定向的框架，参考下面的"重定向"<br />11，sessions--Django的session框架，参考第12章<br />12，sitemaps--一个生成站点图XML文件的框架，参考下面的"Sitemaps"<br />13，sites--一个让你操作同一数据库和Django安装的多个网站的框架，参考下面的"Sites"<br />14，syndication--一个在RSS和Atom生成syndication种子的框架，参考下面的"Syndication种子"<br />本章的其它部分进入每个django.contrib包的细节<br /><br /><strong>Sites</strong><br />Django的"sites"系统是一个让你操作同一数据库和Django项目的多个网站的框架，由于这是个抽象概念，它很难理解，所以<br />我们以几个例子开始<br /><br /><strong>例子1：在多个站点重用数据</strong><br />我们第1章解释到，Django驱动的站点LJWorld.com和Lawrence.com被同一新闻组织操作--堪萨斯劳伦斯的Lawrence Journal-<br />World报纸，LJWorld.com关注新闻，而Lawrence.com关注本地娱乐，但是有时候编辑想在两个站点发表同一文章<br />解决此问题的要命的方法是为每个站点使用不同的数据库，然后让站点生成者发表同一个故事两次:一次在LJWorld.com一次<br />在Lawrence.com，但是这使站点生成者很低效，并且它在数据库里存储了同一故事的多份拷贝从而造成冗余<br />更好的解决方案非常简单:两个站点使用同一文章数据库，并且文章通过多对多关系关联到多个站点，Django的sites框架提<br />供了文章可以被关联的数据库表，同多个"sites"关联数据是个钩子<br /><br /><strong>例子2：在一个地方存储你的站点名/域名</strong><br />LJWorld.com和Lawrence.com都有e-mail提醒功能，这让读者订阅并当新闻发生时得到告示，这非常基本:读者在一个Web表单<br />订阅，然后他立即得到一个e-mail说，"感谢你的订阅"<br />实现该登录处理代码两次是非常低效和冗余的，所以sites在幕后使用了同样的代码，但是"感谢你的订阅"这个通知需要当前<br />站点的name(如'LJWorld.com')和domain(如'www.ljworld.com')的值<br />Django的sites框架提供了一个让你在你的Django项目里为每个站点存储name和domain的地方，这意味着你可以用一个一般的<br />方式来重用这些值<br /><br /><strong>使用sites框架</strong><br />sites框架不像是一个框架而更像是一些惯例，它整个东西是基于两个简单的概念:<br />1，Site模型，位于djang.contrib.sites，它有domain和name域<br />2，settings文件里的SITE_ID设置指定了Site对象的数据库ID<br />怎样使用这两个概念取决于你，但是Django通过简单的惯例用一些方式自动的使用它们<br />按下面的步骤安装sites app:<br />1，添加'django.contrib.sites'到你的INSTALLED_APPS<br />2，运行命令manage.py syncdb来在你的数据库安装django_site表<br />3，通过Django的admin站点或者Python API来添加一个或多个Site对象，为该Django项目拥有的每个站点/域名创建Site对象<br />4，在你的每个settings文件中定义SITE_ID，这个值应该为该settings文件驱动的站点的Site对象的数据库ID<br /><br /><strong>你可以用sites框架做的事情</strong><br /><strong>在多个站点间重用数据</strong><br />为了像"例子1"中解释的那样在多个站点重用数据，只需在你的模型中创建一个ManyToManyField到Site，例如:<br /><pre name="code" class="java">
+from django.db import models
+from django.contrib.sites.models import Site
+
+class Article(models.Model):
+    headline = models.CharField(maxlength=200)
+    # ...
+    sites = models.ManyToManyField(Site)
+</pre><br />这是为了在你的数据库中将文章关联到多个站点所需的必要基本组织，而且你还可以对多个站点重用同样的Django视图代码<br />继续Article例子，这里是article_detail的视图的样子:<br /><pre name="code" class="java">
+from django.conf import settings
+
+def article_detail(request, article_id):
+    try:
+        a = Article.objects.get(id=article_id, sites__id=settings.SITE_ID)
+    except Article.DoesNotExist:
+        raise Http404
+    # ...
+</pre><br />该视图方法是可重用的，因为它根据SITE_ID设置的值来动态检查文章的站点<br />例如，LJWorld.com的settings文件的SITE_ID设置为1而Lawrence.com的settings文件的SITE_ID设置为2，如果当LJWorld.<br />com的settings文件是活动时调用该视图，则它将限制文章查询在包含LJWorld.com的sites列表的文章<br /><br /><strong>与单独的站点关联内容</strong><br />同样的，你可以使用ForeignKey和多对一关系来关联模型到Site模型<br />例如，如果文章只允许在一个单独的站点，你可以像这样使用模型:<br /><pre name="code" class="java">
+from django.db import models
+from django.contrib.sites.models import Site
+
+class Article(models.Model):
+    headline = models.CharField(maxlength=200)
+    # ...
+    site = models.ForeignKey(Site)
+</pre><br />上一部分描述了同样的好处<br /><br /><strong>从视图进入当前站点</strong><br />在更低的级别，你可以基于视图在哪个site调用在你的Django视图使用sites框架来做特殊的事情，例如:<br /><pre name="code" class="java">
+from django.conf import settings
+
+def my_view(request):
+    if settings.SITE_ID == 3:
+        # Do something.
+    else:
+        # Do something else.
+</pre><br />当然，这丑陋的硬编码了站点IDs，你最好赶紧修正它，一个达到同样目的的稍微干净的方式是检查当前站点的域名:<br /><pre name="code" class="java">
+from django.conf import settings
+from django.contrib.sites.models import Site
+
+def my_view(request):
+    current_site = Site.objects.get(id=settings.SITE_ID)
+    if current_site.domain == 'foo.com':
+        # Do something
+    else:
+        # Do something else.
+</pre><br />根据settings.SITE_ID得到Site对象的惯例非常常见，所以Site模型的manager(Site.objects)有一个get_current()方法<br />这个例子等同于前面的:<br /><pre name="code" class="java">
+from django.contrib.sites.models import Site
+
+def my_view(request):
+    current_site = Site.objects.get_current()
+    if current_site.domain == 'foo.com':
+        # Do something
+    else:
+        # Do something else.
+</pre><br />注意在这个最好的例子中，你不需要import djang.conf.settings<br /><br /><strong>得到当前域名来显示</strong><br />对于在"例子2"中解释的DRY(Don't Repeat Yourself)方式的存储你的站点名和域名，只需在当前Site对象引用name和domain<br />例如:<br /><pre name="code" class="java">
+from django.contrib.sites.models import Site
+from django.core.mail import send_mail
+
+def register_for_newsletter(request):
+    # Check form values, etc., and subscribe the user.
+    # ...
+    current_site = Site.objects.get_current()
+    send_mail('Thanks for subscribing to %s alerts' % current_site.name,
+        'Thanks for your subscription. We appreciate it.\n\n-The %s team.' % current_site.name,
+        'editor@%s' % current_site.domain,
+        [user_email])
+    # ...
+</pre><br />继续我们的LJWorld.com和Lawrence.com的例子:在Lawrence.com，这个e-mail有一个主题行"Thanks for subscribing to La<br />wrence.com alers."在LJWorld.com，这个e-mail主题为"Thanks for subscribing to LJWorld.com alerts."同样的站点特<br />有的行为在e-mail的信息主体里完成<br />注意一个更灵活(但是更重量级)的完成这个的方式是使用Django的模板系统，假设Lawrence.com和LJWorld.com有不同的模板<br />目录(TEMPLATE_DIRS)，你可以像这样简单的委派给模板系统:<br /><pre name="code" class="java">
+from django.core.mail import send_mail
+from django.template import loader, Context
+
+def register_for_newsletter(request):
+    # Check form values, etc., and subscribe the user.
+    # ...
+    subject = loader.get_template('alerts/subject.txt').render(Context({}))
+    message = loader.get_template('alerts/message.txt').render(Context({}))
+    send_mail(subject, message, 'do-not-reply@example.com', [user_email])
+    # ...
+</pre><br />这种情况下，你不需要在LJWorld.com和Lawrence.com模板目录都创建subject.txt和message.txt模板，这给你更多的灵活性<br />但是也更复杂<br />尽可能多的使用Site对象来删除不必要的复杂性和冗余是个好主意<br /><br /><strong>为完整URLs得到当前域名</strong><br />Django的get_absolute_url()惯例对不要域名而得到你的对象的URL很好，但是某些情况下你可能想显示完整的URL--用http:<br />//和域名和任何东西--对于一个对象，为了做这个，你可以使用sites框架，一个简单的例子:<br /><pre name="code" class="java">
+&gt;&gt;&gt; from django.contrib.sites.models import Site
+&gt;&gt;&gt; obj = MyModel.objects.get(id=3)
+&gt;&gt;&gt; obj.get_absolute_url()
+'/mymodel/objects/3/'
+&gt;&gt;&gt; Site.objects.get_current().domain
+'example.com'
+&gt;&gt;&gt; 'http://%s%s' % (Site.objects.get_current().domain, obj.get_absolute_url())
+'http://example.com/mymodel/objects/3/'
+</pre><br /><br /><strong>CurrentSiteManager</strong><br />如果Sites在你的程序里担任一个关键的角色，考虑在你的模型里使用有用的CurrentSiteManager，是模型manager(参考第5<br />章)自动过滤它的查询来包含当前Site相关的对象<br />通过显示的添加CurrentSiteManager到你的模型中来使用它，例如:<br /><pre name="code" class="java">
+from django.db import models
+from django.contrib.sites.models import Site
+from django.contrib.sites.managers import CurrentSiteManager
+
+class Photo(models.Model):
+    photo = models.FileField(upload_to='/home/photos')
+    photographer_name = models.CharField(maxlength=100)
+    pub_date = models.DateField()
+    site = models.ForeignKey(Site)
+    objects = models.Manager()
+    on_site = CurrentSiteManager()
+</pre><br />对这个模型，Photo.objects.all()将返回数据库中所有的Photo对象，但是Photo.on_site.all()将根据SITE_ID设置只返回<br />当前站点相关联的Photo对象<br />换句话说，这两个语句是相等的:<br /><pre name="code" class="java">
+Photo.objects.filter(site=settings.SITE_ID)
+Photo.on_site.all()
+</pre><br />CurrentSiteManager怎么知道Photo的哪个域是Site?它默认查找叫site的域，如果你的模型有一个ForeignKey或者ManyToMan<br />yField叫site以外的东西，你需要将它作为参数显示的传递给CurrentSiteManager，下面的域叫publish_on的模型做了示范:<br /><pre name="code" class="java">
+from django.db import models
+from django.contrib.sites.models import Site
+from django.contrib.sites.managers import CurrentSiteManager
+
+class Photo(models.Model):
+    photo = models.FileField(upload_to='/home/photos')
+    photographer_name = models.CharField(maxlength=100)
+    pub_date = models.DateField()
+    publish_on = models.ForeignKey(Site)
+    objects = models.Manager()
+    on_site = CurrentSiteManager('publish_on')
+</pre><br />如果你尝试使用CurrentSiteManager并传递一个不存在的域的名字Django将触发ValueError<br />最后，注意即使你使用CurrentSiteManager，你可能想在你的模型保持一个普通(非站点专有)的Manager，在第5章解释了，<br />如果你手动定义一个manager，则Django不会为你自动创建objects = models.Manager()，同时注意Django的某些部分--即<br />Django的admin站点和generic views--使用模型中首先定义的manager，所以如果你想让你的admin站点访问所有的对象(而<br />不只是站点专有的对象)，在定义CurrentSiteManager之前把objects = models.Manager()放置到你的模型中<br /><br /><strong>Django怎样使用sites框架</strong><br />尽管使用sites框架不是必需的，但这是强力推荐的，因为Django在一些地方使用它，即使你的Django安装只是单站点驱动<br />你应该花费两秒钟来使用你的domain和name来创建site对象，并在你的SITE_ID设置里指出它的ID<br />这里是Django怎样使用sites框架:<br />1，在重定向框架(参考下面的"重定向")中，每个重定向对象与特殊的站点相关联，当Django搜索一个重定向时，它考虑当<br />前的SITE_ID<br />2，在注释框架(参考第13章)中，每个注释与特殊的站点相关联，当发表一个注释时，它的site设置为SITE_ID，当注释通过<br />合适的模板标签列出时，只显示当前站点的注释<br />3，在flatpages框架中(参考下面的"Flatpages")，每个flatpage与一个特殊的站点相关联，当flatpage创建时，你指定它的<br />site，并且flatpage中间件在得到flatpages时检查当前SITE_ID来显示<br />4，在syndication框架中(参考下面的"Syndication种子")，title和description的模板自动访问{{{ site }}}变量，它是<br />表示当前站点的Site对象，而且如果你不指定完整的域名，提供条目URLs的钩子将使用当前Site对象的domain<br /><br /><strong>Flatpages</strong><br />你经常有一个数据库驱动的Web程序要运行，但是你将需要添加一些"一次性的"静态页面，例如"About"页面或者"私有政策"<br />页面，可以使用标准Web服务器如Apache来将其作为平坦的HTML文件服务，但是这在你的程序中导致了额外级别的复杂度，因<br />为你需要担心配置Apache，你需要建立让你的团队编辑这些文件的访问方式，并且你不能使用Django的模板系统来给这些页<br />面添加风格<br />这个问题的解决方案是Django的"flatpages"app，它位于django.contrib.flatpages包，这个app让你通过Django的admin站<br />点管理这些"一次性"页面，并让你使用Django的模板系统为它们指定模板，它在幕后使用Django模型，这意味着你在数据库<br />存储这些页面，就像你的其它数据一样，并且你可以使用Django的标准数据库API访问flatpages<br />Flatpages通过它们的URL和site作为键来维护，当你创建一个flatpage，你指定它关联的URL以及它所在的站点(参考上面的<br />"Sites"部分得到更多关于sites)<br /><br /><strong>使用Flatpages</strong><br />按下面步骤安装flatpages app:<br />1，把'django.contrib.flatpages'添加到你的INSTALLED_APPS<br />2，把'django.contrib.flatpages.middleware.FlatpageFallbckMiddleware'添加到你的MIDDLEWARE_CLASSES设置<br />3，运行命令manage.py syncdb来安装两个必需的表到你的数据库<br /><br /><strong>它怎样工作</strong><br />flatpages app在你的数据库创建了两个表:django_flatpage和django_flatpage_sites，django_flatpage是一个简单映射<br />一个URL到一个title和一些文本内容的查询表，django_flatpage_sites是将一个flatpage同一个或多个站点关联的多对多表<br />该app带有一个单独的FlatPage模型，定义在django/contrib/flatpages/models.py，它看起来像这样:<br /><pre name="code" class="java">
+from django.db import models
+from django.contrib.sites.models import Site
+
+class FlatPage(models.Model):
+    url = models.CharField(maxlength=100)
+    title = models.CharField(maxlength=200)
+    content = models.TextField()
+    enable_comments = models.BooleanField()
+    template_name = models.CharField(maxlength=70, blank=True)
+    registration_required = models.BooleanField()
+    sites = models.ManyToManyField(Site)
+</pre><br />让我们一次看看所有这些域:<br />1，url--flatpage位于的URL，不包含域名但包含前置斜线，例如:'/about/contact/'<br />2，title--flatpage的title，框架不对它做任何特殊的事情，在模板中显示它是你的责任<br />3，content--flatpage的内容，即页面的HTML，框架不对它做任何特殊的事情，在模板中显示它是你的责任<br />4，enable_comments--是否在flatpage允许注释，框架不对它做任何特殊的事情，你可以在你的模板中检查该值并需要的话<br />显示一个注释表单<br />5，template_name--用来渲染该flatpage的的模板名，它是可选的，如果它没有给出，框架将使用模板flatpages/default.<br />html<br />6，registration_required--注册对于查看该flatpage是否必需，它与第12章解释的Django的认证/用户框架集成<br />7，sites--该flatpage位于的站点，它与上面的"Sites"部分解释的Django的sites框架继承<br />你可以通过Django的admin界面或者Django数据库API创建flatpages，参考下面的"怎样添加，更改和删除flatpages"<br />一旦你创建了flatpages，FlatpageFallbackMiddleware做所有的工作，每次Django程序触发404错误时，该中间件对请求的<br />URL检查flatpages数据库作为最后的手段，特别的，它使用给定的URL和表示SITE_ID设置的站点ID来检查flatpage<br />如果它找到一个匹配，它就载入flatpage的模板或者如果flatpage没有指定自定义模板时使用flatpages/default.html，它<br />传递给模板一个单独的context变量flatpage，它是flatpage对象，然后使用RequestContext渲染模板<br />如果它没找到匹配，请求继续照常处理<br />注意该中间件只为404激活--而不为500或其它状态码的应答，同时注意MIDDLEWARE_CLASSES的顺序有关系，一般来说，你可<br />以将FlatpageFallbackMiddleware放在列表的末尾，因为它是最后的手段<br /><br /><strong>怎样添加，更改和删除flatpages</strong><br />通过admin界面<br />如果你激活了自动的Django的admin界面，你应该在admin首页看到一个"Flatpages"部分，在系统中像编辑其它对象一样编辑<br />flatpages<br />通过Python API<br />上面描述了，flatpages通过位于django/contrib/flatpages/models.py的标准Django模型来表示，这样，你可以通过标准<br />Django数据库API访问flatpage对象，例如:<br /><pre name="code" class="java">
+&gt;&gt;&gt; from django.contrib.flatpages.models import FlatPage
+&gt;&gt;&gt; from django.contrib.sites.models import Site
+&gt;&gt;&gt; fp = FlatPage(
+...     url='/about/',
+...     title='About',
+...     content='&lt;p&gt;About this site...&lt;/p&gt;',
+...     enable_comments=False,
+...     template_name='',
+...     registration_required=False,
+... )
+&gt;&gt;&gt; fp.save()
+&gt;&gt;&gt; fp.sites.add(Site.objects.get(id=1))
+&gt;&gt;&gt; FlatPage.objects.get(url='/about/')
+&lt;FlatPage: /about/ -- About&gt;
+</pre><br /><br /><strong>Flatpage模板</strong><br />flatpages默认通过模板flatpages/default.html渲染，但是你可以对应该特殊的flatpage覆盖它<br />创建flatpages/default.html模板是你的责任，在你的模板目录创建flatpages目录并包含一个default.html文件<br />Faltpage模板传递了一个单独的context变量flatpage，它是flatpage对象<br />这里是flatpages/default.html模板的例子:<br /><pre name="code" class="java">
+&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+    "http://www.w3.org/TR/REC-html40/loose.dtd"&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;{{ flatpage.title }}&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+{{ flatpage.content }}
+&lt;/body&gt;
+&lt;/html&gt;
+</pre><br /><br /><strong>重定向</strong><br />Django的重定向框架让你通过在数据库里存储它们来轻松管理重定向并把它们当作其它Django模型对象，例如你可以使用重<br />定向框架来告诉Django，"重定向任何对/music/的请求到/sections/arts/music/"<br /><br /><strong>使用重定向框架</strong><br />按下面步骤安装重定向app:<br />1，把'django.contrib.redirects'安装到你的INSTALLED_APPS<br />2，把'django.contrib.redirects.middleware.RedirectFallbackMiddleware'添加到你点MIDDLEWARE_CLASSES设置<br />3，运行命令manage.py syncdb来安装单独的必需表到你的数据库<br /><br /><strong>它怎样工作</strong><br />manage.py syncdb在你的数据库安装了一个django_redirect表，它是有site_id，old_path和new_path域的简单查询表<br />你可以通过Django的admin界面或者Django数据库API创建重定向，参考下面的"怎样添加，更改和删除重定向"<br />一旦你创建了重定向，RedirectFallbackMiddleware做所有的工作，每次Django程序触发了404错误，中间件都将检查重定向<br />表作为最后的手段，特别的，它使用给定的old_path和表示SITE_ID设置的站点ID来检查重定向(参考上面的"Sites"来得到更<br />多关于SITE_ID和sites框架)，然后，它遵循下面的步骤:<br />1，如果它找到匹配，并且new_path不为空，则它将重定向到new_path<br />2，如果它找到匹配，并且new_path为空，它发送一个410("不存在")HTTP头部和空(无内容)应答<br />3，如果它找不到匹配，请求继续照常处理<br />中间件只为404激活--不为400或者任何其它状态码的应答<br />注意MIDDLEWARE_CLASSES的顺序有关系，一般来说，你可以将RedirectFallbackMiddleware放置在列表末尾，因为它是最后<br />的手段<br /><br /><strong>怎样添加，更改和删除重定向</strong><br />通过admin界面<br />如果你激活了自动的Django的admin界面，你应该在admin首页看到一个"重定向"部分，在系统中像编辑任何其它对象一样编<br />辑重定向<br />通过Python API<br />重定向通过位于django/contrib/redirects/models.py的标准Django模型表示，这样你可以通过Django数据库API访问重定向<br />对象，例如:<br /><pre name="code" class="java">
+&gt;&gt;&gt; from django.contrib.redirects.models import Redirect
+&gt;&gt;&gt; from django.contrib.sites.models import Site
+&gt;&gt;&gt; red = Redirect(
+...     site=Site.objects.get(id=1),
+...     old_path='/music/',
+...     new_path='/sections/arts/music/',
+... )
+&gt;&gt;&gt; red.save()
+&gt;&gt;&gt; Redirect.objects.get(old_path='/music/')
+&lt;Redirect: /music/ ---&gt; /sections/arts/music/&gt;
+</pre><br /><br /><strong>CSRF防护</strong><br />django.contrib.csrf包提供了容易使用的跨站点请求伪造Cross-Site Request Forgeries(CSRF)防护<br /><br /><strong>CSRF解释</strong><br />CSRF，也称为"session驾驭"，它是一个Web站点安全开拓，当一个恶毒的网站欺骗用户未知的从一个他们已经认证站点载入<br />一个URL--这样就可以使用他们的认证状态，这起初可能有点难以理解，所以这里我们包含了两个例子:<br />一个简单的例子<br />比如说你已经在example.com登录了一个webmail帐号，这个webmail站点有一个"注销"按钮指向URL为example.com/logout--<br />即你为了注销所需要做的唯一的动作是访问example.com/logout页面<br />恶毒的站点可以通过把URL example.com/logout包含在他自己(恶毒的)页面的一个隐藏的iframe来强迫你访问该URL，这样<br />如果你在example.com登录了webmail帐号并访问有example.com/logout的iframe的恶毒页面，访问该恶毒页面的结果是将<br />你从example.com注销<br />显然，不按你的意愿从一个webmail站点注销不是令人恐怖的安全漏洞，但是同类型的开拓可以发生在任何"信任"用户的站点<br />--例如银行站点或电子商务站点<br />一个更复杂的例子<br />在上个例子中，example.com部分有故障，因为他允许通过HTTP GET方法做状态更改(即注销你自己)，对任何请求需要HTTP<br />POST来在服务器更改状态是一个良好实践，但是即使Web站点需要POST来做状态改变对于CSRF也很易受到攻击<br />比方说example.com升级了它的"注销"功能为一个form按钮来通过POST到URL example.com/logout来请求，而且，注销form<br />包含下面隐藏域:<br /><pre name="code" class="java">
+&lt;input type="hidden" name="confirm" value="true" /&gt;
+</pre><br />这保证了简单的POST到URL example.com/logout将不执行注销，为了让用户注销，用户必须通过POST并发送confirm POST变<br />量且值为'true'<br />但是不管额外的安全，这种方式仍然可以被CSRF开拓，恶毒的页面只需做一点更多的工作，取代在iframe载入example.com/<br />logout页面，它可以通过使用JavaScript和POST来调用该URL，并传递confirm=true变量<br />防止<br />这样的话，怎样防止你的站点被开拓呢?<br />第一步是确认所有的GET请求没有副作用，这样，如果恶毒的站点包含了一个你的页面作为iframe，它将没有坏作用<br />第二步是给每个POST表单一个隐藏域，值为隐秘的并从用户的session ID生成，这样，当在服务器端处理时检查隐秘域，如<br />果它不合法则触发一个异常<br />这就是Django的CSRF预防层做的事情<br /><br /><strong>使用CSRF中间件</strong><br />djang.csrf包只包含一个模块:middleware.py，该模块包含了Django的中间件类CsrfMiddleware，它实现了CSRF预防<br />为了使用它，把'django.contrib.csrf.middleware.CsrfMiddleware'添加到你的settings文件的MIDDLEWARE_CLASSes设置中<br />这个中间件需要在SessionMiddleware之后处理应答，所以CsrfMiddleware必须放在列表的SessionMiddleware之前，它也必<br />须在应答被压缩或切碎之前处理，所以CsrfMiddleware必须放在GZipMiddleware之后<br />一旦你将它添加到你的MIDDLEWARE_CLASSES设置中，你就完成了，这是你需要做的所有的事情<br /><br /><strong>它怎样工作</strong><br />如果你感兴趣，这里是关于CsrfMiddleware怎样工作，它做这两件事情:<br />1，它通过使用csrfmiddlewaretoken名和session ID加上密码的hash值来添加一个隐藏域到所有的POST表单来修改外出的请<br />求，如果没有session ID设置则中间件不修改应答，所以执行处罚对于不使用sessions的请求可以忽略<br />2，对于所有进来的有session cookie设置的POST请求，它检查csrfmiddlewaretoken存在并正确，如果不是这样，用户将得<br />到一个403HTTP错误，403错误页面的内容是"发现跨站点请求伪造，请求中止"的信息<br />这确保了只有你的网站的原始表单可以用来POST回数据<br />该中间件故意只针对HTTP POST请求(以及相应的POST表单)，我们上面解释了，GET请求应该从来没有副作用，确保这点是你<br />自己的责任<br />不通过session cookie完成的POST请求不被预防，但是它们也不需要预防，因为恶毒的网站不会伪造这种类型的请求<br />为了防止更改非文本请求，中间件在修改它之前检查应答的Content-Type头部，只有格式为text/html或者application/xml<br />+xhtml的页面被修改<br /><br /><strong>限制</strong><br />CsrfMiddleware需要Django的session框架来工作(参考第12章)，如果你正在使用一个自定义的手动惯例session cookie的<br />session或者认证框架，该中间件将不能帮助你<br />如果你的app用一些不寻常的方式创建HTML页面和表单--例如，如果它用JavaScript的document.write语句传递HTML碎片--你<br />可能迂回添加隐藏域到表单的过滤器，这种情况下，表单提交将一直出错(这会发生因为CsrfMiddleware使用正则表达式来在<br />页面发送到客户端之前添加csrfmiddlewaretoken域到你的HTML，而正则表达式有时候不能处理古怪的HTML)，如果你怀疑这<br />可能发生，只需在你的浏览器查看源代码来看看csrfmiddlewaretoken是否插入到你的表单<br />访问<a href="http://en.wikipedia.org/wiki/Csrf" target="_blank">http://en.wikipedia.org/wiki/Csrf</a>来得到更多关于CSRF的信息和例子<br /><br /><strong>内容类型</strong><br />This section hasn't been written yet.<br /><br /><strong>表单工具</strong><br />This section hasn't been written yet.<br /><br /><strong>使数据人性化</strong><br />This section hasn't been written yet.<br /><br /><strong>标记过滤器</strong><br />This section hasn't been written yet.<br /><br /><strong>Syndication种子</strong><br />This section hasn't been written yet.
+  </div>
+
+  
+
+  

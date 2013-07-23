@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "banyangongchengxinxiguanlixitong"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Banyan是一个开源的、基于web的协同解决复杂问题的工具。", 
+        "modified": "2006-05-06 18:23:11", 
+        "title": "Banyan信息管理系统"
+    }
+}

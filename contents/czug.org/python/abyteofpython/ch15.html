@@ -1,0 +1,198 @@
+<p>出处： <a href="http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch15.html">http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch15.html</a></p>
+
+<h1>第15章 更多Python的内容</h1>
+
+<p><strong>目录表</strong></p>
+<dl>
+<dt><a href="#s01">特殊的方法</a></dt>
+<dt><a href="#ch15s02.html">单语句块</a></dt>
+<dt><a href="#ch15s03.html">列表综合</a></dt>
+<dd><a href="#ch15s03.html#using">使用列表综合</a></dd>
+<dt><a href="#ch15s04.html">在函数中接收元组和列表</a></dt>
+<dt><a href="#ch15s05.html">lambda形式</a></dt>
+<dd><a href="#ch15s05.html#using">使用lambda形式</a></dd>
+<dt><a href="#ch15s06.html">exec和eval语句</a></dt>
+<dt><a href="#ch15s07.html">assert语句</a></dt>
+<dt><a href="#ch15s08.html">repr函数</a></dt>
+<dt><a href="#ch15s09.html">概括</a></dt>
+</dl>
+
+<p>到目前为止，我们已经学习了绝大多数常用的Python知识。在这一章中，我们将要学习另外一些方面的Python知识，从而使我们对Python的了解更加 <dfn>完整</dfn> 。</p>
+
+<h1><a name="s01">特殊的方法</a></h1>
+<p>在类中有一些特殊的方法具有特殊的意义，比如<code>__init__</code>和<code>__del__</code>方法，它们的重要性我们已经学习过了。</p>
+<p>一般说来，特殊的方法都被用来模仿某个行为。例如，如果你想要为你的类使用<code>x[key]</code>这样的索引操作（就像列表和元组一样），那么你只需要实现<code>__getitem__()</code>方法就可以了。想一下，Python就是对<code>list</code>类这样做的！</p>
+<p>下面这个表中列出了一些有用的特殊方法。如果你想要知道所有的特殊方法，你可以在《Python参考手册》中找到一个庞大的列表。</p>
+
+<p class="exampletitle"><a name="t151">表15.1 一些特殊的方法</a></p>
+<table width="95%" border="1">
+<tr>
+<th width="20%" align="center">名称</th>
+<th width="80%" align="center">说明</th>
+</tr>
+<tr>
+<td>__init__(self,...)</td>
+<td>这个方法在新建对象恰好要被返回使用之前被调用。</td>
+</tr>
+<tr>
+<td>__del__(self)</td>
+<td>恰好在对象要被删除之前调用。</td>
+</tr>
+<tr>
+<td>__str__(self)</td>
+<td>在我们对对象使用<code>print</code>语句或是使用<code>str()</code>的时候调用。</td>
+</tr>
+<tr>
+<td>__lt__(self,other)</td>
+<td>当使用 <dfn>小于</dfn> 运算符（&lt;）的时候调用。类似地，对于所有的运算符（+，&gt;等等）都有特殊的方法。</td>
+</tr>
+<tr>
+<td>__getitem__(self,key)</td>
+<td>使用<code>x[key]</code>索引操作符的时候调用。</td>
+</tr>
+<tr>
+<td>__len__(self)</td>
+<td>对序列对象使用内建的<code>len()</code>函数的时候调用。</td>
+</tr>
+</table>
+
+
+<h1><a name="ch15s02.html">单语句块</a></h1>
+<p>现在，你已经很深刻地理解了每一个语句块是通过它的缩进层次与其它块区分开来的。然而这在大多数情况下是正确的，但是并非100％的准确。如果你的语句块只包含一句语句，那么你可以在条件语句或循环语句的同一行指明它。下面这个例子清晰地说明了这一点：</p>
+
+<p class="codebox"><code>
+&gt;&gt;&gt; flag = True<br>
+&gt;&gt;&gt; if flag: print 'Yes'<br>
+...<br>
+Yes
+</code></p>
+
+<p>就如你所看见的，单个语句被直接使用而不是作为一个独立的块使用。虽然这样做可以使你的程序变得 <dfn>小一些</dfn> ，但是除了检验错误之外我<strong>强烈</strong>建议你不要使用这种缩略方法。不使用它的一个主要的理由是一旦你使用了恰当的缩进，你就可以很方便地添加一个额外的语句。</p>
+<p>另外，注意在使用交互模式的Python解释器的时候，它会通过恰当地改变提示符来帮助你输入语句。在上面这个例子中，当你输入了关键字<code>if</code>之后，Python解释器把提示符改变为<code>...</code>以表示语句还没有结束。在这种情况下，我们按<strong>回车键</strong>用来确认语句已经完整了。然后，Python完成整个语句的执行，并且返回原来的提示符并且等待下一句输入。</p>
+
+
+<h1><a name="ch15s03.html">列表综合</a></h1>
+<p>通过<a name="ch15s03.html">列表综合</a>，可以从一个已有的列表导出一个新的列表。例如，你有一个数的列表，而你想要得到一个对应的列表，使其中所有大于2的数都是原来的2倍。对于这种应用，<a name="ch15s03.html">列表综合</a>是最理想的方法。</p>
+
+<h2><a name="using">使用<a name="ch15s03.html">列表综合</a></a></h2>
+<p class="exampletitle"><a name="e151">例15.1 使用<a name="ch15s03.html">列表综合</a></a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: list_comprehension.py</code><br>
+<br>
+<code>listone = [</code><code class="cite">2</code><code>, </code><code class="cite">3</code><code>, </code><code class="cite">4</code><code>]</code><br>
+<code>listtwo = [</code><code class="cite">2</code><code>*i </code><code class="key">for </code><code>i </code><code class="key">in </code><code>listone </code><code class="key">if </code><code>i > </code><code class="cite">2</code><code>]</code><br>
+<code class="key">print </code><code>listtwo</code>
+</p>
+<p>（源文件：<a href="code/list_comprehension.py">code/list_comprehension.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python list_comprehension.py<br>
+[6, 8]
+</code></p>
+
+<h2>它如何工作</h2>
+<p>这里我们为满足条件（<code>if i > 2</code>）的数指定了一个操作（<code>2*i</code>），从而导出一个新的列表。注意原来的列表并没有发生变化。在很多时候，我们都是使用循环来处理列表中的每一个元素，而使用<a name="ch15s03.html">列表综合</a>可以用一种更加精确、简洁、清楚的方法完成相同的工作。</p>
+
+
+<h1><a name="ch15s04.html">在函数中接收元组和列表</a></h1>
+<p>当要使函数接收元组或字典形式的参数的时候，有一种特殊的方法，它分别使用<code>*</code>和<code>**</code>前缀。这种方法在函数需要获取可变数量的参数的时候特别有用。</p>
+
+<p class="codebox"><code>
+&gt;&gt;&gt; def powersum(power, *args):<br>
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'''Return the sum of each argument raised to specified power.'''<br>
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;total = 0<br>
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for i in args:<br>
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;total += pow(i, power)<br>
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return total<br>
+...<br>
+&gt;&gt;&gt; powersum(2, 3, 4)<br>
+25<br>
+<br>
+&gt;&gt;&gt; powersum(2, 10)<br>
+100
+</code></p>
+
+<p>由于在<code>args</code>变量前有<code>*</code>前缀，所有多余的函数参数都会作为一个元组存储在<code>args</code>中。如果使用的是<code>**</code>前缀，多余的参数则会被认为是一个字典的键/值对。</p>
+
+
+<h1><a name="ch15s05.html">lambda形式</a></h1>
+<p><code>lambda</code>语句被用来创建新的函数对象，并且在运行时返回它们。</p>
+
+<p class="exampletitle"><a name="e152">例15.2 使用<a name="ch15s05.html">lambda形式</a></a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: lambda.py</code><br>
+<br>
+<code class="key">def </code><code class="func">make_repeater</code><code>(n):</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;return lambda </code><code>s: s*n<br>
+<br>
+twice = make_repeater(</code><code class="cite">2</code><code>)</code><br>
+<br>
+<code class="key">print </code><code>twice(</code><code class="cite">'word'</code><code>)</code><br>
+<code class="key">print </code><code>twice(</code><code class="cite">5</code><code>)</code>
+</p>
+<p>（源文件：<a href="code/lambda.py">code/lambda.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python lambda.py<br>
+wordword<br>
+10
+</code></p>
+
+<h2>它如何工作</h2>
+<p>这里，我们使用了<code>make_repeater</code>函数在运行时创建新的函数对象，并且返回它。<code>lambda</code>语句用来创建函数对象。本质上，<code>lambda</code>需要一个参数，后面仅跟单个表达式作为函数体，而表达式的值被这个新建的函数返回。注意，即便是<code>print</code>语句也不能用在<a name="ch15s05.html">lambda形式</a>中，只能使用表达式。</p>
+
+
+<h1><a name="ch15s06.html">exec和eval语句</a></h1>
+<p><code>exec</code>语句用来执行储存在字符串或文件中的Python语句。例如，我们可以在运行时生成一个包含Python代码的字符串，然后使用<code>exec</code>语句执行这些语句。下面是一个简单的例子。</p>
+
+<p class="codebox"><code>
+&gt;&gt;&gt; exec 'print "Hello World"'<br>
+Hello World
+</code></p>
+
+<p><code>eval</code>语句用来计算存储在字符串中的有效Python表达式。下面是一个简单的例子。</p>
+
+<p class="codebox"><code>
+&gt;&gt;&gt; eval('2*3')<br>
+6
+</code></p>
+
+
+<h1><a name="ch15s07.html">assert语句</a></h1>
+<p><code>assert</code>语句用来声明某个条件是真的。例如，如果你非常确信某个你使用的列表中至少有一个元素，而你想要检验这一点，并且在它非真的时候引发一个错误，那么<code>assert</code>语句是应用在这种情形下的理想语句。当<a name="ch15s07.html">assert语句</a>失败的时候，会引发一个<code>AssertionError</code>。</p>
+
+<p class="codebox"><code>
+&gt;&gt;&gt; mylist = ['item']<br>
+&gt;&gt;&gt; assert len(mylist) &gt;= 1<br>
+&gt;&gt;&gt; mylist.pop()<br>
+'item'<br>
+&gt;&gt;&gt; assert len(mylist) &gt;= 1<br>
+Traceback (most recent call last):<br>
+&nbsp;&nbsp;File "&lt;stdin&gt;", line 1, in ?<br>
+AssertionError
+</code></p>
+
+
+<h1><a name="ch15s08.html">repr函数</a></h1>
+<p><code>repr</code>函数用来取得对象的规范字符串表示。反引号（也称转换符）可以完成相同的功能。注意，在大多数时候有<code>eval(repr(object)) == object</code>。</p>
+
+<p class="codebox"><code>
+&gt;&gt;&gt; i = []<br>
+&gt;&gt;&gt; i.append('item')<br>
+&gt;&gt;&gt; `i`<br>
+"['item']"<br>
+&gt;&gt;&gt; repr(i)<br>
+"['item']"
+</code></p>
+
+<p>基本上，<code>repr</code>函数和反引号用来获取对象的可打印的表示形式。你可以通过定义类的<code>__repr__</code>方法来控制你的对象在被<code>repr</code>函数调用的时候返回的内容。</p>
+
+
+<h1><a name="ch15s09.html">概括</a></h1>
+<p>在这一章中，我们又学习了一些Python的特色，然而你可以肯定我们并没有学习完Python的所有特色。不过，到目前为止，我们确实已经学习了绝大多数你在实际中会使用的内容。这些已经足以让你去创建任何程序了。</p>
+<p>接下来，我们会讨论一下如何进一步深入探索Python。</p>
+

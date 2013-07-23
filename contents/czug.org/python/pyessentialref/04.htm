@@ -1,0 +1,393 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-a2e4a36629a3584d6efc8cbad83b0aece3534385">第四章 运算符与表达式</a><ol><li><a href="#head-5b84dd375193f042a9235c7d7c5e2043ff4fbfd4">数值操作</a></li><li><a href="#head-0a9ee598870173a7ea257e75d3bedadedc21c030">序列运算</a></li><li><a href="#head-ba7d0118733f648ee6215de5b0bd42651b224ddc">字典的操作</a></li><li><a href="#head-ee29f05c9dcfde452b409903ec42f198543ba2d3">增量赋值语句</a></li><li><a href="#head-9b9caf95d8f9dc52b2ceb7df444ffbaf79b5a5b0">属性(.)操作符</a></li><li><a href="#head-d7a0d8d10c70e239fa7ceaa83485a2ec81eb7169">类型转换</a></li><li><a
+href="#head-944342a81e4931bd630428ac89934b8b3733b4c3">Unicode字符串</a></li><li><a href="#head-381865d7760d09c6857d9d2bb20886af79470e06">布尔表达式</a></li><li><a href="#head-280def030a49ec56dbe5dd368d1d414631e529e7">对象的比较与身份</a></li><li><a href="#head-0091afd9b8e6cb6d45836927fa7cf023ed443a7b">运算优先级</a></li></ol></li></ol></div> <span id="line-2" class="anchor"/>
+<h1 id="head-a2e4a36629a3584d6efc8cbad83b0aece3534385">1. 第四章 运算符与表达式</h1>
+<span id="line-3" class="anchor"/><p class="line874">本章的主题是 Python 语言的内建运算符及表达式求值的优先级。 <span id="line-4" class="anchor"/>
+</p><h2 id="head-5b84dd375193f042a9235c7d7c5e2043ff4fbfd4">1.1. 数值操作</h2>
+<span id="line-5" class="anchor"/><p class="line874">所有数值类型都提供下列运算: <span id="line-6" class="anchor"/><span id="line-7" class="anchor"/></p><pre>运算                    描述
+<span id="line-8" class="anchor"/>x + y                   加
+<span id="line-9" class="anchor"/>x - y                   减
+<span id="line-10" class="anchor"/>x * y                   乘
+<span id="line-11" class="anchor"/>x / y                   常规除
+<span id="line-12" class="anchor"/>x // y                  地板除
+<span id="line-13" class="anchor"/>x ** y                  乘方 (xy )
+<span id="line-14" class="anchor"/>x % y                   取模 (x mod y )
+<span id="line-15" class="anchor"/>-x                      改变操作数的符号位
+<span id="line-16" class="anchor"/>+x                      什么也不做
+<span id="line-17" class="anchor"/>~x                      ~x=-(x+1)
+<span id="line-18" class="anchor"/></pre><span id="line-19" class="anchor"/><p class="line867"><span id="line-20" class="anchor"/></p><pre>        关于常规除 / 与地板除 //: 地板除在任何时候都会将小数部分舍为0，而常规除的行为依操作数的类型而有不同。
+<span id="line-21" class="anchor"/>        常规除 / : 整数除以整数时 / 与 // 除完全相同，商都会被舍去小数部分而返回一个整数。如7 / 4 的结果是 1,而不是1.75;
+<span id="line-22" class="anchor"/>        如果有一个操作数为浮点数，情形就不同了：
+<span id="line-23" class="anchor"/>        对于 / ，会返回一个双精度浮点数
+<span id="line-24" class="anchor"/>        对于 //，也会返回一个双精度浮点数，只不过小数部分被舍弃
+<span id="line-25" class="anchor"/></pre><span id="line-26" class="anchor"/><span id="line-27" class="anchor"/><p class="line874">取模操作返回 x/y 的余数，如7 % 4是3。对于浮点数，取模操作返回的是x - int(x / y ) * y。 对于复数，取模操作返回x - int((x / y ).real ) * y。 <span id="line-28" class="anchor"/><span id="line-29" class="anchor"/></p><p class="line874">下列列出的位运算符只能用于整数或长整数: <span id="line-30" class="anchor"/><span id="line-31" class="anchor"/></p><pre>操作                    描述
+<span id="line-32" class="anchor"/>x << y                  左移
+<span id="line-33" class="anchor"/>x >> y                  右移
+<span id="line-34" class="anchor"/>x & y                   按位与
+<span id="line-35" class="anchor"/>x | y                   按位或
+<span id="line-36" class="anchor"/>x ^ y                   按位异或 (exclusive or)
+<span id="line-37" class="anchor"/>~x                      按位翻转
+<span id="line-38" class="anchor"/></pre><span id="line-39" class="anchor"/><span id="line-40" class="anchor"/><p class="line874">这些都是相当原始的运算，操作的是操作数的每一个位。所有的操作数都假定是以二进制补码形式表示。对于长整数，按位运算符假定符号位可以被无限地向左扩展。 <span id="line-41" class="anchor"/><span id="line-42" class="anchor"/></p><p class="line874">除了这些以外，下边这些内建函数支持所有的数值类型: <span id="line-43" class="anchor"/><span id="line-44" class="anchor"/></p><pre>函数                    描述
+<span id="line-45" class="anchor"/>abs(x )                 绝对值
+<span id="line-46" class="anchor"/>divmod(x ,y )           返回 (int(x / y ), x % y )
+<span id="line-47" class="anchor"/>pow(x ,y [,modulo ])    返回 (x ** y ) x % modulo
+<span id="line-48" class="anchor"/>round(x ,[n])           四舍五入，n为小数点位数
+<span id="line-49" class="anchor"/></pre><span id="line-50" class="anchor"/><p class="line874">abs()函数返回一个数的绝对值。divmod()函数返回一个包含商和余数的元组。pow()函数可以用于代替 ** 运算，但它还支持三重取模运算(经常用于密码运算)。 <span id="line-51" class="anchor"/>round函数总是返回一个浮点数。Python的四舍五入规则不是银行家四舍五入规则，这一点请大家注意。 <span id="line-52" class="anchor"/><span id="line-53" class="anchor"/></p><p class="line874">下列比较操作有标准的数学解释,返回一个布尔值True,或者False: <span id="line-54" class="anchor"/><span id="line-55" class="anchor"/></p><pre>运算符                  描述
+<span id="line-56" class="anchor"/>x < y                   小于
+<span id="line-57" class="anchor"/>x > y                   大于
+<span id="line-58" class="anchor"/>x == y                  等于
+<span id="line-59" class="anchor"/>x != y                  不等于(与<>相同)
+<span id="line-60" class="anchor"/>x >= y                  大于等于
+<span id="line-61" class="anchor"/>x <= y                  小于等于
+<span id="line-62" class="anchor"/></pre><span id="line-63" class="anchor"/><p class="line862">Python的比较运算可以连结在一起，如w < x < y < z 。这个表达式等价于 w < x and x < y and y < z 。 <span id="line-64" class="anchor"/><span id="line-65" class="anchor"/></p><p class="line862">x < y > z这个表达式也是合法的，(注意,这个表达式中 x 和 z 并没有比较操作)。不建议这样的写法，因为这会造成代码的阅读困难。 <span id="line-66" class="anchor"/><span id="line-67" class="anchor"/></p><p class="line862">只可以对复数进行等于(==)及不等于(!=)比较，任何对复数进行其他比较的操作都会引发<tt class="backtick">TypeError</tt>异常。 <span id="line-68" class="anchor"/><span id="line-69" class="anchor"/></p><p
+class="line874">数值操作要求操作数必须是同一类型，若Python发现操作数类型不一致，就会自动进行类型的强制转换，转换规则如下: <span id="line-70" class="anchor"/><span id="line-71" class="anchor"/></p><pre>1.如果操作数中有一个是复数，另一个也将被转换为复数
+<span id="line-72" class="anchor"/>2.如果操作数中有一个是浮点数，另一个将被转换为浮点数
+<span id="line-73" class="anchor"/>3.如果操作数中有一个是长整数数，另一个将被转换为长整数数
+<span id="line-74" class="anchor"/>4.如果以上都不符合，则这两个数字必然都是整数，不需进行强制转换。
+<span id="line-75" class="anchor"/></pre><span id="line-76" class="anchor"/><p class="line867">
+</p><h2 id="head-0a9ee598870173a7ea257e75d3bedadedc21c030">1.2. 序列运算</h2>
+<span id="line-77" class="anchor"/><p class="line867"><strong>序列支持以下操作：</strong> <span id="line-78" class="anchor"/><span id="line-79" class="anchor"/></p><pre>操作                      描述
+<span id="line-80" class="anchor"/>s + r                   序列连接
+<span id="line-81" class="anchor"/>s * n , n * s           s的 n 次拷贝,n为整数
+<span id="line-82" class="anchor"/>s % d                   字符串格式化(仅字符串)
+<span id="line-83" class="anchor"/>s[i]                    索引
+<span id="line-84" class="anchor"/>s[i :j ]                切片
+<span id="line-85" class="anchor"/>x in s , x not in s     从属关系
+<span id="line-86" class="anchor"/>for x in s :            迭代
+<span id="line-87" class="anchor"/>len(s)                  长度
+<span id="line-88" class="anchor"/>min(s)                  最小元素
+<span id="line-89" class="anchor"/>max(s)                  最大元素
+<span id="line-90" class="anchor"/></pre><span id="line-91" class="anchor"/><span id="line-92" class="anchor"/><p class="line874">+ 运算符将两个相同类型的序列连结成一个。 s * n 运算符给出一个序列的 n 次浅拷贝。下边的例子可以帮助你理解这点: <span id="line-93" class="anchor"/><span id="line-94" class="anchor"/><span id="line-95" class="anchor"/><span id="line-96" class="anchor"/><span id="line-97" class="anchor"/><span id="line-98" class="anchor"/><span id="line-99" class="anchor"/><span id="line-100" class="anchor"/><span id="line-101" class="anchor"/><span id="line-102" class="anchor"/><span id="line-103" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-4ed935c95e59a5fbf5ccfeba7432c943dbb8ba29_000\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-4ed935c95e59a5fbf5ccfeba7432c943dbb8ba29_000', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-4ed935c95e59a5fbf5ccfeba7432c943dbb8ba29_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="Number">3</span><span class="Operator">,</span><span class="Number">4</span><span class="Operator">,</span><span class="Number">5</span><span class="Operator">]</span>        <span class="Comment"># 一个列表</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="ID">a</span><span class="Operator">]</span>            <span class="Comment"># 包含a的列表</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">c</span> <span class="Operator">=</span> <span class="Number">4</span><span class="Operator">*</span><span class="ID">b</span>            <span class="Comment"># b的四次拷贝</span></span>
+<span class="line"><span class="LineNumber">   4 </span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="Comment"># 修改 a</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="Comment"/><span class="ID">a</span><span class="Operator">[</span><span class="Number">0</span><span class="Operator">]</span> <span class="Operator">==</span> <span class="Operator">-</span><span class="Number">7</span></span>
+<span class="line"><span class="LineNumber">   7 </span></span>
+<span class="line"><span class="LineNumber">   8 </span><span class="Comment"># 打印出 c</span></span>
+<span class="line"><span class="LineNumber">   9 </span><span class="Comment"/><span class="ResWord">print</span> <span class="ID">c</span><span class="Text"/></span>
+</pre></div><span id="line-104" class="anchor"/><p class="line874">程序将会输出: <span id="line-105" class="anchor"/><span id="line-106" class="anchor"/></p><p class="line874">[[-7, 4, 5], [-7, 4, 5], [-7, 4, 5], [-7, 4, 5]] <span id="line-107" class="anchor"/><span id="line-108" class="anchor"/></p><p class="line874">这种情况下,列表b中放置了到列表a的引用,当b被重复的时候,仅创建了4个额外的引用。所以,当a被修改的时候,这个变化也影响到所有a的引用。这种情况通常是大多程序员不愿意看到的。你可以通过复制a中的所有元素来解决这种问题。如： <span id="line-109" class="anchor"/><span id="line-110"
+class="anchor"/></p><pre>a = [3, 4, 5 ]
+<span id="line-111" class="anchor"/>c = [a[:] for j in range((4)]  # [:]代表a的副本而不是到a的引用
+<span id="line-112" class="anchor"/></pre><span id="line-113" class="anchor"/><p class="line867"><span id="line-114" class="anchor"/></p><pre>        注:a[:]这种方式也仅仅是创建列表a所有元素的浅拷贝，如果a中有元素为可变元素，仍然可能会有潜在问题。 --WeiZhong
+<span id="line-115" class="anchor"/></pre><span id="line-116" class="anchor"/><p class="line874">标准库中的copy模块也可以用于一个对象的浅复制，另外它还支持深复制。 <span id="line-117" class="anchor"/><span id="line-118" class="anchor"/></p><p class="line862">索引操作符 s[n] 返回序列中的第 n个对象(s[0]是第一个),如果 n 是负数，在求值之前，就先执行 n+=len(s)。如果尝试读取一个不存在的元素则会引发<tt class="backtick">IndexError</tt>异常。 <span id="line-119" class="anchor"/><span id="line-120" class="anchor"/></p><p class="line874">切片操作符s[i:j]返回一个子序列。i 和 j
+必须是整数或长整数。如果被省略,那么它们的默认值分别为序列的开始或结束。切片操作同样允许负数索引。你只要记住这个公式：s[n]=s[n-len(s)] (n为正数) 或者 s[n]=s[len(s)+n] (n为负数)就行了。 <span id="line-121" class="anchor"/><span id="line-122" class="anchor"/><span id="line-123" class="anchor"/><span id="line-124" class="anchor"/><span id="line-125" class="anchor"/><span id="line-126" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-dcc7db85279570d612d4f807a1f2b4cdb67005ab_001\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-dcc7db85279570d612d4f807a1f2b4cdb67005ab_001', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-dcc7db85279570d612d4f807a1f2b4cdb67005ab_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">s</span><span class="Operator">=</span><span class="Operator">[</span><span class="Number">1</span><span class="Operator">,</span><span class="Number">2</span><span class="Operator">,</span><span class="Number">3</span><span class="Operator">,</span><span class="Number">4</span><span class="Operator">]</span>             <span class="Comment"># S 上界为 0 下界为 4 </span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">print</span> <span class="ID">s</span><span class="Operator">[</span><span class="Operator">-</span><span class="Number">100</span><span class="Operator">:</span><span class="Number">100</span><span class="Operator">]</span>       <span class="Comment">#返回 [1,2,3,4] -100超出了上界，100超出了下界：等价于 s[0:4]</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">print</span> <span class="ID">s</span><span class="Operator">[</span><span class="Operator">-</span><span class="Number">100</span><span class="Operator">:</span><span class="Operator">-</span><span class="Number">200</span><span class="Operator">]</span>      <span class="Comment">#返回 [] -100,-200均超出了上界，自动取上界：等价于s[0:0]</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">print</span> <span class="ID">s</span><span class="Operator">[</span><span class="Number">100</span><span class="Operator">:</span><span class="Number">200</span><span class="Operator">]</span>        <span class="Comment">#返回 [] 100,200均超出了下界，自动取下界值：等价于s[4:4]</span><span class="Text"/></span>
+</pre></div><span id="line-127" class="anchor"/><span id="line-128" class="anchor"/><p class="line874">x in s 运算符检验对象 x 是否是 s 的子对象，并返回True或False。  not in 运算符刚好与 in 相反。for x in s 操作顺序迭代序列中的全部元素，这将在第五章--控制流中详细介绍。len(s)返回一个序列中的元素个数。 min(s)和max(s)返回一个序列的最小值和最大值，这两个函数只有序列中的元素可排序时返回值才有意义。(如果对一个文件对象的列表取最大值或最小值，就毫无意义) <span id="line-129" class="anchor"/><span id="line-130" class="anchor"/></p><p
+class="line874">字符串和元组是不可变对象，不能在创建之后对原始对象修改。列表则可以进行以下操作: <span id="line-131" class="anchor"/><span id="line-132" class="anchor"/></p><pre>操作                      描述
+<span id="line-133" class="anchor"/>s[i ] = x               为s[i]重新赋值
+<span id="line-134" class="anchor"/>s[i :j ] = r            将列表片段重新赋值
+<span id="line-135" class="anchor"/>del s[i ]               删除列表中一个元素
+<span id="line-136" class="anchor"/>del s[i :j ]            删除列表中一个片段
+<span id="line-137" class="anchor"/></pre><span id="line-138" class="anchor"/><p class="line862">s[i] = x操作将列表索引为 i 的元素重新赋值为对象 x ，并增加 x 的引用记数。如果i是负数，在求值之前，就先执行 i+=len(s)，计算结果必须是一个小于len(s)的非负整数。尝试给一个不存在的索引赋值会引发 <tt class="backtick">IndexError</tt> 异常. 切片分配操作符 s[i:j] = r 将列表片段s[i:j]替换为序列 r。如: <span id="line-139" class="anchor"/><span id="line-140" class="anchor"/><span id="line-141" class="anchor"/><span id="line-142" class="anchor"/><span id="line-143" class="anchor"/><span id="line-144"
+class="anchor"/><span id="line-145" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-9de81fa644fad012e4492c8983b0487b7ba58fce_002\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-9de81fa644fad012e4492c8983b0487b7ba58fce_002', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-9de81fa644fad012e4492c8983b0487b7ba58fce_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="Number">1</span><span class="Operator">,</span><span class="Number">2</span><span class="Operator">,</span><span class="Number">3</span><span class="Operator">,</span><span class="Number">4</span><span class="Operator">,</span><span class="Number">5</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">a</span><span class="Operator">[</span><span class="Number">1</span><span class="Operator">]</span> <span class="Operator">=</span> <span class="Number">6</span>            <span class="Comment"># a = [1,6,3,4,5]</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">a</span><span class="Operator">[</span><span class="Number">2</span><span class="Operator">:</span><span class="Number">4</span><span class="Operator">]</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="Number">10</span><span class="Operator">,</span><span class="Number">11</span><span class="Operator">]</span>    <span class="Comment"># a = [1,6,10,11,5]</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">a</span><span class="Operator">[</span><span class="Number">3</span><span class="Operator">:</span><span class="Number">4</span><span class="Operator">]</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span><span class="Operator">-</span><span class="Number">2</span><span class="Operator">,</span><span class="Operator">-</span><span class="Number">3</span><span class="Operator">]</span> <span
+class="Comment"># a = [1,6,10,-1,-2,-3,5]</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ID">a</span><span class="Operator">[</span><span class="Number">2</span><span class="Operator">:</span><span class="Operator">]</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="Number">0</span><span class="Operator">]</span>         <span class="Comment"># a = [1,6,0]</span><span class="Text"/></span>
+</pre></div><span id="line-146" class="anchor"/><p class="line874">del s[i]语句从列表s中删除元素i,并将它的引用记数减1。del s[i:j]语句删除一个切片。 <span id="line-147" class="anchor"/><span id="line-148" class="anchor"/></p><p class="line862">序列可以使用<, >, <=, >=, == 和 != 来进行比较。当比较两个序列的时候,首先比较序列的第一个元素。如果它们不同,就马上得出结论.如果它们相同,就继续比较第二个元素，直到找到两个不同的元素或者两个序列都没有多余元素为止。字符串通过比较每个字符的内部编码决定大小(如ASCII或Unicode)。 <span id="line-149" class="anchor"/><span id="line-150"
+class="anchor"/></p><p class="line867"><strong>字符串取模运算</strong> <span id="line-151" class="anchor"/>s % d 返回一个格式化后的字符串。 需要一个格式字符串 s 作为左操作数，一个独立对象或一个元组或一个映射对象 d 作为右操作数。格式字符串 s 可以是ASCII字符串，也可以是一个Unicode字符串。这个运算符和 C 语言中的 sprintf() 函数类似。格式字符串包含两种对象类型:普通字符(不改变它的值)和转换符<tt class="backtick">(% + 转换字符)</tt>--在输出结果中，转换符将格式化 d 中的相应元素，然后用格式化后的结果填充自身。如果 s 内只有一个转换符，则允许一个 d 是一个独立的非tuple对象。否则
+d 就必须是一个tuple或映射对象。如果 d 是一个tuple,则转换表示符的个数必须和d的长度相等；如果d是一个映射,每个转换表示符的 % 字符之后必须有一个小括号括起来的映射对象中的key值.表Table 4.1详细列出了转换符的使用． <span id="line-152" class="anchor"/><span id="line-153" class="anchor"/></p><p class="line867"><strong>表 4.1. 字符串格式转换</strong> <span id="line-154" class="anchor"/><span id="line-155" class="anchor"/></p><pre>字符              输出格式
+<span id="line-156" class="anchor"/>d,i             十进制整数或长整数
+<span id="line-157" class="anchor"/>u               无符号十进制整数或长整数
+<span id="line-158" class="anchor"/>o               八进制整数或长整数
+<span id="line-159" class="anchor"/>x               十六进制整数或长整数
+<span id="line-160" class="anchor"/>X               十六进制整数或长整数(大写字母)
+<span id="line-161" class="anchor"/>f               浮点数如 [-]m.dddddd
+<span id="line-162" class="anchor"/>e               浮点数如 [-]m .dddddde ±xx .
+<span id="line-163" class="anchor"/>E               浮点数如 [-]m .ddddddE ±xx .
+<span id="line-164" class="anchor"/>g,G             指数小于-4或者更高精确度使用 %e 或 %E; 否则,使用 %f
+<span id="line-165" class="anchor"/>s               字符串或其他对象,使用str()来产生字符串
+<span id="line-166" class="anchor"/>r               与 repr() 返回的字符串相同
+<span id="line-167" class="anchor"/>c               单个字符
+<span id="line-168" class="anchor"/>%               转换符标识 %
+<span id="line-169" class="anchor"/></pre><span id="line-170" class="anchor"/><p class="line874">在 % 和转换字符串之间,允许出现以下修饰符,并且只能按以下顺序: <span id="line-171" class="anchor"/><span id="line-172" class="anchor"/></p><pre>1.映射对象的 key,如果被格式化对象是一个映射对象却没有这个成分,会引发KeyError异常.
+<span id="line-173" class="anchor"/>2.下面所列的一个或多个:
+<span id="line-174" class="anchor"/>    左对齐标志
+<span id="line-175" class="anchor"/>    +,数值指示必须包含
+<span id="line-176" class="anchor"/>    0,指示一个零填充
+<span id="line-177" class="anchor"/>3.指示最小栏宽的数字.转换值会被打印在指定了最小宽度的栏中并且填充在(或者右边).
+<span id="line-178" class="anchor"/>4. 一个小数点用来分割浮点数
+<span id="line-179" class="anchor"/>5. A number specifying the maximum number of characters to be printed from a string, the number of digits following the decimal point in a floating-point number, or the minimum number of digits for an integer.
+<span id="line-180" class="anchor"/>另外,形标(*)字符用于在任意宽度的栏中代替数字. If present, the width will be read from the next item in the tuple.下边的代码给出了几个例子:
+<span id="line-181" class="anchor"/></pre><p class="line867"><span id="line-182" class="anchor"/><span id="line-183" class="anchor"/><span id="line-184" class="anchor"/><span id="line-185" class="anchor"/><span id="line-186" class="anchor"/><span id="line-187" class="anchor"/><span id="line-188" class="anchor"/><span id="line-189" class="anchor"/><span id="line-190" class="anchor"/><span id="line-191" class="anchor"/><span id="line-192" class="anchor"/><span id="line-193" class="anchor"/><span id="line-194" class="anchor"/><span id="line-195" class="anchor"/></p><div
+lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-1388387617298e497b5fb9d8da299e6751946c6c_003\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-1388387617298e497b5fb9d8da299e6751946c6c_003', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-1388387617298e497b5fb9d8da299e6751946c6c_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="Number">42</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="Number">13.142783</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">c</span> <span class="Operator">=</span> <span class="String">"hello"</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">d</span> <span class="Operator">=</span> <span class="Operator">{</span><span class="String">'x'</span><span class="Operator">:</span><span class="Number">13</span><span class="Operator">,</span> <span class="String">'y'</span><span class="Operator">:</span><span class="Number">1.54321</span><span class="Operator">,</span> <span class="String">'z'</span><span class="Operator">:</span><span class="String">'world'</span><span class="Operator">}</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ID">e</span> <span class="Operator">=</span> <span class="Number">5628398123741234L</span></span>
+<span class="line"><span class="LineNumber">   6 </span></span>
+<span class="line"><span class="LineNumber">   7 </span><span class="ResWord">print</span> <span class="String">'a is %d'</span> <span class="Operator">%</span> <span class="ID">a</span>             <span class="Comment">#  "a is 42"</span></span>
+<span class="line"><span class="LineNumber">   8 </span><span class="ResWord">print</span> <span class="String">'%10d %f'</span> <span class="Operator">%</span> <span class="Operator">(</span><span class="ID">a</span><span class="Operator">,</span><span class="ID">b</span><span class="Operator">)</span>         <span class="Comment">#  " 42 13.142783"</span></span>
+<span class="line"><span class="LineNumber">   9 </span><span class="ResWord">print</span> <span class="String">'%+010d %E'</span> <span class="Operator">%</span> <span class="Operator">(</span><span class="ID">a</span><span class="Operator">,</span><span class="ID">b</span><span class="Operator">)</span>       <span class="Comment">#  "+000000042 1.314278E+01"</span></span>
+<span class="line"><span class="LineNumber">  10 </span><span class="ResWord">print</span> <span class="String">'%(x)-10d %(y)0.3g'</span> <span class="Operator">%</span> <span class="ID">d</span>   <span class="Comment">#  "13         1.54"</span></span>
+<span class="line"><span class="LineNumber">  11 </span><span class="ResWord">print</span> <span class="String">'%0.4s %s'</span> <span class="Operator">%</span> <span class="Operator">(</span><span class="ID">c</span><span class="Operator">,</span> <span class="ID">d</span><span class="Operator">[</span><span class="String">'z'</span><span class="Operator">]</span><span class="Operator">)</span>  <span class="Comment">#  "hell world"</span></span>
+<span class="line"><span class="LineNumber">  12 </span><span class="ResWord">print</span> <span class="String">'%*.*f'</span> <span class="Operator">%</span> <span class="Operator">(</span><span class="Number">5</span><span class="Operator">,</span><span class="Number">3</span><span class="Operator">,</span><span class="ID">b</span><span class="Operator">)</span>         <span class="Comment">#  "13.143"</span></span>
+<span class="line"><span class="LineNumber">  13 </span><span class="ResWord">print</span> <span class="String">'e = %d'</span> <span class="Operator">%</span> <span class="ID">e</span>              <span class="Comment">#  "e = 5628398123741234"</span><span class="Text"/></span>
+</pre></div><span id="line-196" class="anchor"/><p class="line867">
+</p><h2 id="head-ba7d0118733f648ee6215de5b0bd42651b224ddc">1.3. 字典的操作</h2>
+<span id="line-197" class="anchor"/><span id="line-198" class="anchor"/><p class="line874">字典用来在名字与对象之间建立映射。对一个字典可进行以下操作: <span id="line-199" class="anchor"/><span id="line-200" class="anchor"/></p><pre>操作              描述
+<span id="line-201" class="anchor"/>x = d[k ]       通过 key 访问字典元素
+<span id="line-202" class="anchor"/>d [k ] = x      通过 key 对字典元素进行赋值
+<span id="line-203" class="anchor"/>del d[k ]       通过 key 删除某个字典元素
+<span id="line-204" class="anchor"/>len(d )         字典的元素个数
+<span id="line-205" class="anchor"/></pre><span id="line-206" class="anchor"/><p class="line874">key 可以是任意不可变对象,如字符串,数字,和元组。另外,字典的关键字也可以是用逗号分隔的多个值。例如: <span id="line-207" class="anchor"/><span id="line-208" class="anchor"/><span id="line-209" class="anchor"/><span id="line-210" class="anchor"/><span id="line-211" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-0eecc05d96c5f14537661bcc291ad36d6f232693_004\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-0eecc05d96c5f14537661bcc291ad36d6f232693_004', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-0eecc05d96c5f14537661bcc291ad36d6f232693_004" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">d</span> <span class="Operator">=</span> <span class="Operator">{</span><span class="Operator">}</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">d</span><span class="Operator">[</span><span class="Number">1</span><span class="Operator">,</span><span class="Number">2</span><span class="Operator">,</span><span class="Number">3</span><span class="Operator">]</span> <span class="Operator">=</span> <span class="String">"foo"</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">d</span><span class="Operator">[</span><span class="Number">1</span><span class="Operator">,</span><span class="Number">0</span><span class="Operator">,</span><span class="Number">3</span><span class="Operator">]</span> <span class="Operator">=</span> <span class="String">"bar"</span><span class="Text"/></span>
+</pre></div><span id="line-212" class="anchor"/><p class="line874">在这种情况下,关键字的值其实是一个元组,下面的代码和上面的代码作用是一样的: <span id="line-213" class="anchor"/><span id="line-214" class="anchor"/></p><pre>d[(1,2,3)] = "foo"
+<span id="line-215" class="anchor"/>d[(1,0,3)] = "bar"
+<span id="line-216" class="anchor"/></pre><span id="line-217" class="anchor"/><span id="line-218" class="anchor"/><p class="line867">
+</p><h2 id="head-ee29f05c9dcfde452b409903ec42f198543ba2d3">1.4. 增量赋值语句</h2>
+<span id="line-219" class="anchor"/><span id="line-220" class="anchor"/><p class="line874">Python提供以下的增量赋值操作: <span id="line-221" class="anchor"/><span id="line-222" class="anchor"/></p><pre>操作            等价表达式
+<span id="line-223" class="anchor"/>x += y          x = x + y
+<span id="line-224" class="anchor"/>x -= y          x = x - y
+<span id="line-225" class="anchor"/>x *= y          x = x * y
+<span id="line-226" class="anchor"/>x /= y          x = x / y
+<span id="line-227" class="anchor"/>x **= y         x = x ** y
+<span id="line-228" class="anchor"/>x %= y          x = x % y
+<span id="line-229" class="anchor"/>x &= y          x = x & y
+<span id="line-230" class="anchor"/>x |= y          x = x | y
+<span id="line-231" class="anchor"/>x ^= y          x = x ^ y
+<span id="line-232" class="anchor"/>x >>= y         x = x >> y
+<span id="line-233" class="anchor"/>x <<= y         x = x << y
+<span id="line-234" class="anchor"/></pre><span id="line-235" class="anchor"/><span id="line-236" class="anchor"/><p class="line874">应用举例: <span id="line-237" class="anchor"/><span id="line-238" class="anchor"/><span id="line-239" class="anchor"/><span id="line-240" class="anchor"/><span id="line-241" class="anchor"/><span id="line-242" class="anchor"/><span id="line-243" class="anchor"/><span id="line-244" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-05e4cb6f1c830f16ded3e3539a45886a6c84bc94_005\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-05e4cb6f1c830f16ded3e3539a45886a6c84bc94_005', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-05e4cb6f1c830f16ded3e3539a45886a6c84bc94_005" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="Number">3</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">a</span> <span class="Operator">+=</span> <span class="Number">1</span>                      <span class="Comment"># a = 4</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="Number">1</span><span class="Operator">,</span><span class="Number">2</span><span class="Operator">]</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">b</span><span class="Operator">[</span><span class="Number">1</span><span class="Operator">]</span> <span class="Operator">+=</span> <span class="Number">10</span>                  <span class="Comment"># b = [1, 12]</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ID">c</span> <span class="Operator">=</span> <span class="String">"%s %s"</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ID">c</span> <span class="Operator">%=</span> <span class="Operator">(</span><span class="String">"Douglas"</span><span class="Operator">,</span> <span class="String">"Adams"</span><span class="Operator">)</span>   <span class="Comment"># c = "Douglas Adams"</span><span class="Text"/></span>
+</pre></div><span id="line-245" class="anchor"/><p class="line874">需要指出的是，增量赋值语句并不对对象进行原地修改，因此也不会改变对象的性质。x += y语句创建了一个值为x + y的新对象，并将这个对象赋给 x。用户自定义类可通过定义特殊方法重载增量赋值操作符.(参见第三章,类型和对象) <span id="line-246" class="anchor"/><span id="line-247" class="anchor"/></p><p class="line867">
+</p><h2 id="head-9b9caf95d8f9dc52b2ceb7df444ffbaf79b5a5b0">1.5. 属性(.)操作符</h2>
+<span id="line-248" class="anchor"/><span id="line-249" class="anchor"/><p class="line874">点(.)操作符用来访问一个对象的属性,例如: <span id="line-250" class="anchor"/><span id="line-251" class="anchor"/><span id="line-252" class="anchor"/><span id="line-253" class="anchor"/><span id="line-254" class="anchor"/><span id="line-255" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-4b74edd796991e4be4a11a3f682e6aebc2ce009a_006\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-4b74edd796991e4be4a11a3f682e6aebc2ce009a_006', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-4b74edd796991e4be4a11a3f682e6aebc2ce009a_006" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">foo</span><span class="Operator">.</span><span class="ID">x</span> <span class="Operator">=</span> <span class="Number">3</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">print</span> <span class="ID">foo</span><span class="Operator">.</span><span class="ID">y</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="ID">foo</span><span class="Operator">.</span><span class="ID">bar</span><span class="Operator">(</span><span class="Number">3</span><span class="Operator">,</span><span class="Number">4</span><span class="Operator">,</span><span class="Number">5</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">del</span> <span class="ID">foo</span><span class="Operator">.</span><span class="ID">x</span><span class="Text"/></span>
+</pre></div><span id="line-256" class="anchor"/><p class="line874">点操作符并不仅仅可以用于单个表达式,例如foo.y.a.b . 它还可以用于函数的中间结果,例如a = foo.bar(3,4,5).spam .属性可以使用del语句来删除,例如del foo.x . <span id="line-257" class="anchor"/><span id="line-258" class="anchor"/></p><p class="line867">
+</p><h2 id="head-d7a0d8d10c70e239fa7ceaa83485a2ec81eb7169">1.6. 类型转换</h2>
+<span id="line-259" class="anchor"/><span id="line-260" class="anchor"/><p class="line874">经常对内建类型进行类型转换的需要。下列内建函数提供了显式的的类型转换操作: <span id="line-261" class="anchor"/><span id="line-262" class="anchor"/></p><pre>函数                      描述
+<span id="line-263" class="anchor"/>int(x [,base ])         将x转换为一个整数
+<span id="line-264" class="anchor"/>long(x [,base ])        将x转换为一个长整数
+<span id="line-265" class="anchor"/>float(x )               将x转换到一个浮点数
+<span id="line-266" class="anchor"/>complex(real [,imag ])  创建一个复数
+<span id="line-267" class="anchor"/>str(x )                 将对象 x 转换为字符串
+<span id="line-268" class="anchor"/>repr(x )                将对象 x 转换为表达式字符串
+<span id="line-269" class="anchor"/>eval(str )              用来计算在字符串中的有效Python表达式,并返回一个对象
+<span id="line-270" class="anchor"/>tuple(s )               将序列 s 转换为一个元组
+<span id="line-271" class="anchor"/>list(s )                将序列 s 转换为一个列表
+<span id="line-272" class="anchor"/>chr(x )                 将一个整数转换为一个字符
+<span id="line-273" class="anchor"/>unichr(x )              将一个整数转换为Unicode字符
+<span id="line-274" class="anchor"/>ord(x )                 将一个字符转换为它的整数值
+<span id="line-275" class="anchor"/>hex(x )                 将一个整数转换为一个十六进制字符串
+<span id="line-276" class="anchor"/>oct(x )                 将一个整数转换为一个八进制字符串
+<span id="line-277" class="anchor"/></pre><span id="line-278" class="anchor"/><span id="line-279" class="anchor"/><p class="line862">repr(x)函数也可写为 <tt class="backtick">x</tt> .注意str()函数和repr()函数返回的结果经常是不同的. repr()函数取得对象的表达式字符串表示,通常可以使用eval()函数来重新得到这个对象.而str()产生一个对象的简洁格式表示(用于print语句). ord()函数返回字符在ascii或Unicode字符编码中的整数顺序值. chr()和unichr()函数将一个整数分别转换为ascii或Unicode字符. <span id="line-280"
+class="anchor"/><span id="line-281" class="anchor"/></p><p class="line874">将一个字符串转换为数字或其他对象,使用int(), long(),和 float()函数. eval()函数也可以将一个包含有效表达式的字符转换为一个对象,例如: <span id="line-282" class="anchor"/><span id="line-283" class="anchor"/><span id="line-284" class="anchor"/><span id="line-285" class="anchor"/><span id="line-286" class="anchor"/><span id="line-287" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-5e4f1a05ff5982f84f827080a862030d6f4e77e8_007\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-5e4f1a05ff5982f84f827080a862030d6f4e77e8_007', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-5e4f1a05ff5982f84f827080a862030d6f4e77e8_007" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="ID">int</span><span class="Operator">(</span><span class="String">"34"</span><span class="Operator">)</span>             <span class="Comment"># a = 34</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="ID">long</span><span class="Operator">(</span><span class="String">"0xfe76214"</span><span class="Operator">,</span> <span class="Number">16</span><span class="Operator">)</span> <span class="Comment"># b = 266822164L (0xfe76214L)</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="ID">float</span><span class="Operator">(</span><span class="String">"3.1415926"</span><span class="Operator">)</span>    <span class="Comment"># b = 3.1415926</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">c</span> <span class="Operator">=</span> <span class="ID">eval</span><span class="Operator">(</span><span class="String">"3, 5, 6"</span><span class="Operator">)</span>       <span class="Comment"># c = (3,5,6)</span><span class="Text"/></span>
+</pre></div><span id="line-288" class="anchor"/><p class="line867">
+</p><h2 id="head-944342a81e4931bd630428ac89934b8b3733b4c3">1.7. Unicode字符串</h2>
+<span id="line-289" class="anchor"/><span id="line-290" class="anchor"/><p class="line874">在同一个程序中使用标准字符串和Unicode字符串会有一点点复杂.这是因为对字符串有太多种操作,包括字符串连结,比较,字典关键字查询,以及在函数中用做参数. <span id="line-291" class="anchor"/><span id="line-292" class="anchor"/></p><p class="line874">内建函数unicode(s [, encoding [,errors ]])可以把一个标准字符串转换为一个Unicode字符串.字符串方法u.encode([encoding [, errors
+]])可以把一个Unicode字符串转换为一个标准字符串.这些转换操作需要特殊编码规则来指定16位Unicode字符串与标准8位字符来相互映射.编码参数是一个由如下值组成的特定字符串: <span id="line-293" class="anchor"/><span id="line-294" class="anchor"/></p><pre>值                               描述
+<span id="line-295" class="anchor"/>'ascii'                         7-bit ASCII
+<span id="line-296" class="anchor"/>'latin-1' or 'iso-8859-1'       ISO 8859-1 Latin-1
+<span id="line-297" class="anchor"/>'utf-8'                         8-位可变长度编码
+<span id="line-298" class="anchor"/>'utf-16'                        16-位可变长度编码(可能是 little endian或 big endian)
+<span id="line-299" class="anchor"/>'utf-16-le'                     UTF-16, little-endian 编码
+<span id="line-300" class="anchor"/>'utf-16-be'                     UTF-16, big-endian 编码
+<span id="line-301" class="anchor"/>'unicode-escape'                与Unicode文字 u"string" 相同
+<span id="line-302" class="anchor"/>'raw-unicode-escape'            与原始 Unicode文字 ur"string"相同
+<span id="line-303" class="anchor"/></pre><span id="line-304" class="anchor"/><p class="line874">默认编码在site模块中设置,可以通过sys.getdefaultencoding()来读取.在多数情况下,默认编码是'ascii',即就是ASCII字符,它的值在区间[0x00,0x7f]内,直接映射到Unicode字符的[U+0000, U+007F].其他关于编码的内容在第九章--输入与输出. <span id="line-305" class="anchor"/><span id="line-306" class="anchor"/></p><p class="line862">当转换字符串时,如果有一个字符不能被转换,那么就会引起一个<a href="/moin/UnicodeError"
+class="nonexistent">UnicodeError</a>异常.比如,如果编码规则为'ascii', Unicode字符U+1F28 就不能被转换,因为它的值太大. 同样地,字符串 "\xfc" 也不能被转换到Unicode,因为它也超出了ASCII字符范围. errors参数决定如何处理编码错误.它是一个包含下列值的字符串: <span id="line-307" class="anchor"/><span id="line-308" class="anchor"/></p><pre>值                       描述
+<span id="line-309" class="anchor"/>'strict'                编码错误时引起一个UnicodeError异常
+<span id="line-310" class="anchor"/>'ignore'                忽略不可转换字符
+<span id="line-311" class="anchor"/>'replace'               将不可转换字符用U+FFFD替代(Unicode中的U+FFFD 是标准字符串中的'?')
+<span id="line-312" class="anchor"/></pre><span id="line-313" class="anchor"/><p class="line874">默认错误处理是 'strict'. <span id="line-314" class="anchor"/><span id="line-315" class="anchor"/></p><p class="line874">当标准字符串和Unicode字符串在表达式中混用时,标准字符串将被自动转换为Unicode字符串.例如: <span id="line-316" class="anchor"/><span id="line-317" class="anchor"/><span id="line-318" class="anchor"/><span id="line-319" class="anchor"/><span id="line-320" class="anchor"/></p><div
+lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-0254358ef07c74f97cb27898539a1a74c65931dc_008\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-0254358ef07c74f97cb27898539a1a74c65931dc_008', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-0254358ef07c74f97cb27898539a1a74c65931dc_008" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">s</span> <span class="Operator">=</span> <span class="String">"hello"</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">t</span> <span class="Operator">=</span> <span class="String">u"world"</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">w</span> <span class="Operator">=</span> <span class="ID">s</span> <span class="Operator">+</span> <span class="ID">t</span>          <span class="Comment"># w = unicode(s) + t</span><span class="Text"/></span>
+</pre></div><span id="line-321" class="anchor"/><p class="line874">当一个字符串方法(第三章中讲到)中使用到Unicode字符串时,结果也将总是Unicode字符串,例如: <span id="line-322" class="anchor"/><span id="line-323" class="anchor"/><span id="line-324" class="anchor"/><span id="line-325" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-16a01283b3eed747ae7183671c86d8b4fb4e4fa1_009\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-16a01283b3eed747ae7183671c86d8b4fb4e4fa1_009', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-16a01283b3eed747ae7183671c86d8b4fb4e4fa1_009" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="String">"Hello World"</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="ID">a</span><span class="Operator">.</span><span class="ID">replace</span><span class="Operator">(</span><span class="String">"World"</span><span class="Operator">,</span> <span class="String">u"Bob"</span><span class="Operator">)</span>  <span class="Comment"># b = u"Hello Bob"</span><span class="Text"/></span>
+</pre></div><span id="line-326" class="anchor"/><p class="line874">此外,即使使用replace()方法进行零替换(替换结果仍是原始字符串)时,结果仍然会是Unicode字符串. <span id="line-327" class="anchor"/><span id="line-328" class="anchor"/></p><p class="line874">如果一个Unicode字符串使用 % 操作符做格式字符串,所有参数在一开始都将强制转换为Unicode字符串,然后再根据格式规则连结在一起.如果一个Unicode对象被用做 %
+操作符的一个参数,整个结果也将是Unicode字符串(Unicode对象被扩充),例如: <span id="line-329" class="anchor"/><span id="line-330" class="anchor"/><span id="line-331" class="anchor"/><span id="line-332" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-f871a3916a019277a2f3b19a419c03a47a4c5d9d_010\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-f871a3916a019277a2f3b19a419c03a47a4c5d9d_010', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-f871a3916a019277a2f3b19a419c03a47a4c5d9d_010" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">c</span> <span class="Operator">=</span> <span class="String">"%s %s"</span> <span class="Operator">%</span> <span class="Operator">(</span><span class="String">"Hello"</span><span class="Operator">,</span> <span class="String">u"World"</span><span class="Operator">)</span> <span
+class="Comment"># c = "Hello " + u"World"</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">d</span> <span class="Operator">=</span> <span class="String">u"%s %s"</span> <span class="Operator">%</span> <span class="Operator">(</span><span class="String">"Hello"</span><span class="Operator">,</span> <span class="String">"World"</span><span class="Operator">)</span> <span class="Comment"># d = u"Hello " + u"World"</span><span class="Text"/></span>
+</pre></div><span id="line-333" class="anchor"/><p class="line874">当使用Unicode字符串时, str()和repr()函数会自动使用默认编码将Unicode字符串转换为标准字符串.对于一个Unicode字符串u, str(u)相当于u.encode(), repr(u)相当于u"%s" % repr(u.encode('unicode-escape')). <span id="line-334" class="anchor"/><span id="line-335" class="anchor"/></p><p class="line862">另外,许多库和内建函数只能用于操作标准字符串,
+Unicode字符串将会被自动使用默认编码转换为标准字符串.如果转换不可执行,会引发<a href="/moin/UnicodeError" class="nonexistent">UnicodeError</a>异常. <span id="line-336" class="anchor"/><span id="line-337" class="anchor"/></p><p class="line874">标准字符串和Unicode字符串可以比较.在这种情况下,标准字符串首先会使用默认编码强制转换为Unicode字符串.这个规则在列表和字典元素的比较操作中也同样适用.例如 'x' in [u'x', u'y', u'z']
+强制将'x'转换为Unicode,并返回True. 对于从属测试, 'W' in u'Hello World' 也同理('W'被转换为Unicode). <span id="line-338" class="anchor"/><span id="line-339" class="anchor"/></p><p class="line874">当使用 hash() 函数计算哈希值时,标准字符串和Unicode字符串返回同一个值(当Unicode字符串只包含[U+0000, U+007F]中的字符时).这样就可以使标准字符串和Unicode字符串在用做字典关键字时可以互换(但条件还是Unicode字符串只包含[U+0000, U+007F]中的字符),例如: <span
+id="line-340" class="anchor"/><span id="line-341" class="anchor"/><span id="line-342" class="anchor"/><span id="line-343" class="anchor"/><span id="line-344" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-2e285e3026335af02db644fe1e53ba22fc4ab795_011\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-2e285e3026335af02db644fe1e53ba22fc4ab795_011', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-2e285e3026335af02db644fe1e53ba22fc4ab795_011" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">a</span> <span class="Operator">=</span> <span class="Operator">{</span> <span class="Operator">}</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">a</span><span class="Operator">[</span><span class="String">u"foo"</span><span class="Operator">]</span> <span class="Operator">=</span> <span class="Number">1234</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">print</span> <span class="ID">a</span><span class="Operator">[</span><span class="String">"foo"</span><span class="Operator">]</span>        <span class="Comment"># Prints 1234</span><span class="Text"/></span>
+</pre></div><span id="line-345" class="anchor"/><p class="line874">但是,应该注意在默认编码被改变为非acsii或者Unicode字符串包含非ASCII字符时，字典关键字不具有这种可以互换的行为.比如,如果'utf-8'被用做默认编码,字符串比较会返回相等,但哈希值不同: <span id="line-346" class="anchor"/></p><pre>#python
+<span id="line-347" class="anchor"/>a = u"M\u00fcller"       # Unicode字符串
+<span id="line-348" class="anchor"/>b = "M\303\274ller"      # utf-8 编码格式的 a
+<span id="line-349" class="anchor"/>print a == b             # Prints True
+<span id="line-350" class="anchor"/>print hash(a)==hash(b)   # Prints False
+<span id="line-351" class="anchor"/></pre><span id="line-352" class="anchor"/><p class="line867"><span id="line-353" class="anchor"/></p><pre>        注意，上面的例子在python2.4中会引发异常.所以上面这些言论可能已经过时. --WeiZhong
+<span id="line-354" class="anchor"/></pre><span id="line-355" class="anchor"/><span id="line-356" class="anchor"/><p class="line867">
+</p><h2 id="head-381865d7760d09c6857d9d2bb20886af79470e06">1.8. 布尔表达式</h2>
+<span id="line-357" class="anchor"/><span id="line-358" class="anchor"/><p class="line874">and, or,和 not关键字可以组成布尔表达式.这些操作符的特性如下: <span id="line-359" class="anchor"/><span id="line-360" class="anchor"/></p><pre>操作符             描述
+<span id="line-361" class="anchor"/>x or y          如果 x 为假,返回 y ; 否则,返回 x
+<span id="line-362" class="anchor"/>x and y         如果 x 为假,返回 x ; 否则,返回 y
+<span id="line-363" class="anchor"/>not x           如果 x 为假,返回 True ; 否则,返回 False
+<span id="line-364" class="anchor"/></pre><span id="line-365" class="anchor"/><p class="line874">当你使用一个表达式用来判断True 或 False时，任何非零的数字或非空列表,元组,字典,都返回True。零,None,以及空列表,元组,字典返回False. 布尔表达式从左至右进行计算,而且具有短路行为，也就是说只有需要时才会进行右边表达式的计算.例如表达式 a and b 只有当a为True时才计算b. <span id="line-366" class="anchor"/><span id="line-367"
+class="anchor"/></p><pre>      注：  0 and 10/0 这样的表达式不会引发 除0错误，因为 10/0 这个表达式被短路了。 --WeiZhong
+<span id="line-368" class="anchor"/></pre><span id="line-369" class="anchor"/><span id="line-370" class="anchor"/><p class="line867">
+</p><h2 id="head-280def030a49ec56dbe5dd368d1d414631e529e7">1.9. 对象的比较与身份</h2>
+<span id="line-371" class="anchor"/><span id="line-372" class="anchor"/><p class="line874">相等运算符 x== y 检验x和y的值是否相等.在比较列表或元组,只有当所有的元素都相等时这两个对象才是相等的.对于字典,只有当x和y有相同的关键字和相同的对应值时,才会返回相等. <span id="line-373" class="anchor"/><span id="line-374" class="anchor"/></p><p class="line874">身份运算符 x is y 和 x is not y 检验两个对象在内存中否指向同一个对象.通常情况下,
+x==y,但 x is not y. <span id="line-375" class="anchor"/><span id="line-376" class="anchor"/></p><p class="line874">比较操作也可以在两个不兼容的对象类型之间进行,比如一个文件和一个浮点数,不过返回的结果是任意的,这样的比较也没有任何意义.另外,比较两个不兼容的对象有可能会引发异常. <span id="line-377" class="anchor"/><span id="line-378" class="anchor"/></p><p class="line867">
+</p><h2 id="head-0091afd9b8e6cb6d45836927fa7cf023ed443a7b">1.10. 运算优先级</h2>
+<span id="line-379" class="anchor"/><span id="line-380" class="anchor"/><p class="line874">Table 4.2列出了Python运算符的运算顺序(优先级).除乘方(**)外的所有运算符都是从左至右进行运算.表中靠前的运算符优先级要比后边的高些,也就是说,靠前的运算符在一个表达式中会先运算.(注:同一栏的运算符,如 x * y , x / y , x % y 有相同的优先级) <span id="line-381" class="anchor"/><span id="line-382" class="anchor"/></p><p class="line867"><strong>Table
+4.2. 运算优先级 (由高到低)</strong> <span id="line-383" class="anchor"/><span id="line-384" class="anchor"/></p><pre>运算                                      名称
+<span id="line-385" class="anchor"/>--------------------------------------------------------------------
+<span id="line-386" class="anchor"/>(...), [...], {...}                     创建元组,列表,字典
+<span id="line-387" class="anchor"/>--------------------------------------------------------------------
+<span id="line-388" class="anchor"/>`...`                                   字符串转换
+<span id="line-389" class="anchor"/>--------------------------------------------------------------------
+<span id="line-390" class="anchor"/>s[i ], s[i:j ],  .attr                  索引,切片,属性
+<span id="line-391" class="anchor"/>--------------------------------------------------------------------
+<span id="line-392" class="anchor"/>f(...)                                  函数调用s
+<span id="line-393" class="anchor"/>--------------------------------------------------------------------
+<span id="line-394" class="anchor"/>+x , -x , ~x                            一元运算符
+<span id="line-395" class="anchor"/>--------------------------------------------------------------------
+<span id="line-396" class="anchor"/>x ** y                                  乘方(从右至左运算)
+<span id="line-397" class="anchor"/>--------------------------------------------------------------------
+<span id="line-398" class="anchor"/>x * y , x / y , x % y                   乘,除,取模
+<span id="line-399" class="anchor"/>--------------------------------------------------------------------
+<span id="line-400" class="anchor"/>x + y , x - y                           加,减
+<span id="line-401" class="anchor"/>--------------------------------------------------------------------
+<span id="line-402" class="anchor"/>x << y , x >> y                         移位
+<span id="line-403" class="anchor"/>--------------------------------------------------------------------
+<span id="line-404" class="anchor"/>x & y                                   按位与
+<span id="line-405" class="anchor"/>--------------------------------------------------------------------
+<span id="line-406" class="anchor"/>x ^ y                                   按位异或
+<span id="line-407" class="anchor"/>--------------------------------------------------------------------
+<span id="line-408" class="anchor"/>x | y                                   按位或
+<span id="line-409" class="anchor"/>--------------------------------------------------------------------
+<span id="line-410" class="anchor"/>x < y , x <= y ,
+<span id="line-411" class="anchor"/>x > y , x >= y ,
+<span id="line-412" class="anchor"/>x == y , x != y                         比较,身份,序列成员检测
+<span id="line-413" class="anchor"/>x <> y
+<span id="line-414" class="anchor"/>x is y , x is not y
+<span id="line-415" class="anchor"/>x in s , x not in s
+<span id="line-416" class="anchor"/>--------------------------------------------------------------------
+<span id="line-417" class="anchor"/>not x                                   逻辑非
+<span id="line-418" class="anchor"/>--------------------------------------------------------------------
+<span id="line-419" class="anchor"/>x and y                                 逻辑与
+<span id="line-420" class="anchor"/>--------------------------------------------------------------------
+<span id="line-421" class="anchor"/>x or y                                  逻辑或
+<span id="line-422" class="anchor"/>--------------------------------------------------------------------
+<span id="line-423" class="anchor"/>lambda args : expr                      lambda函数表达式
+<span id="line-424" class="anchor"/></pre><span id="line-425" class="anchor"/><span id="bottom" class="anchor"/></div>

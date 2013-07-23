@@ -1,0 +1,296 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-2809a28553a6623924011264199992bcf631f41c">欢迎使用wxPython</a><ol><li><a href="#head-84e89315caf343219a3e64bb00fc2f7a347bafa5">开始wxPython</a></li><li><a href="#head-af8e927b2ebb31be6ef77872684fa9faa29a4aa5">创建最小的空的wxPython程序</a><ol><li><a href="#head-292abdf719cf123d546e04f055cd1c1ab767c16f">导入wxPython</a></li><li><a href="#head-e126757b9f9109819d1dafb3f572be121fa4b4fb">使用应用程序和框架工作</a></li></ol></li><li><a href="#head-524d44c126e9cfbd969ee09cc2f10ffe6cc8fd23">扩展这个最小的空的wxPython程序</a></li><li><a
+href="#head-99964c90aba72154cc770f127db5a0854e7411b2">创建最终的hello.py程序</a></li></ol></li></ol></div> <span id="line-2" class="anchor"/><span id="line-3" class="anchor"/><p class="line867">
+</p><h1 id="head-2809a28553a6623924011264199992bcf631f41c">1. 欢迎使用wxPython</h1>
+<span id="line-4" class="anchor"/><span id="line-5" class="anchor"/><p class="line874">下面是一个例子，它创建了一个有一个文本框的窗口用来显示鼠标的位置。 <span id="line-6" class="anchor"/><span id="line-7" class="anchor"/><span id="line-8" class="anchor"/><span id="line-9" class="anchor"/><span id="line-10" class="anchor"/><span id="line-11" class="anchor"/><span id="line-12" class="anchor"/><span id="line-13" class="anchor"/><span id="line-14" class="anchor"/><span id="line-15" class="anchor"/><span id="line-16" class="anchor"/><span id="line-17" class="anchor"/><span id="line-18" class="anchor"/><span id="line-19" class="anchor"/><span id="line-20" class="anchor"/><span id="line-21" class="anchor"/><span id="line-22" class="anchor"/><span id="line-23" class="anchor"/><span
+id="line-24" class="anchor"/><span id="line-25" class="anchor"/><span id="line-26" class="anchor"/><span id="line-27" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-27bef4aa866d5a0c16663281b820caa050c0ce25_000\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-27bef4aa866d5a0c16663281b820caa050c0ce25_000', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-27bef4aa866d5a0c16663281b820caa050c0ce25_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#!/bin/env python</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">MyFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"My Frame"</span><span class="Operator">,</span> <span class="ID">size</span><span class="Operator">=</span><span
+class="Operator">(</span><span class="Number">300</span><span class="Operator">,</span> <span class="Number">300</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">panel</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Panel</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">panel</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MOTION</span><span class="Operator">,</span>  <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnMove</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">StaticText</span><span class="Operator">(</span><span class="ID">panel</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Pos:"</span><span class="Operator">,</span> <span class="ID">pos</span><span class="Operator">=</span><span class="Operator">(</span><span class="Number">10</span><span class="Operator">,</span> <span class="Number">12</span><span
+class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">posCtrl</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">TextCtrl</span><span class="Operator">(</span><span class="ID">panel</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">""</span><span class="Operator">,</span> <span class="ID">pos</span><span class="Operator">=</span><span
+class="Operator">(</span><span class="Number">40</span><span class="Operator">,</span> <span class="Number">10</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span></span>
+<span class="line"><span class="LineNumber">  12 </span>    <span class="ResWord">def</span> <span class="ID">OnMove</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">pos</span> <span class="Operator">=</span> <span class="ID">event</span><span class="Operator">.</span><span class="ID">GetPosition</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">posCtrl</span><span class="Operator">.</span><span class="ID">SetValue</span><span class="Operator">(</span><span class="String">"%s, %s"</span> <span class="Operator">%</span> <span class="Operator">(</span><span class="ID">pos</span><span class="Operator">.</span><span class="ID">x</span><span class="Operator">,</span> <span class="ID">pos</span><span class="Operator">.</span><span class="ID">y</span><span class="Operator">)</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span></span>
+<span class="line"><span class="LineNumber">  16 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">'__main__'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  17 </span>    <span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span>    <span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">MyFrame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span>    <span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="ID">True</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>    <span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-28" class="anchor"/><span id="line-29" class="anchor"/><span id="line-30" class="anchor"/><p class="line874">图示如下： <span id="line-31" class="anchor"/><span id="line-32" class="anchor"/></p><p class="line867"><img title="attachment:w1.1.gif" src="/moin/WxPythonInAction/ChapterOne?action=AttachFile&amp;do=get&amp;target=w1.1.gif" class="attachment"/> <span id="line-33" class="anchor"/><span id="line-34" class="anchor"/><span id="line-35" class="anchor"/></p><p class="line862">漂亮的界面是一个<tt
+class="backtick">GUI</tt>程序必不可少的一部分，<tt>wxPython</tt>可以做到这一点，加之<tt>Python</tt>强大的功能和简洁的语法，使用得它在<tt>Python</tt>的<tt>gui</tt>中成为一种主流。 <span id="line-36" class="anchor"/><span id="line-37" class="anchor"/><span id="line-38" class="anchor"/></p><p class="line867">
+</p><h2 id="head-84e89315caf343219a3e64bb00fc2f7a347bafa5">1.1. 开始wxPython</h2>
+<span id="line-39" class="anchor"/><span id="line-40" class="anchor"/><span id="line-41" class="anchor"/><p class="line874">首先我们创建一个显示一个图像的文件。这将分三步： <span id="line-42" class="anchor"/><span id="line-43" class="anchor"/></p><ol type="1"><li><p class="line862">首先创建一个空的最小的可以工作的<tt>wxPthon</tt>程序 <span id="line-44" class="anchor"/></p></li><li>组织和细化 <span id="line-45" class="anchor"/></li><li><p class="line862">显示<tt>wxPython</tt>的<tt>logo</tt> <span id="line-46" class="anchor"/></p></li></ol><p class="line874">图示如下： <span id="line-47"
+class="anchor"/><span id="line-48" class="anchor"/></p><p class="line867"><img title="attachment:w1.2.gif" src="/moin/WxPythonInAction/ChapterOne?action=AttachFile&amp;do=get&amp;target=w1.2.gif" class="attachment"/> <span id="line-49" class="anchor"/><span id="line-50" class="anchor"/></p><p class="line867">
+</p><h2 id="head-af8e927b2ebb31be6ef77872684fa9faa29a4aa5">1.2. 创建最小的空的wxPython程序</h2>
+<span id="line-51" class="anchor"/><span id="line-52" class="anchor"/><p class="line862">我们创建一个名为<tt>bare.py</tt>的程序并键入以下代码： <span id="line-53" class="anchor"/><span id="line-54" class="anchor"/><span id="line-55" class="anchor"/><span id="line-56" class="anchor"/><span id="line-57" class="anchor"/><span id="line-58" class="anchor"/><span id="line-59" class="anchor"/><span id="line-60" class="anchor"/><span id="line-61" class="anchor"/><span id="line-62" class="anchor"/><span id="line-63" class="anchor"/><span id="line-64" class="anchor"/><span id="line-65" class="anchor"/></p><div
+lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-f97b58e59b97edf860b71e7a417fa88f6ac405e4_001\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-f97b58e59b97edf860b71e7a417fa88f6ac405e4_001', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-f97b58e59b97edf860b71e7a417fa88f6ac405e4_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span> <span class="Comment">#1</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">App</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">App</span><span class="Operator">)</span><span class="Operator">:</span><span class="Comment">#2</span></span>
+<span class="line"><span class="LineNumber">   4 </span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ResWord">def</span> <span class="ID">OnInit</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span> <span class="Comment">#3</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">(</span><span class="ID">parent</span><span class="Operator">=</span><span class="ID">None</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">=</span><span class="String">'Bare'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ResWord">return</span> <span class="ID">True</span></span>
+<span class="line"><span class="LineNumber">   9 </span></span>
+<span class="line"><span class="LineNumber">  10 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">App</span><span class="Operator">(</span><span class="Operator">)</span> <span class="Comment">#4</span></span>
+<span class="line"><span class="LineNumber">  11 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span> <span class="Comment">#5</span><span class="Text"/></span>
+</pre></div><span id="line-66" class="anchor"/><span id="line-67" class="anchor"/><p class="line874">上面的代码运行的结果如下： <span id="line-68" class="anchor"/><span id="line-69" class="anchor"/></p><p class="line867"><img title="attachment:w1.5.gif" src="/moin/WxPythonInAction/ChapterOne?action=AttachFile&amp;do=get&amp;target=w1.5.gif" class="attachment"/> <span id="line-70" class="anchor"/><span id="line-71" class="anchor"/><span id="line-72" class="anchor"/></p><p
+class="line862">上面的代码的任何一行都不能少，否则将不能工作。这个基本的<tt>wxPython</tt>程序说明了开发任一<tt>wxPython</tt>程序所必须的五个基本步骤： <span id="line-73" class="anchor"/></p><ol type="1"><li><p class="line862">导入必须的<tt>wxPython</tt>包 <span id="line-74" class="anchor"/></p></li><li><p class="line862">子类化<tt>wxPython</tt>应用程序类 <span id="line-75" class="anchor"/></p></li><li>定义一个应用程序的初始化方法 <span id="line-76" class="anchor"/></li><li>创建一个应用程序类的实例 <span id="line-77" class="anchor"/></li><li>进入这个应用程序的主事件循环 <span
+id="line-78" class="anchor"/><span id="line-79" class="anchor"/></li></ol><p class="line874">下面让我们看看这个最小的空的程序是如何一步一步实现的。 <span id="line-80" class="anchor"/><span id="line-81" class="anchor"/><span id="line-82" class="anchor"/></p><p class="line867">
+</p><h3 id="head-292abdf719cf123d546e04f055cd1c1ab767c16f">1.2.1. 导入wxPython</h3>
+<span id="line-83" class="anchor"/><span id="line-84" class="anchor"/><p class="line862">你需要做的第一件事就是导入这个主要的<tt>wxPython</tt>包，这个包名为<tt>wx:</tt> <span id="line-85" class="anchor"/><span id="line-86" class="anchor"/></p><p class="line867"><span id="line-87" class="anchor"/><span id="line-88" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-46e88542f2a05eef224caee4740a079a21a37851_002\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-46e88542f2a05eef224caee4740a079a21a37851_002', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-46e88542f2a05eef224caee4740a079a21a37851_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span><span class="Text"/></span>
+</pre></div><span id="line-89" class="anchor"/><span id="line-90" class="anchor"/><p class="line862">一旦这个包被导入，你就可以引用<tt>wxPython</tt>的类、函数和常量（它们以<tt>wx</tt>为前缀），如下所示： <span id="line-91" class="anchor"/><span id="line-92" class="anchor"/></p><p class="line867"><span id="line-93" class="anchor"/><span id="line-94" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-35bc31044960e48868859683147cf1c543babe86_003\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-35bc31044960e48868859683147cf1c543babe86_003', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-35bc31044960e48868859683147cf1c543babe86_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">class</span> <span class="ID">App</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">App</span><span class="Operator">)</span><span class="Operator">:</span><span class="Text"/></span>
+</pre></div><span id="line-95" class="anchor"/><span id="line-96" class="anchor"/><p class="line862">注意：老的引入方式仍然被支持，你可能会遇到用这种老的引入方式的代码。因此我们将会简短地说明这种老的方式及为什么要改变它。老的包的名字是<tt>wxPython</tt>，它包含了一个内在的名为<tt>wx</tt>模块。那时，通常有两种导入必要的代码的方法，一种就是从<tt>wxPython</tt>包中导入<tt>wx</tt>模块：<tt>from</tt> <tt>wxPython</tt> <tt>import</tt> <tt>wx</tt>；另一种就是直接从<tt>wx</tt>模块中导入所有的东西：<tt>from</tt> <tt>wxPython.wx</tt> <tt>import</tt>
+*。这两种方法都有严重的缺点。这第二种方法<tt>Python</tt>中是不建议使用的，这因为可能导致名字空间冲突，而老的<tt>wx</tt>模块通过在其属性前加一个<tt>wx</tt>前缀避免了这个问题。尽管使用这个安全防范，但是<tt>import</tt>*仍然有可能导致问题，但是许多<tt>wxPython</tt>程序员喜欢这种类型，并且你将在老的代码中经常看到这种用法。这种风格的坏处是类名以小写字母开头，而大多数<tt>wxPython</tt>方法以大写字母开头，这和通常的<tt>Python</tt>编写程序的习惯相反。 <span id="line-97" class="anchor"/><span id="line-98" class="anchor"/></p><p
+class="line862">然而如果你试图避免由于使用<tt>import</tt>*导致的名字空间膨胀，而使用<tt>from</tt> <tt>wxPython</tt> <tt>import</tt> <tt>wx</tt>。那么你就不得不为每个类、函数、常数名键入两次<tt>wx</tt>，一次是作为包的前缀，另一次是作为通常的前缀，例如<tt>wx.wxWindow</tt>。 <span id="line-99" class="anchor"/><span id="line-100" class="anchor"/></p><p
+class="line862">对于导入顺序需要注意的是：你从<tt>wxPython</tt>导入其它东西之前必须先导入<tt>wx</tt>。通常情况下，<tt>Python</tt>中的模块导入顺序无关。但是<tt>wxPython</tt>中的不同，它是一个复杂的模块。当你第一次导入<tt>wx</tt>模块时，<tt>wxPython</tt>要对别的<tt>wxPython</tt>模块执行一些初始化工作。例如<tt>wxPython</tt>中的一些子包，如<tt>xrc</tt>模块，它在<tt>wx</tt>模块导入之前不能够正确的工作，我们必须按下面顺序导入： <span id="line-101" class="anchor"/><span id="line-102" class="anchor"/></p><p class="line867"><span id="line-103"
+class="anchor"/><span id="line-104" class="anchor"/><span id="line-105" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-cb03536d4f12a350367634b30446457bb62fc133_004\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-cb03536d4f12a350367634b30446457bb62fc133_004', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-cb03536d4f12a350367634b30446457bb62fc133_004" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">from</span> <span class="ID">wx</span> <span class="ResWord">import</span> <span class="ID">xrc</span><span class="Text"/></span>
+</pre></div><span id="line-106" class="anchor"/><span id="line-107" class="anchor"/><p class="line862">以上的导入顺序只针对<tt>wxPython</tt>的模块，<tt>Python</tt>的模块导入顺序没关系。例如： <span id="line-108" class="anchor"/><span id="line-109" class="anchor"/></p><p class="line867"><span id="line-110" class="anchor"/><span id="line-111" class="anchor"/><span id="line-112" class="anchor"/><span id="line-113" class="anchor"/><span id="line-114" class="anchor"/><span id="line-115" class="anchor"/></p><div lang="en" dir="ltr"
+class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-6487eebca0acbc11717a47453c6b51c6e2a27c07_005\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-6487eebca0acbc11717a47453c6b51c6e2a27c07_005', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-6487eebca0acbc11717a47453c6b51c6e2a27c07_005" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">sys</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">import</span> <span class="ID">os</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">from</span> <span class="ID">wx</span> <span class="ResWord">import</span> <span class="ID">xrc</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">import</span> <span class="ID">urllib</span><span class="Text"/></span>
+</pre></div><span id="line-116" class="anchor"/><span id="line-117" class="anchor"/><span id="line-118" class="anchor"/><p class="line867">
+</p><h3 id="head-e126757b9f9109819d1dafb3f572be121fa4b4fb">1.2.2. 使用应用程序和框架工作</h3>
+<span id="line-119" class="anchor"/><span id="line-120" class="anchor"/><span id="line-121" class="anchor"/><p class="line862">一旦你导入了<tt>wx</tt>模块，你就能够创建你的应用程序（<tt>application</tt>）对象和框架（<tt>frame</tt>）对象。每个<tt>wxPython</tt>程序必须有一个<tt>application</tt>对象和至少一个<tt>frame</tt>对象。<tt>application</tt>对象必须是<tt>wx.App</tt>的一个实例或你在<tt>OnInit()</tt>方法中定义的一个子类的一个实例。当你的应用程序启动的时候，<tt>OnInit()</tt>方法将被<tt>wx.App</tt>父类调用。 <span
+id="line-122" class="anchor"/><span id="line-123" class="anchor"/><span id="line-124" class="anchor"/></p><p class="line867"><strong>子类化<tt>wxPython</tt></strong> <span id="line-125" class="anchor"/><strong><tt>application</tt>类</strong> <span id="line-126" class="anchor"/><span id="line-127" class="anchor"/></p><p class="line862">下面的代码演示了如何定义我们的<tt>wx.App</tt>的子类： <span id="line-128" class="anchor"/><span id="line-129" class="anchor"/><span id="line-130" class="anchor"/><span id="line-131"
+class="anchor"/><span id="line-132" class="anchor"/><span id="line-133" class="anchor"/><span id="line-134" class="anchor"/><span id="line-135" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-8c9fb1d9b573ae0219f2cdb96a56dbc50fb91a02_006\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-8c9fb1d9b573ae0219f2cdb96a56dbc50fb91a02_006', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-8c9fb1d9b573ae0219f2cdb96a56dbc50fb91a02_006" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">class</span> <span class="ID">MyApp</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">App</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span>    <span class="ResWord">def</span> <span class="ID">OnInit</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>        <span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">(</span><span class="ID">parent</span><span class="Operator">=</span><span class="ID">None</span><span class="Operator">,</span> <span class="ID">id</span><span class="Operator">=</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span>
+<span class="ID">title</span><span class="Operator">=</span><span class="String">"Bare"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ResWord">return</span> <span class="ID">True</span><span class="Text"/></span>
+</pre></div><span id="line-136" class="anchor"/><span id="line-137" class="anchor"/><span id="line-138" class="anchor"/><p class="line862">上面我们定义了一个名为<tt>MyApp</tt>的子类。我们通常在<tt>OnInit()</tt>方法中创建<tt>frame</tt>对象。上面的<tt>wx.Frame</tt>接受三个参数，仅第一个是必须的，其余的都有默认值。 <span id="line-139" class="anchor"/>调用<tt>Show()</tt>方法使<tt>frame</tt>可见，否则不可见。我们可以通过给<tt>Show()</tt>一个布尔值参数来设定<tt>frame</tt>的可见性： <span id="line-140"
+class="anchor"/><span id="line-141" class="anchor"/></p><pre>frame.Show(False)  # 使框架不可见.
+<span id="line-142" class="anchor"/>frame.Show(True)   # True是默认值，使框架可见.
+<span id="line-143" class="anchor"/>frame.Hide()       # 等同于frame.Show(False)
+<span id="line-144" class="anchor"/></pre><span id="line-145" class="anchor"/><span id="line-146" class="anchor"/><p class="line867"><strong>定义一个应用程序的初始化方法</strong> <span id="line-147" class="anchor"/><span id="line-148" class="anchor"/></p><p
+class="line862">注意：我们没有为我们的应用程序类定义一个<tt>__init__()</tt>方法。在<tt>Python</tt>中，这就意味着父方法<tt>wx.App.__init()__</tt>将在对象创建时被自动调用。这是一个好的事情。如果你定义你自己的<tt>__init__()</tt>方法，不要忘了调用其基类的<tt>__init()__</tt>方法，示例如下： <span id="line-149" class="anchor"/><span id="line-150" class="anchor"/><span id="line-151" class="anchor"/><span id="line-152" class="anchor"/><span id="line-153" class="anchor"/><span id="line-154" class="anchor"/></p><div
+lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-78532a3c6fbcb604210189e0819f6de629566b5e_007\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-78532a3c6fbcb604210189e0819f6de629566b5e_007', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-78532a3c6fbcb604210189e0819f6de629566b5e_007" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">class</span> <span class="ID">App</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">App</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span></span>
+<span class="line"><span class="LineNumber">   4 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">App</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-155" class="anchor"/><span id="line-156" class="anchor"/><span id="line-157" class="anchor"/><p class="line862">如果你忘了这样做，<tt>wxPython</tt>将不被初始化并且你的<tt>OnInit()</tt>方法也将得不到调用。 <span id="line-158" class="anchor"/><span id="line-159" class="anchor"/></p><p class="line867"><strong>创建一个应用程序实例并进入它的主事件循环</strong> <span id="line-160" class="anchor"/><span id="line-161" class="anchor"/></p><p
+class="line862">这步是创建<tt>wx.App</tt>子类的实例，并调用它的<tt>MainLoop()</tt>方法： <span id="line-162" class="anchor"/><span id="line-163" class="anchor"/></p><p class="line867"><span id="line-164" class="anchor"/><span id="line-165" class="anchor"/><span id="line-166" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-239f046abd3a19d09836ae6b3e9716f2d3c99ba0_008\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-239f046abd3a19d09836ae6b3e9716f2d3c99ba0_008', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-239f046abd3a19d09836ae6b3e9716f2d3c99ba0_008" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">App</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-167" class="anchor"/><span id="line-168" class="anchor"/><span id="line-169" class="anchor"/><p class="line862">一旦进入主事件循环，控制权将转交给<tt>wxPython</tt>。<tt>wxPython</tt> <tt>GUI</tt>程序主要响应用户的鼠标和键盘事件。当一个应用程序的所有框架被关闭后，这个<tt>app.MainLoop()</tt>方法将返回且程序退出。 <span id="line-170" class="anchor"/><span id="line-171" class="anchor"/><span id="line-172" class="anchor"/></p><p class="line867">
+</p><h2 id="head-524d44c126e9cfbd969ee09cc2f10ffe6cc8fd23">1.3. 扩展这个最小的空的wxPython程序</h2>
+<span id="line-173" class="anchor"/><span id="line-174" class="anchor"/><span id="line-175" class="anchor"/><p class="line862">现在我们将给空的最小程序增加适当数量的功能，它包含了通常<tt>Python</tt>编程的标准并能够作为你自己的程 <span id="line-176" class="anchor"/><span id="line-177" class="anchor"/></p><p class="line862">序的一个基准。下面我们创建一个名为<tt>spare.py</tt>程序： <span id="line-178" class="anchor"/><span id="line-179" class="anchor"/><span id="line-180"
+class="anchor"/><span id="line-181" class="anchor"/><span id="line-182" class="anchor"/><span id="line-183" class="anchor"/><span id="line-184" class="anchor"/><span id="line-185" class="anchor"/><span id="line-186" class="anchor"/><span id="line-187" class="anchor"/><span id="line-188" class="anchor"/><span id="line-189" class="anchor"/><span id="line-190" class="anchor"/><span id="line-191" class="anchor"/><span id="line-192" class="anchor"/><span id="line-193"
+class="anchor"/><span id="line-194" class="anchor"/><span id="line-195" class="anchor"/><span id="line-196" class="anchor"/><span id="line-197" class="anchor"/><span id="line-198" class="anchor"/><span id="line-199" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-c1f616521284b5df9060e18b688f5f6b4b80c1f2_009\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-c1f616521284b5df9060e18b688f5f6b4b80c1f2_009', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-c1f616521284b5df9060e18b688f5f6b4b80c1f2_009" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#!/usr/bin/env python   #1</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="String">"""Spare.py is a starting point for a wxPython program."""</span>   <span class="Comment">#2</span></span>
+<span class="line"><span class="LineNumber">   4 </span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   6 </span></span>
+<span class="line"><span class="LineNumber">   7 </span><span class="ResWord">class</span> <span class="ID">Frame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span>   <span class="Comment">#3</span></span>
+<span class="line"><span class="LineNumber">   8 </span>    <span class="ResWord">pass</span></span>
+<span class="line"><span class="LineNumber">   9 </span></span>
+<span class="line"><span class="LineNumber">  10 </span><span class="ResWord">class</span> <span class="ID">App</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">App</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  11 </span></span>
+<span class="line"><span class="LineNumber">  12 </span>    <span class="ResWord">def</span> <span class="ID">OnInit</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">Frame</span><span class="Operator">(</span><span class="ID">parent</span><span class="Operator">=</span><span class="ID">None</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">=</span><span
+class="String">'Spare'</span><span class="Operator">)</span>   <span class="Comment">#4</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetTopWindow</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">frame</span><span class="Operator">)</span>   <span class="Comment">#5</span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ResWord">return</span> <span class="ID">True</span></span>
+<span class="line"><span class="LineNumber">  17 </span></span>
+<span class="line"><span class="LineNumber">  18 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">'__main__'</span><span class="Operator">:</span>   <span class="Comment">#6</span></span>
+<span class="line"><span class="LineNumber">  19 </span>    <span class="ID">app</span> <span class="Operator">=</span> <span class="ID">App</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>    <span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-200" class="anchor"/><span id="line-201" class="anchor"/><span id="line-202" class="anchor"/><p class="line874">这个程序仍然很小，只有14行代码，但是它增加了几个重要的项目让我们考虑到什么样的代码是好的、完整的。 <span id="line-203" class="anchor"/><span id="line-204" class="anchor"/><span id="line-205" class="anchor"/></p><p class="line867"><strong>#1</strong>
+这行看似注释，但是在如<tt>linux</tt>和<tt>unix</tt>等操作系统上，它告诉操作系统如何找到执行该程序的解释器。如果这个程序被给予可执行权限（例如使用<tt>chmod</tt>命令），我们可以在命令行下仅仅键入该程序的名字来运行这个程序： <span id="line-206" class="anchor"/><span id="line-207" class="anchor"/></p><p class="line867"><span id="line-208" class="anchor"/></p><pre>% spare.py
+<span id="line-209" class="anchor"/></pre><span id="line-210" class="anchor"/><span id="line-211" class="anchor"/><p class="line874">这行在其它的操作系统上将被忽略。但是包含它可以实现代码的跨平台。 <span id="line-212" class="anchor"/><span id="line-213" class="anchor"/><span id="line-214" class="anchor"/></p><p class="line867"><strong>#2</strong> 这是文档字符串，当模块中的第一句是字符串的时候，这个字符串就成了该模块的文档字符串并存储 <span id="line-215"
+class="anchor"/><span id="line-216" class="anchor"/></p><p class="line862">在该模块的<tt>__doc__</tt>属性中。你能够在你的代码中、某些开发平台、甚至交互模式下运行的<tt>Python</tt>解释器 <span id="line-217" class="anchor"/><span id="line-218" class="anchor"/></p><p class="line874">中访问文档字符串： <span id="line-219" class="anchor"/><span id="line-220" class="anchor"/><span id="line-221" class="anchor"/><span id="line-222" class="anchor"/></p><div lang="en"
+dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-457c254e0f7da46d48882058e9995ae6d7751ed4_010\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-457c254e0f7da46d48882058e9995ae6d7751ed4_010', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-457c254e0f7da46d48882058e9995ae6d7751ed4_010" dir="ltr"><span class="line"><span class="LineNumber">   1 </span>    <span class="ResWord">import</span> <span class="ID">spare</span></span>
+<span class="line"><span class="LineNumber">   2 </span>    <span class="ResWord">print</span> <span class="ID">spare</span><span class="Operator">.</span><span class="ID">__doc__</span><span class="Text"/></span>
+</pre></div><span id="line-223" class="anchor"/><span id="line-224" class="anchor"/><p class="line867"><tt>Spare.py</tt> 简单 <tt>wxPython</tt> 程序的起点。 <span id="line-225" class="anchor"/><span id="line-226" class="anchor"/></p><p class="line867"><strong>#3</strong>
+我们改变了你们创建<tt>frame</tt>对象的方法。<tt>bare</tt>版的程序简单地创建了一个<tt>wx.Frame</tt>类的实例。在<tt>spare</tt>版中，我们定义了我们自己的<tt>Frame</tt>类作为<tt>wx.Frame</tt>的子类。此时，最终的结果没有什么不同，但是如果你想在你的框架中显示诸如文本、按钮、菜单的话，你可能就想要你自己的<tt>Frame</tt>类了。 <span id="line-227" class="anchor"/><span id="line-228" class="anchor"/><span id="line-229" class="anchor"/></p><p
+class="line867"><strong>#4</strong> 我们将对<tt>frame</tt>实例的引用作为应用程序实例的一个属性 <span id="line-230" class="anchor"/><span id="line-231" class="anchor"/><span id="line-232" class="anchor"/></p><p class="line867"><strong>#5</strong>
+在<tt>OnInit()</tt>方法中，我们调用了这个<tt>App</tt>类自己的<tt>SetTopWindow()</tt>方法，并传递给它我们新创建的<tt>frame</tt>实例。我们不必定义<tt>SetTopWindow()</tt>方法，因为它继承自<tt>wx.App</tt>父类。<tt>SetTopWindow()</tt>方法是一个可选的方法，它让<tt>wxPython</tt>方法知道哪个框架或对话框将被认为是主要的。一个<tt>wxPython</tt>程序可以有几个框架，其中有一个是被设计为应用程序的顶级窗口的。 <span id="line-233" class="anchor"/><span
+id="line-234" class="anchor"/></p><p class="line867"><strong>#6</strong> 这个是<tt>Python</tt>中通常用来测试该模块是作为程序独立运行还是被另一模块所导入。我们通过检查该模块的<tt>__name__</tt>属性来实现： <span id="line-235" class="anchor"/><span id="line-236" class="anchor"/></p><p class="line867"><span id="line-237" class="anchor"/><span id="line-238" class="anchor"/><span id="line-239" class="anchor"/><span id="line-240"
+class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-5e814986594427f509bb5adcad70eabc15db1b5e_011\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-5e814986594427f509bb5adcad70eabc15db1b5e_011', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-5e814986594427f509bb5adcad70eabc15db1b5e_011" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">'__main__'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>   <span class="ID">app</span> <span class="Operator">=</span> <span class="ID">App</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span>   <span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-241" class="anchor"/><span id="line-242" class="anchor"/><span id="line-243" class="anchor"/><p class="line867">
+</p><h2 id="head-99964c90aba72154cc770f127db5a0854e7411b2">1.4. 创建最终的hello.py程序</h2>
+<span id="line-244" class="anchor"/><span id="line-245" class="anchor"/><span id="line-246" class="anchor"/><p class="line874">代码如下： <span id="line-247" class="anchor"/><span id="line-248" class="anchor"/><span id="line-249" class="anchor"/><span id="line-250" class="anchor"/><span id="line-251" class="anchor"/><span id="line-252" class="anchor"/><span id="line-253" class="anchor"/><span id="line-254" class="anchor"/><span
+id="line-255" class="anchor"/><span id="line-256" class="anchor"/><span id="line-257" class="anchor"/><span id="line-258" class="anchor"/><span id="line-259" class="anchor"/><span id="line-260" class="anchor"/><span id="line-261" class="anchor"/><span id="line-262" class="anchor"/><span id="line-263" class="anchor"/><span id="line-264" class="anchor"/><span id="line-265" class="anchor"/><span id="line-266" class="anchor"/><span
+id="line-267" class="anchor"/><span id="line-268" class="anchor"/><span id="line-269" class="anchor"/><span id="line-270" class="anchor"/><span id="line-271" class="anchor"/><span id="line-272" class="anchor"/><span id="line-273" class="anchor"/><span id="line-274" class="anchor"/><span id="line-275" class="anchor"/><span id="line-276" class="anchor"/><span id="line-277" class="anchor"/><span id="line-278" class="anchor"/><span
+id="line-279" class="anchor"/><span id="line-280" class="anchor"/><span id="line-281" class="anchor"/><span id="line-282" class="anchor"/><span id="line-283" class="anchor"/><span id="line-284" class="anchor"/><span id="line-285" class="anchor"/><span id="line-286" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-2bf99877051b0c9e86538309eeed316a7e6d47d8_012\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-2bf99877051b0c9e86538309eeed316a7e6d47d8_012', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-2bf99877051b0c9e86538309eeed316a7e6d47d8_012" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#!/usr/bin/env python</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="String">"""Hello, wxPython! program."""</span></span>
+<span class="line"><span class="LineNumber">   4 </span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   6 </span></span>
+<span class="line"><span class="LineNumber">   7 </span></span>
+<span class="line"><span class="LineNumber">   8 </span><span class="ResWord">class</span> <span class="ID">Frame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span>   <span class="Comment">#2 wx.Frame子类</span></span>
+<span class="line"><span class="LineNumber">   9 </span>    <span class="String">"""Frame class that displays an image."""</span></span>
+<span class="line"><span class="LineNumber">  10 </span></span>
+<span class="line"><span class="LineNumber">  11 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">image</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">=</span><span class="ID">None</span><span class="Operator">,</span> <span
+class="ID">id</span><span class="Operator">=</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  12 </span>                 <span class="ID">pos</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">DefaultPosition</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  13 </span>                 <span class="ID">title</span><span class="Operator">=</span><span class="String">'Hello, wxPython!'</span><span class="Operator">)</span><span class="Operator">:</span> <span class="Comment">#3图像参数</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="String">"""Create a Frame instance and display image."""</span></span>
+<span class="line"><span class="LineNumber">  15 </span><span class="Comment">#4 显示图像</span></span>
+<span class="line"><span class="LineNumber">  16 </span><span class="Comment"/>        <span class="ID">temp</span> <span class="Operator">=</span> <span class="ID">image</span><span class="Operator">.</span><span class="ID">ConvertToBitmap</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">size</span> <span class="Operator">=</span> <span class="ID">temp</span><span class="Operator">.</span><span class="ID">GetWidth</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">,</span> <span class="ID">temp</span><span class="Operator">.</span><span class="ID">GetHeight</span><span
+class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">,</span> <span class="ID">id</span><span
+class="Operator">,</span> <span class="ID">title</span><span class="Operator">,</span> <span class="ID">pos</span><span class="Operator">,</span> <span class="ID">size</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">bmp</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">StaticBitmap</span><span class="Operator">(</span><span class="ID">parent</span><span class="Operator">=</span><span class="ID">self</span><span
+class="Operator">,</span> <span class="ID">bitmap</span><span class="Operator">=</span><span class="ID">temp</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span></span>
+<span class="line"><span class="LineNumber">  21 </span><span class="ResWord">class</span> <span class="ID">App</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">App</span><span class="Operator">)</span><span class="Operator">:</span>  <span class="Comment">#5 wx.App子类</span></span>
+<span class="line"><span class="LineNumber">  22 </span>    <span class="String">"""Application class."""</span></span>
+<span class="line"><span class="LineNumber">  23 </span></span>
+<span class="line"><span class="LineNumber">  24 </span>    <span class="ResWord">def</span> <span class="ID">OnInit</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  25 </span><span class="Comment">#6 图像处理</span></span>
+<span class="line"><span class="LineNumber">  26 </span><span class="Comment"/>        <span class="ID">image</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Image</span><span class="Operator">(</span><span class="String">'wxPython.jpg'</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">BITMAP_TYPE_JPEG</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  27 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">Frame</span><span class="Operator">(</span><span class="ID">image</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  28 </span></span>
+<span class="line"><span class="LineNumber">  29 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  30 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetTopWindow</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">frame</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  31 </span>        <span class="ResWord">return</span> <span class="ID">True</span></span>
+<span class="line"><span class="LineNumber">  32 </span></span>
+<span class="line"><span class="LineNumber">  33 </span><span class="ResWord">def</span> <span class="ID">main</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">:</span>  <span class="Comment">#7</span></span>
+<span class="line"><span class="LineNumber">  34 </span>    <span class="ID">app</span> <span class="Operator">=</span> <span class="ID">App</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  35 </span>    <span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  36 </span></span>
+<span class="line"><span class="LineNumber">  37 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">'__main__'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  38 </span>     <span class="ID">main</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-287" class="anchor"/><span id="line-288" class="anchor"/><p class="line874">说明： <span id="line-289" class="anchor"/><span id="line-290" class="anchor"/><span id="line-291" class="anchor"/></p><ul><li style="list-style-type: none;"><p class="line891"><strong>#2</strong> 定义一个<tt>wx.Frame</tt>的子类，以便我们更容量控制框架的内容和外观。 <span id="line-292" class="anchor"/><span
+id="line-293" class="anchor"/></p><p class="line891"><strong>#3</strong> 给我们的框架的构造器增加一个图像参数。这个值通过我们的应用程序类在创建一个框架的实例时提供。同样，我们可以传递必要的值给<tt>wx.Frame.__init__()</tt> <span id="line-294" class="anchor"/><span id="line-295" class="anchor"/></p><p class="line891"><strong>#4</strong>
+我们将用<tt>wx.StaticBitmap</tt>控件来显示这个图像，它要求一个位图。所以我们转换图像到位图。我们也使用图像的宽度和高度创建一个<tt>size</tt>元组。这个<tt>size</tt>元组被提供给<tt>wx.Frame.__init__()</tt>调用，以便于框架的尺寸匹配位图尺寸。 <span id="line-296" class="anchor"/><span id="line-297" class="anchor"/></p><p class="line891"><strong>#5</strong>
+定义一个带有<tt>OnInit()</tt>方法的<tt>wx.App</tt>的子类，这是<tt>wxPython</tt>应用程序最基本的要求。 <span id="line-298" class="anchor"/><span id="line-299" class="anchor"/></p><p class="line891"><strong>#6</strong> 我们使用与<tt>hello.py</tt>在同一目录下的名为<tt>wxPython.jpg</tt>的文件创建了一个图像对象。 <span id="line-300" class="anchor"/><span id="line-301" class="anchor"/></p><p
+class="line891"><strong>#7</strong> <tt>main()</tt>函数创建一个应用程序的实例并启动<tt>wxPython</tt>的事件循环。 <span id="line-302" class="anchor"/></p></li></ul><span id="bottom" class="anchor"/></div>

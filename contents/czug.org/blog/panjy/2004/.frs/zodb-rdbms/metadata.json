@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zodb-rdbms"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "内容管理系统，到底应该选择关系数据库，还是ZODB来存储数据？", 
+        "modified": "2005-09-22 08:36:55", 
+        "title": "ZODB，还是RDBMS?"
+    }
+}

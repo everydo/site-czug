@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "whatcanido"
+    }, 
+    "dublin": {
+        "creators": [
+            "patanka"
+        ], 
+        "description": "领导说要换掉现在的plone系统，我该怎么办？", 
+        "modified": "2005-04-10 19:36:41", 
+        "title": "我该怎么做？"
+    }
+}

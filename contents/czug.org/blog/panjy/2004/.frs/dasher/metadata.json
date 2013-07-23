@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "dasher"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "发现了Dasher, 很新颖的文字输入方法，适合于身体残疾患者以及触摸电脑等使用", 
+        "modified": "2004-12-31 02:07:13", 
+        "title": "Dasher: 新的文字输入方法"
+    }
+}

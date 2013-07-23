@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "mod_encoding"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "apache认为client传来的webdav请求是utf-8的编码，但对中文来说实际上更多是gb编码。", 
+        "modified": "2004-12-27 07:41:44", 
+        "title": "mod_encoding：让apache的webdav支持中文文件名"
+    }
+}

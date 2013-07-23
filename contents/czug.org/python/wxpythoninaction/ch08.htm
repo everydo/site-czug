@@ -1,0 +1,1179 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-29181fe167f9f42ea62d68807c358154c99847b8">把窗口部件放入框架中</a><ol><li><a href="#head-d156b1ced33ad19118c25eb94b664191aeec0e30">框架的寿命</a></li><li><a href="#head-501ed2a1ed1140fea40d4253427f9da53ffa7d8f">使用框架</a></li><li><a href="#head-a259990e2d4ddf82bb721774991598e9f92ad7a9">可选的框架类型</a></li><li><a href="#head-04973e178f7fc772164b5d380ccd2f2aa0330541">使用分割窗</a></li><li><a href="#head-7fa8d2f3c2d9a31c4cffd3e882dde018d313aedc">本章小结</a></li></ol></li></ol></div> <span id="line-2" class="anchor"/><span id="line-3" class="anchor"/><p class="line867">
+</p><h1 id="head-29181fe167f9f42ea62d68807c358154c99847b8">1. 把窗口部件放入框架中</h1>
+<span id="line-4" class="anchor"/><span id="line-5" class="anchor"/><p class="line874">在你的wxPython中，所有的用户交互行为都发生在一个窗口部件容器中，它通常被称作窗口，在wxPython 中被称为框架。在这一章中，我们将讨论wxPython中的几个不同样式的框架。这个主要的wx.Frame有几个不同的框架样式，这些样式可以改变wx.Frame的外观。另外，wxPython提供了小型框架和实现多文档界面的框架。框架可以使用分隔条来划分为不同的部分，并且可以通过滚动条的使用来包含比框架本身大的面板（panel）。 <span id="line-6" class="anchor"/><span id="line-7" class="anchor"/><span id="line-8" class="anchor"/></p><p class="line867">
+</p><h2 id="head-d156b1ced33ad19118c25eb94b664191aeec0e30">1.1. 框架的寿命</h2>
+<span id="line-9" class="anchor"/><span id="line-10" class="anchor"/><span id="line-11" class="anchor"/><p class="line874">我们将通过讨论框架最基本的元素：创建和除去它们，来作为我们的开始。创建框架包括了解可以应用的所有样式元素；框架的去除可能比你原本想像的要复杂。 <span id="line-12" class="anchor"/><span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></p><p class="line867">
+</p><h3 id="head-bbb5b738b0a13843194c9cd082db2660bda760fa">1.1.1. 如何创建一个框架？</h3>
+<span id="line-15" class="anchor"/><span id="line-16" class="anchor"/><span id="line-17" class="anchor"/><p class="line874">在本书中我们已经见过了许多的框架创建的例子，但是我们仍将再回顾一下框架创建的初步原则。 <span id="line-18" class="anchor"/><span id="line-19" class="anchor"/><span id="line-20" class="anchor"/></p><p class="line867"><strong>创建一个简单的框架</strong> <span id="line-21" class="anchor"/><span id="line-22" class="anchor"/></p><p class="line874">框架是类wx.Frame的实例。例8.1显示了一个非常简单的框架创建的例子。 <span id="line-23" class="anchor"/><span id="line-24" class="anchor"/><span id="line-25" class="anchor"/></p><p class="line867"><strong>例8.1</strong>  <span id="line-26" class="anchor"/><strong>创建基本的wx.Frame</strong> <span id="line-27"
+class="anchor"/><span id="line-28" class="anchor"/><span id="line-29" class="anchor"/><span id="line-30" class="anchor"/><span id="line-31" class="anchor"/><span id="line-32" class="anchor"/><span id="line-33" class="anchor"/><span id="line-34" class="anchor"/><span id="line-35" class="anchor"/><span id="line-36" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-e686efe0e85f65daab86e8c0d59bfc9b8dabe1be_000\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-e686efe0e85f65daab86e8c0d59bfc9b8dabe1be_000', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-e686efe0e85f65daab86e8c0d59bfc9b8dabe1be_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">'__main__'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">(</span><span class="ID">None</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"A Frame"</span><span class="Operator">,</span> <span class="ID">style</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">DEFAULT_FRAME_STYLE</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ID">size</span><span class="Operator">=</span><span class="Operator">(</span><span class="Number">200</span><span class="Operator">,</span> <span class="Number">100</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>    <span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>    <span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-37" class="anchor"/><span id="line-38" class="anchor"/><p class="line874">上面的代码创建一个带有标题的框架，其大小是(200,100)。表8.1中的默认样式提供了标准框架的装饰如关闭框、最小化和最大化框。结果如图8.1所示。 <span id="line-39" class="anchor"/><span id="line-40" class="anchor"/></p><p class="line874">图8.1 <span id="line-41" class="anchor"/><span id="line-42" class="anchor"/></p><p class="line867"><img title="attachment:w8.1.gif" src="/moin/WxPythonInAction/ChapterEight?action=AttachFile&amp;do=get&amp;target=w8.1.gif" class="attachment"/> <span id="line-43"
+class="anchor"/><span id="line-44" class="anchor"/><span id="line-45" class="anchor"/></p><p class="line874">wx.Frame的构造函数类似于我们在第7章见到的其它窗口部件的构造函数： <span id="line-46" class="anchor"/><span id="line-47" class="anchor"/></p><p class="line867"><span id="line-48" class="anchor"/><span id="line-49" class="anchor"/><span id="line-50" class="anchor"/><span id="line-51" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-6cbe834dc7ee0677c96e8e6a5e4dc584b8917fac_001\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-6cbe834dc7ee0677c96e8e6a5e4dc584b8917fac_001', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-6cbe834dc7ee0677c96e8e6a5e4dc584b8917fac_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">(</span><span class="ID">parent</span><span class="Operator">,</span> <span class="ID">id</span><span class="Operator">=</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">=</span><span class="String">""</span><span class="Operator">,</span> <span
+class="ID">pos</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">DefaultPosition</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   2 </span>        <span class="ID">size</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">DefaultSize</span><span class="Operator">,</span> <span class="ID">style</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">DEFAULT_FRAME_STYLE</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   3 </span>        <span class="ID">name</span><span class="Operator">=</span><span class="String">"frame"</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-52" class="anchor"/><p class="line874">这里有超过十余种之多的专用于wx.Frame的样式标记，我们将在下一部分涵盖它们。默认样式为你提供了最小化和最大化框、系统下拉菜单、可调整尺寸的粗边框和一个标题。 <span id="line-53" class="anchor"/><span id="line-54" class="anchor"/></p><p class="line874">这里没有与一个wx.Frame挂钩的事件类型。但是，由于一个wx.Frame是你的屏幕上用户最可能去关闭的元素，所以你通常想去为关闭事件定义一个处理器，以便子窗口和数据被妥善的处理。 <span id="line-55" class="anchor"/><span id="line-56" class="anchor"/><span id="line-57" class="anchor"/></p><p
+class="line867"><strong>创建框架的子类</strong> <span id="line-58" class="anchor"/><span id="line-59" class="anchor"/></p><p class="line874">你将很少直接创建wx.Frame的实例。正如我们在本书中所见过的其它例子一样，一个典型的wxPython应用程序创建wx.Frame的子类并创建那些子类的实例。这是因为wx.Frame的独特的情形——虽然它自身定义了很少的行为，但是带有独自的初始化程序的子类是放置有关你的框架的布局和行为的最合理的地方。不创建子类而构造你应用程序的特定的布局是有可能，但除了最简单的应用程序以外，那是不容易的。例8.2展示了wx.Frame子类的例子。 <span id="line-60" class="anchor"/><span id="line-61"
+class="anchor"/><span id="line-62" class="anchor"/></p><p class="line867"><strong>例8.2</strong>  <span id="line-63" class="anchor"/><strong>一个简单的框架子类</strong> <span id="line-64" class="anchor"/><span id="line-65" class="anchor"/><span id="line-66" class="anchor"/><span id="line-67" class="anchor"/><span id="line-68" class="anchor"/><span id="line-69" class="anchor"/><span id="line-70" class="anchor"/><span id="line-71" class="anchor"/><span id="line-72" class="anchor"/><span id="line-73" class="anchor"/><span id="line-74" class="anchor"/><span id="line-75"
+class="anchor"/><span id="line-76" class="anchor"/><span id="line-77" class="anchor"/><span id="line-78" class="anchor"/><span id="line-79" class="anchor"/><span id="line-80" class="anchor"/><span id="line-81" class="anchor"/><span id="line-82" class="anchor"/><span id="line-83" class="anchor"/><span id="line-84" class="anchor"/><span id="line-85" class="anchor"/><span id="line-86" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-e775c5ee5f8d296f9e81de7b81c9083307ee561f_002\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-e775c5ee5f8d296f9e81de7b81c9083307ee561f_002', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-e775c5ee5f8d296f9e81de7b81c9083307ee561f_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">SubclassFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">'Frame Subclass'</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   6 </span>                <span class="ID">size</span><span class="Operator">=</span><span class="Operator">(</span><span class="Number">300</span><span class="Operator">,</span> <span class="Number">100</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">panel</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Panel</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">button</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Button</span><span class="Operator">(</span><span class="ID">panel</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Close Me"</span><span class="Operator">,</span> <span class="ID">pos</span><span class="Operator">=</span><span class="Operator">(</span><span
+class="Number">15</span><span class="Operator">,</span> <span class="Number">15</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_BUTTON</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnCloseMe</span><span class="Operator">,</span> <span class="ID">button</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_CLOSE</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnCloseWindow</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span></span>
+<span class="line"><span class="LineNumber">  12 </span>    <span class="ResWord">def</span> <span class="ID">OnCloseMe</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Close</span><span class="Operator">(</span><span class="ID">True</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span></span>
+<span class="line"><span class="LineNumber">  15 </span>    <span class="ResWord">def</span> <span class="ID">OnCloseWindow</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Destroy</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span></span>
+<span class="line"><span class="LineNumber">  18 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">'__main__'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  19 </span>    <span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>    <span class="ID">SubclassFrame</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span>    <span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-87" class="anchor"/><span id="line-88" class="anchor"/><p class="line874">运行结果如图8.2所示 <span id="line-89" class="anchor"/><span id="line-90" class="anchor"/></p><p class="line874">图8.2 <span id="line-91" class="anchor"/><span id="line-92" class="anchor"/></p><p class="line867"><img title="attachment:w8.2.gif" src="/moin/WxPythonInAction/ChapterEight?action=AttachFile&amp;do=get&amp;target=w8.2.gif" class="attachment"/> <span id="line-93" class="anchor"/><span id="line-94" class="anchor"/><span id="line-95" class="anchor"/></p><p
+class="line862">我们在许多其它的例子中已经见过了这种基本的结构，因此让我们来讨论上面代码中特定于框架的部分。wx.Frame.<span class="u">init</span>方法与wx.Frame构造函数有相同的信息。子类自身的构造器除了self没有其它参数，它允许你作为程序员去定义参数，所定义的参数将传递给其父类，并且使你可以不用重复指定与父类相同的参数。 <span id="line-96" class="anchor"/><span id="line-97" class="anchor"/></p><p
+class="line874">同样值得注意的是，框架的子窗口部件被放置在一个面板（panel）中。面板（panel)是类wx.Panel的实例，它是其它有较少功能的窗口部件的容器。你基本上应该使用一个wx.Panel作为你的框架的顶级子窗口部件。有一件事情就是，多层次的构造可以使得更多的代码能够重用，如相同的面板和布局可以被用于多个框架中。在框架中使用wx.Panel给了你一些对话框的功能。这些功能以成对的方式表现。其一是，在MS
+Windows操作系统下，wx.Panel实例的默认背景色以白色代替了灰色。其二，面板（panel）可以有一个默认的项目，该项目在当回车键被按下时自动激活，并且面板（panel）以与对话框大致相同的办法响应tab键盘事件，以改变或选择默认项目。 <span id="line-98" class="anchor"/><span id="line-99" class="anchor"/><span id="line-100" class="anchor"/><span id="line-101" class="anchor"/></p><p class="line867">
+</p><h3 id="head-df71becbe009d9ddf47b4f0423ec682e2c96c102">1.1.2. 有些什么不同的框架样式？</h3>
+<span id="line-102" class="anchor"/><span id="line-103" class="anchor"/><span id="line-104" class="anchor"/><p class="line874">wx.Frame有许多的可能的样式标记。通常，默认样式就是你想要的，但也有一些有用的变种。我们将讨论的第一组样式控制框架的形状和尺寸。尽管不是强制性的，但是这些标记应该被认为是互斥的——一个给定的框架应该只使用它们中的一个。表8.1说明了形状和尺寸标记。 <span id="line-105" class="anchor"/><span id="line-106" class="anchor"/><span id="line-107" class="anchor"/></p><p class="line867"><strong>表8.1 框架的形状和尺寸标记</strong> <span id="line-108"
+class="anchor"/><span id="line-109" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line862">wx.FRAME_NO_TASKBAR</p></td>
+<td><p class="line862">一个完全标准的框架，除了一件事：在Windows系统和别的支持这个特性的系统下，它不显示在任务栏中。当最小化时，该框架图标化到桌面而非任务栏。</p></td>
+</tr>
+<tr>  <td><span id="line-110" class="anchor"/><p class="line862">wx.FRAME_SHAPED</p></td>
+<td><p class="line862">非矩形的框架。框架的确切形状使用<a href="/moin/SetShape" class="nonexistent">SetShape</a>()方法来设置。窗口的形状将在本章后面部分讨论。</p></td>
+</tr>
+<tr>  <td><span id="line-111" class="anchor"/><p class="line862">wx.FRAME_TOOL_WINDOW</p></td>
+<td><p class="line862">该框架的标题栏比标准的小些，通常用于包含多种工具按钮的辅助框架。在Windows操作系统下，工具窗口将不显示在任务栏中。</p></td>
+</tr>
+<tr>  <td><span id="line-112" class="anchor"/><p class="line862">wx.ICONIZE</p></td>
+<td><p class="line862">窗口初始时将被最小化显示。这个样式仅在Windows系统中起作用。</p></td>
+</tr>
+<tr>  <td><span id="line-113" class="anchor"/><p class="line862">wx.MAXIMIZE</p></td>
+<td><p class="line862">窗口初始时将被最大化显示（全屏）。这个样式仅在Windows系统中起作用。</p></td>
+</tr>
+<tr>  <td><span id="line-114" class="anchor"/><p class="line862">wx.MINIMIZE</p></td>
+<td><p class="line862">同wx.ICONIZE。</p></td>
+</tr>
+</tbody></table></div><span id="line-115" class="anchor"/><span id="line-116" class="anchor"/><p class="line874">上面这组样式中，屏幕画面最需要的样式是wx.FRAME_TOOL_WINDOW。图8.3显示了一个小的结合使用了wx.FRAME_TOOL_WINDOW、wx.CAPTION和wx.SYSTEM_MENU样式的例子。 <span id="line-117" class="anchor"/><span id="line-118" class="anchor"/><span id="line-119" class="anchor"/></p><p class="line867"><strong>图8.3</strong> <span id="line-120" class="anchor"/><span id="line-121" class="anchor"/></p><p class="line867"><img title="attachment:w8.3.gif"
+src="/moin/WxPythonInAction/ChapterEight?action=AttachFile&amp;do=get&amp;target=w8.3.gif" class="attachment"/> <span id="line-122" class="anchor"/><span id="line-123" class="anchor"/><span id="line-124" class="anchor"/></p><p
+class="line874">这里有两个互斥的样式，它们控制一个框架是否位于别的框架的上面，无论别的框架是否获得了焦点。这对于那些小的不是始终可见的对话框是有用的。表8.2说明了这两个样式。最后，这还有一些用于放置在你的窗口上的装饰。如果你没有使用默认样式，那么这些装饰将不被自动放置到你的窗口上，你必须添加它们，否则容易导致窗口不能关闭或移动。表8.3给出了这些装饰的列表。 <span id="line-125" class="anchor"/><span id="line-126" class="anchor"/><span id="line-127" class="anchor"/></p><p class="line867"><strong>表8.2</strong>  <span id="line-128"
+class="anchor"/><strong>针对窗口漂浮行为的样式</strong> <span id="line-129" class="anchor"/><span id="line-130" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line862">wx.FRAME_FLOAT_ON_PARENT</p></td>
+<td><p class="line862">框架将漂浮在其父窗口（仅其父窗口）的上面。（很明显，要使用这个样式，框架需要有一个父窗口）。其它的框架可以遮盖这个框架。</p></td>
+</tr>
+<tr>  <td><span id="line-131" class="anchor"/><p class="line862">wx.STAY_ON_TOP</p></td>
+<td><p class="line862">该框架将始终在系统中其它框架的上面。（如果你有多个框架使用了这个样式，那么它们将相互重叠，但对于系统中其它的框架，它们仍在上面。）</p></td>
+</tr>
+</tbody></table></div><span id="line-132" class="anchor"/><span id="line-133" class="anchor"/><p class="line874">默认的样式wx.DEFAULT_FRAME_STYLE等同于wx.MINIMIZE_BOX | wx.MAXIMIZE_BOX | wx.CLOSE_BOX | wx.RESIZE_BORDER | wx.SYSTEM_MENU |wx.CAPTION。这个样式创建了一个典型的窗口，你可以调整大小，最小化，最大化，或关闭。一个很好的主意就是当你想要使用除默认样式以外的样式时，将默认样式与其它的样式组合在一起，以确保你有正确的一套装饰。例如，要创建一个工具框架，你可以使用style=wx.DEFAULT_FRAME_STYLE |
+wx.FRAME_TOOL_WINDOW。记住，你可以使用^操作符来去掉不要的样式。 <span id="line-134" class="anchor"/><span id="line-135" class="anchor"/><span id="line-136" class="anchor"/></p><p class="line867"><strong>表8.3 用于装饰窗口的样式</strong> <span id="line-137" class="anchor"/><span id="line-138" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line862">wx.CAPTION</p></td>
+<td><p class="line862">给窗口一个标题栏。如果你要放置最大化框、最小化框、系统菜单和上下文帮助，那么你必须包括该样式。</p></td>
+</tr>
+<tr>  <td><span id="line-139" class="anchor"/><p class="line862">wx.FRAME_EX_CONTEXTHELP</p></td>
+<td><p class="line862">这是用于Windows操作系统的，它在标题栏的右角放置问号帮助图标。这个样式是与wx.MAXIMIZE_BOX和WX.MINIMIZE_BOX样式互斥的。它是一个扩展的样式，并且必须使用两步来创建，稍后说明。</p></td>
+</tr>
+<tr>  <td><span id="line-140" class="anchor"/><p class="line862">wx.FRAME_EX_METAL</p></td>
+<td><p class="line862">在Mac OS X上，使用这个样式的框架有一个金属质感的外观。这是一个附加样式，必须使用<a href="/moin/SetExtraStyle" class="nonexistent">SetExtraStyle</a>方法来设置。</p></td>
+</tr>
+<tr>  <td><span id="line-141" class="anchor"/><p class="line862">wx.MAXIMIZE_BOX</p></td>
+<td><p class="line862">在标题栏的标准位置放置一个最大化框。</p></td>
+</tr>
+<tr>  <td><span id="line-142" class="anchor"/><p class="line862">wx.MINIMIZE_BOX</p></td>
+<td><p class="line862">在标题栏的标准位置放置一个最小化框。</p></td>
+</tr>
+<tr>  <td><span id="line-143" class="anchor"/><p class="line862">wx.CLOSE_BOX</p></td>
+<td><p class="line862">在标题栏的标准位置放置一个关闭框。</p></td>
+</tr>
+<tr>  <td><span id="line-144" class="anchor"/><p class="line862">wx.RESIZE_BORDER</p></td>
+<td><p class="line862">给框架一个标准的可以手动调整尺寸的边框。</p></td>
+</tr>
+<tr>  <td><span id="line-145" class="anchor"/><p class="line862">wx.SIMPLE_BORDER</p></td>
+<td><p class="line862">给框架一个最简单的边框，不能调整尺寸，没有其它装饰。该样式与所有其它装饰样式是互斥的</p></td>
+</tr>
+<tr>  <td><span id="line-146" class="anchor"/><p class="line862">wx.SYSTEM_MENU</p></td>
+<td><p class="line862">在标题栏上放置一个系统菜单。这个系统菜单的内容与你所使用的装饰样式有关。例如，如果你使用wx.MINIMIZE_BOX，那么系统菜单项就有“最小化”选项。</p></td>
+</tr>
+</tbody></table></div><span id="line-147" class="anchor"/><span id="line-148" class="anchor"/><span id="line-149" class="anchor"/><span id="line-150" class="anchor"/><p class="line867">
+</p><h3 id="head-a21c11521d3d7f989b26a458ad09f76000e44439">1.1.3. 如何创建一个有额外样式信息的框架？</h3>
+<span id="line-151" class="anchor"/><span id="line-152" class="anchor"/><span id="line-153" class="anchor"/><p class="line862">wx.FRAME_EX_CONTEXTHELP是一个扩展样式，意思是样式标记的值太大以致于不能使用通常的构造函数来设置（因为底层C++变量类型的特殊限制）。通常你可以在窗口部件被创建后，使用<a href="/moin/SetExtraStyle"
+class="nonexistent">SetExtraStyle</a>方法来设置额外的样式，但是某些样式，比如wx.FRAME_EX_CONTEXTHELP，必须在本地UI（用户界面）对象被创建之前被设置。在wxPython中，这需要使用稍微笨拙的方法来完成，即分两步构建。之后标题栏中带有我们熟悉的问号图标的框架就被创建了。如图8.4所示。 <span id="line-154" class="anchor"/><span id="line-155" class="anchor"/></p><p class="line874">图8.4 <span id="line-156" class="anchor"/><span id="line-157" class="anchor"/></p><p class="line867"><img title="attachment:w8.4.gif"
+src="/moin/WxPythonInAction/ChapterEight?action=AttachFile&amp;do=get&amp;target=w8.4.gif" class="attachment"/> <span id="line-158" class="anchor"/><span id="line-159" class="anchor"/><span id="line-160" class="anchor"/></p><p class="line862">标记值必须使用<a href="/moin/SetExtraStyle" class="nonexistent">SetExtraStyle</a>()方法来设置。有时，额外样式信息必须在框架被实例化前被设置，这就导致了一个问题：你如何对于一个不存在的实例调用一个方法？在接下来的部分，我们将展示实现这种操作的两个机制。 <span id="line-161" class="anchor"/><span
+id="line-162" class="anchor"/><span id="line-163" class="anchor"/></p><p class="line867"><strong>添加额外样式信息</strong> <span id="line-164" class="anchor"/><span id="line-165" class="anchor"/></p><p class="line862">在wxPython中，额外样式信息在创建之前通过使用专门的类wx.<a href="/moin/PreFrame"
+class="nonexistent">PreFrame</a>来被添加，它是框架的一种局部实例。你可以在预框架（preframe）上设置额外样式位，然后使用这个预框架（preframe）来创建实际的框架。例8.3显示了在一个子类的构造器中如何完成这两步（two-step）的构建。注意，在wxPython中它实际上是三步（在C++ wxWidgets工具包中，它是两步（two-step），我们只是沿用这个叫法而已）。 <span id="line-166" class="anchor"/><span id="line-167" class="anchor"/><span id="line-168" class="anchor"/></p><p class="line867"><strong>例8.3</strong>  <span id="line-169" class="anchor"/><span
+id="line-170" class="anchor"/><span id="line-171" class="anchor"/><span id="line-172" class="anchor"/><span id="line-173" class="anchor"/><span id="line-174" class="anchor"/><span id="line-175" class="anchor"/><span id="line-176" class="anchor"/><span id="line-177" class="anchor"/><span id="line-178" class="anchor"/><span id="line-179" class="anchor"/><span id="line-180" class="anchor"/><span id="line-181" class="anchor"/><span id="line-182" class="anchor"/><span id="line-183" class="anchor"/><span id="line-184" class="anchor"/><span
+id="line-185" class="anchor"/><span id="line-186" class="anchor"/><span id="line-187" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-9b13d0038c59b8ceba096a7f6eb3ebab746f54d0_003\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-9b13d0038c59b8ceba096a7f6eb3ebab746f54d0_003', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-9b13d0038c59b8ceba096a7f6eb3ebab746f54d0_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">HelpFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ID">pre</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PreFrame</span><span class="Operator">(</span><span class="Operator">)</span> <span class="Comment">#1 预构建对象</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">pre</span><span class="Operator">.</span><span class="ID">SetExtraStyle</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">FRAME_EX_CONTEXTHELP</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">pre</span><span class="Operator">.</span><span class="ID">Create</span><span class="Operator">(</span><span class="ID">None</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Help Context"</span><span class="Operator">,</span> <span class="ID">size</span><span class="Operator">=</span><span class="Operator">(</span><span
+class="Number">300</span><span class="Operator">,</span> <span class="Number">100</span><span class="Operator">)</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   9 </span>                <span class="ID">style</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">DEFAULT_FRAME_STYLE</span> <span class="Operator">^</span></span>
+<span class="line"><span class="LineNumber">  10 </span>                <span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">MINIMIZE_BOX</span> <span class="Operator">|</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MAXIMIZE_BOX</span><span class="Operator">)</span><span class="Operator">)</span> <span class="Comment">#2 创建框架</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">PostCreate</span><span class="Operator">(</span><span class="ID">pre</span><span class="Operator">)</span> <span class="Comment">#3 底层C++指针的传递</span></span>
+<span class="line"><span class="LineNumber">  12 </span></span>
+<span class="line"><span class="LineNumber">  13 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">'__main__'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  14 </span>    <span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span>    <span class="ID">HelpFrame</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span>    <span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-188" class="anchor"/><span id="line-189" class="anchor"/><p class="line867"><strong>#1</strong> 创建wx.<a href="/moin/PreFrame" class="nonexistent">PreFrame</a>()的一个实例（关于对话框，这有一个类似的wx.<a href="/moin/PreDialog" class="nonexistent">PreDialog</a>()——其它的wxWidgets窗口部件有它们自己的预类）。在这个调用之后，你可以做你需要的其它初始化工作。 <span id="line-190" class="anchor"/><span id="line-191" class="anchor"/><span id="line-192" class="anchor"/></p><p
+class="line867"><strong>#2</strong> 调用Create()方法创建框架。 <span id="line-193" class="anchor"/><span id="line-194" class="anchor"/><span id="line-195" class="anchor"/></p><p class="line867"><strong>#3</strong> 这是特定于wxPython的，并且不由C++完成。<a href="/moin/PostCreate" class="nonexistent">PostCreate</a>方法做一些内部的内务处理，它实例化一个你在第一步中创建的封装了C++的对象。 <span id="line-196" class="anchor"/><span id="line-197" class="anchor"/><span id="line-198" class="anchor"/></p><p
+class="line867"><strong>添加额外样式信息的通用方法</strong> <span id="line-199" class="anchor"/><span id="line-200" class="anchor"/></p><p class="line862">先前的算法有点笨拙，但是它可以被重构得容易一点，以便于管理维护。第一步是创建一个公用函数，它可以管理任何分两步的创建。例8.4提供了一个例子，它使用Python的内省性能来调用以变量形式被传递的函数。这个例子用于在Python的一个新的框架实例化期间的<span class="u">init</span>方法中被调用。 <span id="line-201" class="anchor"/><span id="line-202" class="anchor"/><span
+id="line-203" class="anchor"/></p><p class="line867"><strong>例8.4</strong>  <span id="line-204" class="anchor"/><strong>一个公用的两步式创建函数</strong> <span id="line-205" class="anchor"/><span id="line-206" class="anchor"/><span id="line-207" class="anchor"/><span id="line-208" class="anchor"/><span id="line-209" class="anchor"/><span id="line-210" class="anchor"/><span id="line-211" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-8b7f07fb89532501912bcede6ea393fffaee7ec5_004\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-8b7f07fb89532501912bcede6ea393fffaee7ec5_004', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-8b7f07fb89532501912bcede6ea393fffaee7ec5_004" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">def</span> <span class="ID">twoStepCreate</span><span class="Operator">(</span><span class="ID">instance</span><span class="Operator">,</span> <span class="ID">preClass</span><span class="Operator">,</span> <span class="ID">preInitFunc</span><span class="Operator">,</span> <span class="Operator">*</span><span class="ID">args</span><span
+class="Operator">,</span><span class="Operator">**</span><span class="ID">kwargs</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>        <span class="ID">pre</span> <span class="Operator">=</span> <span class="ID">preClass</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span>        <span class="ID">preInitFunc</span><span class="Operator">(</span><span class="ID">pre</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span>        <span class="ID">pre</span><span class="Operator">.</span><span class="ID">Create</span><span class="Operator">(</span><span class="Operator">*</span><span class="ID">args</span><span class="Operator">,</span> <span class="Operator">**</span><span class="ID">kwargs</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">instance</span><span class="Operator">.</span><span class="ID">PostCreate</span><span class="Operator">(</span><span class="ID">pre</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-212" class="anchor"/><p class="line862">在例8.4中，函数要求三个必须的参数。instance参数是实际被创建的实例。preClass参数是临时的预类的类对象——对框架预类是wx.<a href="/moin/PreFrame" class="nonexistent">PreFrame</a>。preInitFunc是一个函数对象，它通常作为回调函数用于该实例的初始化。这三个参数之后，我们可以再增加任意数量的其它可选参数。 <span id="line-213" class="anchor"/><span id="line-214" class="anchor"/></p><p class="line862">这个函数的第一行，pre =
+preClass()，内省地实例化这个预创建对象，使用作为参数传递过来的类对象。下面一行根据参数preInitFunc内省地调用回调函数，它通常设置扩展样式标记。然后pre.Create()方法被调用，它使用了可选的参数。最后，<a href="/moin/PostCreate" class="nonexistent">PostCreate</a>方法被调用来将内在的值从pre移给实例。至此，instance参数已经完全被创建了。假设twoStepCreate已被导入，那么上面的公用函数可以如例8.5被使用。 <span id="line-215" class="anchor"/><span id="line-216" class="anchor"/><span id="line-217" class="anchor"/></p><p
+class="line867"><strong>例8.5</strong>  <span id="line-218" class="anchor"/><strong>另一个两步式的创建，使用了公用函数</strong> <span id="line-219" class="anchor"/><span id="line-220" class="anchor"/><span id="line-221" class="anchor"/><span id="line-222" class="anchor"/><span id="line-223" class="anchor"/><span id="line-224" class="anchor"/><span id="line-225" class="anchor"/><span id="line-226" class="anchor"/><span id="line-227" class="anchor"/><span id="line-228" class="anchor"/><span id="line-229"
+class="anchor"/><span id="line-230" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-60d18364b6411d7fa17923dabc33e1521180142e_005\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-60d18364b6411d7fa17923dabc33e1521180142e_005', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-60d18364b6411d7fa17923dabc33e1521180142e_005" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">HelpFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">,</span> <span class="ID">ID</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">,</span><span class="ID">pos</span><span class="Operator">=</span><span class="ID">wx</span><span
+class="Operator">.</span><span class="ID">DefaultPosition</span><span class="Operator">,</span> <span class="ID">size</span><span class="Operator">=</span><span class="Operator">(</span><span class="Number">100</span><span class="Operator">,</span><span class="Number">100</span><span class="Operator">)</span><span class="Operator">,</span><span class="ID">style</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">DEFAULT_DIALOG_STYLE</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ID">twoStepCreate</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PreFrame</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">preInit</span><span class="Operator">,</span> <span class="ID">parent</span><span
+class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">id</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">,</span> <span class="ID">pos</span><span class="Operator">,</span> <span class="ID">size</span><span class="Operator">,</span> <span class="ID">style</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span></span>
+<span class="line"><span class="LineNumber">   9 </span><span class="ResWord">def</span> <span class="ID">preInit</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">pre</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">pre</span><span class="Operator">.</span><span class="ID">SetExtraStyle</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">FRAME_EX_CONTEXTHELP</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-231" class="anchor"/><span id="line-232" class="anchor"/><p class="line862">类wx.<a href="/moin/PreFrame" class="nonexistent">PreFrame</a>和函数self.preInit被传递给公用函数，并且preInit方法被定义为回调函数。 <span id="line-233" class="anchor"/><span id="line-234" class="anchor"/><span id="line-235" class="anchor"/><span id="line-236" class="anchor"/></p><p class="line867">
+</p><h3 id="head-a27fb73228fcc96049a17f5f165664618c89b79a">1.1.4. 当关闭一个框架时都发生了什么？</h3>
+<span id="line-237" class="anchor"/><span id="line-238" class="anchor"/><span id="line-239" class="anchor"/><p class="line874">当你关闭一个框架时，它最终消失了。除非这个框架被明确地告诉不关闭。换句话说，那关闭不是直接了当的。在wxPython的窗口部件关闭体系之后的用意是，给正在关闭的窗口部件充足的机会来关闭或释放它所占用任何非wxPython资源。如果你占用了某种昂贵的外部资源，如一个大的数据结构或一个数据库连接，那么该意图是特别受欢迎的。 <span id="line-240" class="anchor"/><span id="line-241"
+class="anchor"/></p><p class="line874">诚然，在C++ wxWidgets世界里，由于C++不为你管理内在分配的清理工作，管理资源是更严肃的问题。在wxPython中，对于多步的关闭过程的显式需求就很少，但它对于在过程中使用额外的钩子仍然是有用的。（随便说一下，我们在这一节中从单词“框架”切换到单词“窗口部件”是故意的——因为在本节中的所有内容都适用于所有顶级窗口部件，如框架或对话框）。 <span id="line-242" class="anchor"/><span id="line-243" class="anchor"/><span id="line-244" class="anchor"/></p><p
+class="line867"><strong>何时用户触发关闭过程</strong> <span id="line-245" class="anchor"/><span id="line-246" class="anchor"/></p><p class="line874">关闭过程最常由用户触发，如敲击一个关闭框或选择系统菜单中的关闭项或当应用程序响应其它某个事件而调用框架的Close方法。当上述情况发生时，wxPython架构引发一个EVT_CLOSE事件。像wxPython 架构中的其它别的事件一样，你可以在绑定一个事件处理器以便一个EVT_CLOSE事件发生时调用。 <span id="line-247" class="anchor"/><span id="line-248" class="anchor"/></p><p
+class="line874">如果你不声明你自己的事件处理器，那么默认的行为将被调用。默认的行为对于框架和对话框是不同的。 <span id="line-249" class="anchor"/><span id="line-250" class="anchor"/></p><p class="line874">1、默认情况下，框架处理器调用Destroy()方法并删除该框架和它的所有的组件。 <span id="line-251" class="anchor"/><span id="line-252" class="anchor"/></p><p
+class="line874">2、默认情况下，对话框的关闭处理器不销毁该对话框——它仅仅模拟取消按钮的按下，并隐藏对话框。该对话框对象仍继续存在在内存中。因此，如果需要的话，应用程序可以从它的数据输入部件获取值。当应用程序完成了对对话框的使用后，应该调用对话框的Destroy()方法。 <span id="line-253" class="anchor"/><span id="line-254" class="anchor"/></p><p
+class="line862">如果你编写你自己的关闭处理器，那么你可以使用它来关闭或删除任何外部的资源，但是，如果你选择去删除框架的话，显式地调用Destroy()方法是你的责任。尽管Destroy()经常被Close()调用，但是只调用Close()方法不能保证框架的销毁。在一定的情形下，决定不销毁框架是完全可以的，如当用户取消了关闭。然而，你仍然需要一个方法来销毁该框架。如果你选择不去销毁窗口，那么调用关闭事件的wx.<a href="/moin/CloseEvent"
+class="nonexistent">CloseEvent</a>.Veto()方法来通知相关部分：框架拒绝关闭，是一个好的习惯。 <span id="line-255" class="anchor"/><span id="line-256" class="anchor"/></p><p
+class="line874">如果你选择在你的程序的别处而非关闭处理器中关闭你的框架，例如从一个不同的用户事件像一个菜单项，那么我们建议使用的机制是调用框架的Close()方法。这将启动一个和系统关闭行为相同的过程。如果你要确保框架一定被删除，那么你可以直接调用Destroy()方法；然而，如果你这样做了，可能会导致框架所管理的资源或数据没有被释放或保存。 <span id="line-257" class="anchor"/><span id="line-258" class="anchor"/><span id="line-259" class="anchor"/></p><p
+class="line867"><strong>什么时候系统触发关闭过程</strong> <span id="line-260" class="anchor"/><span id="line-261" class="anchor"/></p><p class="line874">如果关闭事件是由系统自己触发的，对于系统关闭或类似情况，你也有一种办法管理该事件。wx.App 类接受一个EVT_QUERY_END_SESSION事件，如果需要的话，该事件使你能够否决应用程序的关闭，如果所有运行的应用已经批准了系统或GUI环境的关闭的话，那么随后会有一个EVT_END_SESSION事件。你选择去否决关闭的行为是与依赖于具体系统的。 <span id="line-262"
+class="anchor"/><span id="line-263" class="anchor"/></p><p class="line874">最后，值得注意的是，调用一个窗口部件的Destroy()方法不意味该部件被立即销毁。销毁实际上是当事件循环在未来空闲时（任何未被处理的事件被处理之后）才被处理的。这就防止了处理已不存在的窗口部件的事件。 <span id="line-264" class="anchor"/><span id="line-265" class="anchor"/></p><p class="line874">在接下来的两节，我们的讨论将从一个框架的生命周期切换到在框架生命周期里，你能够用框架来做些什么。 <span id="line-266"
+class="anchor"/><span id="line-267" class="anchor"/><span id="line-268" class="anchor"/><span id="line-269" class="anchor"/></p><p class="line867">
+</p><h2 id="head-501ed2a1ed1140fea40d4253427f9da53ffa7d8f">1.2. 使用框架</h2>
+<span id="line-270" class="anchor"/><span id="line-271" class="anchor"/><span id="line-272" class="anchor"/><p class="line874">框架包含了许多方法和属性。其中最重要的是那些查找框架中任意窗口部件的方法，和滚动框架中内容的方法。在这一节，我们将讨论如何实现这些。 <span id="line-273" class="anchor"/><span id="line-274" class="anchor"/><span id="line-275" class="anchor"/></p><p class="line867">
+</p><h3 id="head-500d4f2634d41a1aec738ca3661780ab147242d4">1.2.1. wx.Frame有那些方法和属性？</h3>
+<span id="line-276" class="anchor"/><span id="line-277" class="anchor"/><span id="line-278" class="anchor"/><p class="line874">这部分中的表包含了wx.Frame和它的父类wx.Window的最基本的属性。这些属性和方法的许多在本书中的其它地方有更详细的说明。表8.4包含了wx.Frame的一些公共的可读、可修改的属性。 <span id="line-279" class="anchor"/><span id="line-280" class="anchor"/><span id="line-281" class="anchor"/></p><p class="line867"><strong>表8.4</strong>  <span id="line-282"
+class="anchor"/><strong>wx.Frame的公共属性</strong> <span id="line-283" class="anchor"/><span id="line-284" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line891"><a href="/moin/GetBackgroundColor" class="nonexistent">GetBackgroundColor</a>(),<a href="/moin/SetBackgroundColor" class="nonexistent">SetBackgroundColor</a>(wx.Color)</p></td>
+<td><p class="line862">背景色是框架中没有被其子窗口部件覆盖住的那些部分的颜色。你可以传递一个wx.Color或颜色名给设置方法。任何传递给需要颜色的wxPython方法的字符串，都被解释为对函数wx.<a href="/moin/NamedColour" class="nonexistent">NamedColour</a>()的调用。</p></td>
+</tr>
+<tr>  <td><span id="line-285" class="anchor"/><p class="line891"><a href="/moin/GetId" class="nonexistent">GetId</a>(),<a href="/moin/SetId" class="nonexistent">SetId</a>(int)</p></td>
+<td><p class="line862">返回或设置窗口部件的标识符。</p></td>
+</tr>
+<tr>  <td><span id="line-286" class="anchor"/><p class="line891"><a href="/moin/GetMenuBar" class="nonexistent">GetMenuBar</a>(),<a href="/moin/SetMenuBar" class="nonexistent">SetMenuBar</a>(wx.<a href="/moin/MenuBar" class="nonexistent">MenuBar</a>)</p></td>
+<td><p class="line862">得到或设置框架当前使用的的菜单栏对象，如果没有菜单栏，则返回None。</p></td>
+</tr>
+<tr>  <td><span id="line-287" class="anchor"/><p class="line891"><a href="/moin/GetPosition" class="nonexistent">GetPosition</a>(),<a href="/moin/GetPositionTuple" class="nonexistent">GetPositionTuple</a>(),<a href="/moin/SetPosition" class="nonexistent">SetPosition</a>(wx.Point)</p></td>
+<td><p class="line862">以一个wx.Point或Python元组的形式返回窗口左上角的x,y的位置。对于顶级窗口，该位置是相对于显示区域的坐标，对于子窗口，该位置是相对于父窗口的坐标。</p></td>
+</tr>
+</tbody></table></div><span id="line-288" class="anchor"/><span id="line-289" class="anchor"/><p class="line867"><a href="/moin/GetSize" class="nonexistent">GetSize</a>() <span id="line-290" class="anchor"/><a href="/moin/GetSizeTuple" class="nonexistent">GetSizeTuple</a>() <span id="line-291" class="anchor"/><a href="/moin/SetSize" class="nonexistent">SetSize</a>(wx.Size)：C++版的get*或set*方法被覆盖。默认的get*或set*使用一个wx.Size对象。<a href="/moin/GetSizeTuple"
+class="nonexistent">GetSizeTuple</a>()方法以一个Python元组的形式返回尺寸。也可以参看访问该信息的另外的方法<a href="/moin/SetDimensions" class="nonexistent">SetDimensions</a>()。 <span id="line-292" class="anchor"/><span id="line-293" class="anchor"/></p><p class="line867"><a href="/moin/GetTitle" class="nonexistent">GetTitle</a>() <span id="line-294" class="anchor"/><a href="/moin/SetTitle" class="nonexistent">SetTitle</a>(String)：得到或设置框架标题栏的字符串。 <span id="line-295"
+class="anchor"/><span id="line-296" class="anchor"/></p><p class="line874">表8.5显示了一些wx.Frame的非属性类的更有用的方法。其中要牢记的是Refresh()，你可以用它来手动触发框架的重绘。 <span id="line-297" class="anchor"/><span id="line-298" class="anchor"/><span id="line-299" class="anchor"/></p><p class="line867"><strong>表8.5</strong>  <span id="line-300" class="anchor"/><strong>wx.Frame的方法</strong> <span id="line-301" class="anchor"/><span id="line-302" class="anchor"/></p><p
+class="line874">Center(direction=wx.BOTH)：框架居中（注意，非美语的拼写Centre，也被定义了的）。参数的默认值是wx.BoTH，在此情况下，框是在两个方向都居中的。参数的值若是wx.HORIZONTAL或wx.VERTICAL，表示在水平或垂直方向居中。 <span id="line-303" class="anchor"/><span id="line-304" class="anchor"/></p><p class="line874">Enable(enable=true)：如果参数为true，则框架能够接受用户的输入。如果参数为False，则用户不能在框架中输入。相对应的方法是Disable()。 <span id="line-305"
+class="anchor"/><span id="line-306" class="anchor"/></p><p class="line867"><a href="/moin/GetBestSize" class="nonexistent">GetBestSize</a>()：对于wx.Frame，它返回框架能容纳所有子窗口的最小尺寸。 <span id="line-307" class="anchor"/><span id="line-308" class="anchor"/></p><p class="line874">Iconize(iconize)：如果参数为true，最小化该框架为一个图标（当然，具体的行为与系统有关）。如果参数为False，图标化的框架恢复到正常状态。 <span id="line-309" class="anchor"/><span id="line-310"
+class="anchor"/></p><p class="line867"><a href="/moin/IsEnabled" class="nonexistent">IsEnabled</a>()：如果框架当前有效，则返回True。 <span id="line-311" class="anchor"/><span id="line-312" class="anchor"/></p><p class="line867"><a href="/moin/IsFullScreen" class="nonexistent">IsFullScreen</a>()：如果框架是以全屏模式显示的，则返回True，否则False。细节参看<a href="/moin/ShowFullScreen" class="nonexistent">ShowFullScreen</a>。 <span id="line-313" class="anchor"/><span id="line-314"
+class="anchor"/></p><p class="line867"><a href="/moin/IsIconized" class="nonexistent">IsIconized</a>()：如果框架当前最小化为图标了，则返回True，否则False。 <span id="line-315" class="anchor"/><span id="line-316" class="anchor"/></p><p class="line867"><a href="/moin/IsMaximized" class="nonexistent">IsMaximized</a>()：如果框架当前是最大化状态，则返回True，否则False。 <span id="line-317" class="anchor"/><span id="line-318" class="anchor"/></p><p class="line867"><a href="/moin/IsShown"
+class="nonexistent">IsShown</a>()：如果框架当前可见，则返回True。 <span id="line-319" class="anchor"/><span id="line-320" class="anchor"/></p><p class="line867"><a href="/moin/IsTopLevel" class="nonexistent">IsTopLevel</a>()：对于顶级窗口部件如框架或对话框，总是返回True，对于其它类型的窗口部件返回False。 <span id="line-321" class="anchor"/><span id="line-322" class="anchor"/></p><p
+class="line874">Maximize(maximize)：如果参数为True，最大化框架以填充屏幕（具体的行为与系统有关）。这与敲击框架的最大化按钮所做的相同，这通常放大框架以填充桌面，但是任务栏和其它系统组件仍然可见。 <span id="line-323" class="anchor"/><span id="line-324" class="anchor"/></p><p class="line874">Refresh(eraseBackground=True, <span id="line-325"
+class="anchor"/>rect=None)：触发该框架的重绘事件。如果rect是none，那么整个框架被重画。如果指定了一个矩形区域，那么仅那个矩形区域被重画。如果eraseBackground为True，那么这个窗口的北影也将被重画，如果为False，那么背景将不被重画。 <span id="line-326" class="anchor"/><span id="line-327" class="anchor"/></p><p class="line867"><a href="/moin/SetDimensions" class="nonexistent">SetDimensions</a>(x, y, width, height, <span id="line-328"
+class="anchor"/>sizeFlags=wx.SIZE_AUTO)：使你能够在一个方法调用中设置窗口的尺寸和位置。位置由参数x和y决定，尺寸由参数width和height决定。前四个参数中，如果有的为-1，那么这个-1将根据参数sizeFlags的值作相应的解释。表8.6包含了参数sizeFlags的可能取值。 <span id="line-329" class="anchor"/><span id="line-330" class="anchor"/></p><p class="line874">Show(show=True)：如果参数值为True，导致框架被显示。如果参数值为False，导致框架被隐藏。Show(False)等同于Hide()。 <span id="line-331"
+class="anchor"/><span id="line-332" class="anchor"/></p><p class="line867"><a href="/moin/ShowFullScreen" class="nonexistent">ShowFullScreen</a>(show, <span id="line-333"
+class="anchor"/>style=wx.FULLSCREEN_ALL)：如果布尔参数是True，那么框架以全屏的模式被显示——意味着框架被放大到填充整个显示区域，包括桌面上的任务栏和其它系统组件。如果参数是False，那么框架恢复到正常尺寸。style参数是一个位掩码。默认值wx.FULLSCREEN_ALL指示wxPython当全屏模式时隐藏所有窗口的所有样式元素。后面的这些值可以通过使用按位运算符来组合，以取消全屏模式框架的部分装饰：wx.FULLSCREEN_NOBORDER, wx.FULLSCREEN_NOCAPTION, <span id="line-334" class="anchor"/>wx.FULLSCREEN_NOMENUBAR,
+<span id="line-335" class="anchor"/>wx.FULLSCREEN_NOSTATUSBAR, <span id="line-336" class="anchor"/>wx.FULLSCREEN_NOTOOLBAR。 <span id="line-337" class="anchor"/><span id="line-338" class="anchor"/></p><p class="line862">表8.5中说明的<a href="/moin/SetDimensions" class="nonexistent">SetDimensions</a>()方法在用户将一个尺寸指定为-1时，使用尺寸标记的一个位掩码来决定默认行为。表8.6说明了这些标记。 <span id="line-339" class="anchor"/><span id="line-340" class="anchor"/></p><p
+class="line874">这些方法没有涉及框架所包含的孩子的位置问题。这个问题要求框架的孩子自已去说明它。 <span id="line-341" class="anchor"/><span id="line-342" class="anchor"/><span id="line-343" class="anchor"/></p><p class="line867"><strong>表8.6</strong>  <span id="line-344" class="anchor"/><strong>关于<a href="/moin/SetDimensions" class="nonexistent">SetDimensions</a>方法的尺寸标记</strong> <span id="line-345" class="anchor"/><span id="line-346" class="anchor"/></p><p
+class="line874">wx.ALLOW_MINUS_ONE：一个有效的位置或尺寸。 <span id="line-347" class="anchor"/><span id="line-348" class="anchor"/></p><p class="line874">wx.SIZE_AUTO：转换为一个wxPython默认值。 <span id="line-349" class="anchor"/><span id="line-350" class="anchor"/></p><p class="line874">wx.SIZE_AUTO_HEIGHT：一个有效的高度，或一个wxPython默认高度。 <span id="line-351" class="anchor"/><span id="line-352" class="anchor"/></p><p
+class="line874">wx.SIZE_AUTO_WIDTH：一个有效的宽度，或一个wxPython默认宽度。 <span id="line-353" class="anchor"/><span id="line-354" class="anchor"/></p><p class="line874">wx.SIZE_USE_EXISTING：使用现有的尺寸。 <span id="line-355" class="anchor"/><span id="line-356" class="anchor"/><span id="line-357" class="anchor"/><span id="line-358" class="anchor"/></p><p class="line867">
+</p><h3 id="head-c390054f8b31c54af535b6293898e749ab446096">1.2.2. 如何查找框架的子窗口部件？</h3>
+<span id="line-359" class="anchor"/><span id="line-360" class="anchor"/><span id="line-361" class="anchor"/><p
+class="line862">有时候，你将需要查找框架或面板(panel)上的一个特定的窗口部件，并且你没有它的相关引用。如第6章所示的这种情况的一个公用的应用程序，它查找与所选菜单相关的实际的菜单项对象（因为事件不包含对它的一个引用）。另一种情况就是，当你想基于一个项的事件去改变系统中其它任一窗口部件的状态时。例如，你可能有一个按钮和一个菜单项，它们互相改变彼此的开关状态。当按钮被敲击时，你需要去得到菜单项以触发它。例8.6显示了一个摘自第7章的一个小的例子。在这个代码中，<a href="/moin/FindItemById"
+class="nonexistent">FindItemById</a>()方法用来去获得与事件对象所提供的ID相关的菜单项。该项的标签被用来驱动所要求的颜色的改变。 <span id="line-362" class="anchor"/><span id="line-363" class="anchor"/><span id="line-364" class="anchor"/></p><p class="line867"><strong>例8.6</strong>  <span id="line-365" class="anchor"/><strong>通过ID查找项目的函数</strong> <span id="line-366" class="anchor"/><span id="line-367" class="anchor"/><span id="line-368" class="anchor"/><span id="line-369"
+class="anchor"/><span id="line-370" class="anchor"/><span id="line-371" class="anchor"/><span id="line-372" class="anchor"/><span id="line-373" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-58bd1a11b9c63d57ddd606f8bc20c044eb774f25_006\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-58bd1a11b9c63d57ddd606f8bc20c044eb774f25_006', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-58bd1a11b9c63d57ddd606f8bc20c044eb774f25_006" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">def</span> <span class="ID">OnColor</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>        <span class="ID">menubar</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">GetMenuBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span>        <span class="ID">itemId</span> <span class="Operator">=</span> <span class="ID">event</span><span class="Operator">.</span><span class="ID">GetId</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span>        <span class="ID">item</span> <span class="Operator">=</span> <span class="ID">menubar</span><span class="Operator">.</span><span class="ID">FindItemById</span><span class="Operator">(</span><span class="ID">itemId</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">color</span> <span class="Operator">=</span> <span class="ID">item</span><span class="Operator">.</span><span class="ID">GetLabel</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">sketch</span><span class="Operator">.</span><span class="ID">SetColor</span><span class="Operator">(</span><span class="ID">color</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-374" class="anchor"/><p class="line874">在wxPython中，有三种查找子窗口部件的方法，它们的行为都很相似。这些方法对任何作为容器的窗口部件都是适用的，不单单是框架，还有对话框和面板(panel)。你可以通过内部的wxPython ID查寻一个窗口部件，或通过传递给构造函数的名字（在name参数中），或通过文本标签来查寻。文本标签被定义为相应窗口部件的标题，如按钮和框架。 <span id="line-375" class="anchor"/><span id="line-376" class="anchor"/></p><p
+class="line874">这三种方法是： <span id="line-377" class="anchor"/><span id="line-378" class="anchor"/></p><ul><li style="list-style-type: none;"><p class="line862">1.wx.<a href="/moin/FindWindowById" class="nonexistent">FindWindowById</a>(id, parent=None) <span id="line-379" class="anchor"/><span id="line-380" class="anchor"/></p><p class="line862">1.wx.<a href="/moin/FindWindowByName" class="nonexistent">FindWindowByName</a>(name, parent=None) <span id="line-381"
+class="anchor"/><span id="line-382" class="anchor"/></p><p class="line862">1.wx.<a href="/moin/FindWindowByLabel" class="nonexistent">FindWindowByLabel</a>(label, parent=None) <span id="line-383" class="anchor"/><span id="line-384" class="anchor"/></p></li></ul><p class="line862">这三种情况中，parent参数可以被用来限制为对一个特殊子层次的搜索（也就是，它等同于父类的Find方法）。还有，<a href="/moin/FindWindowByName"
+class="nonexistent">FindWindowByName</a>()首先按name参数查找，如果没有发现匹配的，它就调用<a href="/moin/FindWindowByLabel" class="nonexistent">FindWindowByLabel</a>()去查找一个匹配。 <span id="line-385" class="anchor"/><span id="line-386" class="anchor"/><span id="line-387" class="anchor"/></p><p class="line867">
+</p><h3 id="head-b459a03fbb9b746bee10488f1a62a8008fb4542a">1.2.3. 如何创建一个带有滚动条的框架？</h3>
+<span id="line-388" class="anchor"/><span id="line-389" class="anchor"/><span id="line-390" class="anchor"/><p class="line862">在wxPython中，滚动条不是框架本身的一个元素，而是被类wx.<a href="/moin/ScrolledWindow" class="nonexistent">ScrolledWindow</a>控制。你可以在任何你要使用wx.Panel的地方使用wx.<a href="/moin/ScrolledWindow"
+class="nonexistent">ScrolledWindow</a>，并且滚动条移动所有在滚动窗口中的项目。图8.5和图8.6显示了滚动条，包括它的初始状态和滚动后的状态。从图8.5到图8.6，左上的按钮移出了视野，右下的按钮移进了视野。 <span id="line-391" class="anchor"/><span id="line-392" class="anchor"/></p><p class="line874">在这一节，我们将讨论如何去创建一个带有滚动条的窗口以及如何在你的程序中处理滚动行为。 <span id="line-393" class="anchor"/><span id="line-394" class="anchor"/><span id="line-395"
+class="anchor"/></p><p class="line867"><strong>图8.5</strong> <span id="line-396" class="anchor"/><span id="line-397" class="anchor"/></p><p class="line867"><img title="attachment:w8.5.gif" src="/moin/WxPythonInAction/ChapterEight?action=AttachFile&amp;do=get&amp;target=w8.5.gif" class="attachment"/> <span id="line-398" class="anchor"/><span id="line-399" class="anchor"/><span id="line-400" class="anchor"/></p><p class="line867"><strong>图8.6</strong> <span
+id="line-401" class="anchor"/><span id="line-402" class="anchor"/></p><p class="line867"><img title="attachment:w8.5.gif" src="/moin/WxPythonInAction/ChapterEight?action=AttachFile&amp;do=get&amp;target=w8.5.gif" class="attachment"/> <span id="line-403" class="anchor"/><span id="line-404" class="anchor"/><span id="line-405" class="anchor"/><span id="line-406" class="anchor"/></p><p class="line867"><strong>如何创建滚动条</strong> <span id="line-407"
+class="anchor"/><span id="line-408" class="anchor"/></p><p class="line874">例8.7显示了用于创建滚动窗口的代码。 <span id="line-409" class="anchor"/><span id="line-410" class="anchor"/><span id="line-411" class="anchor"/></p><p class="line867"><strong>例8.7</strong>  <span id="line-412" class="anchor"/><strong>创建一个简单的滚动窗口</strong> <span id="line-413" class="anchor"/><span id="line-414" class="anchor"/><span id="line-415" class="anchor"/><span id="line-416"
+class="anchor"/><span id="line-417" class="anchor"/><span id="line-418" class="anchor"/><span id="line-419" class="anchor"/><span id="line-420" class="anchor"/><span id="line-421" class="anchor"/><span id="line-422" class="anchor"/><span id="line-423" class="anchor"/><span id="line-424" class="anchor"/><span id="line-425" class="anchor"/><span id="line-426" class="anchor"/><span id="line-427" class="anchor"/><span id="line-428" class="anchor"/><span id="line-429"
+class="anchor"/><span id="line-430" class="anchor"/><span id="line-431" class="anchor"/><span id="line-432" class="anchor"/><span id="line-433" class="anchor"/><span id="line-434" class="anchor"/><span id="line-435" class="anchor"/><span id="line-436" class="anchor"/><span id="line-437" class="anchor"/><span id="line-438" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-f66c858dd784b1ea100d2a46fb0988dcf887f33a_007\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-f66c858dd784b1ea100d2a46fb0988dcf887f33a_007', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-f66c858dd784b1ea100d2a46fb0988dcf887f33a_007" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">ScrollbarFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span
+class="Operator">,</span> <span class="String">'Scrollbar Example'</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   6 </span>                <span class="ID">size</span><span class="Operator">=</span><span class="Operator">(</span><span class="Number">300</span><span class="Operator">,</span> <span class="Number">200</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">scroll</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">ScrolledWindow</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">scroll</span><span class="Operator">.</span><span class="ID">SetScrollbars</span><span class="Operator">(</span><span class="Number">1</span><span class="Operator">,</span> <span class="Number">1</span><span class="Operator">,</span> <span class="Number">600</span><span class="Operator">,</span> <span
+class="Number">400</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">button</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Button</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">scroll</span><span class="Operator">,</span> <span
+class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Scroll Me"</span><span class="Operator">,</span> <span class="ID">pos</span><span class="Operator">=</span><span class="Operator">(</span><span class="Number">50</span><span class="Operator">,</span> <span class="Number">20</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_BUTTON</span><span class="Operator">,</span>  <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnClickTop</span><span class="Operator">,</span> <span
+class="ID">self</span><span class="Operator">.</span><span class="ID">button</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">button2</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Button</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">scroll</span><span class="Operator">,</span> <span
+class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Scroll Back"</span><span class="Operator">,</span> <span class="ID">pos</span><span class="Operator">=</span><span class="Operator">(</span><span class="Number">500</span><span class="Operator">,</span> <span class="Number">350</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_BUTTON</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnClickBottom</span><span class="Operator">,</span> <span
+class="ID">self</span><span class="Operator">.</span><span class="ID">button2</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span></span>
+<span class="line"><span class="LineNumber">  14 </span>    <span class="ResWord">def</span> <span class="ID">OnClickTop</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">scroll</span><span class="Operator">.</span><span class="ID">Scroll</span><span class="Operator">(</span><span class="Number">600</span><span class="Operator">,</span> <span class="Number">400</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span></span>
+<span class="line"><span class="LineNumber">  17 </span>    <span class="ResWord">def</span> <span class="ID">OnClickBottom</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  18 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">scroll</span><span class="Operator">.</span><span class="ID">Scroll</span><span class="Operator">(</span><span class="Number">1</span><span class="Operator">,</span> <span class="Number">1</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span></span>
+<span class="line"><span class="LineNumber">  20 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">'__main__'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  21 </span>    <span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  22 </span>    <span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">ScrollbarFrame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  23 </span>    <span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  24 </span>    <span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-439" class="anchor"/><span id="line-440" class="anchor"/><p class="line862">wx.<a href="/moin/ScrolledWindow" class="nonexistent">ScrolledWindow</a>的构造函数几乎与wx.Panel的相同： <span id="line-441" class="anchor"/><span id="line-442" class="anchor"/><span id="line-443" class="anchor"/><span id="line-444" class="anchor"/><span id="line-445" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-9a2acab5ccd39b8af7d8f2c0d125a55477dc0c9f_008\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-9a2acab5ccd39b8af7d8f2c0d125a55477dc0c9f_008', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-9a2acab5ccd39b8af7d8f2c0d125a55477dc0c9f_008" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">ScrolledWindow</span><span class="Operator">(</span><span class="ID">parent</span><span class="Operator">,</span> <span class="ID">id</span><span class="Operator">=</span><span class="Operator">-</span><span
+class="Number">1</span><span class="Operator">,</span> <span class="ID">pos</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">DefaultPosition</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   2 </span>        <span class="ID">size</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">DefaultSize</span><span class="Operator">,</span> <span class="ID">style</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">HSCROLL</span> <span class="Operator">|</span> <span
+class="ID">wx</span><span class="Operator">.</span><span class="ID">VSCROLL</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   3 </span>        <span class="ID">name</span><span class="Operator">=</span><span class="String">"scrolledWindow"</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-446" class="anchor"/><p class="line874">所有的这些属性的行为都如你所愿，尽管size属性是它的父亲中的面板的物理尺寸，而非滚动窗口的逻辑尺寸。 <span id="line-447" class="anchor"/><span id="line-448" class="anchor"/><span id="line-449" class="anchor"/></p><p class="line867"><strong>指定滚动区域的尺寸</strong> <span id="line-450" class="anchor"/><span id="line-451" class="anchor"/></p><p
+class="line862">有几个自动指定滚动区域尺寸的方法。手工指定最多的方法如例8.1所示，使用了方法<a href="/moin/SetScrollBars" class="nonexistent">SetScrollBars</a>： <span id="line-452" class="anchor"/><span id="line-453" class="anchor"/><span id="line-454" class="anchor"/><span id="line-455" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-d3f1717499d04e593fc525270d50e4d8b5737477_009\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-d3f1717499d04e593fc525270d50e4d8b5737477_009', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-d3f1717499d04e593fc525270d50e4d8b5737477_009" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">SetScrollbars</span><span class="Operator">(</span><span class="ID">pixelsPerUnitX</span><span class="Operator">,</span> <span class="ID">pixelsPerUnitY</span><span class="Operator">,</span> <span class="ID">noUnitsX</span><span class="Operator">,</span> <span
+class="ID">noUnitsY</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   2 </span>        <span class="ID">xPos</span><span class="Operator">=</span><span class="Number">0</span><span class="Operator">,</span> <span class="ID">yPos</span><span class="Operator">=</span><span class="Number">0</span><span class="Operator">,</span> <span class="ID">noRefresh</span><span class="Operator">=</span><span class="ID">False</span><span
+class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-456" class="anchor"/><p class="line862">其中关键的概念是滚动单位，它是滚动条的一次移动所引起的窗口中的转移距离。前面的两个参数pixelsPerUnitX和PixelsPerUnitY使你能够在两个方向设置滚动单位的大小。接下来的两个参数noUnitsX和noUnitsY使你能够按滚动单位设置滚动区域的尺寸。换句话说，滚动区域的象素尺寸是(pixelsPerUnitX* noUnitsX, pixelsPerUnitY *
+noUnitsY)。例8.7通过将滚动单位设为1像素而避免了可能造成的混淆。参数xPos和yPos以滚动单位（非像素）为单位，它设置滚动条的初始位置，如果参数noRefresh为true，那么就阻止了在因<a href="/moin/SetScrollbars" class="nonexistent">SetScrollbars</a>()的调用而引起的滚动后的窗口的自动刷新。 <span id="line-457" class="anchor"/><span id="line-458" class="anchor"/></p><p
+class="line862">还有另外的三个方法，你可以用来设置滚动区域的尺寸，然后单独设置滚动率。你可能发现这些方法更容易使用，因为它们使你能够更直接地指定尺寸。你可以如下以像素为单位使用滚动窗口的<a href="/moin/SetVirtualSize" class="nonexistent">SetVirtualSize</a>()方法来直接设置尺寸。 <span id="line-459" class="anchor"/><span id="line-460" class="anchor"/><span id="line-461" class="anchor"/></p><div lang="en" dir="ltr"
+class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-f744308fb02dc550cee915ee0f482344e9edd04a_010\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-f744308fb02dc550cee915ee0f482344e9edd04a_010', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-f744308fb02dc550cee915ee0f482344e9edd04a_010" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">self</span><span class="Operator">.</span><span class="ID">scroll</span><span class="Operator">.</span><span class="ID">SetVirtualSize</span><span class="Operator">(</span><span class="Operator">(</span><span class="Number">600</span><span
+class="Operator">,</span> <span class="Number">400</span><span class="Operator">)</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-462" class="anchor"/><p class="line862">使用方法<a href="/moin/FitInside" class="nonexistent">FitInside</a>()，你可以在滚动区域中设置窗口部件，以便滚动窗口绑定它们。这个方法设置滚动窗口的边界，以使滚动窗口刚好适合其中的所有子窗口： <span id="line-463" class="anchor"/><span id="line-464" class="anchor"/><span id="line-465" class="anchor"/></p><div lang="en" dir="ltr"
+class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-bdb4e46079147e81a680c2e99eedbc6bd58c140e_011\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-bdb4e46079147e81a680c2e99eedbc6bd58c140e_011', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-bdb4e46079147e81a680c2e99eedbc6bd58c140e_011" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">self</span><span class="Operator">.</span><span class="ID">scroll</span><span class="Operator">.</span><span class="ID">FitInside</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-466" class="anchor"/><p class="line862">通常使用<a href="/moin/FitInside" class="nonexistent">FitInside</a>()的情况是，当在滚动窗口中正好有一个窗口部件（如文本域），并且该窗口部件的逻辑尺寸已被设置。如果我们在例8.7中使用了<a href="/moin/FitInside"
+class="nonexistent">FitInside</a>()，那么一个更小的滚动区域将被创建，因为该区域将正好匹配右下按钮的边缘，而没有多余的内边距。 <span id="line-467" class="anchor"/><span id="line-468" class="anchor"/></p><p class="line862">最后，如果滚动窗口中有一个sizer设置，那么使用<a href="/moin/SetSizer"
+class="nonexistent">SetSizer</a>()设置滚动区域为sizer所管理的窗口部件的尺寸。这是在一个复杂的布局中最常用的机制。关于sizer的更多细节参见第11章。 <span id="line-469" class="anchor"/><span id="line-470" class="anchor"/></p><p class="line862">对于上述所有三种机制，滚动率需要去使用<a href="/moin/SetScrollRate" class="nonexistent">SetScrollRate</a>()方法单独设置，如下所示： <span
+id="line-471" class="anchor"/><span id="line-472" class="anchor"/><span id="line-473" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-2f81d9ff6fa654623a595ac77cef29c7aa447eff_012\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-2f81d9ff6fa654623a595ac77cef29c7aa447eff_012', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-2f81d9ff6fa654623a595ac77cef29c7aa447eff_012" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">self</span><span class="Operator">.</span><span class="ID">scroll</span><span class="Operator">.</span><span class="ID">SetScrollRate</span><span class="Operator">(</span><span class="Number">1</span><span
+class="Operator">,</span> <span class="Number">1</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-474" class="anchor"/><p class="line874">参数分别是x和y方向的滚动单位尺寸。大于0的尺寸都是有效的。 <span id="line-475" class="anchor"/><span id="line-476" class="anchor"/><span id="line-477" class="anchor"/></p><p class="line867"><strong>滚动条事件</strong> <span id="line-478" class="anchor"/><span id="line-479" class="anchor"/></p><p
+class="line874">在例8.7中的按钮事件处理器，使用Scroll()方法程序化地改变滚动条的位置。这个方法需要滚动窗口的x和y坐标，使用的是滚动单位。 <span id="line-480" class="anchor"/><span id="line-481" class="anchor"/></p><p
+class="line874">在第7章中，我们答应了你可以捕获的来自滚动条的事件列表，因为它们也被用来去控制滑块。表8.7列出了所有被滚动窗口内在处理的滚动事件。通常，许多你不会用到，除非你建造自定义窗口部件。 <span id="line-482" class="anchor"/><span id="line-483" class="anchor"/><span id="line-484" class="anchor"/></p><p class="line867"><strong>表8.7 滚动条的事件</strong> <span
+id="line-485" class="anchor"/><span id="line-486" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line862">EVT_SCROLL</p></td>
+<td><p class="line862">当任何滚动事件被触发时发生。</p></td>
+</tr>
+<tr>  <td><span id="line-487" class="anchor"/><p class="line862">EVT_SCROLL_BOTTOM</p></td>
+<td><p class="line862">当用户移动滚动条到它的范围的最末端时触发（底边或右边，依赖于方向）。</p></td>
+</tr>
+<tr>  <td><span id="line-488" class="anchor"/><p class="line862">EVT_SCROLL_ENDSCROLL</p></td>
+<td><p class="line862">在微软的Windows中，任何滚动会话的结束都将触发该事件，不管是因鼠标拖动或按键按下。</p></td>
+</tr>
+<tr>  <td><span id="line-489" class="anchor"/><p class="line862">EVT_SCROLL_LINEDOWN</p></td>
+<td><p class="line862">当用户向下滚动一行时触发。</p></td>
+</tr>
+<tr>  <td><span id="line-490" class="anchor"/><p class="line862">EVT_SCROLL_LINEUP</p></td>
+<td><p class="line862">当用户向上滚动一行时触发。</p></td>
+</tr>
+<tr>  <td><span id="line-491" class="anchor"/><p class="line862">EVT_SCROLL_PAGEDOWN</p></td>
+<td><p class="line862">当用户向下滚动一页时触发。</p></td>
+</tr>
+<tr>  <td><span id="line-492" class="anchor"/><p class="line862">EVT_SCROLL_PAGEUP</p></td>
+<td><p class="line862">当用户向上滚动一页时触发。</p></td>
+</tr>
+<tr>  <td><span id="line-493" class="anchor"/><p class="line862">EVT_SCROLL_THUMBRELEASE</p></td>
+<td><p class="line862">用户使用鼠标拖动滚动条滚动不超过一页的范围，并释放鼠标后，触发该事件。</p></td>
+</tr>
+<tr>  <td><span id="line-494" class="anchor"/><p class="line862">EVT_SCROLL_THUMBTRACK</p></td>
+<td><p class="line862">滚动条在一页内被拖动时不断的触发。</p></td>
+</tr>
+<tr>  <td><span id="line-495" class="anchor"/><p class="line862">EVT_SCROLL_TOP</p></td>
+<td><p class="line862">当用户移动滚动条到它的范围的最始端时触发，可能是顶端或左边，依赖于方向而定。</p></td>
+</tr>
+</tbody></table></div><span id="line-496" class="anchor"/><span id="line-497" class="anchor"/><p class="line862">行和页的准确定义依赖于你所设定的滚动单位，一行是一个滚动单位，一页是滚动窗口中可见部分的全部滚动单位的数量。对于表中所列出的每个EVT_SCROLL*事件，都有一个相应的EVT_SCROLLWIN*事件（它们由wx.<a href="/moin/ScrolledWindow"
+class="nonexistent">ScrolledWindow</a>产生）来回应。 <span id="line-498" class="anchor"/><span id="line-499" class="anchor"/></p><p class="line862">还有一个wxPython的特殊的滚动窗口子类：wx.lib.scrolledpanel.<a href="/moin/ScrolledPanel"
+class="nonexistent">ScrolledPanel</a>，它使得你能够在面板上自动地设置滚动，该面板使用一个sizer来管理子窗口部件的布局。wx.lib.scrolledpanel.<a href="/moin/ScrolledPanel" class="nonexistent">ScrolledPanel</a>增加的好处是，它让用户能够使用tab键来在子窗口部件间切换。面板自动滚动，使新获得焦点的窗口部件进入视野。要使用wx.lib.scrolledpanel.<a
+href="/moin/ScrolledPanel" class="nonexistent">ScrolledPanel</a>，就要像一个滚动窗口一样声明它，然后，在所有的子窗口被添加后，调用下面的方法： <span id="line-500" class="anchor"/><span id="line-501" class="anchor"/><span id="line-502" class="anchor"/><span id="line-503" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-49ec73f25dd6b49fdf72bcdd5c2577fa64b5908a_013\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-49ec73f25dd6b49fdf72bcdd5c2577fa64b5908a_013', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-49ec73f25dd6b49fdf72bcdd5c2577fa64b5908a_013" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">SetupScrolling</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">scroll_x</span><span class="Operator">=</span><span
+class="ID">True</span><span class="Operator">,</span> <span class="ID">scroll_y</span><span class="Operator">=</span><span class="ID">True</span><span class="Operator">,</span> <span class="ID">rate_x</span><span class="Operator">=</span><span class="Number">20</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   2 </span>        <span class="ID">rate_y</span><span class="Operator">=</span><span class="Number">20</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-504" class="anchor"/><p class="line874">rate_x和rate_y是窗口的滚动单位，该类自动根据sizer所计算的子窗口部件的尺寸设定虚拟尺寸(virtual size)。 <span id="line-505"
+class="anchor"/>记住，当确定滚动窗口中的窗口部件的位置的时候，该位置总是窗口部件的物理位置，它相对于显示器中的滚动窗口的实际原点，而非窗口部件相对于显示器虚拟尺寸(virtual size)的逻辑位置。这始终是成立的，即使窗口部件不再可见。例如，在敲击了图8.5中的Scroll Me按钮后，该按钮所报告的它的位置是(-277,-237)。如果这不的你所想要的，那么使用<a
+href="/moin/CalcScrolledPosition" class="nonexistent">CalcScrolledPosition</a>(x,y)和。<a href="/moin/CalcUnscrolledPosition" class="nonexistent">CalcUnscrolledPosition</a>(x, y)方法在显示器坐标和逻辑坐标之间切换。在这两种情况中，在按钮敲击并使滚动条移动到底部后，你传递指针的坐标，并且滚动窗口返回一个(x,y)元组，如下所示： <span
+id="line-506" class="anchor"/><span id="line-507" class="anchor"/><span id="line-508" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-a235f3a40751c6367fdc9e8af017fbecaae4d2f9_014\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-a235f3a40751c6367fdc9e8af017fbecaae4d2f9_014', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-a235f3a40751c6367fdc9e8af017fbecaae4d2f9_014" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">CalcUnscrolledPostion</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">277</span><span class="Operator">,</span> <span
+class="Operator">-</span><span class="Number">237</span><span class="Operator">)</span> <span class="Comment">#</span><span class="Text"/></span>
+</pre></div><span id="line-509" class="anchor"/><span id="line-510" class="anchor"/><span id="line-511" class="anchor"/><p class="line867">
+</p><h2 id="head-a259990e2d4ddf82bb721774991598e9f92ad7a9">1.3. 可选的框架类型</h2>
+<span id="line-512" class="anchor"/><span id="line-513" class="anchor"/><span id="line-514" class="anchor"/><p class="line874">框架不限于其中带有窗口部件的普通的矩形，它可以呈现其它的形状。你也可以创建MDI（多文档界面）框架，它其中包含别的框架。或者你也可以去掉框架的标题栏，并且仍然可以使用户能拖动框架。 <span
+id="line-515" class="anchor"/><span id="line-516" class="anchor"/><span id="line-517" class="anchor"/></p><p class="line867">
+</p><h3 id="head-934dbfb8cfcfc7091a9635f79ea96d904f98be4e">1.3.1. 如何创建一个MDI框架？</h3>
+<span id="line-518" class="anchor"/><span id="line-519" class="anchor"/><span id="line-520" class="anchor"/><p
+class="line874">还记得MDI吗？许多人都不记得了。MDI是微软90年代初的创新，它使得一个应用程序中的多个子窗口能被一个单一的父窗口控制，本质上为每个应用程序提供了一个独立的桌面。在大多数应用程序中，MDI要求应用程序中的所有窗口同时最小化，并保持相同的z轴次序（相对系统中的其它部分）。我们建议仅当用户期望同时看到所有的应用程序窗口的情况下使用MDI，例如一个游戏。图8.7显示了一个典型的MDI环境。
+<span id="line-521" class="anchor"/><span id="line-522" class="anchor"/></p><p class="line874">在wxPython中MDI是被支持的，在Windows操作系统下通过使用本地窗口部件来实现MDI，在其它的操作系统中通过模拟子窗口实现MDI。例8.8提供了一简单的MDI的例子。 <span id="line-523" class="anchor"/><span id="line-524" class="anchor"/><span
+id="line-525" class="anchor"/></p><p class="line867"><strong>图8.7</strong> <span id="line-526" class="anchor"/><span id="line-527" class="anchor"/></p><p class="line867"><img title="attachment:w8.7.gif" src="/moin/WxPythonInAction/ChapterEight?action=AttachFile&amp;do=get&amp;target=w8.7.gif" class="attachment"/> <span
+id="line-528" class="anchor"/><span id="line-529" class="anchor"/><span id="line-530" class="anchor"/><span id="line-531" class="anchor"/></p><p class="line867"><strong>例8.8</strong>  <span id="line-532" class="anchor"/><strong>如何创建一个MDI窗口</strong> <span id="line-533" class="anchor"/><span id="line-534"
+class="anchor"/><span id="line-535" class="anchor"/><span id="line-536" class="anchor"/><span id="line-537" class="anchor"/><span id="line-538" class="anchor"/><span id="line-539" class="anchor"/><span id="line-540" class="anchor"/><span id="line-541" class="anchor"/><span id="line-542" class="anchor"/><span
+id="line-543" class="anchor"/><span id="line-544" class="anchor"/><span id="line-545" class="anchor"/><span id="line-546" class="anchor"/><span id="line-547" class="anchor"/><span id="line-548" class="anchor"/><span id="line-549" class="anchor"/><span id="line-550" class="anchor"/><span id="line-551"
+class="anchor"/><span id="line-552" class="anchor"/><span id="line-553" class="anchor"/><span id="line-554" class="anchor"/><span id="line-555" class="anchor"/><span id="line-556" class="anchor"/><span id="line-557" class="anchor"/><span id="line-558" class="anchor"/><span id="line-559" class="anchor"/><span
+id="line-560" class="anchor"/><span id="line-561" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-2d3d470349c6adca27a4585367b9907753c48b2e_015\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-2d3d470349c6adca27a4585367b9907753c48b2e_015', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-2d3d470349c6adca27a4585367b9907753c48b2e_015" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">MDIFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">MDIParentFrame</span><span class="Operator">)</span><span
+class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MDIParentFrame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span
+class="Operator">,</span> <span class="ID">None</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"MDI Parent"</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   6 </span>                <span class="ID">size</span><span class="Operator">=</span><span class="Operator">(</span><span class="Number">600</span><span class="Operator">,</span><span class="Number">400</span><span class="Operator">)</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">menu</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Menu</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Number">5000</span><span class="Operator">,</span> <span class="String">"  Window"</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Number">5001</span><span class="Operator">,</span> <span class="String">"E "</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">menubar</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MenuBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">menubar</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="ID">menu</span><span class="Operator">,</span> <span class="String">" "</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetMenuBar</span><span class="Operator">(</span><span class="ID">menubar</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span>
+<span class="ID">self</span><span class="Operator">.</span><span class="ID">OnNewWindow</span><span class="Operator">,</span> <span class="ID">id</span><span class="Operator">=</span><span class="Number">5000</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span>
+<span class="ID">self</span><span class="Operator">.</span><span class="ID">OnExit</span><span class="Operator">,</span> <span class="ID">id</span><span class="Operator">=</span><span class="Number">5001</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span></span>
+<span class="line"><span class="LineNumber">  16 </span>    <span class="ResWord">def</span> <span class="ID">OnExit</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">evt</span><span class="Operator">)</span><span
+class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Close</span><span class="Operator">(</span><span class="ID">True</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span></span>
+<span class="line"><span class="LineNumber">  19 </span>    <span class="ResWord">def</span> <span class="ID">OnNewWindow</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">evt</span><span class="Operator">)</span><span
+class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ID">win</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MDIChildFrame</span><span class="Operator">(</span><span class="ID">self</span><span
+class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Child Window"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span>        <span class="ID">win</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="ID">True</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  22 </span></span>
+<span class="line"><span class="LineNumber">  23 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">'__main__'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  24 </span>    <span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  25 </span>    <span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">MDIFrame</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  26 </span>    <span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  27 </span>    <span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-562" class="anchor"/><p class="line874">MDI的基本概念是十分简单的。父窗口是wx.MDIParentFrame的一个子类，子窗口如同任何其它的wxPython窗口部件一样被添加，除了它们是wx.MDIChildFrame的子类。wx.MDIParentFrame的构造函数与wx.Frame的基本相同，如下所示： <span id="line-563"
+class="anchor"/><span id="line-564" class="anchor"/><span id="line-565" class="anchor"/><span id="line-566" class="anchor"/><span id="line-567" class="anchor"/><span id="line-568" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-85cc221abc597e8cd94964eafea5d76e9763b06a_016\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-85cc221abc597e8cd94964eafea5d76e9763b06a_016', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-85cc221abc597e8cd94964eafea5d76e9763b06a_016" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">MDIParentFrame</span><span class="Operator">(</span><span
+class="ID">parent</span><span class="Operator">,</span> <span class="ID">id</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">,</span> <span class="ID">pos</span> <span class="Operator">=</span> <span class="ID">wx</span><span
+class="Operator">.</span><span class="ID">DefaultPosition</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   2 </span>        <span class="ID">size</span><span class="Operator">=</span><span class="ID">wxDefaultSize</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   3 </span>        <span class="ID">style</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">DEFAULT_FRAME_STYLE</span> <span class="Operator">|</span> <span class="ID">wx</span><span
+class="Operator">.</span><span class="ID">VSCROLL</span> <span class="Operator">|</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">HSCROLL</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   4 </span>        <span class="ID">name</span><span class="Operator">=</span><span class="String">"frame"</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-569" class="anchor"/><p class="line874">不同的一点是wx.MDIParentFrame在默认情况下有滚动条。wx.MDIChildFrame的构造函数是相同的，除了它没有滚动条。如例8.8所示，添加一个子框架是通过创建一个以父框架为父亲的框架来实现的。 <span id="line-570" class="anchor"/><span
+id="line-571" class="anchor"/></p><p
+class="line862">你可以通过使用父框架的Cascade()或Tile()方法来同时改变所有子框架的位置和尺寸，它们模拟相同名字的菜单项。调用Cascade()，导致一个窗口显示在其它的上面，如图8.7的所示，而Tile()使每个窗口有相同的尺寸并移动它们以使它们不重叠。要以编程的方式在子窗口中移动焦点，要使用父亲的方法<a
+href="/moin/ActivateNext" class="nonexistent">ActivateNext</a>()和<a href="/moin/ActivatePrevious" class="nonexistent">ActivatePrevious</a>() <span id="line-572" class="anchor"/><span id="line-573" class="anchor"/><span id="line-574" class="anchor"/></p><p class="line867">
+</p><h3 id="head-2fcf828bd0f3df49fadc457866fd93c0207838d4">1.3.2. 什么是小型框架，我们为何要用它？</h3>
+<span id="line-575" class="anchor"/><span id="line-576" class="anchor"/><span id="line-577" class="anchor"/><p class="line874">小型框架是一个有两个例外的矩形框架：它有一个较小的标题区域，并且在微软的Windows下或GTK下，它不在任务栏中显示。图8.8显示了一个较小标题域的一个例子。 <span
+id="line-578" class="anchor"/><span id="line-579" class="anchor"/><span id="line-580" class="anchor"/></p><p class="line867"><strong>图8.8</strong>  <span id="line-581" class="anchor"/><strong>一个小型框架</strong> <span id="line-582" class="anchor"/><span id="line-583"
+class="anchor"/></p><p class="line867"><img title="attachment:w8.8.gif" src="/moin/WxPythonInAction/ChapterEight?action=AttachFile&amp;do=get&amp;target=w8.8.gif" class="attachment"/> <span id="line-584" class="anchor"/><span id="line-585" class="anchor"/><span id="line-586"
+class="anchor"/></p><p class="line862">创建小型框架的代码基本上等同于创建一个矩形框架，唯一的不同是父类是wx.<a href="/moin/MiniFrame" class="nonexistent">MiniFrame</a>。例8.9显示了这个代码。 <span id="line-587" class="anchor"/><span id="line-588" class="anchor"/><span id="line-589"
+class="anchor"/></p><p class="line867"><strong>例8.9</strong>  <span id="line-590" class="anchor"/><strong>创建一个小型框架</strong> <span id="line-591" class="anchor"/><span id="line-592" class="anchor"/><span id="line-593" class="anchor"/><span id="line-594" class="anchor"/><span
+id="line-595" class="anchor"/><span id="line-596" class="anchor"/><span id="line-597" class="anchor"/><span id="line-598" class="anchor"/><span id="line-599" class="anchor"/><span id="line-600" class="anchor"/><span id="line-601" class="anchor"/><span id="line-602" class="anchor"/><span
+id="line-603" class="anchor"/><span id="line-604" class="anchor"/><span id="line-605" class="anchor"/><span id="line-606" class="anchor"/><span id="line-607" class="anchor"/><span id="line-608" class="anchor"/><span id="line-609" class="anchor"/><span id="line-610" class="anchor"/><span
+id="line-611" class="anchor"/><span id="line-612" class="anchor"/><span id="line-613" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-f109d794122f216135ea14a386625bb9943c25b5_017\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-f109d794122f216135ea14a386625bb9943c25b5_017', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-f109d794122f216135ea14a386625bb9943c25b5_017" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">MiniFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">MiniFrame</span><span
+class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MiniFrame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span
+class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">'Mini Frame'</span><span
+class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   6 </span>                <span class="ID">size</span><span class="Operator">=</span><span class="Operator">(</span><span class="Number">300</span><span class="Operator">,</span> <span class="Number">100</span><span
+class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">panel</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Panel</span><span class="Operator">(</span><span
+class="ID">self</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="ID">size</span><span class="Operator">=</span><span class="Operator">(</span><span class="Number">300</span><span
+class="Operator">,</span> <span class="Number">100</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">button</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Button</span><span class="Operator">(</span><span
+class="ID">panel</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Close Me"</span><span class="Operator">,</span> <span class="ID">pos</span><span
+class="Operator">=</span><span class="Operator">(</span><span class="Number">15</span><span class="Operator">,</span> <span class="Number">15</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">EVT_BUTTON</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnCloseMe</span><span class="Operator">,</span> <span class="ID">button</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">EVT_CLOSE</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnCloseWindow</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span></span>
+<span class="line"><span class="LineNumber">  12 </span>    <span class="ResWord">def</span> <span class="ID">OnCloseMe</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span
+class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Close</span><span class="Operator">(</span><span class="ID">True</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span></span>
+<span class="line"><span class="LineNumber">  15 </span>    <span class="ResWord">def</span> <span class="ID">OnCloseWindow</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span
+class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Destroy</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span></span>
+<span class="line"><span class="LineNumber">  18 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">'__main__'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  19 </span>    <span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>    <span class="ID">MiniFrame</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span>    <span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-614" class="anchor"/><p class="line862">wx.<a href="/moin/MiniFrame" class="nonexistent">MiniFrame</a>的构造函数等同于wx.Frame的，然而，wx.<a href="/moin/MiniFrame" class="nonexistent">MiniFrame</a>支持额外的样式标记。如表8.8所示。 <span
+id="line-615" class="anchor"/><span id="line-616" class="anchor"/><span id="line-617" class="anchor"/></p><p class="line867"><strong>表8.8</strong>  <span id="line-618" class="anchor"/><strong>wx.<a href="/moin/MiniFrame" class="nonexistent">MiniFrame</a>的样式标记</strong>
+<span id="line-619" class="anchor"/><span id="line-620" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line862">wx.THICK_FRAME</p></td>
+<td><p class="line862">在Windows或Motif下，使用粗边框绘制框架。</p></td>
+</tr>
+<tr>  <td><span id="line-621" class="anchor"/><p class="line862">wx.TINY_CAPTION_HORIZONTAL</p></td>
+<td><p class="line862">代替wx.CAPTION而显示一个较小的水平标题。</p></td>
+</tr>
+<tr>  <td><span id="line-622" class="anchor"/><p class="line862">wx.TINY_CAPTION_VERTICAL</p></td>
+<td><p class="line862">代替wx.CAPTION而显示一个较小的垂直标题。</p></td>
+</tr>
+</tbody></table></div><span id="line-623" class="anchor"/><span id="line-624" class="anchor"/><p class="line874">典型的，小型框架被用于工具框窗口中，在工具框窗口中始终是有效的，它们不影响任务栏。较小的标题使得它们更有效的利用空间，并且明显地区别于标准的框架。 <span
+id="line-625" class="anchor"/><span id="line-626" class="anchor"/><span id="line-627" class="anchor"/><span id="line-628" class="anchor"/></p><p class="line867">
+</p><h3 id="head-490eea45d2677174f01546e31939fb37ee178000">1.3.3. 如何创建一个非矩形的框架？</h3>
+<span id="line-629" class="anchor"/><span id="line-630" class="anchor"/><span id="line-631" class="anchor"/><p
+class="line874">在大多数应用程序中，框架都是矩形，因为矩形有一个不错的规则的形状，并且绘制和维护相对简单。可是，有时候你需要打破直线的制约。在wxPython中，你可以给框架一个任一的形状。如果一个备用的形状被定义了，那么框架超出该形状的部分不将被绘制，并且不响应鼠标事件；对于用户而言，它们不是框架的一部分。图8.9显示了一个非矩形的窗口，显示的背景是文本编辑器中的代码。
+<span id="line-632" class="anchor"/><span id="line-633" class="anchor"/></p><p class="line874">事件被设置来以便双击时开关这个非标准形状，鼠标右键单击时关闭这个窗口。这个例子使用了来自wxPython demo的images模块作为vippi的图像的资源，wxPython的吉祥物。 <span
+id="line-634" class="anchor"/><span id="line-635" class="anchor"/><span id="line-636" class="anchor"/></p><p class="line867"><strong>图8.9</strong> <span id="line-637" class="anchor"/><span id="line-638" class="anchor"/></p><p class="line867"><img
+title="attachment:w8.9.gif" src="/moin/WxPythonInAction/ChapterEight?action=AttachFile&amp;do=get&amp;target=w8.9.gif" class="attachment"/> <span id="line-639" class="anchor"/><span id="line-640" class="anchor"/><span id="line-641" class="anchor"/></p><p
+class="line874">例8.10显示了在这个非矩形框架后面的代码。这个例子比我们见过的其它一些稍微精细点，以显示如何在缺少典型的窗口界面装饰的情况下管理像窗口关闭之类的事情。 <span id="line-642" class="anchor"/><span id="line-643" class="anchor"/><span id="line-644"
+class="anchor"/></p><p class="line867"><strong>例8.10</strong>  <span id="line-645" class="anchor"/><strong>绘制符合形状的窗口</strong> <span id="line-646" class="anchor"/><span id="line-647" class="anchor"/><span id="line-648" class="anchor"/><span id="line-649"
+class="anchor"/><span id="line-650" class="anchor"/><span id="line-651" class="anchor"/><span id="line-652" class="anchor"/><span id="line-653" class="anchor"/><span id="line-654" class="anchor"/><span id="line-655" class="anchor"/><span id="line-656"
+class="anchor"/><span id="line-657" class="anchor"/><span id="line-658" class="anchor"/><span id="line-659" class="anchor"/><span id="line-660" class="anchor"/><span id="line-661" class="anchor"/><span id="line-662" class="anchor"/><span id="line-663"
+class="anchor"/><span id="line-664" class="anchor"/><span id="line-665" class="anchor"/><span id="line-666" class="anchor"/><span id="line-667" class="anchor"/><span id="line-668" class="anchor"/><span id="line-669" class="anchor"/><span id="line-670"
+class="anchor"/><span id="line-671" class="anchor"/><span id="line-672" class="anchor"/><span id="line-673" class="anchor"/><span id="line-674" class="anchor"/><span id="line-675" class="anchor"/><span id="line-676" class="anchor"/><span id="line-677"
+class="anchor"/><span id="line-678" class="anchor"/><span id="line-679" class="anchor"/><span id="line-680" class="anchor"/><span id="line-681" class="anchor"/><span id="line-682" class="anchor"/><span id="line-683" class="anchor"/><span id="line-684"
+class="anchor"/><span id="line-685" class="anchor"/><span id="line-686" class="anchor"/><span id="line-687" class="anchor"/><span id="line-688" class="anchor"/><span id="line-689" class="anchor"/><span id="line-690" class="anchor"/><span id="line-691"
+class="anchor"/><span id="line-692" class="anchor"/><span id="line-693" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-037fd29afd84f9481cf9f9495d3ef2211d25b3d6_018\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-037fd29afd84f9481cf9f9495d3ef2211d25b3d6_018', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-037fd29afd84f9481cf9f9495d3ef2211d25b3d6_018" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">import</span> <span class="ID">images</span></span>
+<span class="line"><span class="LineNumber">   3 </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">class</span> <span class="ID">ShapedFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span
+class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span
+class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span
+class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Shaped
+Window"</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   7 </span>                <span class="ID">style</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">FRAME_SHAPED</span> <span
+class="Operator">|</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">SIMPLE_BORDER</span> <span class="Operator">|</span></span>
+<span class="line"><span class="LineNumber">   8 </span>                <span class="ID">wx</span><span class="Operator">.</span><span class="ID">FRAME_NO_TASKBAR</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">hasShape</span> <span class="Operator">=</span> <span class="ID">False</span></span>
+<span class="line"><span class="LineNumber">  10 </span></span>
+<span class="line"><span class="LineNumber">  11 </span><span class="Comment">#1 获取图像</span></span>
+<span class="line"><span class="LineNumber">  12 </span><span class="Comment"/>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">bmp</span> <span class="Operator">=</span> <span class="ID">images</span><span
+class="Operator">.</span><span class="ID">getVippiBitmap</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetClientSize</span><span class="Operator">(</span><span class="Operator">(</span><span
+class="ID">self</span><span class="Operator">.</span><span class="ID">bmp</span><span class="Operator">.</span><span class="ID">GetWidth</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">,</span> <span
+class="ID">self</span><span class="Operator">.</span><span class="ID">bmp</span><span class="Operator">.</span><span class="ID">GetHeight</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span></span>
+<span class="line"><span class="LineNumber">  15 </span><span class="Comment">#2 绘制图像</span></span>
+<span class="line"><span class="LineNumber">  16 </span><span class="Comment"/>        <span class="ID">dc</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">ClientDC</span><span
+class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">dc</span><span class="Operator">.</span><span class="ID">DrawBitmap</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span
+class="ID">bmp</span><span class="Operator">,</span> <span class="Number">0</span><span class="Operator">,</span><span class="Number">0</span><span class="Operator">,</span> <span class="ID">True</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span></span>
+<span class="line"><span class="LineNumber">  19 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetWindowShape</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">EVT_LEFT_DCLICK</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnDoubleClick</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">EVT_RIGHT_UP</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnExit</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  22 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">EVT_PAINT</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnPaint</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  23 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">EVT_WINDOW_Create</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetWindowShape</span><span class="Operator">)</span><span class="Comment">#3 绑定窗口创建事件</span></span>
+<span class="line"><span class="LineNumber">  24 </span></span>
+<span class="line"><span class="LineNumber">  25 </span>    <span class="ResWord">def</span> <span class="ID">SetWindowShape</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span
+class="ID">evt</span><span class="Operator">=</span><span class="ID">None</span><span class="Operator">)</span><span class="Operator">:</span><span class="Comment">#4 设置形状</span></span>
+<span class="line"><span class="LineNumber">  26 </span>        <span class="ID">r</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">RegionFromBitmap</span><span
+class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">bmp</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  27 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">hasShape</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">SetShape</span><span class="Operator">(</span><span class="ID">r</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  28 </span></span>
+<span class="line"><span class="LineNumber">  29 </span>    <span class="ResWord">def</span> <span class="ID">OnDoubleClick</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span
+class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  30 </span>        <span class="ResWord">if</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">hasShape</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  31 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetShape</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">Region</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span><span class="Comment">#5 重置形状</span></span>
+<span class="line"><span class="LineNumber">  32 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">hasShape</span> <span class="Operator">=</span> <span class="ID">False</span></span>
+<span class="line"><span class="LineNumber">  33 </span>        <span class="ResWord">else</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  34 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetWindowShape</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  35 </span></span>
+<span class="line"><span class="LineNumber">  36 </span>    <span class="ResWord">def</span> <span class="ID">OnPaint</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">evt</span><span
+class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  37 </span>        <span class="ID">dc</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PaintDC</span><span class="Operator">(</span><span
+class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  38 </span>        <span class="ID">dc</span><span class="Operator">.</span><span class="ID">DrawBitmap</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span
+class="ID">bmp</span><span class="Operator">,</span> <span class="Number">0</span><span class="Operator">,</span><span class="Number">0</span><span class="Operator">,</span> <span class="ID">True</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  39 </span></span>
+<span class="line"><span class="LineNumber">  40 </span>    <span class="ResWord">def</span> <span class="ID">OnExit</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">evt</span><span
+class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  41 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Close</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  42 </span></span>
+<span class="line"><span class="LineNumber">  43 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">'__main__'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  44 </span>    <span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  45 </span>    <span class="ID">ShapedFrame</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  46 </span>    <span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-694" class="anchor"/><span id="line-695" class="anchor"/><p class="line867"><strong>#1</strong>
+在从images模块得到图像后，我们将窗口内部的尺寸设置为位图的尺寸。你也可以根据一个标准的图像文件来创建这个wxPython位图，这将在第16章中作更详细的讨论。 <span id="line-696" class="anchor"/><span id="line-697" class="anchor"/><span id="line-698"
+class="anchor"/></p><p class="line867"><strong>#2</strong> 这里，我们在窗口中绘制这个图像。这决不是一个必然的选择。你可以像其它窗口一样在该形状窗口中放置窗口部件和文本（尽管它们必须在该形状的区域内）。 <span id="line-699" class="anchor"/><span
+id="line-700" class="anchor"/><span id="line-701" class="anchor"/></p><p class="line867"><strong>#3</strong> 这个事件在大多数平台上是多余的，它强制性地在窗口被创建后调用<a href="/moin/SetWindowShape"
+class="nonexistent">SetWindowShape</a>()。但是，GTK的实现要求在该形状被设置以前，窗口的本地UI对象被创建和确定，因此当窗口创建发生时我们使用窗口创建事件去通知并在它的处理器中设置形状。 <span id="line-702" class="anchor"/><span id="line-703"
+class="anchor"/><span id="line-704" class="anchor"/></p><p class="line867"><strong>#4</strong> 我们使用全局方法wx.<a href="/moin/RegionFromBitmap"
+class="nonexistent">RegionFromBitmap</a>去创建设置形状所需的wx.Region对象。这是创建不规则形状的最容易的方法。你也可以根据一个定义多边形的点的列表来创建一个wx.Region。图像的透明部分的用途是定义区域的边界。 <span id="line-705" class="anchor"/><span
+id="line-706" class="anchor"/><span id="line-707" class="anchor"/></p><p class="line867"><strong>#5</strong> 双击事件开关窗口的形状。要回到标准的矩形，要使用一个空的wx.Region作为参数来调用<a href="/moin/SetShape" class="nonexistent">SetShape</a>()。
+<span id="line-708" class="anchor"/><span id="line-709" class="anchor"/></p><p class="line862">除了没有标准的关闭框或标题栏等外，不规则形状框架的行为像一个普通的框架一样。任何框架都可以改变它的形状，因为<a href="/moin/SetShape"
+class="nonexistent">SetShape</a>()方法是wx.Frame类的一部分，它可以被任何子类继承。在wx.<a href="/moin/SplashScreen" class="nonexistent">SplashScreen</a>中，符合形状的框架是特别的有用。 <span id="line-710" class="anchor"/><span id="line-711"
+class="anchor"/><span id="line-712" class="anchor"/></p><p class="line867">
+</p><h3 id="head-d468d3c769be9a5d9b213633ca71584b81db4cfb">1.3.4. 如何拖动一个没有标题栏的框架？</h3>
+<span id="line-713" class="anchor"/><span id="line-714" class="anchor"/><span id="line-715" class="anchor"/><p
+class="line874">前一个例子的明显结果是这个没有标题栏的框架不能被拖动的，这儿没有拖动窗口的标准方法。要解决这个问题，我们需要去添加事件处理器来在当拖动发生时移动该窗口。例8.11显示与前一例子相同形状的窗口，但增加了对于处理鼠标左键敲击和鼠标移动的一些事件。这个技术可以适用于任何其它的框架，甚至是框架内你想要移动的窗口（例如绘画程序中的元素）。
+<span id="line-716" class="anchor"/><span id="line-717" class="anchor"/><span id="line-718" class="anchor"/></p><p class="line867"><strong>例8.11</strong>  <span id="line-719" class="anchor"/><strong>使用户能够从框架来拖动框架的事件</strong> <span
+id="line-720" class="anchor"/><span id="line-721" class="anchor"/><span id="line-722" class="anchor"/><span id="line-723" class="anchor"/><span id="line-724" class="anchor"/><span id="line-725" class="anchor"/><span id="line-726" class="anchor"/><span
+id="line-727" class="anchor"/><span id="line-728" class="anchor"/><span id="line-729" class="anchor"/><span id="line-730" class="anchor"/><span id="line-731" class="anchor"/><span id="line-732" class="anchor"/><span id="line-733" class="anchor"/><span
+id="line-734" class="anchor"/><span id="line-735" class="anchor"/><span id="line-736" class="anchor"/><span id="line-737" class="anchor"/><span id="line-738" class="anchor"/><span id="line-739" class="anchor"/><span id="line-740" class="anchor"/><span
+id="line-741" class="anchor"/><span id="line-742" class="anchor"/><span id="line-743" class="anchor"/><span id="line-744" class="anchor"/><span id="line-745" class="anchor"/><span id="line-746" class="anchor"/><span id="line-747" class="anchor"/><span
+id="line-748" class="anchor"/><span id="line-749" class="anchor"/><span id="line-750" class="anchor"/><span id="line-751" class="anchor"/><span id="line-752" class="anchor"/><span id="line-753" class="anchor"/><span id="line-754" class="anchor"/><span
+id="line-755" class="anchor"/><span id="line-756" class="anchor"/><span id="line-757" class="anchor"/><span id="line-758" class="anchor"/><span id="line-759" class="anchor"/><span id="line-760" class="anchor"/><span id="line-761" class="anchor"/><span
+id="line-762" class="anchor"/><span id="line-763" class="anchor"/><span id="line-764" class="anchor"/><span id="line-765" class="anchor"/><span id="line-766" class="anchor"/><span id="line-767" class="anchor"/><span id="line-768" class="anchor"/><span
+id="line-769" class="anchor"/><span id="line-770" class="anchor"/><span id="line-771" class="anchor"/><span id="line-772" class="anchor"/><span id="line-773" class="anchor"/><span id="line-774" class="anchor"/><span id="line-775" class="anchor"/><span
+id="line-776" class="anchor"/><span id="line-777" class="anchor"/><span id="line-778" class="anchor"/><span id="line-779" class="anchor"/><span id="line-780" class="anchor"/><span id="line-781" class="anchor"/><span id="line-782" class="anchor"/><span
+id="line-783" class="anchor"/><span id="line-784" class="anchor"/><span id="line-785" class="anchor"/><span id="line-786" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-2cac8d986da247ea76f20b2ed8ef98881361bab5_019\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-2cac8d986da247ea76f20b2ed8ef98881361bab5_019', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-2cac8d986da247ea76f20b2ed8ef98881361bab5_019" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">import</span> <span class="ID">images</span></span>
+<span class="line"><span class="LineNumber">   3 </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">class</span> <span class="ID">ShapedFrame</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span
+class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span
+class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span>
+<span class="String">"Shaped Window"</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   7 </span>                <span class="ID">style</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">FRAME_SHAPED</span> <span
+class="Operator">|</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">SIMPLE_BORDER</span> <span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">hasShape</span> <span class="Operator">=</span> <span class="ID">False</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">delta</span> <span class="Operator">=</span> <span class="ID">wx</span><span
+class="Operator">.</span><span class="ID">Point</span><span class="Operator">(</span><span class="Number">0</span><span class="Operator">,</span><span class="Number">0</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">bmp</span> <span class="Operator">=</span> <span class="ID">images</span><span
+class="Operator">.</span><span class="ID">getVippiBitmap</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetClientSize</span><span class="Operator">(</span><span class="Operator">(</span><span
+class="ID">self</span><span class="Operator">.</span><span class="ID">bmp</span><span class="Operator">.</span><span class="ID">GetWidth</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">,</span>
+<span class="ID">self</span><span class="Operator">.</span><span class="ID">bmp</span><span class="Operator">.</span><span class="ID">GetHeight</span><span class="Operator">(</span><span class="Operator">)</span><span
+class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">dc</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">ClientDC</span><span
+class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">dc</span><span class="Operator">.</span><span class="ID">DrawBitmap</span><span class="Operator">(</span><span class="ID">self</span><span
+class="Operator">.</span><span class="ID">bmp</span><span class="Operator">,</span> <span class="Number">0</span><span class="Operator">,</span><span class="Number">0</span><span class="Operator">,</span> <span
+class="ID">True</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetWindowShape</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span
+class="Operator">.</span><span class="ID">EVT_LEFT_DCLICK</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnDoubleClick</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span></span>
+<span class="line"><span class="LineNumber">  17 </span><span class="Comment">#1 新事件</span></span>
+<span class="line"><span class="LineNumber">  18 </span><span class="Comment"/>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span
+class="Operator">.</span><span class="ID">EVT_LEFT_DOWN</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnLeftDown</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span
+class="Operator">.</span><span class="ID">EVT_LEFT_UP</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnLeftUp</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span
+class="Operator">.</span><span class="ID">EVT_MOTION</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnMouseMove</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span></span>
+<span class="line"><span class="LineNumber">  22 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span
+class="Operator">.</span><span class="ID">EVT_RIGHT_UP</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnExit</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  23 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span
+class="Operator">.</span><span class="ID">EVT_PAINT</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnPaint</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  24 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span
+class="Operator">.</span><span class="ID">EVT_WINDOW_Create</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetWindowShape</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  25 </span></span>
+<span class="line"><span class="LineNumber">  26 </span>    <span class="ResWord">def</span> <span class="ID">SetWindowShape</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span
+class="ID">evt</span><span class="Operator">=</span><span class="ID">None</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  27 </span>        <span class="ID">r</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">RegionFromBitmap</span><span
+class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">bmp</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  28 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">hasShape</span> <span class="Operator">=</span> <span class="ID">self</span><span
+class="Operator">.</span><span class="ID">SetShape</span><span class="Operator">(</span><span class="ID">r</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  29 </span></span>
+<span class="line"><span class="LineNumber">  30 </span>    <span class="ResWord">def</span> <span class="ID">OnDoubleClick</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span
+class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  31 </span>        <span class="ResWord">if</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">hasShape</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  32 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetShape</span><span class="Operator">(</span><span class="ID">wx</span><span
+class="Operator">.</span><span class="ID">Region</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  33 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">hasShape</span> <span class="Operator">=</span> <span class="ID">False</span></span>
+<span class="line"><span class="LineNumber">  34 </span>        <span class="ResWord">else</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  35 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetWindowShape</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  36 </span></span>
+<span class="line"><span class="LineNumber">  37 </span>    <span class="ResWord">def</span> <span class="ID">OnPaint</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span
+class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  38 </span>        <span class="ID">dc</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PaintDC</span><span
+class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  39 </span>        <span class="ID">dc</span><span class="Operator">.</span><span class="ID">DrawBitmap</span><span class="Operator">(</span><span class="ID">self</span><span
+class="Operator">.</span><span class="ID">bmp</span><span class="Operator">,</span> <span class="Number">0</span><span class="Operator">,</span><span class="Number">0</span><span class="Operator">,</span> <span
+class="ID">True</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  40 </span></span>
+<span class="line"><span class="LineNumber">  41 </span>    <span class="ResWord">def</span> <span class="ID">OnExit</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span
+class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  42 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Close</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  43 </span></span>
+<span class="line"><span class="LineNumber">  44 </span>    <span class="ResWord">def</span> <span class="ID">OnLeftDown</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span
+class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span><span class="Comment">#2 鼠标按下</span></span>
+<span class="line"><span class="LineNumber">  45 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">CaptureMouse</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  46 </span>        <span class="ID">pos</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">ClientToScreen</span><span
+class="Operator">(</span><span class="ID">evt</span><span class="Operator">.</span><span class="ID">GetPosition</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  47 </span>        <span class="ID">oigin</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">GetPosition</span><span
+class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  48 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">delta</span> <span class="Operator">=</span> <span class="ID">wx</span><span
+class="Operator">.</span><span class="ID">Point</span><span class="Operator">(</span><span class="ID">pos</span><span class="Operator">.</span><span class="ID">x</span> <span class="Operator">-</span> <span class="ID">oigin</span><span
+class="Operator">.</span><span class="ID">x</span><span class="Operator">,</span> <span class="ID">pos</span><span class="Operator">.</span><span class="ID">y</span> <span class="Operator">-</span> <span class="ID">oigin</span><span
+class="Operator">.</span><span class="ID">y</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  49 </span></span>
+<span class="line"><span class="LineNumber">  50 </span>    <span class="ResWord">def</span> <span class="ID">OnMouseMove</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span
+class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span><span class="Comment">#3 鼠标移动</span></span>
+<span class="line"><span class="LineNumber">  51 </span>        <span class="ResWord">if</span> <span class="ID">evt</span><span class="Operator">.</span><span class="ID">Dragging</span><span class="Operator">(</span><span
+class="Operator">)</span> <span class="ResWord">and</span> <span class="ID">evt</span><span class="Operator">.</span><span class="ID">LeftIsDown</span><span class="Operator">(</span><span class="Operator">)</span><span
+class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  52 </span>            <span class="ID">pos</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">ClientToScreen</span><span
+class="Operator">(</span><span class="ID">evt</span><span class="Operator">.</span><span class="ID">GetPosition</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  53 </span>            <span class="ID">newPos</span> <span class="Operator">=</span> <span class="Operator">(</span><span class="ID">pos</span><span class="Operator">.</span><span
+class="ID">x</span> <span class="Operator">-</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">delta</span><span class="Operator">.</span><span class="ID">x</span><span class="Operator">,</span> <span
+class="ID">pos</span><span class="Operator">.</span><span class="ID">y</span> <span class="Operator">-</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">delta</span><span class="Operator">.</span><span
+class="ID">y</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  54 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">Move</span><span class="Operator">(</span><span class="ID">newPos</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  55 </span></span>
+<span class="line"><span class="LineNumber">  56 </span>    <span class="ResWord">def</span> <span class="ID">OnLeftUp</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span
+class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span><span class="Comment">#4 鼠标释放</span></span>
+<span class="line"><span class="LineNumber">  57 </span>        <span class="ResWord">if</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">HasCapture</span><span class="Operator">(</span><span
+class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  58 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">ReleaseMouse</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  59 </span></span>
+<span class="line"><span class="LineNumber">  60 </span></span>
+<span class="line"><span class="LineNumber">  61 </span></span>
+<span class="line"><span class="LineNumber">  62 </span><span class="ResWord">if</span> <span class="ID">__name__</span> <span class="Operator">==</span> <span class="String">'__main__'</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  63 </span>    <span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span
+class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  64 </span>    <span class="ID">ShapedFrame</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">Show</span><span
+class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  65 </span>    <span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span
+class="Text"/></span>
+</pre></div><span id="line-787" class="anchor"/><span id="line-788" class="anchor"/><p class="line867"><strong>#1</strong> 我们为三个事件增加了相应的处理器，以作相应的工作。这三个事件是鼠标左键按下，鼠标左键释放和鼠标移动。 <span
+id="line-789" class="anchor"/><span id="line-790" class="anchor"/><span id="line-791" class="anchor"/></p><p class="line867"><strong>#2</strong>
+拖动事件从鼠标左键按下开始。这个事件处理器做两件事。首先它捕获这个鼠标，直到鼠标被释放，以防止鼠标事件被改善到其它窗口部件。第二，它计算事件发生的位置和窗口左上角之间的偏移量，这个偏移量将被用来计算窗口的新位置。 <span id="line-792"
+class="anchor"/><span id="line-793" class="anchor"/><span id="line-794" class="anchor"/></p><p class="line867"><strong>#3</strong>
+这个处理器当鼠标移动时被调用，它首先检查看该事件是否是一个鼠标左键按下，如果是，它使用这个新的位置和前面计算的偏移量来确定窗口的新位置，并移动窗口。 <span id="line-795" class="anchor"/><span id="line-796" class="anchor"/><span
+id="line-797" class="anchor"/></p><p class="line867"><strong>#4</strong> 当鼠标左键被释放时，<a href="/moin/ReleaseMouse" class="nonexistent">ReleaseMouse</a>()被调用，这使得鼠标事件又可以被发送到其它的窗口部件。 <span id="line-798"
+class="anchor"/><span id="line-799" class="anchor"/></p><p
+class="line874">这个拖动技术可以被完善以适合其它的需要。例如，仅在一个定义的区域内鼠标敲击才开始一个拖动，你可以对鼠标按下事件的位置做一个测试，使敲击发生在右边的位置时，才能拖动。 <span id="line-800" class="anchor"/><span id="line-801"
+class="anchor"/><span id="line-802" class="anchor"/><span id="line-803" class="anchor"/><span id="line-804" class="anchor"/></p><p class="line867">
+</p><h2 id="head-04973e178f7fc772164b5d380ccd2f2aa0330541">1.4. 使用分割窗</h2>
+<span id="line-805" class="anchor"/><span id="line-806" class="anchor"/><span id="line-807" class="anchor"/><p
+class="line874">分割窗是一种特殊的容器窗口部件，它管理两个子窗口。这两个子窗口可以被水平的堆放或彼此左右相邻。在两个子窗口之间的是一个窗框，它是一个可移动的边框，移动它就改变了两个子窗口的尺寸。分割窗经常被用于主窗口的侧边栏。图8.10显示了一个分割窗的样板。
+<span id="line-808" class="anchor"/><span id="line-809" class="anchor"/></p><p class="line874">当你有两个信息面板并且想让用户自主决定每个面板的尺寸时，可以使用分割窗。Mac OS X
+Finder窗口就是一个分割窗的例子，并且许多的文本编辑器或制图软件都用它来维护一个打开的文件的列表。 <span id="line-810" class="anchor"/><span id="line-811" class="anchor"/><span id="line-812" class="anchor"/></p><p class="line867">
+</p><h3 id="head-5cfc0fa9c366c3e691d6f91ea660df55a85f7205">1.4.1. 创建一个分割窗</h3>
+<span id="line-813" class="anchor"/><span id="line-814" class="anchor"/><span id="line-815" class="anchor"/><p class="line862">在wxPython中，分割窗是类wx.<a href="/moin/SplitterWindow"
+class="nonexistent">SplitterWindow</a>的实例。和大多数其它的wxPython窗口部件不一样，分隔窗口在被创建后，可使用前要求进一步的初始化。它的构造函数是十分简单的。 <span id="line-816" class="anchor"/><span id="line-817" class="anchor"/><span
+id="line-818" class="anchor"/></p><p class="line867"><strong>图8.10</strong> <span id="line-819" class="anchor"/><span id="line-820" class="anchor"/></p><p class="line867"><img title="attachment:w8.10.gif"
+src="/moin/WxPythonInAction/ChapterEight?action=AttachFile&amp;do=get&amp;target=w8.10.gif" class="attachment"/> <span id="line-821" class="anchor"/><span id="line-822" class="anchor"/></p><p class="line867"><span id="line-823"
+class="anchor"/><span id="line-824" class="anchor"/><span id="line-825" class="anchor"/><span id="line-826" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-cd5c170feb3e0310afcec8bd1dc623b0033027dd_020\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-cd5c170feb3e0310afcec8bd1dc623b0033027dd_020', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-cd5c170feb3e0310afcec8bd1dc623b0033027dd_020" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">SplitterWindow</span><span class="Operator">(</span><span class="ID">parent</span><span class="Operator">,</span> <span class="ID">id</span><span class="Operator">=</span><span class="Operator">-</span><span
+class="Number">1</span><span class="Operator">,</span> <span class="ID">pos</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">DefaultPosition</span><span
+class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   2 </span>        <span class="ID">size</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">DefaultSize</span><span
+class="Operator">,</span> <span class="ID">style</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">SP_3D</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   3 </span>        <span class="ID">name</span><span class="Operator">=</span><span class="String">"splitterWindow"</span><span class="Operator">)</span><span
+class="Text"/></span>
+</pre></div><span id="line-827" class="anchor"/><p class="line874">它的这些参数都有标准的含义——parent是窗口部件的容器，pos是窗口部件在它的父容器中位置，size是它的尺寸。 <span id="line-828" class="anchor"/><span
+id="line-829" class="anchor"/></p><p
+class="line874">在创建了这个分割窗后，在它可以被使用前，你必须对这个窗口调用三个方法中的一处。如果你想初始时只显示一个子窗口，那么调用Initialize(window)，参数window是这个单一的子窗口（通常是一种wx.Panel）。在这种情况下，窗口将在以后响应用户的动作时再分割。
+<span id="line-830" class="anchor"/><span id="line-831" class="anchor"/></p><p class="line862">要显示两个子窗口，使用<a href="/moin/SplitHorizontally" class="nonexistent">SplitHorizontally</a>
+(window1，window2，sashPosition=0)或<a href="/moin/SplitVertically" class="nonexistent">SplitVertically</a>(window1, window2,
+sashPosition=0)。两个方法的工作都是相似的，参数window1和window2包含两个子窗口，参数sashPosition包含分割条的初始位置。对于水平分割（水平分割条）来说，window1被放置在window2的顶部。如果sashPosition是一个正数，它代表顶部窗口的初始高度（也就是分割条距顶部的像素值）。如果sashPosition是一个负数，它定义了底部窗口的尺寸，或分割条距底部的像素值。如果sashPosition是0，那么这个分割条位于正中。对于垂直分割（垂直分割条），window1位于左边，window2位于右边。正值的sashPosition设置window1的尺寸，也就是分割条距左边框的像素值。类似的，负值sashPosition设置右边子窗口的尺寸，0值将分割条放置在正中。如果你的子窗口复杂的话，我们建议你在布局中使用sizer，以便于当分割条被移动时很好地调整窗口的大小。
+<span id="line-832" class="anchor"/><span id="line-833" class="anchor"/><span id="line-834" class="anchor"/></p><p class="line867">
+</p><h3 id="head-70ccf67b352d4206f92d0959c1dabe0b1f0237af">1.4.2. 一个分割窗的例子</h3>
+<span id="line-835" class="anchor"/><span id="line-836" class="anchor"/><span id="line-837" class="anchor"/><p
+class="line874">例8.12显示了如何创建有一个子窗口的分割窗并且在以后响应菜单项的分割。这个例子也使用了一些事件，这些事件我们以后讨论。注意，我们不计划在开始可见的子面板使用Hide()方法来隐藏。我们这样做是因为我们开始时不告诉分割窗去管理那个子面板的尺寸和位置，所以我们使用这种方法来隐藏它。如果我们在开始就要分割和显示这两个子面板，那么我们就不必考虑这些。
+<span id="line-838" class="anchor"/><span id="line-839" class="anchor"/><span id="line-840" class="anchor"/></p><p class="line867"><strong>例8.12</strong>  <span id="line-841"
+class="anchor"/><strong>如何创建你自己的分割窗</strong> <span id="line-842" class="anchor"/><span id="line-843" class="anchor"/><span id="line-844" class="anchor"/><span id="line-845" class="anchor"/><span id="line-846"
+class="anchor"/><span id="line-847" class="anchor"/><span id="line-848" class="anchor"/><span id="line-849" class="anchor"/><span id="line-850" class="anchor"/><span id="line-851" class="anchor"/><span id="line-852"
+class="anchor"/><span id="line-853" class="anchor"/><span id="line-854" class="anchor"/><span id="line-855" class="anchor"/><span id="line-856" class="anchor"/><span id="line-857" class="anchor"/><span id="line-858"
+class="anchor"/><span id="line-859" class="anchor"/><span id="line-860" class="anchor"/><span id="line-861" class="anchor"/><span id="line-862" class="anchor"/><span id="line-863" class="anchor"/><span id="line-864"
+class="anchor"/><span id="line-865" class="anchor"/><span id="line-866" class="anchor"/><span id="line-867" class="anchor"/><span id="line-868" class="anchor"/><span id="line-869" class="anchor"/><span id="line-870"
+class="anchor"/><span id="line-871" class="anchor"/><span id="line-872" class="anchor"/><span id="line-873" class="anchor"/><span id="line-874" class="anchor"/><span id="line-875" class="anchor"/><span id="line-876"
+class="anchor"/><span id="line-877" class="anchor"/><span id="line-878" class="anchor"/><span id="line-879" class="anchor"/><span id="line-880" class="anchor"/><span id="line-881" class="anchor"/><span id="line-882"
+class="anchor"/><span id="line-883" class="anchor"/><span id="line-884" class="anchor"/><span id="line-885" class="anchor"/><span id="line-886" class="anchor"/><span id="line-887" class="anchor"/><span id="line-888"
+class="anchor"/><span id="line-889" class="anchor"/><span id="line-890" class="anchor"/><span id="line-891" class="anchor"/><span id="line-892" class="anchor"/><span id="line-893" class="anchor"/><span id="line-894"
+class="anchor"/><span id="line-895" class="anchor"/><span id="line-896" class="anchor"/><span id="line-897" class="anchor"/><span id="line-898" class="anchor"/><span id="line-899" class="anchor"/><span id="line-900"
+class="anchor"/><span id="line-901" class="anchor"/><span id="line-902" class="anchor"/><span id="line-903" class="anchor"/><span id="line-904" class="anchor"/><span id="line-905" class="anchor"/><span id="line-906"
+class="anchor"/><span id="line-907" class="anchor"/><span id="line-908" class="anchor"/><span id="line-909" class="anchor"/><span id="line-910" class="anchor"/><span id="line-911" class="anchor"/><span id="line-912"
+class="anchor"/><span id="line-913" class="anchor"/><span id="line-914" class="anchor"/><span id="line-915" class="anchor"/><span id="line-916" class="anchor"/><span id="line-917" class="anchor"/><span id="line-918"
+class="anchor"/><span id="line-919" class="anchor"/><span id="line-920" class="anchor"/><span id="line-921" class="anchor"/><span id="line-922" class="anchor"/><span id="line-923" class="anchor"/><span id="line-924"
+class="anchor"/><span id="line-925" class="anchor"/><span id="line-926" class="anchor"/><span id="line-927" class="anchor"/><span id="line-928" class="anchor"/><span id="line-929" class="anchor"/><span id="line-930"
+class="anchor"/><span id="line-931" class="anchor"/><span id="line-932" class="anchor"/><span id="line-933" class="anchor"/><span id="line-934" class="anchor"/><span id="line-935" class="anchor"/><span id="line-936"
+class="anchor"/><span id="line-937" class="anchor"/><span id="line-938" class="anchor"/><span id="line-939" class="anchor"/><span id="line-940" class="anchor"/><span id="line-941" class="anchor"/><span id="line-942"
+class="anchor"/><span id="line-943" class="anchor"/><span id="line-944" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-48c62cbcd9bfa1c3ab28fb16d9239d3801734082_021\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-48c62cbcd9bfa1c3ab28fb16d9239d3801734082_021', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-48c62cbcd9bfa1c3ab28fb16d9239d3801734082_021" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">class</span> <span class="ID">SplitterExampleFrame</span><span class="Operator">(</span><span class="ID">wx</span><span
+class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span
+class="Operator">,</span> <span class="ID">parent</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span
+class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">,</span> <span
+class="ID">title</span><span class="Operator">=</span><span class="ID">title</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   6 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">MakeMenuBar</span><span class="Operator">(</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">minpane</span> <span class="Operator">=</span> <span
+class="Number">0</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">initpos</span> <span class="Operator">=</span> <span
+class="Number">0</span></span>
+<span class="line"><span class="LineNumber">   9 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">sp</span> <span class="Operator">=</span> <span
+class="ID">wx</span><span class="Operator">.</span><span class="ID">SplitterWindow</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Comment">#
+创建一个分割窗</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">p1</span> <span class="Operator">=</span> <span
+class="ID">wx</span><span class="Operator">.</span><span class="ID">Panel</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">sp</span><span
+class="Operator">,</span> <span class="ID">style</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">SUNKEN_BORDER</span><span
+class="Operator">)</span><span class="Comment"># 创建子面板</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">p2</span> <span class="Operator">=</span> <span
+class="ID">wx</span><span class="Operator">.</span><span class="ID">Panel</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">sp</span><span
+class="Operator">,</span> <span class="ID">style</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">SUNKEN_BORDER</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">p1</span><span class="Operator">.</span><span
+class="ID">SetBackgroundColour</span><span class="Operator">(</span><span class="String">"pink"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">p2</span><span class="Operator">.</span><span
+class="ID">SetBackgroundColour</span><span class="Operator">(</span><span class="String">"sky blue"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">p1</span><span class="Operator">.</span><span
+class="ID">Hide</span><span class="Operator">(</span><span class="Operator">)</span><span class="Comment"># 确保备用的子面板被隐藏</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">p2</span><span class="Operator">.</span><span
+class="ID">Hide</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">sp</span><span class="Operator">.</span><span
+class="ID">Initialize</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">p1</span><span class="Operator">)</span><span class="Comment">#
+初始化分割窗</span></span>
+<span class="line"><span class="LineNumber">  18 </span></span>
+<span class="line"><span class="LineNumber">  19 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span
+class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_SPLITTER_SASH_POS_CHANGING</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  20 </span>                  <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnSashChanging</span><span class="Operator">,</span>
+<span class="ID">self</span><span class="Operator">.</span><span class="ID">sp</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span
+class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_SPLITTER_SASH_POS_CHANGED</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  22 </span>                  <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnSashChanged</span><span class="Operator">,</span>
+<span class="ID">self</span><span class="Operator">.</span><span class="ID">sp</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  23 </span></span>
+<span class="line"><span class="LineNumber">  24 </span></span>
+<span class="line"><span class="LineNumber">  25 </span>    <span class="ResWord">def</span> <span class="ID">MakeMenuBar</span><span class="Operator">(</span><span class="ID">self</span><span
+class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  26 </span>        <span class="ID">menu</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">Menu</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  27 </span>        <span class="ID">item</span> <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span
+class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Split horizontally"</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  28 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span
+class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">OnSplitH</span><span class="Operator">,</span> <span class="ID">item</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  29 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span
+class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_Update_UI</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">OnCheckCanSplit</span><span class="Operator">,</span> <span class="ID">item</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  30 </span>        <span class="ID">item</span> <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span
+class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Split vertically"</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  31 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span
+class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">OnSplitV</span><span class="Operator">,</span> <span class="ID">item</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  32 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span
+class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_Update_UI</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">OnCheckCanSplit</span><span class="Operator">,</span> <span class="ID">item</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  33 </span>        <span class="ID">item</span> <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span
+class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Unsplit"</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  34 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span
+class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">OnUnsplit</span><span class="Operator">,</span> <span class="ID">item</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  35 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span
+class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_Update_UI</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">OnCheckCanUnsplit</span><span class="Operator">,</span> <span class="ID">item</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  36 </span></span>
+<span class="line"><span class="LineNumber">  37 </span>        <span class="ID">menu</span><span class="Operator">.</span><span class="ID">AppendSeparator</span><span class="Operator">(</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  38 </span>        <span class="ID">item</span> <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span
+class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Set initial sash
+position"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  39 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span
+class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">OnSetPos</span><span class="Operator">,</span> <span class="ID">item</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  40 </span>        <span class="ID">item</span> <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span
+class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Set minimum pane size"</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  41 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span
+class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">OnSetMin</span><span class="Operator">,</span> <span class="ID">item</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  42 </span></span>
+<span class="line"><span class="LineNumber">  43 </span>        <span class="ID">menu</span><span class="Operator">.</span><span class="ID">AppendSeparator</span><span class="Operator">(</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  44 </span>        <span class="ID">item</span> <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span
+class="ID">Append</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">ID_EXIT</span><span class="Operator">,</span> <span class="String">"E
+"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  45 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span
+class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">OnExit</span><span class="Operator">,</span> <span class="ID">item</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  46 </span></span>
+<span class="line"><span class="LineNumber">  47 </span>        <span class="ID">mbar</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">MenuBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  48 </span>        <span class="ID">mbar</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span
+class="ID">menu</span><span class="Operator">,</span> <span class="String">"Splitter"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  49 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetMenuBar</span><span class="Operator">(</span><span
+class="ID">mbar</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  50 </span></span>
+<span class="line"><span class="LineNumber">  51 </span></span>
+<span class="line"><span class="LineNumber">  52 </span>    <span class="ResWord">def</span> <span class="ID">OnSashChanging</span><span class="Operator">(</span><span class="ID">self</span><span
+class="Operator">,</span> <span class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  53 </span>        <span class="ResWord">print</span> <span class="String">"OnSashChanging:"</span><span class="Operator">,</span> <span
+class="ID">evt</span><span class="Operator">.</span><span class="ID">GetSashPosition</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  54 </span></span>
+<span class="line"><span class="LineNumber">  55 </span>    <span class="ResWord">def</span> <span class="ID">OnSashChanged</span><span class="Operator">(</span><span class="ID">self</span><span
+class="Operator">,</span> <span class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  56 </span>        <span class="ResWord">print</span> <span class="String">"OnSashChanged:"</span><span class="Operator">,</span> <span
+class="ID">evt</span><span class="Operator">.</span><span class="ID">GetSashPosition</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  57 </span></span>
+<span class="line"><span class="LineNumber">  58 </span></span>
+<span class="line"><span class="LineNumber">  59 </span>    <span class="ResWord">def</span> <span class="ID">OnSplitH</span><span class="Operator">(</span><span class="ID">self</span><span
+class="Operator">,</span> <span class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span><span class="Comment"># 响应水平分割请求</span></span>
+<span class="line"><span class="LineNumber">  60 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">sp</span><span class="Operator">.</span><span
+class="ID">SplitHorizontally</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">p1</span><span class="Operator">,</span> <span
+class="ID">self</span><span class="Operator">.</span><span class="ID">p2</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">initpos</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  61 </span></span>
+<span class="line"><span class="LineNumber">  62 </span>    <span class="ResWord">def</span> <span class="ID">OnSplitV</span><span class="Operator">(</span><span class="ID">self</span><span
+class="Operator">,</span> <span class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span><span class="Comment"># 响应垂直分割请求</span></span>
+<span class="line"><span class="LineNumber">  63 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">sp</span><span class="Operator">.</span><span
+class="ID">SplitVertically</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">p1</span><span class="Operator">,</span> <span
+class="ID">self</span><span class="Operator">.</span><span class="ID">p2</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">initpos</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  64 </span></span>
+<span class="line"><span class="LineNumber">  65 </span>    <span class="ResWord">def</span> <span class="ID">OnCheckCanSplit</span><span class="Operator">(</span><span class="ID">self</span><span
+class="Operator">,</span> <span class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  66 </span>        <span class="ID">evt</span><span class="Operator">.</span><span class="ID">Enable</span><span class="Operator">(</span><span
+class="ResWord">not</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">sp</span><span class="Operator">.</span><span class="ID">IsSplit</span><span
+class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  67 </span></span>
+<span class="line"><span class="LineNumber">  68 </span>    <span class="ResWord">def</span> <span class="ID">OnCheckCanUnsplit</span><span class="Operator">(</span><span class="ID">self</span><span
+class="Operator">,</span> <span class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  69 </span>        <span class="ID">evt</span><span class="Operator">.</span><span class="ID">Enable</span><span class="Operator">(</span><span
+class="ID">self</span><span class="Operator">.</span><span class="ID">sp</span><span class="Operator">.</span><span class="ID">IsSplit</span><span class="Operator">(</span><span
+class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  70 </span></span>
+<span class="line"><span class="LineNumber">  71 </span>    <span class="ResWord">def</span> <span class="ID">OnUnsplit</span><span class="Operator">(</span><span class="ID">self</span><span
+class="Operator">,</span> <span class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  72 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">sp</span><span class="Operator">.</span><span
+class="ID">Unsplit</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  73 </span></span>
+<span class="line"><span class="LineNumber">  74 </span>    <span class="ResWord">def</span> <span class="ID">OnSetMin</span><span class="Operator">(</span><span class="ID">self</span><span
+class="Operator">,</span> <span class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  75 </span>        <span class="ID">minpane</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">GetNumberFromUser</span><span class="Operator">(</span></span>
+<span class="line"><span class="LineNumber">  76 </span>            <span class="String">"Enter the minimum pane size"</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  77 </span>            <span class="String">""</span><span class="Operator">,</span> <span class="String">"Minimum Pane Size"</span><span
+class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">minpane</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  78 </span>            <span class="Number">0</span><span class="Operator">,</span> <span class="Number">1000</span><span class="Operator">,</span> <span
+class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  79 </span>        <span class="ResWord">if</span> <span class="ID">minpane</span> <span class="Operator">!=</span> <span class="Operator">-</span><span
+class="Number">1</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  80 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">minpane</span> <span class="Operator">=</span> <span
+class="ID">minpane</span></span>
+<span class="line"><span class="LineNumber">  81 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">sp</span><span class="Operator">.</span><span
+class="ID">SetMinimumPaneSize</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">minpane</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  82 </span></span>
+<span class="line"><span class="LineNumber">  83 </span>    <span class="ResWord">def</span> <span class="ID">OnSetPos</span><span class="Operator">(</span><span class="ID">self</span><span
+class="Operator">,</span> <span class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  84 </span>        <span class="ID">initpos</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">GetNumberFromUser</span><span class="Operator">(</span></span>
+<span class="line"><span class="LineNumber">  85 </span>            <span class="String">"Enter the initial sash position (to be used in the Split call)"</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  86 </span>            <span class="String">""</span><span class="Operator">,</span> <span class="String">"Initial Sash Position"</span><span
+class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">initpos</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  87 </span>            <span class="Operator">-</span><span class="Number">1000</span><span class="Operator">,</span> <span class="Number">1000</span><span
+class="Operator">,</span> <span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  88 </span>        <span class="ResWord">if</span> <span class="ID">initpos</span> <span class="Operator">!=</span> <span class="Operator">-</span><span
+class="Number">1</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  89 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">initpos</span> <span class="Operator">=</span> <span
+class="ID">initpos</span></span>
+<span class="line"><span class="LineNumber">  90 </span></span>
+<span class="line"><span class="LineNumber">  91 </span></span>
+<span class="line"><span class="LineNumber">  92 </span>    <span class="ResWord">def</span> <span class="ID">OnExit</span><span class="Operator">(</span><span class="ID">self</span><span
+class="Operator">,</span> <span class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  93 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Close</span><span class="Operator">(</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  94 </span></span>
+<span class="line"><span class="LineNumber">  95 </span></span>
+<span class="line"><span class="LineNumber">  96 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">PySimpleApp</span><span class="Operator">(</span><span class="ID">redirect</span><span class="Operator">=</span><span class="ID">True</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  97 </span><span class="ID">frm</span> <span class="Operator">=</span> <span class="ID">SplitterExampleFrame</span><span class="Operator">(</span><span
+class="ID">None</span><span class="Operator">,</span> <span class="String">"Splitter Example"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  98 </span><span class="ID">frm</span><span class="Operator">.</span><span class="ID">SetSize</span><span class="Operator">(</span><span
+class="Operator">(</span><span class="Number">600</span><span class="Operator">,</span><span class="Number">500</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  99 </span><span class="ID">frm</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 100 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">SetTopWindow</span><span class="Operator">(</span><span
+class="ID">frm</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 101 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span
+class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-945" class="anchor"/><p class="line862">分割窗只能分割一次，对已分割的窗口再分割将会失败，从而导致分割方法返回False（成功时返回True）。要确定窗口当前是否被分割了，调用方法<a
+href="/moin/IsSplit" class="nonexistent">IsSplit</a>()。在例8.12中，为了确保相应的菜单项有效，就采用这个方法。 <span id="line-946" class="anchor"/><span id="line-947" class="anchor"/></p><p
+class="line874">如果你想不分割窗口，那么使用Unsplit(toRemove=None)。参数toRemove是实际要移除的wx.Window对象，并且必须是这两个子窗口中的一个。如果toRemove是None，那么底部或右部的窗口将被移除，这根据分割的方向而定。默认情况下，被移除的窗口是没有被wxPython删除的，所以以后你可以再把它添加回来。unsplit方法在取消分割成功时返回True。如果分割窗当前没有被分割，或toRemove参数不是两个子窗口中的一个，那么该方法返回False。
+<span id="line-948" class="anchor"/><span id="line-949" class="anchor"/></p><p class="line862">要确保你对想要的子窗口有一个正确的引用，那么使用<a href="/moin/GetWindow1"
+class="nonexistent">GetWindow1</a>()和<a href="/moin/GetWindow2" class="nonexistent">GetWindow2</a>()方法。<a href="/moin/GetWindow1" class="nonexistent">GetWindow1</a>()方法返回顶部或左边的子窗口，而<a
+href="/moin/GetWindow2" class="nonexistent">GetWindow2</a>()方法返回底部或右边的窗口。由于没有一个直接的设置方法来改变一个子窗口，所以使用方法<a href="/moin/ReplaceWindow"
+class="nonexistent">ReplaceWindow</a>(winOld, winNew)，winOld是你要替换的wx.Window对象，winNew是要显示的新窗口。 <span id="line-950" class="anchor"/><span id="line-951" class="anchor"/><span id="line-952"
+class="anchor"/><span id="line-953" class="anchor"/><span id="line-954" class="anchor"/></p><p class="line867">
+</p><h3 id="head-dbdf693e5d58e4580a45d407e86f4d79832ade49">1.4.3. 改变分割的外观</h3>
+<span id="line-955" class="anchor"/><span id="line-956" class="anchor"/><span id="line-957" class="anchor"/><p
+class="line874">有许多样式标记用来控制显示在屏幕上的分割窗的外观。注意，由于分割与平台有关，所以不是所有列出的标记都将对任何平台起作用。表8.9说明了这些有效的标记。 <span id="line-958"
+class="anchor"/><span id="line-959" class="anchor"/></p><p class="line874">我们将在接下来的部分看到，你也可以用你的程序来改变分割的显示，以响应用户的动作或你自己的要求。 <span id="line-960"
+class="anchor"/><span id="line-961" class="anchor"/><span id="line-962" class="anchor"/></p><p class="line867"><strong>表8.9</strong>  <span id="line-963" class="anchor"/><strong>分割窗的样式</strong>
+<span id="line-964" class="anchor"/><span id="line-965" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line862">wx.SP_3D</p></td>
+<td><p class="line862">绘制三维的边框和分割条。这是一个默认样式。</p></td>
+</tr>
+<tr>  <td><span id="line-966" class="anchor"/><p class="line862">wx.SP_3DBORDER</p></td>
+<td><p class="line862">绘制三维样式的边框，不包括分割条。</p></td>
+</tr>
+<tr>  <td><span id="line-967" class="anchor"/><p class="line862">wx.SP_3DSASH</p></td>
+<td><p class="line862">绘制三维样式的分割条，不包括边框。</p></td>
+</tr>
+<tr>  <td><span id="line-968" class="anchor"/><p class="line862">wx.SP_BORDER</p></td>
+<td><p class="line862">绘制窗口的边框，非三维的样式。</p></td>
+</tr>
+<tr>  <td><span id="line-969" class="anchor"/><p class="line862">wx.SP_LIVE_Update</p></td>
+<td><p
+class="line862">改变响应分割条移动的默认行为。如果没有设置这个标记，那么当用户拖动分割条时，将绘制一条线来标明分割条的新位置。子窗口的尺寸没有被实际地更新，直到完成分割条拖放。如果设置了这个标记，那么当分割条在被拖动时，子窗口的尺寸将不断地变化。</p></td>
+</tr>
+<tr>  <td><span id="line-970" class="anchor"/><p class="line862">wx.SP_NOBORDER</p></td>
+<td><p class="line862">不绘制任何边框。</p></td>
+</tr>
+<tr>  <td><span id="line-971" class="anchor"/><p class="line862">wx.SP_NO_XP_THEME</p></td>
+<td><p class="line862">在Windows XP系统下，分割条不使用XP的主题样式，它给窗口一个更经典的外观。</p></td>
+</tr>
+<tr>  <td><span id="line-972" class="anchor"/><p class="line862">wx.SP_PERMIT_UNSPLIT</p></td>
+<td><p class="line862">如果设置了这个样式，那么窗口始终不被分割。如果不设置，你可以通过设置大于0的最小化的窗格尺寸来防止窗口被分割。</p></td>
+</tr>
+</tbody></table></div><span id="line-973" class="anchor"/><span id="line-974" class="anchor"/><span id="line-975" class="anchor"/><p class="line867">
+</p><h3 id="head-b3d5cf1b0be45a67f370e28d6800ac22ef8adcbd">1.4.4. 以程序的方式处理分割</h3>
+<span id="line-976" class="anchor"/><span id="line-977" class="anchor"/><span id="line-978" class="anchor"/><p
+class="line862">一旦分割窗被创建，你就可以使用窗口的方法来处理分割条的位置。特别是，你可以使用方法<a href="/moin/SetSashPosition"
+class="nonexistent">SetSashPosition</a>(position,redraw=True)来移动分割条。position是以像素单位的新的位置，它是分割条距窗口顶部或左边的距离。用在分割方法中的负值，表示位置从底部或右边算起。如果redraw为True，则窗口立即更新。否则它等待常规窗口的刷新。如果你的像素值在范围外的话，设置方法的行为将不被定义。要得到当前分割条的位置，使用<a
+href="/moin/GetSashPosition" class="nonexistent">GetSashPosition</a>()方法。 <span id="line-979" class="anchor"/><span id="line-980" class="anchor"/></p><p
+class="line862">在默认的分割行为下，用户可以在两个边框间随意移到分割条。移动分割条到一边，使得别一子窗口的尺寸为0，这导致窗口此时成未分割状态。要防止这种情况，你可以使用方法<a
+href="/moin/SetMinimumPaneSize"
+class="nonexistent">SetMinimumPaneSize</a>(paneSize)来指定子窗口的最小尺寸。paneSize参数是子窗口的最小像素尺寸。这样，用户就不能通过拖放来使子窗口更小，程序同样也不能使子窗口更小。如前所述，你可以使用wx.SP_PERMIT_UNSPLIT样式来达到相同的效果。要得到当前最小子窗口尺寸，使用方法<a
+href="/moin/GetMinimumPaneSize" class="nonexistent">GetMinimumPaneSize</a>()。 <span id="line-981" class="anchor"/><span id="line-982" class="anchor"/></p><p
+class="line862">改变窗口的分割模式，使用方法<a href="/moin/SetSplitMode"
+class="nonexistent">SetSplitMode</a>(mode)，参数mode取下列常量值之一：wx.SPLIT_VERTICAL、wx.SPLIT_HORIZONTAL。如果模式改变了，那么顶部窗口变为左边，而底部变为右边（反之亦然）。该方法不引起窗口的重绘，你必须显式地进行强制重绘。你可以使用<a
+href="/moin/GetSplitMode" class="nonexistent">GetSplitMode</a>()来得到当前的分割模式，它返回上面两个常量值之一。如果窗口当前是未分割状态，那么<a href="/moin/GetSplitMode"
+class="nonexistent">GetSplitMode</a>()方法返回最近的分割模式。 <span id="line-983" class="anchor"/><span id="line-984" class="anchor"/></p><p
+class="line862">典型的，如果wx.SP_LIVE_Update样式没有被设置，那么子窗口仅在分割条拖动会话结束时改变尺寸。如果你想在其它时刻强制子窗口重绘，你可以使用方法<a href="/moin/UpdateSize"
+class="nonexistent">UpdateSize</a>()。 <span id="line-985" class="anchor"/><span id="line-986" class="anchor"/><span id="line-987" class="anchor"/></p><p class="line867">
+</p><h3 id="head-0c1661e92b07d865677afccaaf28e6c39f28cfc6">1.4.5. 响应分割事件</h3>
+<span id="line-988" class="anchor"/><span id="line-989" class="anchor"/><span id="line-990" class="anchor"/><p class="line862">分割窗触发wx.<a href="/moin/SplitterEvent"
+class="nonexistent">SplitterEvent</a>类事件。这儿有四个不同的分割窗的事件类型，如表8.10所示。 <span id="line-991" class="anchor"/><span id="line-992" class="anchor"/><span id="line-993"
+class="anchor"/></p><p class="line867"><strong>表8.10 分割窗的事件类型</strong> <span id="line-994" class="anchor"/><span id="line-995" class="anchor"/></p><div><table><tbody><tr>  <td><p
+class="line862">EVT_SPLITTER_DCLICK</p></td>
+<td><p class="line862">当分割条被双击时触发。捕捉这个事件不阻塞标准的不分割行为，除非你调用事件的Veto()方法。</p></td>
+</tr>
+<tr>  <td><span id="line-996" class="anchor"/><p class="line862">EVT_SPLITTER_SASH_POS_CHANGED</p></td>
+<td><p class="line862">分割条的改变结束后触发，但在此之前，改变将在屏幕上显示（因此你可以再作用于它）。这个事件可以使用Veto()来中断。</p></td>
+</tr>
+<tr>  <td><span id="line-997" class="anchor"/><p class="line862">EVT_SPLITTER_SASH_POS_CHANGING</p></td>
+<td><p class="line862">当分割条在被拖动时，不断触发该事件。这个事件可以通过使用事件的Veto()方法来中断，如果被中断，那么分割条的位置不被改变。</p></td>
+</tr>
+<tr>  <td><span id="line-998" class="anchor"/><p class="line862">EVT_SPLITTER_UNSPLIT</p></td>
+<td><p class="line862">变成未分割状态时触发。</p></td>
+</tr>
+</tbody></table></div><span id="line-999" class="anchor"/><span id="line-1000" class="anchor"/><p class="line862">这个分割事件类是wx.<a href="/moin/CommandEvent"
+class="nonexistent">CommandEvent</a>的子类。从分割事件的实例，你可以访问关于分割窗当前状态的信息。对于涉及到分割条移动的两个事件，调用<a href="/moin/GetSashPosition"
+class="nonexistent">GetSashPosition</a>()得到分割条相对于左或顶部的位置，这依据分割条的方向而定。在位置正在变化事件中，调用<a href="/moin/SetSashPosition"
+class="nonexistent">SetSashPosition</a>(pos)，将用线条表示新的位置。在位置已改变事件中，<a href="/moin/SetSashPosition"
+class="nonexistent">SetSashPosition</a>(pos)方法将移动分割条。对于双击事件，你可以使用事件的GetX() 和GetY()方法得到敲击的确切位置。对于未分割事件，你可以使用<a
+href="/moin/GetWindowBeingRemoved" class="nonexistent">GetWindowBeingRemoved</a>()方法来得到哪个窗口被移除了。 <span id="line-1001" class="anchor"/><span id="line-1002"
+class="anchor"/><span id="line-1003" class="anchor"/><span id="line-1004" class="anchor"/><span id="line-1005" class="anchor"/></p><p class="line867">
+</p><h2 id="head-7fa8d2f3c2d9a31c4cffd3e882dde018d313aedc">1.5. 本章小结</h2>
+<span id="line-1006" class="anchor"/><span id="line-1007" class="anchor"/><span id="line-1008" class="anchor"/><p
+class="line874">1、wxPython中的大部分用户交互都发生在wx.Frame或wx.Dialog中。wx.Frame代表用户调用的窗口。wx.Frame实例的创建就像其它的wxPython窗口部件一样。wx.Frame的典型用法包括创建子类，子类通过定义子窗口部件，布局和行为来扩展基类。通常，一个框架包含只包含一个wx.Panel的顶级子窗口部件或别的容器窗口。
+<span id="line-1009" class="anchor"/><span id="line-1010" class="anchor"/></p><p
+class="line874">2、这儿还有各种特定于wx.Frame的样式标记。其中的一些影响框架的尺寸和形状，另一些影响在系统中相对于其它的框架，它将如何被绘制，还有一些定义了在框架边框上有那些界面装饰。在某种情况下，定义一个样式标记需要“两步”的创建过程。
+<span id="line-1011" class="anchor"/><span id="line-1012" class="anchor"/></p><p
+class="line874">3、通过调用Close()方法可以产生关闭框架的请求。这给了框架一个关闭它所占用的资源的机会。框架也能否决一个关闭请求。调用Destroy()方法将迫使框架立即消失而没有任何延缓。
+<span id="line-1013" class="anchor"/><span id="line-1014" class="anchor"/></p><p class="line874">4、框架中的一个特定的子窗口部件可以使用它的wxPython ID、名字或它的文本标签来发现。
+<span id="line-1015" class="anchor"/><span id="line-1016" class="anchor"/></p><p class="line862">5、通过包括wx.<a href="/moin/ScrolledWindow"
+class="nonexistent">ScrolledWindow</a>类的容器部件可以实现滚动。这儿有几个方法来设置滚动参数，最简单的是在滚动窗口中使用sizer，在这种情况下，wxPython自动确定滚动面板的虚拟尺寸（virtual
+size）。如果想的话，虚拟尺寸可以被手动设置。 <span id="line-1017" class="anchor"/><span id="line-1018" class="anchor"/></p><p
+class="line862">6、这儿有一对不同的框架子类，它们允许不同的外观。类wx.MDIParentFrame可以被用来创建MDI，而wx.<a href="/moin/MiniFrame"
+class="nonexistent">MiniFrame</a>可以创建一个带有较小标题栏的工具框样式的窗口。使用<a href="/moin/SetShape"
+class="nonexistent">SetShape</a>()方法，框架可以呈现出非矩形的形状。形状的区域可以被任何位图定义，并使用简单的颜色掩码来决定区域的边缘。非矩形窗口通常没有标准的标题栏，标题栏使得框架可以被拖动，
+但这可以通过显式地处理鼠标事件来管理。 <span id="line-1019" class="anchor"/><span id="line-1020" class="anchor"/></p><p
+class="line862">7、位于两个子窗口间的可拖动的分割条能够使用wx.<a href="/moin/SplitterWindow"
+class="nonexistent">SplitterWindow</a>来实现，分割条可以被用户以交互的方式处理，或以编程的方式处理（如果需要的话）。 <span id="line-1021" class="anchor"/><span id="line-1022"
+class="anchor"/></p><p class="line874">在下一章，我们将讨论对话框，它的行为类似于框架。 <span id="line-1023" class="anchor"/><span id="bottom" class="anchor"/></p></div>

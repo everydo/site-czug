@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zemantic"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Zemantic是ZCatalog的一个替代。他能够存储网站的rdf数据，并支持查询。", 
+        "modified": "2005-03-29 16:28:24", 
+        "title": "Zemantic: 基于Zope的语义网(Semantic Web)存储和查询引擎"
+    }
+}

@@ -1,0 +1,26 @@
+{
+    "main": {
+        "hidden_keys": [
+            "img", 
+            "__init__.pyc", 
+            "__init__.py"
+        ], 
+        "keys": [
+            "getstarted.rst", 
+            "example.rst", 
+            "interface.rst", 
+            "adapter.rst", 
+            "utility.rst", 
+            "adapter2.rst", 
+            "zope.rst", 
+            "case.rst", 
+            "reference.rst", 
+            "component-architecture.tex"
+        ], 
+        "contenttype": "Folder"
+    }, 
+    "dublin": {
+        "description": "网站皮肤、规则用法说明", 
+        "title": "皮肤制作"
+    }
+}

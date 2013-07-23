@@ -1,0 +1,14 @@
+{
+    "main": {
+        "hidden_keys": [
+            "img", 
+            "__init__.pyc", 
+            "__init__.py"
+        ], 
+        "contenttype": "Document"
+    }, 
+    "dublin": {
+        "description": "接口和函数使用参考", 
+        "title": "参考"
+    }
+}

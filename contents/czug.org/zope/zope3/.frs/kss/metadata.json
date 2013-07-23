@@ -1,0 +1,15 @@
+{
+    "main": {
+        "left_col": ".. navtree::\n   :root_depth: 2",
+        "hidden_keys": [
+            "img", 
+            "__init__.pyc", 
+            "__init__.py"
+        ], 
+        "contenttype": "Folder"
+    }, 
+    "dublin": {
+        "description": "不需要javascript的AJAX框架", 
+        "title": "KSS"
+    }
+}

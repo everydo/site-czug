@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "xiangmuguanlichanpin"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "今天有人问起Plone上的项目管理产品。", 
+        "modified": "2006-01-05 22:32:53", 
+        "title": "项目管理产品"
+    }
+}

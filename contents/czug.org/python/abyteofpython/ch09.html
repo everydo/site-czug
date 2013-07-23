@@ -1,0 +1,391 @@
+<p>出处： <a href="http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch09.html">http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch09.html</a></p>
+
+<h1>第9章 数据结构</h1>
+
+<p><strong>目录表</strong></p>
+<dl>
+<dt><a href="#s01">简介</a></dt>
+<dt><a href="#ch09s02.html">列表</a></dt>
+<dd><a href="#ch09s02.html#quick">对象与类的快速入门</a></dd>
+<dd><a href="#ch09s02.html#using">使用列表</a></dd>
+<dt><a href="#ch09s03.html">元组</a></dt>
+<dd><a href="#ch09s03.html#using">使用元组</a></dd>
+<dd><a href="#ch09s03.html#tuples">元组与打印语句</a></dd>
+<dt><a href="#ch09s04.html">字典</a></dt>
+<dd><a href="#ch09s04.html#using">使用字典</a></dd>
+<dt><a href="#ch09s05.html">序列</a></dt>
+<dd><a href="#ch09s05.html#using">使用序列</a></dd>
+<dt><a href="#ch09s06.html">参考</a></dt>
+<dd><a href="#ch09s06.html#objects">对象与参考</a></dd>
+<dt><a href="#ch09s07.html">更多字符串的内容</a></dt>
+<dd><a href="#ch09s07.html#string">字符串的方法</a></dd>
+<dt><a href="#ch09s08.html">概括</a></dt>
+</dl>
+
+<h1><a name="s01">简介</a></h1>
+<p>数据结构基本上就是——它们是可以处理一些 <dfn>数据</dfn> 的 <dfn>结构</dfn> 。或者说，它们是用来存储一组相关数据的。</p>
+<p>在Python中有三种内建的数据结构——列表、元组和字典。我们将会学习如何使用它们，以及它们如何使编程变得简单。</p>
+
+
+<h1><a name="ch09s02.html">列表</a></h1>
+<p><code>list</code>是处理一组有序项目的数据结构，即你可以在一个<a name="ch09s02.html">列表</a>中存储一个 <dfn>序列</dfn> 的项目。假想你有一个购物<a name="ch09s02.html">列表</a>，上面记载着你要买的东西，你就容易理解<a name="ch09s02.html">列表</a>了。只不过在你的购物表上，可能每样东西都独自占有一行，而在Python中，你在每个项目之间用逗号分割。</p>
+<p><a name="ch09s02.html">列表</a>中的项目应该包括在方括号中，这样Python就知道你是在指明一个<a name="ch09s02.html">列表</a>。一旦你创建了一个<a name="ch09s02.html">列表</a>，你可以添加、删除或是搜索<a name="ch09s02.html">列表</a>中的项目。由于你可以增加或删除项目，我们说<a name="ch09s02.html">列表</a>是 <dfn>可变的</dfn> 数据类型，即这种类型是可以被改变的。</p>
+
+<h2><a name="quick">对象与类的快速入门</a></h2>
+<p>尽管我一直推迟讨论对象和类，但是现在对它们做一点解释可以使你更好的理解<a name="ch09s02.html">列表</a>。我们会在相应的<a href="ch11.html">章节</a>详细探索这个主题。</p>
+<p><a name="ch09s02.html">列表</a>是使用对象和类的一个例子。当你使用变量<code>i</code>并给它赋值的时候，比如赋整数<code>5</code>，你可以认为你创建了一个<strong>类</strong>（类型）<code>int</code>的<strong>对象</strong>（实例）<code>i</code>。事实上，你可以看一下<code>help(int)</code>以更好地理解这一点。</p>
+<p>类也有<strong>方法</strong>，即仅仅为类而定义地函数。仅仅在你有一个该类的对象的时候，你才可以使用这些功能。例如，Python为<code>list</code>类提供了<code>append</code>方法，这个方法让你在<a name="ch09s02.html">列表</a>尾添加一个项目。例如<code>mylist.append('an item')</code><a name="ch09s02.html">列表</a><code>mylist</code>中增加那个字符串。注意，使用点号来使用对象的方法。</p>
+<p>一个类也有<strong>域</strong>，它是仅仅为类而定义的变量。仅仅在你有一个该类的对象的时候，你才可以使用这些变量/名称。类也通过点号使用，例如<code>mylist.field</code>。</p>
+
+<h2><a name="using">使用<a name="ch09s02.html">列表</a></a></h2>
+<p class="exampletitle"><a name="e91">例9.1 使用<a name="ch09s02.html">列表</a></a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: using_list.py<br>
+<br>
+# This is my shopping list</code><br>
+<code>shoplist = [</code><code class="cite">'apple'</code><code>, </code><code class="cite">'mango'</code><code>, </code><code class="cite">'carrot'</code><code>, </code><code class="cite">'banana'</code><code>]</code><br>
+<br>
+<code class="key">print </code><code class="cite">'I have'</code><code>, </code><code class="func">len</code><code>(shoplist),</code><code class="cite">'items to purchase.'</code><br>
+<br>
+<code class="key">print </code><code class="cite">'These items are:'</code><code>, </code><code class="comment"># Notice the comma at end of the line</code><br>
+<code class="key">for </code><code>item </code><code class="key">in </code><code>shoplist:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code>item,</code><br>
+<br>
+<code class="key">print </code><code class="cite">'\nI also have to buy rice.'</code><br>
+<code>shoplist.append(</code><code class="cite">'rice'</code><code>)</code><br>
+<code class="key">print </code><code class="cite">'My shopping list is now'</code><code>, shoplist</code><br>
+<br>
+<code class="key">print </code><code class="cite">'I will sort my list now'</code><br>
+<code>shoplist.sort()</code><br>
+<code class="key">print </code><code class="cite">'Sorted shopping list is'</code><code>, shoplist</code><br>
+<br>
+<code class="key">print </code><code class="cite">'The first item I will buy is'</code><code>, shoplist[</code><code class="cite">0</code><code>]</code><br>
+<code>olditem = shoplist[</code><code class="cite">0</code><code>]</code><br>
+<code class="key">del </code><code>shoplist[</code><code class="cite">0</code><code>]</code><br>
+<code class="key">print </code><code class="cite">'I bought the'</code><code>, olditem</code><br>
+<code class="key">print </code><code class="cite">'My shopping list is now'</code><code>, shoplist
+</code>
+</p>
+<p>（源文件：<a href="code/using_list.py">code/using_list.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python using_list.py<br>
+I have 4 items to purchase.<br>
+These items are: apple mango carrot banana<br>
+I also have to buy rice.<br>
+My shopping list is now ['apple', 'mango', 'carrot', 'banana', 'rice']<br>
+I will sort my list now<br>
+Sorted shopping list is ['apple', 'banana', 'carrot', 'mango', 'rice']<br>
+The first item I will buy is apple<br>
+I bought the apple<br>
+My shopping list is now ['banana', 'carrot', 'mango', 'rice']
+</code></p>
+
+<h2>它如何工作</h2>
+<p>变量<code>shoplist</code>是某人的购物<a name="ch09s02.html">列表</a>。在<code>shoplist</code>中，我们只存储购买的东西的名字字符串，但是记住，你可以在<a name="ch09s02.html">列表</a>中添加 <dfn>任何种类的对象</dfn> 包括数甚至其他<a name="ch09s02.html">列表</a>。</p>
+<p>我们也使用了<code>for..in</code>循环在<a name="ch09s02.html">列表</a>中各项目间递归。从现在开始，你一定已经意识到<a name="ch09s02.html">列表</a>也是一个序列。序列的特性会在后面的<a href="ch09s05.html">章节</a>中讨论。</p>
+<p>注意，我们在<code>print</code>语句的结尾使用了一个 <dfn>逗号</dfn> 来消除每个<code>print</code>语句自动打印的换行符。这样做有点难看，不过确实简单有效。</p>
+<p>接下来，我们使用<code>append</code>方法在<a name="ch09s02.html">列表</a>中添加了一个项目，就如前面已经讨论过的一样。然后我们通过打印<a name="ch09s02.html">列表</a>的内容来检验这个项目是否确实被添加进<a name="ch09s02.html">列表</a>了。打印<a name="ch09s02.html">列表</a>只需简单地把<a name="ch09s02.html">列表</a>传递给<code>print</code>语句，我们可以得到一个整洁的输出。</p>
+<p>再接下来，我们使用<a name="ch09s02.html">列表</a>的<code>sort</code>方法来对<a name="ch09s02.html">列表</a>排序。需要理解的是，这个方法影响<a name="ch09s02.html">列表</a>本身，而不是返回一个修改后的<a name="ch09s02.html">列表</a>——这与字符串工作的方法不同。这就是我们所说的<a name="ch09s02.html">列表</a>是 <dfn>可变的</dfn> 而字符串是 <dfn>不可变的</dfn> 。</p>
+<p>最后，但我们完成了在市场购买一样东西的时候，我们想要把它从<a name="ch09s02.html">列表</a>中删除。我们使用<code>del</code>语句来完成这个工作。这里，我们指出我们想要删除<a name="ch09s02.html">列表</a>中的哪个项目，而<code>del</code>语句为我们从<a name="ch09s02.html">列表</a>中删除它。我们指明我们想要删除<a name="ch09s02.html">列表</a>中的第一个元素，因此我们使用<code>del shoplist[0]</code>（记住，Python从0开始计数）。</p>
+<p>如果你想要知道<a name="ch09s02.html">列表</a>对象定义的所有方法，可以通过<code>help(list)</code>获得完整的知识。</p>
+
+
+<h1><a name="ch09s03.html">元组</a></h1>
+<p><a name="ch09s03.html">元组</a>和列表十分类似，只不过<a name="ch09s03.html">元组</a>和字符串一样是 <dfn>不可变的</dfn> 即你不能修改<a name="ch09s03.html">元组</a>。<a name="ch09s03.html">元组</a>通过圆括号中用逗号分割的项目定义。<a name="ch09s03.html">元组</a>通常用在使语句或用户定义的函数能够安全地采用一组值的时候，即被使用的<a name="ch09s03.html">元组</a>的值不会改变。</p>
+
+<h2><a name="using">使用<a name="ch09s03.html">元组</a></a></h2>
+<p class="exampletitle"><a name="e92">例9.2 使用<a name="ch09s03.html">元组</a></a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: using_tuple.py</code><br>
+<br>
+<code>zoo = (</code><code class="cite">'wolf'</code><code>, </code><code class="cite">'elephant'</code><code>, </code><code class="cite">'penguin'</code><code>)</code><br>
+<code class="key">print </code><code class="cite">'Number of animals in the zoo is'</code><code>, </code><code class="func">len</code><code>(zoo)</code><br>
+<br>
+<code>new_zoo = (</code><code class="cite">'monkey'</code><code>, </code><code class="cite">'dolphin'</code><code>, zoo)</code><br>
+<code class="key">print </code><code class="cite">'Number of animals in the new zoo is'</code><code>, </code><code class="func">len</code><code>(new_zoo)</code><br>
+<code class="key">print </code><code class="cite">'All animals in new zoo are'</code><code>, new_zoo</code><br>
+<code class="key">print </code><code class="cite">'Animals brought from old zoo are'</code><code>, new_zoo[</code><code class="cite">2</code><code>]</code><br>
+<code class="key">print </code><code class="cite">'Last animal brought from old zoo is'</code><code>, new_zoo[</code><code class="cite">2</code><code>][</code><code class="cite">2</code><code>]</code>
+</p>
+<p>（源文件：<a href="code/using_tuple.py">code/using_tuple.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python using_tuple.py<br>
+Number of animals in the zoo is 3<br>
+Number of animals in the new zoo is 3<br>
+All animals in new zoo are ('monkey', 'dolphin', ('wolf', 'elephant', 'penguin'))<br>
+Animals brought from old zoo are ('wolf', 'elephant', 'penguin')<br>
+Last animal brought from old zoo is penguin
+</code></p>
+
+<h2>它如何工作</h2>
+<p>变量<code>zoo</code>是一个<a name="ch09s03.html">元组</a>，我们看到<code>len</code>函数可以用来获取<a name="ch09s03.html">元组</a>的长度。这也表明<a name="ch09s03.html">元组</a>也是一个<a href="ch09s05.html">序列</a>。</p>
+<p>由于老动物园关闭了，我们把动物转移到新动物园。因此，<code>new_zoo</code><a name="ch09s03.html">元组</a>包含了一些已经在那里的动物和从老动物园带过来的动物。回到话题，注意<a name="ch09s03.html">元组</a>之内的<a name="ch09s03.html">元组</a>不会失去它的身份。</p>
+<p>我们可以通过一对方括号来指明某个项目的位置从而来访问<a name="ch09s03.html">元组</a>中的项目，就像我们对列表的用法一样。这被称作 <dfn>索引</dfn> 运算符。我们使用<code>new_zoo[2]</code>来访问<code>new_zoo</code>中的第三个项目。我们使用<code>new_zoo[2][2]</code>来访问<code>new_zoo</code><a name="ch09s03.html">元组</a>的第三个项目的第三个项目。</p>
+<p><strong>含有0个或1个项目的<a name="ch09s03.html">元组</a>。</strong>一个空的<a name="ch09s03.html">元组</a>由一对空的圆括号组成，如<code>myempty = ()</code>。然而，含有单个元素的<a name="ch09s03.html">元组</a>就不那么简单了。你必须在第一个（唯一一个）项目后跟一个逗号，这样Python才能区分<a name="ch09s03.html">元组</a>和表达式中一个带圆括号的对象。即如果你想要的是一个包含项目<code>2</code>的<a name="ch09s03.html">元组</a>的时候，你应该指明<code>singleton = (2 , )</code>。</p>
+
+<p class="notebox">
+<span class="boxtitle">给Perl程序员的注释</span><br>
+列表之中的列表不会失去它的身份，即列表不会像Perl中那样被打散。同样<a name="ch09s03.html">元组</a>中的<a name="ch09s03.html">元组</a>，或列表中的<a name="ch09s03.html">元组</a>，或<a name="ch09s03.html">元组</a>中的列表等等都是如此。只要是Python，它们就只是使用另一个对象存储的对象。
+</p>
+
+<h2><a name="tuples"><a name="ch09s03.html">元组</a>与打印语句</a></h2>
+<p><a name="ch09s03.html">元组</a>最通常的用法是用在打印语句中，下面是一个例子：</p>
+
+<p class="exampletitle"><a name="e93">例9.3 使用<a name="ch09s03.html">元组</a>输出</a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: print_tuple.py</code><br>
+<br>
+<code>age = </code><code class="cite">22</code><br>
+<code>name = </code><code class="cite">'Swaroop'</code><br>
+<br>
+<code class="key">print </code><code class="cite">'%s is %d years old' </code><code>% (name, age)</code><br>
+<code class="key">print </code><code class="cite">'Why is %s playing with that python?' </code><code>% name</code>
+</p>
+<p>（源文件：<a href="code/print_tuple.py">code/print_tuple.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python print_tuple.py<br>
+Swaroop is 22 years old<br>
+Why is Swaroop playing with that python?
+</code></p>
+
+<h2>它如何工作</h2>
+
+<p><code>print</code>语句可以使用跟着<code>%</code>符号的项目<a name="ch09s03.html">元组</a>的字符串。这些字符串具备定制的功能。定制让输出满足某种特定的格式。定制可以是<code>%s</code>表示字符串或<code>%d</code>表示整数。<a name="ch09s03.html">元组</a>必须按照相同的顺序来对应这些定制。</p>
+<p>观察我们使用的第一个<a name="ch09s03.html">元组</a>，我们首先使用<code>%s</code>，这对应变量<code>name</code>，它是<a name="ch09s03.html">元组</a>中的第一个项目。而第二个定制是<code>%d</code>，它对应<a name="ch09s03.html">元组</a>的第二个项目<code>age</code>。</p>
+<p>Python在这里所做的是把<a name="ch09s03.html">元组</a>中的每个项目转换成字符串并且用字符串的值替换定制的位置。因此<code>%s</code>被替换为变量<code>name</code>的值，依此类推。</p>
+<p><code>print</code>的这个用法使得编写输出变得极其简单，它避免了许多字符串操作。它也避免了我们一直以来使用的逗号。</p>
+<p>在大多数时候，你可以只使用<code>%s</code>定制，而让Python来提你处理剩余的事情。这种方法对数同样奏效。然而，你可能希望使用正确的定制，从而可以避免多一层的检验程序是否正确。</p>
+<p>在第二个<code>print</code>语句中，我们使用了一个定制，后面跟着<code>%</code>符号后的单个项目——没有圆括号。这只在字符串中只有一个定制的时候有效。</p>
+
+
+<h1><a name="ch09s04.html">字典</a></h1>
+<p><a name="ch09s04.html">字典</a>类似于你通过联系人名字查找地址和联系人详细情况的地址簿，即，我们把<strong>键</strong>（名字）和<strong>值</strong>（详细情况）联系在一起。注意，键必须是唯一的，就像如果有两个人恰巧同名的话，你无法找到正确的信息。</p>
+<p>注意，你只能使用不可变的对象（比如字符串）来作为<a name="ch09s04.html">字典</a>的键，但是你可以不可变或可变的对象作为<a name="ch09s04.html">字典</a>的值。基本说来就是，你应该只使用简单的对象作为键。</p>
+<p>键值对在<a name="ch09s04.html">字典</a>中以这样的方式标记：<code>d = {key1 : value1, key2 : value2 }</code>。注意它们的键/值对用冒号分割，而各个对用逗号分割，所有这些都包括在花括号中。</p>
+<p>记住<a name="ch09s04.html">字典</a>中的键/值对是没有顺序的。如果你想要一个特定的顺序，那么你应该在使用前自己对它们排序。</p>
+<p><a name="ch09s04.html">字典</a>是<code>dict</code>类的实例/对象。</p>
+
+<h2><a name="using">使用<a name="ch09s04.html">字典</a></a></h2>
+<p class="exampletitle"><a name="e94">例9.4 使用<a name="ch09s04.html">字典</a></a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: using_dict.py<br>
+<br>
+# 'ab' is short for 'a'ddress'b'ook</code><br>
+<br>
+<code>ab = {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cite">'Swaroop'&nbsp;&nbsp;&nbsp;</code><code>: </code><code class="cite">'swaroopch@byteofpython.info'</code><code>,</code><br>
+<code class="cite">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Larry'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code>: </code><code class="cite">'larry@wall.org'</code><code>,</code><br>
+<code class="cite">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Matsumoto'&nbsp;</code><code>: </code><code class="cite">'matz@ruby-lang.org'</code><code>,</code><br>
+<code class="cite">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Spammer'&nbsp;&nbsp;&nbsp;</code><code>: </code><code class="cite">'spammer@hotmail.com'</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</code><br>
+<br>
+<code class="key">print </code><code class="cite">"Swaroop's address is %s" </code><code>% ab[</code><code class="cite">'Swaroop'</code><code>]</code><br>
+<br>
+<code class="comment"># Adding a key/value pair</code><br>
+<code>ab[</code><code class="cite">'Guido'</code><code>] = </code><code class="cite">'guido@python.org'</code><br>
+<br>
+<code class="comment"># Deleting a key/value pair</code><br>
+<code class="key">del </code><code>ab[</code><code class="cite">'Spammer'</code><code>]</code><br>
+<br>
+<code class="key">print </code><code class="cite">'\nThere are %d contacts in the address-book\n' </code><code>% </code><code class="func">len</code><code>(ab)</code><br>
+<code class="key">for </code><code>name, address </code><code class="key">in </code><code>ab.items():</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Contact %s at %s' </code><code>% (name, address)</code><br>
+<br>
+<code class="key">if </code><code class="cite">'Guido' </code><code class="key">in </code><code>ab: </code><code class="comment"># OR ab.has_key('Guido')</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">"\nGuido's address is %s" </code><code>% ab[</code><code class="cite">'Guido'</code><code>]</code>
+</p>
+<p>（源文件：<a href="code/using_dict.py">code/using_dict.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python using_dict.py<br>
+Swaroop's address is swaroopch@byteofpython.info<br>
+<br>
+There are 4 contacts in the address-book<br>
+<br>
+Contact Swaroop at swaroopch@byteofpython.info<br>
+Contact Matsumoto at matz@ruby-lang.org<br>
+Contact Larry at larry@wall.org<br>
+Contact Guido at guido@python.org<br>
+<br>
+Guido's address is guido@python.org
+</code></p>
+
+<h2>它如何工作</h2>
+<p>我们使用已经介绍过的标记创建了<a name="ch09s04.html">字典</a><code>ab</code>。然后我们使用在列表和元组章节中已经讨论过的索引操作符来指定键，从而使用键/值对。我们可以看到<a name="ch09s04.html">字典</a>的语法同样十分简单。</p>
+<p>我们可以使用索引操作符来寻址一个键并为它赋值，这样就增加了一个新的键/值对，就像在上面的例子中我们对Guido所做的一样。</p>
+<p>我们可以使用我们的老朋友——<code>del</code>语句来删除键/值对。我们只需要指明<a name="ch09s04.html">字典</a>和用索引操作符指明要删除的键，然后把它们传递给<code>del</code>语句就可以了。执行这个操作的时候，我们无需知道那个键所对应的值。</p>
+<p>接下来，我们使用<a name="ch09s04.html">字典</a>的<code>items</code>方法，来使用<a name="ch09s04.html">字典</a>中的每个键/值对。这会返回一个元组的列表，其中每个元组都包含一对项目——键与对应的值。我们抓取这个对，然后分别赋给<code>for..in</code>循环中的变量<code>name</code>和<code>address</code>然后在for－块中打印这些值。</p>
+<p>我们可以使用<code>in</code>操作符来检验一个键/值对是否存在，或者使用<code>dict</code>类的<code>has_key</code>方法。你可以使用<code>help(dict)</code>来查看<code>dict</code>类的完整方法列表。</p>
+<p><strong>关键字参数与<a name="ch09s04.html">字典</a>。</strong>如果换一个角度看待你在函数中使用的关键字参数的话，你已经使用了<a name="ch09s04.html">字典</a>了！只需想一下——你在函数定义的参数列表中使用的键/值对。当你在函数中使用变量的时候，它只不过是使用一个<a name="ch09s04.html">字典</a>的键（这在编译器设计的术语中被称作 <dfn>符号表</dfn> ）。</p>
+
+
+<h1><a name="ch09s05.html">序列</a></h1>
+<p>列表、元组和字符串都是<a name="ch09s05.html">序列</a>，但是<a name="ch09s05.html">序列</a>是什么，它们为什么如此特别呢？<a name="ch09s05.html">序列</a>的两个主要特点是<strong>索引</strong>操作符和<strong>切片</strong>操作符。索引操作符让我们可以从<a name="ch09s05.html">序列</a>中抓取一个特定项目。切片操作符让我们能够获取<a name="ch09s05.html">序列</a>的一个切片，即一部分<a name="ch09s05.html">序列</a>。</p>
+
+<h2><a name="using">使用<a name="ch09s05.html">序列</a></a></h2>
+<p class="exampletitle"><a name="e95">例9.5 使用<a name="ch09s05.html">序列</a></a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: seq.py</code><br>
+<br>
+<code>shoplist = [</code><code class="cite">'apple'</code><code>, </code><code class="cite">'mango'</code><code>, </code><code class="cite">'carrot'</code><code>, </code><code class="cite">'banana'</code><code>]</code><br>
+<br>
+<code class="comment"># Indexing or 'Subscription' operation</code><br>
+<code class="key">print </code><code class="cite">'Item 0 is'</code><code>, shoplist[</code><code class="cite">0</code><code>]</code><br>
+<code class="key">print </code><code class="cite">'Item 1 is'</code><code>, shoplist[</code><code class="cite">1</code><code>]</code><br>
+<code class="key">print </code><code class="cite">'Item 2 is'</code><code>, shoplist[</code><code class="cite">2</code><code>]</code><br>
+<code class="key">print </code><code class="cite">'Item 3 is'</code><code>, shoplist[</code><code class="cite">3</code><code>]</code><br>
+<code class="key">print </code><code class="cite">'Item -1 is'</code><code>, shoplist[</code><code class="cite">-1</code><code>]</code><br>
+<code class="key">print </code><code class="cite">'Item -2 is'</code><code>, shoplist[</code><code class="cite">-2</code><code>]</code><br>
+<br>
+<code class="comment"># Slicing on a list</code><br>
+<code class="key">print </code><code class="cite">'Item 1 to 3 is'</code><code>, shoplist[</code><code class="cite">1</code><code>:</code><code class="cite">3</code><code>]</code><br>
+<code class="key">print </code><code class="cite">'Item 2 to end is'</code><code>, shoplist[</code><code class="cite">2</code><code>:</code><code>]</code><br>
+<code class="key">print </code><code class="cite">'Item 1 to -1 is'</code><code>, shoplist[</code><code class="cite">1</code><code>:</code><code class="cite">-1</code><code>]</code><br>
+<code class="key">print </code><code class="cite">'Item start to end is'</code><code>, shoplist[:]</code><br>
+<br>
+<code class="comment"># Slicing on a string</code><br>
+<code>name = </code><code class="cite">'swaroop'</code><br>
+<code class="key">print </code><code class="cite">'characters 1 to 3 is'</code><code>, name[</code><code class="cite">1</code><code>:</code><code class="cite">3</code><code>]</code><br>
+<code class="key">print </code><code class="cite">'characters 2 to end is'</code><code>, name[</code><code class="cite">2</code><code>:]</code><br>
+<code class="key">print </code><code class="cite">'characters 1 to -1 is'</code><code>, name[</code><code class="cite">1</code><code>:</code><code class="cite">-1</code><code>]</code><br>
+<code class="key">print </code><code class="cite">'characters start to end is'</code><code>, name[:]</code>
+</p>
+<p>（源文件：<a href="code/seq.py">code/seq.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python seq.py<br>
+Item 0 is apple<br>
+Item 1 is mango<br>
+Item 2 is carrot<br>
+Item 3 is banana<br>
+Item -1 is banana<br>
+Item -2 is carrot<br>
+Item 1 to 3 is ['mango', 'carrot']<br>
+Item 2 to end is ['carrot', 'banana']<br>
+Item 1 to -1 is ['mango', 'carrot']<br>
+Item start to end is ['apple', 'mango', 'carrot', 'banana']<br>
+characters 1 to 3 is wa<br>
+characters 2 to end is aroop<br>
+characters 1 to -1 is waroo<br>
+characters start to end is swaroop
+</code></p>
+
+<h2>它如何工作</h2>
+<p>首先，我们来学习如何使用索引来取得<a name="ch09s05.html">序列</a>中的单个项目。这也被称作是下标操作。每当你用方括号中的一个数来指定一个<a name="ch09s05.html">序列</a>的时候，Python会为你抓取<a name="ch09s05.html">序列</a>中对应位置的项目。记住，Python从0开始计数。因此，<code>shoplist[0]</code>抓取第一个项目，<code>shoplist[3]</code>抓取<code>shoplist</code><a name="ch09s05.html">序列</a>中的第四个元素。</p>
+<p>索引同样可以是负数，在那样的情况下，位置是从<a name="ch09s05.html">序列</a>尾开始计算的。因此，<code>shoplist[-1]</code>表示<a name="ch09s05.html">序列</a>的最后一个元素而<code>shoplist[-2]</code>抓取<a name="ch09s05.html">序列</a>的倒数第二个项目。</p>
+<p>切片操作符是<a name="ch09s05.html">序列</a>名后跟一个方括号，方括号中有一对可选的数字，并用冒号分割。注意这与你使用的索引操作符十分相似。记住数是可选的，而冒号是必须的。</p>
+<p>切片操作符中的第一个数（冒号之前）表示切片开始的位置，第二个数（冒号之后）表示切片到哪里结束。如果不指定第一个数，Python就从<a name="ch09s05.html">序列</a>首开始。如果没有指定第二个数，则Python会停止在<a name="ch09s05.html">序列</a>尾。注意，返回的<a name="ch09s05.html">序列</a>从开始位置 <dfn>开始</dfn> ，刚好在 <dfn>结束</dfn> 位置之前结束。即开始位置是包含在<a name="ch09s05.html">序列</a>切片中的，而结束位置被排斥在切片外。</p>
+<p>这样，<code>shoplist[1:3]</code>返回从位置1开始，包括位置2，但是停止在位置3的一个<a name="ch09s05.html">序列</a>切片，因此返回一个含有两个项目的切片。类似地，<code>shoplist[:]</code>返回整个<a name="ch09s05.html">序列</a>的拷贝。</p>
+<p>你可以用负数做切片。负数用在从<a name="ch09s05.html">序列</a>尾开始计算的位置。例如，<code>shoplist[:-1]</code>会返回除了最后一个项目外包含所有项目的<a name="ch09s05.html">序列</a>切片。</p>
+<p>使用Python解释器交互地尝试不同切片指定组合，即在提示符下你能够马上看到结果。<a name="ch09s05.html">序列</a>的神奇之处在于你可以用相同的方法访问元组、列表和字符串。</p>
+
+
+<h1><a name="ch09s06.html">参考</a></h1>
+<p>当你创建一个对象并给它赋一个变量的时候，这个变量仅仅 <dfn><a name="ch09s06.html">参考</a></dfn> 那个对象，而不是表示这个对象本身！也就是说，变量名指向你计算机中存储那个对象的内存。这被称作名称到对象的<strong>绑定</strong>。</p>
+<p>一般说来，你不需要担心这个，只是在<a name="ch09s06.html">参考</a>上有些细微的效果需要你注意。这会通过下面这个例子加以说明。</p>
+
+<h2><a name="objects">对象与<a name="ch09s06.html">参考</a></a></h2>
+<p class="exampletitle"><a name="e96">例9.6 对象与<a name="ch09s06.html">参考</a></a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: reference.py</code><br>
+<br>
+<code class="key">print </code><code class="cite">'Simple Assignment'</code><br>
+<code>shoplist = [</code><code class="cite">'apple'</code><code>, </code><code class="cite">'mango'</code><code>, </code><code class="cite">'carrot'</code><code>, </code><code class="cite">'banana'</code><code>]</code><br>
+<code>mylist = shoplist </code><code class="comment"># mylist is just another name pointing to the same object!</code><br>
+<br>
+<code class="key">del </code><code>shoplist[</code><code class="cite">0</code><code>]</code><br>
+<br>
+<code class="key">print </code><code class="cite">'shoplist is'</code><code>, shoplist</code><br>
+<code class="key">print </code><code class="cite">'mylist is'</code><code>, mylist</code><br>
+<code class="comment"># notice that both shoplist and mylist both print the same list without<br>
+# the 'apple' confirming that they point to the same object</code><br>
+<br>
+<code class="key">print </code><code class="cite">'Copy by making a full slice'</code><br>
+<code>mylist = shoplist[:] </code><code class="comment"># make a copy by doing a full slice</code><br>
+<code class="key">del </code><code>mylist[</code><code class="cite">0</code><code>] </code><code class="comment"># remove first item</code><br>
+<br>
+<code class="key">print </code><code class="cite">'shoplist is'</code><code>, shoplist</code><br>
+<code class="key">print </code><code class="cite">'mylist is'</code><code>, mylist</code><br>
+<code class="comment"># notice that now the two lists are different</code>
+</p>
+<p>（源文件：<a href="code/reference.py">code/reference.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python reference.py<br>
+Simple Assignment<br>
+shoplist is ['mango', 'carrot', 'banana']<br>
+mylist is ['mango', 'carrot', 'banana']<br>
+Copy by making a full slice<br>
+shoplist is ['mango', 'carrot', 'banana']<br>
+mylist is ['carrot', 'banana']
+</code></p>
+
+<h2>它如何工作</h2>
+<p>大多数解释已经在程序的注释中了。你需要记住的只是如果你想要复制一个列表或者类似的序列或者其他复杂的对象（不是如整数那样的简单 <dfn>对象</dfn> ），那么你必须使用切片操作符来取得拷贝。如果你只是想要使用另一个变量名，两个名称都 <dfn><a name="ch09s06.html">参考</a></dfn> 同一个对象，那么如果你不小心的话，可能会引来各种麻烦。</p>
+
+<p class="notebox">
+<span class="boxtitle">给Perl程序员的注释</span><br>
+记住列表的赋值语句<strong>不</strong>创建拷贝。你得使用切片操作符来建立序列的拷贝。
+</p>
+
+
+<h1><a name="ch09s07.html">更多字符串的内容</a></h1>
+<p>我们已经在前面详细讨论了字符串。我们还需要知道什么呢？那么，你是否知道字符串也是对象，同样具有方法。这些方法可以完成包括检验一部分字符串和去除空格在内的各种工作。</p>
+<p>你在程序中使用的字符串都是<code>str</code>类的对象。这个类的一些有用的方法会在下面这个例子中说明。如果要了解这些方法的完整列表，请参见<code>help(str)</code>。</p>
+
+<h2><a name="string">字符串的方法</a></h2>
+<p class="exampletitle"><a name="e97">例9.7 字符串的方法</a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: str_methods.py</code><br>
+<br>
+<code>name = </code><code class="cite">'Swaroop' </code><code class="comment"># This is a string object
+</code><br>
+<br>
+<code class="key">if </code><code>name.startswith(</code><code class="cite">'Swa'</code><code>):</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Yes, the string starts with "Swa"'</code><br>
+<br>
+<code class="key">if </code><code class="cite">'a' </code><code class="key">in </code><code>name:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Yes, it contains the string "a"'</code><br>
+<br>
+<code class="key">if </code><code>name.find(</code><code class="cite">'war'</code><code>) != </code><code class="cite">-1</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Yes, it contains the string "war"'</code><br>
+<br>
+<code>delimiter = </code><code class="cite">'_*_'</code><br>
+<code>mylist = [</code><code class="cite">'Brazil'</code><code>, </code><code class="cite">'Russia'</code><code>, </code><code class="cite">'India'</code><code>, </code><code class="cite">'China'</code><code>]</code><br>
+<code class="key">print </code><code>delimiter.join(mylist)</code>
+</p>
+<p>（源文件：<a href="code/str_methods.py">code/str_methods.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python str_methods.py<br>
+Yes, the string starts with "Swa"<br>
+Yes, it contains the string "a"<br>
+Yes, it contains the string "war"<br>
+Brazil_*_Russia_*_India_*_China
+</code></p>
+
+<h2>它如何工作</h2>
+<p>这里，我们看到使用了许多字符串方法。<code>startwith</code>方法是用来测试字符串是否以给定字符串开始。<code>in</code>操作符用来检验一个给定字符串是否为另一个字符串的一部分。</p>
+<p><code>find</code>方法用来找出给定字符串在另一个字符串中的位置，或者返回-1以表示找不到子字符串。<code>str</code>类也有以一个作为分隔符的字符串<code>join</code>序列的项目的整洁的方法，它返回一个生成的大字符串。</p>
+
+
+<h1><a name="ch09s08.html">概括</a></h1>
+<p>我们已经详细探讨了多种Python内建的数据结构。这些数据结构将是编写程序时至关重要的部分。</p>
+<p>现在我们已经掌握了很多Python的基本知识，我们接下来将学习如何设计和编写一个实用的Python程序。</p>
+

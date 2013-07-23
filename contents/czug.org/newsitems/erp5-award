@@ -1,0 +1,40 @@
+
+ <p>来源:&nbsp; <span><span><a href="http://zope.org/Members/nexedi/ERP5%20Award">Zope-based ERP5
+ Awarded Best ERP out of 400 Projects</a><br />
+ <br /></span></span>Coramy, a European leader of apparel
+ industry and first user of <a href="http://www.erp5.org/">ERP5</a> , was awarded <a href="http://www.01net.com/article/245204.html">best ERP
+ implementation project</a> in the special edition of <a href="http://www.01net.com/decisioninformatique/">Decision
+ Informatique</a> on June, 21st, 2004. A panel of 40 corporate
+ managers, researchers and journalists voted this award and
+ elected ERP5 out of 400 projects, some of them based on very
+ famous proprietary ERP solutions. They recognize the excellence
+ of ERP5 implementation by <a href="http://www.nexedi.com/">Nexedi</a> in a highly mission
+ critical manufacturing environment.<br />
+ <span><span><br />
+ ERP5是zope上一个历史比较悠久的开源ERP系统, 这个产品包括:<br /></span></span></p>
+
+ <ul>
+  <li>customer relation management (CRM), 客户关系管理<br /></li>
+
+  <li>production management (MRP), 生产管理<br /></li>
+
+  <li>supply chain management (SCM), 供应链管理<br /></li>
+
+  <li>product design management (PDM), 产品设计管理<br /></li>
+
+  <li>accounting, 财务<br /></li>
+
+  <li>human resources 人力资源<br /></li>
+
+  <li>and e-commerce. 电子商务</li>
+ </ul>
+
+ <p>在技术上, ERP5很好的扩展了Zope, 他的<a href="http://cvs.erp5.org/cgi-bin/viewcvs.cgi/ZSQLCatalog/">ZSQLCatalog</a>技术和<a href="http://cvs.erp5.org/cgi-bin/viewcvs.cgi/CMFActivity/">
+ CMFActivity</a>技术极大的提高了系统的性能.</p><br />
+
+ <p>ERP5 also introduces a new model for business applications
+ which allows to use the same concepts to represent human
+ resources, accounting, production, etc. A scientific article
+ was published in <a href="http://www.computer.org/itpro/cover_stories/smets.htm">IEEE</a>
+ . More information about ERP5 can also be found in <a href="http://pythonology.org/success&amp;story=nexedi">Pythonlogy
+ success stories</a></p>

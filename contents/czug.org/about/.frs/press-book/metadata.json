@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "id": "press-book"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Plone的相关出版物", 
+        "modified": "2006-09-15 08:44:57", 
+        "title": "出版书籍"
+    }
+}

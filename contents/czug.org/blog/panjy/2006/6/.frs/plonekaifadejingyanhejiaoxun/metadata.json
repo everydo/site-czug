@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "plonekaifadejingyanhejiaoxun"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "看到邮件列表中，有人问这个问题，把前面看到的几个链接翻出来了(我还没看呢...但评价似乎不错)，这对", 
+        "modified": "2006-06-02 16:45:57", 
+        "title": "Plone开发的经验和教训"
+    }
+}

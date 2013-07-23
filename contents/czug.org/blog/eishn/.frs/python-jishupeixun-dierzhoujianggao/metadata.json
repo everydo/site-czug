@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "python-jishupeixun-dierzhoujianggao"
+    }, 
+    "dublin": {
+        "creators": [
+            "eishn"
+        ], 
+        "description": "面向对象编程初步及图形界面编程", 
+        "modified": "2005-12-19 17:00:49", 
+        "title": "[Python 技术培训] 第二周讲稿"
+    }
+}

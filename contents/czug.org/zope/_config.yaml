@@ -1,0 +1,4 @@
+description: ''
+exclude: [left_col.rst]
+order: [index.rst, bfg, ca, zope3, deliverance]
+title: zope

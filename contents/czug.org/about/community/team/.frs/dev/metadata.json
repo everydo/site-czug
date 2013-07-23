@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "id": "dev"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "在zope和plone上提出一些中文改进的意见，优化zope和plone核心对中文的支持；同时开发一些第三方的中文本地化产品或者项目；要求是成熟的zope/plone开发人员。", 
+        "modified": "2004-03-05 16:02:44", 
+        "title": "开发团队"
+    }
+}

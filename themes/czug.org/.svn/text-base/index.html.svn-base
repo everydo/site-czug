@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh" lang="zh">
+    
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <title>
+            润普 - 中文内容管理开源服务商 &mdash; 上海润普
+        </title>
+        <meta name="generator" content="Plone - http://plone.org" />
+        <meta content="在中文内容管理领域，我们为企业提供优秀的产品和专业的解决方案。" name="description" />
+        <!-- Plone ECMAScripts -->
+        <!--script type="text/javascript" src="http://zopen.cn/portal_javascripts/Plone%20Default/ploneScripts5895.js">
+        </script>
+        <script type="text/javascript" src="http://zopen.cn/portal_javascripts/Plone%20Default/ploneScripts0564.js">
+        </script-->
+        <link type="text/css" href="css/ploneStyles6330.css" rel="stylesheet"/>
+        <link type="text/css" href="css/ploneStyles4464.css" rel="stylesheet"/>
+        <link type="text/css" href="css/navtree.css" rel="stylesheet"/>
+        <link type="text/css" href="css/default.css" rel="stylesheet"/>
+
+        <script type="text/javascript"
+                src="/resources/thecmsface/js/sarissa.js"></script> 
+        <script type="text/javascript"
+                src="/resources/thecmsface/js/base2-dom-fp.js"></script> 
+
+        <script type="text/javascript"
+                src="/resources/thecmsface/js/kukit.js">
+        </script>
+
+        <script type="text/javascript"
+            src="/resources/thecmsface/js/zopen.js">
+        </script>
+
+        <link type="text/css" rel="kinetic-stylesheet"
+          href="/static/navtree.kss"
+          media="all" />
+
+        <link rel="home" href="/" title="首页" />
+        <link rel="search" href="/search_form" title="搜索网站" />
+        <link rel="author" href="/author/panjy" title="作者信息" />
+        <link rel="contents" href="/sitemap" title="网站地图" />
+        <!-- Disable IE6 image toolbar -->
+        <meta http-equiv="imagetoolbar" content="no" />
+    </head>
+    
+    <body class="section-front-page" dir="ltr">
+        <div id="visual-portal-wrapper">
+            <div id="portal-top">
+                <div id="portal-header">
+                    <p class="hiddenStructure">
+                        <a accesskey="2" href="/front-page#documentContent">
+                            跳至内容
+                        </a>
+                        |
+                        <a accesskey="6" href="/front-page#portlet-navigation-tree">
+                            跳至导航
+                        </a>
+                    </p>
+                    <ul id="portal-siteactions">
+                        <li id="siteaction-english">
+                            <a href="/front-page/switchLanguage?set_language=en" accesskey=""
+                            title="English version">
+                                English version
+                            </a>
+                        </li>
+                        <li id="siteaction-sitemap">
+                            <a href="/sitemap" accesskey="3" title="网站地图">
+                                网站地图
+                            </a>
+                        </li>
+                        <li id="siteaction-contact">
+                            <a href="/contact-info.html" accesskey="9" title="联系">
+                                联系
+                            </a>
+                        </li>
+                        <li id="siteaction-login">
+                            <a href="/login_form" accesskey="" title="登录">
+                                登录
+                            </a>
+                        </li>
+                    </ul>
+                    <div id="portal-searchbox">
+                        <form name="searchform" action="/search" style="white-space:nowrap"
+                        onsubmit="return liveSearchSubmit()">
+                            <label for="searchGadget" class="hiddenStructure">
+                                搜索
+                            </label>
+                            <div class="LSBox">
+                                <input id="searchGadget" name="SearchableText" type="text" size="15" title="搜索网站"
+                                accesskey="4" class="visibility:visible" />
+                                <input class="searchButton" type="submit" value="搜索" />
+                                <div class="LSResult" id="LSResult" style="">
+                                    <div class="LSShadow" id="LSShadow">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="portal-advanced-search" class="hiddenStructure">
+                            <a href="/search_form" accesskey="5">
+                                Advanced Search&hellip;
+                            </a>
+                        </div>
+                    </div>
+                    <h1 id="portal-logo">
+                        <a href="/" accesskey="1">
+                            上海润普
+                        </a>
+                    </h1>
+                    <div id="portal-skinswitcher">
+                    </div>
+                    <h5 class="hiddenStructure">
+                        频道
+                    </h5>
+                    <ul id="portal-globalnav">
+                        <li id="portaltab-index_html" class="selected">
+                            <a href="/front-page">
+                                首页
+                            </a>
+                        </li>
+                        <li id="portaltab-yidu" class="plain">
+                            <a href="/yidu" title="">
+                                易度
+                            </a>
+                        </li>
+                        <li id="portaltab-products" class="plain">
+                            <a href="/products" title="润普公司开发和维护的Zope/Plone扩展产品清单。部分产品使用开放源代码许可，可免费下载使用。">
+                                产品
+                            </a>
+                        </li>
+                        <li id="portaltab-solutions" class="plain">
+                            <a href="/solutions" title="我们提供内容管理相关的解决方案">
+                                解决方案
+                            </a>
+                        </li>
+                        <li id="portaltab-training" class="plain">
+                            <a href="/training" title="">
+                                培训
+                            </a>
+                        </li>
+                        <li id="portaltab-cases" class="plain">
+                            <a href="/cases" title="">
+                                成功案例
+                            </a>
+                        </li>
+                        <li id="portaltab-technology" class="plain">
+                            <a href="/technology" title="公司的开源技术路线">
+                                技术
+                            </a>
+                        </li>
+                        <li id="portaltab-company" class="plain">
+                            <a href="/company" title="公司介绍信息">
+                                关于润普
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="visualClear" id="clear-space-before-wrapper-table">
+                <!-- -->
+            </div>
+            <table id="portal-columns">
+                <tbody>
+                    <tr id="portal-tr">
+                        <td id="portal-column-content">
+                           <div id="content"></div>
+                         </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="visualClear" id="clear-space-before-footer"> </div>
+            <hr class="netscape4" />
+            <div id="portal-footer">
+                版权所有 &copy; 2002-
+                <span> 2009 </span>
+                上海润普网络信息技术有限责任公司
+                <div>
+                    <a href="http://www.miibeian.gov.cn/" style="color: black">
+                        沪ICP备05008050号
+                    </a>
+                </div>
+                <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+                </script>
+                <script type="text/javascript">
+                    _uacct = "UA-782615-1";
+                    _udn = "zopen.cn";
+                    urchinTracker();
+                </script>
+            </div>
+            <div>
+            </div>
+        </div>
+    </body>
+</html>

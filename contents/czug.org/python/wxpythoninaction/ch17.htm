@@ -1,0 +1,564 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-1" class="anchor"/><p class="line867"><strong>第17章 <tt>wxPython</tt>的打印构架</strong> <span id="line-2" class="anchor"/><span id="line-3" class="anchor"/></p><p class="line874">本章内容 <span id="line-4" class="anchor"/><span id="line-5" class="anchor"/></p><ul><li><p class="line862">用<tt>wxPython</tt>打印 <span id="line-6" class="anchor"/></p></li><li>创建和显示打印对话框 <span id="line-7" class="anchor"/></li><li>创建和显示页面设置对话框 <span id="line-8" class="anchor"/></li><li>在你的程序中执行打印 <span id="line-9" class="anchor"/></li><li>执行一个打印预览 <span id="line-10" class="anchor"/><span id="line-11" class="anchor"/><span id="line-12" class="anchor"/></li></ul><p
+class="line862">在第16章中，我们已经关注了<tt>wxPython</tt>的一打印方法：使用<tt>wx.HtmlEasyPrinting</tt>。如果你用该方法打印<tt>HTML</tt>（或某些容易转换为<tt>HTML</tt>的文件）的话，这个方法将会工作的很好，但是要作为一个完善打印办法还是不够的。在<tt>wxPython</tt>中还有一个更为通用的打印构架，你可以用它来打印你想打印的任何东西。基本上，该构架使你能够使用设备上下文和绘制操作来执行打印。你也可以创建打印预览。 <span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></p><p class="line862">本章将讨论该构架中最重要的类：<tt>wx.Printout</tt>，它管理实际的图片部分。打印输出实例可以由一个代表打印机的<tt>wx.Printer</tt>对象或用于打印预览的<tt>wx.PrintPreview</tt>对象来管理。多们也将讨论几个管理与打印相关的数据的类，以及用来显示信息给用户的对话框。 <span id="line-15"
+class="anchor"/><span id="line-16" class="anchor"/><span id="line-17" class="anchor"/></p><p class="line867">
+</p><h2 id="head-329de47b9c0c094c9d38c29ffe10e013b8260516">1. 如何用wxPython打印？</h2>
+<span id="line-18" class="anchor"/><span id="line-19" class="anchor"/><span id="line-20" class="anchor"/><p class="line862">我们将以类<tt>wx.Printout</tt>作为开始。首先你要创建你自定义的<tt>wx.Printout</tt>的子类。接着你要覆盖<tt>wx.Printout</tt>的方法以定义你自定义的打印行为。<tt>wx.Printout</tt>有7个你可以覆盖以自定义打印行为的方法。这些方法在一个打印会话过程期间被<tt>wxPython</tt>自动调用。图17.1其中的六个方法，它们被特定的事件触发。在大多数情况下，你不需要全部覆盖它们。 <span id="line-21" class="anchor"/><span id="line-22" class="anchor"/><span id="line-23" class="anchor"/></p><p class="line867"><strong>图17.1</strong> <span id="line-24" class="anchor"/><span id="line-25" class="anchor"/></p><p class="line867"><img title="attachment:w17.1.gif"
+src="/moin/WxPythonInAction/ChapterSeventeen?action=AttachFile&amp;do=get&amp;target=w17.1.gif" class="attachment"/> <span id="line-26" class="anchor"/><span id="line-27" class="anchor"/><span id="line-28" class="anchor"/><span id="line-29" class="anchor"/><span id="line-30" class="anchor"/></p><p class="line867">
+</p><h3 id="head-15e369a215c97db2e39251df0d591250f647b09d">1.1. 理解打印输出的生命周期</h3>
+<span id="line-31" class="anchor"/><span id="line-32" class="anchor"/><span id="line-33" class="anchor"/><p class="line862">你通过创建一个你的打印输出对象的实例和一个类<tt>wx.Printer</tt>的实例启动一个打印会话： <span id="line-34" class="anchor"/><span id="line-35" class="anchor"/></p><pre>wx.Printer(data=None)
+<span id="line-36" class="anchor"/></pre><span id="line-37" class="anchor"/><p class="line862">可选的<tt>data</tt>参数是<tt>wx.PrintDialogData</tt>的一个实例。要开始实际的打印，需要调用<tt>wx.Printer</tt>的<tt>Print(parent, printout, prompt=True)</tt>方法。参数<tt>parent</tt>是父窗口（它被用作对话框的窗口中）。参数<tt>printout</tt>是你的<tt>wx.Printout</tt>实例。如果参数<tt>prompt</tt>为<tt>True</tt>，那么在打印之前，<tt>wxPython</tt>将显示打印对话框，否则不显示。 <span id="line-38" class="anchor"/><span id="line-39" class="anchor"/></p><p
+class="line862">在<tt>Print()</tt>方法开始后，它调用<tt>wx.Printout</tt>的第一个可被覆盖的方法<tt>OnPreparePrint()</tt>。<tt>OnPreparePrint()</tt>方法在<tt>wx.Printout</tt>实例做任何其它的事之前被确保调用，因此该方法是放置收集你的数据或做那些必须在打印开始之前所要做的计算的一个好的地方。实际的打印使用<tt>OnBeginPrinting()</tt>方法开始，你可以对该方法进行覆盖，以自定主你想要的行为——默认情况下，该方法什么也不做。<tt>OnBeginPrinting()</tt>在整个打印会话中只会被调用一次。 <span id="line-40" class="anchor"/><span id="line-41" class="anchor"/></p><p class="line862">你希望打印的文档的每个单独的拷贝触发对<tt>OnBeginDocument(startPage, endPage)</tt>的一个调用，其中参数<tt>startPage,
+endPage</tt>告诉<tt>wxPython</tt>打印的起始页和最后一页。这两个参数都应该指定。如果你想覆盖这个方法，那么你必须调用它的基类的方法，因为基类的方法要做一些重要的工作（如调用<tt>wx.DC.StartDoc()</tt>）。在<tt>wxPython</tt>中，你可以使用<tt>base_OnBeginDocument(startPage, endPage)</tt>来调用其父类的方法。如果<tt>OnBeginDocument</tt>返回<tt>False</tt>，那么将取消打印工作。 <span id="line-42" class="anchor"/><span id="line-43" class="anchor"/></p><p
+class="line862">你最有可能去覆盖的方法是<tt>OnPrintPage(pageNum)</tt>，该方法是你放置关于每一页的绘制命令的地方。参数<tt>pageNum</tt>是要打印的页的页码。在这个方法中，你调用<tt>GetDC()</tt>，<tt>GetDC()</tt>根据你当前的系统平台返回一个适当的设备上下文。对于实际的打印，如果你是在一个微软的<tt>Windows</tt>系统上的话，那么<tt>GetDC()</tt>返回的是类<tt>wx.PrinterDC</tt>的实例。对于其它的系统，返回的是类<tt>wx.PostScriptDC</tt>的实例。如果你是处在一个打印预览操作中，那么对于任何的操作系统，<tt>GetDC()</tt>返回的都是一个<tt>wx.MemoryDC</tt>。一旦你有了设备上下文，你就可以做你想做的设备上下文绘制操作，并且它们将被打印或预览。 <span id="line-44" class="anchor"/><span id="line-45" class="anchor"/></p><p
+class="line862">在一个文档的副本打印结束后，一个<tt>OnEndDocument()</tt>调用被触发。另外，如果你要覆盖<tt>OnEndDocument()</tt>方法，那么你必须调用其基类的方法<tt>base_OnEndDocument()</tt>。<tt>base_OnEndDocument()</tt>将调用<tt>wx.DC.EndDoc()</tt>方法。当你的所有的副本被打印完后，<tt>OnEndPrinting()</tt>方法被调用，这样就结束了打印会话。 <span id="line-46" class="anchor"/><span id="line-47" class="anchor"/></p><p class="line867"><tt>wx.Printout</tt>还有另一个可被覆盖的方法：<tt>HasPage(pageNum)</tt>。该方法通常需要被覆盖，它被打印架构用于循环控制。如果参数<tt>pageNum</tt>存在于文档中，那么该方法返回<tt>True</tt>，否则返回<tt>False</tt>。 <span id="line-48" class="anchor"/><span id="line-49" class="anchor"/><span id="line-50" class="anchor"/><span id="line-51"
+class="anchor"/></p><p class="line867">
+</p><h3 id="head-31d4cf908d7aa8d63a214de8f731f8dbbceab7ee">1.2. 实战打印构架</h3>
+<span id="line-52" class="anchor"/><span id="line-53" class="anchor"/><span id="line-54" class="anchor"/><p class="line874">下面我们将通过一个例子来展示打印构架实际上是如何工作的。这个例子由一个简单的用于打印文本文件的构架组成，并且应用程序让你能够键入简单的文本。图17.2显示了这个应用程序的结果。 <span id="line-55" class="anchor"/><span id="line-56" class="anchor"/><span id="line-57" class="anchor"/></p><p class="line867"><strong>图17.1</strong> <span id="line-58" class="anchor"/><span id="line-59" class="anchor"/></p><p class="line867"><img title="attachment:w17.2.gif" src="/moin/WxPythonInAction/ChapterSeventeen?action=AttachFile&amp;do=get&amp;target=w17.2.gif" class="attachment"/> <span id="line-60" class="anchor"/><span id="line-61" class="anchor"/><span id="line-62"
+class="anchor"/></p><p class="line874">例17.1显示了我们已经讨论过的打印构架和我们将要接触的打印对话框机制。 <span id="line-63" class="anchor"/><span id="line-64" class="anchor"/><span id="line-65" class="anchor"/></p><p class="line867"><strong>例17.1</strong>  <span id="line-66" class="anchor"/><strong>打印构架的一个较长的例子</strong> <span id="line-67" class="anchor"/><span id="line-68" class="anchor"/></p><p class="line867"><span id="line-69" class="anchor"/><span id="line-70" class="anchor"/><span id="line-71" class="anchor"/><span id="line-72" class="anchor"/><span id="line-73" class="anchor"/><span id="line-74" class="anchor"/><span id="line-75" class="anchor"/><span id="line-76" class="anchor"/><span id="line-77" class="anchor"/><span id="line-78" class="anchor"/><span
+id="line-79" class="anchor"/><span id="line-80" class="anchor"/><span id="line-81" class="anchor"/><span id="line-82" class="anchor"/><span id="line-83" class="anchor"/><span id="line-84" class="anchor"/><span id="line-85" class="anchor"/><span id="line-86" class="anchor"/><span id="line-87" class="anchor"/><span id="line-88" class="anchor"/><span id="line-89" class="anchor"/><span id="line-90" class="anchor"/><span id="line-91" class="anchor"/><span id="line-92" class="anchor"/><span id="line-93" class="anchor"/><span id="line-94" class="anchor"/><span id="line-95" class="anchor"/><span id="line-96" class="anchor"/><span id="line-97" class="anchor"/><span id="line-98" class="anchor"/><span id="line-99" class="anchor"/><span id="line-100" class="anchor"/><span id="line-101"
+class="anchor"/><span id="line-102" class="anchor"/><span id="line-103" class="anchor"/><span id="line-104" class="anchor"/><span id="line-105" class="anchor"/><span id="line-106" class="anchor"/><span id="line-107" class="anchor"/><span id="line-108" class="anchor"/><span id="line-109" class="anchor"/><span id="line-110" class="anchor"/><span id="line-111" class="anchor"/><span id="line-112" class="anchor"/><span id="line-113" class="anchor"/><span id="line-114" class="anchor"/><span id="line-115" class="anchor"/><span id="line-116" class="anchor"/><span id="line-117" class="anchor"/><span id="line-118" class="anchor"/><span id="line-119" class="anchor"/><span id="line-120" class="anchor"/><span id="line-121" class="anchor"/><span id="line-122" class="anchor"/><span
+id="line-123" class="anchor"/><span id="line-124" class="anchor"/><span id="line-125" class="anchor"/><span id="line-126" class="anchor"/><span id="line-127" class="anchor"/><span id="line-128" class="anchor"/><span id="line-129" class="anchor"/><span id="line-130" class="anchor"/><span id="line-131" class="anchor"/><span id="line-132" class="anchor"/><span id="line-133" class="anchor"/><span id="line-134" class="anchor"/><span id="line-135" class="anchor"/><span id="line-136" class="anchor"/><span id="line-137" class="anchor"/><span id="line-138" class="anchor"/><span id="line-139" class="anchor"/><span id="line-140" class="anchor"/><span id="line-141" class="anchor"/><span id="line-142" class="anchor"/><span id="line-143" class="anchor"/><span id="line-144"
+class="anchor"/><span id="line-145" class="anchor"/><span id="line-146" class="anchor"/><span id="line-147" class="anchor"/><span id="line-148" class="anchor"/><span id="line-149" class="anchor"/><span id="line-150" class="anchor"/><span id="line-151" class="anchor"/><span id="line-152" class="anchor"/><span id="line-153" class="anchor"/><span id="line-154" class="anchor"/><span id="line-155" class="anchor"/><span id="line-156" class="anchor"/><span id="line-157" class="anchor"/><span id="line-158" class="anchor"/><span id="line-159" class="anchor"/><span id="line-160" class="anchor"/><span id="line-161" class="anchor"/><span id="line-162" class="anchor"/><span id="line-163" class="anchor"/><span id="line-164" class="anchor"/><span id="line-165" class="anchor"/><span
+id="line-166" class="anchor"/><span id="line-167" class="anchor"/><span id="line-168" class="anchor"/><span id="line-169" class="anchor"/><span id="line-170" class="anchor"/><span id="line-171" class="anchor"/><span id="line-172" class="anchor"/><span id="line-173" class="anchor"/><span id="line-174" class="anchor"/><span id="line-175" class="anchor"/><span id="line-176" class="anchor"/><span id="line-177" class="anchor"/><span id="line-178" class="anchor"/><span id="line-179" class="anchor"/><span id="line-180" class="anchor"/><span id="line-181" class="anchor"/><span id="line-182" class="anchor"/><span id="line-183" class="anchor"/><span id="line-184" class="anchor"/><span id="line-185" class="anchor"/><span id="line-186" class="anchor"/><span id="line-187"
+class="anchor"/><span id="line-188" class="anchor"/><span id="line-189" class="anchor"/><span id="line-190" class="anchor"/><span id="line-191" class="anchor"/><span id="line-192" class="anchor"/><span id="line-193" class="anchor"/><span id="line-194" class="anchor"/><span id="line-195" class="anchor"/><span id="line-196" class="anchor"/><span id="line-197" class="anchor"/><span id="line-198" class="anchor"/><span id="line-199" class="anchor"/><span id="line-200" class="anchor"/><span id="line-201" class="anchor"/><span id="line-202" class="anchor"/><span id="line-203" class="anchor"/><span id="line-204" class="anchor"/><span id="line-205" class="anchor"/><span id="line-206" class="anchor"/><span id="line-207" class="anchor"/><span id="line-208" class="anchor"/><span
+id="line-209" class="anchor"/><span id="line-210" class="anchor"/><span id="line-211" class="anchor"/><span id="line-212" class="anchor"/><span id="line-213" class="anchor"/><span id="line-214" class="anchor"/><span id="line-215" class="anchor"/><span id="line-216" class="anchor"/><span id="line-217" class="anchor"/><span id="line-218" class="anchor"/><span id="line-219" class="anchor"/><span id="line-220" class="anchor"/><span id="line-221" class="anchor"/><span id="line-222" class="anchor"/><span id="line-223" class="anchor"/><span id="line-224" class="anchor"/><span id="line-225" class="anchor"/><span id="line-226" class="anchor"/><span id="line-227" class="anchor"/><span id="line-228" class="anchor"/><span id="line-229" class="anchor"/><span id="line-230"
+class="anchor"/><span id="line-231" class="anchor"/><span id="line-232" class="anchor"/><span id="line-233" class="anchor"/><span id="line-234" class="anchor"/><span id="line-235" class="anchor"/><span id="line-236" class="anchor"/><span id="line-237" class="anchor"/><span id="line-238" class="anchor"/><span id="line-239" class="anchor"/><span id="line-240" class="anchor"/><span id="line-241" class="anchor"/><span id="line-242" class="anchor"/><span id="line-243" class="anchor"/><span id="line-244" class="anchor"/><span id="line-245" class="anchor"/><span id="line-246" class="anchor"/><span id="line-247" class="anchor"/><span id="line-248" class="anchor"/><span id="line-249" class="anchor"/><span id="line-250" class="anchor"/><span id="line-251" class="anchor"/><span
+id="line-252" class="anchor"/><span id="line-253" class="anchor"/><span id="line-254" class="anchor"/><span id="line-255" class="anchor"/><span id="line-256" class="anchor"/><span id="line-257" class="anchor"/><span id="line-258" class="anchor"/><span id="line-259" class="anchor"/><span id="line-260" class="anchor"/><span id="line-261" class="anchor"/><span id="line-262" class="anchor"/><span id="line-263" class="anchor"/><span id="line-264" class="anchor"/><span id="line-265" class="anchor"/><span id="line-266" class="anchor"/><span id="line-267" class="anchor"/><span id="line-268" class="anchor"/><span id="line-269" class="anchor"/><span id="line-270" class="anchor"/><span id="line-271" class="anchor"/><span id="line-272" class="anchor"/><span id="line-273"
+class="anchor"/><span id="line-274" class="anchor"/><span id="line-275" class="anchor"/><span id="line-276" class="anchor"/><span id="line-277" class="anchor"/><span id="line-278" class="anchor"/><span id="line-279" class="anchor"/><span id="line-280" class="anchor"/><span id="line-281" class="anchor"/><span id="line-282" class="anchor"/><span id="line-283" class="anchor"/><span id="line-284" class="anchor"/><span id="line-285" class="anchor"/><span id="line-286" class="anchor"/><span id="line-287" class="anchor"/><span id="line-288" class="anchor"/><span id="line-289" class="anchor"/><span id="line-290" class="anchor"/><span id="line-291" class="anchor"/><span id="line-292" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-d1be9af28a86f260f06622ca123b409dff5619dc_000\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-d1be9af28a86f260f06622ca123b409dff5619dc_000', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-d1be9af28a86f260f06622ca123b409dff5619dc_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">wx</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">import</span> <span class="ID">os</span></span>
+<span class="line"><span class="LineNumber">   3 </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">FONTSIZE</span> <span class="Operator">=</span> <span class="Number">10</span></span>
+<span class="line"><span class="LineNumber">   5 </span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">class</span> <span class="ID">TextDocPrintout</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Printout</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   7 </span>    <span class="String">"""</span></span>
+<span class="line"><span class="LineNumber">   8 </span><span class="String">    A printout class that is able to print simple text documents.</span></span>
+<span class="line"><span class="LineNumber">   9 </span><span class="String">    Does not handle page numbers o titles, and it assumes that no</span></span>
+<span class="line"><span class="LineNumber">  10 </span><span class="String">    lines are longer than what will fit within the page width.  Those</span></span>
+<span class="line"><span class="LineNumber">  11 </span><span class="String">    features are left as an exercise for the reader. ;-)</span></span>
+<span class="line"><span class="LineNumber">  12 </span><span class="String">    """</span></span>
+<span class="line"><span class="LineNumber">  13 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">text</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">,</span> <span class="ID">margins</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Printout</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">lines</span> <span class="Operator">=</span> <span class="ID">text</span><span class="Operator">.</span><span class="ID">split</span><span class="Operator">(</span><span class="String">'\n'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">margins</span> <span class="Operator">=</span> <span class="ID">margins</span></span>
+<span class="line"><span class="LineNumber">  17 </span></span>
+<span class="line"><span class="LineNumber">  18 </span></span>
+<span class="line"><span class="LineNumber">  19 </span>    <span class="ResWord">def</span> <span class="ID">HasPage</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">page</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ResWord">return</span> <span class="ID">page</span>  <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">numPages</span></span>
+<span class="line"><span class="LineNumber">  21 </span></span>
+<span class="line"><span class="LineNumber">  22 </span>    <span class="ResWord">def</span> <span class="ID">GetPageInfo</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  23 </span>        <span class="ResWord">return</span> <span class="Operator">(</span><span class="Number">1</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">numPages</span><span class="Operator">,</span> <span class="Number">1</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">numPages</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  24 </span></span>
+<span class="line"><span class="LineNumber">  25 </span></span>
+<span class="line"><span class="LineNumber">  26 </span>    <span class="ResWord">def</span> <span class="ID">CalculateScale</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">dc</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  27 </span>        <span class="Comment"># Scale the DC such that the printout is roughly the same as</span></span>
+<span class="line"><span class="LineNumber">  28 </span><span class="Comment"/>        <span class="Comment"># the screen scaling.</span></span>
+<span class="line"><span class="LineNumber">  29 </span><span class="Comment"/>        <span class="ID">ppiPrinterX</span><span class="Operator">,</span> <span class="ID">ppiPrinterY</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">GetPPIPrinter</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  30 </span>        <span class="ID">ppiScreenX</span><span class="Operator">,</span> <span class="ID">ppiScreenY</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">GetPPIScreen</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  31 </span>        <span class="ID">logScale</span> <span class="Operator">=</span> <span class="ID">float</span><span class="Operator">(</span><span class="ID">ppiPrinterX</span><span class="Operator">)</span><span class="Operator">/</span><span class="ID">float</span><span class="Operator">(</span><span class="ID">ppiScreenX</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  32 </span></span>
+<span class="line"><span class="LineNumber">  33 </span>        <span class="Comment"># Now adjust if the real page size is reduced (such as when</span></span>
+<span class="line"><span class="LineNumber">  34 </span><span class="Comment"/>        <span class="Comment"># drawing on a scaled wx.MemoryDC in the Print Preview.)  If</span></span>
+<span class="line"><span class="LineNumber">  35 </span><span class="Comment"/>        <span class="Comment"># page width == DC width then nothing changes, otherwise we</span></span>
+<span class="line"><span class="LineNumber">  36 </span><span class="Comment"/>        <span class="Comment"># scale down for the DC.</span></span>
+<span class="line"><span class="LineNumber">  37 </span><span class="Comment"/>        <span class="ID">pw</span><span class="Operator">,</span> <span class="ID">ph</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">GetPageSizePixels</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  38 </span>        <span class="ID">dw</span><span class="Operator">,</span> <span class="ID">dh</span> <span class="Operator">=</span> <span class="ID">dc</span><span class="Operator">.</span><span class="ID">GetSize</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  39 </span>        <span class="ID">scale</span> <span class="Operator">=</span> <span class="ID">logScale</span> <span class="Operator">*</span> <span class="ID">float</span><span class="Operator">(</span><span class="ID">dw</span><span class="Operator">)</span><span class="Operator">/</span><span class="ID">float</span><span class="Operator">(</span><span class="ID">pw</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  40 </span></span>
+<span class="line"><span class="LineNumber">  41 </span>        <span class="Comment"># Set the DC's scale.</span></span>
+<span class="line"><span class="LineNumber">  42 </span><span class="Comment"/>        <span class="ID">dc</span><span class="Operator">.</span><span class="ID">SetUserScale</span><span class="Operator">(</span><span class="ID">scale</span><span class="Operator">,</span> <span class="ID">scale</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  43 </span></span>
+<span class="line"><span class="LineNumber">  44 </span>        <span class="Comment"># Find the logical units per millimeter (for calculating the</span></span>
+<span class="line"><span class="LineNumber">  45 </span><span class="Comment"/>        <span class="Comment"># margins)</span></span>
+<span class="line"><span class="LineNumber">  46 </span><span class="Comment"/>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">logUnitsMM</span> <span class="Operator">=</span> <span class="ID">float</span><span class="Operator">(</span><span class="ID">ppiPrinterX</span><span class="Operator">)</span><span class="Operator">/</span><span class="Operator">(</span><span class="ID">logScale</span><span class="Operator">*</span><span class="Number">25.4</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  47 </span></span>
+<span class="line"><span class="LineNumber">  48 </span></span>
+<span class="line"><span class="LineNumber">  49 </span>    <span class="ResWord">def</span> <span class="ID">CalculateLayout</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">dc</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  50 </span>        <span class="Comment"># Determine the position of the margins and the</span></span>
+<span class="line"><span class="LineNumber">  51 </span><span class="Comment"/>        <span class="Comment"># page/line height</span></span>
+<span class="line"><span class="LineNumber">  52 </span><span class="Comment"/>        <span class="ID">topLeft</span><span class="Operator">,</span> <span class="ID">bottomRight</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">margins</span></span>
+<span class="line"><span class="LineNumber">  53 </span>        <span class="ID">dw</span><span class="Operator">,</span> <span class="ID">dh</span> <span class="Operator">=</span> <span class="ID">dc</span><span class="Operator">.</span><span class="ID">GetSize</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  54 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">x1</span> <span class="Operator">=</span> <span class="ID">topLeft</span><span class="Operator">.</span><span class="ID">x</span> <span class="Operator">*</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">logUnitsMM</span></span>
+<span class="line"><span class="LineNumber">  55 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">y1</span> <span class="Operator">=</span> <span class="ID">topLeft</span><span class="Operator">.</span><span class="ID">y</span> <span class="Operator">*</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">logUnitsMM</span></span>
+<span class="line"><span class="LineNumber">  56 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">x2</span> <span class="Operator">=</span> <span class="ID">dc</span><span class="Operator">.</span><span class="ID">DeviceToLogicalXRel</span><span class="Operator">(</span><span class="ID">dw</span><span class="Operator">)</span> <span class="Operator">-</span> <span class="ID">bottomRight</span><span class="Operator">.</span><span class="ID">x</span> <span class="Operator">*</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">logUnitsMM</span></span>
+<span class="line"><span class="LineNumber">  57 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">y2</span> <span class="Operator">=</span> <span class="ID">dc</span><span class="Operator">.</span><span class="ID">DeviceToLogicalYRel</span><span class="Operator">(</span><span class="ID">dh</span><span class="Operator">)</span> <span class="Operator">-</span> <span class="ID">bottomRight</span><span class="Operator">.</span><span class="ID">y</span> <span class="Operator">*</span> <span class="ID">self</span><span class="Operator">.</span><span
+class="ID">logUnitsMM</span></span>
+<span class="line"><span class="LineNumber">  58 </span></span>
+<span class="line"><span class="LineNumber">  59 </span>        <span class="Comment"># use a 1mm buffer around the inside of the box, and a few</span></span>
+<span class="line"><span class="LineNumber">  60 </span><span class="Comment"/>        <span class="Comment"># pixels between each line</span></span>
+<span class="line"><span class="LineNumber">  61 </span><span class="Comment"/>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">pageHeight</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">y2</span> <span class="Operator">-</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">y1</span> <span class="Operator">-</span> <span class="Number">2</span><span class="Operator">*</span><span class="ID">self</span><span class="Operator">.</span><span
+class="ID">logUnitsMM</span></span>
+<span class="line"><span class="LineNumber">  62 </span>        <span class="ID">font</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Font</span><span class="Operator">(</span><span class="ID">FONTSIZE</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">TELETYPE</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">NORMAL</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">NORMAL</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  63 </span>        <span class="ID">dc</span><span class="Operator">.</span><span class="ID">SetFont</span><span class="Operator">(</span><span class="ID">font</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  64 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">lineHeight</span> <span class="Operator">=</span> <span class="ID">dc</span><span class="Operator">.</span><span class="ID">GetCharHeight</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  65 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">linesPerPage</span> <span class="Operator">=</span> <span class="ID">int</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">pageHeight</span><span class="Operator">/</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">lineHeight</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  66 </span></span>
+<span class="line"><span class="LineNumber">  67 </span></span>
+<span class="line"><span class="LineNumber">  68 </span>    <span class="ResWord">def</span> <span class="ID">OnPreparePrinting</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  69 </span>        <span class="Comment"># calculate the number of pages</span></span>
+<span class="line"><span class="LineNumber">  70 </span><span class="Comment"/>        <span class="ID">dc</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">GetDC</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  71 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">CalculateScale</span><span class="Operator">(</span><span class="ID">dc</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  72 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">CalculateLayout</span><span class="Operator">(</span><span class="ID">dc</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  73 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">numPages</span> <span class="Operator">=</span> <span class="ID">len</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">lines</span><span class="Operator">)</span> <span class="Operator">/</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">linesPerPage</span></span>
+<span class="line"><span class="LineNumber">  74 </span>        <span class="ResWord">if</span> <span class="ID">len</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">lines</span><span class="Operator">)</span> <span class="Operator">%</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">linesPerPage</span> <span class="Operator">!=</span> <span class="Number">0</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  75 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">numPages</span> <span class="Operator">+=</span> <span class="Number">1</span></span>
+<span class="line"><span class="LineNumber">  76 </span></span>
+<span class="line"><span class="LineNumber">  77 </span></span>
+<span class="line"><span class="LineNumber">  78 </span>    <span class="ResWord">def</span> <span class="ID">OnPrintPage</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">page</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  79 </span>        <span class="ID">dc</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">GetDC</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  80 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">CalculateScale</span><span class="Operator">(</span><span class="ID">dc</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  81 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">CalculateLayout</span><span class="Operator">(</span><span class="ID">dc</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  82 </span></span>
+<span class="line"><span class="LineNumber">  83 </span>        <span class="Comment"># draw a page outline at the margin points</span></span>
+<span class="line"><span class="LineNumber">  84 </span><span class="Comment"/>        <span class="ID">dc</span><span class="Operator">.</span><span class="ID">SetPen</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Pen</span><span class="Operator">(</span><span class="String">"black"</span><span class="Operator">,</span> <span class="Number">0</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  85 </span>        <span class="ID">dc</span><span class="Operator">.</span><span class="ID">SetBrush</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">TRANSPARENT_BRUSH</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  86 </span>        <span class="ID">r</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">RectPP</span><span class="Operator">(</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">x1</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">y1</span><span class="Operator">)</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  87 </span>                      <span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">x2</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">y2</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  88 </span>        <span class="ID">dc</span><span class="Operator">.</span><span class="ID">DrawRectangleRect</span><span class="Operator">(</span><span class="ID">r</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  89 </span>        <span class="ID">dc</span><span class="Operator">.</span><span class="ID">SetClippingRect</span><span class="Operator">(</span><span class="ID">r</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  90 </span></span>
+<span class="line"><span class="LineNumber">  91 </span>        <span class="Comment"># Draw the text lines for this page</span></span>
+<span class="line"><span class="LineNumber">  92 </span><span class="Comment"/>        <span class="ID">line</span> <span class="Operator">=</span> <span class="Operator">(</span><span class="ID">page</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">)</span> <span class="Operator">*</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">linesPerPage</span></span>
+<span class="line"><span class="LineNumber">  93 </span>        <span class="ID">x</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">x1</span> <span class="Operator">+</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">logUnitsMM</span></span>
+<span class="line"><span class="LineNumber">  94 </span>        <span class="ID">y</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">y1</span> <span class="Operator">+</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">logUnitsMM</span></span>
+<span class="line"><span class="LineNumber">  95 </span>        <span class="ResWord">while</span> <span class="ID">line</span>   <span class="Operator">(</span><span class="ID">page</span> <span class="Operator">*</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">linesPerPage</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  96 </span>            <span class="ID">dc</span><span class="Operator">.</span><span class="ID">DrawText</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">lines</span><span class="Operator">[</span><span class="ID">line</span><span class="Operator">]</span><span class="Operator">,</span> <span class="ID">x</span><span class="Operator">,</span> <span class="ID">y</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  97 </span>            <span class="ID">y</span> <span class="Operator">+=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">lineHeight</span></span>
+<span class="line"><span class="LineNumber">  98 </span>            <span class="ID">line</span> <span class="Operator">+=</span> <span class="Number">1</span></span>
+<span class="line"><span class="LineNumber">  99 </span>            <span class="ResWord">if</span> <span class="ID">line</span>  <span class="Operator">=</span> <span class="ID">len</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">lines</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber"> 100 </span>                <span class="ResWord">break</span></span>
+<span class="line"><span class="LineNumber"> 101 </span>        <span class="ResWord">return</span> <span class="ID">True</span></span>
+<span class="line"><span class="LineNumber"> 102 </span></span>
+<span class="line"><span class="LineNumber"> 103 </span></span>
+<span class="line"><span class="LineNumber"> 104 </span><span class="ResWord">class</span> <span class="ID">PrintFrameworkSample</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber"> 105 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber"> 106 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Frame</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">None</span><span class="Operator">,</span> <span class="ID">size</span><span class="Operator">=</span><span class="Operator">(</span><span class="Number">640</span><span class="Operator">,</span> <span class="Number">480</span><span class="Operator">)</span><span
+class="Operator">,</span></span>
+<span class="line"><span class="LineNumber"> 107 </span>                          <span class="ID">title</span><span class="Operator">=</span><span class="String">"Print Framework Sample"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 108 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">CreateStatusBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 109 </span></span>
+<span class="line"><span class="LineNumber"> 110 </span>        <span class="Comment"># A text widget to display the doc and let it be edited</span></span>
+<span class="line"><span class="LineNumber"> 111 </span><span class="Comment"/>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">tc</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">TextCtrl</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">""</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber"> 112 </span>                              <span class="ID">style</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">TE_MULTILINE</span><span class="Operator">|</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">TE_DONTWRAP</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 113 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">tc</span><span class="Operator">.</span><span class="ID">SetFont</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Font</span><span class="Operator">(</span><span class="ID">FONTSIZE</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">TELETYPE</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span
+class="ID">NORMAL</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">NORMAL</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 114 </span>        <span class="ID">filename</span> <span class="Operator">=</span> <span class="ID">os</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">join</span><span class="Operator">(</span><span class="ID">os</span><span class="Operator">.</span><span class="ID">path</span><span class="Operator">.</span><span class="ID">dirname</span><span class="Operator">(</span><span class="ID">__file__</span><span class="Operator">)</span><span class="Operator">,</span> <span
+class="String">"sample-text.txt"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 115 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">tc</span><span class="Operator">.</span><span class="ID">SetValue</span><span class="Operator">(</span><span class="ID">open</span><span class="Operator">(</span><span class="ID">filename</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">read</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 116 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">tc</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_SET_FOCUS</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnClearSelection</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 117 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">CallAfter</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">tc</span><span class="Operator">.</span><span class="ID">SetInsertionPoint</span><span class="Operator">,</span> <span class="Number">0</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 118 </span></span>
+<span class="line"><span class="LineNumber"> 119 </span>        <span class="Comment"># Create the menu and menubar</span></span>
+<span class="line"><span class="LineNumber"> 120 </span><span class="Comment"/>        <span class="ID">menu</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Menu</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 121 </span>        <span class="ID">item</span> <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Page Setup...\tF5"</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber"> 122 </span>                           <span class="String">"Set up page margins and etc."</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 123 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnPageSetup</span><span class="Operator">,</span> <span class="ID">item</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 124 </span>        <span class="ID">item</span> <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Print Setup...\tF6"</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber"> 125 </span>                           <span class="String">"Set up the printer options, etc."</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 126 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnPrintSetup</span><span class="Operator">,</span> <span class="ID">item</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 127 </span>        <span class="ID">item</span> <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Print Preview...\tF7"</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber"> 128 </span>                           <span class="String">"View the printout on-screen"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 129 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnPrintPreview</span><span class="Operator">,</span> <span class="ID">item</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 130 </span>        <span class="ID">item</span> <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"Print...\tF8"</span><span class="Operator">,</span> <span class="String">"Print the document"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 131 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnPrint</span><span class="Operator">,</span> <span class="ID">item</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 132 </span>        <span class="ID">menu</span><span class="Operator">.</span><span class="ID">AppendSeparator</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 133 </span>        <span class="ID">item</span> <span class="Operator">=</span> <span class="ID">menu</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="Operator">-</span><span class="Number">1</span><span class="Operator">,</span> <span class="String">"E "</span><span class="Operator">,</span> <span class="String">"Close this application"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 134 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Bind</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">EVT_MENU</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">OnExit</span><span class="Operator">,</span> <span class="ID">item</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 135 </span></span>
+<span class="line"><span class="LineNumber"> 136 </span>        <span class="ID">menubar</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MenuBar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 137 </span>        <span class="ID">menubar</span><span class="Operator">.</span><span class="ID">Append</span><span class="Operator">(</span><span class="ID">menu</span><span class="Operator">,</span> <span class="String">" "</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 138 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">SetMenuBar</span><span class="Operator">(</span><span class="ID">menubar</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 139 </span></span>
+<span class="line"><span class="LineNumber"> 140 </span>        <span class="Comment"># initialize the print data and set some default values</span></span>
+<span class="line"><span class="LineNumber"> 141 </span><span class="Comment"/>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">pdata</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PrintData</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 142 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">pdata</span><span class="Operator">.</span><span class="ID">SetPaperId</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">PAPER_LETTER</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 143 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">pdata</span><span class="Operator">.</span><span class="ID">SetOrientation</span><span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">PORTRAIT</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 144 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">margins</span> <span class="Operator">=</span> <span class="Operator">(</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">Point</span><span class="Operator">(</span><span class="Number">15</span><span class="Operator">,</span><span class="Number">15</span><span class="Operator">)</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Point</span><span
+class="Operator">(</span><span class="Number">15</span><span class="Operator">,</span><span class="Number">15</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 145 </span></span>
+<span class="line"><span class="LineNumber"> 146 </span></span>
+<span class="line"><span class="LineNumber"> 147 </span>    <span class="ResWord">def</span> <span class="ID">OnExit</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber"> 148 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">Close</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 149 </span></span>
+<span class="line"><span class="LineNumber"> 150 </span></span>
+<span class="line"><span class="LineNumber"> 151 </span>    <span class="ResWord">def</span> <span class="ID">OnClearSelection</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber"> 152 </span>        <span class="ID">evt</span><span class="Operator">.</span><span class="ID">Skip</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 153 </span>        <span class="ID">wx</span><span class="Operator">.</span><span class="ID">CallAfter</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">tc</span><span class="Operator">.</span><span class="ID">SetInsertionPoint</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber"> 154 </span>                     <span class="ID">self</span><span class="Operator">.</span><span class="ID">tc</span><span class="Operator">.</span><span class="ID">GetInsertionPoint</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 155 </span></span>
+<span class="line"><span class="LineNumber"> 156 </span></span>
+<span class="line"><span class="LineNumber"> 157 </span>    <span class="ResWord">def</span> <span class="ID">OnPageSetup</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber"> 158 </span>        <span class="ID">data</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PageSetupDialogData</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 159 </span>        <span class="ID">data</span><span class="Operator">.</span><span class="ID">SetPrintData</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">pdata</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 160 </span></span>
+<span class="line"><span class="LineNumber"> 161 </span>        <span class="ID">data</span><span class="Operator">.</span><span class="ID">SetDefaultMinMargins</span><span class="Operator">(</span><span class="ID">True</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 162 </span>        <span class="ID">data</span><span class="Operator">.</span><span class="ID">SetMarginTopLeft</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">margins</span><span class="Operator">[</span><span class="Number">0</span><span class="Operator">]</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 163 </span>        <span class="ID">data</span><span class="Operator">.</span><span class="ID">SetMarginBottomRight</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">margins</span><span class="Operator">[</span><span class="Number">1</span><span class="Operator">]</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 164 </span></span>
+<span class="line"><span class="LineNumber"> 165 </span>        <span class="ID">dlg</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PageSetupDialog</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">data</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 166 </span>        <span class="ResWord">if</span> <span class="ID">dlg</span><span class="Operator">.</span><span class="ID">ShowModal</span><span class="Operator">(</span><span class="Operator">)</span> <span class="Operator">==</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">ID_OK</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber"> 167 </span>            <span class="ID">data</span> <span class="Operator">=</span> <span class="ID">dlg</span><span class="Operator">.</span><span class="ID">GetPageSetupData</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 168 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">pdata</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PrintData</span><span class="Operator">(</span><span class="ID">data</span><span class="Operator">.</span><span class="ID">GetPrintData</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span> <span class="Comment"># force a copy</span></span>
+<span class="line"><span class="LineNumber"> 169 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">pdata</span><span class="Operator">.</span><span class="ID">SetPaperId</span><span class="Operator">(</span><span class="ID">data</span><span class="Operator">.</span><span class="ID">GetPaperId</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 170 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">margins</span> <span class="Operator">=</span> <span class="Operator">(</span><span class="ID">data</span><span class="Operator">.</span><span class="ID">GetMarginTopLeft</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber"> 171 </span>                            <span class="ID">data</span><span class="Operator">.</span><span class="ID">GetMarginBottomRight</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 172 </span>        <span class="ID">dlg</span><span class="Operator">.</span><span class="ID">Destroy</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 173 </span></span>
+<span class="line"><span class="LineNumber"> 174 </span></span>
+<span class="line"><span class="LineNumber"> 175 </span>    <span class="ResWord">def</span> <span class="ID">OnPrintSetup</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber"> 176 </span>        <span class="ID">data</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PrintDialogData</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">pdata</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 177 </span>        <span class="ID">dlg</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PrintDialog</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">data</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 178 </span>        <span class="ID">dlg</span><span class="Operator">.</span><span class="ID">GetPrintDialogData</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">SetSetupDialog</span><span class="Operator">(</span><span class="ID">True</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 179 </span>        <span class="ID">dlg</span><span class="Operator">.</span><span class="ID">ShowModal</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">;</span></span>
+<span class="line"><span class="LineNumber"> 180 </span>        <span class="ID">data</span> <span class="Operator">=</span> <span class="ID">dlg</span><span class="Operator">.</span><span class="ID">GetPrintDialogData</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 181 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">pdata</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PrintData</span><span class="Operator">(</span><span class="ID">data</span><span class="Operator">.</span><span class="ID">GetPrintData</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span> <span class="Comment"># force a copy</span></span>
+<span class="line"><span class="LineNumber"> 182 </span>        <span class="ID">dlg</span><span class="Operator">.</span><span class="ID">Destroy</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 183 </span></span>
+<span class="line"><span class="LineNumber"> 184 </span></span>
+<span class="line"><span class="LineNumber"> 185 </span>    <span class="ResWord">def</span> <span class="ID">OnPrintPreview</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber"> 186 </span>        <span class="ID">data</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PrintDialogData</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">pdata</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 187 </span>        <span class="ID">text</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">tc</span><span class="Operator">.</span><span class="ID">GetValue</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 188 </span>        <span class="ID">printout1</span> <span class="Operator">=</span> <span class="ID">TextDocPrintout</span><span class="Operator">(</span><span class="ID">text</span><span class="Operator">,</span> <span class="String">"title"</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">margins</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 189 </span>        <span class="ID">printout2</span> <span class="Operator">=</span> <span class="ID">None</span> <span class="Comment">#TextDocPrintout(text, "title", self.margins)</span></span>
+<span class="line"><span class="LineNumber"> 190 </span>        <span class="ID">preview</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PrintPreview</span><span class="Operator">(</span><span class="ID">printout1</span><span class="Operator">,</span> <span class="ID">printout2</span><span class="Operator">,</span> <span class="ID">data</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 191 </span>        <span class="ResWord">if</span> <span class="ResWord">not</span> <span class="ID">preview</span><span class="Operator">.</span><span class="ID">Ok</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber"> 192 </span>            <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MessageBox</span><span class="Operator">(</span><span class="String">"Unable to create PrintPreview!"</span><span class="Operator">,</span> <span class="String">"Error"</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 193 </span>        <span class="ResWord">else</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber"> 194 </span>            <span class="Comment"># create the preview frame such that it overlays the app frame</span></span>
+<span class="line"><span class="LineNumber"> 195 </span><span class="Comment"/>            <span class="ID">frame</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PreviewFrame</span><span class="Operator">(</span><span class="ID">preview</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">,</span> <span class="String">"Print Preview"</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber"> 196 </span>                                    <span class="ID">pos</span><span class="Operator">=</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">GetPosition</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber"> 197 </span>                                    <span class="ID">size</span><span class="Operator">=</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">GetSize</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 198 </span>            <span class="ID">frame</span><span class="Operator">.</span><span class="ID">Initialize</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 199 </span>            <span class="ID">frame</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 200 </span></span>
+<span class="line"><span class="LineNumber"> 201 </span></span>
+<span class="line"><span class="LineNumber"> 202 </span>    <span class="ResWord">def</span> <span class="ID">OnPrint</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">evt</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber"> 203 </span>        <span class="ID">data</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PrintDialogData</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">.</span><span class="ID">pdata</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 204 </span>        <span class="ID">printer</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">Printer</span><span class="Operator">(</span><span class="ID">data</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 205 </span>        <span class="ID">text</span> <span class="Operator">=</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">tc</span><span class="Operator">.</span><span class="ID">GetValue</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 206 </span>        <span class="ID">printout</span> <span class="Operator">=</span> <span class="ID">TextDocPrintout</span><span class="Operator">(</span><span class="ID">text</span><span class="Operator">,</span> <span class="String">"title"</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">margins</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 207 </span>        <span class="ID">useSetupDialog</span> <span class="Operator">=</span> <span class="ID">True</span></span>
+<span class="line"><span class="LineNumber"> 208 </span>        <span class="ResWord">if</span> <span class="ResWord">not</span> <span class="ID">printer</span><span class="Operator">.</span><span class="ID">Print</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">printout</span><span class="Operator">,</span> <span class="ID">useSetupDialog</span><span class="Operator">)</span> \
+<span class="ResWord">and</span> <span class="ID">printer</span><span class="Operator">.</span><span class="ID">GetLastError</span><span class="Operator">(</span><span class="Operator">)</span> <span class="Operator">==</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PRINTER_ERROR</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber"> 209 </span>            <span class="ID">wx</span><span class="Operator">.</span><span class="ID">MessageBox</span><span class="Operator">(</span></span>
+<span class="line"><span class="LineNumber"> 210 </span>                <span class="String">"There was a problem printing.\n"</span></span>
+<span class="line"><span class="LineNumber"> 211 </span>                <span class="String">"Perhaps your current printer is not set correctly?"</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber"> 212 </span>                <span class="String">"Printing Error"</span><span class="Operator">,</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">OK</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 213 </span>        <span class="ResWord">else</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber"> 214 </span>            <span class="ID">data</span> <span class="Operator">=</span> <span class="ID">printer</span><span class="Operator">.</span><span class="ID">GetPrintDialogData</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 215 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">pdata</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PrintData</span><span class="Operator">(</span><span class="ID">data</span><span class="Operator">.</span><span class="ID">GetPrintData</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span> <span class="Comment"># force a copy</span></span>
+<span class="line"><span class="LineNumber"> 216 </span>        <span class="ID">printout</span><span class="Operator">.</span><span class="ID">Destroy</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 217 </span></span>
+<span class="line"><span class="LineNumber"> 218 </span></span>
+<span class="line"><span class="LineNumber"> 219 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">wx</span><span class="Operator">.</span><span class="ID">PySimpleApp</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 220 </span><span class="ID">frm</span> <span class="Operator">=</span> <span class="ID">PrintFrameworkSample</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 221 </span><span class="ID">frm</span><span class="Operator">.</span><span class="ID">Show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber"> 222 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">MainLoop</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-293" class="anchor"/><span id="line-294" class="anchor"/><p class="line874">例17.2中的打印输出类能够打印简单的文本文档，但是不能处理页码或标题，并且它创假设了行的宽度没有超过页面的宽度。对于例子的完善就留给读者作为一个练习。 <span id="line-295" class="anchor"/><span id="line-296" class="anchor"/></p><p class="line862">上面最重要的代码片断是在构架的<tt>OnPreparePrinting()</tt>和<tt>OnPrintPage()</tt>以及示例窗口的<tt>OnPrint()</tt>方法中。 <span id="line-297" class="anchor"/><span id="line-298" class="anchor"/><span id="line-299" class="anchor"/></p><p
+class="line867">
+</p><h3 id="head-1f7f0f3df3e0b10ad8ec5314bc0ad834c9a0c826">1.3. 使用wx.Printout的方法工作</h3>
+<span id="line-300" class="anchor"/><span id="line-301" class="anchor"/><span id="line-302" class="anchor"/><p class="line862">在<tt>wx.Printout</tt>中有几个<tt>get</tt>*方法，它们使你能够获取当前打印环境的有关信息。表17.1列出了这些方法。 <span id="line-303" class="anchor"/><span id="line-304" class="anchor"/><span id="line-305" class="anchor"/></p><p class="line867"><strong>表17.1</strong>  <span id="line-306" class="anchor"/><strong><tt>wx.Printout</tt>的信息获取方法</strong> <span id="line-307" class="anchor"/><span id="line-308" class="anchor"/></p><div><table><tbody><tr>  <td><p
+class="line891"><tt>GetDC()</tt></p></td>
+<td><p class="line862">该方法返回关于打印机或打印预览的用于绘制文档的设备上下文。</p></td>
+</tr>
+<tr>  <td><span id="line-309" class="anchor"/><p class="line891"><tt>GetPageInfo()</tt></p></td>
+<td><p class="line862">返回一个含有四个元素的元组(<tt>minPage, maxPage, pageFrom, pageTo)</tt>。<tt>minPage, maxPage</tt>分别是所允许的最小和最大页码，默认是1和32000。<tt>pageFrom, pageTo</tt>是必须被打印的范围，默认为1。你可以在你的子类中覆盖这个方法。</p></td>
+</tr>
+<tr>  <td><span id="line-310" class="anchor"/><p class="line891"><tt>GetPageSizeMM()</tt></p></td>
+<td><p class="line862">返回包含一个页面的宽度和高度的一个(<tt>w, h)</tt>元组，以毫米为单位。</p></td>
+</tr>
+<tr>  <td><span id="line-311" class="anchor"/><p class="line891"><tt>GetPageSizePixels()</tt></p></td>
+<td><p class="line862">返回一个页面的宽度和高度的一个(<tt>w, h)</tt>元组，以像素为单位。如果打印输出被用于打印预览，那么像素数将反应当前的缩放比列，意思就是说像素将会随缩放比列而变。</p></td>
+</tr>
+<tr>  <td><span id="line-312" class="anchor"/><p class="line891"><tt>GetPPIPrinter()</tt></p></td>
+<td><p class="line862">返回当前打印机在垂直和水平方向上每英寸的像素的一个(<tt>w, h)</tt>元组。在预览中，这个值也是始终一致的，即使打印预览的缩放比列变化了。</p></td>
+</tr>
+<tr>  <td><span id="line-313" class="anchor"/><p class="line891"><tt>GetPPIScreen()</tt></p></td>
+<td><p class="line862">返回当前屏幕在垂直和水平方向上每英寸的像素的一个(<tt>w, h)</tt>元组。在预览中，这个值也是始终一致的，即使打印预览的缩放比列变化了。</p></td>
+</tr>
+<tr>  <td><span id="line-314" class="anchor"/><p class="line891"><tt>GetTitle()</tt></p></td>
+<td><p class="line862">返回打印输出的标题。</p></td>
+</tr>
+</tbody></table></div><span id="line-315" class="anchor"/><span id="line-316" class="anchor"/><p class="line874">在后面的几节中，我们将讨论如何呈现打印对话框给用户。 <span id="line-317" class="anchor"/><span id="line-318" class="anchor"/><span id="line-319" class="anchor"/><span id="line-320" class="anchor"/></p><p class="line867">
+</p><h2 id="head-cce298500e70940a097ada46417bec45278e8ba6">2. 如何显示打印对话框？</h2>
+<span id="line-321" class="anchor"/><span id="line-322" class="anchor"/><span id="line-323" class="anchor"/><p class="line862">诸如要打印那些面面，要打印多少副本这些关于打印工作的数据是由标准的打印对话框来管理的。打印对话框是与字体和颜色对话框类似的，<tt>wxPython</tt>中的打印对话框实例仅仅是对本地控件和一个储存了对话框数据的分离的数据对象的简单封装。 <span id="line-324" class="anchor"/><span id="line-325" class="anchor"/><span id="line-326" class="anchor"/></p><p class="line867">
+</p><h3 id="head-a7d482bc2c8bac2edb2bf5a3d8137187d25bc22e">2.1. 创建一个打印对话框</h3>
+<span id="line-327" class="anchor"/><span id="line-328" class="anchor"/><span id="line-329" class="anchor"/><p class="line874">图17.3显示了打印设置对话框的样例。 <span id="line-330" class="anchor"/><span id="line-331" class="anchor"/><span id="line-332" class="anchor"/></p><p class="line867"><strong>图17.3</strong> <span id="line-333" class="anchor"/><span id="line-334" class="anchor"/></p><p class="line867"><img title="attachment:w17.3.gif" src="/moin/WxPythonInAction/ChapterSeventeen?action=AttachFile&amp;do=get&amp;target=w17.3.gif" class="attachment"/> <span id="line-335"
+class="anchor"/><span id="line-336" class="anchor"/><span id="line-337" class="anchor"/></p><p class="line862">这里的对话框是类<tt>wx.PrintDialog</tt>的一个实例，你可以使用下面的构造函数来得到： <span id="line-338" class="anchor"/><span id="line-339" class="anchor"/></p><p class="line867"><span id="line-340" class="anchor"/></p><pre>wx.PrintDialog(parent, data=None)
+<span id="line-341" class="anchor"/></pre><span id="line-342" class="anchor"/><span id="line-343" class="anchor"/><p class="line862">其中，参数<tt>parent</tt>是对话框的父框架，参数<tt>data</tt>是一个预先存在的<tt>wx.PrintDialogData</tt>实例，它用于对话框的初始数据。 <span id="line-344" class="anchor"/><span id="line-345" class="anchor"/><span id="line-346" class="anchor"/></p><p class="line867"><strong>使用方法</strong> <span id="line-347" class="anchor"/><span id="line-348" class="anchor"/></p><p
+class="line862">一旦你有了打印对话框，你就可以使用标准的<tt>ShowModal()</tt>方法来显示它，<tt>ShowModal()</tt>方法将根据用户关闭对话框的方式而返回<tt>wx.ID_OK</tt>或<tt>wx.ID_CANCEL</tt>。 在你关闭了对话框之后，你可以使用<tt>GetPrintDialogData()</tt>方法来得到用户输入的数据。你也可以使用<tt>GetPrintDC()</tt>方法得到与数据相关联的打印机的设备上下文，如果还没有内容被创建，那么<tt>GetPrintDC()</tt>方法返回<tt>None</tt>。例17.1中的<tt>OnPrintSetup()</tt>方法显示了实际上对话框是如何被获取的。 <span id="line-349" class="anchor"/><span id="line-350" class="anchor"/><span
+id="line-351" class="anchor"/></p><p class="line867"><strong>使用属性</strong> <span id="line-352" class="anchor"/><span id="line-353" class="anchor"/></p><p class="line862">这个数据对象本身有几个属性，其中的一个是对<tt>wx.PrintData</tt>类型的一个对象的引用，<tt>wx.PrintData</tt>有更多的属性。你可以使用构造函数<tt>wx.PrintDialogData()</tt>来创建你的<tt>wx.PrintDialogData</tt>对象。这使得你能够在打开对话框之前预设属性。 <span id="line-354" class="anchor"/><span id="line-355" class="anchor"/></p><p
+class="line867"><tt>wx.PrintDialogData</tt>对象有四个属性用于控制打印对话框的各个部分的有效性。方法<tt>EnableHelp(enable)</tt>用于开关帮助性能。至于对话框的其它部分，<tt>EnablePageNumbers(enable)</tt>与页面数量输入框相关，<tt>EnablePrintToFile(enable)</tt>管理实际的打印按钮，<tt>EnableSelection(enable)</tt>在打印所有和仅打印被选项之间作切换。 <span id="line-356" class="anchor"/><span id="line-357" class="anchor"/></p><p class="line874">表17.2显示了对话框数据对象的其它属性，它们使你能够管理有关打印请求的信息。 <span id="line-358" class="anchor"/><span id="line-359"
+class="anchor"/><span id="line-360" class="anchor"/></p><p class="line867"><strong>表17.2</strong>  <span id="line-361" class="anchor"/><strong><tt>wx.PrintDialogData</tt>的属性</strong> <span id="line-362" class="anchor"/><span id="line-363" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line891"><tt>GetAllPages()</tt></p></td>
+<td><p class="line862">如果用户选择了打印整个文档这一选项，则返回<tt>True</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-364" class="anchor"/><p class="line891"><tt>SetCollate(flag)</tt></p></td>
+<td/>
+</tr>
+<tr>  <td><span id="line-365" class="anchor"/><p class="line891"><tt>GetCollate()</tt></p></td>
+<td><p class="line862">如果用户选择了核对打印的页，则返回<tt>True</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-366" class="anchor"/><p class="line891"><tt>SetFromPage(page)</tt></p></td>
+<td/>
+</tr>
+<tr>  <td><span id="line-367" class="anchor"/><p class="line891"><tt>GetFromPage()</tt></p></td>
+<td><p class="line862">如果用户选择从某一页打印，那么方法返回打印的第一页的整数页码。</p></td>
+</tr>
+<tr>  <td><span id="line-368" class="anchor"/><p class="line891"><tt>SetMaxPage(page)</tt></p></td>
+<td/>
+</tr>
+<tr>  <td><span id="line-369" class="anchor"/><p class="line891"><tt>GetMaxPage()</tt></p></td>
+<td><p class="line862">返回文档中最大的页码。</p></td>
+</tr>
+<tr>  <td><span id="line-370" class="anchor"/><p class="line891"><tt>SetMinPage(page)</tt></p></td>
+<td/>
+</tr>
+<tr>  <td><span id="line-371" class="anchor"/><p class="line891"><tt>GetMinPage()</tt></p></td>
+<td><p class="line862">返回文档中最小的页码。</p></td>
+</tr>
+<tr>  <td><span id="line-372" class="anchor"/><p class="line891"><tt>SetNoCopies()</tt></p></td>
+<td/>
+</tr>
+<tr>  <td><span id="line-373" class="anchor"/><p class="line891"><tt>GetNoCopies()</tt></p></td>
+<td><p class="line862">返回用户选择要打印的副本的数量。</p></td>
+</tr>
+<tr>  <td><span id="line-374" class="anchor"/><p class="line891"><tt>SetPrintData(printData)</tt></p></td>
+<td/>
+</tr>
+<tr>  <td><span id="line-375" class="anchor"/><p class="line891"><tt>GetPrintData()</tt></p></td>
+<td><p class="line862">返回与对话框相关联的<tt>wx.PrintData</tt>对象。</p></td>
+</tr>
+<tr>  <td><span id="line-376" class="anchor"/><p class="line891"><tt>SetPrintToFile(flag)</tt></p></td>
+<td/>
+</tr>
+<tr>  <td><span id="line-377" class="anchor"/><p class="line891"><tt>GetPrintToFile()</tt></p></td>
+<td><p class="line862">如果用户已经选择了打印到一个文件这一项，那么返回<tt>True</tt>。“打印到文件”这一机制由<tt>wxPython</tt>管理。</p></td>
+</tr>
+<tr>  <td><span id="line-378" class="anchor"/><p class="line891"><tt>SetSelection(flag)</tt></p></td>
+<td/>
+</tr>
+<tr>  <td><span id="line-379" class="anchor"/><p class="line891"><tt>GetSelection()</tt></p></td>
+<td><p class="line862">如果用户已经选择了只打印当前的选择这一项，那么返回<tt>True</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-380" class="anchor"/><p class="line891"><tt>SetToPage(page)</tt></p></td>
+<td/>
+</tr>
+<tr>  <td><span id="line-381" class="anchor"/><p class="line891"><tt>GetToPage()</tt></p></td>
+<td><p class="line862">如果用户指定了一个范围，那么返回打印的最后一页的页码。</p></td>
+</tr>
+</tbody></table></div><span id="line-382" class="anchor"/><span id="line-383" class="anchor"/><span id="line-384" class="anchor"/><p class="line862">被<tt>GetPrintData()</tt>方法返回的<tt>wx.PrintData</tt>实例提供了有关打印的更进一步的信息。通常这些信息是在你的打印对话框的打印设置子对话框中的。表17.3列出了<tt>wx.PrintData</tt>对象的属性。 <span id="line-385" class="anchor"/><span id="line-386" class="anchor"/><span id="line-387" class="anchor"/></p><p class="line867"><strong>表17.3</strong>   <span id="line-388"
+class="anchor"/><strong><tt>wx.PrintData</tt>的属性</strong> <span id="line-389" class="anchor"/><span id="line-390" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line891"><tt>SetColour(flag)</tt></p></td>
+</tr>
+<tr>  <td><span id="line-391" class="anchor"/><p class="line891"><tt>GetColour()</tt></p></td>
+<td><p class="line862">如果当前的打印是用于颜色打印的，那么返回<tt>True</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-392" class="anchor"/><p class="line891"><tt>SetDuplex(mode)</tt></p></td>
+</tr>
+<tr>  <td><span id="line-393" class="anchor"/><p class="line891"><tt>GetDuplex()</tt></p></td>
+<td><p class="line862">返回当前关于双面打印的设置。值可以是<tt>wx.DUPLEX_SIMPLE</tt>（非双面打印），<tt>wx.DUPLEX_HORIZONTAL</tt>（横向双面打印），<tt>wx.DUPLEX_VERTICAL</tt>（纵向双面打印）。</p></td>
+</tr>
+<tr>  <td><span id="line-394" class="anchor"/><p class="line891"><tt>SetOrientation(orientation)</tt></p></td>
+</tr>
+<tr>  <td><span id="line-395" class="anchor"/><p class="line891"><tt>GetOrientation()</tt></p></td>
+<td><p class="line862">返回纸张的打印定位（肖像或风景）。值可以是<tt>wx.LANDSCAPE</tt>和<tt>wx.PORTRAIT</tt>。</p></td>
+</tr>
+<tr>  <td><span id="line-396" class="anchor"/><p class="line891"><tt>SetPaperId(paperId)</tt></p></td>
+</tr>
+<tr>  <td><span id="line-397" class="anchor"/><p class="line891"><tt>GetPaperId()</tt></p></td>
+<td><p class="line862">返回匹配纸张类型的标识符。通常的值有<tt>wx.PAPER_LETTER, wx.PAPER_LEGAL, </tt>和<tt>wx.PAPER_A4</tt>。完整的页面（纸张）<tt>ID</tt>的列表见<tt>wxWidgets</tt>文档。</p></td>
+</tr>
+<tr>  <td><span id="line-398" class="anchor"/><p class="line891"><tt>SetPrinterName(printerName)</tt></p></td>
+</tr>
+<tr>  <td><span id="line-399" class="anchor"/><p class="line891"><tt>GetPrinterName()</tt></p></td>
+<td><p class="line862">返回被系统引用的当前打印机的名字。如果该值为空字符串，那么默认打印机被使用。</p></td>
+</tr>
+<tr>  <td><span id="line-400" class="anchor"/><p class="line891"><tt>SetQuality(quality)</tt></p></td>
+</tr>
+<tr>  <td><span id="line-401" class="anchor"/><p class="line891"><tt>GetQuality()</tt></p></td>
+<td><p class="line862">返回打印机的当前品质值。<tt>set</tt>*方法仅接受如下取值</p></td>
+<td><p class="line891"><tt>wx.PRINT_QUALITY_DRAFT, wx.PRINT_QUALITY_HIGH, wx.PRINT_QUALITY_MEDIUM, </tt>或<tt>wx.PRINT_QUALITY_LOW</tt>。<tt>get</tt>*方法将返回上面的这些值之一，或一个代表每英寸点数设置的正整数。</p></td>
+</tr>
+</tbody></table></div><span id="line-402" class="anchor"/><span id="line-403" class="anchor"/><span id="line-404" class="anchor"/><span id="line-405" class="anchor"/><p class="line867">
+</p><h2 id="head-519fc62fea11f30eebf019fe68cf8ce6389657dd">3. 如何显示页面设置对话框？</h2>
+<span id="line-406" class="anchor"/><span id="line-407" class="anchor"/><span id="line-408" class="anchor"/><p class="line874">图17.4显示了页面设置对话框是如何让用户来设置与页面尺寸相关的数据的。 <span id="line-409" class="anchor"/><span id="line-410" class="anchor"/><span id="line-411" class="anchor"/></p><p class="line867"><strong>图17.4</strong> <span id="line-412" class="anchor"/><span id="line-413" class="anchor"/></p><p class="line867"><img title="attachment:w17.3.gif"
+src="/moin/WxPythonInAction/ChapterSeventeen?action=AttachFile&amp;do=get&amp;target=w17.3.gif" class="attachment"/> <span id="line-414" class="anchor"/><span id="line-415" class="anchor"/><span id="line-416" class="anchor"/><span id="line-417" class="anchor"/></p><p class="line867">
+</p><h3 id="head-8f84499c1f03a74bfe4ca158555105bf211d2431">3.1. 创建页面设置对话框</h3>
+<span id="line-418" class="anchor"/><span id="line-419" class="anchor"/><span id="line-420" class="anchor"/><p class="line862">你可以通过实例化一个<tt>wx.PageSetupDialog</tt>类来创建一个页面设置对话框。 <span id="line-421" class="anchor"/><span id="line-422" class="anchor"/></p><p class="line867"><tt>wx.PageSetupDialog(parent, data=None)</tt> <span id="line-423" class="anchor"/><span id="line-424" class="anchor"/></p><p
+class="line862">参数<tt>parent</tt>是新的对话框的父窗口。参数<tt>data</tt>是<tt>wx.PageSetupDialogData</tt>的一个实例默认为<tt>None</tt>。一旦页面设置对话框被创建了，那么这个对话框的行为就和其它任何模式对话框一样，并且你可以使用<tt>ShowModal()</tt>来显示它。通常，返回值表明了用户是否是使用<tt>wx.ID_OK</tt>或<tt>wx.ID_CANCEL</tt>按钮关闭的对话框窗口。在对话框关闭后，你可以通过调用<tt>GetPageSetupDialogData()</tt>来取得对数据对象的访问， <tt>GetPageSetupDialogData()</tt>返回类<tt>wx.PageSetupDialogData</tt>的一个实例。 <span
+id="line-425" class="anchor"/><span id="line-426" class="anchor"/><span id="line-427" class="anchor"/><span id="line-428" class="anchor"/></p><p class="line867">
+</p><h3 id="head-d9ca644960c14f7f93f25a7d80fa8938456e820b">3.2. 使用页面设置属性工作</h3>
+<span id="line-429" class="anchor"/><span id="line-430" class="anchor"/><span id="line-431" class="anchor"/><p class="line867"><tt>wx.PageSetupDialogData</tt>类有几个必须与页面设置一起使用的属性。表17.4展示了控制对话框自身显示的属性。除非有其它的指定，否则所有这些属性都默认为<tt>True</tt>。 <span id="line-432" class="anchor"/><span id="line-433" class="anchor"/><span id="line-434" class="anchor"/></p><p class="line867"><strong>表17.4</strong>  <span id="line-435"
+class="anchor"/><strong><tt>wx.PageSetupDialogData</tt>的对话框控制属性</strong> <span id="line-436" class="anchor"/><span id="line-437" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line891"><tt>GetDefaultMinMargins()</tt></p></td>
+</tr>
+<tr>  <td><span id="line-438" class="anchor"/><p class="line891"><tt>SetDefaultMinMargins(flag)</tt></p></td>
+<td><p class="line862">如果这个属性为<tt>True</tt>，并且你是在微软的<tt>Windows</tt>系统上，那么页面设置将使用默认打印机的当前属性作为默认认的最小化页边距。否则，它将使用系统默认值。</p></td>
+</tr>
+<tr>  <td><span id="line-439" class="anchor"/><p class="line891"><tt>GetDefaultInfo()</tt></p></td>
+</tr>
+<tr>  <td><span id="line-440" class="anchor"/><p class="line891"><tt>SetDefaultInfo(flag)</tt></p></td>
+<td><p class="line862">如果这个属性为<tt>True</tt>，并且你是在微软的<tt>Windows</tt>系统上，那么这个页面设置对话框不会被显示。替而代之，当前打印机的所有默认值都将被放入数据对象。</p></td>
+</tr>
+<tr>  <td><span id="line-441" class="anchor"/><p class="line891"><tt>EnableHelp(flag)</tt></p></td>
+</tr>
+<tr>  <td><span id="line-442" class="anchor"/><p class="line891"><tt>GetEnableHelp()</tt></p></td>
+<td><p class="line862">如果为<tt>True</tt>，那么对话框的帮助部分是有效的。</p></td>
+</tr>
+<tr>  <td><span id="line-443" class="anchor"/><p class="line891"><tt>EnableMargins(flag)</tt></p></td>
+</tr>
+<tr>  <td><span id="line-444" class="anchor"/><p class="line891"><tt>GetEnableMargins()</tt></p></td>
+<td><p class="line862">如果为<tt>True</tt>，那么对话框的用于调整页边距的部分是有效的。</p></td>
+</tr>
+<tr>  <td><span id="line-445" class="anchor"/><p class="line891"><tt>EnableOrientation(flag)</tt></p></td>
+</tr>
+<tr>  <td><span id="line-446" class="anchor"/><p class="line891"><tt>GetEnableOrientation()</tt></p></td>
+<td><p class="line862">如果为<tt>True</tt>，那么对话框的用于改变页面定位的部分是有效的。</p></td>
+</tr>
+<tr>  <td><span id="line-447" class="anchor"/><p class="line891"><tt>EnablePaper(flag)</tt></p></td>
+</tr>
+<tr>  <td><span id="line-448" class="anchor"/><p class="line891"><tt>GetEnablePaper()</tt></p></td>
+<td><p class="line862">如果为<tt>True</tt>，那么对话框的用于允许用户改变页面（纸张）类型的部分是效的。</p></td>
+</tr>
+<tr>  <td><span id="line-449" class="anchor"/><p class="line891"><tt>EnablePrinter(flag)</tt></p></td>
+</tr>
+<tr>  <td><span id="line-450" class="anchor"/><p class="line891"><tt>GetEnablePrinter()</tt></p></td>
+<td><p class="line862">如果为<tt>True</tt>，那么允许用户设置打印机的按钮是有效的。</p></td>
+</tr>
+</tbody></table></div><span id="line-451" class="anchor"/><span id="line-452" class="anchor"/><span id="line-453" class="anchor"/><p class="line862">表17.5显示了<tt>wx.PageSetupDialogData</tt>类的附加的属性，这些属性用于控制页面的边距和尺寸。 <span id="line-454" class="anchor"/><span id="line-455" class="anchor"/><span id="line-456" class="anchor"/></p><p class="line867"><strong>表17.5</strong>  <span id="line-457" class="anchor"/><strong><tt>wx.PageSetupDialogData</tt>的页边距和尺寸属性</strong> <span
+id="line-458" class="anchor"/><span id="line-459" class="anchor"/></p><div><table><tbody><tr>  <td><p class="line891"><tt>GetMarginTopLeft()</tt></p></td>
+</tr>
+<tr>  <td><span id="line-460" class="anchor"/><p class="line891"><tt>SetMarginTopLeft(pt)</tt></p></td>
+<td><p class="line891"><tt>get</tt>*方法返回一个<tt>wx.Point</tt>，其中的值x是当前的左边距，y是当前的上边距。<tt>set</tt>*方法允许你使用一个<tt>wx.Point</tt>或一个<tt>Python</tt>元组来改变这些值。</p></td>
+</tr>
+<tr>  <td><span id="line-461" class="anchor"/><p class="line891"><tt>GetMarginBottomRight()</tt></p></td>
+</tr>
+<tr>  <td><span id="line-462" class="anchor"/><p class="line891"><tt>SetMarginBottomRight(pt)</tt></p></td>
+<td><p class="line891"><tt>get</tt>*方法返回一个<tt>wx.Point</tt>，其中的值x是当前的右边距，y是当前的下边距。<tt>set</tt>*方法允许你使用一个<tt>wx.Point</tt>或一个<tt>Python</tt>元组来改变这些值。</p></td>
+</tr>
+<tr>  <td><span id="line-463" class="anchor"/><p class="line891"><tt>GetMinMarginTopLeft()</tt></p></td>
+</tr>
+<tr>  <td><span id="line-464" class="anchor"/><p class="line891"><tt>SetMinMarginTopLeft(pt)</tt></p></td>
+<td><p class="line862">同<tt>GetMarginTopLeft()</tt>中的一样，只是值是所允许的最小左边距和上边距。</p></td>
+</tr>
+<tr>  <td><span id="line-465" class="anchor"/><p class="line891"><tt>GetMinMarginBottomRight()</tt></p></td>
+</tr>
+<tr>  <td><span id="line-466" class="anchor"/><p class="line891"><tt>SetMinMarginBottomRight(pt)</tt></p></td>
+<td><p class="line862">同<tt>GetMarginBottomRight()</tt>中的一样，只是值是所允许的最小右边距和下边距。</p></td>
+</tr>
+<tr>  <td><span id="line-467" class="anchor"/><p class="line891"><tt>GetPaperId()</tt></p></td>
+</tr>
+<tr>  <td><span id="line-468" class="anchor"/><p class="line891"><tt>SetPaperId(id)</tt></p></td>
+<td><p class="line862">返回关于当前页面类型的<tt>wxPython</tt>标识符。同<tt>wx.PrinterData</tt>的属性。</p></td>
+</tr>
+<tr>  <td><span id="line-469" class="anchor"/><p class="line891"><tt>GetPaperSize()</tt></p></td>
+</tr>
+<tr>  <td><span id="line-470" class="anchor"/><p class="line891"><tt>SetPaperSize(size)</tt></p></td>
+<td><p class="line891"><tt>get</tt>*方法返回包含页面的水平和坚直方向尺寸的一个<tt>wx.Size</tt>实例。单位是毫米。</p></td>
+</tr>
+<tr>  <td><span id="line-471" class="anchor"/><p class="line891"><tt>GetPrintData()</tt></p></td>
+</tr>
+<tr>  <td><span id="line-472" class="anchor"/><p class="line891"><tt>SetPrintData(printData)</tt></p></td>
+<td><p class="line891"><tt>get</tt>*方法返回与当前打印会话相关的<tt>wx.PrintData</tt>实例。</p></td>
+</tr>
+</tbody></table></div><span id="line-473" class="anchor"/><span id="line-474" class="anchor"/><p class="line874">到目前为止，我们已经讨论了所有关于数据对话框的整改，下面我们将重点放在打印上面。 <span id="line-475" class="anchor"/><span id="line-476" class="anchor"/><span id="line-477" class="anchor"/><span id="line-478" class="anchor"/></p><p class="line867">
+</p><h2 id="head-04b63295c3d7a1fcc242aec1c8be12c26a0a0f28">4. 如何打印？</h2>
+<span id="line-479" class="anchor"/><span id="line-480" class="anchor"/><span id="line-481" class="anchor"/><p class="line862">到目前为止，我们已经见过了打印构架的所有部分，现是我们打印一些东西的时候了。实际的打印部分是由<tt>wx.Printer</tt>类的一个实例来控制的。与已经说明的其它部分相比，打印并不更简单。接下来，我们将对在例17.1中的<tt>OnPrint()</tt>中的步骤作介绍。 <span id="line-482" class="anchor"/><span id="line-483" class="anchor"/></p><p class="line874">第一步 按顺序得到你的所有数据 <span
+id="line-484" class="anchor"/><span id="line-485" class="anchor"/><span id="line-486" class="anchor"/></p><p class="line862">这至少应该包括带有打印机命令的<tt>wx.Printout</tt>对象，通常也要包括一个<tt>wx.PrintDialogData</tt>实例。 <span id="line-487" class="anchor"/><span id="line-488" class="anchor"/></p><p class="line862">第二步 创建一个<tt>wx.Printer</tt>实例 <span id="line-489" class="anchor"/><span id="line-490" class="anchor"/><span id="line-491" class="anchor"/></p><p
+class="line862">创建该实例，要使用构造器<tt>wx.Printer(data=None)</tt>。可选参数<tt>data</tt>是一个<tt>wx.PrintDialogData</tt>实例。该数据控制打印，通常，你会想使用它。 <span id="line-492" class="anchor"/><span id="line-493" class="anchor"/></p><p class="line862">第三步 使用<tt>wx.Printer</tt>的<tt>Print ()</tt>方法打印 <span id="line-494" class="anchor"/><span id="line-495" class="anchor"/><span id="line-496" class="anchor"/></p><p class="line867"><tt>Print()</tt>方法如下： <span id="line-497"
+class="anchor"/><span id="line-498" class="anchor"/></p><p class="line867"><span id="line-499" class="anchor"/><span id="line-500" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-88694b7043394b412ff9c286a0d4465b770af92e_001\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-88694b7043394b412ff9c286a0d4465b770af92e_001', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-88694b7043394b412ff9c286a0d4465b770af92e_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">Print</span><span class="Operator">(</span><span class="ID">parent</span><span class="Operator">,</span> <span class="ID">printout</span><span class="Operator">,</span> <span class="ID">prompt</span><span class="Operator">=</span><span class="ID">True</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-501" class="anchor"/><span id="line-502" class="anchor"/><p class="line862">其中参数<tt>parent</tt>是当打印时所触发的对话框的父窗口。<tt>printout</tt>是用于打印的<tt>wx.Printout</tt>对象。如果参数<tt>prompt</tt>为<tt>True</tt>，那么在打印之前显示打印对话框，否则将立即；启动打印。 <span id="line-503" class="anchor"/><span id="line-504" class="anchor"/></p><p
+class="line862">如果打印成功，则<tt>Print()</tt>方法返回<tt>True</tt>。你能够调用<tt>GetLastError()</tt>方法来得到下列常量之一：<tt>wx.PRINTER_CANCELLED</tt>（如果失败是由于用户取消了打印所引起的），<tt>wx.PRINTER_ERROR</tt>（如果失败在打印期间由打印自身所引起的），或<tt>wx.PRINTER_NO_ERROR</tt>（如果<tt>Print()</tt>返回<tt>True</tt>且没有错误发生）。 <span id="line-505" class="anchor"/><span id="line-506" class="anchor"/></p><p
+class="line862">这儿还有另外两个你可以使用一个<tt>wx.Printer</tt>实例做的事： <span id="line-507" class="anchor"/><span id="line-508" class="anchor"/></p><p class="line862">* 你可以使用<tt>CreateAbortWindow(parent,printout)</tt>来显示中止对话框，其中参数<tt>parent</tt>和<tt>printout</tt>同<tt>Print()</tt>方法中的。如果用户已经中止打印任务，你能够通过调用<tt>Abort()</tt>来发现，该方法在这种情况下返回<tt>True</tt>。 <span id="line-509" class="anchor"/><span id="line-510"
+class="anchor"/></p><p class="line862">* 你可以使用<tt>PrintDialog(parent)</tt>来显式地显示打印对话框，并且你可以使用<tt>GetPrintDialogData()</tt>来得到活动的打印数据对象。 <span id="line-511" class="anchor"/><span id="line-512" class="anchor"/></p><p class="line867">
+</p><h2 id="head-1df78536776f04685b2e41d2d28ed26c5e20306f">5. 如何实现一个打印预览？</h2>
+<span id="line-513" class="anchor"/><span id="line-514" class="anchor"/><span id="line-515" class="anchor"/><p class="line874">使用设备上下文的一个好处就是很容易管理打印预览，你可以使用一个屏幕设备上下文来代替打印机设备上下文。接下来的三个部分将讨论打印预览的过程。 <span id="line-516" class="anchor"/><span id="line-517" class="anchor"/></p><p class="line874">第一步 创建预览实例 <span id="line-518" class="anchor"/><span id="line-519" class="anchor"/><span id="line-520"
+class="anchor"/></p><p class="line862">在一个打印预览中的第一步是创建类<tt>wx.PrintPreview</tt>的一个实例，<tt>wx.PrintPreview</tt>类似<tt>wx.Printer</tt>。构造器如下： <span id="line-521" class="anchor"/><span id="line-522" class="anchor"/></p><p class="line867"><span id="line-523" class="anchor"/><span id="line-524" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-5795b9c181362bebe2b162e20ba690de002a8aa2_002\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-5795b9c181362bebe2b162e20ba690de002a8aa2_002', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-5795b9c181362bebe2b162e20ba690de002a8aa2_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">PrintPreview</span><span class="Operator">(</span><span class="ID">printout</span><span class="Operator">,</span> <span class="ID">printoutForPrinting</span><span class="Operator">,</span> <span class="ID">data</span><span class="Operator">=</span><span
+class="ID">None</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-525" class="anchor"/><span id="line-526" class="anchor"/><p
+class="line862">其中参数<tt>printout</tt>是一个<tt>wx.Printout</tt>对象，用于管理预览。参数<tt>printoutForPrinting</tt>是另一个<tt>wx.Printout</tt>对象。如果它不是<tt>None</tt>，那么当显示的时候，该打印预览窗口包含一<tt>Print</tt>按钮，该按钮启动打印。<tt>printoutForPrinting</tt>用于实际的打印。如果参数<tt>printoutForPrinting</tt>为<tt>None</tt>，那么<tt>Print</tt>按钮不显示。当然，你可以传递同一个实例或你的自定义打印输出类的相同版本的两个实例给参数<tt>printout</tt>和<tt>printoutForPrinting</tt>。参数<tt>data</tt>可以是一个<tt>wx.PrintData</tt>对象或一个<tt>wx.PrintDialogData</tt>对象。如果参数<tt>data</tt>指定了的话，那么它被用于控制该打印预览。在例17.1中，我们显示了一个在<tt>OnPrintPreview()</tt>方法中使用打印预览的例子。
+<span id="line-527" class="anchor"/><span id="line-528" class="anchor"/></p><p class="line874">第二步 创建预览框架 <span id="line-529" class="anchor"/><span id="line-530" class="anchor"/><span id="line-531" class="anchor"/></p><p
+class="line862">一旦你有了你的<tt>wx.PrintPreview</tt>，你就需要一框架以在其中观看你的<tt>wx.PrintPreview</tt>。该框架由类<tt>wx.PreviewFrame</tt>提供，<tt>wx.PreviewFrame</tt>是<tt>wx.Frame</tt>的一个子类，<tt>wx.Frame</tt>为预览提供基本的用户交互控件。<tt>wx.PreviewFrame</tt>的构造器如下： <span id="line-532" class="anchor"/><span id="line-533" class="anchor"/></p><p class="line867"><span id="line-534" class="anchor"/><span id="line-535" class="anchor"/><span
+id="line-536" class="anchor"/><span id="line-537" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-bb6193703111bac538dae2ca6a4eee32b16f9681_003\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-bb6193703111bac538dae2ca6a4eee32b16f9681_003', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-bb6193703111bac538dae2ca6a4eee32b16f9681_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">PreviewFrame</span><span class="Operator">(</span><span class="ID">preview</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">,</span> <span
+class="ID">pos</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">DefaultPosition</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   2 </span>        <span class="ID">size</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">DefaultSize</span><span class="Operator">,</span> <span class="ID">style</span><span class="Operator">=</span><span class="ID">wx</span><span class="Operator">.</span><span class="ID">DEFAULT_FRAME_STYLE</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">   3 </span>        <span class="ID">name</span><span class="Operator">=</span><span class="String">"frame"</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-538" class="anchor"/><span id="line-539" class="anchor"/><p class="line862">其中真正有意义的参数是<tt>preview</tt>，它是要被预览的<tt>wx.PrintPreview</tt>实例。其它的参数都是标准的<tt>wx.Frame</tt>中的。<tt>wx.PreviewFrame</tt>不定义任何自定义的样式或事件。 <span id="line-540" class="anchor"/><span id="line-541" class="anchor"/></p><p class="line874">第三步 初始化框架 <span id="line-542" class="anchor"/><span id="line-543"
+class="anchor"/><span id="line-544" class="anchor"/><span id="line-545" class="anchor"/></p><p
+class="line862">在你显示你的<tt>wx.PreviewFrame</tt>之前，你需要调用<tt>Initialize()</tt>方法，该方法创建窗口的内部的部件并做其它的内部的计算。一旦你<tt>Show()</tt>了该框架，那么如果你想再改变预览窗口的感观，你可以使用考虑<tt>CreateControlBar()</tt>和<tt>CreateCanvas()</tt>方法，它们分别创建类<tt>wx.PreviewControlBar</tt>和<tt>wx.PreviewCanvas</tt>的对象。覆盖这些方法以创建你自己的画布(<tt>canvas)</tt>和/或控制栏对象，使得你能够定制你的打印预览窗口的感观。
+<span id="line-546" class="anchor"/><span id="line-547" class="anchor"/><span id="line-548" class="anchor"/><span id="line-549" class="anchor"/></p><p class="line867">
+</p><h2 id="head-9b25db6068dce5496ac0c49853fca94d2caf09c0">6. 本章小结</h2>
+<span id="line-550" class="anchor"/><span id="line-551" class="anchor"/><span id="line-552" class="anchor"/><p class="line862">1、这是<tt>wxPython</tt>中的一个通用的打印构架，它不仅可以打印<tt>HTML</tt>，还可以打印任何能够被绘制到设备上下文的东西。这个架构中的主要的类是<tt>wx.Printout</tt>，但是<tt>wx.Printer</tt>和<tt>wx.PrintPreview</tt>也是重要的。 <span id="line-553" class="anchor"/><span id="line-554" class="anchor"/></p><p
+class="line862">2、<tt>wx.Printout</tt>类管理图形打印的细节，并且它包含几个可以被覆盖来定制打印会话期间的行为和使用的数据的方法。打印发生在<tt>OnPrintPage()</tt>方法期间。 <span id="line-555" class="anchor"/><span id="line-556" class="anchor"/></p><p
+class="line862">3、用于打印机设置和页面设置的标准的对话框是可以从<tt>wxPython</tt>来访问的。打印机设置对话框是<tt>wx.PrintDialog</tt>的一个实例，页面设置对话框是<tt>wx.PageSetupDialog</tt>的一个实例。这两个对话框都有相关的数据类，数据类使你的程序可以处理所有显示在对话框中的值。 <span id="line-557" class="anchor"/><span id="line-558" class="anchor"/></p><p
+class="line862">4、一旦有了数据，那么实际将数据传送给打印机则是<tt>wx.Printer</tt>类的相对简单的应用。你可以使用<tt>wx.PrintPreview</tt>类来管理一个打印预览会话，该类包括一个打印预览框架，和根据该框架指定通常打印行为的选项。 <span id="line-559" class="anchor"/><span id="bottom" class="anchor"/></p></div>

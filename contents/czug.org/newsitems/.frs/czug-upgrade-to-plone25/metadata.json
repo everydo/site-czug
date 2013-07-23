@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "czug-upgrade-to-plone25"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "经过不懈的努力，czug升级到Zope 2.9 + Plone 2.5.1的最新版本", 
+        "modified": "2006-11-01 08:50:57", 
+        "title": "CZUG.org升级到Plone 2.5平台"
+    }
+}

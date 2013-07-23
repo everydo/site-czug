@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "auto-login"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "如何在登录一次后, 以后打开浏览器能自动登录", 
+        "modified": "2006-02-19 01:39:36", 
+        "title": "如何让用户自动登陆到网站？"
+    }
+}

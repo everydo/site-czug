@@ -1,0 +1,532 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-4" class="anchor"/><p class="line867"><strong> Drag and Drop in <a href="/moin/PyQt4" class="nonexistent">PyQt4</a> <a href="/moin/PyQt4" class="nonexistent">PyQt4</a>中的拖放操作 </strong> <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/></p><p class="line862">::-- <a href="/moin/zhuyj">zhuyj</a> [2008-07-20 07:27:47] </p><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-edbd2362584145b28c903ae31ff19a183d3d4fba">Drag and Drop in PyQt4</a><ol><li><a href="#head-a2861100e927760a9a3b216bb44c12dea5324874">Simple Drag and Drop</a></li><li><a href="#head-380ac365bc0361eb5666631fcef1003fa9f385f5">Drag & drop a button widget</a></li></ol></li><li><a
+href="#head-6ba9d17052018bf2651034bb55bb399b652408be">交流</a></li></ol></div> <span id="line-7" class="anchor"/><span id="line-8" class="anchor"/><p class="line867">
+</p><h1 id="head-edbd2362584145b28c903ae31ff19a183d3d4fba">1. Drag and Drop in PyQt4</h1>
+<span id="line-9" class="anchor"/><ul><li style="list-style-type: none;"><p class="line891"><em> In this part of the <a href="/moin/PyQt4" class="nonexistent">PyQt4</a> tutorial, we will talk about drag & drop operations.</em> <span id="line-10" class="anchor"/><span id="line-11" class="anchor"/></p></li><li style="list-style-type: none;" class="gap"><p class="line862">这部分<a href="/moin/PyQt4" class="nonexistent">PyQt4</a>教程我们将了解拖放操作。 <span id="line-12" class="anchor"/><span id="line-13" class="anchor"/></p><p class="line891"><em> In computer graphical user interfaces, drag-and-drop is the action of (or support for the action of) clicking on a virtual object and dragging it to a different location or onto another virtual object. In general, it can be used to
+invoke many kinds of actions, or create various types of associations between two abstract objects. (Wikipedia)</em> <span id="line-14" class="anchor"/><span id="line-15" class="anchor"/></p></li><li style="list-style-type: none;" class="gap">在计算机图形用户界面中，拖放操作是指点击一个虚拟对象并把它拖到一个不同的位置或其他的虚拟对象上的操作(或支持的行为).一般来说，可以调用多种操作，或创建两个抽象对象间的特定类型的关联。(Wikipedia) <span id="line-16" class="anchor"/><span id="line-17" class="anchor"/><p class="line891"><em> Drag and drop functionality is one of the most visible aspects of the graphical user interface. Drag and drop operation enables users to do complex things intuitively. <span id="line-18" class="anchor"/></em></p></li></ul><p class="line867"> <span
+id="line-19" class="anchor"/><span id="line-20" class="anchor"/></p><ul><li style="list-style-type: none;">拖放功能是最明显的图形用户接口外观，拖放操作允许用户直观的组合事物。 <span id="line-21" class="anchor"/><span id="line-22" class="anchor"/><p class="line891"><em>Usually, we can drag and drop two things. Data or some graphical objects. If we drag an image from one application to another, we drag and drop binary data. If we drag a tab in Firefox and move it to another place, we drag and drop a graphical component. <span id="line-23" class="anchor"/></em></p></li></ul><p class="line867"> <span id="line-24" class="anchor"/><span id="line-25" class="anchor"/></p><ul><li style="list-style-type:
+none;">一般来说，我们可以拖放两件事情，数据或依稀图形对象。如果我们将一幅图像从一个应用程序拖到另一个，我们拖放的是二进制数据。如果我们拖起一个火狐的标签并将它放到另一个地方，我们拖放的是图形组件。 <span id="line-26" class="anchor"/><span id="line-27" class="anchor"/></li></ul><p class="line867">
+</p><h2 id="head-a2861100e927760a9a3b216bb44c12dea5324874">1.1. Simple Drag and Drop</h2>
+<span id="line-28" class="anchor"/><p class="line867"><strong>简单的拖放</strong> <span id="line-29" class="anchor"/><span id="line-30" class="anchor"/></p><ul><li style="list-style-type: none;"><p class="line891"><em>In the first example, we will have a QLineEdit and a QPushButton. We will drag plain text from the line edit widget and drop it onto the button widget.</em> <span id="line-31" class="anchor"/></p></li><li style="list-style-type: none;">第一个例子中，我们有一个QLineEdit和一个QPushButton。我们将从行编辑组件中拖动无格式的文本并将它放到按钮组件上。 <span id="line-32" class="anchor"/><span id="line-33" class="anchor"/></li></ul><p class="line867"><span id="line-34" class="anchor"/><span id="line-35" class="anchor"/><span id="line-36" class="anchor"/><span id="line-37"
+class="anchor"/><span id="line-38" class="anchor"/><span id="line-39" class="anchor"/><span id="line-40" class="anchor"/><span id="line-41" class="anchor"/><span id="line-42" class="anchor"/><span id="line-43" class="anchor"/><span id="line-44" class="anchor"/><span id="line-45" class="anchor"/><span id="line-46" class="anchor"/><span id="line-47" class="anchor"/><span id="line-48" class="anchor"/><span id="line-49" class="anchor"/><span id="line-50" class="anchor"/><span id="line-51" class="anchor"/><span id="line-52" class="anchor"/><span id="line-53" class="anchor"/><span id="line-54" class="anchor"/><span id="line-55" class="anchor"/><span id="line-56" class="anchor"/><span id="line-57" class="anchor"/><span id="line-58" class="anchor"/><span id="line-59"
+class="anchor"/><span id="line-60" class="anchor"/><span id="line-61" class="anchor"/><span id="line-62" class="anchor"/><span id="line-63" class="anchor"/><span id="line-64" class="anchor"/><span id="line-65" class="anchor"/><span id="line-66" class="anchor"/><span id="line-67" class="anchor"/><span id="line-68" class="anchor"/><span id="line-69" class="anchor"/><span id="line-70" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-e4c72e5fc2d0a8c9e6a607004fd0f808e7d3cb9e_000\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-e4c72e5fc2d0a8c9e6a607004fd0f808e7d3cb9e_000', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-e4c72e5fc2d0a8c9e6a607004fd0f808e7d3cb9e_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#!/usr/bin/python</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="Comment"># dragdrop.py</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"/><span class="ResWord">import</span> <span class="ID">sys</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtGui</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">class</span> <span class="ID">Button</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QPushButton</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   6 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QPushButton</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setAcceptDrops</span><span class="Operator">(</span><span class="ID">True</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>    <span class="ResWord">def</span> <span class="ID">dragEnterEvent</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  10 </span>        <span class="ResWord">if</span> <span class="ID">event</span><span class="Operator">.</span><span class="ID">mimeData</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">hasFormat</span><span class="Operator">(</span><span class="String">'text/plain'</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  11 </span>            <span class="ID">event</span><span class="Operator">.</span><span class="ID">accept</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ResWord">else</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  13 </span>            <span class="ID">event</span><span class="Operator">.</span><span class="ID">ignore</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span>    <span class="ResWord">def</span> <span class="ID">dropEvent</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  15 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">setText</span><span class="Operator">(</span><span class="ID">event</span><span class="Operator">.</span><span class="ID">mimeData</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">text</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span><span class="ResWord">class</span> <span class="ID">DragDrop</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QDialog</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  17 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">=</span><span class="ID">None</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  18 </span>        <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QDialog</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">resize</span><span class="Operator">(</span><span class="Number">280</span><span class="Operator">,</span> <span class="Number">150</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setWindowTitle</span><span class="Operator">(</span><span class="String">'Simple Drag & Drop'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span>        <span class="ID">edit</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QLineEdit</span><span class="Operator">(</span><span class="String">''</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  22 </span>        <span class="ID">edit</span><span class="Operator">.</span><span class="ID">setDragEnabled</span><span class="Operator">(</span><span class="ID">True</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  23 </span>        <span class="ID">edit</span><span class="Operator">.</span><span class="ID">move</span><span class="Operator">(</span><span class="Number">30</span><span class="Operator">,</span> <span class="Number">65</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  24 </span>        <span class="ID">button</span> <span class="Operator">=</span> <span class="ID">Button</span><span class="Operator">(</span><span class="String">"Button"</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  25 </span>        <span class="ID">button</span><span class="Operator">.</span><span class="ID">move</span><span class="Operator">(</span><span class="Number">170</span><span class="Operator">,</span> <span class="Number">65</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  26 </span></span>
+<span class="line"><span class="LineNumber">  27 </span></span>
+<span class="line"><span class="LineNumber">  28 </span>        <span class="ID">screen</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QDesktopWidget</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">screenGeometry</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  29 </span>        <span class="ID">size</span> <span class="Operator">=</span>  <span class="ID">self</span><span class="Operator">.</span><span class="ID">geometry</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  30 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">move</span><span class="Operator">(</span><span class="Operator">(</span><span class="ID">screen</span><span class="Operator">.</span><span class="ID">width</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">-</span><span class="ID">size</span><span class="Operator">.</span><span class="ID">width</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span><span
+class="Operator">/</span><span class="Number">2</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  31 </span>            <span class="Operator">(</span><span class="ID">screen</span><span class="Operator">.</span><span class="ID">height</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">-</span><span class="ID">size</span><span class="Operator">.</span><span class="ID">height</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span><span class="Operator">/</span><span class="Number">2</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  32 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QApplication</span><span class="Operator">(</span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">argv</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  33 </span><span class="ID">icon</span> <span class="Operator">=</span> <span class="ID">DragDrop</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  34 </span><span class="ID">icon</span><span class="Operator">.</span><span class="ID">show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  35 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">exec_</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-71" class="anchor"/><p class="line867"><span id="line-72" class="anchor"/><span id="line-73" class="anchor"/><span id="line-74" class="anchor"/><span id="line-75" class="anchor"/><span id="line-76" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-81f98ece2ac6a0ab7ffb8ee80c8832703bec2ad8_001\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-81f98ece2ac6a0ab7ffb8ee80c8832703bec2ad8_001', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-81f98ece2ac6a0ab7ffb8ee80c8832703bec2ad8_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span> <span class="ResWord">class</span> <span class="ID">Button</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QPushButton</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>     <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>         <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QPushButton</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-77" class="anchor"/><ul><li style="list-style-type: none;"><p class="line891"><em> In order to drop text on the QPushButton widget, we must reimplement some methods. So we create our own Button class, which will inherit from the QPushButton widget.</em> <span id="line-78" class="anchor"/></p></li><li style="list-style-type: none;">为了将文本放到QPushButton组件，我们必须重载一些方法，所以我们通过继承QPushButton组件来创建我们自己的按钮类。 <span id="line-79" class="anchor"/><span id="line-80" class="anchor"/></li></ul><p class="line867"><span id="line-81"
+class="anchor"/></p><pre> self.setAcceptDrops(True)
+<span id="line-82" class="anchor"/></pre><span id="line-83" class="anchor"/><ul><li style="list-style-type: none;"><p class="line891"><em> We enable drop events for the QPushButton widget.</em> <span id="line-84" class="anchor"/></p></li><li style="list-style-type: none;">我们允许QPushButton的放置事件。 <span id="line-85" class="anchor"/><span id="line-86" class="anchor"/></li></ul><p class="line867"><span id="line-87" class="anchor"/><span id="line-88" class="anchor"/><span id="line-89" class="anchor"/><span id="line-90" class="anchor"/><span id="line-91" class="anchor"/><span
+id="line-92" class="anchor"/><span id="line-93" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-55091013f623c1ea872b77acbcb314fa1255ccf6_002\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-55091013f623c1ea872b77acbcb314fa1255ccf6_002', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-55091013f623c1ea872b77acbcb314fa1255ccf6_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span> <span class="ResWord">def</span> <span class="ID">dragEnterEvent</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>     <span class="ResWord">if</span> <span class="ID">event</span><span class="Operator">.</span><span class="ID">mimeData</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">hasFormat</span><span class="Operator">(</span><span class="String">'text/plain'</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>         <span class="ID">event</span><span class="Operator">.</span><span class="ID">accept</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span>     <span class="ResWord">else</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   5 </span>         <span class="ID">event</span><span class="Operator">.</span><span class="ID">ignore</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-94" class="anchor"/><ul><li style="list-style-type: none;"><p class="line891"><em> First we reimplement the dragEnteEvent() method. We inform about the data type, we will accept. In our case it is plain text.</em> <span id="line-95" class="anchor"/></p></li><li style="list-style-type: none;">首先我们重载dragEnteEvent()方法，我们通知我们将要收到的数据类型，这里是无格式文本。 <span id="line-96" class="anchor"/><span id="line-97" class="anchor"/></li></ul><p class="line867"><span id="line-98" class="anchor"/><span id="line-99"
+class="anchor"/><span id="line-100" class="anchor"/><span id="line-101" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-b489c607f66c3fb0ed69a15c210754bfef6b13e3_003\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-b489c607f66c3fb0ed69a15c210754bfef6b13e3_003', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-b489c607f66c3fb0ed69a15c210754bfef6b13e3_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span> <span class="ResWord">def</span> <span class="ID">dropEvent</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>     <span class="ID">self</span><span class="Operator">.</span><span class="ID">setText</span><span class="Operator">(</span><span class="ID">event</span><span class="Operator">.</span><span class="ID">mimeData</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">text</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-102" class="anchor"/><ul><li style="list-style-type: none;"><p class="line891"><em> By reimplementing the dropEvent() method, we will define, what we will do upon the drop event. Here we change the text of the button widget.</em> <span id="line-103" class="anchor"/></p></li><li style="list-style-type: none;">通过重载dropEvent()方法，我们定义我们收到drop事件后如何操作，这里我们改变按钮组件显示的文本。 <span id="line-104" class="anchor"/><span id="line-105" class="anchor"/></li></ul><p class="line867"><span id="line-106"
+class="anchor"/></p><pre> edit = QtGui.QLineEdit('', self)
+<span id="line-107" class="anchor"/> edit.setDragEnabled(True)
+<span id="line-108" class="anchor"/></pre><span id="line-109" class="anchor"/><ul><li style="list-style-type: none;"><p class="line891"><em> The QLineEdit widget has a built-in support for drag operations. All we need to do is to call setDragEnabled() method to activate it.</em> <span id="line-110" class="anchor"/></p></li><li style="list-style-type: none;">QLineEdit组件有内置的拖动操作，我们所要作的就是调用setDragEnabled()方法来接收它。 <span id="line-111" class="anchor"/><span id="line-112" class="anchor"/></li></ul><p class="line867"><em> Simple Drag
+& Drop </em> Figure: Simple Drag & Drop <span id="line-113" class="anchor"/><span id="line-114" class="anchor"/></p><p class="line867">
+</p><h2 id="head-380ac365bc0361eb5666631fcef1003fa9f385f5">1.2. Drag & drop a button widget</h2>
+<span id="line-115" class="anchor"/><p class="line867"><strong>拖放按钮组件</strong> <span id="line-116" class="anchor"/><span id="line-117" class="anchor"/></p><ul><li style="list-style-type: none;"><p class="line891"><em> In the following example, we will demonstrate, how to drag & drop a button widget.</em> <span id="line-118" class="anchor"/></p></li><li style="list-style-type: none;">以下的例子中我们将示范如何拖放一个按钮组件。 <span id="line-119" class="anchor"/><span id="line-120" class="anchor"/></li></ul><p class="line867"><span id="line-121"
+class="anchor"/><span id="line-122" class="anchor"/><span id="line-123" class="anchor"/><span id="line-124" class="anchor"/><span id="line-125" class="anchor"/><span id="line-126" class="anchor"/><span id="line-127" class="anchor"/><span id="line-128" class="anchor"/><span id="line-129" class="anchor"/><span id="line-130" class="anchor"/><span id="line-131" class="anchor"/><span id="line-132" class="anchor"/><span id="line-133" class="anchor"/><span id="line-134" class="anchor"/><span id="line-135" class="anchor"/><span id="line-136"
+class="anchor"/><span id="line-137" class="anchor"/><span id="line-138" class="anchor"/><span id="line-139" class="anchor"/><span id="line-140" class="anchor"/><span id="line-141" class="anchor"/><span id="line-142" class="anchor"/><span id="line-143" class="anchor"/><span id="line-144" class="anchor"/><span id="line-145" class="anchor"/><span id="line-146" class="anchor"/><span id="line-147" class="anchor"/><span id="line-148" class="anchor"/><span id="line-149" class="anchor"/><span id="line-150" class="anchor"/><span id="line-151"
+class="anchor"/><span id="line-152" class="anchor"/><span id="line-153" class="anchor"/><span id="line-154" class="anchor"/><span id="line-155" class="anchor"/><span id="line-156" class="anchor"/><span id="line-157" class="anchor"/><span id="line-158" class="anchor"/><span id="line-159" class="anchor"/><span id="line-160" class="anchor"/><span id="line-161" class="anchor"/><span id="line-162" class="anchor"/><span id="line-163" class="anchor"/><span id="line-164" class="anchor"/><span id="line-165" class="anchor"/><span id="line-166"
+class="anchor"/><span id="line-167" class="anchor"/><span id="line-168" class="anchor"/><span id="line-169" class="anchor"/><span id="line-170" class="anchor"/><span id="line-171" class="anchor"/><span id="line-172" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-fea663c06fd38a168880e6bc2a9d949d4a889377_004\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-fea663c06fd38a168880e6bc2a9d949d4a889377_004', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-fea663c06fd38a168880e6bc2a9d949d4a889377_004" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#!/usr/bin/python</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="Comment"># dragbutton.py</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"/><span class="ResWord">import</span> <span class="ID">sys</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtGui</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtCore</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">class</span> <span class="ID">Button</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QPushButton</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   7 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   8 </span>        <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QPushButton</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span>    <span class="ResWord">def</span> <span class="ID">mouseMoveEvent</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  10 </span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ResWord">if</span> <span class="ID">event</span><span class="Operator">.</span><span class="ID">buttons</span><span class="Operator">(</span><span class="Operator">)</span> <span class="Operator">!=</span> <span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">Qt</span><span class="Operator">.</span><span class="ID">RightButton</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  12 </span>            <span class="ResWord">return</span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">mimeData</span> <span class="Operator">=</span> <span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">QMimeData</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">drag</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QDrag</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">drag</span><span class="Operator">.</span><span class="ID">setMimeData</span><span class="Operator">(</span><span class="ID">mimeData</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ID">drag</span><span class="Operator">.</span><span class="ID">setHotSpot</span><span class="Operator">(</span><span class="ID">event</span><span class="Operator">.</span><span class="ID">pos</span><span class="Operator">(</span><span class="Operator">)</span> <span class="Operator">-</span> <span class="ID">self</span><span class="Operator">.</span><span class="ID">rect</span><span class="Operator">(</span><span class="Operator">)</span><span
+class="Operator">.</span><span class="ID">topLeft</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">dropAction</span> <span class="Operator">=</span> <span class="ID">drag</span><span class="Operator">.</span><span class="ID">start</span><span class="Operator">(</span><span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">Qt</span><span class="Operator">.</span><span class="ID">MoveAction</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span>        <span class="ResWord">if</span> <span class="ID">dropAction</span> <span class="Operator">==</span> <span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">Qt</span><span class="Operator">.</span><span class="ID">MoveAction</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  19 </span>            <span class="ID">self</span><span class="Operator">.</span><span class="ID">close</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>    <span class="ResWord">def</span> <span class="ID">mousePressEvent</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  21 </span>        <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QPushButton</span><span class="Operator">.</span><span class="ID">mousePressEvent</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  22 </span>        <span class="ResWord">if</span> <span class="ID">event</span><span class="Operator">.</span><span class="ID">button</span><span class="Operator">(</span><span class="Operator">)</span> <span class="Operator">==</span> <span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">Qt</span><span class="Operator">.</span><span class="ID">LeftButton</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  23 </span>            <span class="ResWord">print</span> <span class="String">'press'</span></span>
+<span class="line"><span class="LineNumber">  24 </span><span class="ResWord">class</span> <span class="ID">DragButton</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QDialog</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  25 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">=</span><span class="ID">None</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  26 </span>        <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QDialog</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  27 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">resize</span><span class="Operator">(</span><span class="Number">280</span><span class="Operator">,</span> <span class="Number">150</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  28 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setWindowTitle</span><span class="Operator">(</span><span class="String">'Click or Move'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  29 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setAcceptDrops</span><span class="Operator">(</span><span class="ID">True</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  30 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">button</span> <span class="Operator">=</span> <span class="ID">Button</span><span class="Operator">(</span><span class="String">'Close'</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  31 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">button</span><span class="Operator">.</span><span class="ID">move</span><span class="Operator">(</span><span class="Number">100</span><span class="Operator">,</span> <span class="Number">65</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  32 </span></span>
+<span class="line"><span class="LineNumber">  33 </span></span>
+<span class="line"><span class="LineNumber">  34 </span>        <span class="ID">screen</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QDesktopWidget</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">screenGeometry</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  35 </span>        <span class="ID">size</span> <span class="Operator">=</span>  <span class="ID">self</span><span class="Operator">.</span><span class="ID">geometry</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  36 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">move</span><span class="Operator">(</span><span class="Operator">(</span><span class="ID">screen</span><span class="Operator">.</span><span class="ID">width</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">-</span><span class="ID">size</span><span class="Operator">.</span><span class="ID">width</span><span class="Operator">(</span><span
+class="Operator">)</span><span class="Operator">)</span><span class="Operator">/</span><span class="Number">2</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  37 </span>            <span class="Operator">(</span><span class="ID">screen</span><span class="Operator">.</span><span class="ID">height</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">-</span><span class="ID">size</span><span class="Operator">.</span><span class="ID">height</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span><span class="Operator">/</span><span class="Number">2</span><span
+class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  38 </span>    <span class="ResWord">def</span> <span class="ID">dragEnterEvent</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  39 </span>         <span class="ID">event</span><span class="Operator">.</span><span class="ID">accept</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  40 </span>    <span class="ResWord">def</span> <span class="ID">dropEvent</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  41 </span>        <span class="ID">position</span> <span class="Operator">=</span> <span class="ID">event</span><span class="Operator">.</span><span class="ID">pos</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  42 </span>        <span class="ID">button</span> <span class="Operator">=</span> <span class="ID">Button</span><span class="Operator">(</span><span class="String">'Close'</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  43 </span>        <span class="ID">button</span><span class="Operator">.</span><span class="ID">move</span><span class="Operator">(</span><span class="ID">position</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  44 </span>        <span class="ID">button</span><span class="Operator">.</span><span class="ID">show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  45 </span>        <span class="ID">event</span><span class="Operator">.</span><span class="ID">setDropAction</span><span class="Operator">(</span><span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">Qt</span><span class="Operator">.</span><span class="ID">MoveAction</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  46 </span>        <span class="ID">event</span><span class="Operator">.</span><span class="ID">accept</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  47 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QApplication</span><span class="Operator">(</span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">argv</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  48 </span><span class="ID">db</span> <span class="Operator">=</span> <span class="ID">DragButton</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  49 </span><span class="ID">db</span><span class="Operator">.</span><span class="ID">show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  50 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">exec_</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-173" class="anchor"/><ul><li style="list-style-type: none;"><p class="line891"><em> In our code example, we have a QPushButton on the window. If we click on the button with a left mouse button, we print 'press' to the console. By right clicking and moving the button, we perform a drag & drop operation on the button widget.</em> <span id="line-174" class="anchor"/></p></li><li style="list-style-type:
+none;">在我们的例子里，窗口有一个QPushButton，如果我们鼠标左键点击按钮，我们在终端上打印'press'，如果我们右键点击并拖动按钮，我们对按钮组件执行拖放操作。 <span id="line-175" class="anchor"/><span id="line-176" class="anchor"/></li></ul><p class="line867"><span id="line-177" class="anchor"/><span id="line-178" class="anchor"/><span id="line-179" class="anchor"/><span id="line-180" class="anchor"/><span id="line-181" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-81f98ece2ac6a0ab7ffb8ee80c8832703bec2ad8_005\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-81f98ece2ac6a0ab7ffb8ee80c8832703bec2ad8_005', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-81f98ece2ac6a0ab7ffb8ee80c8832703bec2ad8_005" dir="ltr"><span class="line"><span class="LineNumber">   1 </span> <span class="ResWord">class</span> <span class="ID">Button</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QPushButton</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>     <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   3 </span>         <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QPushButton</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">title</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-182" class="anchor"/><ul><li style="list-style-type: none;"><p class="line891"><em> We create a Button class, which will derive from the QPushButton. We also reimplement two methods of the QPushButton. mouseMoveEvent() and mousePressEvent(). The mouseMoveEvent() method is the place, where the drag & drop operation begins.</em> <span id="line-183" class="anchor"/></p></li><li style="list-style-type:
+none;">我们创建一个起源自QPushButton的按钮类。我们同时重载QPushButton的两个方法mouseMoveEvent()和mousePressEvent()。mouseMoveEvent()方法是拖放操作开始的位置。 <span id="line-184" class="anchor"/><span id="line-185" class="anchor"/></li></ul><p class="line867"><span id="line-186" class="anchor"/></p><pre> if event.buttons() != QtCore.Qt.RightButton:
+<span id="line-187" class="anchor"/>     return
+<span id="line-188" class="anchor"/></pre><span id="line-189" class="anchor"/><ul><li style="list-style-type: none;"><p class="line891"><em> Here we decide, that we can perform drag & drop only with a right mouse button. The left mouse button is reserved for clicking on the button.</em> <span id="line-190" class="anchor"/></p></li><li style="list-style-type: none;">这里我们设定只对鼠标右键的拖放操作作出响应，对鼠标左键操作保留给点击按钮。 <span id="line-191" class="anchor"/><span id="line-192" class="anchor"/></li></ul><p
+class="line867"><span id="line-193" class="anchor"/></p><pre> mimeData = QtCore.QMimeData()
+<span id="line-194" class="anchor"/> drag = QtGui.QDrag(self)
+<span id="line-195" class="anchor"/> drag.setMimeData(mimeData)
+<span id="line-196" class="anchor"/> drag.setHotSpot(event.pos() - self.rect().topLeft())
+<span id="line-197" class="anchor"/></pre><span id="line-198" class="anchor"/><ul><li style="list-style-type: none;"><p class="line891"><em> Here we create a QDrag object.</em> <span id="line-199" class="anchor"/></p></li><li style="list-style-type: none;">这里我们创建一个QDrag对象。 <span id="line-200" class="anchor"/><span id="line-201" class="anchor"/></li></ul><p class="line867"><span id="line-202" class="anchor"/></p><pre> dropAction = drag.start(QtCore.Qt.MoveAction)
+<span id="line-203" class="anchor"/> if dropAction == QtCore.Qt.MoveAction:
+<span id="line-204" class="anchor"/>     self.close()
+<span id="line-205" class="anchor"/></pre><span id="line-206" class="anchor"/><ul><li style="list-style-type: none;"><p class="line891"><em> The start() method of the drag object starts the drag & drop operation. If we perform a move drop action, we destory the button widget. Technically, we destroy a widget on the current position and recreate it on a new position.</em> <span id="line-207" class="anchor"/></p></li><li style="list-style-type:
+none;">拖动对象的start()方法开始拖放操作。如果我们完成一次移动放置操作，我们要销毁按钮组件。技术上来讲，我们在当前位置销毁一个组件，并在新位置重新创建它。 <span id="line-208" class="anchor"/><span id="line-209" class="anchor"/></li></ul><p class="line867"><span id="line-210" class="anchor"/><span id="line-211" class="anchor"/><span id="line-212" class="anchor"/><span id="line-213" class="anchor"/><span id="line-214" class="anchor"/><span id="line-215" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-82379ce18f2e4fa1bd84233c23b527994e6d9967_006\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-82379ce18f2e4fa1bd84233c23b527994e6d9967_006', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-82379ce18f2e4fa1bd84233c23b527994e6d9967_006" dir="ltr"><span class="line"><span class="LineNumber">   1 </span> <span class="ResWord">def</span> <span class="ID">mousePressEvent</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   2 </span>     <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QPushButton</span><span class="Operator">.</span><span class="ID">mousePressEvent</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   3 </span>     <span class="ResWord">if</span> <span class="ID">event</span><span class="Operator">.</span><span class="ID">button</span><span class="Operator">(</span><span class="Operator">)</span> <span class="Operator">==</span> <span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">Qt</span><span class="Operator">.</span><span class="ID">LeftButton</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   4 </span>         <span class="ResWord">print</span> <span class="String">'press'</span><span class="Text"/></span>
+</pre></div><span id="line-216" class="anchor"/><ul><li style="list-style-type: none;"><p class="line891"><em>. We print 'press' to the console, if we left click on the button with the mouse. Notice that we call mousePressEvent() method on the parent as well. Otherwise we would not see the button being pushed.</em> <span id="line-217" class="anchor"/></p></li><li style="list-style-type:
+none;">如果我们点击鼠标左键，就在控制台打印'press'。注意，这里我们调用了父类的mousePressEvent()方法，否则我们无法看到鼠标被按下的效果。 <span id="line-218" class="anchor"/><span id="line-219" class="anchor"/></li></ul><p class="line867"><span id="line-220" class="anchor"/></p><pre> position = event.pos()
+<span id="line-221" class="anchor"/> button = Button('Close', self)
+<span id="line-222" class="anchor"/> button.move(position)
+<span id="line-223" class="anchor"/> button.show()
+<span id="line-224" class="anchor"/></pre><span id="line-225" class="anchor"/><ul><li style="list-style-type: none;"><p class="line891"><em> In the dropEvent() method we code, what happens after we release the mouse button and finish the drop operation. In our example, we create a new Button widget at the current position of the mouse pointer.</em> <span id="line-226" class="anchor"/></p></li><li style="list-style-type:
+none;">在dropEvent()方法中包含了当我们释放鼠标按键并且结束放置后的操作的代码。在我们的例子里，我们在鼠标指针的当前位置创建了一个新的按钮组件。 <span id="line-227" class="anchor"/><span id="line-228" class="anchor"/></li></ul><p class="line867"><span id="line-229" class="anchor"/></p><pre> event.setDropAction(QtCore.Qt.MoveAction)
+<span id="line-230" class="anchor"/> event.accept()
+<span id="line-231" class="anchor"/></pre><span id="line-232" class="anchor"/><ul><li style="list-style-type: none;"><p class="line891"><em> We specify the type of the drop action. In our case it is a move action.</em> <span id="line-233" class="anchor"/></p></li><li style="list-style-type: none;">我们指定释放操作的类型。这里是移动操作。 <span id="line-234" class="anchor"/><span id="line-235" class="anchor"/></li></ul><p class="line867">
+</p><h1 id="head-6ba9d17052018bf2651034bb55bb399b652408be">2. 交流</h1>
+<span id="line-236" class="anchor"/><p class="line867"/><div id="pagecomment">
+<a name="pagecomment1"/>
+<table border="0" class="pagecomment">
+<tbody><tr><td colspan="5" style="border-width: 1px; margin: 10px 0pt;">
+
+<script language="javascript">
+<!--
+function setCookie(name, value) {
+var today = new Date();
+var expire = new Date(today.getTime() + 60*60*24*365*1000);
+document.cookie = name + "=" + encodeURIComponent(value) + "; expires=" + expire.toGMTString() + "; path=/moin";
+}
+//-->
+</script>
+<form onsubmit="setCookie('PG2AUTHOR', this.comauthor.value);" method="post" name="comment" action="Drag_and_Drop_%E6%8B%96%E6%94%BE%E6%93%8D%E4%BD%9C#pagecomment1">
+<table class="addcommentform">
+<tbody><tr>
+<td style="border-width: 0px; vertical-align: middle; font-size: 0.9em;"><textarea onblur="if (this.value=='') {this.value='Add your comment';};" onfocus="if (this.value=='Add your comment') {this.value='';};" style="font-size: 9pt;" cols="60" rows="4" name="comtext">Add your comment</textarea></td>
+<td style="border-width: 0px; font-size: 0.9em; vertical-align: bottom;"><input type="submit" style="font-size: 9pt; width: 6em; height: 3em;" value="保存" name="button_save"/></td>
+</tr>
+<tr><td style="border-width: 0px; vertical-align: middle; font-size: 0.9em;">
+Name<input type="text" onblur="if (this.value=='') {this.value='58';};" onfocus="if (this.value=='58') {this.value='';};" value="58" name="comauthor" maxlength="20" size="6" style="font-size: 9pt;"/>
+Password4deL<input type="password" onblur="if (this.value=='') {this.value='jej7';};" onfocus="if (this.value=='jej7') {this.value='';};" value="jej7" name="compasswd" maxlength="10" size="4" style="font-size: 9pt;"/>
+<input type="hidden" name="autopasswd" value="jej7"/>
+<input type="radio" value=";)" name="comicon"/><img width="15" height="15" title=";)" src="/htdocs/woodpecker/img/smile4.png" alt=";)"/>
+<input type="radio" value="=D" name="comicon"/>
+<input type="radio" value="=)" name="comicon"/>
+<input type="radio" value=":P" name="comicon"/>
+<input type="radio" value=":(|)" name="comicon"/>
+<input type="radio" value=":-|" name="comicon"/>
+<input type="radio" value=":(" name="comicon"/><img width="15" height="15" title=":(" src="/htdocs/woodpecker/img/sad.png" alt=":("/>
+<input type="radio" value="X-(" name="comicon"/><img width="15" height="15" title="X-(" src="/htdocs/woodpecker/img/angry.png" alt="X-("/>
+<input type="radio" value="B-)" name="comicon"/><img width="15" height="15" title="B-)" src="/htdocs/woodpecker/img/smile2.png" alt="B-)"/>
+
+</td>
+<td style="border-width: 0px; vertical-align: middle; text-align: right; font-size: 9pt;"/>
+</tr>
+</tbody></table>
+<input type="hidden" value="show" name="action"/>
+<input type="hidden" value="55" name="comrev"/>
+<input type="hidden" value="addcomment1" name="commentaction"/>
+</form>
+</td></tr>
+<tr><td style="border-width: 0px; height: 20px;" class="commentblankline" colspan="5"/></tr>
+<script language="javascript">
+<!--
+function requesttodeleteadmin1(delform, comkey) {
+if (confirm("Really delete this comment?")) {;
+delform.delkey.value = comkey;
+delform.delpasswd.value = "****";
+delform.submit();
+}
+}
+function requesttodelete1(delform, comkey) {
+var passwd = prompt("请输入一个密码!:", "");
+if(!(passwd == "" || passwd == null)) {
+delform.delkey.value = comkey;
+delform.delpasswd.value = passwd;
+delform.submit();
+}
+}
+//-->
+</script>
+<form method="post" action="Drag_and_Drop_%E6%8B%96%E6%94%BE%E6%93%8D%E4%BD%9C#pagecomment1" name="delform1"/>
+<input type="hidden" name="action" value="show"/>
+<input type="hidden" value="****" name="delpasswd"/>
+<input type="hidden" value="" name="delkey"/>
+<input type="hidden" value="delcomment1" name="commentaction"/>
+
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">hjnfmcpw ylfygekm gwtvenjs<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-09 21:00:43 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra prix</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">hmfwjlyr lwmcdhsi sbtysncn<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-09 22:26:07 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra prix</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">cjvcuqso ktiqwrqz wwmqpcsk<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-09 23:52:10 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">qmlmplny prqohrof ffmwpbiy<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-10 01:15:36 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">hnhgquua gxgjervo xanlvmqa<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-10 02:38:57 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">rvtjktcu fnseikgg siahbves<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-14 15:10:44 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">generique viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">rnhlibyf ywadcafi ghgfigzh<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-14 16:34:57 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">sarisalz evdfbqub iigvwggp<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-14 17:59:01 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis achat</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">btevbenq mafaetws vimvjpdx<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-14 19:22:05 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra france</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">wxmcopuq sfaqapmx tdlinrzp<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-14 20:48:52 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">rckiixec vgewgnfd jepanhbi<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-14 22:16:34 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">zpwdjois eulftgto kqcbllnl<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-14 23:43:22 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">ljpvnsdk vrfmgwbl rcktxbjf<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-15 01:09:48 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis sur le net</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">rjkysmbo udpafgvc tzchshzv<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-15 02:34:08 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra vente</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">eetdxyhj zkfmsdjr ninevsel<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-15 03:58:12 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis rezeptfrei</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">idxkbajz uppirnct yamjfjxh<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-18 13:39:21 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra kaufen ohne r</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">knkleupp ncipysis wjguzwjf<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-18 15:17:00 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis bestellen</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">ugasasqg zgxmenyg wiidacqe<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-18 16:58:09 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra online</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">wauctwze llgwyaza hjiurszn<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-19 16:02:30 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acquisto viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">hyhtopam bfnhxiod srbiamjm<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-21 07:25:26 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">oyxeywnl ogtxfsaq obcijnvz<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-21 19:20:53 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acquisto cialis orig</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">wnjondme kwlpwjkb tmivzlxz<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-22 01:19:04 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acquisto viagra in f</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">pgjgdbfc wjjwuyxk mnthifvw<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-22 05:45:03 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acquisto cialis orig</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">niwlsyqf mskdtlcq ieiolruq<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-22 11:44:44 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis prix</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">chinqfgg oppuueol bbntxapo<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-23 00:14:57 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis 10mg</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">qymmhpux ultfhrxl lduyrigx<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-23 02:02:18 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis 10mg</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">xfeefcse xzzlwhhd dqplxliy<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-23 03:45:56 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acquisto viagra in f</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">pvzelbba tywsrmpi lkryjziy<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-29 03:41:59 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra sur le net</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">metogtcl xpmhbmbg rkcqicqi<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-29 05:21:44 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">comprare cialis onli</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">fkxejshb hbzejlsb glbohovv<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-29 06:58:13 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">comprare cialis in i</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">eqaogngt ywvstgto wkveotdg<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-29 08:37:19 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acquisto viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">tphmwout qweknejd nmtrdevo<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-29 10:18:05 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">comprare viagra senz</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">qliibmmd wynlloas sgwwmeii<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-29 11:58:35 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acquisto cialis orig</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">uwkrvawb uolomqaf zcpjoypj<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-29 13:35:59 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">acquisto viagra</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">xnbrernu iqfnmogg mkxaseok<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-29 15:12:52 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">cialis</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">kssswcaz jpbmaysh szvkgeoh<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-29 16:51:48 <font style="font-size: 8pt;">
+</font></td></tr>
+<tr><td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenticon"/>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commentauthor">viagra cialis</td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt; width: 10px;"> </td>
+<td style="border-width: 1px 0px 0px; vertical-align: top; font-size: 9pt;" class="commenttext">bcjjcjho eghdnuef bchwfcrq<br/></td>
+<td nowrap="" style="border-width: 1px 0px 0px; vertical-align: top; text-align: right; font-size: 8pt;" class="commentdate">2009-08-29 18:30:09 <font style="font-size: 8pt;">
+</font></td></tr>
+</tbody></table>
+</div> <span id="line-237" class="anchor"/><span id="bottom" class="anchor"/></div>

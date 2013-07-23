@@ -1,0 +1,309 @@
+<p>出处： <a href="http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch07.html">http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch07.html</a></p>
+
+<h1>第7章 函数</h1>
+<p><strong>目录表</strong></p>
+<dl>
+<dt><a href="#s01">简介</a></dt>
+<dd><a href="#ch07.html#defining">定义函数</a></dd>
+<dt><a href="#ch07s02.html">函数形参</a></dt>
+<dd><a href="#ch07s02.html#using">使用函数形参</a></dd>
+<dt><a href="#ch07s03.html">局部变量</a></dt>
+<dd><a href="#ch07s03.html#local">使用局部变量</a></dd>
+<dd><a href="#ch07s03.html#global">使用global语句</a></dd>
+<dt><a href="#ch07s04.html">默认参数值</a></dt>
+<dd><a href="#ch07s04.html#using">使用默认参数值</a></dd>
+<dt><a href="#ch07s05.html">关键参数</a></dt>
+<dd><a href="#ch07s05.html#using">使用关键参数</a></dd>
+<dt><a href="#ch07s06.html">return语句</a></dt>
+<dd><a href="#ch07s06.html#using">使用字面意义上的语句</a></dd>
+<dt><a href="#ch07s07.html">DocStrings</a></dt>
+<dd><a href="#ch07s07.html#using">使用DocStrings</a></dd>
+<dt><a href="#ch07s08.html">概括</a></dt>
+</dl>
+
+<h1><a name="s01">简介</a></h1>
+<p>函数是重用的程序段。它们允许你给一块语句一个名称，然后你可以在你的程序的任何地方使用这个名称任意多次地运行这个语句块。这被称为 <dfn>调用</dfn> 函数。我们已经使用了许多内建的函数，比如<code>len</code>和<code>range</code>。</p>
+<p>函数通过<code>def</code>关键字<strong>定义</strong>。def关键字后跟一个函数的 <dfn>标识符</dfn> 名称，然后跟一对圆括号。圆括号之中可以包括一些变量名，该行以冒号结尾。接下来是一块语句，它们是函数体。下面这个例子将说明这事实上是十分简单的：</p>
+
+<h2><a name="defining">定义函数</a></h2>
+<p class="exampletitle"><a name="e71">例7.1 定义函数</a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: function1.py</code><br>
+<br>
+<code class="key">def </code><code class="func">sayHello</code><code>():</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Hello World!' </code><code class="comment"># block belonging to the function</code><br>
+<br>
+<code>sayHello() </code><code class="comment"># call the function</code>
+</p>
+<p>（源文件：<a href="code/function1.py">code/function1.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python function1.py<br>
+Hello World!
+</code></p>
+
+<h2>它如何工作</h2>
+<p>我们使用上面解释的语法定义了一个称为<code>sayHello</code>的函数。这个函数不使用任何参数，因此在圆括号中没有声明任何变量。参数对于函数而言，只是给函数的输入，以便于我们可以传递不同的值给函数，然后得到相应的结果。</p>
+
+
+<h1><a name="ch07s02.html">函数形参</a></h1>
+<p>函数取得的参数是你提供给函数的值，这样函数就可以利用这些值 <dfn>做</dfn> 一些事情。这些参数就像变量一样，只不过它们的值是在我们调用函数的时候定义的，而非在函数本身内赋值。</p>
+<p>参数在函数定义的圆括号对内指定，用逗号分割。当我们调用函数的时候，我们以同样的方式提供值。注意我们使用过的术语——函数中的参数名称为 <dfn>形参</dfn> 而你提供给函数调用的值称为 <dfn>实参</dfn> 。</p>
+
+<h2><a name="using">使用<a name="ch07s02.html">函数形参</a></a></h2>
+<p class="exampletitle"><a name="e72">例7.2 使用<a name="ch07s02.html">函数形参</a></a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: func_param.py</code><br>
+<br>
+<code class="key">def </code><code class="func">printMax</code><code>(a, b):</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;if </code><code>a > b:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code>a, </code><code class="cite">'is maximum'</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;else</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code>b, </code><code class="cite">'is maximum'</code><br>
+<br>
+<code>printMax(</code><code class="cite">3</code><code>, </code><code class="cite">4</code><code>) </code><code class="comment"># directly give literal values</code><br>
+<br>
+<code>x = </code><code class="cite">5</code><br>
+<code>y = </code><code class="cite">7</code><br>
+<br>
+<code>printMax(x, y) </code><code class="comment"># give variables as arguments</code>
+</p>
+<p>（源文件：<a href="code/func_param.py">code/func_param.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python func_param.py<br>
+4 is maximum<br>
+7 is maximum
+</code></p>
+
+<h2>它如何工作</h2>
+<p>这里，我们定义了一个称为<code>printMax</code>的函数，这个函数需要两个形参，叫做<code>a</code>和<code>b</code>。我们使用<code>if..else</code>语句找出两者之中较大的一个数，并且打印较大的那个数。</p>
+<p>在第一个<code>printMax</code>使用中，我们直接把数，即实参，提供给函数。在第二个使用中，我们使用变量调用函数。<code>printMax(x, y)</code>使实参<code>x</code>的值赋给形参<code>a</code>，实参<code>y</code>的值赋给形参<code>b</code>。在两次调用中，printMax函数的工作完全相同。</p>
+
+
+<h1><a name="ch07s03.html">局部变量</a></h1>
+<p>当你在函数定义内声明变量的时候，它们与函数外具有相同名称的其他变量没有任何关系，即变量名称对于函数来说是 <dfn>局部</dfn> 的。这称为变量的 <dfn>作用域</dfn> 。所有变量的作用域是它们被定义的块，从它们的名称被定义的那点开始。</p>
+
+<h2><a name="local">使用<a name="ch07s03.html">局部变量</a></a></h2>
+<p class="exampletitle"><a name="e73">例7.3 使用<a name="ch07s03.html">局部变量</a></a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: func_local.py</code><br>
+<br>
+<code class="key">def </code><code class="func">func</code><code>(x):</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'x is'</code><code>, x</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;x = </code><code class="cite">2</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Changed local x to'</code><code>, x</code><br>
+<br>
+<code>x = </code><code class="cite">50</code><br>
+<code>func(x)</code><br>
+<code class="key">print </code><code class="cite">'x is still'</code><code>, x</code>
+</p>
+<p>（源文件：<a href="code/func_local.py">code/func_local.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python func_local.py<br>
+x is 50<br>
+Changed local x to 2<br>
+x is still 50
+</code></p>
+
+<h2>它如何工作</h2>
+<p>在函数中，我们第一次使用<code>x</code>的 <dfn>值</dfn> 的时候，Python使用函数声明的形参的值。</p>
+<p>接下来，我们把值<code>2</code>赋给<code>x</code>。<code>x</code>是函数的<a name="ch07s03.html">局部变量</a>。所以，当我们在函数内改变<code>x</code>的值的时候，在主块中定义的<code>x</code>不受影响。</p>
+<p>在最后一个<code>print</code>语句中，我们证明了主块中的<code>x</code>的值确实没有受到影响。</p>
+
+<h2><a name="global">使用global语句</a></h2>
+<p>如果你想要为一个定义在函数外的变量赋值，那么你就得告诉Python这个变量名不是局部的，而是 <dfn>全局</dfn> 的。我们使用<code>global</code>语句完成这一功能。没有<code>global</code>语句，是不可能为定义在函数外的变量赋值的。</p>
+<p>你可以使用定义在函数外的变量的值（假设在函数内没有同名的变量）。然而，我并不鼓励你这样做，并且你应该尽量避免这样做，因为这使得程序的读者会不清楚这个变量是在哪里定义的。使用<code>global</code>语句可以清楚地表明变量是在外面的块定义的。</p>
+
+<p class="exampletitle"><a name="e74">例7.4 使用global语句</a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: func_global.py</code><br>
+<br>
+<code class="key">def </code><code class="func">func</code><code>():</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;global </code><code>x</code><br>
+<br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'x is'</code><code>, x</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;x = </code><code class="cite">2</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Changed local x to'</code><code>, x</code><br>
+<br>
+<code>x = </code><code class="cite">50</code><br>
+<code>func()</code><br>
+<code class="key">print </code><code class="cite">'Value of x is'</code><code>, x</code>
+</p>
+<p>（源文件：<a href="code/func_global.py">code/func_global.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python func_global.py<br>
+x is 50<br>
+Changed global x to 2<br>
+Value of x is 2
+</code></p>
+
+<h2>它如何工作</h2>
+<p><code>global</code>语句被用来声明<code>x</code>是全局的——因此，当我们在函数内把值赋给<code>x</code>的时候，这个变化也反映在我们在主块中使用<code>x</code>的值的时候。</p>
+<p>你可以使用同一个<code>global</code>语句指定多个全局变量。例如<code>global x, y, z</code>。</p>
+
+
+<h1><a name="ch07s04.html">默认参数值</a></h1>
+<p>对于一些函数，你可能希望它的一些参数是 <dfn>可选</dfn> 的，如果用户不想要为这些参数提供值的话，这些参数就使用默认值。这个功能借助于<a name="ch07s04.html">默认参数值</a>完成。你可以在函数定义的形参名后加上赋值运算符（=）和默认值，从而给形参指定<a name="ch07s04.html">默认参数值</a>。</p>
+<p>注意，<a name="ch07s04.html">默认参数值</a>应该是一个参数。更加准确的说，<a name="ch07s04.html">默认参数值</a>应该是不可变的——这会在后面的章节中做详细解释。从现在开始，请记住这一点。</p>
+
+<h2><a name="using">使用<a name="ch07s04.html">默认参数值</a></a></h2>
+<p class="exampletitle"><a name="e75">例7.5 使用<a name="ch07s04.html">默认参数值</a></a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: func_default.py</code><br>
+<br>
+<code class="key">def </code><code class="func">say</code><code>(message, times = </code><code class="cite">1</code><code>):</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code>message * times</code><br>
+<br>
+<code>say(</code><code class="cite">'Hello'</code><code>)</code><br>
+<code>say(</code><code class="cite">'World'</code><code>, </code><code class="cite">5</code><code>)</code>
+</p>
+<p>（源文件：<a href="code/func_default.py">code/func_default.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python func_default.py<br>
+Hello<br>
+WorldWorldWorldWorldWorld
+</code></p>
+
+<h2>它如何工作</h2>
+<p>名为<code>say</code>的函数用来打印一个字符串任意所需的次数。如果我们不提供一个值，那么默认地，字符串将只被打印一遍。我们通过给形参<code>times</code>指定<a name="ch07s04.html">默认参数值</a><code>1</code>来实现这一功能。</p>
+<p>在第一次使用<code>say</code>的时候，我们只提供一个字符串，函数只打印一次字符串。在第二次使用<code>say</code>的时候，我们提供了字符串和参数<code>5</code>，表明我们想要 <dfn>说</dfn> 这个字符串消息5遍。</p>
+
+<p class="notebox">
+<span class="boxtitle">重要</span><br>
+只有在形参表末尾的那些参数可以有<a name="ch07s04.html">默认参数值</a>，即你不能在声明函数形参的时候，先声明有默认值的形参而后声明没有默认值的形参。<br>
+这是因为赋给形参的值是根据位置而赋值的。例如，<code>def func(a, b=5)</code>是有效的，但是<code>def func(a=5, b)</code>是 <dfn>无效</dfn> 的。
+</p>
+
+
+<h1><a name="ch07s05.html">关键参数</a></h1>
+<p>如果你的某个函数有许多参数，而你只想指定其中的一部分，那么你可以通过命名来为这些参数赋值——这被称作 <dfn><a name="ch07s05.html">关键参数</a></dfn> ——我们使用名字（关键字）而不是位置（我们前面所一直使用的方法）来给函数指定实参。</p>
+<p>这样做有两个 <dfn>优势</dfn> ——一，由于我们不必担心参数的顺序，使用函数变得更加简单了。二、假设其他参数都有默认值，我们可以只给我们想要的那些参数赋值。</p>
+
+<h2><a name="using">使用<a name="ch07s05.html">关键参数</a></a></h2>
+<p class="exampletitle"><a name="e76">例7.6 使用<a name="ch07s05.html">关键参数</a></a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: func_key.py</code><br>
+<br>
+<code class="key">def </code><code class="func">func</code><code>(a, b=</code><code class="cite">5</code><code>, c=</code><code class="cite">10</code><code>):</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'a is'</code><code>, a, </code><code class="cite">'and b is'</code><code>, b, </code><code class="cite">'and c is'</code><code>, c</code><br>
+<br>
+<code>func(</code><code class="cite">3</code><code>, </code><code class="cite">7</code><code>)</code><br>
+<code>func(</code><code class="cite">25</code><code>, c=</code><code class="cite">24</code><code>)</code><br>
+<code>func(c=</code><code class="cite">50</code><code>, a=</code><code class="cite">100</code><code>)</code>
+</p>
+<p>（源文件：<a href="code/func_key.py">code/func_key.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python func_key.py<br>
+a is 3 and b is 7 and c is 10<br>
+a is 25 and b is 5 and c is 24<br>
+a is 100 and b is 5 and c is 50
+</code></p>
+
+<h2>它如何工作</h2>
+<p>名为<code>func</code>的函数有一个没有默认值的参数，和两个有默认值的参数。</p>
+<p>在第一次使用函数的时候，<code> func(3, 7)</code>，参数<code>a</code>得到值<code>3</code>，参数<code>b</code>得到值<code>7</code>，而参数<code>c</code>使用默认值<code>10</code>。</p>
+<p>在第二次使用函数<code>func(25, c=24)</code>的时候，根据实参的位置变量<code>a</code>得到值<code>25</code>。根据命名，即<a name="ch07s05.html">关键参数</a>，参数<code>c</code>得到值<code>24</code>。变量<code>b</code>根据默认值，为<code>5</code>。</p>
+<p>在第三次使用<code>func(c=50, a=100)</code>的时候，我们使用<a name="ch07s05.html">关键参数</a>来完全指定参数值。注意，尽管函数定义中，<code>a</code>在<code>c</code>之前定义，我们仍然可以在<code>a</code>之前指定参数<code>c</code>的值。
+</p>
+
+
+<h1><a name="ch07s06.html">return语句</a></h1>
+<p><code>return</code>语句用来从一个函数 <dfn>返回</dfn> 即跳出函数。我们也可选从函数 <dfn>返回一个值</dfn> 。</p>
+
+<h2><a name="using">使用字面意义上的语句</a></h2>
+<p class="exampletitle"><a name="e77">例7.7 使用字面意义上的语句</a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: func_return.py</code><br>
+<br>
+<code class="key">def </code><code class="func">maximum</code><code>(x, y):</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;if </code><code>x > y:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return </code><code>x</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;else</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return </code><code>y</code><br>
+<br>
+<code class="key">print </code><code>maximum(</code><code class="cite">2</code><code>, </code><code class="cite">3</code><code>)</code>
+</p>
+<p>（源文件：<a href="code/func_return.py">code/func_return.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python func_return.py<br>
+3
+</code></p>
+
+<h2>它如何工作</h2>
+<p><code>maximum</code>函数返回参数中的最大值，在这里是提供给函数的数。它使用简单的<code>if..else</code>语句来找出较大的值，然后 <dfn>返回</dfn> 那个值。</p>
+<p>注意，没有返回值的<code>return</code>语句等价于<code>return None</code>。<code>None</code>是Python中表示没有任何东西的特殊类型。例如，如果一个变量的值为<code>None</code>，可以表示它没有值。</p>
+<p>除非你提供你自己的<code>return</code>语句，每个函数都在结尾暗含有<code>return None</code>语句。通过运行<code>print someFunction()</code>，你可以明白这一点，函数<code>someFunction</code>没有使用<code>return</code>语句，如同：</p>
+<p class="filebox">
+<code class="key">def </code><code class="func">someFunction</code><code>():</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;pass</code>
+</p>
+
+<p><code>pass</code>语句在Python中表示一个空的语句块。</p>
+
+
+<h1><a name="ch07s07.html">DocStrings</a></h1>
+<p>Python有一个很奇妙的特性，称为 <dfn>文档字符串</dfn> ，它通常被简称为 <dfn>docstrings</dfn> 。<a name="ch07s07.html">DocStrings</a>是一个重要的工具，由于它帮助你的程序文档更加简单易懂，你应该尽量使用它。你甚至可以在程序运行的时候，从函数恢复文档字符串！</p>
+
+<h2><a name="using">使用<a name="ch07s07.html">DocStrings</a></a></h2>
+<p class="exampletitle"><a name="e78">例7.8 使用<a name="ch07s07.html">DocStrings</a></a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: func_doc.py</code><br>
+<br>
+<code class="key">def </code><code class="func">printMax</code><code>(x, y):</code><br>
+<code class="cite">&nbsp;&nbsp;&nbsp;&nbsp;'''Prints the maximum of two numbers.<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The two values must be integers.'''</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;x = </code><code class="func">int</code><code>(x) </code><code class="comment"># convert to integers, if possible</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;y = </code><code class="func">int</code><code>(y)</code><br>
+<br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;if </code><code>x > y:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code>x, </code><code class="cite">'is maximum'</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;else</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code>y, </code><code class="cite">'is maximum'</code><br>
+<br>
+<code>printMax(</code><code class="cite">3</code><code>, </code><code class="cite">5</code><code>)</code><br>
+<code class="key">print </code><code>printMax.__doc__</code>
+</p>
+<p>（源文件：<a href="code/func_doc.py">code/func_doc.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox">$ python func_doc.py<br>
+5 is maximum<br>
+Prints the maximum of two numbers.<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The two values must be integers.
+</p>
+
+<h2>它如何工作</h2>
+<p>在函数的第一个逻辑行的字符串是这个函数的 <dfn>文档字符串</dfn> 。注意，<a name="ch07s07.html">DocStrings</a>也适用于<a href="ch08.html">模块</a>和<a href="ch11.html">类</a>，我们会在后面相应的章节学习它们。</p>
+<p>文档字符串的惯例是一个多行字符串，它的首行以大写字母开始，句号结尾。第二行是空行，从第三行开始是详细的描述。 <dfn>强烈建议</dfn> 你在你的函数中使用文档字符串时遵循这个惯例。</p>
+<p>你可以使用<code>__doc__</code>（注意双下划线）调用<code>printMax</code>函数的文档字符串属性（属于函数的名称）。请记住Python把 <dfn>每一样东西</dfn> 都作为对象，包括这个函数。我们会在后面的<a href="ch11.html">类</a>一章学习更多关于对象的知识。</p>
+<p>如果你已经在Python中使用过<code>help()</code>，那么你已经看到过DocStings的使用了！它所做的只是抓取函数的<code>__doc__</code>属性，然后整洁地展示给你。你可以对上面这个函数尝试一下——只是在你的程序中包括<code>help(printMax)</code>。记住按<strong>q</strong>退出<code>help</code>。</p>
+<p>自动化工具也可以以同样的方式从你的程序中提取文档。因此，我 <dfn>强烈建议</dfn> 你对你所写的任何正式函数编写文档字符串。随你的Python发行版附带的<strong>pydoc</strong>命令，与<code>help()</code>类似地使用<a name="ch07s07.html">DocStrings</a>。</p>
+
+
+<h1><a name="ch07s08.html">概括</a></h1>
+<p>我们已经学习了函数的很多方面的知识，不过注意还有一些方面我们没有涉及。然而，我们已经覆盖了大多数在日常使用中，你可能用到的Python函数知识。</p>
+<p>接下来，我们将学习如何创建和使用Python模块。</p>
+

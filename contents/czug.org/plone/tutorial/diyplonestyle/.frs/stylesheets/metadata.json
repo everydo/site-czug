@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "stylesheets"
+    }, 
+    "dublin": {
+        "creators": [
+            "chenq"
+        ], 
+        "description": "对资源注册表的最佳使用。", 
+        "modified": "2005-11-15 10:43:45", 
+        "title": "注册样式表"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "index.rst"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "华东地区Python聚会日程安排", 
+        "modified": "2006-11-14 19:35:01", 
+        "title": "11月12日SPUG聚会日程"
+    }
+}

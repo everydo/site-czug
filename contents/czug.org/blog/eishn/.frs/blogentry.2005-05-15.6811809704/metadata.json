@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "blogentry.2005-05-15.6811809704"
+    }, 
+    "dublin": {
+        "creators": [
+            "eishn"
+        ], 
+        "description": "借用杜工的提法：以快乐的名义！", 
+        "modified": "2005-05-15 15:25:40", 
+        "title": "在公司力推 Plone 终于成功了"
+    }
+}

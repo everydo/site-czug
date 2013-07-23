@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zodb-size"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "ZODB能够存放多少对象，有限制因素吗？看看jim的回答", 
+        "modified": "2005-01-13 09:50:13", 
+        "title": "ZODB的容量有限制吗？"
+    }
+}

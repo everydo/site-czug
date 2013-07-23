@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zope3-i18n-i10n"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Zope3的多语言支持", 
+        "modified": "2004-09-24 03:01:03", 
+        "title": "学习Zope3：国际化和本地化的支持"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "uml"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "收集一些UML工具的信息", 
+        "modified": "2004-12-30 18:29:01", 
+        "title": "UML的一些工具"
+    }
+}

@@ -1,0 +1,258 @@
+<p>出处： <a href="http://www.javaeye.com/wiki/Django-book/728-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%EF%BC%9A%E7%94%9F%E6%88%90%E9%9D%9EHTML%E5%86%85%E5%AE%B9">http://www.javaeye.com/wiki/Django-book/728-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%EF%BC%9A%E7%94%9F%E6%88%90%E9%9D%9EHTML%E5%86%85%E5%AE%B9</a></p>
+  
+  <h1 style="margin:25px 0 10px 10px">翻译www.djangobook.com之第十一章：生成非HTML内容 
+    
+  </h1>
+  <div class="content">
+    <span style="color: red"><strong>The Django Book：第11章 生成非HTML内容</strong></span><br /><br />通常当我们谈到开发网站时，我们都是指生成一些HTML<br />当然也有很多HTML之外的东西，我们使用web来发布所有的内容，不仅仅是HTML<br />到目前为止我们都是在关注通常的HTML生成，但是本章将绕道来看看使用Django生成其它类型的内容<br />你可以使用Django方便的内建工具来生成一些常见的非HTML内容:<br />RSS/Atom聚合<br />Sitemaps，可以被Google，Yahoo和微软的搜索引擎搜索<br />JSON和XML序列化的模型(通常为AJAX方法使用)<br />我们将谈到上面的每一个工具，但是首先来看看一些基础<br /><br /><strong>基础</strong><br />还记得第3章的内容吗?<br />视图方法或者简短来说视图是简单的Python方法，它得到Web请求并返回Web应答，这个应答可以是Web页面的HTML内容，<br />或者是一个重定向，或者是404错误，或者是一个XML文档，或者是一个image，...，或者是其它的任何东西<br />更正式的，Django视图方法必须接受一个HttpRequest实例作为它的第一个参数并且返回一个HttpResponse实例<br />从视图返回非HTML内容的关键在于HttpResponse类，特别是mimetype构造函数的参数，通过改变mimetype我们可以指示<br />浏览器我们返回的不同类型的对象<br />下面是一个简单的例子，我们来看看一个返回PNG图像的视图，为了让事情保持简单，我们只是从硬盘读一个文件:<br /><pre name="code" class="java">
+from django.http import HttpResponse
+
+def my_image(request):
+    image_data = open("/path/to/my/image.png", "rb").read()
+    return HttpResponse(image_data, mimetype="image/png")
+</pre><br />仅此而已!如果你改变open()调用的图像路径为一个真正图像的路径，你可以使用这个非常简单的视图来处理图像，浏览<br />器将正确的显示它<br />另外一个需要记住的重要事情是HttpResponse对象实现了Python的标准文件API，这意味着你可以传递一个HttpResponse<br />实例给Python(或者第三方库)需要文件的任何地方<br />例如我们看看用Django生成CSV<br /><br /><strong>生成CSV</strong><br />CSV是通常被电子制表软件使用的简单数据形式，它基本上是表的一系列行，行的每个单元用逗号分隔(CSV表示"逗号分隔<br />的值")，例如，下面是FAA收集的最近10年的"不规矩"的航空旅客的列表:<br /><pre name="code" class="java">
+Year,Unruly Airline Passengers
+1995,146
+1996,184
+1997,235
+1998,200
+1999,226
+2000,251
+2001,299
+2002,273
+2003,281
+2004,304
+2005,203
+</pre><br />注意参看<a href="http://www.faa.gov/data_statistics/passengers_cargo/unruly_passengers/" target="_blank">http://www.faa.gov/data_statistics/passengers_cargo/unruly_passengers/</a>得到此数据<br />不幸的是，CSV不是正式定义的格式，软件的不同部分生成和使用不同的CSV，这让它有点难以使用<br />幸运的是，Python有一个标准CSV库csv，它是非常防弹的<br />和Django使用这个库的关键是csv模块的CSV创建能力表现为类似文件对象，Django的HttpResponse对象也类似文件对象:<br /><pre name="code" class="java">
+import csv
+from django.http import HttpResponse
+
+# Number of unruly passengers each year 1995 - 2005
+UNRULY_PASSENGERS = [146,184,235,200,226,251,299,273,281,304,203]
+
+def unruly_passengers_csv(request):
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(mimetype='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=unruly.csv'
+
+    # Create the CSV writer using the HttpResponse as the "file"
+    writer = csv.writer(response)
+    writer.writerow(['Year', 'Unruly Airline Passengers'])
+    for (year, num) in zip(range(1995, 2006), UNRULY_PASSENGERS):
+        writer.writerow([year, num])
+
+    return response
+</pre><br />代码和注释看起来非常清楚，但是有一些事情需要注意:<br />1，应答的mime-type为为text/csv，这告诉浏览器文档是一个CSV文件，而不是HTML文件<br />2，应答有一个另外的Content-Disposition头部，它包含CSV文件的名字，这个头部("attachment")将告诉浏览器提示<br />一个位置来保存文件(而不是显示它)，这个文件名随意，你想叫它什么都可以，它将被浏览器的"Save as..."对话框使用<br />3，CSV生成API很简单，只是传递response作为第一个参数给csv.writer，csv.writer方法期望一个类似文件的对象，<br />然后HttpResponse对象来付帐<br />4，对你的CSV文件的每一行调用writer.writerow，传递一个iterable对象给它，例如列表或者元组<br />5，CSV模块帮你关注引号，所以你不需要担心escape含有引号或逗号的字符串，只需传递信息给writerow()，它将给你<br />做正确的事情<br />你通常将重复这个模式，创建一个HttpResponse应答对象(用一个特殊的mime-type)，把它传递给一个期望文件的东西，<br />然后返回应答，任何你生成非HTML内容的时候都可以这样做<br />让我们看看一些更多的例子<br /><br /><strong>生成PDF</strong><br />PDF(Portable Document Format)是Adobe开发的格式，它用来展示可打印的文档，并具有象素完美的格式，内嵌的字体和<br />2D向量图形，你可以把PDF文档当作可打印文档的数字等价物，确实，PDF通常用在当你需要把一份文档给另一个人打印时<br />有了绝佳的ReportLab开源库(<a href="http://www.reportlab.org/rl_toolkit.html" target="_blank">http://www.reportlab.org/rl_toolkit.html</a>)你可以使用Python和Django轻松<br />生成PDF，动态生成PDF文件的好处是你可以创建自定义的PDF来满足不同的目的，如为不同的用户或不同的内容等<br />例如，我们在KUSports.com使用Django和ReportLab来为参加March Madness(大学篮球赛)的人们生成自定义的可打印的<br />NCAA锦标赛brackets<br /><br /><strong>安装ReportLab</strong><br />但是，在你生成任何PDF之前你需要安装ReportLab，这通常很简单<br />只需从<a href="http://www.reportlab.org/downloads.html" target="_blank">http://www.reportlab.org/downloads.html</a>下载和安装库<br />用户手册(不巧也是PDF文件)在<a href="http://www.reportlab.org/rsrc/userguide.pdf" target="_blank">http://www.reportlab.org/rsrc/userguide.pdf</a>并有额外的安装帮助<br />注意，如果你使用时髦的Linux发布，你可能想在手动安装ReportLab前检查你的包管理工具，大部分包资源库已经<br />包含了ReportLab，例如，如果你使用(绝佳的)Ubuntu发布，一个简单的aptitude install python-reportlab将很好的<br />安装它<br />通过在Python交互解释器里import它来测试你的安装:<br /><pre name="code" class="java">
+&gt;&gt;&gt; import reportlab
+</pre><br />如果上面的命令不触发任何错误，表明安装的组件已经工作<br /><br /><strong>写视图</strong><br />再说一遍，使用Django动态生成PDF的关键是ReportLab API基于类似文件的对象，而且Django的HttpResponse对象也是<br />类似文件的对象，这里是一个"Hello World"例子:<br /><pre name="code" class="java">
+from reportlab.pdfgen import canvas
+from django.http import HttpResponse
+
+def hello_pdf(request):
+    # Create the HttpResponse object with the appropriate PDF headers.
+    response = HttpResponse(mimetype='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename=hello.pdf'
+
+    # Create the PDF object, using the response object as its "file."
+    p = canvas.Canvas(response)
+
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+    p.drawString(100, 100, "Hello world.")
+
+    # Close the PDF object cleanly, and we're done.
+    p.showPage()
+    p.save()
+    return response
+</pre><br />和上面一样，有一些地方需要按顺序注意一下:<br />1，这里我们使用application/pdf mime-type，这告诉浏览器文档是一个PDF文件，而不是一个HTML文件，如果你不写<br />这个，浏览器将可能把输出解释为HTML，这将导致在浏览器触发错误<br />2，ReportLab API很简单，只需把response作为第一个参数传递给canva.Canvas，Canvas类期望一个类似文件的对象，<br />然后HttpResponse对象来付帐<br />3，所有后面的PDF生成方法在PDF对象(这里是p)上调用，而不是在response上<br />4，最后，在PDF文件上调用showPage()和save()很重要(否则你将得到一个糟糕的PDF文件)<br /><br /><strong>复杂的PDF</strong><br />如果你使用ReportLab创建一个复杂的PDF文档，考虑为你的PDF文件使用cStringIO库作为一个临时存储位置，cStringIO<br />库提供一个非常有效的类似文件的对象接口(比天真的HttpResponse作为文件的实现更好)<br />这里是使用cStringIO来重写上面的"Hello World"例子:<br /><pre name="code" class="java">
+from cStringIO import StringIO
+from reportlab.pdfgen import canvas
+from django.http import HttpResponse
+
+def hello_pdf(request):
+    # Create the HttpResponse object with the appropriate PDF headers.
+    response = HttpResponse(mimetype='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename=hello.pdf'
+
+    buffer = StringIO()
+
+    # Create the PDF object, using the StringIO object as its "file."
+    p = canvas.Canvas(buffer)
+
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+    p.drawString(100, 100, "Hello world.")
+
+    # Close the PDF object cleanly.
+    p.showPage()
+    p.save()
+
+    # Get the value of the StringIO buffer and write it to the response.
+    response.write(buffer.getvalue())
+    return response
+</pre><br /><br /><strong>其它可能性</strong><br />用Python你可以生成整个世界的其它类型的内容，这里是一些更多的主意，其中一些是你可以用来实现它们的库:<br />生成ZIP文件:Python的zipfile模块的标准库，它可以读写压缩的ZIP文件，你可以使用它来提供任意文件的存档，<br />或者有需求时把大文档压缩，你同样可以使用标准库的tarfile模块来生成TAR文件<br />动态图像生成:Python图像库(<a href="http://www.pythonware.com/products/pil/" target="_blank">http://www.pythonware.com/products/pil/</a>)是一个非常奇妙的用来生成图像<br />(PNG，JPEG，GIF等等)的工具库，你可以用它来自动缩小图像，把多幅图像组合成单独画面，甚至做基于web的图像处理<br />分图和制图:有许多不可思议的强大的Python分图和制图库，你可以用它们生成任意的maps，charts，plots和graphs<br />我们不能列出所有的，所以这里是一些不错的:<br />matplotlib(<a href="http://matplotlib.sourceforge.net/" target="_blank">http://matplotlib.sourceforge.net/</a>)，它可以用来生成通常用MatLab或者Mathematica来生成<br />的高质量的plots<br />pygraphviz(<a href="https://networkx.lanl.gov/wiki/pygraphviz" target="_blank">https://networkx.lanl.gov/wiki/pygraphviz</a>)<br />这是一个Graphviz图形布局工具库(<a href="http://graphviz.org/" target="_blank">http://graphviz.org/</a>)的接口，用来生成图形或网络的结构化diagrams<br />通常来说，任何可以写文件的Python库都可以在Django中使用，可能性真的是无限的<br />既然我们看到了生成非HTML内容的基础，让我们进一步抽象，Django带有一些非常俏皮的内建工具用来生成一些通常类型<br />的非HTML内容<br /><br /><strong>聚合框架</strong><br />Django带有一个高级的聚合生成框架，它让创建RSS和Atom feeds非常容易<br />什么是RSS?什么是Atom?<br />RSS和Atom都是基于XML的格式，你可以用来提供自动更新你的站点内容的"feeds"<br />阅读更多关于RSS的内容<a href="http://www.whatisrss.com" target="_blank">http://www.whatisrss.com</a><br />以及更多关于Atome的内容<a href="http://www.atomenabled.org" target="_blank">http://www.atomenabled.org</a><br />创建任何聚合只需写一个很短的Python类，你可以想创建多少feeds就创建多少<br />Django也带一个低级feed生成API，如果你想在Web context之外生成feeds或者用一些更低级的方式的话可以使用它<br /><br /><br /><strong>高级框架概览</strong><br />高级feed生成框架是一个默认绑定到/feeds/的视图，Django使用URL的其它部分(在/feeds/之后的任何东西)来决定输出<br />哪个feed<br />为了创建一个feed，只需写一个Feed类并在你的URL配置里指出(参考第3章和第8章得到更多关于URL配置)<br /><br /><strong>初始化</strong><br />为了在你的Django站点里激活聚合，你需要把下面的内容添加到你的URL配置:<br /><pre name="code" class="java">
+(r'^feeds/(?P&lt;url&gt;.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
+</pre><br />这会告诉Django使用RSS框架来处理所有的以"feeds/"开头的URL(你可以改变"feeds/"前缀来满足你自己的需求)<br />这个URL配置有另外一个参数{'feed_dict': feeds}，使用这个额外参数来把改URL下发布的feeds传递给聚合框架<br />特别的，feed_dict应该是一个映射feed的slug(简短URL标签)到它的Feed类的字典<br />你可以在URL配置本身里定义feed_dict，这里是一个完整的例子:<br /><pre name="code" class="java">
+from django.conf.urls.defaults import *
+from myproject.feeds import LatestEntries, LatestEntriesByCategory
+
+feeds = {
+    'latest': LatestEntries,
+    'categories': LatestEntriesByCategory,
+}
+
+urlpatterns = patterns('',
+    # ...
+    (r'^feeds/(?P&lt;url&gt;.*)/$', 'django.contrib.syndication.views.feed',
+        {'feed_dict': feeds}),
+    # ...
+)
+</pre><br />上面的例子注册了两个feeds:<br />通过LatestEntries展示的feed对应feeds/latest/<br />通过LatestEntriesByCategory展示的feed对应feeds/categories/<br />一旦建立好之后，你只需定义Feed类本身<br /><br /><strong>Feed类</strong><br />一个Feed类是展示聚合feed的简单的Python类，一个Feed可以很简单(例如一个"站点新闻"feed或者显示博客最近条目的<br />基本feed)也可以更复杂(例如显示博客特殊类别的所有条目，该类别可变)<br />Feed类必须继承django.contrib.syndication.feeds.Feed，它们可以在你的代码树的任何位置<br /><br /><strong>简单的例子</strong><br />这个简单的例子来自于chicagocrime.org，描述最近5项新闻条目的feed:<br /><pre name="code" class="java">
+from django.contrib.syndication.feeds import Feed
+from chicagocrime.models import NewsItem
+
+class LatestEntries(Feed):
+    title = "Chicagocrime.org site news"
+    link = "/sitenews/"
+    description = "Updates on changes and additions to chicagocrime.org."
+
+    def items(self):
+        return NewsItem.objects.order_by('-pub_date')[:5]
+</pre><br />这里需要注意的重要事情:<br />1，这个类继承django.contrib.syndication.feeds.Feed<br />2，title，link和description对应标准的RSS(title)，(link)和(description)元素<br />3，items()是简单的返回在feed中作为(item)元素的对象列表的方法，尽管这个例子使用Django的数据库API返回<br />NewsItem对象，items()不一定必须返回模型实例<br />你可以通过使用Django模型得到一些功能，但是items()可以返回任何你想要类型的对象<br />只有另一个更多的步骤，在一个RSS feed里，每个(item)有一个(title)，(link)和(description)，我们需要告诉框架<br />把哪些数据放到那些元素中<br />4，为了指定(title)和(description)的内容，创建叫feeds/latest_title.html和feeds/latest_description.html的<br />Django模板(参考第4章)，latest是给定feed的URL配置里指定的slug<br />注意.html扩展名是必需的<br />RSS系统为每个条目渲染该模板，并传递两个模板context变量:<br />obj<br />当前对象(在items()里返回的对象里的一个)<br />site<br />一个显示当前站点的django.models.core.sites.Site对象，它对{{ site.domain }}或者{{ site.name }}有用<br />如果你不为title或description创建模板，框架将默认使用模板"{{ obj }}"，对象的普通的字符串展示<br />你也可以通过指定title_template和description_template作为你的Feed类的属性来改变这两个模板的名字<br />5，为了指定(link)的内容，你有两个选择，对items()的每个条目，Django首先尝试执行对象的get_absolute_url()方法<br />如果该方法不存在，则尝试调用Feed类的item_link()方法，并把该对象本身作为参数item传递过去<br />6，对于上面的LatestEntries例子，我们可以有一些简单的feed模板，latest_title.html包含:<br /><pre name="code" class="java">
+{{ obj.title }}
+</pre><br />latest_description.html包含:<br /><pre name="code" class="java">
+{{ obj.description }}
+</pre><br />这简直太简单了...<br /><br /><strong>复杂的例子</strong><br />框架也通过参数提供更复杂的feeds<br />例如，chicagocrime.org提供一个最近在Chicago每个警察打击的犯罪的RSS feed，为每个警察打击的犯罪创建单独的<br />Feed类是很愚蠢的，这将违反DRY(Don't Repeat Yourself)原则并把数据和编程逻辑耦合<br />聚合框架让你构建基于feed的URL信息输出items的通用feeds<br />在chicagocrime.org，警察打击feeds可以像这样通过URL访问:<br />/rss/beats/0613/，返回0613打击的最近犯罪<br />/rss/beats/1424/，返回1424打击的最近犯罪<br />这里的slug是"beats"，聚合框架查看slug后面另外的URL，0613和1424，并可以告诉它那些URL表示什么，以及它们怎样<br />影响feed中哪些条目被发表<br />一个例子将把事情解释清楚，这里是那些打击专有的feeds的代码:<br /><pre name="code" class="java">
+from django.core.exceptions import ObjectDoesNotExist
+
+class BeatFeed(Feed):
+    def get_object(self, bits):
+        # In case of "/rss/beats/0613/foo/bar/baz/", or other such
+        # clutter, check that bits has only one member.
+        if len(bits) != 1:
+            raise ObjectDoesNotExist
+        return Beat.objects.get(beat__exact=bits[0])
+
+    def title(self, obj):
+        return "Chicagocrime.org: Crimes for beat %s" % obj.beat
+
+    def link(self, obj):
+        return obj.get_absolute_url()
+
+    def description(self, obj):
+        return "Crimes recently reported in police beat %s" % obj.beat
+
+    def items(self, obj):
+        crimes =  Crime.objects.filter(beat__id__exact=obj.id)
+        return crimes.order_by('-crime_date')[:30]
+</pre><br />这里是RSS框架遵循的基本算法，给定这个类和一个请求到/rss/beats/0613/:<br />1，框架得到/rss/beats/0613/的URL并注意到在slug后面有一个额外的URL片段，则它通过斜线字符("/")把后面的字符串<br />分隔开然后调用Feed类的get_object()方法并把片段传递过去<br />这里的片段是['0613']，对于/rss/beats/0613/foo/bar/的请求，片段则为['0613', 'foo', 'bar']<br />2，get_object()负责返回从给定片段得到给定的打击<br />在这里，它使用Django数据库API来查询打击，注意如果给定非法参数的话get_object()应该触发<br />django.core.exceptions.ObjectDoesNotExist异常，Beat.objects.get()调用没有try/except包围，因为没必要，<br />这个方法在失败时触发Beat.DoesNotExist，而Beat.DoesNotExist是ObjectDoesNotExist的子类，在get_object()里触发<br />ObjectDoesNotExist异常告诉Django对该请求产生404错误<br />3，为了生成feed的(title)，(link)和(description)，Django使用title()，link()和description()方法，在上个例子<br />中，它们是简单的字符串类属性，但是这个例子说明它们可以是字符串或者方法，对title，link和description中的任<br />一个，Django遵循这个算法:<br />首先，它尝试调用一个方法，传递obj参数，这里obj是get_object()返回的对象<br />失败的话，它尝试调用一个没有参数的方法<br />再失败的话，它使用类属性<br />4，最后，注意这个例子中的items()也需要obj参数，items的算法和上一步描述的一样，它尝试items(obj)，然后是<br />items()，最后是一个items类属性(它应该是一个列表)<br />Feed类所有方法和属性的完整文档一直可以从Django官方文档得到<br />参看<a href="http://www.djangoproject.com/documentation/syndication/" target="_blank">http://www.djangoproject.com/documentation/syndication/</a><br /><br /><strong>指定feed类型</strong><br />默认框架使用RSS2.0生成feeds，这可以通过在你的Feed类添加feed_type属性来更改:<br /><pre name="code" class="java">
+from django.utils.feedgenerator import Atom1Feed
+
+class MyFeed(Feed):
+    feed_type = Atom1Feed
+</pre><br />注意你设置feed_type为一个类对象，而不是一个实例，当前可以得到的feed类型为:<br />Feed class&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Format<br />django.utils.feedgenerator.Rss201rev2Feed&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RSS 2.01(default).<br />django.utils.feedgenerator.RssUser1and091Feed&nbsp; RSS 0.91.<br />django.utils.feedgenerator.Atom1Feed&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Atom 1.0.<br /><br /><strong>封装</strong><br />为了指定封装，如那些用来创建podcast feeds的，使用item_enclosure_url，item_enclosure_length和<br />item_enclosure_mime_type钩子，例如:<br /><pre name="code" class="java">
+from myproject.models import Song
+
+class MyFeedWithEnclosures(MyFeed):
+    title = "Example feed with enclosures"
+    link = "/feeds/example-with-enclosures/"
+
+    def items(self):
+        return Song.objects.all()[:30]
+
+    def item_enclosure_url(self, item):
+        return item.song_url
+
+    def item_enclosure_length(self, item):
+        return item.song_length
+
+    item_enclosure_mime_type = "audio/mpeg"
+</pre><br />当然这个假设你已经用song_url域和song_length域(即bytes表示的size)创建了Song对象<br /><br /><strong>语言</strong><br />聚合框架创建的Feeds自动包含合适的(language)标签(RSS 2.0)或者xml:lang属性(Atom)<br />它直接来自于你的LANGUAGE_CODE设置<br /><br /><strong>URL</strong><br />link方法/属性可以返回一个绝对URL(例如"/blog/")或者一个具有完整域名和协议的URL<br />(例如"http://www.example.com/blog/")，如果link不返回域名，则聚合框架将根据你的SITE_ID设置插入当前站点的域名<br /><br /><strong>分别发布Atom和RSS feeds</strong><br />一些开发者喜欢让他们的feeds的Atom和RSS版本都可用，使用Django很容易做这个:只需创建你的feed类的子类并设置<br />feed_type为不同的东西，然后更新你的URL配置来添加额外的版本，这里是一个完整的例子:<br /><pre name="code" class="java">
+from django.contrib.syndication.feeds import Feed
+from chicagocrime.models import NewsItem
+from django.utils.feedgenerator import Atom1Feed
+
+class RssSiteNewsFeed(Feed):
+    title = "Chicagocrime.org site news"
+    link = "/sitenews/"
+    description = "Updates on changes and additions to chicagocrime.org."
+
+    def items(self):
+        return NewsItem.objects.order_by('-pub_date')[:5]
+
+class AtomSiteNewsFeed(RssSiteNewsFeed):
+    feed_type = Atom1Feed
+</pre><br />然后相应的URL配置:<br /><pre name="code" class="java">
+from django.conf.urls.defaults import *
+from myproject.feeds import RssSiteNewsFeed, AtomSiteNewsFeed
+
+feeds = {
+    'rss': RssSiteNewsFeed,
+    'atom': AtomSiteNewsFeed,
+}
+
+urlpatterns = patterns('',
+    # ...
+    (r'^feeds/(?P&lt;url&gt;.*)/$', 'django.contrib.syndication.views.feed',
+        {'feed_dict': feeds}),
+    # ...
+)
+</pre><br /><br /><strong>sitemap框架</strong><br />类似于聚合框架，Django也有一个高级的Sitemap生成框架<br />一个Sitemap是一个你的网站的XML文件，它告诉搜索引擎索索引你的页面的更新频率和你的站点某些页面联系到其它页面<br />有多"重要"，这个信息帮助搜索引擎索引你的站点，参看<a href="http://www.sitemaps.org" target="_blank">http://www.sitemaps.org</a>得到更多关于Sitemaps<br />Django的sitemap框架通过让你用Python代码表达这个信息来自动生成这个XML文件，为了创建一个sitemap，你只需写<br />一个Sitemap类并在你的URL配置里指向它<br /><br /><strong>安装</strong><br />遵循下面的步骤来安装sitemap app:<br />1，添加'django.contrib.sitemaps'到你的INSTALLED_APPS设置<br />2，确认'django.template.loaders.app_directories.load_template_source'在你的TEMPLATE_LOADERS设置中<br />它默认在里面，所以如果你改变了这个设置则你将只需更改这个<br />3，确认你已经安装了sites框架(参考第15章)<br />注意，sitemap程序不会安装任何数据库表，它需要进入INSTALLED_APPS的唯一的原因是为了让load_template_source<br />模板载入器可以找到默认的模板<br /><br /><strong>初始化</strong><br />为了在你的Django站点激活sitemap生成，把下面的内容添加到你的URL配置里:<br /><pre name="code" class="java">
+(r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps})
+</pre><br />这会告诉Django当一个客户端访问/sitemap.xml时构建一个sitemap<br />sitemap文件名不重要，但是位置很重要，搜索引擎将只为当前及以下的URL级别索引你的sitemap里的链接<br />例如，如果sitemap.xml存在于你的根目录，它将引用你的站点的任何URL，如果sitemap存在于/content/sitemap.xml，<br />它将只引用以/content/开始的URL<br />sitemap使用一个额外的必需参数{'sitemaps': sitemaps}，sitemaps应该是一个映射简短的section标签(如blog或者<br />news)到它的Sitemap类(如BlogSitemap或者NewsSitemap)的字典，它可能也映射一个Sitemap类的实例<br />(如BlogSitemap(some_var))<br /><br /><strong>Sitemap类</strong><br />一个Sitemap类是一个表示你的sitemap一部分条目的简单的Python类，例如，一个Sitemap类可以表示你的博客的所有<br />条目，而另一个可以表示你的日程表的所有的事件<br />最简单的情况下，所有这些部分混合在一个sitemap.xml里，但是也可以使用框架生成一个sitemap索引并引用单独的<br />sitemap文件，每个部分一个文件(参看下面的内容)<br />Sitemap类必须继承django.contrib.sitemaps.Sitemap，它们可以在你的代码树的任意位置<br />例如，让我们假设你有一个博客系统和一个Entry模型，并且你想让你的sitemap包含所有到你的单独博客条目的链接<br />这里是你的sitemap类的样子:<br /><pre name="code" class="java">
+from django.contrib.sitemaps import Sitemap
+from mysite.blog.models import Entry
+
+class BlogSitemap(Sitemap):
+    changefreq = "never"
+    priority = 0.5
+
+    def items(self):
+        return Entry.objects.filter(is_draft=False)
+
+    def lastmod(self, obj):
+        return obj.pub_date
+</pre><br />在看过聚合框架之后，这将看起来非常熟悉:<br />1，changefreq和priority是对应(changefreq)和(priority)元素的类属性，它们可以作为方法来调用，例如lastmod<br />2，items()是简单的返回对象列表的方法，返回的对象将根据sitemap属性(location，lastmod，changefreq和priority)<br />传递给任何可调用的方法<br />3，lastmod应该返回一个Python datetime对象<br />4，例子中没有location方法，但是你可以为了指出你的对象的URL而提供它，默认location()对每个对象调用<br />get_absolute_url()并返回结果<br /><br /><strong>Sitemap方法/属性</strong><br />像Feed类一样，Sitemap成员可以是方法或者属性，参考"复杂的例子"得到更多关于它怎样工作的信息<br />一个Sitemap类可以定义以下方法/属性:<br />items(必需)<br />提供对象列表，框架不关心它们是什么类型的对象，关心的只是这些对象传递给location()，lastmod()，changefreq()<br />和priority()方法<br />location(可选)<br />对给定对象提供绝对的URL<br />这里"绝对的URL"表示不包含协议和域名的URL，例如:<br />Good:'/foo/bar/'<br />Bad:'example.com/foo/bar/'<br />Bad:'http://example.com/foo/bar/'<br />如果location没有提供，框架将对items()返回的每个对象调用get_absolute_url()方法<br />lastmod(可选)<br />对象的"last modification"日期，是一个Python datetime对象<br />changefreq(可选)<br />对象改变的频率，可能的值(Sitemaps规范所给)为:<br />'always'<br />'hourly'<br />'daily'<br />'weekly'<br />'monthly'<br />'yearly'<br />'never'<br />priority(可选)<br />建议的索引优先级别，在0.0和1.0之间，一个页面的默认级别为0.5，参看sitemaps.org文档来得到更多关于priority<br /><br /><strong>捷径</strong><br />sitemap框架为通常的情况提供了一些方便类:<br />FlatPageSitemap<br />django.contrib.sitemaps.FlatPageSitemap类查看当前站点定义的所有flat页面并在sitemap里创建条目，这些条目只<br />包含location属性，不包含lastmod，changefreq或priority，参考第15章来得到更多关于flat页面<br />GenericSitemap<br />GenericSitemap类和你已经有的任何generic views(参考第9章)工作<br />为了使用它，创建一个实例并传递你传递给generic views的同样的info_dict，仅有的需求是这个字典有一个queryset<br />条目，它可能也有一个date_field条目来指定从queryset得到的对象的date域，它被用于生成的sitemap的lastmod属性<br />你也可以传递priority和changefreq关键字参数到GenericSitemap构造函数来为所有的URL指定这些属性<br />这里是一个使用FlatPageSitemap和GenericSitemap的URL配置的例子(使用上面假定的Entry对象):<br /><pre name="code" class="java">
+from django.conf.urls.defaults import *
+from django.contrib.sitemaps import FlatPageSitemap, GenericSitemap
+from mysite.blog.models import Entry
+
+info_dict = {
+    'queryset': Entry.objects.all(),
+    'date_field': 'pub_date',
+}
+
+sitemaps = {
+    'flatpages': FlatPageSitemap,
+    'blog': GenericSitemap(info_dict, priority=0.6),
+}
+
+urlpatterns = patterns('',
+    # some generic view using info_dict
+    # ...
+
+    # the sitemap
+    (r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps})
+)
+</pre><br /><br /><strong>创建sitemap索引</strong><br />sitemap框架也可以创建一个sitemap索引来引用单独的sitemap文件，即在你的sitemaps字典里定义的每个部分<br />使用上唯一的区别是:<br />1，你在URL配置里使用两个视图:django.contrib.sitemaps.views.index和django.contrib.sitemaps.views.sitemap<br />2，django.contrib.sitemaps.views.sitemap应该使用一个section关键字参数<br />这里是上面例子的相关的URL配置:<br /><pre name="code" class="java">
+(r'^sitemap.xml$', 'django.contrib.sitemaps.views.index', {'sitemaps': sitemaps})
+(r'^sitemap-(?P&lt;section&gt;.+).xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps})
+</pre><br />这将自动生成一个sitemap.xml文件，它引用sitemap-flatpages.xml和sitemap-blog.xml<br />而Sitemap类和sitemaps目录根本没有更改<br /><br /><strong>Pinging Google</strong><br />你可能当你的sitemap更改时想"ping" Google来让它知道重新索引你的站点，框架提供一个方法来做这件事:<br />django.contrib.sitemaps.ping_google()<br />注意，本书在写作时，只有Google响应sitemap pings，尽管如此，很可能Yahoo或Microsoft将很快也支持这些pings<br />那个时候，我们可能更改ping_google()的名字为类似于ping_search_engines()，所以确认查看最近的sitemap文档<br /><a href="http://www.djangoproject.com/documentation/sitemaps/" target="_blank">http://www.djangoproject.com/documentation/sitemaps/</a><br />ping_google()使用一个可选的参数sitemap_url，它应该为你的站点的sitemap(即'/sitemap.xml')的绝对URL<br />如果这个参数没有提供，ping_google()将尝试通过倒转顺序查看你的URL配置来找出你的sitemap<br />如果ping_google()不能决定你的sitemap URL，它将触发django.contrib.sitemaps.SitemapNotFound异常<br />一个有用的调用ping_google()的方式是从一个模型的save()方法:<br /><pre name="code" class="java">
+from django.contrib.sitemaps import ping_google
+
+class Entry(models.Model):
+    # ...
+    def save(self):
+        super(Entry, self).save()
+        try:
+            ping_google()
+        except Exception:
+            # Bare 'except' because we could get a variety
+            # of HTTP-related exceptions.
+            pass
+</pre><br />尽管如此，一个更高效的解决方案是从一个cron脚本调用ping_google()，或者一些其它的日程任务，这个方法给Google<br />的服务器发送一个HTTP请求，所以你可能不想每次你调用save()都招致网络过度<br /><br /><strong>下一步是什么?</strong><br />下一步，我们将继续深入挖掘Django带给你的俏皮的内建工具，第12章会看到提供用户自定义站点的工具:session，<br />users和authentication<br />前进!
+  </div>
+
+  
+
+  

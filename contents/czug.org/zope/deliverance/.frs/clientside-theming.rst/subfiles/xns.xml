@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<metadata xmlns="http://plone.org/ns/archetypes/" xmlns:cmf="http://cmf.zope.org/namespaces/default/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xmp="adobe:ns:meta">
+    <dc:title>
+客户端外观定位
+	</dc:title>
+	<dc:description>
+Deliverance 实现了一个特性，这个特性允许外观能在客户端浏览器上定位而不用在服务器端提供。
+	</dc:description>
+	<field id="hidden_keys">
+	  "img","__init__.pyc","__init__.py"
+	</field>
+	<field id="keys">
+'quickstart.rst', 'philosophy.rst', 'configuration.rst', 'pyref.rst', 'clientside-theming.rst', 'code-map.rst', 'page-classes.rst', 'rules.rst', 'proxy.rst', 'license.rst'
+	</field>
+</metadata>

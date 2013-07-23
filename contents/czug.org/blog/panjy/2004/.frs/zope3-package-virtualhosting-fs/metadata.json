@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zope3-package-virtualhosting-fs"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "继续学习Zope3，包管理、虚拟主机的设置，以及web编辑的代码到文件系统的同步", 
+        "modified": "2004-09-06 14:21:33", 
+        "title": "学习Zope3: 安装包、虚拟主机和代码文件系统同步"
+    }
+}

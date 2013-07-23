@@ -1,0 +1,15 @@
+<p>我们<a href="http://www.zopechina.com">润普公司</a>非常高兴发布内容仪表盘CMFContentPanels的新版本.</p>
+<p>内容仪表盘CMFContentPanels 是一个cmf/plone内容，他能通过直接在web上制作面板和面板的布局来定义复杂的内容。面板是有内容、视图和皮肤组成。在1.1版本中，一个内容可以有多个不同的视图。</p>
+<p>这个版本发布稍微有限晚，但是功能却十分强劲，值得您的等待。</p>
+<p>简单来说，CMFContentPanels1.1有如下新特性:</p>
+
+<ul>
+<li>新的content/viewlet/box_skin架构. 内容可以定义多个视图.</li>
+<li>使用CMF Action机制来注册视图</li>
+<li>I18N国际化，支持中文</li>
+<li>通过浏览和查询选择内容。(谢谢Epoz中的部分代码)</li>
+<li>界面优化</li>
+<li>更多其他的特性...</li>
+
+</ul>
+<p>点击<a href="//www.zope.org/Members/panjunyong/CMFContentPanels">此处</a>，获取更多信息</p>

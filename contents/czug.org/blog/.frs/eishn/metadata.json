@@ -1,0 +1,15 @@
+{
+    "main": {
+        "contenttype": "Folder", 
+        "left_col": ".. navtree::\n   :root_depth: 3",
+        "hidden_keys": ["left_col.rst", "index.rst"]
+    }, 
+    "dublin": {
+        "creators": [
+            "eishn"
+        ], 
+        "description": "沈崴的 Blog。", 
+        "modified": "2006-11-28 12:07:20", 
+        "title": "蜻蜓点水 举重若轻"
+    }
+}

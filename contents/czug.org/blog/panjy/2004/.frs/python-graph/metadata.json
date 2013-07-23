@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "python-graph"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Python上的一些图表工具", 
+        "modified": "2004-11-29 14:30:50", 
+        "title": "Python上的图表工具"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "plonezhongdexitongjiaoshaihebendejiaoshaipouxi"
+    }, 
+    "dublin": {
+        "creators": [
+            "zhangbingkai"
+        ], 
+        "description": "Plone中有这样三个概念：", 
+        "modified": "2007-01-19 12:14:43", 
+        "title": "Plone中的系统角色和本地角色"
+    }
+}

@@ -1,0 +1,76 @@
+.. raw:: html
+
+   <div>
+
+    <h1>联系信息</h1>
+	<p></p>
+        <!-- feedback form -->        
+        
+            <p class="documentDescription">如果希望联系网站管理员，请填写下面的表单。</p>
+            
+            <form name="feedback_form" action="./contact-info/@@contact.html" method="post">
+
+            <fieldset>
+
+                <legend>反馈详细信息</legend>
+
+            
+              <div class="field">
+              <label for="sender_fullname">名字</label>
+
+              <div class="formHelp">请输入您的姓名</div>
+
+              <div></div>            
+
+              <input id="sender_fullname" name="sender_fullname" size="40" tabindex="0" type="text">
+
+            </div>
+            <div class="field">
+              <label for="sender_from_address">电子邮件</label>
+              <span class="fieldRequired" title="需填">（必填）</span>
+
+              <div class="formHelp">请输入您的邮件地址</div>
+   
+              <div></div>            
+
+              <input id="sender_from_address" name="sender_from_address" size="40" type="text">
+
+            </div>
+            
+            
+            <div class="field">
+              <label for="subject">标题</label>
+              <span class="fieldRequired" title="需填">（必填）</span>
+
+              <div class="formHelp">请输入希望发送的消息主题。</div>
+   
+              <div></div>            
+
+              <input id="subject" name="subject" size="25" type="text">
+
+            </div>
+            <div class="field">
+              <label for="message">消息</label>
+              <span class="fieldRequired" title="需填">（必填）</span>
+
+              <div class="formHelp">请输入需要发送的消息。</div>
+   
+              <div></div>            
+        
+              <textarea name="message" id="message" rows="5" cols="25"></textarea>
+
+            </div>
+        
+            <div class="formControls">
+
+                <input class="context" name="form.button.Send" value="发送" type="submit">
+
+            </div>
+
+            </fieldset>
+
+            <input name="form.submitted" value="1" type="hidden">
+
+            </form>
+
+	</div>

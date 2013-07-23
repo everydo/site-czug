@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "blogentry.2005-02-19.0576703579"
+    }, 
+    "dublin": {
+        "creators": [
+            "eishn"
+        ], 
+        "description": "在一种叫做 QQ 的即时通信软件中、在一种叫做浩方的盗版游戏平台上，这种技术正在被剧烈地使用着。使用 HTML & Javascript 来建立 Python 本地应用程序的图形用户界面，有许多好处：比如可以让众多的网站界面设计师直接变成应用程序界面设计师；也有许多方法来实现它……", 
+        "modified": "2005-02-19 13:02:14", 
+        "title": "使用 HTML & Javascript 来建立 Python 本地应用程序的图形用户界面"
+    }
+}

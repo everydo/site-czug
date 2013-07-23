@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "document_managemenet"
+    }, 
+    "dublin": {
+        "creators": [
+            "blueszhao"
+        ], 
+        "description": "欢迎社区成员贡献翻译文章、原创文章。本文档说明了文档内容来源、贡献方法、内容与形式、文档的格式及内容要求、署名方法以及内容维护更新办法。", 
+        "modified": "2004-03-13 01:45:44", 
+        "title": "关于文档贡献说明"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "ca-zope"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "CA同Zope/Plone/JBoss社区结盟，走向开放源代码的战略", 
+        "modified": "2004-06-12 05:19:31", 
+        "title": "CA World大步迈向开放原始码技术"
+    }
+}

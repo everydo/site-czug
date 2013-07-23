@@ -1,0 +1,4 @@
+description: 应邀在豆瓣python论坛发起的一个系列贴，整理转帖在这里
+exclude: [img, __init__.pyc, __init__.py]
+order: [beiju.rst, zodb.rst, scripting-web.rst, zca.rst, publisher.rst]
+title: Zope五日谈

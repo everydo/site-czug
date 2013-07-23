@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "News_Item.2003-03-05.0050"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "ZopeChinaPak是一个针对Zope、Plone、以及相关核心产品的一个非常容易安装和升级的中文补丁包。", 
+        "modified": "2003-03-05 10:12:24", 
+        "title": "润普发布ZopeChinaPak，Zope中文支持更简单！"
+    }
+}

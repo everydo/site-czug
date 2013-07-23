@@ -1,0 +1,32 @@
+Plone和zope上的其他产品一样，可直接拷贝到实例的Products目录($INSTANCE_HOME/Products)，完成安装.
+
+1. 下载CMF
+
+ CMF包括如下产品::
+
+  1. CMFCalendar<a class="new" href="http://members.czug.org/plone/plonebook/X_e6_89_8b_e5_b7_a5_e5_ae_89_e8_a3_85Plone_e7_ad_89_e4_ba_a7_e5_93_81/createform?page=CMFCalendar" title="create this page">?</a>：日历
+  2. CMFCore<a class="new" href="http://members.czug.org/plone/plonebook/X_e6_89_8b_e5_b7_a5_e5_ae_89_e8_a3_85Plone_e7_ad_89_e4_ba_a7_e5_93_81/createform?page=CMFCore" title="create this page">?</a>：CMF核心
+  3. CMFDefault<a class="new" href="http://members.czug.org/plone/plonebook/X_e6_89_8b_e5_b7_a5_e5_ae_89_e8_a3_85Plone_e7_ad_89_e4_ba_a7_e5_93_81/createform?page=CMFDefault" title="create this page">?</a>：CMF确实实现
+  4. CMFTopic<a class="new" href="http://members.czug.org/plone/plonebook/X_e6_89_8b_e5_b7_a5_e5_ae_89_e8_a3_85Plone_e7_ad_89_e4_ba_a7_e5_93_81/createform?page=CMFTopic" title="create this page">?</a>：查询集
+  5. DCWorkflow<a class="new" href="http://members.czug.org/plone/plonebook/X_e6_89_8b_e5_b7_a5_e5_ae_89_e8_a3_85Plone_e7_ad_89_e4_ba_a7_e5_93_81/createform?page=DCWorkflow" title="create this page">?</a>：工作流
+
+2. 下载解压缩Plone
+
+ Plone2包括如下产品::
+
+  1. CMFActions<a class="new" href="http://members.czug.org/plone/plonebook/X_e6_89_8b_e5_b7_a5_e5_ae_89_e8_a3_85Plone_e7_ad_89_e4_ba_a7_e5_93_81/createform?page=CMFActions" title="create this page">?</a>
+  2. BetreeFolder2<a class="new" href="http://members.czug.org/plone/plonebook/X_e6_89_8b_e5_b7_a5_e5_ae_89_e8_a3_85Plone_e7_ad_89_e4_ba_a7_e5_93_81/createform?page=BetreeFolder2" title="create this page">?</a>
+  3. CMFFormController<a class="new" href="http://members.czug.org/plone/plonebook/X_e6_89_8b_e5_b7_a5_e5_ae_89_e8_a3_85Plone_e7_ad_89_e4_ba_a7_e5_93_81/createform?page=CMFFormController" title="create this page">?</a>
+  4. CMFPlone<a class="new" href="http://members.czug.org/plone/plonebook/X_e6_89_8b_e5_b7_a5_e5_ae_89_e8_a3_85Plone_e7_ad_89_e4_ba_a7_e5_93_81/createform?page=CMFPlone" title="create this page">?</a>
+  5. CMFQuickInstallerTool<a class="new" href="http://members.czug.org/plone/plonebook/X_e6_89_8b_e5_b7_a5_e5_ae_89_e8_a3_85Plone_e7_ad_89_e4_ba_a7_e5_93_81/createform?page=CMFQuickInstallerTool" title="create this page">?</a>
+  6. ExternalEditor<a class="new" href="http://members.czug.org/plone/plonebook/X_e6_89_8b_e5_b7_a5_e5_ae_89_e8_a3_85Plone_e7_ad_89_e4_ba_a7_e5_93_81/createform?page=ExternalEditor" title="create this page">?</a>：外部编辑器
+  7. Formulator：
+  8. PlacelessTranslationService<a class="new" href="http://members.czug.org/plone/plonebook/X_e6_89_8b_e5_b7_a5_e5_ae_89_e8_a3_85Plone_e7_ad_89_e4_ba_a7_e5_93_81/createform?page=PlacelessTranslationService" title="create this page">?</a>
+
+3. 扩展产品
+
+ <a href="http://members.czug.org/plone/plonebook/CMFContentPanels" title="" style="background-color:;">CMFContentPanels</a>
+ 
+ <a href="http://members.czug.org/plone/plonebook/CMFBoard" title="" style="background-color:;">CMFBoard</a>
+
+ Zwiki

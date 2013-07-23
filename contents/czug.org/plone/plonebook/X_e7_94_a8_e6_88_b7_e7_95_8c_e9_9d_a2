@@ -1,0 +1,60 @@
+:作者: Alexander Limi
+:原文: <a href="http://plone.org/documentation/whatsnew/2.0/ui">http://plone.org/documentation/whatsnew/2.0/ui</a>
+:翻译: 赵玉勇
+:版本: $Revision: 1.5 $
+:版权: 
+
+.. contents:: 目录
+
+搜索词加亮显示
+==================================
+
+.. image:: <a href="http://plone.org/documentation/whatsnew/2.0/search-highlight.png">http://plone.org/documentation/whatsnew/2.0/search-highlight.png</a>
+
+当使用简单查询或高级查询功能时，在通过查询结果打开的文档内容显示页面中，指定的搜索文字将加亮显示，这样将使得用户更容易定位到需要查询的内容。
+
+
+使用内容描述作为提示信息
+==================================
+
+.. image:: <a href="http://plone.org/documentation/whatsnew/2.0/desc-tooltips.png">http://plone.org/documentation/whatsnew/2.0/desc-tooltips.png</a>
+
+在大部分的列表界面或者面板中，鼠标移动到每个内容条目上时会弹出其描述信息。
+
+形象的外部链接指示
+==================================
+
+.. image:: <a href="http://plone.org/documentation/whatsnew/2.0/link-indicators.png">http://plone.org/documentation/whatsnew/2.0/link-indicators.png</a>
+
+文档内容中的外部链接信息，在显示时系统会自动加上合适的图标，更加直观形象。
+
+任意查询支持RSS
+==================================
+
+.. image:: <a href="http://plone.org/documentation/whatsnew/2.0/rss-search.png">http://plone.org/documentation/whatsnew/2.0/rss-search.png</a>
+
+任意查询结果集都可以被作为RSS feed被联合发布。
+
+新的缺省列表界面
+==================================
+
+.. image:: <a href="http://plone.org/documentation/whatsnew/2.0/item-listing.png">http://plone.org/documentation/whatsnew/2.0/item-listing.png</a>
+
+文件夹下未创建缺省显示页面内容时，缺省的查看界面如上图，相比于以前版本中的表格形式，更加清晰、直观、易读。
+
+字体大小动态切换
+==================================
+
+.. image::  <a href="http://plone.org/documentation/whatsnew/2.0/fontsize.png">http://plone.org/documentation/whatsnew/2.0/fontsize.png</a>
+
+Plone站点中文字字体可以被随意切换改变，而不需要重新再次载入页面。字体切换调整（如图）功能可以调整整个站点内容的文字显示大小，所以你可以预先定义几个不同的CSS，例如为视力弱的用户提供高清晰度的风格。
+
+
+内容对象显示顺序调整
+==================================
+
+.. image:: <a href="http://plone.org/documentation/whatsnew/2.0/ordering.png">http://plone.org/documentation/whatsnew/2.0/ordering.png</a>
+
+无论是在导航树中还是文件夹清单界面中，内容的显示顺序是可以被调整的。通过点击文件夹内容界面中的上下箭头图标，用户可以设置内容的显示顺序。
+
+**下一节 [国际化&可访问性]<a class="new" href="http://members.czug.org/plone/plonebook/X_e7_94_a8_e6_88_b7_e7_95_8c_e9_9d_a2/createform?page=%E5%9B%BD%E9%99%85%E5%8C%96%26%E5%8F%AF%E8%AE%BF%E9%97%AE%E6%80%A7" title="create this page">?</a> >>>**

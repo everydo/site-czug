@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zope-asia-marketing"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "随着Zope日本公司的建立，包括CPS/ERP5在上海的展示，感觉亚洲的Zope市场开始活跃起来", 
+        "modified": "2004-09-12 03:31:26", 
+        "title": "亚洲的zope市场"
+    }
+}

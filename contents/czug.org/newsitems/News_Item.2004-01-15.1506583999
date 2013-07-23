@@ -1,0 +1,12 @@
+<p>详细参考<a href="http://www.cheimes.de/opensource/docs/plone-speedup">此文</a></p>
+<p>具体采用的优化方法包括：</p>
+
+<ol>
+<li> 改进plone中CMF的代码，使用cache加快skin文件的查找，如custom等目录。代价是：skin中的变化不会自动被应用，需要程序启动zope（以后会改为使用手动刷新的方式）</li>
+<li> 使用<a href="http://www.google.com/url?sa=U&start=1&q=http://psyco.sourceforge.net/&e=7872">psyco</a>(python的加速器)进行加速。代价是：占用更多的内存。</li>
+<li> 启动zope的时候，打开PYTHONOPTIMIZE=1的开关</li>
+
+</ol>
+<p>进行上述优化后，评测的结果是：</p>
+<p>最高提速500%!!</p>
+<p>Nice job !</p>

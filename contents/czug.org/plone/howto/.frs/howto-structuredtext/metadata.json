@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "howto-structuredtext"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "结构化文本规范", 
+        "modified": "2006-02-19 01:30:55", 
+        "title": "如何使用StructuredText"
+    }
+}

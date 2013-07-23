@@ -1,0 +1,378 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-4" class="anchor"/><p class="line867"><strong> First programs in <a href="/moin/PyQt4" class="nonexistent">PyQt4</a> toolkit </strong> <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/></p><p class="line862">::-- <a href="/moin/zhuyj">zhuyj</a> [2008-06-06 01:37:11] </p><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-6df5b2e9275e8b42d9ee8d9cdc453f5d402fa676">First programs in PyQt4 toolkit</a><ol><li><a href="#head-4af88db4f19f94ae126818aafab798beeb01702f">Simple example</a></li><li><a href="#head-763d787d12f81e2d5e303c7996640623d8ba7313">An application icon</a></li><li><a href="#head-f54e283a1464bcc877ddbe312853d536b8d0a261">Showing a tooltip</a></li><li><a
+href="#head-9a80319e8f9c7fd18dfca57999616de79c5808e0">Closing a window</a></li><li><a href="#head-aca7dc0d9921fde8d75a43950682e2f2358d0717">Message Box</a></li><li><a href="#head-69edfe98c2f5fc06af93ed155833262a4e8439f1">Centering window on the screen</a></li></ol></li></ol></div> <span id="line-7" class="anchor"/><span id="line-8" class="anchor"/><p class="line867">
+</p><h1 id="head-6df5b2e9275e8b42d9ee8d9cdc453f5d402fa676">1. First programs in PyQt4 toolkit</h1>
+<span id="line-9" class="anchor"/><span id="line-10" class="anchor"/><p class="line867"><em> In this sections we will learn some basic functionality. The explanation will be slow, as if we would talk to a child. The first steps of a child are awkward, so are the very first attempts of a newbie programmer. Remember, there are no stupid people. There are only lazy people and people, that are not persistent enough.</em> <span id="line-11" class="anchor"/><span id="line-12" class="anchor"/></p><ul><li style="list-style-type: none;">这一部分我们将学习一些基本的功能。讲解会很详细，就像我们和孩子说话一样。孩子迈出第一步总是笨拙的，初学者的第一次尝试也是类似的。记住，没有笨人，只有懒惰的和固执的人。  <span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></li></ul><p
+class="line867">
+</p><h2 id="head-4af88db4f19f94ae126818aafab798beeb01702f">1.1. Simple example</h2>
+<span id="line-15" class="anchor"/><p class="line867"><strong>简单的例子</strong> <span id="line-16" class="anchor"/><span id="line-17" class="anchor"/></p><p class="line867"><em>The code example is very simplistic. It only shows a small window. Yet we can do a lot with this window. We can resize it. Maximize it. Minimize it. This requires a lot of coding. Someone already coded this functionality. Because it repeats in most applications, there is no need to code it over again So it has been hidden from a programmer. <a href="/moin/PyQt">PyQt</a> is a high level toolkit. If we would code in a lower level toolkit, the following code example could easily have dozens of lines. </em> <span id="line-18" class="anchor"/><span id="line-19" class="anchor"/></p><ul><li
+style="list-style-type: none;">这段代码非常简单，它的作用只是显示一个小的窗口，然而你可以对这个窗口作很多事情。我们可以改变窗口尺寸，最大化、最小化窗口。这些需要大量的代码。有人已经将这些将这些功能编码了，因为这些在很多的程序中都是重复出现的，没有必要一次一次的重新写这些代码  <span id="line-20" class="anchor"/></li></ul><p class="line867"><span id="line-21" class="anchor"/><span id="line-22" class="anchor"/><span id="line-23" class="anchor"/><span id="line-24" class="anchor"/><span id="line-25" class="anchor"/><span id="line-26" class="anchor"/><span id="line-27" class="anchor"/><span id="line-28" class="anchor"/><span id="line-29" class="anchor"/><span id="line-30" class="anchor"/><span id="line-31" class="anchor"/><span id="line-32" class="anchor"/><span id="line-33"
+class="anchor"/><span id="line-34" class="anchor"/><span id="line-35" class="anchor"/><span id="line-36" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-31b0fb432561067a4028ac82b211f633a2912e3c_000\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-31b0fb432561067a4028ac82b211f633a2912e3c_000', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-31b0fb432561067a4028ac82b211f633a2912e3c_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span> <span class="Comment">#!/usr/bin/python</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   3 </span> <span class="Comment"># simple.py</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   5 </span> <span class="ResWord">import</span> <span class="ID">sys</span></span>
+<span class="line"><span class="LineNumber">   6 </span> <span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtGui</span></span>
+<span class="line"><span class="LineNumber">   7 </span></span>
+<span class="line"><span class="LineNumber">   8 </span> <span class="ID">app</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QApplication</span><span class="Operator">(</span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">argv</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   9 </span></span>
+<span class="line"><span class="LineNumber">  10 </span> <span class="ID">widget</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QWidget</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  11 </span> <span class="ID">widget</span><span class="Operator">.</span><span class="ID">resize</span><span class="Operator">(</span><span class="Number">250</span><span class="Operator">,</span> <span class="Number">150</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span> <span class="ID">widget</span><span class="Operator">.</span><span class="ID">setWindowTitle</span><span class="Operator">(</span><span class="String">'simple'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span> <span class="ID">widget</span><span class="Operator">.</span><span class="ID">show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span></span>
+<span class="line"><span class="LineNumber">  15 </span> <span class="ID">sys</span><span class="Operator">.</span><span class="ID">exit</span><span class="Operator">(</span><span class="ID">app</span><span class="Operator">.</span><span class="ID">exec_</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-37" class="anchor"/><p class="line867"><span id="line-38" class="anchor"/><span id="line-39" class="anchor"/><span id="line-40" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-da8ba13c903609bdff8d623833fb3d0658b24bf8_001\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-da8ba13c903609bdff8d623833fb3d0658b24bf8_001', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-da8ba13c903609bdff8d623833fb3d0658b24bf8_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span> <span class="ResWord">import</span> <span class="ID">sys</span></span>
+<span class="line"><span class="LineNumber">   2 </span> <span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtGui</span><span class="Text"/></span>
+</pre></div><span id="line-41" class="anchor"/><span id="line-42" class="anchor"/><p class="line867"><em> Here we provide the necessary imports. The basic GUI widgets are located in <a href="/moin/QtGui" class="nonexistent">QtGui</a> module.</em> <span id="line-43" class="anchor"/></p><ul><li style="list-style-type: none;">这里我们进行必须的引用。GUI基础插件在这里引入。  <span id="line-44" class="anchor"/></li></ul><p class="line867"><span id="line-45" class="anchor"/></p><pre>app = QtGui.QApplication(sys.argv)
+<span id="line-46" class="anchor"/></pre><span id="line-47" class="anchor"/><span id="line-48" class="anchor"/><p class="line867"><em> Every <a href="/moin/PyQt4" class="nonexistent">PyQt4</a> application must create an application object. The application object is located in the <a href="/moin/QtGui" class="nonexistent">QtGui</a> module. The sys.argv parameter is a list of arguments from the command line. Python scripts can be run from the shell. It is a way, how we can control the startup of our scripts. </em> <span id="line-49" class="anchor"/><span id="line-50"
+class="anchor"/></p><ul><li style="list-style-type: none;"><p class="line862">每一个PyQT4应用必须创建一个应用对象。应用对象放在<a href="/moin/QtGui" class="nonexistent">QtGui</a>模块中。sys.argv参数是从命令行返回的一个参数列表。Python脚本可以从shell来运行。这是一个我们控制我们的脚本启动方式的方法。  <span id="line-51" class="anchor"/><span id="line-52" class="anchor"/></p></li></ul><p class="line867"><span id="line-53" class="anchor"/></p><pre> widget = QtGui.QWidget()
+<span id="line-54" class="anchor"/></pre><span id="line-55" class="anchor"/><p class="line867"><em> The QWidget widget is the base class of all user interface objects in <a href="/moin/PyQt4" class="nonexistent">PyQt4</a>. We provide the default constructor for QWidget. The default constructor has no parent. A widget with no parent is called a window. </em> <span id="line-56" class="anchor"/></p><ul><li style="list-style-type: none;">QWidget插件是PyQT4中所有用户接口对象的基类。我们为QWidget提供了缺省的构造程序。缺省的构造程序没有父类。一个没有父类的插件叫做一个窗口。  <span
+id="line-57" class="anchor"/></li></ul><p class="line867"><span id="line-58" class="anchor"/></p><pre> widget.resize(250, 150)
+<span id="line-59" class="anchor"/></pre><span id="line-60" class="anchor"/><span id="line-61" class="anchor"/><p class="line867"><em> The resize() method resizes the widget. It is 250px wide and 150px high.</em> <span id="line-62" class="anchor"/></p><ul><li style="list-style-type: none;">resize()方法可以调整插件的尺寸。这里是250px宽，150px高。  <span id="line-63" class="anchor"/></li></ul><p class="line867"><span id="line-64" class="anchor"/></p><pre> widget.setWindowTitle('simple')
+<span id="line-65" class="anchor"/></pre><span id="line-66" class="anchor"/><p class="line867"><em> Here we set the title for our window. The title is shown in the titlebar.</em> <span id="line-67" class="anchor"/></p><ul><li style="list-style-type: none;">这里我们指定我们窗口的标题。标题在标题栏里显示。  <span id="line-68" class="anchor"/></li></ul><p class="line867"><span id="line-69" class="anchor"/></p><pre> widget.show()
+<span id="line-70" class="anchor"/></pre><span id="line-71" class="anchor"/><p class="line867"><em> The show() method displays the widget on the screen. </em> <span id="line-72" class="anchor"/></p><ul><li style="list-style-type: none;">show() 方法将插件显示在屏幕上。  <span id="line-73" class="anchor"/></li></ul><p class="line867"><span id="line-74" class="anchor"/></p><pre> sys.exit(app.exec_())
+<span id="line-75" class="anchor"/></pre><span id="line-76" class="anchor"/><p class="line867"><em> Finally, we enter the mainloop of the application. The event handling starts from this point. The mainloop receives events from the window system and dispatches them to the application widgets. The mainloop ends, if we call the exit() method or the main widget is destroyed. The sys.exit() method ensures a clean exit. The environment will be informed, how the application ended.</em> <span id="line-77" class="anchor"/></p><ul><li style="list-style-type:
+none;">最终，我们进入应用的主循环。事件处理从这里开始。主循环从窗口系统接受事件并把他们分发到应用插件中。当我们调用exit()方法或者主插件被销毁时，主循环结束。sys.exit()方法确保一个干净的结束。环境参数中可以体现出应用程序是如何结束的。  <span id="line-78" class="anchor"/></li></ul><p class="line867"><em> You wonder why the exec_() method has the underscore? Everything has a meaning. This is obviously because the exec is a python keyword. And thus, exec_() was used instead.</em> <span id="line-79" class="anchor"/></p><ul><li style="list-style-type:
+none;">你可能觉得奇怪为什么exec_()方法带下划线？每件事情都是有原因的。这显然是因为exec是一个python的关键字。所以，就用exec_()来替代了。  <span id="line-80" class="anchor"/><span id="line-81" class="anchor"/><span id="line-82" class="anchor"/>Simple  <span id="line-83" class="anchor"/></li></ul><p class="line867"><img title="attachment:simple.jpg" src="/moin/First_Programs_%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%A8%8B%E5%BA%8F?action=AttachFile&amp;do=get&amp;target=simple.jpg" class="attachment"/> <span id="line-84" class="anchor"/>Figure: Simple <span id="line-85" class="anchor"/><span
+id="line-86" class="anchor"/><span id="line-87" class="anchor"/><span id="line-88" class="anchor"/></p><p class="line867">
+</p><h2 id="head-763d787d12f81e2d5e303c7996640623d8ba7313">1.2. An application icon</h2>
+<span id="line-89" class="anchor"/><p class="line867"><em>The application icon is a small image, which is usually displayed in the top left corner of the titlebar. In the following example we will show, how we do it in <a href="/moin/PyQt4" class="nonexistent">PyQt4</a>. We will also introduce some new methods.</em> <span id="line-90" class="anchor"/></p><ul><li style="list-style-type: none;">程序图标是一个经常显示在标题栏顶端左面的小的图片。下面的例子我们将要展示在PyQT4里我们是如何作的。我们也会介绍一些新的方法。  <span id="line-91" class="anchor"/></li></ul><p class="line867"><span
+id="line-92" class="anchor"/><span id="line-93" class="anchor"/><span id="line-94" class="anchor"/><span id="line-95" class="anchor"/><span id="line-96" class="anchor"/><span id="line-97" class="anchor"/><span id="line-98" class="anchor"/><span id="line-99" class="anchor"/><span id="line-100" class="anchor"/><span id="line-101" class="anchor"/><span id="line-102" class="anchor"/><span id="line-103" class="anchor"/><span id="line-104" class="anchor"/><span id="line-105" class="anchor"/><span id="line-106" class="anchor"/><span id="line-107" class="anchor"/><span id="line-108"
+class="anchor"/><span id="line-109" class="anchor"/><span id="line-110" class="anchor"/><span id="line-111" class="anchor"/><span id="line-112" class="anchor"/><span id="line-113" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-8ec9d76676fc6f9d6911156d231052890dd62756_002\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-8ec9d76676fc6f9d6911156d231052890dd62756_002', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-8ec9d76676fc6f9d6911156d231052890dd62756_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#!/usr/bin/python</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"># icon.py</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">import</span> <span class="ID">sys</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtGui</span></span>
+<span class="line"><span class="LineNumber">   7 </span></span>
+<span class="line"><span class="LineNumber">   8 </span></span>
+<span class="line"><span class="LineNumber">   9 </span><span class="ResWord">class</span> <span class="ID">Icon</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QWidget</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  10 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">=</span><span class="ID">None</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QWidget</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setGeometry</span><span class="Operator">(</span><span class="Number">300</span><span class="Operator">,</span> <span class="Number">300</span><span class="Operator">,</span> <span class="Number">250</span><span class="Operator">,</span> <span class="Number">150</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setWindowTitle</span><span class="Operator">(</span><span class="String">'Icon'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setWindowIcon</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QIcon</span><span class="Operator">(</span><span class="String">'icons/web.png'</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span></span>
+<span class="line"><span class="LineNumber">  17 </span></span>
+<span class="line"><span class="LineNumber">  18 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QApplication</span><span class="Operator">(</span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">argv</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span><span class="ID">icon</span> <span class="Operator">=</span> <span class="ID">Icon</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span><span class="ID">icon</span><span class="Operator">.</span><span class="ID">show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">exit</span><span class="Operator">(</span><span class="ID">app</span><span class="Operator">.</span><span class="ID">exec_</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-114" class="anchor"/><p class="line867"><em>The previous example was coded in a procedural style. Python programming language supports both procedural and object oriented programming styles. Programming in <a href="/moin/PyQt4" class="nonexistent">PyQt4</a> means programming in OOP. </em> <span id="line-115" class="anchor"/></p><ul><li style="list-style-type: none;">上面的例子是函数风格。Python程序语言支持面向函数和面向对象两种风格。PyQT4中变成意味着面向对象程序设计。  <span id="line-116" class="anchor"/></li></ul><p class="line867"><span
+id="line-117" class="anchor"/></p><pre> class Icon(QtGui.QWidget):
+<span id="line-118" class="anchor"/>     def __init__(self, parent=None):
+<span id="line-119" class="anchor"/>         QtGui.QWidget.__init__(self, parent)
+<span id="line-120" class="anchor"/></pre><span id="line-121" class="anchor"/><p class="line867"><em> The three most important things in object oriented programming are classes, data and methods. Here we create a new class called Icon. The Icon class inherits from <a href="/moin/QtGui" class="nonexistent">QtGui</a>.QWidget class. This means, that we must call two constructors. The first one for the Icon class and the second one for the inherited class. </em> <span id="line-122" class="anchor"/></p><ul><li style="list-style-type: none;"><p
+class="line862">面向对象程序设计中三个最重要的事情是类，数据和方法。这里我们创建一个新类叫Icon。Icon类继承自<a href="/moin/QtGui" class="nonexistent">QtGui</a>.Qwidget类。这意味着，我们必须调用两次初始化。一次是Icon类的，另一次是父类的。  <span id="line-123" class="anchor"/></p></li></ul><p class="line867"><span id="line-124" class="anchor"/></p><pre> self.setGeometry(300, 300, 250, 150)
+<span id="line-125" class="anchor"/> self.setWindowTitle('Icon')
+<span id="line-126" class="anchor"/> self.setWindowIcon(QtGui.QIcon('icons/web.png'))
+<span id="line-127" class="anchor"/></pre><span id="line-128" class="anchor"/><p class="line867"><em> All three classes have been inherited from the <a href="/moin/QtGui" class="nonexistent">QtGui</a>.QWidget class. The setGeometry() does two things. It locates the window on the screen and sets the size of the window. The first two parameters are the x and y positions of the window. The third is the width and the fourth is the height of the window. The last method sets the application icon. To do this, we have created a QIcon object. The QIcon receives the path to our
+icon to be displayed.</em> <span id="line-129" class="anchor"/></p><ul><li style="list-style-type: none;"><p class="line862">所有的三个类都从<a href="/moin/QtGui" class="nonexistent">QtGui</a>.QWidget类继承。setGeometry()函数做两件事情。它在屏幕上定位窗口，设置窗口尺寸。头两个参数是窗口的x和y位置。第三个是窗口的宽度，第四个是高度。最后一个方法设置程序的图标。为了做到这样，我们创建了一个QIcon对象。QIcon 接受我们要显示的图标文件的路径。  <span id="line-130" class="anchor"/><span id="line-131" class="anchor"/><span id="line-132" class="anchor"/>Icon  <span id="line-133"
+class="anchor"/></p></li></ul><p class="line867"><img title="attachment:icon.jpg" src="/moin/First_Programs_%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%A8%8B%E5%BA%8F?action=AttachFile&amp;do=get&amp;target=icon.jpg" class="attachment"/> <span id="line-134" class="anchor"/>Figure: Icon <span id="line-135" class="anchor"/>
+</p><h2 id="head-f54e283a1464bcc877ddbe312853d536b8d0a261">1.3. Showing a tooltip</h2>
+<span id="line-136" class="anchor"/><p class="line867"><em> We can provide a balloon help for any of our widgets. </em> <span id="line-137" class="anchor"/></p><ul><li style="list-style-type: none;">我们可以为我们的组件提供浮动帮助。  <span id="line-138" class="anchor"/></li></ul><p class="line867"><span id="line-139" class="anchor"/><span id="line-140" class="anchor"/><span id="line-141" class="anchor"/><span id="line-142" class="anchor"/><span id="line-143" class="anchor"/><span id="line-144" class="anchor"/><span id="line-145" class="anchor"/><span id="line-146"
+class="anchor"/><span id="line-147" class="anchor"/><span id="line-148" class="anchor"/><span id="line-149" class="anchor"/><span id="line-150" class="anchor"/><span id="line-151" class="anchor"/><span id="line-152" class="anchor"/><span id="line-153" class="anchor"/><span id="line-154" class="anchor"/><span id="line-155" class="anchor"/><span id="line-156" class="anchor"/><span id="line-157" class="anchor"/><span id="line-158" class="anchor"/><span id="line-159" class="anchor"/><span id="line-160" class="anchor"/><span id="line-161" class="anchor"/><span id="line-162"
+class="anchor"/><span id="line-163" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-9759b16c27b891fec357facac20fe86319aea79e_003\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-9759b16c27b891fec357facac20fe86319aea79e_003', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-9759b16c27b891fec357facac20fe86319aea79e_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#!/usr/bin/python</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"># tooltip.py</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">import</span> <span class="ID">sys</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtGui</span></span>
+<span class="line"><span class="LineNumber">   7 </span><span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtCore</span></span>
+<span class="line"><span class="LineNumber">   8 </span></span>
+<span class="line"><span class="LineNumber">   9 </span></span>
+<span class="line"><span class="LineNumber">  10 </span><span class="ResWord">class</span> <span class="ID">Tooltip</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QWidget</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  11 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">=</span><span class="ID">None</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  12 </span>        <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QWidget</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  13 </span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setGeometry</span><span class="Operator">(</span><span class="Number">300</span><span class="Operator">,</span> <span class="Number">300</span><span class="Operator">,</span> <span class="Number">250</span><span class="Operator">,</span> <span class="Number">150</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setWindowTitle</span><span class="Operator">(</span><span class="String">'Tooltip'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setToolTip</span><span class="Operator">(</span><span class="String">'This is a <b>QWidget</b> widget'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span>        <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QToolTip</span><span class="Operator">.</span><span class="ID">setFont</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QFont</span><span class="Operator">(</span><span class="String">'OldEnglish'</span><span class="Operator">,</span> <span class="Number">10</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span></span>
+<span class="line"><span class="LineNumber">  20 </span></span>
+<span class="line"><span class="LineNumber">  21 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QApplication</span><span class="Operator">(</span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">argv</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  22 </span><span class="ID">tooltip</span> <span class="Operator">=</span> <span class="ID">Tooltip</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  23 </span><span class="ID">tooltip</span><span class="Operator">.</span><span class="ID">show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  24 </span><span class="ID">app</span><span class="Operator">.</span><span class="ID">exec_</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-164" class="anchor"/><p class="line867"><em> In this example, we show a tooltip for a QWidget widget. </em> <span id="line-165" class="anchor"/></p><ul><li style="list-style-type: none;">这个例子里，我们为QWidget组件显示工具提示。  <span id="line-166" class="anchor"/></li></ul><p class="line867"><span id="line-167" class="anchor"/></p><pre> self.setToolTip('This is a <b>QWidget</b> widget')
+<span id="line-168" class="anchor"/></pre><span id="line-169" class="anchor"/><p class="line867"><em> To create a tooltip, we call the setTooltip() method. We can use rich text formatting. </em> <span id="line-170" class="anchor"/></p><ul><li style="list-style-type: none;">为了创建一个tooltip，我们调用setTooltip() 方法。我们可以利用rich文本格式化。  <span id="line-171" class="anchor"/></li></ul><p class="line867"><span id="line-172" class="anchor"/></p><pre> QtGui.QToolTip.setFont(QtGui.QFont('OldEnglish', 10))
+<span id="line-173" class="anchor"/></pre><span id="line-174" class="anchor"/><p class="line867"><em> Because the default QToolTip font looks bad, we change it.</em> <span id="line-175" class="anchor"/></p><ul><li style="list-style-type: none;">因为缺省的QToolTip字体看起来很糟，我们换一个。  <span id="line-176" class="anchor"/><span id="line-177" class="anchor"/><span id="line-178" class="anchor"/>Tooltip  <span id="line-179" class="anchor"/></li></ul><p class="line867"><img title="attachment:tooltip.jpg"
+src="/moin/First_Programs_%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%A8%8B%E5%BA%8F?action=AttachFile&amp;do=get&amp;target=tooltip.jpg" class="attachment"/> <span id="line-180" class="anchor"/>Figure: Tooltip <span id="line-181" class="anchor"/><span id="line-182" class="anchor"/></p><p class="line867">
+</p><h2 id="head-9a80319e8f9c7fd18dfca57999616de79c5808e0">1.4. Closing a window</h2>
+<span id="line-183" class="anchor"/><p class="line867"><strong>关闭窗口</strong> <span id="line-184" class="anchor"/><em> The obvious way to how to close a window is to click on the x mark on the titlebar. In the next example, we will show, how we can programatically close our window. We will briefly touch signals and slots. </em> <span id="line-185" class="anchor"/></p><ul><li style="list-style-type: none;">关闭一个窗口最常用的方法是点击标题栏上的x标志。在下一个例子里，我们将会展示我们如何编程来关闭窗口。我们还会简单接触信号和槽的概念。  <span
+id="line-186" class="anchor"/></li></ul><p class="line867"><em> The following is the constructor of a QPushButton, that we will use in our example.</em> <span id="line-187" class="anchor"/></p><ul><li style="list-style-type: none;">下面的是一个QPushButton的构造程序，我们将会在我们的例子中用到它。  <span id="line-188" class="anchor"/></li></ul><p class="line867"><span id="line-189" class="anchor"/></p><pre>   QPushButton(string text, QWidget parent = None)
+<span id="line-190" class="anchor"/></pre><span id="line-191" class="anchor"/><p class="line867"><em> The text parameter is a text that will be displayed on the button. The parent is the ancestor, onto which we place our button. In our case it is QWidget. </em> <span id="line-192" class="anchor"/></p><ul><li style="list-style-type: none;">text参数是将要在按钮上显示的文字。parent是我们放置按钮的父窗口，这里是 QWidget。 <span id="line-193" class="anchor"/></li></ul><p class="line867"><span id="line-194" class="anchor"/><span id="line-195"
+class="anchor"/><span id="line-196" class="anchor"/><span id="line-197" class="anchor"/><span id="line-198" class="anchor"/><span id="line-199" class="anchor"/><span id="line-200" class="anchor"/><span id="line-201" class="anchor"/><span id="line-202" class="anchor"/><span id="line-203" class="anchor"/><span id="line-204" class="anchor"/><span id="line-205" class="anchor"/><span id="line-206" class="anchor"/><span id="line-207" class="anchor"/><span id="line-208" class="anchor"/><span id="line-209" class="anchor"/><span id="line-210"
+class="anchor"/><span id="line-211" class="anchor"/><span id="line-212" class="anchor"/><span id="line-213" class="anchor"/><span id="line-214" class="anchor"/><span id="line-215" class="anchor"/><span id="line-216" class="anchor"/><span id="line-217" class="anchor"/><span id="line-218" class="anchor"/><span id="line-219" class="anchor"/><span id="line-220" class="anchor"/><span id="line-221" class="anchor"/><span id="line-222" class="anchor"/><span id="line-223" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-4561c5099f3bbe6bedad5203121791f56b1cdfbf_004\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-4561c5099f3bbe6bedad5203121791f56b1cdfbf_004', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-4561c5099f3bbe6bedad5203121791f56b1cdfbf_004" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#!/usr/bin/python</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"># quitbutton.py</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">import</span> <span class="ID">sys</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtGui</span><span class="Operator">,</span> <span class="ID">QtCore</span></span>
+<span class="line"><span class="LineNumber">   7 </span></span>
+<span class="line"><span class="LineNumber">   8 </span></span>
+<span class="line"><span class="LineNumber">   9 </span><span class="ResWord">class</span> <span class="ID">QuitButton</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QWidget</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  10 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">=</span><span class="ID">None</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QWidget</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setGeometry</span><span class="Operator">(</span><span class="Number">300</span><span class="Operator">,</span> <span class="Number">300</span><span class="Operator">,</span> <span class="Number">250</span><span class="Operator">,</span> <span class="Number">150</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setWindowTitle</span><span class="Operator">(</span><span class="String">'Icon'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span></span>
+<span class="line"><span class="LineNumber">  16 </span>        <span class="ID">quit</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QPushButton</span><span class="Operator">(</span><span class="String">'Close'</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  17 </span>        <span class="ID">quit</span><span class="Operator">.</span><span class="ID">setGeometry</span><span class="Operator">(</span><span class="Number">10</span><span class="Operator">,</span> <span class="Number">10</span><span class="Operator">,</span> <span class="Number">60</span><span class="Operator">,</span> <span class="Number">35</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  18 </span></span>
+<span class="line"><span class="LineNumber">  19 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">connect</span><span class="Operator">(</span><span class="ID">quit</span><span class="Operator">,</span> <span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">SIGNAL</span><span class="Operator">(</span><span class="String">'clicked()'</span><span class="Operator">)</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  20 </span>            <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">qApp</span><span class="Operator">,</span> <span class="ID">QtCore</span><span class="Operator">.</span><span class="ID">SLOT</span><span class="Operator">(</span><span class="String">'quit()'</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span></span>
+<span class="line"><span class="LineNumber">  22 </span></span>
+<span class="line"><span class="LineNumber">  23 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QApplication</span><span class="Operator">(</span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">argv</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  24 </span><span class="ID">qb</span> <span class="Operator">=</span> <span class="ID">QuitButton</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  25 </span><span class="ID">qb</span><span class="Operator">.</span><span class="ID">show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  26 </span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">exit</span><span class="Operator">(</span><span class="ID">app</span><span class="Operator">.</span><span class="ID">exec_</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  27 </span></span>
+<span class="line"><span class="LineNumber">  28 </span> <span class="ID">quit</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QPushButton</span><span class="Operator">(</span><span class="String">'Close'</span><span class="Operator">,</span> <span class="ID">self</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  29 </span> <span class="ID">quit</span><span class="Operator">.</span><span class="ID">setGeometry</span><span class="Operator">(</span><span class="Number">10</span><span class="Operator">,</span> <span class="Number">10</span><span class="Operator">,</span> <span class="Number">60</span><span class="Operator">,</span> <span class="Number">35</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-224" class="anchor"/><p class="line867"><em> We create a push button and position it on the QWidget just like we have positioned the QWidget on the screen.</em> <span id="line-225" class="anchor"/></p><ul><li style="list-style-type: none;">我们生成了一个按钮并把它显示在了QWidget上，就像我们把QWidget显示到屏幕上一样。  <span id="line-226" class="anchor"/></li></ul><p class="line867"><span id="line-227" class="anchor"/></p><pre> self.connect(quit, QtCore.SIGNAL('clicked()'),
+<span id="line-228" class="anchor"/>     QtGui.qApp, QtCore.SLOT('quit()'))
+<span id="line-229" class="anchor"/></pre><span id="line-230" class="anchor"/><p class="line867"><em> The event processing system in <a href="/moin/PyQt4" class="nonexistent">PyQt4</a> is built with the signal & slot mechanism. If we click on the button, the signal clicked() is emitted. The slot can be a <a href="/moin/PyQt">PyQt</a> slot or any python callable. The <a href="/moin/QtCore" class="nonexistent">QtCore</a>.QObject.connect() method connects signals with slots. In our case the slot is a predefined <a href="/moin/PyQt">PyQt</a>
+quit() slot. The communication is done between two objects. The sender and the receiver. The sender is the push button, the receiver is the application object. </em> <span id="line-231" class="anchor"/></p><ul><li style="list-style-type: none;"><p class="line862">PyQT4的事件处理系统由信号和插槽组成。如果我们点击按钮，就会送出clicked()信号。插槽可以是PyQT槽或者任何python调用。<a href="/moin/QtCore" class="nonexistent">QtCore</a>.QObject.connect()
+方法将信号和槽连接起来。于是发送者和接收者两个对象间就可以通信了。发送者是按钮，接收者是应用对象。  <span id="line-232" class="anchor"/><span id="line-233" class="anchor"/>quit button  <span id="line-234" class="anchor"/></p></li></ul><p class="line867"><img title="attachment:quitbutton.jpg" src="/moin/First_Programs_%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%A8%8B%E5%BA%8F?action=AttachFile&amp;do=get&amp;target=quitbutton.jpg" class="attachment"/> <span id="line-235" class="anchor"/>Figure: quit button <span id="line-236" class="anchor"/>
+</p><h2 id="head-aca7dc0d9921fde8d75a43950682e2f2358d0717">1.5. Message Box</h2>
+<span id="line-237" class="anchor"/><p class="line867"><em> By default, if we click on the x button on the titlebar, the QWidget is closed. Sometimes we want to modify this default behaviour. For example, if we have a file opened in an editor to which we did some changes. We show a message box to confirm the action.</em> <span id="line-238" class="anchor"/></p><ul><li style="list-style-type:
+none;">缺省的我们点击标题栏上的x按钮，QWidget就退出了，有时我们想改变缺省的行为。比如，如果我们的编辑器里有一个修改过的文件，我们需要显示一个对话框来确认关闭的操作。  <span id="line-239" class="anchor"/></li></ul><p class="line867"><span id="line-240" class="anchor"/><span id="line-241" class="anchor"/><span id="line-242" class="anchor"/><span id="line-243" class="anchor"/><span id="line-244" class="anchor"/><span id="line-245" class="anchor"/><span id="line-246" class="anchor"/><span id="line-247" class="anchor"/><span id="line-248"
+class="anchor"/><span id="line-249" class="anchor"/><span id="line-250" class="anchor"/><span id="line-251" class="anchor"/><span id="line-252" class="anchor"/><span id="line-253" class="anchor"/><span id="line-254" class="anchor"/><span id="line-255" class="anchor"/><span id="line-256" class="anchor"/><span id="line-257" class="anchor"/><span id="line-258" class="anchor"/><span id="line-259" class="anchor"/><span id="line-260" class="anchor"/><span id="line-261" class="anchor"/><span id="line-262" class="anchor"/><span id="line-263"
+class="anchor"/><span id="line-264" class="anchor"/><span id="line-265" class="anchor"/><span id="line-266" class="anchor"/><span id="line-267" class="anchor"/><span id="line-268" class="anchor"/><span id="line-269" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-b1c8a4e25c20a267fac9ff393910cdbe1ec52eae_005\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-b1c8a4e25c20a267fac9ff393910cdbe1ec52eae_005', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-b1c8a4e25c20a267fac9ff393910cdbe1ec52eae_005" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#!/usr/bin/python</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"># messagebox.py</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">import</span> <span class="ID">sys</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtGui</span></span>
+<span class="line"><span class="LineNumber">   7 </span></span>
+<span class="line"><span class="LineNumber">   8 </span></span>
+<span class="line"><span class="LineNumber">   9 </span><span class="ResWord">class</span> <span class="ID">MessageBox</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QWidget</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  10 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">=</span><span class="ID">None</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QWidget</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setGeometry</span><span class="Operator">(</span><span class="Number">300</span><span class="Operator">,</span> <span class="Number">300</span><span class="Operator">,</span> <span class="Number">250</span><span class="Operator">,</span> <span class="Number">150</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setWindowTitle</span><span class="Operator">(</span><span class="String">'message box'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span></span>
+<span class="line"><span class="LineNumber">  16 </span></span>
+<span class="line"><span class="LineNumber">  17 </span>    <span class="ResWord">def</span> <span class="ID">closeEvent</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">event</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  18 </span>        <span class="ID">reply</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QMessageBox</span><span class="Operator">.</span><span class="ID">question</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="String">'Message'</span><span class="Operator">,</span></span>
+<span class="line"><span class="LineNumber">  19 </span>            <span class="String">"Are you sure to quit?"</span><span class="Operator">,</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QMessageBox</span><span class="Operator">.</span><span class="ID">Yes</span><span class="Operator">,</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QMessageBox</span><span class="Operator">.</span><span class="ID">No</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span></span>
+<span class="line"><span class="LineNumber">  21 </span>        <span class="ResWord">if</span> <span class="ID">reply</span> <span class="Operator">==</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QMessageBox</span><span class="Operator">.</span><span class="ID">Yes</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  22 </span>            <span class="ID">event</span><span class="Operator">.</span><span class="ID">accept</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  23 </span>        <span class="ResWord">else</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  24 </span>            <span class="ID">event</span><span class="Operator">.</span><span class="ID">ignore</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  25 </span></span>
+<span class="line"><span class="LineNumber">  26 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QApplication</span><span class="Operator">(</span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">argv</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  27 </span><span class="ID">qb</span> <span class="Operator">=</span> <span class="ID">MessageBox</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  28 </span><span class="ID">qb</span><span class="Operator">.</span><span class="ID">show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  29 </span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">exit</span><span class="Operator">(</span><span class="ID">app</span><span class="Operator">.</span><span class="ID">exec_</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-270" class="anchor"/><p class="line867"><em> If we close the QWidget, the QCloseEvent is generated. To modify the widget behaviour we need to reimplement the closeEvent() event handler.</em> <span id="line-271" class="anchor"/></p><ul><li style="list-style-type: none;">如果我们关闭QWidget，就会产生QCloseEvent事件。为了改变widget的行为，我们需要改变closeEvent()事件的处理。  <span id="line-272" class="anchor"/></li></ul><p class="line867"><span id="line-273" class="anchor"/></p><pre> reply =
+QtGui.QMessageBox.question(self, 'Message',
+<span id="line-274" class="anchor"/>     "Are you sure to quit?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+<span id="line-275" class="anchor"/></pre><span id="line-276" class="anchor"/><p class="line867"><em>We show a message box with two buttons. Yes and No. The first string appears on the titlebar. The second string is the message text displayed by the dialog. The return value is stored in the reply variable.</em> <span id="line-277" class="anchor"/></p><ul><li style="list-style-type: none;">我们显示一个有Yes和No两个按钮的提示框。第一个串显示在标题栏上。第二个串是对话框的信息提示。返回值保存在返回变量中。  <span
+id="line-278" class="anchor"/></li></ul><p class="line867"><span id="line-279" class="anchor"/></p><pre> if reply == QtGui.QMessageBox.Yes:
+<span id="line-280" class="anchor"/>     event.accept()
+<span id="line-281" class="anchor"/> else:
+<span id="line-282" class="anchor"/>    event.ignore()
+<span id="line-283" class="anchor"/></pre><span id="line-284" class="anchor"/><p class="line867"><em>Here we test the return value. If we clicked Yes button, we accept the event which leads to the closure of the widget and to the termination of the application. Otherwise we ignore the close event.</em> <span id="line-285" class="anchor"/></p><ul><li style="list-style-type: none;">这里我们测试返回值。如果点击了Yes按钮，我们就接受关闭widget并且退出程序的事件。否则我们就忽略关闭事件。  <span id="line-286"
+class="anchor"/><span id="line-287" class="anchor"/><span id="line-288" class="anchor"/>message box  <span id="line-289" class="anchor"/></li></ul><p class="line867"><img title="attachment:messagebox.jpg" src="/moin/First_Programs_%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%A8%8B%E5%BA%8F?action=AttachFile&amp;do=get&amp;target=messagebox.jpg" class="attachment"/> <span id="line-290" class="anchor"/>Figure: message box <span id="line-291" class="anchor"/><span id="line-292" class="anchor"/></p><p class="line867">
+</p><h2 id="head-69edfe98c2f5fc06af93ed155833262a4e8439f1">1.6. Centering window on the screen</h2>
+<span id="line-293" class="anchor"/><p class="line867"><em> The following script shows, how we can center a window on the desktop screen. </em> <span id="line-294" class="anchor"/></p><ul><li style="list-style-type: none;">下面的脚本显示了如何将一个窗口放到桌面的正中。  <span id="line-295" class="anchor"/></li></ul><p class="line867"><span id="line-296" class="anchor"/><span id="line-297" class="anchor"/><span id="line-298" class="anchor"/><span id="line-299" class="anchor"/><span id="line-300" class="anchor"/><span
+id="line-301" class="anchor"/><span id="line-302" class="anchor"/><span id="line-303" class="anchor"/><span id="line-304" class="anchor"/><span id="line-305" class="anchor"/><span id="line-306" class="anchor"/><span id="line-307" class="anchor"/><span id="line-308" class="anchor"/><span id="line-309" class="anchor"/><span id="line-310" class="anchor"/><span id="line-311" class="anchor"/><span id="line-312" class="anchor"/><span id="line-313" class="anchor"/><span id="line-314" class="anchor"/><span id="line-315"
+class="anchor"/><span id="line-316" class="anchor"/><span id="line-317" class="anchor"/><span id="line-318" class="anchor"/><span id="line-319" class="anchor"/><span id="line-320" class="anchor"/><span id="line-321" class="anchor"/><span id="line-322" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-9de146e7197f80be3652c6c0a323034f03cba72c_006\', 1, 1);" \
+class="codenumbers">切换行号显示<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-9de146e7197f80be3652c6c0a323034f03cba72c_006', 1, 1);" href="#">切换行号显示</a>
+<pre lang="en" id="CA-9de146e7197f80be3652c6c0a323034f03cba72c_006" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment">#!/usr/bin/python</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"># center.py</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">import</span> <span class="ID">sys</span></span>
+<span class="line"><span class="LineNumber">   6 </span><span class="ResWord">from</span> <span class="ID">PyQt4</span> <span class="ResWord">import</span> <span class="ID">QtGui</span></span>
+<span class="line"><span class="LineNumber">   7 </span></span>
+<span class="line"><span class="LineNumber">   8 </span></span>
+<span class="line"><span class="LineNumber">   9 </span><span class="ResWord">class</span> <span class="ID">Center</span><span class="Operator">(</span><span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QWidget</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  10 </span>    <span class="ResWord">def</span> <span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">=</span><span class="ID">None</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  11 </span>        <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QWidget</span><span class="Operator">.</span><span class="ID">__init__</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">,</span> <span class="ID">parent</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  12 </span></span>
+<span class="line"><span class="LineNumber">  13 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">setWindowTitle</span><span class="Operator">(</span><span class="String">'center'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  14 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">resize</span><span class="Operator">(</span><span class="Number">250</span><span class="Operator">,</span> <span class="Number">150</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  15 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">center</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  16 </span></span>
+<span class="line"><span class="LineNumber">  17 </span>    <span class="ResWord">def</span> <span class="ID">center</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">  18 </span>        <span class="ID">screen</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QDesktopWidget</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">.</span><span class="ID">screenGeometry</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  19 </span>        <span class="ID">size</span> <span class="Operator">=</span>  <span class="ID">self</span><span class="Operator">.</span><span class="ID">geometry</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  20 </span>        <span class="ID">self</span><span class="Operator">.</span><span class="ID">move</span><span class="Operator">(</span><span class="Operator">(</span><span class="ID">screen</span><span class="Operator">.</span><span class="ID">width</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">-</span><span class="ID">size</span><span class="Operator">.</span><span class="ID">width</span><span
+class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span><span class="Operator">/</span><span class="Number">2</span><span class="Operator">,</span> <span class="Operator">(</span><span class="ID">screen</span><span class="Operator">.</span><span class="ID">height</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">-</span><span class="ID">size</span><span class="Operator">.</span><span class="ID">height</span><span
+class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span><span class="Operator">/</span><span class="Number">2</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  21 </span></span>
+<span class="line"><span class="LineNumber">  22 </span></span>
+<span class="line"><span class="LineNumber">  23 </span><span class="ID">app</span> <span class="Operator">=</span> <span class="ID">QtGui</span><span class="Operator">.</span><span class="ID">QApplication</span><span class="Operator">(</span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">argv</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  24 </span><span class="ID">qb</span> <span class="Operator">=</span> <span class="ID">Center</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  25 </span><span class="ID">qb</span><span class="Operator">.</span><span class="ID">show</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">  26 </span><span class="ID">sys</span><span class="Operator">.</span><span class="ID">exit</span><span class="Operator">(</span><span class="ID">app</span><span class="Operator">.</span><span class="ID">exec_</span><span class="Operator">(</span><span class="Operator">)</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-323" class="anchor"/><p class="line867"><span id="line-324" class="anchor"/></p><pre> self.resize(250, 150)
+<span id="line-325" class="anchor"/></pre><span id="line-326" class="anchor"/><p class="line867"><em> Here we resize the QWidget to be 250px wide and 150px heigh.</em> <span id="line-327" class="anchor"/></p><ul><li style="list-style-type: none;">这里我们将QWidget改变为250px宽，150px高。  <span id="line-328" class="anchor"/></li></ul><p class="line867"><span id="line-329" class="anchor"/></p><pre> screen = QtGui.QDesktopWidget().screenGeometry()
+<span id="line-330" class="anchor"/></pre><span id="line-331" class="anchor"/><p class="line867"><em> We figure out the screen resolution of our monitor.</em> <span id="line-332" class="anchor"/></p><ul><li style="list-style-type: none;">我们计算我们监视器的屏幕分辨率。  <span id="line-333" class="anchor"/></li></ul><p class="line867"><span id="line-334" class="anchor"/></p><pre> size =  self.geometry()
+<span id="line-335" class="anchor"/></pre><span id="line-336" class="anchor"/><p class="line867"><em> Here we get the size of our QWidget. </em> <span id="line-337" class="anchor"/></p><ul><li style="list-style-type: none;">这里我们获得我们QWidget的尺寸。  <span id="line-338" class="anchor"/></li></ul><p class="line867"><span id="line-339" class="anchor"/></p><pre> self.move((screen.width()-size.width())/2, (screen.height()-size.height())/2)
+<span id="line-340" class="anchor"/></pre><span id="line-341" class="anchor"/><p class="line867"><em> Here we move the window to the center of the screen. </em> <span id="line-342" class="anchor"/></p><ul><li style="list-style-type: none;">这里我们将窗口放到屏幕的正中。 <span id="line-343" class="anchor"/><span id="line-344" class="anchor"/><span id="line-345" class="anchor"/><span id="line-346" class="anchor"/></li></ul><p class="line867"/><div id="pagecomment">
+<a name="pagecomment1"/>
+<table border="0" class="pagecomment">
+<tbody><tr><td colspan="5" style="border-width: 1px; margin: 10px 0pt;">
+
+<script language="javascript">
+<!--
+function setCookie(name, value) {
+var today = new Date();
+var expire = new Date(today.getTime() + 60*60*24*365*1000);
+document.cookie = name + "=" + encodeURIComponent(value) + "; expires=" + expire.toGMTString() + "; path=/moin";
+}
+//-->
+</script>
+<form onsubmit="setCookie('PG2AUTHOR', this.comauthor.value);" method="post" name="comment" action="First_Programs_%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%A8%8B%E5%BA%8F#pagecomment1">
+<table class="addcommentform">
+<tbody><tr>
+<td style="border-width: 0px; vertical-align: middle; font-size: 0.9em;"><textarea onblur="if (this.value=='') {this.value='Add your comment';};" onfocus="if (this.value=='Add your comment') {this.value='';};" style="font-size: 9pt;" cols="60" rows="4" name="comtext">Add your comment</textarea></td>
+<td style="border-width: 0px; font-size: 0.9em; vertical-align: bottom;"><input type="submit" style="font-size: 9pt; width: 6em; height: 3em;" value="保存" name="button_save"/></td>
+</tr>
+<tr><td style="border-width: 0px; vertical-align: middle; font-size: 0.9em;">
+Name<input type="text" onblur="if (this.value=='') {this.value='58';};" onfocus="if (this.value=='58') {this.value='';};" value="58" name="comauthor" maxlength="20" size="6" style="font-size: 9pt;"/>
+Password4deL<input type="password" onblur="if (this.value=='') {this.value='qoz5';};" onfocus="if (this.value=='qoz5') {this.value='';};" value="qoz5" name="compasswd" maxlength="10" size="4" style="font-size: 9pt;"/>
+<input type="hidden" name="autopasswd" value="qoz5"/>
+<input type="radio" value=";)" name="comicon"/><img width="15" height="15" title=";)" src="/htdocs/woodpecker/img/smile4.png" alt=";)"/>
+<input type="radio" value="=D" name="comicon"/>
+<input type="radio" value="=)" name="comicon"/>
+<input type="radio" value=":P" name="comicon"/>
+<input type="radio" value=":(|)" name="comicon"/>
+<input type="radio" value=":-|" name="comicon"/>
+<input type="radio" value=":(" name="comicon"/><img width="15" height="15" title=":(" src="/htdocs/woodpecker/img/sad.png" alt=":("/>
+<input type="radio" value="X-(" name="comicon"/><img width="15" height="15" title="X-(" src="/htdocs/woodpecker/img/angry.png" alt="X-("/>
+<input type="radio" value="B-)" name="comicon"/><img width="15" height="15" title="B-)" src="/htdocs/woodpecker/img/smile2.png" alt="B-)"/>
+
+</td>
+<td style="border-width: 0px; vertical-align: middle; text-align: right; font-size: 9pt;"/>
+</tr>
+</tbody></table>
+<input type="hidden" value="show" name="action"/>
+<input type="hidden" value="0" name="comrev"/>
+<input type="hidden" value="addcomment1" name="commentaction"/>
+</form>
+</td></tr>
+<tr><td style="border-width: 0px; height: 20px;" class="commentblankline" colspan="5"/></tr>
+<script language="javascript">
+<!--
+function requesttodeleteadmin1(delform, comkey) {
+if (confirm("Really delete this comment?")) {;
+delform.delkey.value = comkey;
+delform.delpasswd.value = "****";
+delform.submit();
+}
+}
+function requesttodelete1(delform, comkey) {
+var passwd = prompt("请输入一个密码!:", "");
+if(!(passwd == "" || passwd == null)) {
+delform.delkey.value = comkey;
+delform.delpasswd.value = passwd;
+delform.submit();
+}
+}
+//-->
+</script>
+<form method="post" action="First_Programs_%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%A8%8B%E5%BA%8F#pagecomment1" name="delform1"/>
+<input type="hidden" name="action" value="show"/>
+<input type="hidden" value="****" name="delpasswd"/>
+<input type="hidden" value="" name="delkey"/>
+<input type="hidden" value="delcomment1" name="commentaction"/>
+
+
+</tbody></table>
+</div> <span id="line-347" class="anchor"/><span id="bottom" class="anchor"/></div>

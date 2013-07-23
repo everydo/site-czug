@@ -1,0 +1,24 @@
+<p><a href="http://www.zope.org/Products/Zope/2.8.0/Zope-2_8_0-released">英文新闻稿</a>
+|
+<a href="http://www.zope.org/Products/Zope/2.8.0/">下载</a>
+|
+<a href="http://www.zope.org/Products/Zope/2.8.0/CHANGES.txt">更改清单</a>
+|
+<a href="http://www.zope.org/Wikis/DevSite/Projects/Zope2.8/OverView">Zope 2.8项目</a>
+|
+<a href="http://collector.zope.org/Zope">报告故障</a></p>
+<p>Zope 2.8的新特性:</p>
+
+<ul>
+<li>使用ZODB 3.4，支持MVCC(多版本并行控制). MVCC基本上解决了ZODB读冲突错误的所有问题，这对于高负载的Zope网站是非常重要的。</li>
+<li>Extension Classes使用Python的new-style classes重新编写。这样，在Zope对象中，可以利用Python new-style classes的所有特性. 包括：支持循环垃圾收集.</li>
+<li>通过Five(http://codespeak.net/z3/five/)，集成了Zope 3的若干技术。</li>
+
+</ul>
+<p><strong>警告</strong></p>
+
+<ul>
+<li>由于Extension Classes 和 ZODB 的重大更新，您的应用很有可能出现问题。在开始试用zope 2.8之前，您一个备份您的Data.fs数据库。</li>
+<li>Zope 2.8不支持Plone 2.0.x</li>
+
+</ul>

@@ -1,0 +1,16 @@
+
+ <p>响应Limodou的号召：<img alt="." src="http://www.linuxforum.net/forum/images/icons/book.gif" height="15" hspace="5" width="15" /> <a href="http://www.linuxforum.net/forum/showflat.php?Cat=&amp;Board=python&amp;Number=501282&amp;page=0&amp;view=collapsed&amp;sb=5&amp;o=&amp;fpart=">
+ 列出你的Blog来</a>，经过几天的的努力，<a href="http://blog.czug.org">blog.czug.org</a>基本可以运转了。<br />
+ <br />
+ 现在blog.czug.org仅仅包括了站长 <a href="http://blog.czug.org/panjunyong">潘俊勇的Blog</a>，但最终，我希望最终能够把blog.czug.org建设成一个：
+ <b><br />
+ <br />
+ python/zope/plone等相关开源技术的专业Blog群</b><br />
+ <br />
+ 各位“python人、zope人、plone人”如需建立Blog网，请与我联系：ｐａｎｊｙ＠ｃｚｕｇ．ｏｒｇ。<br />
+ <br />
+ blog.czug.org采用SimpleBlog构建，我对这个产品进行了中文化等一些改进。大家可以到sf.net/projects/collective中下载。<br />
+
+ <br />
+ 注意现在需要从cvs中取release_1_2的这个分支上的最新版本，我已经联系了SimpleBlog的作者，或许他会在下周发布一个新的版本。</p><br />
+ 

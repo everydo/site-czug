@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "ca-zope-mainstream"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "为客户提供兼具强大功能与延展性的资料库驱动解决方案", 
+        "modified": "2004-06-12 05:03:35", 
+        "title": "CA与Zope将开放原始码内容管理带入主流企业巿场"
+    }
+}

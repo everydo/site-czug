@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "plone-chinese-support"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "让Plone支持中文搜索等", 
+        "modified": "2006-02-19 01:10:30", 
+        "title": "如何让Plone支持中文？"
+    }
+}

@@ -1,0 +1,11 @@
+
+ <p>Plone.org的原始新闻：<a href="http://plone.org/newsitems/news_item.2005-01-09.2669651614">City of Berne
+ relaunches Website</a><br />
+ <br />
+ 网站为<a href="http://www.bern.ch/leben_in_bern">www.bern.ch</a>，由瑞士<a href="http://www.4teamwork.ch/">4teamwork</a>公司和borneIT部门采用Plone耗时4个月联合搭建完成。<br />
+ <br />
+ 网站有70人参与著录，内容数目超过19'000，第一天的请求数目超过250'000。系统采用squid进行加速。<br />
+ <br />
+ <img src="http://members.plone.org/Members/buehlmann/bern.ch.jpg" /><br />
+ <br />
+ 这个项目中的部分产品将以开放源代码的形式发布，作为瑞士电子政务的基础平台。瑞士政府正在启动一个基于Plone的更为广泛的电子政务计划。瑞士政府也正在开始使用Plone搭建门户网站。</p>

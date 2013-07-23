@@ -1,0 +1,137 @@
+<p>出处： <a href="http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch14.html">http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch14.html</a></p>
+
+<h1>第14章 Python标准库</h1>
+<p><strong>目录表</strong></p>
+<dl>
+<dt><a href="#s01">简介</a></dt>
+<dt><a href="#ch14s02.html">sys模块</a></dt>
+<dd><a href="#ch14s02.html#command">命令行参数</a></dd>
+<dd><a href="#ch14s02.html#more">更多sys的内容</a></dd>
+<dt><a href="#ch14s03.html">os模块</a></dt>
+<dt><a href="#ch14s04.html">概括</a></dt>
+</dl>
+
+<h1><a name="s01">简介</a></h1>
+<p>Python标准库是随Python附带安装的，它包含大量极其有用的模块。熟悉Python标准库是十分重要的，因为如果你熟悉这些库中的模块，那么你的大多数问题都可以简单快捷地使用它们来解决。</p>
+<p>我们已经研究了一些这个库中的常用模块。你可以在Python附带安装的文档的“库参考”一节中了解Python标准库中所有模块的完整内容。</p>
+
+
+<h1><a name="ch14s02.html">sys模块</a></h1>
+<p><code>sys</code>模块包含系统对应的功能。我们已经学习了<code>sys.argv</code>列表，它包含命令行参数。</p>
+
+<h2><a name="command">命令行参数</a></h2>
+<p class="exampletitle"><a name="e141">例14.1 使用sys.argv</a></p>
+<p class="filebox">
+<code class="comment">#!/usr/bin/python<br>
+# Filename: cat.py</code><br>
+<br>
+<code class="key">import </code><code class="func">sys</code><br>
+<br>
+<code class="key">def </code><code class="func">readfile</code><code>(filename):</code><br>
+<code class="cite">&nbsp;&nbsp;&nbsp;&nbsp;'''Print a file to the standard output.'''</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;f = </code><code class="func">file</code><code>(filename)</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;while </code><code class="func">True</code><code>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line = f.readline()</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if </code><code class="func">len</code><code>(line) == </code><code class="cite">0</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code>line, </code><code class="comment"># notice comma</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;f.close()</code><br>
+<br>
+<code class="comment"># Script starts from here</code><br>
+<code class="key">if </code><code class="func">len</code><code>(</code><code class="func">sys</code><code>.argv) &lt; </code><code class="cite">2</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'No action specified.'</code><br>
+<code class="func">&nbsp;&nbsp;&nbsp;&nbsp;sys</code><code>.exit()</code><br>
+<br>
+<code class="key">if </code><code class="func">sys</code><code>.argv[</code><code class="cite">1</code><code>].startswith(</code><code class="cite">'--'</code><code>):</code><br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;option = </code><code class="func">sys</code><code>.argv[</code><code class="cite">1</code><code>][</code><code class="cite">2</code><code>:]</code><br>
+<code class="comment">&nbsp;&nbsp;&nbsp;&nbsp;# fetch sys.argv[1] but without the first two characters</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;if </code><code>option == </code><code class="cite">'version'</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Version 1.2'</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;elif </code><code>option == </code><code class="cite">'help'</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'''\<br>
+This program prints files to the standard output.<br>
+Any number of files can be specified.<br>
+Options include:<br>
+&nbsp;&nbsp;--version : Prints the version number<br>
+&nbsp;&nbsp;--help&nbsp;&nbsp;&nbsp; : Display this help'''</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;else</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print </code><code class="cite">'Unknown option.'</code><br>
+<code class="func">&nbsp;&nbsp;&nbsp;&nbsp;sys</code><code>.exit()</code><br>
+<code class="key">else</code><code>:</code><br>
+<code class="key">&nbsp;&nbsp;&nbsp;&nbsp;for </code><code>filename </code><code class="key">in </code><code class="func">sys</code><code>.argv[</code><code class="cite">1</code><code>:]:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;readfile(filename)</code>
+</p>
+<p>（源文件：<a href="code/cat.py">code/cat.py</a>）</p>
+
+<h2>输出</h2>
+<p class="codebox"><code>
+$ python cat.py<br>
+No action specified.<br>
+<br>
+$ python cat.py --help<br>
+This program prints files to the standard output.<br>
+Any number of files can be specified.<br>
+Options include:<br>
+&nbsp;&nbsp;--version : Prints the version number<br>
+&nbsp;&nbsp;--help&nbsp;&nbsp;&nbsp; : Display this help<br>
+<br>
+$ python cat.py --version<br>
+Version 1.2<br>
+<br>
+$ python cat.py --nonsense<br>
+Unknown option.<br>
+<br>
+$ python cat.py poem.txt<br>
+Programming is fun<br>
+When the work is done<br>
+if you wanna make your work also fun:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use Python!<br>
+</code></p>
+
+<h2>它如何工作</h2>
+<p>这个程序用来模范Linux/Unix用户熟悉的<strong>cat</strong>命令。你只需要指明某些文本文件的名字，这个程序会把它们打印输出。</p>
+<p>在Python程序运行的时候，即不是在交互模式下，在<code>sys.argv</code>列表中总是至少有一个项目。它就是当前运行的程序名称，作为<code>sys.argv[0]</code>（由于Python从<code>0</code>开始计数）。其他的命令行参数在这个项目之后。</p>
+<p>为了使这个程序对用户更加友好，我们提供了一些用户可以指定的选项来了解更多程序的内容。我们使用第一个参数来检验我们的程序是否被指定了选项。如果使用了<code>--version</code>选项，程序的版本号将被打印出来。类似地，如果指定了<code>--help</code>选项，我们提供一些关于程序的解释。我们使用<code>sys.exit</code>函数退出正在运行的程序。和以往一样，你可以看一下<code>help(sys.exit)</code>来了解更多详情。</p>
+<p>如果没有指定任何选项，而是为程序提供文件名的话，它就简单地打印出每个文件地每一行，按照命令行中的顺序一个文件接着一个文件地打印。</p>
+<p>顺便说一下，名称<strong>cat</strong>是 <dfn>concatenate</dfn> 的缩写，它基本上表明了程序的功能——它可以在输出打印一个文件或者把两个或两个以上文件连接/级连在一起打印。</p>
+
+<h2><a name="more">更多sys的内容</a></h2>
+<p><code>sys.version</code>字符串给你提供安装的Python的版本信息。<code>sys.version_info</code>元组则提供一个更简单的方法来使你的程序具备Python版本要求功能。</p>
+
+<p class="codebox"><code>
+[swaroop@localhost code]$ python<br>
+&gt;&gt;&gt; import sys<br>
+&gt;&gt;&gt; sys.version<br>
+'2.3.4 (#1, Oct 26 2004, 16:42:40) \n[GCC 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)]'<br>
+&gt;&gt;&gt; sys.version_info<br>
+(2, 3, 4, 'final', 0)</code></p>
+
+<p>对于有经验的程序员，<code>sys</code>模块中其他令人感兴趣的项目有<code>sys.stdin</code>、<code>sys.stdout</code>和<code>sys.stderr</code>它们分别对应你的程序的标准输入、标准输出和标准错误流。</p>
+
+
+<h1><a name="ch14s03.html">os模块</a></h1>
+<p>这个模块包含普遍的操作系统功能。如果你希望你的程序能够与平台无关的话，这个模块是尤为重要的。即它允许一个程序在编写后不需要任何改动，也不会发生任何问题，就可以在Linux和Windows下运行。一个例子就是使用<code>os.sep</code>可以取代操作系统特定的路径分割符。</p>
+<p>下面列出了一些在<code>os</code>模块中比较有用的部分。它们中的大多数都简单明了。</p>
+
+<ul>
+<li><p><code>os.name</code>字符串指示你正在使用的平台。比如对于Windows，它是<code>'nt'</code>，而对于Linux/Unix用户，它是<code>'posix'</code>。</p></li>
+<li><p><code>os.getcwd()</code>函数得到当前工作目录，即当前Python脚本工作的目录路径。</p></li>
+<li><p><code>os.getenv()</code>和<code>os.putenv()</code>函数分别用来读取和设置环境变量。</p></li>
+<li><p><code>os.listdir()</code>返回指定目录下的所有文件和目录名。</p></li>
+<li><p><code>os.remove()</code>函数用来删除一个文件。</p></li>
+<li><p><code>os.system()</code>函数用来运行shell命令。</p></li>
+<li><p><code>os.linesep</code>字符串给出当前平台使用的行终止符。例如，Windows使用<code>'\r\n'</code>，Linux使用<code>'\n'</code>而Mac使用<code>'\r'</code>。</p></li>
+<li><p><code>os.path.split()</code>函数返回一个路径的目录名和文件名。</p>
+<p class="codebox"><code>
+&gt;&gt;&gt; os.path.split('/home/swaroop/byte/code/poem.txt')<br>
+('/home/swaroop/byte/code', 'poem.txt')
+</code></p></li>
+<li><p><code>os.path.isfile()</code>和<code>os.path.isdir()</code>函数分别检验给出的路径是一个文件还是目录。类似地，<code>os.path.existe()</code>函数用来检验给出的路径是否真地存在。</p></li>
+</ul>
+<p>你可以利用Python标准文档去探索更多有关这些函数和变量的详细知识。你也可以使用<code>help(sys)</code>等等。</p>
+
+
+<h1><a name="ch14s04.html">概括</a></h1>
+<p>我们已经学习了Python标准库中的<code>sys</code>模块和<code>os</code>模块的一部分功能。你应该利用Python标准文档去学习这两个模块以及其他模块的更多内容。</p>
+<p>接下来，我们将要学习Python中剩余的几个方面的内容，从而使我们的Python课程更加 <dfn>完整</dfn> 。</p>
+

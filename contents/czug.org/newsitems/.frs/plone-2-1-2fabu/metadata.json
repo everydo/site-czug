@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "plone-2-1-2fabu"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "包括Windows和Mac OS安装程序的Plone 2.1.2已经发布了，这是一个重要的补丁修改版本. 下面是你需要知道...", 
+        "modified": "2006-01-25 18:32:12", 
+        "title": "Plone 2.1.2发布!"
+    }
+}

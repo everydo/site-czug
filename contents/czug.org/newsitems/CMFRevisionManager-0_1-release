@@ -1,0 +1,25 @@
+
+ <p>我们 <a href="http://www.zopechina.com">润普公司</a>
+ 很荣幸发布CMFRevisionManager的第一个版本。<br />
+ <br />
+ 版本管理是内容管理的重要特性之一，但是CMF/Plone核心缺少这一功能。CMFRevisionManager将CVS和CMF/Plone集成，将CVS的版本管理特性带到CMF/Plone。</p>
+ <h1>主要的特性</h1>
+ <ul>
+ <li>基于成熟的产品: <a href="http://www.cvshome.org">CVS</a> 和 <a href="http://www.zopemag.com/Issue005/Section_Articles/article_RevisionManager.html">
+ RevisionManager</a></li>
+ <li>和所有支持WebDav的CMF 内容兼容，包括页面文档、文件、图片、zwiki页面等</li>
+ <li>容易使用, 安装就可使用, 无需编写适配器</li>
+ <li>支持双向的同步:
+ <ul>
+ <li>CVS-&gt;ZODB: 通过CVS 编辑，然后同步到CMF/Plone</li>
+ <li>ZODB-&gt;CVS: 通过CMF/Plone 编辑，然后提交到CVS</li>
+ </ul>
+ </li>
+ <li>支持全部的cvs特性: 历史, 回复, 比较差异</li>
+ <li>灵活控制需要进行版本控制的内容：可限定位置和类型。</li>
+ </ul>
+ <h1>链接</h1>
+ <p><a href="http://zope.org/Members/panjunyong/cmfrevisionmanager/swpackage_view">产品主页</a>
+ | <a href="http://zope.org/Members/panjunyong/cmfrevisionmanager/revisionmanager--0_1/cmfrevisionmanager-0_1.tgz">
+ 下载</a><span style="text-decoration: underline;"><br /></span>(注意:
+ 本产品目前还处于开发阶段，还不完备.)</p>

@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "zope-3-2fabu"
+    }, 
+    "dublin": {
+        "creators": [
+            "panjy"
+        ], 
+        "description": "Zope 3 开发团队宣布Zope 3.2.0正式发布. Zope 3 是Zope另一个主要的发布版本。它是基于最新的软件设计模式和Zope 2的开发经验，完全重新编写的。", 
+        "modified": "2006-01-25 19:32:45", 
+        "title": "Zope 3.2发布！"
+    }
+}

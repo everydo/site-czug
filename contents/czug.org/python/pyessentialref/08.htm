@@ -1,0 +1,224 @@
+<div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
+<span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-44cbdf5a51cd5490a8af72c33c10c19cc04c99bb">第八章 模块和包</a><ol><li><a href="#head-bda7579da56e3797cfd711103abf2e973c2aeb59">模块</a></li><li><a href="#head-ac25897de5678e95b3caf2a4697afbf8e95c7cd7">模块搜索路径</a></li><li><a href="#head-a295b3f4818e033c86eb30c5d2edf0961b0f0cb3">模块导入和汇编</a></li><li><a href="#head-12a7f0909f4f524ae219c9260b298146970064e6">重新导入模块</a></li><li><a href="#head-e7075fbe37e659ec88fc3a5f4efca4590a5aba83">包</a></li></ol></li></ol></div> <span id="line-2" class="anchor"/>
+<h1 id="head-44cbdf5a51cd5490a8af72c33c10c19cc04c99bb">1. 第八章 模块和包</h1>
+<span id="line-3" class="anchor"/><span id="line-4" class="anchor"/><p class="line874">本章的主题就是模块和包。较大的Python程序基本上都使用模块和包进行组织，Python发行版也包括方方面面许许多多的模块... <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/></p><p class="line867">
+</p><h2 id="head-bda7579da56e3797cfd711103abf2e973c2aeb59">1.1. 模块</h2>
+<span id="line-7" class="anchor"/><span id="line-8" class="anchor"/><p class="line874">你可以使用import语句将一个源代码文件作为模块导入.例如: <span id="line-9" class="anchor"/><span id="line-10" class="anchor"/><span id="line-11" class="anchor"/><span id="line-12" class="anchor"/><span id="line-13" class="anchor"/><span id="line-14" class="anchor"/><span id="line-15" class="anchor"/><span id="line-16" class="anchor"/><span id="line-17" class="anchor"/><span id="line-18" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+function isnumbered(obj) {
+return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+var nlen = Math.max(0,chrs-(''+num).length), res = '';
+while (nlen>0) { res += ' '; nlen-- }
+return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+var c = document.getElementById(did), l = c.firstChild, n = 1;
+if (!isnumbered(c))
+if (typeof nstart == 'undefined') nstart = 1;
+if (typeof nstep  == 'undefined') nstep = 1;
+n = nstart;
+while (l != null) {
+if (l.tagName == 'SPAN') {
+var s = document.createElement('SPAN');
+s.className = 'LineNumber'
+s.appendChild(document.createTextNode(nformat(n,4,' ')));
+n += nstep;
+if (l.childNodes.length)
+l.insertBefore(s, l.firstChild)
+else
+l.appendChild(s)
+}
+l = l.nextSibling;
+}
+return false;
+}
+function remnumber(did) {
+var c = document.getElementById(did), l = c.firstChild;
+if (isnumbered(c))
+while (l != null) {
+if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+l = l.nextSibling;
+}
+return false;
+}
+function togglenumber(did, nstart, nstep) {
+var c = document.getElementById(did);
+if (isnumbered(c)) {
+remnumber(did);
+} else {
+addnumber(did,nstart,nstep);
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-f0fb854d54813151de77c7aefc15bafc3c316ab6_000\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-f0fb854d54813151de77c7aefc15bafc3c316ab6_000', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-f0fb854d54813151de77c7aefc15bafc3c316ab6_000" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment"># file : spam.py</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="ID">a</span> <span class="Operator">=</span> <span class="Number">37</span>                    <span class="Comment"># 一个变量</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ResWord">def</span> <span class="ID">foo</span><span class="Operator">:</span>                  <span class="Comment"># 一个函数</span></span>
+<span class="line"><span class="LineNumber">   4 </span>    <span class="ResWord">print</span> <span class="String">"I'm foo"</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ResWord">class</span> <span class="ID">bar</span><span class="Operator">:</span>                <span class="Comment"># 一个类</span></span>
+<span class="line"><span class="LineNumber">   6 </span>    <span class="ResWord">def</span> <span class="ID">grok</span><span class="Operator">(</span><span class="ID">self</span><span class="Operator">)</span><span class="Operator">:</span></span>
+<span class="line"><span class="LineNumber">   7 </span>        <span class="ResWord">print</span> <span class="String">"I'm bar.grok"</span></span>
+<span class="line"><span class="LineNumber">   8 </span><span class="ID">b</span> <span class="Operator">=</span> <span class="ID">bar</span><span class="Operator">(</span><span class="Operator">)</span>                 <span class="Comment"># 创建一个实例</span><span class="Text"/></span>
+</pre></div><span id="line-19" class="anchor"/><p class="line874">使用import spam 语句就可以将这个文件作为模块导入。系统在导入模块时，要做以下三件事： <span id="line-20" class="anchor"/><span id="line-21" class="anchor"/></p><ol type="1"><li>为源代码文件中定义的对象创建一个名字空间，通过这个名字空间可以访问到模块中定义的函数及变量。 <span id="line-22" class="anchor"/><span id="line-23" class="anchor"/>2.在新创建的名字空间里执行源代码文件. <span id="line-24" class="anchor"/><span id="line-25"
+class="anchor"/>3.创建一个名为源代码文件的对象，该对象引用模块的名字空间，这样就可以通过这个对象访问模块中的函数及变量，如： <span id="line-26" class="anchor"/></li></ol><p class="line867"><span id="line-27" class="anchor"/><span id="line-28" class="anchor"/><span id="line-29" class="anchor"/><span id="line-30" class="anchor"/><span id="line-31" class="anchor"/><span id="line-32" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-af6d0500d6fe62cad1d45e8042a2f7f18e935b90_001\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-af6d0500d6fe62cad1d45e8042a2f7f18e935b90_001', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-af6d0500d6fe62cad1d45e8042a2f7f18e935b90_001" dir="ltr"><span class="line"><span class="LineNumber">   1 </span> <span class="ResWord">import</span> <span class="ID">spam</span>           <span class="Comment"># 导入并运行模块 spam</span></span>
+<span class="line"><span class="LineNumber">   2 </span> <span class="ResWord">print</span> <span class="ID">spam</span><span class="Operator">.</span><span class="ID">a</span>          <span class="Comment"># 访问模块 spam 的属性</span></span>
+<span class="line"><span class="LineNumber">   3 </span> <span class="ID">spam</span><span class="Operator">.</span><span class="ID">foo</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span> <span class="ID">c</span> <span class="Operator">=</span> <span class="ID">spam</span><span class="Operator">.</span><span class="ID">bar</span><span class="Operator">(</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   5 </span> <span class="Operator">.</span><span class="Operator">.</span><span class="Operator">.</span><span class="Text"/></span>
+</pre></div><span id="line-33" class="anchor"/><p class="line874">用逗号分割模块名称就可以同时导入多个模块: <span id="line-34" class="anchor"/><span id="line-35" class="anchor"/></p><pre>import socket, os, regex
+<span id="line-36" class="anchor"/></pre><span id="line-37" class="anchor"/><p class="line874">模块导入时可以使用 as 关键字来改变模块的引用对象名字: <span id="line-38" class="anchor"/><span id="line-39" class="anchor"/><span id="line-40" class="anchor"/><span id="line-41" class="anchor"/><span id="line-42" class="anchor"/><span id="line-43" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-2b1a71c7c83e1a22cae59eceff2d3670f384f2f5_002\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-2b1a71c7c83e1a22cae59eceff2d3670f384f2f5_002', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-2b1a71c7c83e1a22cae59eceff2d3670f384f2f5_002" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">os</span> <span class="ResWord">as</span> <span class="ID">system</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">import</span> <span class="ID">socket</span> <span class="ResWord">as</span> <span class="ID">net</span><span class="Operator">,</span> <span class="ID">thread</span> <span class="ResWord">as</span> <span class="ID">threads</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">system</span><span class="Operator">.</span><span class="ID">chdir</span><span class="Operator">(</span><span class="String">".."</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">net</span><span class="Operator">.</span><span class="ID">gethostname</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-44" class="anchor"/><p class="line874">使用from语句可以将模块中的对象直接导入到当前的名字空间. from语句不创建一个到模块名字空间的引用对象，而是把被导入模块的一个或多个对象直接放入当前的名字空间: <span id="line-45" class="anchor"/><span id="line-46" class="anchor"/><span id="line-47" class="anchor"/><span id="line-48" class="anchor"/><span id="line-49" class="anchor"/><span id="line-50" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-adbe7e7c7b340d1f45c448fdc05323eb6072e85f_003\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-adbe7e7c7b340d1f45c448fdc05323eb6072e85f_003', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-adbe7e7c7b340d1f45c448fdc05323eb6072e85f_003" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">from</span> <span class="ID">socket</span> <span class="ResWord">import</span> <span class="ID">gethostname</span></span>
+<span class="line"><span class="LineNumber">   2 </span>                               <span class="Comment"># 将gethostname放如当前名字空间</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"/><span class="ResWord">print</span> <span class="ID">gethostname</span><span class="Operator">(</span><span class="Operator">)</span>            <span class="Comment"># 直接调用</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="ID">socket</span><span class="Operator">.</span><span class="ID">gethostname</span><span class="Operator">(</span><span class="Operator">)</span>           <span class="Comment"># 引发异常NameError: socket</span><span class="Text"/></span>
+</pre></div><span id="line-51" class="anchor"/><p class="line862">from语句支持逗号分割的对象，也可以使用星号(<tt class="backtick">*</tt>)代表模块中除下划线开头的所有对象: <span id="line-52" class="anchor"/><span id="line-53" class="anchor"/><span id="line-54" class="anchor"/><span id="line-55" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-14c1a6437b32579c97af1daffbe8565e08e307da_004\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-14c1a6437b32579c97af1daffbe8565e08e307da_004', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-14c1a6437b32579c97af1daffbe8565e08e307da_004" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">from</span> <span class="ID">socket</span> <span class="ResWord">import</span> <span class="ID">gethostname</span><span class="Operator">,</span> <span class="ID">socket</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ResWord">from</span> <span class="ID">socket</span> <span class="ResWord">import</span> <span class="Operator">*</span>   <span class="Comment"># 载入所有对象到当前名字空间</span><span class="Text"/></span>
+</pre></div><span id="line-56" class="anchor"/><p class="line862">不过，如果一个模块如果定义有列表<tt class="backtick">__all__</tt>，则from module import * 语句只能导入<tt class="backtick">__all__</tt>列表中存在的对象。 <span id="line-57" class="anchor"/><span id="line-58" class="anchor"/></p><pre># module: foo.py
+<span id="line-59" class="anchor"/>__all__ = [ 'bar', 'spam' ]     # 定义使用 `*` 可以导入的对象
+<span id="line-60" class="anchor"/></pre><span id="line-61" class="anchor"/><p class="line874">另外, as 也可以和 from 联合使用: <span id="line-62" class="anchor"/><span id="line-63" class="anchor"/><span id="line-64" class="anchor"/><span id="line-65" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-58a328b76f70e07bc47e1efa6a5160184956e6ac_005\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-58a328b76f70e07bc47e1efa6a5160184956e6ac_005', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-58a328b76f70e07bc47e1efa6a5160184956e6ac_005" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">from</span> <span class="ID">socket</span> <span class="ResWord">import</span> <span class="ID">gethostname</span> <span class="ResWord">as</span> <span class="ID">hostname</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">h</span> <span class="Operator">=</span> <span class="ID">hostname</span><span class="Operator">(</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-66" class="anchor"/><p class="line874">import 语句可以在程序的任何位置使用，你可以在程序中多次导入同一个模块，但模块中的代码*仅仅*在该模块被首次导入时执行。后面的import语句只是简单的创建一个到模块名字空间的引用而已。sys.modules字典中保存着所有被导入模块的模块名到模块对象的映射。这个字典用来决定是否需要使用import语句来导入一个模块的最新拷贝. <span id="line-67" class="anchor"/><span id="line-68" class="anchor"/></p><p class="line862">from module import <tt class="backtick">*</tt>
+语句只能用于一个模块的最顶层.*特别注意*：由于存在作用域冲突，不允许在函数中使用from 语句。 <span id="line-69" class="anchor"/><span id="line-70" class="anchor"/></p><p class="line862">每个模块都拥有 <tt class="backtick">__name__</tt> 属性，它是一个内容为模块名字的字符串。最顶层的模块名称是 <tt class="backtick">__main__</tt> .命令行或是交互模式下程序都运行在<tt class="backtick">__main__</tt> 模块内部. 利用<tt
+class="backtick">__name__</tt>属性，我们可以让同一个程序在不同的场合（单独执行或被导入)具有不同的行为，象下面这样做： <span id="line-71" class="anchor"/><span id="line-72" class="anchor"/></p><pre># 检查是单独执行还是被导入
+<span id="line-73" class="anchor"/>if __name__ == '__main__':
+<span id="line-74" class="anchor"/>      # Yes
+<span id="line-75" class="anchor"/>      statements
+<span id="line-76" class="anchor"/>else:
+<span id="line-77" class="anchor"/>      # No (可能被作为模块导入)
+<span id="line-78" class="anchor"/>      statements
+<span id="line-79" class="anchor"/></pre><span id="line-80" class="anchor"/><p class="line867">
+</p><h2 id="head-ac25897de5678e95b3caf2a4697afbf8e95c7cd7">1.2. 模块搜索路径</h2>
+<span id="line-81" class="anchor"/><span id="line-82" class="anchor"/><p class="line874">导入模块时,解释器会搜索sys.path列表,这个列表中保存着一系列目录。一个典型的sys.path 列表的值： <span id="line-83" class="anchor"/><span id="line-84" class="anchor"/></p><pre>Linux:
+<span id="line-85" class="anchor"/>['', '/usr/local/lib/python2.0',
+<span id="line-86" class="anchor"/>     '/usr/local/lib/python2.0/plat-sunos5',
+<span id="line-87" class="anchor"/>     '/usr/local/lib/python2.0/lib-tk',
+<span id="line-88" class="anchor"/>     '/usr/local/lib/python2.0/lib-dynload',
+<span id="line-89" class="anchor"/>     '/usr/local/lib/python2.0/site-packages']
+<span id="line-90" class="anchor"/>Windows:
+<span id="line-91" class="anchor"/>['', 'C:\\WINDOWS\\system32\\python24.zip', 'C:\\Documents and Settings\\weizhong', 'C:\\Python24\\DLLs', 'C:\\Python24\\lib', 'C:\\Python24\\lib\\plat-win', 'C:\\Python24\\lib\\lib-tk', 'C:\\Python24\\Lib\\site-packages\\pythonwin', 'C:\\Python24', 'C:\\Python24\\lib\\site-packages', 'C:\\Python24\\lib\\site-packages\\win32', 'C:\\Python24\\lib\\site-packages\\win32\\lib', 'C:\\Python24\\lib\\site-packages\\wx-2.6-msw-unicode']
+<span id="line-92" class="anchor"/></pre><span id="line-93" class="anchor"/><span id="line-94" class="anchor"/><p class="line862">空字符串 <em> 代表当前目录. <span id="line-95" class="anchor"/>要加入新的搜索路径,只需要将这个路径加入到这个列表. <span id="line-96" class="anchor"/><span id="line-97" class="anchor"/></em></p><p class="line867">
+</p><h2 id="head-a295b3f4818e033c86eb30c5d2edf0961b0f0cb3"><em _moz-rs-heading="">1.3. 模块导入和汇编</em></h2>
+<span id="line-98" class="anchor"/><p class="line874">到现在为止，本章介绍的模块都是包含Python源代码的文本文件. 不过模块不限于此，可以被 import 语句导入的模块共有以下四类: <span id="line-99" class="anchor"/><span id="line-100" class="anchor"/></p><ul><li>使用Python写的程序( .py文件) <span id="line-101" class="anchor"/></li><li>C或C++扩展(已编译为共享库或DLL文件) <span id="line-102" class="anchor"/></li><li>包(包含多个模块) <span id="line-103" class="anchor"/></li><li>内建模块(使用C编写并已链接到Python解释器内) <span
+id="line-104" class="anchor"/><span id="line-105" class="anchor"/></li></ul><p class="line874">当查询模块 foo 时,解释器按照 sys.path 列表中目录顺序来查找以下文件(目录也是文件的一种): <span id="line-106" class="anchor"/><span id="line-107" class="anchor"/></p><ol type="1"><li>定义为一个包的目录 foo <span id="line-108" class="anchor"/></li><li>foo.so, foomodule.so, foomodule.sl,或 foomodule.dll (已编译扩展) <span id="line-109" class="anchor"/></li><li>foo.pyo (只在使用 -O 或 -OO 选项时) <span id="line-110"
+class="anchor"/></li><li>foo.pyc <span id="line-111" class="anchor"/></li><li>foo.py <span id="line-112" class="anchor"/><span id="line-113" class="anchor"/></li></ol><p class="line874">后面马上介绍包 <span id="line-114" class="anchor"/><span id="line-115" class="anchor"/></p><p class="line874">已编译扩展在附录B:"Extending and Embedding Python."中有详细描述. <span id="line-116" class="anchor"/><span id="line-117" class="anchor"/></p><p
+class="line874">对于.py文件,当一个模块第一次被导入时,它就被汇编为字节代码,并将字节码写入一个同名的 .pyc文件.后来的导入操作会直接读取.pyc文件而不是.py文件.(除非.py文件的修改日期更新,这种情况会重新生成.pyc文件) 在解释器使用 -O 选项时，扩展名为.pyo的同名文件被使用. pyo文件的内容虽去掉行号,断言,及其他调试信息的字节码，体积更小,运行速度更快.如果使用-OO选项代替-O,则文档字符串也会在创建.pyo文件时也被忽略. <span id="line-118" class="anchor"/><span id="line-119" class="anchor"/></p><p
+class="line862">如果在sys.path提供的所有路径均查找失败,解释器会继续在内建模块中寻找,如果再次失败，则引发 <tt class="backtick">ImportError</tt> 异常. <span id="line-120" class="anchor"/><span id="line-121" class="anchor"/></p><p class="line874">.pyc和.pyo文件的汇编,当且仅当import 语句执行时进行. <span id="line-122" class="anchor"/><span id="line-123" class="anchor"/></p><p class="line862">当 import 语句搜索文件时,文件名是大小写敏感的 </p><hr/><p class="line874">即使在文件系统大小写不敏感的系统上也是如此(Windows等). 这样,
+import foo 只会导入文件foo.py而不会是FOO.PY. *注意*:Python的2.1之前的版本的,这个功能在某些平台上会有问题.要写出兼容性好的程序,就避免在模块名中大小定混用. <span id="line-124" class="anchor"/><span id="line-125" class="anchor"/></p><p class="line867">
+</p><h2 id="head-12a7f0909f4f524ae219c9260b298146970064e6">1.4. 重新导入模块</h2>
+<span id="line-126" class="anchor"/><span id="line-127" class="anchor"/><p class="line874">如果更新了一个已经用import语句导入的模块，内建函数reload()可以重新导入并运行更新后的模块代码.它需要一个模块对象做为参数.例如: <span id="line-128" class="anchor"/><span id="line-129" class="anchor"/><span id="line-130" class="anchor"/><span id="line-131" class="anchor"/><span id="line-132" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-008c38862b5910d771b718b82c2dd94602ef7c4a_006\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-008c38862b5910d771b718b82c2dd94602ef7c4a_006', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-008c38862b5910d771b718b82c2dd94602ef7c4a_006" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">foo</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Operator">.</span><span class="Operator">.</span><span class="Operator">.</span> <span class="ID">some</span> <span class="ID">code</span> <span class="Operator">.</span><span class="Operator">.</span><span class="Operator">.</span></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="ID">reload</span><span class="Operator">(</span><span class="ID">foo</span><span class="Operator">)</span>          <span class="Comment"># 重新导入 foo</span><span class="Text"/></span>
+</pre></div><span id="line-133" class="anchor"/><p class="line874">在reload()运行之后的针对模块的操作都会使用新导入代码，不过reload()并不会更新使用旧模块创建的对象，因此有可能出现新旧版本对象共存的情况。 <span id="line-134" class="anchor"/>*注意* 使用C或C++编译的模块不能通过 reload() 函数来重新导入。 <span id="line-135" class="anchor"/><span id="line-136" class="anchor"/></p><p class="line874">记住一个原则，除非是在调试和开发过程中，否则不要使用reload()函数. <span id="line-137" class="anchor"/><span
+id="line-138" class="anchor"/></p><p class="line867">
+</p><h2 id="head-e7075fbe37e659ec88fc3a5f4efca4590a5aba83">1.5. 包</h2>
+<span id="line-139" class="anchor"/><span id="line-140" class="anchor"/><p class="line862">多个关系密切的模块应该组织成一个包，以便于维护和使用。这项技术能有效避免名字空间冲突。创建一个名字为包名字的文件夹并在该文件夹下创建一个<tt class="backtick">__init__.py</tt> 文件就定义了一个包。你可以根据需要在该文件夹下存放资源文件、已编译扩展及子包。举例来说，一个包可能有以下结构: <span id="line-141" class="anchor"/><span id="line-142" class="anchor"/></p><pre>Graphics/
+<span id="line-143" class="anchor"/>      __init__.py
+<span id="line-144" class="anchor"/>      Primitive/
+<span id="line-145" class="anchor"/>         __init__.py
+<span id="line-146" class="anchor"/>         lines.py
+<span id="line-147" class="anchor"/>         fill.py
+<span id="line-148" class="anchor"/>         text.py
+<span id="line-149" class="anchor"/>         ...
+<span id="line-150" class="anchor"/>      Graph2d/
+<span id="line-151" class="anchor"/>         __init__.py
+<span id="line-152" class="anchor"/>         plot2d.py
+<span id="line-153" class="anchor"/>         ...
+<span id="line-154" class="anchor"/>      Graph3d/
+<span id="line-155" class="anchor"/>         __init__.py
+<span id="line-156" class="anchor"/>         plot3d.py
+<span id="line-157" class="anchor"/>         ...
+<span id="line-158" class="anchor"/>      Formats/
+<span id="line-159" class="anchor"/>         __init__.py
+<span id="line-160" class="anchor"/>         gif.py
+<span id="line-161" class="anchor"/>         png.py
+<span id="line-162" class="anchor"/>         tiff.py
+<span id="line-163" class="anchor"/>         jpeg.py
+<span id="line-164" class="anchor"/></pre><span id="line-165" class="anchor"/><span id="line-166" class="anchor"/><p class="line874">import语句使用以下几种方式导入包中的模块: <span id="line-167" class="anchor"/><span id="line-168" class="anchor"/></p><p class="line874">* import Graphics.Primitive.fill <span id="line-169" class="anchor"/>导入模块Graphics.Primitive.fill,只能以全名访问模块属性,例如 <tt class="backtick">Graphics.Primitive.fill.floodfill(img,x,y,color)</tt>. <span id="line-170"
+class="anchor"/><span id="line-171" class="anchor"/></p><p class="line874">* from Graphics.Primitive import fill <span id="line-172" class="anchor"/>导入模块fill ,只能以 fill.属性名 这种方式访问模块属性,例如 fill.floodfill(img,x,y,color). <span id="line-173" class="anchor"/><span id="line-174" class="anchor"/></p><p class="line874">* from Graphics.Primitive.fill import floodfill <span id="line-175" class="anchor"/>导入模块fill ,并将函数floodfill放入当前名称空间,直接访问被导入的属性，例如
+floodfill(img,x,y,color). <span id="line-176" class="anchor"/><span id="line-177" class="anchor"/></p><p class="line862">无论一个包的哪个部分被导入, 在文件<tt class="backtick">__init__.py</tt>中的代码都会运行.这个文件的内容允许为空,不过通常情况下它用来存放包的初始化代码。导入过程遇到的所有 <tt class="backtick">__init__.py</tt>文件都被运行.因此 import Graphics.Primitive.fill 语句会顺序运行 Graphics 和 Primitive 文件夹下的<tt class="backtick">__init__.py</tt>文件. <span id="line-178" class="anchor"/><span
+id="line-179" class="anchor"/></p><p class="line874">下边这个语句具有歧义: <span id="line-180" class="anchor"/><span id="line-181" class="anchor"/></p><p class="line867"><tt class="backtick">from Graphics.Primitive import *</tt> <span id="line-182" class="anchor"/><span id="line-183" class="anchor"/></p><p class="line862">这个语句的原意图是想将Graphics.Primitive包下的所有模块导入到当前的名称空间.然而,由于不同平台间文件名规则不同(比如大小写敏感问题), Python不能正确判定哪些模块要被导入.这个语句只会顺序运行
+Graphics 和 Primitive 文件夹下的<tt class="backtick">__init__.py</tt>文件. 要解决这个问题，应该在Primitive文件夹下面的<tt class="backtick">__init__.py</tt>中定义一个名字<span class="u">all</span>的列表，例如: <span id="line-184" class="anchor"/><span id="line-185" class="anchor"/><span id="line-186" class="anchor"/><span id="line-187" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-4a47d0fa607aec2e9fe9cdbb0ddbec27ca6387e2_007\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-4a47d0fa607aec2e9fe9cdbb0ddbec27ca6387e2_007', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-4a47d0fa607aec2e9fe9cdbb0ddbec27ca6387e2_007" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment"># Graphics/Primitive/__init__.py</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="ID">__all__</span> <span class="Operator">=</span> <span class="Operator">[</span><span class="String">"lines"</span><span class="Operator">,</span><span class="String">"text"</span><span class="Operator">,</span><span class="String">"fill"</span><span class="Operator">,</span><span class="Operator">.</span><span class="Operator">.</span><span class="Operator">.</span><span
+class="Operator">]</span><span class="Text"/></span>
+</pre></div><span id="line-188" class="anchor"/><p class="line874">这样,上边的语句就可以导入列表中所有模块. <span id="line-189" class="anchor"/><span id="line-190" class="anchor"/></p><p class="line862">下面这个语句只会执行Graphics目录下的<tt class="backtick">__init__.py</tt>文件，而不会导入任何模块: <span id="line-191" class="anchor"/><span id="line-192" class="anchor"/><span id="line-193" class="anchor"/><span id="line-194" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-25bbc0bf9b0da0e01e8ee708a5ecb11c51c69e13_008\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-25bbc0bf9b0da0e01e8ee708a5ecb11c51c69e13_008', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-25bbc0bf9b0da0e01e8ee708a5ecb11c51c69e13_008" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="ResWord">import</span> <span class="ID">Graphics</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="ID">Graphics</span><span class="Operator">.</span><span class="ID">Primitive</span><span class="Operator">.</span><span class="ID">fill</span><span class="Operator">.</span><span class="ID">floodfill</span><span class="Operator">(</span><span class="ID">img</span><span class="Operator">,</span><span class="ID">x</span><span class="Operator">,</span><span class="ID">y</span><span
+class="Operator">,</span><span class="ID">color</span><span class="Operator">)</span>  <span class="Comment"># 失败!</span><span class="Text"/></span>
+</pre></div><span id="line-195" class="anchor"/><p class="line862">不过既然 import Graphics 语句会运行 Graphics 目录下的 <span class="u">init</span>.py文件,我们就可以采取下面的手段来解决这个问题： <span id="line-196" class="anchor"/><span id="line-197" class="anchor"/><span id="line-198" class="anchor"/><span id="line-199" class="anchor"/><span id="line-200" class="anchor"/><span id="line-201" class="anchor"/><span id="line-202" class="anchor"/></p><div lang="en" dir="ltr"
+class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-e2eaac67e3b6fdcfb7912cb31c763af57f463b07_009\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-e2eaac67e3b6fdcfb7912cb31c763af57f463b07_009', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-e2eaac67e3b6fdcfb7912cb31c763af57f463b07_009" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment"># Graphics/__init__.py</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/><span class="ResWord">import</span> <span class="ID">Primitive</span><span class="Operator">,</span> <span class="ID">Graph2d</span><span class="Operator">,</span> <span class="ID">Graph3d</span></span>
+<span class="line"><span class="LineNumber">   3 </span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="Comment"># Graphics/Primitive/__init__.py</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="Comment"/><span class="ResWord">import</span> <span class="ID">lines</span><span class="Operator">,</span> <span class="ID">fill</span><span class="Operator">,</span> <span class="ID">text</span><span class="Operator">,</span> <span class="Operator">.</span><span class="Operator">.</span><span class="Operator">.</span><span class="Text"/></span>
+</pre></div><span id="line-203" class="anchor"/><p class="line874">这样import Graphics语句就可以导入所有的子模块(只能用全名来访问这些模块的属性). <span id="line-204" class="anchor"/><span id="line-205" class="anchor"/></p><p class="line874">在一个包中，同一目录下的两个模块可以互相引用而不需要提供包的名字.例如 Graphics.Primitive.fill模块可以使用import lines导入Graphics.Primitive.lines .  <span id="line-206"
+class="anchor"/>不过如果两个模块位于同一个包的不同目录,就必须提供包名.例如,如果Graphics.Graph2d的plot2d模块需要使用Graphics.Primitive下的lines模块,就必须使用from Graphics.Primitive import lines这样的语句.如果需要,一个模块可以通过 <tt class="backtick">__name__</tt> 属性得到自己的全名.例如：下面的代码在仅知道同级子包的名字情况下(不知道它们共同的顶级包名)导入该子包下的一个模块。 <span id="line-207" class="anchor"/><span id="line-208" class="anchor"/></p><p
+class="line867"><span id="line-209" class="anchor"/><span id="line-210" class="anchor"/><span id="line-211" class="anchor"/><span id="line-212" class="anchor"/><span id="line-213" class="anchor"/><span id="line-214" class="anchor"/><span id="line-215" class="anchor"/><span id="line-216" class="anchor"/><span id="line-217" class="anchor"/></p><div lang="en" dir="ltr" class="codearea">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-24b1386123ca67050f6cbca1d165f7ed57618f9c_010\', 1, 1);" \
+class="codenumbers">Toggle line numbers<\/a>');
+</script><a class="codenumbers" onclick="return togglenumber('CA-24b1386123ca67050f6cbca1d165f7ed57618f9c_010', 1, 1);" href="#">Toggle line numbers</a>
+<pre lang="en" id="CA-24b1386123ca67050f6cbca1d165f7ed57618f9c_010" dir="ltr"><span class="line"><span class="LineNumber">   1 </span><span class="Comment"># Graphics/Graph2d/plot2d.py</span></span>
+<span class="line"><span class="LineNumber">   2 </span><span class="Comment"/></span>
+<span class="line"><span class="LineNumber">   3 </span><span class="Comment"># 决定包的名称,以及自身的位置</span></span>
+<span class="line"><span class="LineNumber">   4 </span><span class="Comment"/><span class="ResWord">import</span> <span class="ID">string</span></span>
+<span class="line"><span class="LineNumber">   5 </span><span class="ID">base_package</span> <span class="Operator">=</span> <span class="ID">string</span><span class="Operator">.</span><span class="ID">join</span><span class="Operator">(</span><span class="ID">string</span><span class="Operator">.</span><span class="ID">split</span><span class="Operator">(</span><span class="ID">__name__</span><span class="Operator">,</span><span
+class="String">'.'</span><span class="Operator">)</span><span class="Operator">[</span><span class="Operator">:</span><span class="Operator">-</span><span class="Number">2</span><span class="Operator">]</span><span class="Operator">,</span><span class="String">'.'</span><span class="Operator">)</span></span>
+<span class="line"><span class="LineNumber">   6 </span></span>
+<span class="line"><span class="LineNumber">   7 </span><span class="Comment"># 导入 ../Primitive/fill.py 模块</span></span>
+<span class="line"><span class="LineNumber">   8 </span><span class="Comment"/><span class="ResWord">exec</span> <span class="String">"from %s.Primitive import fill"</span> <span class="Operator">%</span> <span class="Operator">(</span><span class="ID">base_package</span><span class="Operator">,</span><span class="Operator">)</span><span class="Text"/></span>
+</pre></div><span id="line-218" class="anchor"/><p class="line862">最后,当Python导入一个包时,它定义了一个包含目录列表的特殊变量<tt class="backtick">__path__</tt> ,它用于查找包的模块(<tt class="backtick">__path__</tt>与sys.path变量的作用相似). 可以在<tt class="backtick">__init__.py</tt>文件中访问<tt class="backtick">__path__</tt>变量.这个列表的初始值只有一个元素.即包的目录.只要你觉得必要,一个包也可以到其他的目录中去(在<tt
+class="backtick">__path__</tt>增加要搜索的目录)搜索模块。(换言之，一个模块可以属于一个包，却不位于这个包所在的目录或子目录下。 <span id="line-219" class="anchor"/><span id="bottom" class="anchor"/></p></div>

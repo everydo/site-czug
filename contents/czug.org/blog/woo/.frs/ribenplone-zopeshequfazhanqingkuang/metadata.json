@@ -1,0 +1,14 @@
+{
+    "main": {
+        "contenttype": "Document", 
+        "id": "ribenplone-zopeshequfazhanqingkuang"
+    }, 
+    "dublin": {
+        "creators": [
+            "woo"
+        ], 
+        "description": "", 
+        "modified": "2006-09-12 21:16:43", 
+        "title": "日本plone/zope社区发展情况"
+    }
+}
