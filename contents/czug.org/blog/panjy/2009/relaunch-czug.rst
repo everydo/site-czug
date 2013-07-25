@@ -1,5 +1,5 @@
 ---
-created: 2009-8-16 15:48
+created: 2009-8-16 15:48:00
 creator: 潘俊勇
 description: 采用zopen.cms，将czug重构了，内容清理了一遍
 title: CZUG.org, 新生

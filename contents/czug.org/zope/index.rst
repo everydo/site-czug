@@ -5,8 +5,10 @@ description: 'Zope: 一个开源的web应用服务器'
 title: Zope简介
 ---
 =============
-Zope 史话
+Zope简介
 =============
+
+Zope: 一个开源的web应用服务器
 
 .. Contents:: 
 .. sectnum::

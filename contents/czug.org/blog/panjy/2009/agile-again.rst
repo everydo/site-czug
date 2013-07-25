@@ -1,5 +1,5 @@
 ---
-created: 2009-11-15 12:32
+created: 2009-11-15 12:32:00
 creator: 潘俊勇
 description: ''
 title: 敏捷 是什么？

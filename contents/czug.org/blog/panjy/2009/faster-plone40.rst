@@ -1,5 +1,5 @@
 ---
-created: 2010-03-03 16:25
+created: 2010-03-03 16:25:00
 creator: 潘俊勇
 description: ''
 title: Plone 4.0比Drupal, Joomla 和Wordpress快3倍

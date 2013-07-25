@@ -1,4 +1,4 @@
 description: 介绍CZUG、Zope、Plone，和相关网络资源
-exclude: left_col.rst
+exclude: [left_col.rst]
 order: []
 title: 关于

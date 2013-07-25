@@ -1,5 +1,5 @@
 ---
-created: 2009-11-15 12:29
+created: 2009-11-15 12:29:00
 creator: 潘俊勇
 description: ''
 title: 国产软件，我们的痛

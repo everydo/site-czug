@@ -1,5 +1,5 @@
 ---
-created: 2009-11-15 12:31
+created: 2009-11-15 12:31:00
 creator: 潘俊勇
 description: ''
 title: 软件 VS Web 2.0

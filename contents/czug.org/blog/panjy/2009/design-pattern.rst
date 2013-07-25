@@ -1,5 +1,5 @@
 ---
-created: 2009-11-15 12:33
+created: 2009-11-15 12:33:00
 creator: 潘俊勇
 description: ''
 title: 设计模式 VS 反设计模式

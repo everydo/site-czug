@@ -1,4 +1,4 @@
 description: 社区组织完成的一些项目，包括产品开发、网站内容等
-exclude: left_col.rst
+exclude: [left_col.rst]
 order: []
 title: 社区项目
