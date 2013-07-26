@@ -4,6 +4,12 @@ creator: ''
 description: 原理，使用世界来区别对待请求类型
 title: 使用事件机制
 ---
+==================
+使用事件机制
+==================
+
+原理，使用世界来区别对待请求类型
+
 .. include:: include.rst
   
 .. _events_chapter:

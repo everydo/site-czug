@@ -4,6 +4,12 @@ creator: ''
 description: 如何安装？创建Virtaulenv并安装；安装了什么？采用buildout安装
 title: 安装bfg
 ---
+===================
+安装bfg
+===================
+
+如何安装？创建Virtaulenv并安装；安装了什么？采用buildout安装
+
 .. include:: include.rst
 .. _environment_chapter:
 

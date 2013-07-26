@@ -4,6 +4,12 @@ creator: ''
 description: 和其他框架的相似性，为什么？
 title: bfg介绍
 ---
+===============
+bfg介绍
+===============
+
+和其他框架的相似性，为什么？
+
 .. include:: include.rst
 
 :mod:`repoze.bfg` 介绍 

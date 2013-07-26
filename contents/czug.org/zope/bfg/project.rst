@@ -4,6 +4,12 @@ creator: ''
 description: 创建项目；安装新建的项目，准备开发；运行测试；运行应用；项目结构；MyProject项目和包；
 title: 创建一个bfg项目
 ---
+======================
+创建一个bfg项目
+======================
+
+创建项目；安装新建的项目，准备开发；运行测试；运行应用；项目结构；MyProject项目和包；
+
 .. include:: include.rst
 
 :翻译: Hu. Ziming hzmangel at gmail.com

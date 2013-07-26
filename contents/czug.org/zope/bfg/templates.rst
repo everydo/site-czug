@@ -4,6 +4,12 @@ creator: ''
 description: 使用 Chameleon(chameleon.zpt)页面模板；使用xslt；自动加载模板；使用文本模板；其他的模板语言
 title: Templates模板
 ---
+=====================
+Templates模板
+=====================
+
+用函数定义视图；把视图映射为URL;Model接口；view zcml；请求类型；安全性；转向；静态内容
+
 .. include:: include.rst
 
 模板 template

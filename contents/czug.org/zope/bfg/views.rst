@@ -4,6 +4,12 @@ creator: ''
 description: 用函数定义视图；把视图映射为URL;Model接口；view zcml；请求类型；安全性；转向；静态内容
 title: Views
 ---
+=============
+Views
+=============
+
+用函数定义视图；把视图映射为URL;Model接口；view zcml；请求类型；安全性；转向；静态内容
+
 .. include:: include.rst
 
 .. _views_chapter:

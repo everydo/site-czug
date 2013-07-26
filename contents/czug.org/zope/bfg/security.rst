@@ -4,6 +4,12 @@ creator: ''
 description: 开启安全策略；使用权限保护view; model对象 ACL控制；ACL继承；位置感张；调试
 title: 安全性
 ---
+=============
+安全性
+=============
+
+开启安全策略；使用权限保护view; model对象 ACL控制；ACL继承；位置感张；调试
+
 .. include:: include.rst
 .. _security_chapter:
 
