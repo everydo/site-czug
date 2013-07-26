@@ -92,7 +92,7 @@ padding-top:0.2em;
 text-decoration:none;
 }
 /* navtree */
-li.selected div a.navTreeCurrentItem {
+li.active {
 background-color:#EDF3FE;
 border:1px solid #CCCCCC !important;
 color:#436976;
