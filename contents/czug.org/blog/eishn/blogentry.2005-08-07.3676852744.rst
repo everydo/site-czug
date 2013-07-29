@@ -1,3 +1,9 @@
+---
+created: 2005-08-12 12:26:38
+creator: eishn
+description: 今天闲逛 CZUG ，看到关于 Lucene 和 Lupy 的讨论。顺便把 Lupy 的汉化思路写一下。
+title: 使 Lupy 支持中文
+---
 <ul>
  <li>这和 PyAIML 的汉化方法如出一辙，不过要方便多了。关键是一个所谓的 "Analyzer" 类：</li>
  </ul>

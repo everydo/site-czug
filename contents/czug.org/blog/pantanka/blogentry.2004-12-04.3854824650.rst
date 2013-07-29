@@ -1,3 +1,9 @@
+---
+created: 2004-12-04 23:35:23
+creator: patanka
+description: 在我的企业推行plone已经一段时间了，可是情况并不像我想象的那样乐观。
+title: Plone的企业应用成熟么？
+---
 
  <p>用Plone作我们自己的内部网站项目的过程真是很艰辛，使我开始对plone企业应用的成熟性产生了一些怀疑。</p>
  <p>1、关于Zope&amp;Plone的文档比较缺乏</p>

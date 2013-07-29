@@ -1,3 +1,9 @@
+---
+created: 2004-09-22 05:29:51
+creator: patanka
+description: 一见到她，就喜欢上了她。
+title: 结识plone
+---
 
  <p>结识她实属偶然。</p>
  <p>

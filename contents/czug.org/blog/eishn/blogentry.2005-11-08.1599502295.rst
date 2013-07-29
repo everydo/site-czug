@@ -1,3 +1,10 @@
+---
+created: 2005-11-08 11:27:49
+creator: eishn
+description: '通常，我们能够清醒地知道我们是否真正需要一个使用 Python 来编制的服务。其中最简单的一个场合是: 当所有应用逻辑都是使用 Python
+  来完成的时候，也许我们将不得不继续使用 Python 来完成整个服务架构……'
+title: 使用 Zope3 技术建立 Python 服务 (Unix 版本)
+---
 <h2>一、引入 Zope3 系统架构技术</h2>
  <ul>
  <li>使用 Zope3 系统架构技术建立 Python 服务</li>

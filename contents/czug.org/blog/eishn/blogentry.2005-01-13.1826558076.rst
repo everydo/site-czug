@@ -1,3 +1,9 @@
+---
+created: 2005-01-13 12:33:25
+creator: eishn
+description: 简单地探讨一下 Python 中的 import，它的用法。这是第一篇。
+title: import 初探之一 —— 导入 Package
+---
 
  <div align="right">
  <i><strong>—— 朋友，你从哪里来？</strong></i>

@@ -1,3 +1,9 @@
+---
+created: 2007-01-08 14:36:56
+creator: eishn
+description: 注入, crack, xss, javascript
+title: 沈崴手把手教你如何获取别人网易博客权限
+---
 <a href="http://eishn.plonespace.net/images/step6.jpg"><img src="http://eishn.plonespace.net/images/step6.jpg/image_preview" /></a><br />
 <p align="left">好了,
 现在就让我们来聊些别的,
