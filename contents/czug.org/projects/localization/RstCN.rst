@@ -1,3 +1,9 @@
+---
+created: 2006-09-15 08:46:53
+creator: panjy
+description: reStructuredText 是一个功能强大的“所想即所得”文本编写格式，但是目前对中文支持不佳。
+title: 新结构化文本的中文支持
+---
 reStructuredText_ 是一个功能强大的“所想即所得”文本编写格式，但是目前对中文支持不佳。
 
 .. _reStructuredText: /docs/plone/plonebook/X_e6_96_b0_e7_bb_93_e6_9e_84_e5_8c_96_e6_96_87_e6_9c_ac

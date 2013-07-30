@@ -1,3 +1,9 @@
+---
+created: 2006-09-15 08:46:59
+creator: panjy
+description: 支持在线的中英文翻译
+title: 中英文翻译工具
+---
 :项目负责人: Limodou,Zoomq
 :状态: 进行中
 

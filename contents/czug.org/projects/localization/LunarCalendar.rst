@@ -1,3 +1,9 @@
+---
+created: 2006-09-15 08:46:53
+creator: panjy
+description: 让Zope/plone支持阴历
+title: 阴历支持
+---
 :项目状态: 讨论
 :项目描述: 让Zope/Plone支持阴历
 

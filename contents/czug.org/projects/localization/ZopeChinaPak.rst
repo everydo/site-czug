@@ -1,3 +1,9 @@
+---
+created: 2006-09-15 08:46:53
+creator: panjy
+description: 这是一个zope/cmf/plone和其他产品的中文补丁集合。仅供中文用户。
+title: ZopeChinaPak
+---
 <a href="http://www.zope.org/Members/panjunyong/ZopeChinaPak">产品网页</a>
 
 作者 -- <a href="http://www.zopen.cn">润普公司</a> 潘俊勇

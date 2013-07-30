@@ -1,3 +1,9 @@
+---
+created: 2006-09-15 08:46:53
+creator: panjy
+description: 让plone支持支持汉字和拼音的自动转换
+title: 拼音支持
+---
 .. Contents:: 目录
 
 **在Plone2.1中，安装ZopeChinaPak后，可支持自动以拼音作为id**
