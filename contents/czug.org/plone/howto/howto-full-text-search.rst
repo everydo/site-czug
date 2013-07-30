@@ -1,3 +1,9 @@
+---
+created: 2006-02-19 01:34:40
+creator: panjy
+description: Zope中的全文检索查询语法
+title: 如何使用全文索引功能？
+---
  <p>参考：<a href="http://www.zope.org/Documentation/Books/ZopeBook/2_6Edition/SearchingZCatalog.stx">
  此文</a></p>
  <ol>

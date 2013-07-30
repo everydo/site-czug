@@ -1,3 +1,9 @@
+---
+created: 2005-12-14 14:34:35
+creator: panjy
+description: ''
+title: 個人化基本設定
+---
 按此观看简体版本_
 
 .. _按此观看简体版本: X_e4_b8_aa_e4_ba_ba_e5_8c_96_e5_9f_ba_e6_9c_ac_e8_ae_be_e5_ae_9a

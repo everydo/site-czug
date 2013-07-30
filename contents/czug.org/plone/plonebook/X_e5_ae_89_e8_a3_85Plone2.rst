@@ -1,3 +1,9 @@
+---
+created: 2006-02-20 17:22:33
+creator: panjy
+description: 在windows下和linux下如何安装、配置和运行zope/plone
+title: 安装Plone2
+---
 ===========
 安装Plone 2
 ===========

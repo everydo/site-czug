@@ -1,3 +1,9 @@
+---
+created: 2005-12-14 14:34:33
+creator: panjy
+description: ''
+title: 系统安装与系统控制器
+---
 :作者: pupq 
 :原文: <a href="http://plone.org/documentation/whatsnew/2.0/installer">http://plone.org/documentation/whatsnew/2.0/installer</a>
 :翻译: 赵玉勇

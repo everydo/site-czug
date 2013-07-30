@@ -1,3 +1,9 @@
+---
+created: 2006-11-24 17:35:56
+creator: panjy
+description: 想知道更多Plone的东西？看看电影吧，他和其他系统比较如何，为什么我们认为他是管理您内容的最佳平台？我们已经为您准备好了。
+title: Plone演示小电影
+---
 
 <hr />
 <div style="width: 45%; float: left; text-align: center;">&nbsp;

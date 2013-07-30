@@ -1,3 +1,9 @@
+---
+created: 2005-12-14 14:34:33
+creator: panjy
+description: ''
+title: 全文检索规则
+---
 .. Contents:: 目录
 
 逻辑表达式

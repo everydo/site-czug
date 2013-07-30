@@ -1,3 +1,9 @@
+---
+created: 2005-12-14 14:25:21
+creator: panjy
+description: ''
+title: Chapter11
+---
 Chapter 11
 -----------
 :翻译: 潘俊勇

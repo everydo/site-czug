@@ -1,3 +1,9 @@
+---
+created: 2005-12-14 14:34:31
+creator: panjy
+description: ''
+title: CMFBoard
+---
 
 Plone上最优秀的讨论区产品，被<a href="http://mars.telascience.org/home">火星探测器漫游者</a> 网站采用。
 

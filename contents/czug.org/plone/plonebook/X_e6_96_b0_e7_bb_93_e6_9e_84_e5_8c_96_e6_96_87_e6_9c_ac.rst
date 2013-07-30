@@ -1,3 +1,9 @@
+---
+created: 2005-12-14 14:34:26
+creator: panjy
+description: ''
+title: 新结构化文本
+---
 (译者说明： “新结构化文本”(ReStructuredText)是针对[结构化文本]<a class="new" href="http://members.czug.org/plone/plonebook/X_e6_96_b0_e7_bb_93_e6_9e_84_e5_8c_96_e6_96_87_e6_9c_ac/createform?page=%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%87%E6%9C%AC" title="create this page">?</a>存在的问题， `在zope2.7中开始正式引入`__ 。reStructuredText的历史已经很长，是一个标准的文档方法，有标准的规范和强大的操作工具。他得到的广泛的支持。他是python项目的主要文档工具。从Zope 2.7开始，在ZMI中有一个'ReStructuredText Document'的对象可供使用。本文参考 `A ReStructuredText Primer`__ 。)
 
 __ <a href="http://dev.zope.org/Wikis/DevSite/Proposals/ReStructuredTextIntegration">http://dev.zope.org/Wikis/DevSite/Proposals/ReStructuredTextIntegration</a>

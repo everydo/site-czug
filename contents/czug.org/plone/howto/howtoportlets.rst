@@ -1,3 +1,9 @@
+---
+created: 2006-02-19 01:35:44
+creator: panjy
+description: 定制左右面板，得到个性化的界面
+title: 如何定制Plone左右两侧的面板(Portlet)?
+---
 在plone中，<br />
 <ol>
   <li>点击“Plone设置”，进入Plone控制面板；</li>

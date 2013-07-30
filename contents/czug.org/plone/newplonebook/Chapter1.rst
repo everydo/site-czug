@@ -1,3 +1,9 @@
+---
+created: 2006-08-23 22:11:40
+creator: panjy
+description: ''
+title: Chapter1
+---
 第一章 
 ----------------------
 

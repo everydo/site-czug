@@ -1,3 +1,9 @@
+---
+created: 2005-12-14 14:34:29
+creator: panjy
+description: ''
+title: 页面文档的查看页面
+---
 <htm l xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
       lang="en-US"
       metal:use-macro="here/main_template/macros/master"

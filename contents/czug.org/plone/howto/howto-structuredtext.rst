@@ -1,3 +1,9 @@
+---
+created: 2006-02-19 01:30:55
+creator: panjy
+description: 结构化文本规范
+title: 如何使用StructuredText
+---
 <p>本文来自: http://www.czug.org/Members/asky/stx-digest/document_view</p>
 <h2>何謂結構文本 (Structured Text)</h2>
 <p>  簡單地說, 就是利用 <strong>基本</strong> 的純文字指令, 讓使用者可以迅速地在網站上編輯網頁.

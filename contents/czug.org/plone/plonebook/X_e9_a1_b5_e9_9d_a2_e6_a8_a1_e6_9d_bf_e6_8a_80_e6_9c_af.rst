@@ -1,3 +1,9 @@
+---
+created: 2006-02-20 17:24:22
+creator: panjy
+description: 页面模板(Page Template)是plone中构建动态页面主要的方法。这里介绍最简单介绍。
+title: 页面模板技术
+---
 页面模板(Page Template)是plone中构建动态页面主要的方法。这里介绍最简单介绍。
 
 .. contents:: 章节目录

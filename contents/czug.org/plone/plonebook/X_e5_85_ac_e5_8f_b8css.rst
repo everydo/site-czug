@@ -1,3 +1,9 @@
+---
+created: 2005-12-14 14:34:29
+creator: panjy
+description: ''
+title: 公司css
+---
 /* 来源：<a href="http://www.zetaweb.com/ploneCustom.css">http://www.zetaweb.com/ploneCustom.css</a> */
 
 /*

@@ -1,3 +1,9 @@
+---
+created: 2006-02-20 17:23:44
+creator: panjy
+description: 如何定制个性化的皮肤，拥有一个不同外观的个性化网站
+title: Plone的外观定制
+---
 Plone的外观定制
 ==============
 

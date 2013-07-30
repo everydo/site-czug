@@ -1,3 +1,9 @@
+---
+created: 2005-12-14 14:34:30
+creator: panjy
+description: ''
+title: CMFContentPanels
+---
 面板组件（CMFContentPanels）是一个CMF/Plone的仪表盘产品，用于创建聚集类型的内容. 能够通过可配置面板的形式将其他的内容组合成为一个新的内容. 可以直接在web上更改其布局，面板框的皮肤，并改变面板内容的视图。
 
 基本情况

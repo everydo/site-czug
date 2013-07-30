@@ -1,3 +1,9 @@
+---
+created: 2005-12-14 14:34:30
+creator: panjy
+description: ''
+title: MPoll
+---
 投票站（MPoll）
 
  基本信息

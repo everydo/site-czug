@@ -1,3 +1,9 @@
+---
+created: 2005-12-14 14:34:23
+creator: panjy
+description: ''
+title: ZMI中Plone的内幕介绍
+---
 portal_actionicons
 
  更改内容工栏图标：

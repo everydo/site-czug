@@ -1,3 +1,9 @@
+---
+created: 2006-02-20 17:22:56
+creator: panjy
+description: 从最终用户的角度介绍Plone网站的基本操作
+title: 使用Plone2
+---
 :作者: Andy McKay
 :翻译: 赵玉勇
 :版本: $Revision: 1.5 $

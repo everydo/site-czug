@@ -1,3 +1,9 @@
+---
+created: 2006-11-14 10:06:24
+creator: honeyday
+description: "对于支持i18n翻译的zope产品，可以通过自己手工编辑po文件来实现软件的本地化。\r\n本文简单介绍了po文件的制作和应用等的操作步骤。"
+title: 如何自己动手汉化po文件
+---
 <h1><strong>一、po/pot文件简介</strong></h1>
  <p>po是i18n翻译的时候需要的翻译文件。</p>
  <table>

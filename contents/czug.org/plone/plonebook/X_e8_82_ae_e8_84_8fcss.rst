@@ -1,3 +1,9 @@
+---
+created: 2005-12-14 14:34:28
+creator: panjy
+description: ''
+title: 肮脏css
+---
 /* 来源：<a href="http://www.zetaweb.com/dirty/ploneCustom.css">http://www.zetaweb.com/dirty/ploneCustom.css</a> */
 
 /*

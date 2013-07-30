@@ -1,3 +1,9 @@
+---
+created: 2006-02-20 17:23:11
+creator: panjy
+description: Plone包含一个强大的工作流引擎，本章介绍了Plone工作流引擎的基本原理。
+title: 工作流(Workflow)
+---
 :作者: 赵玉勇
 :版本: $Revision: 0.1 $
 :版权: This document has been placed in the public domain.

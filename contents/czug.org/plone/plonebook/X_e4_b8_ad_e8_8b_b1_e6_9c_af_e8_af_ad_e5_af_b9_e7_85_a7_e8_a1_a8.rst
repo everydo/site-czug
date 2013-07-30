@@ -1,3 +1,9 @@
+---
+created: 2005-12-14 14:34:28
+creator: panjy
+description: ''
+title: 中英术语对照表
+---
 词汇清单
 =======
 

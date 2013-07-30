@@ -1,3 +1,9 @@
+---
+created: 2005-12-14 14:34:34
+creator: panjy
+description: ''
+title: 安裝Zope
+---
 Zope 2.7.0
 
 Zope 是開源應用伺服器。你可以用這伺服器建立內容管理、內聯網、portals, 及其它網上軟件。Zope是由　Python: <a href="http://www.python.org/">http://www.python.org/</a> 建立而成。

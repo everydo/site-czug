@@ -1,3 +1,9 @@
+---
+created: 2005-12-14 14:34:32
+creator: panjy
+description: ''
+title: 系统管理
+---
 :作者: pupq
 :原文: <a href="http://plone.org/documentation/whatsnew/2.0/administration">http://plone.org/documentation/whatsnew/2.0/administration</a>
 :翻译: 赵玉勇

@@ -1,3 +1,9 @@
+---
+created: 2006-02-20 17:14:27
+creator: panjy
+description: 相对于Plone 1.0，Plone 2.0增加了哪些新特性？
+title: Plone2新特性
+---
 :作者: Alexander Limi
 :原文: http://plone.org/documentation/whatsnew/2.0/
 :翻译: 赵玉勇

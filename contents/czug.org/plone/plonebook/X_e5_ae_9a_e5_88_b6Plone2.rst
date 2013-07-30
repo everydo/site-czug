@@ -1,3 +1,9 @@
+---
+created: 2006-02-20 17:20:10
+creator: panjy
+description: 介绍对Plone系统的简单定制方法，包括页首标签、面板配置调整等。
+title: 定制Plone2
+---
 :作者: 潘俊勇、赵玉勇
 :版本: $Revision: 0.1 $
 :版权: This document has been placed in the public domain.

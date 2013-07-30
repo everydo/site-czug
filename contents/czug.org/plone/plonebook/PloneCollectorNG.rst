@@ -1,3 +1,9 @@
+---
+created: 2005-12-14 14:34:31
+creator: panjy
+description: ''
+title: PloneCollectorNG
+---
 <a href="http://members.czug.org/plone/plonebook/PloneCollectorNG" title="" style="background-color:;">PloneCollectorNG</a>是一个强大的故障请求处理工具，可灵活定义故障请求的栏目内容。支持处理过程跟踪、邮件通知等功能。同时也是一个容易扩展的系统工具框架。
 
 

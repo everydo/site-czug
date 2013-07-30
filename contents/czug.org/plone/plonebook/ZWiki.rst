@@ -1,3 +1,9 @@
+---
+created: 2005-12-14 14:34:31
+creator: panjy
+description: ''
+title: ZWiki
+---
 Zope上最好的wiki，非常好的文档协同编写工具，支持邮件订阅、自动生成目录结构、可转为为其它格式文档等功能。
 
 .. contents:: 目录

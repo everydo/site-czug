@@ -1,3 +1,9 @@
+---
+created: 2005-12-14 14:25:20
+creator: panjy
+description: ''
+title: Chapter10
+---
 Chapter 10 和其他系统集成
 ------------------------------
 

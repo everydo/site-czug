@@ -1,3 +1,9 @@
+---
+created: 2006-09-18 15:24:30
+creator: panjy
+description: ''
+title: Plone的中文支持
+---
 .. contents:: 章节目录
 
 Plone中文化方案

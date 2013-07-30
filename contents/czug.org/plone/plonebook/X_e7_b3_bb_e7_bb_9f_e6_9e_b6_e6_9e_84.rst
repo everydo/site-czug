@@ -1,3 +1,9 @@
+---
+created: 2005-12-14 14:34:32
+creator: panjy
+description: ''
+title: 系统架构
+---
 :作者: Alexander Limi
 :原文: <a href="http://plone.org/documentation/whatsnew/2.0/architecture">http://plone.org/documentation/whatsnew/2.0/architecture</a>
 :翻译: 赵玉勇

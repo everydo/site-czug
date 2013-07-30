@@ -1,3 +1,9 @@
+---
+created: 2006-08-23 10:58:04
+creator: panjy
+description: ''
+title: 意見
+---
 潘俊勇
   做为一个教程的形式写，更加实用。但是有些内容和中文PloneBook要避免冲突，定位上，这个让用户能够迅速入门，并能够充分反映出plone的特性。
 

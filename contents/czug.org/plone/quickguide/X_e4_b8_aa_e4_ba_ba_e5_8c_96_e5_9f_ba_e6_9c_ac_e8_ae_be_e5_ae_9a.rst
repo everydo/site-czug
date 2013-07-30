@@ -1,3 +1,9 @@
+---
+created: 2006-08-23 22:15:17
+creator: panjy
+description: ''
+title: 个人化基本设定
+---
 `按此觀看繁體版本 <X_e5_80_8b_e4_ba_ba_e5_8c_96_e5_9f_ba_e6_9c_ac_e8_a8_ad_e5_ae_9a>`__
 
 

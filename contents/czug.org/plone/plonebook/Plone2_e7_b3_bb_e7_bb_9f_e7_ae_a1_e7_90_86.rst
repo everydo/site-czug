@@ -1,3 +1,9 @@
+---
+created: 2006-02-20 17:19:41
+creator: panjy
+description: 介绍系统管理操作，包括用户及组管理、邮件设置、网站基本设置等。
+title: Plone2系统管理
+---
 :作者: 赵玉勇
 :版本: $Revision: 1.5 $
 :版权: 

@@ -1,3 +1,9 @@
+---
+created: 2005-12-14 14:34:33
+creator: panjy
+description: ''
+title: 针对设计人员的改进
+---
 :作者: pupq 
 :原文: <a href="http://plone.org/documentation/whatsnew/2.0/designers">http://plone.org/documentation/whatsnew/2.0/designers</a>
 :翻译: 赵玉勇

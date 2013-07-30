@@ -1,3 +1,9 @@
+---
+created: 2005-12-14 14:34:25
+creator: panjy
+description: ''
+title: 如何定制Plone的页首标签
+---
 参考：
 
  <a href="http://plone.org/documentation/howto/HowToChangeTabs">http://plone.org/documentation/howto/HowToChangeTabs</a>

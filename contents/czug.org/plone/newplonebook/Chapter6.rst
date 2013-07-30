@@ -1,3 +1,9 @@
+---
+created: 2005-12-14 14:34:48
+creator: panjy
+description: ''
+title: Chapter6
+---
 第六章
 -------------
 

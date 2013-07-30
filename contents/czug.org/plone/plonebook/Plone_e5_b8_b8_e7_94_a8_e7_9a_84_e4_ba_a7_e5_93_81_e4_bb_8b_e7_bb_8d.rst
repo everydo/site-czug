@@ -1,3 +1,9 @@
+---
+created: 2006-02-20 17:24:45
+creator: panjy
+description: 介绍Plone中常用的第三方产品。
+title: Plone常用的产品介绍
+---
 所见即所得编辑器(<a href="http://members.czug.org/plone/plonebook/EPoz" title="" style="background-color:;">EPoz</a>)
  <a href="http://members.czug.org/plone/plonebook/EPoz" title="" style="background-color:;">EPoz</a>是同时支持IE（5.5 +）,、Mozilla（1.3 +）、Firebird（0.7 +）等多种浏览器的所见即所得（WYSIWYG）编辑器。用户可以在线编辑发布HTML格式内容。Plone2.0已经将其作为缺省安装配置。
 

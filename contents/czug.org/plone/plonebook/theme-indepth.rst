@@ -1,3 +1,9 @@
+---
+created: 2006-02-20 17:24:29
+creator: panjy
+description: 这里介绍如何通过定制css，改变Plone的外观。网站设计人员必看。Plone是适合做外部网解决方案的。
+title: 深入定制Plone外观
+---
 这里介绍如何通过定制css，改变Plone的外观。
 
 .. contents:: 章节目录

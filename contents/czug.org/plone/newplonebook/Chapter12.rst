@@ -1,3 +1,9 @@
+---
+created: 2005-12-14 14:25:18
+creator: panjy
+description: ''
+title: Chapter12
+---
 第12章
 ----------
 :翻译: 红原

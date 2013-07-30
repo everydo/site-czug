@@ -1,3 +1,9 @@
+---
+created: 2007-07-06T08:04:00
+creator: users.benky
+description: ''
+title: CacheFu缓存加速
+---
 =============================
 Plone站点缓存加速
 =============================
