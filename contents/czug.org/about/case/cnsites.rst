@@ -1,3 +1,9 @@
+---
+created: 2006-09-26 07:17:55
+creator: panjy
+description: 采用Zope/Plone搭建的网站清单
+title: 国内采用Zope/Plone搭建的网站
+---
 请把您基于Zope/Plone搭建的网站告诉我（ｐａｎｊｙ＠ｃｚｕｇ．ｏｒｇ）
 
 - GNOME的中文社区网 使用Plone构建  http://www.gnome-cn.org

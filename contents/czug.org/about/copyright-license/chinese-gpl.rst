@@ -1,3 +1,9 @@
+---
+created: 2006-09-15 08:44:45
+creator: panjy
+description: 中文版本的GPL许可文本。Plone采用此许可
+title: 中文版：GNU通用公共许可证( GPL)
+---
 
  <h3>GNU通用公共许可证( GPL)</h3>
  <p><a href="http://www.huihoo.com/open_source/GPL-chinese.html">http://www.huihoo.com/open_source/GPL-chinese.html</a></p>

@@ -1,3 +1,9 @@
+---
+created: 2004-03-22 06:59:32
+creator: panjy
+description: 'ZUG(Zope User Group)是zope社区组织形式之一了: 在zope.org核心社区周围，有众多的本地化的ZUG。CZUG就是一支中文ZUG力量了。'
+title: 为什么叫CZUG？
+---
 
  <p>CZUG ＝ Chinese Zope User Goup， 中文Zope用户组</p>
 

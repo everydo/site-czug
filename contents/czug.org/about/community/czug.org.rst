@@ -1,3 +1,9 @@
+---
+created: 2006-08-04 09:40:37
+creator: panjy
+description: 介绍CZUG的缘起、愿景、文化、组织方式等。
+title: CZUG社区
+---
 <h3>CZUG的起源</h3>
 
 <p>

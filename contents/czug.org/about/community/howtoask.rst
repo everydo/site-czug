@@ -1,3 +1,9 @@
+---
+created: 2004-06-18 11:30:08
+creator: panjy
+description: 交流就免不了提问。正确的提问，能让交流更加平滑，让社区更加健康
+title: 提问的智慧
+---
 
  <pre>
 Copyright (C) 2001 by Eric S. Raymond<br>

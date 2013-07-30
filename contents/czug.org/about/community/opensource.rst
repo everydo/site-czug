@@ -1,3 +1,9 @@
+---
+created: 2004-06-10 03:25:18
+creator: panjy
+description: CZUG不仅仅是一个技术网站，他面向市场，希望成为最终用户、开发和设计人员、服务提供商共同平台。
+title: CZUG的目标
+---
 
  <p>CZUG以<a href="http://Opensource.org">开放源代码</a>商业模式为指导而建立，希望能够为下面几种类型的用户提供服务：</p>
 

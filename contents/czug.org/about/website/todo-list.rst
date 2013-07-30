@@ -1,3 +1,9 @@
+---
+created: 2006-08-27 23:13:13
+creator: panjy
+description: CZUG要做的事情
+title: TODO list
+---
 招聘网站版面负责人
 ========================
 `Zope/Plone产品库 <products>`__ 负责人

@@ -1,3 +1,9 @@
+---
+created: 2006-11-01 08:16:17
+creator: panjy
+description: 网站更新调整历史
+title: 网站历史
+---
 2006年10月
   - 升级到Plone 2.5，采用PlonePAS + LDAPMultiPluggins管理用户
   - 论坛中文化

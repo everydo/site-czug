@@ -1,3 +1,9 @@
+---
+created: 2006-08-24 23:32:11
+creator: panjy
+description: 介绍本网站上安装的产品、系统的配置，以及补丁等信息
+title: CZUG.org内幕
+---
  <p>主要安装的产品包括：</p>
 
  <p>系统软件</p>
