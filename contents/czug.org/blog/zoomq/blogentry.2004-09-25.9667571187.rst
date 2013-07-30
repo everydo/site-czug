@@ -1,3 +1,10 @@
+---
+created: 2004-09-29 12:16:09
+creator: Zoomq
+description: 转移阵地到此，吸引人气吧！ 主要因为 Gmail 开放API 可看来又要开始定制维护了！
+title: '[有样儿学样]Gmail大放送啦!'
+---
+<h1>[有样儿学样]Gmail大放送啦!</h1>
 <p><a href="http://www.isaacmao.com/">[Issac毛]</a> 的 Gmail 体验</p>
 <p><img src="https://gmail.google.com/gmail/help/images/logo.gif" alt="Gmail" />
 </p>

@@ -1,4 +1,10 @@
-
+---
+created: 2005-01-13 12:22:30
+creator: eishn
+description: Python 中的内存泄漏 ，在 Python 中产生内存泄漏的技术
+title: Python 中的内存泄漏
+---
+<h1>Python 中的内存泄漏</h1>
  <p align="right"><i><font face="黑体"><b>——献给那些有内存泄漏相伴的日子</b><br /></font></i></p>
  <p align="justify">&nbsp;&nbsp;&nbsp; 事实证明，写程序是一件非常好玩的事情。</p>
  <p align="justify">&nbsp;&nbsp;&nbsp;&nbsp;我曾经尝试过靠自己勤劳的双手来封装 Python
