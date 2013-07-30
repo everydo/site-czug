@@ -78,13 +78,13 @@ li.navTreeItem div.contenttype-folder a img {
 }
 
 .navTreeItem a:hover,
-dd.portletItem .navTreeItem a:hover {
+dd.portletItem a:hover {
 background-color: #EDF3FE;
 color: #436976;
 border: 1px solid #B9D0FB;
 }
 
-.navTreeItem a, dd.portletItem .navTreeItem a {
+dd.portletItem a {
 border:1px solid White;
 display:block;
 padding-bottom:0.25em;

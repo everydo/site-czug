@@ -87,6 +87,11 @@ padding: 0;
 list-style-image: url(../img/bullet.gif);
 list-style-type: square;
 }
+.portletItem ul {
+margin: 0;
+list-style-image: none;
+list-style-type: none;
+}
 ol {
 line-height: 1.5em;
 margin: 0.5em 0 0 2.5em;
@@ -95,6 +100,9 @@ list-style-image: none;
 }
 li {
 margin-bottom: 0.5em;
+}
+.portletItem li {
+margin-bottom: 0;
 }
 dt {
 font-weight: bold;
