@@ -6,6 +6,7 @@ description: 作为 Eurasia3 的重要组成部分, 客户端组件库(NJF), 已
   可以直接输出 JSON 报文, 转由 NJF 来组装页面并且交互。NJF 的另一大特点是使用 JavaScript 解释的二级语言来进行异步通信编程, 同样非常好玩。
 title: NJF On The Match
 ---
+<h1>NJF On The Match</h1>
 <ul>
   <li>通过模板(div id="tmpl"), 创建三个窗体。</li>
 </ul>

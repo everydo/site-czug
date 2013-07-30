@@ -1,3 +1,10 @@
+---
+created: 2006-12-19 11:27:57
+creator: woo
+description: ''
+title: 开源PK微软 Vista“专杀”网站开张
+---
+<h1>开源PK微软 Vista“专杀”网站开张</h1>
 <p>
                         开源组织自由软件基金会(FSF)成立了一个新网站“BadVista.org”。从名字上就可以看出，这是要跟微软较劲了。<br /><br />BadVista.org
 声称，微软所谓的新一代操作系统Windows

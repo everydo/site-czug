@@ -1,3 +1,10 @@
+---
+created: 2006-10-08 16:02:25
+creator: woo
+description: "该系列文章能告诉你什么：如何利用ZOPE/PLONE快速建立一个WEB站点\r\nby  wgzhou747217"
+title: '如何利用ZOPE/PLONE快速建立一个WEB站点 '
+---
+<h1>如何利用ZOPE/PLONE快速建立一个WEB站点</h1>
 <h2><a id="viewpost1_TitleUrl" href="/blog/wgzhou747217/archive/2006/03/30/1295844.html">如何利用ZOPE/PLONE快速建立一个WEB站点</a> 
 </h2>
 <div class="postbody">———该系列文章能告诉你什么：如何利用ZOPE/PLONE快速建立一个WEB站点———<br /><br />ZOPE/PLONE适用于什么样的网站？<br /><br />Everywhere，只要你愿意，他能为任何类型的公司、政府部门、社团组织提供任何业务的支持。<br />但它更适合以内容管理为主的业务。<br />————————————————————————————————————<br />什么叫内容管理？<br />去GOOGLE上搜一搜吧，看看什么叫做内容管理。<br />假如你是公司的老板，或者是CIO，希望建立一个内部网站，将公司的通知、员工讨论、网上学习等等都汇集到这里，这就是一种内容管理。<br />如果你是政府部门的某个领导，希望实施电子政府，在网上审批各类文件，技术上通常叫做工作流，也是一种内容管理。<br />如果你管理着一个协会，就像武汉自由协会，可以不仅仅只是建立一个WWW.CLINUX.ORG的网站，你的协会完全可以拥有一个有文章发布系统、WEB类型的NEWS系统、谈论区、邮件列表的多功能站点。<br />————————————————————————————————————————<br /><br />为什么是ZOPE？<br />能够提供内容管理支持的工具非常多，为什么选择ZOPE？<br />我的答案是：<br />1、ZOPE有一个类似J2EE的框架，功能的增加和修改很容易。<br />2、ZOPE/PLONE/PYTHON的开发者非常多，不可思议的多，不断地给ZOPE添加新的功能，用户需要开发的部分越来越少。<br /><br />最后，应当说一下的是，zope和plone都是采取的和GPL兼容的版权协议，这关系到哪些打算采用ZOPE/PLONE技术谋生的人，如果你改进了ZOPE/PLONE本身，你应当将源代码同时提供给你的客户。<br />如果你仅仅只是开发了ZOPE的插件，也就是ZOPE的术语：product，你可以选择其他的版权协议。<br />由于zope类似j2ee的结构，开发者将整个体系结构像积木一样搭建起来，自己的开发工作主要在product里，和zope/plone相对隔离开，从而能够采取自己需要的版权协议。<br /><br />参考站点<br /><a href="http://www.czug.org" target="_self">http://www.czug.org(中文)</a><br /><a href="http://www.zope.org/" target="_blank">http://www.zope.org</a><br /><a href="http://www.plone.org/" target="_blank">http://www.plone.org</a><br /><a href="http://www.zope.org.xn--tw(,)-n32hp9yhwkiro1xotwdqq3a60xfa7280a4h7c/" target="_blank">http://www.zope.org.tw（台湾的，有很多繁体的资料）</a><br />其他所有信息，可以从上面的网站上找到<br /><br />

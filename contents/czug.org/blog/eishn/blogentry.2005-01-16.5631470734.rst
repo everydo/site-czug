@@ -5,6 +5,7 @@ description: AIML 是著名的聊天机器人 A.L.I.C.E. 的底层技术。Pytho
   PyAIML 来开发出我们想要的聊天机器人。但是 PyAIML 对中文的支持还有不够理想的地方，我们需要对之进行一点点的改进，使之可以象英文一样地平滑地处理中文。
 title: 让机器人模块 PyAIML 平滑处理中文
 ---
+<h1>让机器人模块 PyAIML 平滑处理中文</h1>
 <div align="right">
  <b>—— 献给 Python 及人工智能爱好者</b><br />
  <b>沈崴 2005 年 1 月 16 日 于广州<br />

@@ -4,6 +4,7 @@ creator: eishn
 description: "Python 基础篇  -Life Is Short  You Need Python\r\n\"作者: 魏中华 (我已经转换为HTML)\""
 title: '[Python 技术培训] 第一周幻灯片 "Python 基础篇"'
 ---
+<h1>[Python 技术培训] 第一周幻灯片 "Python 基础篇</h1>
 <h2 class="Heading">
 Python 基础篇  -Life Is Short  You Need Python</h2><h3 class="Subheading"><br />
 </h3><h3 class="Subheading">Python 简介</h3><ul><li>

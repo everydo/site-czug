@@ -1,3 +1,10 @@
+---
+created: 2006-07-14 13:16:11
+creator: woo
+description: " Eric Raymond 原著\r\n[AKA]rover HansB iasc等翻译\r\n转摘自:http://www.aka.org.cn/Docs/magic-cauldron/magic-cauldron.html"
+title: 开源经典著作三:魔法大锅炉
+---
+<h1>开源经典著作三:魔法大锅炉</h1>
 <p><b><font size="5"><a href="http://www.aka.org.cn/Docs/magic-cauldron/magic-cauldron-1.html">1.近乎魔法</a> </font></b></p>
           <p><font size="5"><b><a href="http://www.aka.org.cn/Docs/magic-cauldron/magic-cauldron-2.html">2.超越高手的天赋</a> </b></font></p>
           <p><font size="5"><b><a href="http://www.aka.org.cn/Docs/magic-cauldron/magic-cauldron-3.html">3.制造业的错觉</a> </b></font></p>

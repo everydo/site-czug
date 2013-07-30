@@ -1,3 +1,10 @@
+---
+created: 2007-02-01 11:14:48
+creator: zhangbingkai
+description: ''
+title: IE7弹出MSXML 5.0支持的问题
+---
+<h1>IE7弹出MSXML 5.0支持的问题</h1>
 <p>Ｐlone在IE7上显示有点问题。</p>
 <p>Plone.org上Limi正好写了一篇相关的文章有介绍。
 <a class="reference" href="http://plone.org/documentation/how-to/plone-ie7-updates">http://plone.org/documentation/how-to/plone-ie7-updates</a></p>

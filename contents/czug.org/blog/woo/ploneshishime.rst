@@ -1,3 +1,10 @@
+---
+created: 2006-09-22 22:42:06
+creator: woo
+description: ''
+title: Plone是什么？
+---
+<h1>Plone是什么？</h1>
 <h2 class="diaryTitle">plone是什么？- -</h2> 
 				 <p>                                      
 				 </p><p>

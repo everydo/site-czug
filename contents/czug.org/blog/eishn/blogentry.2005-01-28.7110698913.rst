@@ -6,6 +6,7 @@ description: "    实现人工智能的途径，很多。包括神经网络；�
   \n"
 title: 自然语言环境(中文)下的人工智能理论及实践(首部曲)
 ---
+<h1>自然语言环境(中文)下的人工智能理论及实践(首部曲)</h1>
 <p style="margin-right: 0px;" align="right" dir="ltr"><i><b><font face="黑体">——关于智能实现的一些零散的构思<br />
  Eishn 于广州 2005 年 1 月</font></b></i></p>
  <p>&nbsp;&nbsp;&nbsp; 上面说到，

@@ -1,3 +1,10 @@
+---
+created: 2004-10-01 07:00:15
+creator: Zoomq
+description: 文本数据之始。字符万物之母...  回应Pan 居士的指点
+title: 文可文，非常文。本可文，非常本。
+---
+<h1>文可文，非常文。本可文，非常本。</h1>
 <p><a class="reference" href="http://nocache.czug.org/blog/panjunyong/zope-rest">新结构化文本reStructuredText的国际化支持</a></p>
 <p>哈哈哈！在下一直是直接使用Python 的docutils 组件，渲染 reSt 文本来用的，在 UltraEdit 中设定一个快捷工具 命令</p>
 <p><strong>python E:LAMPSCJKPython23Scriptsrst2html.py %F %P%n.htm</strong></p>

@@ -1,3 +1,10 @@
+---
+created: 2007-09-15 00:58:44
+creator: zhangbingkai
+description: ''
+title: '[转]Plone3.0的8大酷点'
+---
+<h1>[转]Plone3.0的8大酷点</h1>
 <div class="entryBody">
 
             

@@ -4,6 +4,7 @@ creator: eishn
 description: 面向对象编程初步及图形界面编程
 title: '[Python 技术培训] 第二周讲稿'
 ---
+<h1>[Python 技术培训] 第二周讲稿</h1>
 <h2 class="Heading">上半场·面向对象编程初步</h2><p><br />  上周我们简单扫描了一下 Python
 的基本语法。其实说到底那个还是 C++, 不过大家不必太担心, 我从 Python 1.5 开始一直写的就是这种 Python,
 直到第三年才警醒 Python 其实要比 C++ 好玩得多, 但是这种风格的 Python 已经足以满足我日常所有的需要了。<br /> 

@@ -1,3 +1,10 @@
+---
+created: 2006-07-14 12:35:12
+creator: woo
+description: "Eric Raymond\r\nHansB翻译\r\n转摘自 http://www.aka.org.cn/Docs/c&b.html"
+title: 开源经典著作一:大教堂和市集
+---
+<h1>开源经典著作一:大教堂和市集</h1>
 <p><em><u><font size="4" face="黑体">一. 大教堂和市集</font></u></em></p>
     <p><br />
     　　Linux的影响是非常巨大的。甚至在５年以前，有谁能够想象一个世界级的操作系统能够仅仅用细细的Internet连接起来的散布在全球的几千个开发人员有以业余时间来创造呢？<br />

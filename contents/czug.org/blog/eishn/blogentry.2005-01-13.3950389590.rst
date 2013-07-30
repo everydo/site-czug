@@ -4,6 +4,7 @@ creator: eishn
 description: 简单地探讨一下 Python 中的 import，它的用法。这是第二篇。
 title: import 初探之二 —— __import__() 、reload() 及受限脚本
 ---
+<h1>import 初探之二 —— __import__() 、reload() 及受限脚本</h1>
 <div align="right">
  <b>——朋友，你从哪里来？</b><br />
  <b>沈崴 2005 年 1 月，于广州</b>

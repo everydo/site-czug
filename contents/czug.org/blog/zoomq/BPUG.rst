@@ -1,3 +1,10 @@
+---
+created: 2005-08-02 12:20:31
+creator: Zoomq
+description: 成立了 华蟒用户组！有了统一的交流组织！
+title: CPUG 成立了！
+---
+<h1>CPUG 成立了！</h1>
 <p><strong>我有了新的网路标签！</strong>
 <img alt="BPUG" src="http://blog.woodpecker.org.cn/planet/images/BPUGlabel.gif" /></p>
 <blockquote>

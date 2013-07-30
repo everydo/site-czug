@@ -4,6 +4,7 @@ creator: eishn
 description: JS 精灵语世界，http://elf.ivi.cn。有着国内顶尖的 JavaScript UI 程序技术。
 title: JS 精灵语世界
 ---
+<h1>JS 精灵语世界</h1>
 <p>&nbsp;&nbsp;&nbsp; 我偶然在一个站点上发现了幻宇的《星际争霸》程序，令人惊讶的是完全是采用 JavaScript
  写成的。<br />
  &nbsp;&nbsp;&nbsp; 因为我曾经也是狂热的 JsCoder ，写过 UI

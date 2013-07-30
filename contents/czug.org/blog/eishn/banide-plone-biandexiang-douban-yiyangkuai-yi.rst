@@ -4,6 +4,7 @@ creator: eishn
 description: ''
 title: 把你的 Plone 变得像 Douban 一样快 (一)
 ---
+<h1>把你的 Plone 变得像 Douban 一样快 (一)</h1>
 <a href="http://blog.163.com/eishn/blog/static/652318200610224575563" target="_blank"><img src="http://eishn.plonespace.net/images/593067775929403549.jpg" /></a><br />
 <br /><br />随着<a href="http://zopen.cn/">上海润普公司</a>推出免费的 <a href="http://plone.org/">Plone</a> 空间 <a href="http://www.plonespace.net/">PloneSpace</a> <a href="http://www.plonespace.net/"><img src="http://plonespace.net/about/logo-small.png" /></a>
 之后, Plone 开始变成 Pythoner 日常生活, 建立个人站点稀疏平常的一个选择。任何对 Plone 强大的描述, 或者与其他

@@ -1,3 +1,11 @@
+---
+created: 2007-09-16 18:22:16
+creator: zhangbingkai
+description: "    Everydo.com的论坛使用Ploneboard实现，匿名浏览用户无需注册登录，填写姓名就可发贴；而再次访问Everydo.com时无需再填写姓名，将使用存在Cookie中的姓名来发贴。\r\
+  \n\r\n    因为有社区里朋友问到，我将实现过程写在这里。"
+title: 让你的Ploneboard匿名用户填写姓名可发贴
+---
+<h1>让你的Ploneboard匿名用户填写姓名可发贴</h1>
 <h3>1. 开启匿名用户可发贴</h3>
 <p>在添加了论坛board后，再来添加子论坛forum后，改变forum状态为Free of all，如下图：</p>
 <p><img src="http://download.zopen.cn/benky/stuff/img/public-addcomment4.png" /></p>

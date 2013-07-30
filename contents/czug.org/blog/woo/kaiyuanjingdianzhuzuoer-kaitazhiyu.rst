@@ -1,3 +1,10 @@
+---
+created: 2006-07-14 12:56:34
+creator: woo
+description: "by Eric S. Raymond\r\n转摘自 http://www.aka.org.cn/Docs/homesteading/index.html"
+title: 开源经典著作二:开拓智域
+---
+<h1>源经典著作二:开拓智域</h1>
 <p>1. <a href="http://www.aka.org.cn/Docs/homesteading/homesteading-1.html">矛盾的现象</a></p>
 
 <p>

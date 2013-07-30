@@ -1,3 +1,10 @@
+---
+created: 2007-09-15 00:56:34
+creator: zhangbingkai
+description: ''
+title: Plone3.0初显成效
+---
+<h1>Plone3.0初显成效</h1>
 <p class="discreet">翻译Limi的一篇文章：http://limi.net/articles/some-preliminary-plone-3.0-benchmark-results</p>
 <p class="discreet">文章同时发布在Benky's Space上：http://benky.plonespace.net/sentiment/plone3-0chuxianchengxiao<br /></p>
 <p>自从我们更多聚焦在即将发布的Plone3.0的性能后，我运行了一些基本的，下面的结果是相对于Plone2.5的基准：</p>
