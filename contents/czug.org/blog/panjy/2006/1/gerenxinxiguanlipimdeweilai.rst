@@ -1,3 +1,9 @@
+---
+created: 2006-01-20 01:11:09
+creator: panjy
+description: '再次光顾了一下 Chandler_ , 发现若干年前就要发布的1.0版本还只到了0.6, 另 '
+title: 个人信息管理PIM的未来
+---
 <p>再次光顾了一下 <a class="reference" href="http://chandler.osafoundation.org/">Chandler</a> , 发现若干年前就要发布的1.0版本还只到了0.6, 另
 外附加了一个不错的 <a class="reference" href="http://wiki.osafoundation.org/pub/Projects/ChandlerHome/roadmap.html">roadmap</a> , 也已经不再提及发布日期了。</p>
 <p>下载下来用了一下，目前的calendar功能，功能果然了得，框架搭得不错，界面也

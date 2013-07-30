@@ -1,3 +1,9 @@
+---
+created: 2006-09-30 10:01:41
+creator: panjy
+description: '看Plone创始人runyaga的最近的一篇Blog:'
+title: Plone的钱图和国外市场情况
+---
 <p>看Plone创始人runyaga的最近的一篇Blog:</p>
 <p><a class="reference" href="http://theploneblog.org/blog/archive/2006/09/29/right-time-to-be-a-plone-developer">http://theploneblog.org/blog/archive/2006/09/29/right-time-to-be-a-plone-developer</a></p>
 <p>说明的情况是:</p>

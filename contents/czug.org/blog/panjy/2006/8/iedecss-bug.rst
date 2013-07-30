@@ -1,3 +1,9 @@
+---
+created: 2006-08-10 22:40:18
+creator: panjy
+description: 最近在奋战在IE上显示Plone网页的各种bug，总结一下。
+title: IE的CSS Bug
+---
 <p>最近在奋战在IE上显示Plone网页的各种bug，总结一下。</p>
 <p>IE 6对css支持存在诸多bug，下面的这个网站，专门讲解这些bug:</p>
 <p><a class="reference" href="http://www.positioniseverything.net/">http://www.positioniseverything.net/</a></p>

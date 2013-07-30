@@ -1,3 +1,9 @@
+---
+created: 2006-03-08 20:31:17
+creator: panjy
+description: Plone越来越被更多的知名企业所接受了，Disney。
+title: 迪斯尼使用Plone进行内部知识管理
+---
 <p>Plone越来越被更多的知名企业所接受了，Disney。</p>
 <p>Enfold System最近帮助迪斯尼公司将Plone作为一个大规模的内部知识管理工具使用。
 （Disney's use of Plone as a large-scale knowledge management tool.）</p>

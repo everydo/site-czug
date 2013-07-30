@@ -1,3 +1,9 @@
+---
+created: 2006-05-22 01:59:25
+creator: panjy
+description: 考虑最近将czug的文档和代码的版本管理转型为 bzr_ , 下面说明原因.
+title: 为什么选择bzr
+---
 <p>考虑最近将czug的文档和代码的版本管理转型为 <a class="reference" href="http://bazaar-vcs.org/FrontPage">bzr</a> , 下面说明原因.</p>
 <p>目前采用的subversion, subversion的是典型的集中式版本管理系统。
 也就是说它有一个中心的服务器，如果要提交、比较版本差异，必须连接到中心服务器。</p>

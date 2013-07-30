@@ -1,3 +1,9 @@
+---
+created: 2006-01-11 16:28:39
+creator: panjy
+description: 'webdav_ 是在安全性、功能、网络传输方面都优于ftp的一个web文件管理协议。 '
+title: 批量上传和文件同步的桌面产品
+---
 <p><a class="reference" href="http://webdav.org">webdav</a> 是在安全性、功能、网络传输方面都优于ftp的一个web文件管理协议。
 Zope/Plone对这两个协议都有很好的支持。</p>
 <p>使用 <a class="reference" href="http://webdav.org">webdav</a> / ftp,可批量的上传，或者下载文件。与此存在的问题，能否仅仅

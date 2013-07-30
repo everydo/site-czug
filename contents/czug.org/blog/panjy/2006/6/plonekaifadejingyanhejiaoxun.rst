@@ -1,3 +1,9 @@
+---
+created: 2006-06-02 16:45:57
+creator: panjy
+description: 看到邮件列表中，有人问这个问题，把前面看到的几个链接翻出来了(我还没看呢...但评价似乎不错)，这对
+title: Plone开发的经验和教训
+---
 <p>看到邮件列表中，有人问这个问题，把前面看到的几个链接翻出来了(我还没看呢...但评价似乎不错)，这对准备进入Plone的朋友来说，是不得不打的预防针。</p>
 <dl class="docutils">
 <dt><a class="reference" href="http://groups.humaninet.org/about/evaluating-plone-products">如何评估和选中产品</a></dt>

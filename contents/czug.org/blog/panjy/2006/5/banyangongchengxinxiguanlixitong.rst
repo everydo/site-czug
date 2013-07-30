@@ -1,3 +1,9 @@
+---
+created: 2006-05-06 18:23:11
+creator: panjy
+description: Banyan是一个开源的、基于web的协同解决复杂问题的工具。
+title: Banyan信息管理系统
+---
 <p><a class="reference" href="http://www.banyantrees.org/">Banyan</a> 是一个开源的、基于web的协同解决复杂问题的工具。</p>
 <p>功能包括：</p>
 <ul class="simple">

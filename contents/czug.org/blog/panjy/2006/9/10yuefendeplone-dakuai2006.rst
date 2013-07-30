@@ -1,3 +1,9 @@
+---
+created: 2006-09-03 23:42:45
+creator: panjy
+description: 初步看了下2006年度的Plone大会讲演题目，有些发现。
+title: 10月份的Plone 大会2006
+---
 <p>初步看了下2006年度的Plone大会讲演题目，有些发现。</p>
 <p>在这里：
 &gt; <a class="reference" href="http://plone.org/events/conferences/seattle-2006/agenda">http://plone.org/events/conferences/seattle-2006/agenda</a></p>

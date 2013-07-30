@@ -1,3 +1,9 @@
+---
+created: 2006-03-08 20:36:46
+creator: panjy
+description: 美国航空航天局(NASA)的工程师对web开发框架（j2ee, rails, zope/plone,
+title: Web框架的选择
+---
 <p>美国航空航天局(NASA)的工程师对web开发框架（j2ee, rails, zope/plone,
 turbogears, django）的选型做一个不错的报告。</p>
 <p>演示在这里：

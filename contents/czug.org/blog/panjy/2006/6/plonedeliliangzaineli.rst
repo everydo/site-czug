@@ -1,3 +1,9 @@
+---
+created: 2006-06-19 10:24:28
+creator: panjy
+description: 一个软件能有多大的力量？Plone到底是什么？
+title: Plone的力量在哪里？
+---
 <p>一个软件能有多大的力量？Plone到底是什么？</p>
 <p>当alan/limi这样的名字在Plone的页角抹去，
 alan选择了钱途而在社区身影淡去，

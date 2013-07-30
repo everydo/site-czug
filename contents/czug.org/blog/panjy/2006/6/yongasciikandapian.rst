@@ -1,3 +1,9 @@
+---
+created: 2006-06-15 01:06:36
+creator: panjy
+description: 我是ascii的 粉丝，今天却发现ascii的天空到底有多深
+title: 用ascii看大片
+---
 <p>我是ascii的 粉丝，今天却发现ascii的天空到底有多深</p>
 <p>BBS或者论坛上，水客们都会用ascii字符留个签名，酷酷的，或者土土的。</p>
 <p>用ascii绘制一张图形，这就叫做艺术了。</p>

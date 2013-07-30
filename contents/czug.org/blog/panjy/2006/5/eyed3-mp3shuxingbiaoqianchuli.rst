@@ -1,3 +1,9 @@
+---
+created: 2006-05-11 14:46:49
+creator: panjy
+description: eyeD3_ 是对mp3文件的属性信息进行操作的一个python包。
+title: eyeD3:mp3属性标签处理
+---
 <p><a class="reference" href="http://eyed3.nicfit.net/">eyeD3</a> 是对mp3文件的属性信息进行操作的一个python包。</p>
 <p>试用了一下 <a class="reference" href="http://eyed3.nicfit.net/">eyeD3</a> , 功能比较强，但是发现对中文支持并不好:</p>
 <pre class="literal-block">

@@ -1,3 +1,9 @@
+---
+created: 2006-08-09 17:32:34
+creator: panjy
+description: Salesforce.com和google等大打软件Web服务化旗帜的同时，软件设备化是我近期另外的一个关注点。
+title: 企业服务器软件的设备化趋势
+---
 <p>什么是软件设备化？这是俺提出的名词，就是软件和硬件一体化，做一个整体销售，这样可以：</p>
 <ol class="arabic simple">
 <li>省去了安装软件的复杂操作，</li>

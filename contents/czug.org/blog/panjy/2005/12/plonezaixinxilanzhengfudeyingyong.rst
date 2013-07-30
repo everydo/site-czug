@@ -1,3 +1,12 @@
+---
+created: 2005-12-27 01:38:32
+creator: panjy
+description: '看到Plone.org上的一个新闻：
+
+
+  http://plone.org/news/new-zeal'
+title: Plone在新西兰政府的应用
+---
 <p>看到Plone.org上的一个新闻：</p>
 <p><a class="reference" href="http://plone.org/news/new-zealand-government-releases-web-guidelines-plone-instance">http://plone.org/news/new-zealand-government-releases-web-guidelines-plone-instance</a></p>
 <p>新西兰政府新近制订了电子政务建设的规范指南，是首推Plone的，而且发布了个

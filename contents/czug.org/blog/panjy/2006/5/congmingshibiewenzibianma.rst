@@ -1,3 +1,9 @@
+---
+created: 2006-05-06 18:40:47
+creator: panjy
+description: 有多少人，被编码所困惑...
+title: 聪明识别文字编码
+---
 <p>有多少人，被编码所困惑...</p>
 <p>有一个Python包，可以解决你的困惑：</p>
 <p><a class="reference" href="http://chardet.feedparser.org/">http://chardet.feedparser.org/</a></p>

@@ -1,3 +1,9 @@
+---
+created: 2006-04-13 11:39:32
+creator: panjy
+description: '最近在研究如何将 reStructurctedText_ 转换为PDF格式， Reportlab_ '
+title: 使用Reportlab生成中文PDF文档
+---
 <p>最近在研究如何将 <a class="reference" href="http://docutils.sourceforge.net/rst.html">reStructurctedText</a> 转换为PDF格式， <a class="reference" href="http://reportlab.org">Reportlab</a> 是其中一种方法。</p>
 <p><a class="reference" href="http://reportlab.org">Reportlab</a> 并不是 <a class="reference" href="http://docutils.sourceforge.net/">docutils</a> 项目推荐的最佳PDF生成方法， <a class="reference" href="http://docutils.sourceforge.net/">docutils</a> 推荐还是走 Latex 的路径。</p>
 <p><a class="reference" href="http://reportlab.org">Reportlab</a> 是一个轻量级的PDF生成工具，纯Python，依赖少，性能也不错，一直是我关注的一个项目。</p>

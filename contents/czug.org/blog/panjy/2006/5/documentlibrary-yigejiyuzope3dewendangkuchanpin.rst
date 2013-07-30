@@ -1,3 +1,9 @@
+---
+created: 2006-05-04 00:45:22
+creator: panjy
+description: '看到 Infra_ 发布了一个基于Zope3的文档库产品documentlibrary:'
+title: documentlibrary：一个基于zope3的文档库产品
+---
 <p>看到 <a class="reference" href="http://www.infrae.com/">Infra</a> 发布了一个基于Zope3的文档库产品documentlibrary:</p>
 <p><a class="reference" href="http://www.infrae.com/download/documentlibrary/">http://www.infrae.com/download/documentlibrary/</a></p>
 <p>还没有来得及深入研究，看说明，支持各种文档的格式转换、工作流、版本管理、

@@ -1,3 +1,9 @@
+---
+created: 2007-03-02 23:46:23
+creator: panjy
+description: Gnome.org选择Plone作为他新版网站的内容管理平台。
+title: gnome.org网站选型：Plone获胜！
+---
 <p>Gnome.org选择Plone作为他新版网站的内容管理平台。</p>
 <p>GNOME是一个非常流行的开源桌面环境，GNOME项目也是一个非常大的开源项目。</p>
 <p>GNOME基金会决定采用一个专业的内容管理系统(CMS)，将网站完全改版。</p>

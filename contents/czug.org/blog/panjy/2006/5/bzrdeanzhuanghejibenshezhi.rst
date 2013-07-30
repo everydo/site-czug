@@ -1,3 +1,9 @@
+---
+created: 2006-05-22 01:10:28
+creator: panjy
+description: 准备陆续博一下 bzr_ , 我关注很久的一个分布式版本管理系统。
+title: bzr的安装和基本设置
+---
 <p>准备陆续博一下 <a class="reference" href="http://bazaar-vcs.org/FrontPage">bzr</a> , 我关注很久的一个分布式版本管理系统。</p>
 <p>考虑将czug的svn转换为bzr, 下面是在czug上的一个安装经历。</p>
 <div class="section">

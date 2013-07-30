@@ -1,3 +1,9 @@
+---
+created: 2006-04-17 16:53:28
+creator: panjy
+description: 在linux中，可使用zopectl在命令行中方便的调试你的
+title: Zope的命令行工具：zopectl
+---
 <p>在linux中，可使用zopectl在命令行中方便的调试你的
 站点。</p>
 <p>zopectl位于实例的bin命令中，这可是一个万能瑞士军刀。</p>

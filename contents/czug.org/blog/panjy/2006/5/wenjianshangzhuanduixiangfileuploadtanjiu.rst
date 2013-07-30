@@ -1,3 +1,9 @@
+---
+created: 2006-05-09 22:10:52
+creator: panjy
+description: Zope2的FileUpload对象是如何保存上传文件的。
+title: 文件上传对象FileUpload探究
+---
 <p>Zope2的FileUpload对象是如何保存上传文件的。</p>
 <p>表单页面中的所有输入，包括上传的文件，Zope都保存在request对象中。request对象可从上下文对象中获取:</p>
 <pre class="literal-block">

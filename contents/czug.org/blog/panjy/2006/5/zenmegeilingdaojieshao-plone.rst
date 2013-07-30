@@ -1,3 +1,9 @@
+---
+created: 2006-05-11 16:26:45
+creator: panjy
+description: 收集一些资料，可能对那些需要给领导推广Plone的兄弟有用处。
+title: 怎么给领导介绍 Plone?
+---
 <p>收集一些资料，可能对那些需要给领导推广Plone的兄弟有用处。</p>
 <ul>
 <li><p class="first">首先，得知道Plone是一个专业的内容管理系统，而且中文支持非常好。</p>

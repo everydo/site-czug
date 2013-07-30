@@ -1,3 +1,9 @@
+---
+created: 2006-05-05 18:58:15
+creator: panjy
+description: Plone上外延扩展，看到国外很多新东西。
+title: 'Saleforce.com: 按需CRM web服务商'
+---
 <p>Plone上外延扩展，看到国外很多新东西。</p>
 <p>这个 <a class="reference" href="http://salesforce.com">salsforce.com</a> 为企业提供CRM web服务的网
 站。和当前火热的针对个人的所谓web 2.0相关网站来比，这个网站显得比较重量

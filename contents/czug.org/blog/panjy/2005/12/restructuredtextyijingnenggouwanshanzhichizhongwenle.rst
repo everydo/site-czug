@@ -1,3 +1,9 @@
+---
+created: 2005-12-27 14:36:36
+creator: panjy
+description: reStrcuturedText 是我们公司文档编写的主要格式，也是我非常看好的一个所想即所想即所得的文本格式
+title: reStructuredText中文支持基本完善
+---
 <p><a class="reference" href="http://docutils.sourceforge.net/">reStructuredText</a> 是我们公司文档编写的主要格式，也是我非常看好的一个 <strong>所想即所得</strong> 的文本格式。</p>
 <p>前不久，我曾经提交了一个补丁，添加简体中文(zh_cn)语言的翻译、文献字段别名和指令别名。 <a class="footnote-reference" href="#id4" id="id1" name="id1">[1]</a> <a class="footnote-reference" href="#id5" id="id2" name="id2">[2]</a></p>
 <p>而最近的一个snapshot版本中，却发现如果使用Python2.4，表格已经能够支持中

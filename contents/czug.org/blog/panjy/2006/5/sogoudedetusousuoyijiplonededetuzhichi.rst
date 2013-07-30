@@ -1,3 +1,9 @@
+---
+created: 2006-05-04 18:17:19
+creator: panjy
+description: '终于看到一个让我比较惊叹的中文(中国)web地图搜索服务了，那就是 sohu_ 的地 '
+title: sogou的地图搜索以及Plone的地图支持
+---
 <p>终于看到一个让我比较惊叹的中文(中国)web地图搜索服务了，那就是 <a class="reference" href="http://sohu.com">sohu</a> 的地
 图搜索功能：</p>
 <p><a class="reference" href="http://map.sogou.com">http://map.sogou.com</a></p>

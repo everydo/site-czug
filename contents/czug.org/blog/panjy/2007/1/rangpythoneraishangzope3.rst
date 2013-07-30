@@ -1,3 +1,9 @@
+---
+created: 2007-01-12 18:35:30
+creator: panjy
+description: Zope3的崇拜者不少，但是很多Pythoner却不爱Zope3
+title: 让pythoner爱上Zope3
+---
 <p>Zope3的崇拜者不少，但是很多Pythoner却不爱Zope3</p>
 <p>主要是因为Zope3的学习曲线还是有点陡，对开发人员不是很友好，不很有趣。</p>
 <p>因此Phlipp Weitershausen 他们启动了一个新的项目，叫做 <a class="reference" href="https://launchpad.net/grok">Grok</a> 。</p>

@@ -1,3 +1,9 @@
+---
+created: 2006-12-07 23:09:34
+creator: panjy
+description: htmldoc能够将html转换成PDF文件
+title: htmldoc和PDF生成
+---
 <p>htmldoc能够将html转换成PDF文件</p>
 <p><a class="reference" href="http://www.htmldoc.org">htmldoc</a> 包括2个版本，开源版本和商业版本。
 ubuntu上是可直接使用 sudo apt-get install htmldoc 安装的。

@@ -1,3 +1,9 @@
+---
+created: 2006-03-08 22:55:05
+creator: panjy
+description: 这里有一个对Zope在企业级应用置疑的帖子，作者更加喜欢Django。
+title: 从Zope VS Django说起
+---
 <p>这里有一个对Zope在企业级应用置疑的帖子，作者更加喜欢Django。</p>
 <p><a class="reference" href="http://www.jrandolph.com/blog/?p=23">http://www.jrandolph.com/blog/?p=23</a></p>
 <p>但是值得我关注的是下面Holger Froebe的一个长的回帖，以自身的开发经验

@@ -1,3 +1,9 @@
+---
+created: 2006-06-01 16:30:47
+creator: panjy
+description: 在这个Ajax潮流袭来的年代， dojo_ 是否可成为我们的依靠？
+title: dojo：javascript工具包
+---
 <p>在这个Ajax潮流袭来的年代， <a class="reference" href="http://dojotoolkit.org/">dojo</a> 是否可成为我们的依靠？</p>
 <p><a class="reference" href="http://dojotoolkit.org/">dojo</a> 是采用BSD许可的开源javascript工具包，现在发展迅猛，得到广泛的支
 持，成立了 <a class="reference" href="http://dojotoolkit.org/foundation/">dojo 基金会</a> , IBM /

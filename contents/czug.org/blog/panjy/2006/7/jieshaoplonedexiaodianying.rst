@@ -1,3 +1,9 @@
+---
+created: 2006-07-20 10:07:04
+creator: panjy
+description: 还是来自Sean Kelly，Plone社区的supperstar
+title: 介绍Plone的小电影
+---
 <p>还是来自Sean Kelly，Plone社区的supperstar</p>
 <p>在这里观看：</p>
 <p><a class="reference" href="http://www.archive.org/details/SeanKellyIntroducingPlone">http://www.archive.org/details/SeanKellyIntroducingPlone</a></p>

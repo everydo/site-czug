@@ -1,3 +1,9 @@
+---
+created: 2006-05-06 15:03:37
+creator: panjy
+description: 这是网络链接引用的几个技术。
+title: trackback / pingback / backlink
+---
 <p>这是网络链接引用的几个技术。</p>
 <p>前不久有朋友和我讨论如何进行树状组织各个Blog文章的相互回复和引用关系。</p>
 <p>这里有篇关于 <a class="reference" href="http://www.mengyan.org/blog/tag/backlink">Trackback, Pingback &amp; Backlink</a> 的比较文章

@@ -1,3 +1,9 @@
+---
+created: 2006-02-06 15:22:25
+creator: panjy
+description: 'zope页面模板(ZPT: Zope Page Template)是对xhtml的一个扩展，而xht'
+title: XHTML代码规范
+---
 <p>zope页面模板(ZPT: Zope Page Template)是对xhtml的一个扩展，而xhtml不是简单的html扩展，而是一个格式符合xml规范的语法更加严格的html。</p>
 <p>作者：阿捷 摘自：http://www.w3cn.org/article/step/2004/31.html</p>
 <div class="section">

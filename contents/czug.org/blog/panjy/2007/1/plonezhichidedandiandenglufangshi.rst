@@ -1,3 +1,9 @@
+---
+created: 2007-01-19 14:17:22
+creator: panjy
+description: '因为客户需要，所以查了下Plone的单点登录认证方式。 '
+title: Plone支持的单点登录方式
+---
 <p>因为客户需要，所以查了下Plone的单点登录认证方式。</p>
 <div class="section">
 <h3><a id="openid" name="openid">OpenID</a></h3>

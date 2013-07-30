@@ -1,3 +1,9 @@
+---
+created: 2006-07-10 07:12:14
+creator: panjy
+description: Limi进了Google，初闻如惊天巨雷
+title: Google雇用了Plone的创始人Limi
+---
 <p>Limi进了Google，初闻如惊天巨雷</p>
 <p>Google雇用Plone的创始人Limi，去做界面易用性设计。
 这个可真的信息含量丰富的新闻，limi写了长文进行说明：</p>

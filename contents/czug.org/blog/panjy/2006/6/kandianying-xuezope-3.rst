@@ -1,3 +1,9 @@
+---
+created: 2006-06-02 13:02:31
+creator: panjy
+description: 最快乐的事情，莫过于看电影学技术了
+title: 看电影，学Zope 3
+---
 <p>最快乐的事情，莫过于看电影学技术了</p>
 <p>这里有2个Flash，是很初步Zope 3入门教程，告诉你如何安装，如何开始Hello world.</p>
 <p><a class="reference" href="http://zeapartners.org/scl/2006/04/25/z3-install/index.html">http://zeapartners.org/scl/2006/04/25/z3-install/index.html</a></p>

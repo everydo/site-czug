@@ -1,3 +1,9 @@
+---
+created: 2006-09-26 09:15:55
+creator: panjy
+description: 这是来自Martijn Faassen的Zope讲演录像
+title: 全方位了解Zope
+---
 <p>这是来自Martijn Faassen的Zope讲演录像</p>
 <p>2006年9月的德国的DZUG大会上，Martijn Faassen做了一个&quot;Zope in perspective&quot;的讲演。</p>
 <p>这个讲解，从史到今，由己及邻，优缺评价，说得比较透彻，也是趣味横生。</p>

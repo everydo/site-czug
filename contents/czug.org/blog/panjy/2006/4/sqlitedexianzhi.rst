@@ -1,3 +1,9 @@
+---
+created: 2006-04-18 10:36:15
+creator: panjy
+description: sqlite小巧轻便，深受欢迎，但是也存在一些局限。
+title: sqlite的限制
+---
 <p>sqlite小巧轻便，深受欢迎，但是也存在一些局限。</p>
 <div class="section">
 <h3><a id="id1" name="id1">不支持外键</a></h3>

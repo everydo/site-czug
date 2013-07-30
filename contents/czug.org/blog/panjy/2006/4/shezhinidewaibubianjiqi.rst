@@ -1,3 +1,9 @@
+---
+created: 2006-04-25 02:21:15
+creator: panjy
+description: '使用Zope/Plone上的外部编辑器 ExternalEditor_ ，可自动激活你熟悉的编辑 '
+title: 设置你的外部编辑器
+---
 <p>使用Zope/Plone上的外部编辑器 <a class="reference" href="http://www.zopechina.com/products/ExternalEditor-zh">ExternalEditor</a> ，可自动激活你熟悉的编辑
 器，将网站内容的下载、编辑、上传集成起来，大大简化了用户的操作.</p>
 <p>在个人文件夹中有一个文件，这里可进行一些不友好的设置（应该有个配置用户界

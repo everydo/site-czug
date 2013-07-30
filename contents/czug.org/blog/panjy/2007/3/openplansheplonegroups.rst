@@ -1,3 +1,9 @@
+---
+created: 2007-03-29 09:26:03
+creator: panjy
+description: openplans和plonegroups都是基于Plone技术的、有资助的群组协作项目。
+title: openplans和plonegroups
+---
 <p>openplans和plonegroups都是基于Plone技术的、有资助的群组协作项目。</p>
 <p><a class="reference" href="http://openplans.org">openplans.org</a> 在plone社区是非常有名的了，这个
 项目提供了一个基于wiki和maillist的项目协作区域。openplans对Plone贡献了不

@@ -1,3 +1,9 @@
+---
+created: 2006-12-13 09:17:25
+creator: panjy
+description: 你该选Plone吗？转自Martin的对Plone的说明
+title: Plone的市场定位
+---
 <p>你该选Plone吗？转自Martin的对Plone的说明</p>
 <blockquote>
 As a general point, though - Plone is not a cheap solution, it's a

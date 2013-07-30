@@ -1,3 +1,9 @@
+---
+created: 2006-12-13 09:54:59
+creator: panjy
+description: Java社区的Kathy Sierra说关键在于指导和鼓励中级用户开始回答问题。
+title: 如何构建用户社区
+---
 <p>Java社区的Kathy Sierra说关键在于指导和鼓励中级用户开始回答问题。
 这个对我们CZUG的构建非常有益。</p>
 <p>技术的社区也是人的社区，对人可和对计算机的方法要不同。

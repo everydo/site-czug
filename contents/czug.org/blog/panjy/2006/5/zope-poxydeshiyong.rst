@@ -1,3 +1,9 @@
+---
+created: 2006-05-01 14:40:43
+creator: panjy
+description: zope.proxy是zope3的一个包，能够实现对象的透明代理。
+title: zope.poxy的使用
+---
 <p>zope.proxy是zope3的一个包，能够实现对象的透明代理。
 下面介绍主要接口（摘自 <tt class="docutils literal"><span class="pre">zope/proxy/tests/test_proxy.py</span></tt> ）。</p>
 <div class="contents topic">

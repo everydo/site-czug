@@ -1,3 +1,9 @@
+---
+created: 2006-06-01 21:07:04
+creator: panjy
+description: 这个几个函数非常索然无味，而且在后续版本会过时。
+title: Zope对象文件系统(OFS)的几个hook函数
+---
 <p>这个几个函数非常索然无味，而且在后续版本会过时。</p>
 <p>但是，在zope 3的事件机制未引入之前，Zope开发还是需要了解OFS的几个hook函数。</p>
 <p>所谓OFS，就是Zope的对象文件系统(Object File System)，也就是在ZMI中所看到的对象树。</p>

@@ -1,3 +1,9 @@
+---
+created: 2006-02-24 09:15:00
+creator: panjy
+description: 看到0.4版终于发布了，这是第一个中文支持良好的版本
+title: docutils/reStructuredText 0.4版本发布了
+---
 <p>看到0.4版终于发布了，这是第一个中文支持良好的版本</p>
 <p><a class="reference" href="http://docutils.sourceforge.net/RELEASE-NOTES.html#release-0-4-2006-01-09">http://docutils.sourceforge.net/RELEASE-NOTES.html#release-0-4-2006-01-09</a></p>
 <p>需要强力推荐的是 <a class="reference" href="http://docutils.sourceforge.net/docs/user/slide-shows.html">S5/html幻灯片</a> 的支持，

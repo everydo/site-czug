@@ -1,3 +1,9 @@
+---
+created: 2006-01-12 19:51:28
+creator: panjy
+description: 'Plone2.1中，如果安装了 ZopeChinaPak_ , 会发现新内容的英文代号会自动从中 '
+title: 在Plone脚本中进行汉字到拼音的转换
+---
 <p>Plone2.1中，如果安装了 <a class="reference" href="http://www.zopechina.com/products/ZopeChinaPak">ZopeChinaPak</a> , 会发现新内容的英文代号会自动从中
 文标题转换为拼音。</p>
 <p>在论坛里看到有人希望将用户名按照拼音进行排序，这就需要知道这个汉字-&gt;拼音

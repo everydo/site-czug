@@ -1,3 +1,9 @@
+---
+created: 2006-01-05 22:32:53
+creator: panjy
+description: 今天有人问起Plone上的项目管理产品。
+title: 项目管理产品
+---
 <p>今天有人问起Plone上的项目管理产品。</p>
 <p>我一时记起曾经研究过的一个产品 <a class="reference" href="http://www.logilab.org/projects/cmfprojman/">CMFProjeman</a> ，他采用Archetypes开发
 的，使用了一个底层的python包 <a class="reference" href="http://www.logilab.org/projects/projman">projman</a> 来生成甘特图，支持和GNOME的

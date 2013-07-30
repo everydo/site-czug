@@ -1,3 +1,9 @@
+---
+created: 2006-05-04 00:21:04
+creator: panjy
+description: 综述一下Python的一些标准的XML处理包
+title: Python的XML处理包
+---
 <p>综述一下Python的一些标准的XML处理包</p>
 <p>Python自带如下标准包:</p>
 <dl class="docutils">

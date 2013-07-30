@@ -1,3 +1,9 @@
+---
+created: 2006-06-01 09:13:40
+creator: panjy
+description: 如果说Zope 2.8是开始对Zope 3触电，那么Zope 2.10则是完全的溶入Zope 3了。
+title: Zope 2.10:走向Zope 3的革命性版本
+---
 <p>如果说Zope 2.8是开始对Zope 3触电，那么Zope 2.10则是完全的溶入Zope 3了。</p>
 <p>看看 <a class="reference" href="/http://www.zope.org/Products/Zope/2.10.0b1/CHANGES.txt">Zope 2.10 beta1 的changelog</a></p>
 <p>主要的变更包括：</p>

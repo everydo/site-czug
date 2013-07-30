@@ -1,3 +1,9 @@
+---
+created: 2006-04-14 18:51:17
+creator: panjy
+description: CZUG升级到Plone 2.1后，CMFBoard就歇菜了。最近才得以恢复。
+title: CZUG的CMFBoard升级成功
+---
 <p>CZUG升级到Plone 2.1后，CMFBoard就歇菜了。最近才得以恢复。</p>
 <p>CMFBoard的论坛位于：http://www.czug.org/forums
 上面还是有很多有价值的历史帖子供参考的。</p>

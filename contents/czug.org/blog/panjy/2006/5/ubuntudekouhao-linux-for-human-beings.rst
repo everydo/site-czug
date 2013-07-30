@@ -1,3 +1,9 @@
+---
+created: 2006-05-20 11:35:57
+creator: panjy
+description: 罗嗦一下 ubuntu_ 的这个口号。
+title: 'ubuntu的口号: Linux for human beings'
+---
 <p>罗嗦一下 <a class="reference" href="http://ubuntulinux.org">ubuntu</a> 的这个口号。</p>
 <p>所谓Linux for human beings，说得好听点，可翻译为“人性化的Linux发行版”，意指易用性高吧，能够普及到大众。</p>
 <p>如果直译，就是“为人类准备的Linux发行版”. 这个直译，虽然不那么好听，却揭示了很多Linux世界曾经的问题。</p>

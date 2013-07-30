@@ -1,3 +1,9 @@
+---
+created: 2006-05-09 21:28:45
+creator: panjy
+description: 一个支持ftp/http/https/file等各种方式的文件抓取的python包
+title: urlgrabber:统一的文件抓取包
+---
 <p>一个支持ftp/http/https/file等各种方式的文件抓取的python包。</p>
 <p>可能会比较有用的一个包： <a class="reference" href="http://linux.duke.edu/projects/urlgrabber/">urlgrabber</a></p>
 <ul class="simple">

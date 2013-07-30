@@ -1,3 +1,9 @@
+---
+created: 2006-10-08 08:50:40
+creator: panjy
+description: 10.4日，在我们国庆大假期间，Plone已经出世整整5岁了
+title: Plone第五年
+---
 <p>10.4日，在我们国庆大假期间，Plone已经出世整整5岁了</p>
 <p>看看plone的新闻:</p>
 <p><a class="reference" href="http://plone.org/news/plone-fifth-anniversary">http://plone.org/news/plone-fifth-anniversary</a></p>

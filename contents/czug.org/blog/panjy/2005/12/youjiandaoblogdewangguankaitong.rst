@@ -1,3 +1,9 @@
+---
+created: 2005-12-27 01:26:37
+creator: panjy
+description: "这个帖子就是通过发送邮件发布的。\r\n"
+title: 邮件到Blog的网关开通！
+---
 <p>这个帖子就是通过发送邮件发布的。</p>
 <p>使用说明：</p>
 <ol class="arabic">

@@ -1,3 +1,9 @@
+---
+created: 2006-06-13 21:50:25
+creator: panjy
+description: 发现有人提供了rest->openoffice的转换代码，在这里：
+title: reST->OpenOffice的转换
+---
 <p>发现有人提供了rest-&gt;openoffice的转换代码，在这里：</p>
 <p><a class="reference" href="http://artiemestieri.tn.it/~azazel/odwriter">http://artiemestieri.tn.it/~azazel/odwriter</a></p>
 <p>这个产品还在pre-alpha的阶段，拿来测试了一下，感觉未来前景不错，拿来就可用，速度也不错，不需要依赖包.</p>

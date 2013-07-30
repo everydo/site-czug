@@ -1,3 +1,9 @@
+---
+created: 2006-04-07 17:08:41
+creator: panjy
+description: BUG表现
+title: IE6文本选择失效bug之研究
+---
 <div class="section">
 <h3><a id="bug" name="bug">BUG表现</a></h3>
 <p>如果:</p>

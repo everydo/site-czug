@@ -1,3 +1,9 @@
+---
+created: 2007-04-30 20:43:03
+creator: panjy
+description: kss是Plone 3.0自带的一个轻量级的ajax引擎。
+title: 在javascript中手工调用服务器端kss action的方法
+---
 <p>kss是Plone 3.0自带的一个轻量级的ajax引擎。</p>
 <p>kss的采用类似css的语法，号称是不需要任何javascript技能，就可实现酷酷的
 ajax界面。</p>

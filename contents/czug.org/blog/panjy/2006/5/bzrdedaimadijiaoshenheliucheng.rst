@@ -1,3 +1,9 @@
+---
+created: 2006-05-25 14:17:57
+creator: panjy
+description: bzr是如何规范代码提交集市的交易规则的。
+title: bzr的代码提交审核流程
+---
 <p>bzr是如何规范代码提交集市的交易规则的。</p>
 <p><a class="reference" href="http://bazaar-vcs.org/FrontPage">bzr</a> 项目有一个
 <a class="reference" href="http://bazaar-vcs.org/bzr/bzr.dev/HACKING">代码提交规范</a> .

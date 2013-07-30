@@ -1,3 +1,9 @@
+---
+created: 2006-12-17 00:48:49
+creator: panjy
+description: 介绍Python代码修补
+title: MonkeyPatch简介
+---
 <p>介绍Python代码修补</p>
 <div class="section">
 <h3><a id="patch-diff-merge" name="patch-diff-merge">传统Patch: diff + merge</a></h3>

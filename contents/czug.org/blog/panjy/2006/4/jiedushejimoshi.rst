@@ -1,3 +1,9 @@
+---
+created: 2006-04-30 16:10:55
+creator: panjy
+description: 觉得设计模式方面的知识还是太薄弱，于是根据自己的理解，复习了一下，感想记录如下。
+title: 解读设计模式
+---
 <p>觉得设计模式方面的知识还是太薄弱，于是根据自己的理解，复习了一下，感想记录如下。</p>
 <div class="contents pullquote topic">
 <p class="topic-title first"><a id="contents" name="contents">Contents</a></p>

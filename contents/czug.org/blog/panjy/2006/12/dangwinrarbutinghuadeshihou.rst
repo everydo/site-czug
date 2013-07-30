@@ -1,3 +1,9 @@
+---
+created: 2006-12-28 19:38:04
+creator: panjy
+description: 由于文件编码差异，winrar不能解压缩来自linux上的文件 :-(
+title: 当winrar不听话的时候
+---
 <p>由于文件编码差异，winrar不能解压缩来自linux上的文件 :-(</p>
 <p>由于硬件支持的问题，俺的本本还是在跑windows。这次需要从我们的服务器下载些文件。</p>
 <p>于是 <tt class="docutils literal"><span class="pre">tar</span> <span class="pre">czf</span> <span class="pre">a.tgz</span> <span class="pre">....</span></tt> 打了个包，下载下来。</p>

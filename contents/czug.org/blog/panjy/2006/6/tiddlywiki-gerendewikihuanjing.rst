@@ -1,3 +1,9 @@
+---
+created: 2006-06-21 08:57:41
+creator: panjy
+description: 这个TiddlyWiki颇有创新，让我花了些时间在她身上
+title: TiddlyWiki：个人的wiki环境
+---
 <p>这个TiddlyWiki颇有创新，让我花了些时间在她身上</p>
 <p>一些链接：</p>
 <ul class="simple">

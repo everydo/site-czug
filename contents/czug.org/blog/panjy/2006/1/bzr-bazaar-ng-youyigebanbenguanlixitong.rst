@@ -1,3 +1,9 @@
+---
+created: 2006-01-21 12:09:21
+creator: panjy
+description: 开始关注 Bazaar-NG_ (bzr)这个分布式的版本管理系统，最初的原因有2个：
+title: bzr(Bazaar NG)又一个版本管理系统
+---
 <p>开始关注 <a class="reference" href="http://www.bazaar-ng.org/">Bazaar-NG</a> (bzr)这个分布式的版本管理系统，最初的原因有2个：</p>
 <ul class="simple">
 <li>这是Canonical公司支持的一个项目，也就是 <a class="reference" href="http://www.ubuntulinux.org">ubuntu</a> linux的发行公司</li>
