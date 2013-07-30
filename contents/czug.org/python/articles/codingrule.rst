@@ -1,3 +1,9 @@
+---
+created: 
+creator: panjy
+description: ''
+title: Python开发编码规范
+---
 <p><a href="http://wiki.woodpecker.org.cn/moin/PythonCodingRule">http://wiki.woodpecker.org.cn/moin/PythonCodingRule</a></p>
 <div class="inside"><div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-3" class="anchor"/><div><table><tbody><tr>  <td><p class="line891"><strong>Python开发编码规范</strong> </p></td>
