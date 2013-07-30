@@ -1,3 +1,10 @@
+---
+created: 2007-01-19 12:14:43
+creator: zhangbingkai
+description: 'Plone中有这样三个概念：'
+title: Plone中的系统角色和本地角色
+---
+<h1>Plone中的系统角色和本地角色</h1>
 <p>Plone中有这样三个概念：</p>
 <dl class="docutils">
 <dt>系统角色</dt>
