@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 关于本书
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-42b67dcf9c4e52ad45d0bc03fb6c3ce9bdbae54c">关于本书</a><ol><li><a href="#head-242a0355e22daa01489b6112376cf2bb11d86ff5">谁应该阅读本书？</a></li><li><a href="#head-4a55786d7216d15c911e1452fec81a3631d17318">本书是如何组织的？</a><ol><li><a href="#head-25dc32a4d53904ef4feea3759a3e3c9314d02341">如何使用本书</a></li><li><a href="#head-881812f8c4ed75d6a5fdad677a756e0885dafa3d">印刷约定</a></li><li><a href="#head-c76a3b2405a3eb22532daf15331a6d51068a77d4">代码下载</a></li><li><a href="#head-0a7370376f6ba765ac4f9c845a52df288d30a20d">从何处获得更多帮助</a></li><li><a
 href="#head-3e611151281a3f6a141ce86e15422912dbba6281">作者在线</a></li></ol></li><li><a href="#head-cb04e06648e8b509592df6f4ee4c6b006c5cfae3">关于书名</a></li><li><a href="#head-4cb7e2e14d49c5ae5ad62b1f97f908da406a689e">关于封面绘图</a></li></ol></li></ol></div> <span id="line-7" class="anchor"/><span id="line-8" class="anchor"/><p class="line867">

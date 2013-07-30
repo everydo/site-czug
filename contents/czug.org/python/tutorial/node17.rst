@@ -1,3 +1,9 @@
+---
+created: 
+creator: panjy
+description: ''
+title: About this document
+---
 <p>出处： <a href="http://www.woodpecker.org.cn:9081/projects/pythontutorial/py2.5/html/tut/node19.html">http://www.woodpecker.org.cn:9081/projects/pythontutorial/py2.5/html/tut/node19.html</a></p>
 
 <H1><A NAME="SECTION0019000000000000000000">

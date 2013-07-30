@@ -1,3 +1,9 @@
+---
+created: 
+creator: panjy
+description: ''
+title: 标准库概览
+---
 <p>出处： <a href="http://www.woodpecker.org.cn:9081/projects/pythontutorial/py2.5/html/tut/node11.html">http://www.woodpecker.org.cn:9081/projects/pythontutorial/py2.5/html/tut/node11.html</a></p>
 <div class='online-navigation'>
 <!--Table of Child-Links-->

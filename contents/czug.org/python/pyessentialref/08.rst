@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第八章 模块与包
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-44cbdf5a51cd5490a8af72c33c10c19cc04c99bb">第八章 模块和包</a><ol><li><a href="#head-bda7579da56e3797cfd711103abf2e973c2aeb59">模块</a></li><li><a href="#head-ac25897de5678e95b3caf2a4697afbf8e95c7cd7">模块搜索路径</a></li><li><a href="#head-a295b3f4818e033c86eb30c5d2edf0961b0f0cb3">模块导入和汇编</a></li><li><a href="#head-12a7f0909f4f524ae219c9260b298146970064e6">重新导入模块</a></li><li><a href="#head-e7075fbe37e659ec88fc3a5f4efca4590a5aba83">包</a></li></ol></li></ol></div> <span id="line-2" class="anchor"/>
 <h1 id="head-44cbdf5a51cd5490a8af72c33c10c19cc04c99bb">1. 第八章 模块和包</h1>

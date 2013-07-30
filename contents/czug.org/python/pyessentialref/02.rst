@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第二章 代码约定及语法
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"><a href="/moin/WeiZhong/2006-01-18">Python精要参考第二章</a> <span id="line-2" class="anchor"/><span id="line-3" class="anchor"/></p><p class="line867"><a href="/moin/WeiZhong/2006-01-17">Python 精要参考(第二版)</a> <span id="line-4" class="anchor"/>Python Essential Reference， Second Edition 译文 <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/></p><p class="line874">原著:David M Beazley <span id="line-7" class="anchor"/>出版商: New Riders Publishing <span id="line-8" class="anchor"/><span id="line-9" class="anchor"/></p><p class="line874">初译: Feather andelf@gmail，com <span id="line-10" class="anchor"/>修正补充: <a href="/moin/WeiZhong">WeiZhong</a> weizhong2004@gmail，com <span id="line-11"
 class="anchor"/></p><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-bc347fc7a99eaf5746337957d4b077d19ff48d86">第二章 语法及代码约定</a><ol><li><a href="#head-c7827bbd905227938e8693317b89f7b25643d621">行结构/缩进</a></li><li><a href="#head-d8a28c156c9cb683982a6feb327f1cdb6ce022c0">标识符及保留字</a></li><li><a href="#head-f195087933bf14fb1b3957d4e39fb9e24bf2d258">数字/文字</a></li><li><a href="#head-96f6de4d079a5953817ac1a34286da44798d03d7">运算符、分隔符及特殊符号</a></li><li><a href="#head-926639abad0139302f730c8cc2d61dab104e1207">文档字符串</a></li></ol></li></ol></div> <span id="line-12" class="anchor"/><span id="line-13" class="anchor"/><p class="line867">

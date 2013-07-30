@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 5. 对象和面向对象
+---
 <p>出处： <a href="http://www.woodpecker.org.cn/diveintopython/object_oriented_framework/index.html">http://www.woodpecker.org.cn/diveintopython/object_oriented_framework/index.html</a></p>
       <div class="chapter" lang="zh_cn">
          <div class="titlepage">

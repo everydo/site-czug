@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 4. 自省的威力
+---
 <p>出处： <a href="http://www.woodpecker.org.cn/diveintopython/power_of_introspection/index.html">http://www.woodpecker.org.cn/diveintopython/power_of_introspection/index.html</a></p>
       <div class="chapter" lang="zh_cn">
          <div class="titlepage">

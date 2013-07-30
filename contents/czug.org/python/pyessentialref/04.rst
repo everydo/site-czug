@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第四章 运算符及表达式
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-a2e4a36629a3584d6efc8cbad83b0aece3534385">第四章 运算符与表达式</a><ol><li><a href="#head-5b84dd375193f042a9235c7d7c5e2043ff4fbfd4">数值操作</a></li><li><a href="#head-0a9ee598870173a7ea257e75d3bedadedc21c030">序列运算</a></li><li><a href="#head-ba7d0118733f648ee6215de5b0bd42651b224ddc">字典的操作</a></li><li><a href="#head-ee29f05c9dcfde452b409903ec42f198543ba2d3">增量赋值语句</a></li><li><a href="#head-9b9caf95d8f9dc52b2ceb7df444ffbaf79b5a5b0">属性(.)操作符</a></li><li><a href="#head-d7a0d8d10c70e239fa7ceaa83485a2ec81eb7169">类型转换</a></li><li><a
 href="#head-944342a81e4931bd630428ac89934b8b3733b4c3">Unicode字符串</a></li><li><a href="#head-381865d7760d09c6857d9d2bb20886af79470e06">布尔表达式</a></li><li><a href="#head-280def030a49ec56dbe5dd368d1d414631e529e7">对象的比较与身份</a></li><li><a href="#head-0091afd9b8e6cb6d45836927fa7cf023ed443a7b">运算优先级</a></li></ol></li></ol></div> <span id="line-2" class="anchor"/>

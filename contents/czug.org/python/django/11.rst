@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第十一章：生成非HTML内容
+---
 <p>出处： <a href="http://www.javaeye.com/wiki/Django-book/728-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%EF%BC%9A%E7%94%9F%E6%88%90%E9%9D%9EHTML%E5%86%85%E5%AE%B9">http://www.javaeye.com/wiki/Django-book/728-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%EF%BC%9A%E7%94%9F%E6%88%90%E9%9D%9EHTML%E5%86%85%E5%AE%B9</a></p>
   
   <h1 style="margin:25px 0 10px 10px">翻译www.djangobook.com之第十一章：生成非HTML内容 

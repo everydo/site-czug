@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 绘图
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-4" class="anchor"/><p class="line867"><strong> <span id="line-5" class="anchor"/>含有章节索引的中文 文章模板 <span id="line-6" class="anchor"/></strong> <span id="line-7" class="anchor"/><span id="line-8" class="anchor"/></p><p class="line862">::-- <a href="/moin/zhuyj">zhuyj</a> [2008-12-22 01:39:36] <span id="line-9" class="anchor"/></p><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-81e1ac7e8b0a95db6eaf9150c915ed86b563d510">Drawing in PyQt4</a><ol><li><a href="#head-663f2356f3cc089db16fdf7e33999c838f514e62">Drawing text</a></li><li><a href="#head-2a4c7734064ef1ef94f805d4265e2da929aa9816">Drawing points</a></li><li><a href="#head-ca98dcda800f2c55fb28a2c831c5a0fdf6a714d4">Colors</a></li><li><a
 href="#head-8d14f4ba2a4a9140e52362667b78b111fc7bb469">QPen</a></li><li><a href="#head-fea9029f7254fd4f088599c78270f05eeaa129ff">QBrush</a></li></ol></li><li><a href="#head-86fa6d87987e319c4bd454c0f731a4b923b126ce">交流</a></li></ol></div> <span id="line-10" class="anchor"/><span id="line-11" class="anchor"/><p class="line867">

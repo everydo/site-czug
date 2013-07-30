@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第二章 给wxPython程序一个坚实的基础
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-d20bddbb347af2fc9a6af80a3f220468d885e24c">给你的wxPython程序一个稳固的基础</a><ol><li><a href="#head-39a64b9dda0d44b440ca367e67baf82310d28dd4">关于所要求的对象我们需要知道些什么？</a></li><li><a href="#head-bac399811d314367c558dbea6775c444e0f44894">如何创建和使用一个应用程序对象？</a><ol><li><a href="#head-4d6de42e3466a85bfca342375c21c87d7e230539">创建一个wx.App的子类</a></li><li><a href="#head-03b025b6debee1414228f5686589063c034590f6">理解应用程序对象的生命周期</a></li></ol></li><li><a href="#head-26d367aa4bfe330960ad45ea4685c5c7c1170aa2">如何定向wxPython程序的输出?</a><ol><li><a
 href="#head-42fcad28d9dec4e58255b5ee5ef0dc665c330ad2">重定向输出</a></li><li><a href="#head-f5824793eb626492b2f4fabab3f4f3a8ca3c21eb">修改默认的重定向行为</a></li></ol></li><li><a href="#head-f5bdd596e1c45d841afd84ad754a0df9188e9892">如何关闭wxPython应用程序?</a><ol><li><a href="#head-107de641c65d95d2bc8d0607d2e0e8b8c74b7839">管理正常的关闭</a></li><li><a href="#head-8bd89a62b5eceb7984ef6ae397db3187e34618af">管理紧急关闭</a></li></ol></li><li><a href="#head-cf0b0b9ac4f723bcb2a9be265a88b2cc6125380f">如何创建和使用顶级窗口对象?</a><ol><li><a href="#head-e82cf8110a2ea619f6f9a9639dc67c749eb8f3fa">使用wx.Frame</a></li><li><a href="#head-9de18bc281fdf05f9e7d8220eb5ae03c0ca2bca5">使用wxPython的ID</a></li><li><a

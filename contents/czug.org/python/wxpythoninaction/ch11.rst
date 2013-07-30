@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第十一章 使用sizer放置构件
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-8d4cf8b6261506b5d3e31cd0dd2b8531eb472183">使用sizer放置窗口部件</a><ol><li><a href="#head-50e81fa6de7d591a5bad7a766c581650a12d1861">sizer是什么？</a></li><li><a href="#head-4ed462861bb1109f9e643c41f618c45281907eea">基本的sizer：grid</a><ol><li><a href="#head-29585f4144075dedc5740e748c8235c46e5bb5f8">什么是grid</a></li><li><a href="#head-efdb330edd8b6cd2d0488f8dba1a59362c7778c4">如何对sizer添加或移除孩子？</a></li><li><a href="#head-425f88a0912efe2e3ba3413df4c152c5ab7e649b">sizer是如何管理它的孩子的尺寸和对齐的？</a></li><li><a
 href="#head-95ff96bce5a752f8ec342c24259e635e8f335f5c">能够为sizer或它的孩子指定一个最小的尺寸吗？</a></li><li><a href="#head-b2f340a3d187a3c74bea1e712be145adfa0905ef">sizer如何管理每个孩子的边框？</a></li></ol></li><li><a href="#head-ae9b93628558f04bdbc27a01d4b17fb924e883d2">使用其它类型的sizer</a><ol><li><a href="#head-1bfb417861035f00bd754d8ab441cbe05079f952">什么是flex grid  sizer？</a></li><li><a href="#head-bc0d65d65db8f2a18cadf007de59be462007ce27">什么是grid bag  sizer?</a></li><li><a href="#head-af09e9c27edb728c13c67129cd09286460d07941">什么是box</a></li><li><a href="#head-bfea748837095776adb31cdddd7c19dd11768192">什么是static</a></li></ol></li><li><a href="#head-11ef90c5b495f9c562241fdf96022be5470ff08a">一个现实中使用sizer的例子</a></li><li><a

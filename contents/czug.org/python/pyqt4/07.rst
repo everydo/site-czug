@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 插件
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-4" class="anchor"/><p class="line867"><strong> <span id="line-5" class="anchor"/><a href="/moin/PyQt4" class="nonexistent">PyQt4</a> Widgets <span id="line-6" class="anchor"/></strong> <span id="line-7" class="anchor"/><span id="line-8" class="anchor"/></p><p class="line862">::-- <a href="/moin/zhuyj">zhuyj</a> [2008-06-27 14:31:01] <span id="line-9" class="anchor"/></p><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-094eb1c76406de306de73803946f60a550d13568">PyQt4 Widgets</a><ol><li><a href="#head-e1ab766ca092304abe5428b01f4ccc4b44c07981">QCheckBox</a></li><li><a href="#head-b3d9d280bb6b00776012a9e3080fd18c98e78475">ToggleButton</a></li><li><a href="#head-ee5deab5eae6e49b9cf0d947eeb0095bd523c2bf">QSlider,
 QLabel</a></li><li><a href="#head-8e44eee48b12e83a9a3d0ffda35778ae9d2c07c5">QProgressBar</a></li><li><a href="#head-313f0427cd451e687f5683916600f5ce5cb68a54">QCalendarWidget</a></li></ol></li></ol></div> <span id="line-10" class="anchor"/><span id="line-11" class="anchor"/><p class="line867">

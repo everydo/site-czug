@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 11. HTTP Web 服务
+---
 <p>出处： <a href="http://www.woodpecker.org.cn/diveintopython/http_web_services/index.html">http://www.woodpecker.org.cn/diveintopython/http_web_services/index.html</a></p>
       <div class="chapter" lang="zh_cn">
          <div class="titlepage">

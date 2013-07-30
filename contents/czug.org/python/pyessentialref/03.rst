@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第三章 类型及对象
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"><a href="/moin/PythonEssentialRef3">Python精要参考第三章</a> <span id="line-2" class="anchor"/></p><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-9af01b759c6572d5aed60e32c376dd63aa1bb75a">第三章 类型和对象</a><ol><li><a href="#head-e425797d5b9e0cb996ec14465b96c2fb0dac015d">术语</a></li><li><a href="#head-3d085974fd43054cf40530848446fd2e689d4ebb">对象的标识与类型</a></li><li><a href="#head-f8bb078bc3832b815dd3fb780eda9d2d6321ce6c">引用计数与垃圾收集</a></li><li><a href="#head-4c41db81485cff97c26dd3aaf435a95787143f2b">引用与副本</a></li><li><a href="#head-835021e08b8f05e832d44a682d9db83c327ddc20">内建类型</a><ol><li><a
 href="#head-74e7a80864d415c28d60fba4508bec800f729ac3">None类型</a></li><li><a href="#head-82041e9ed7d501135a53349abaa8ca343d705017">数值类型</a></li><li><a href="#head-72a78ed842c1d01441dcce922d2d27572fb4e39b">序列类型</a></li><li><a href="#head-4ca84d33cef867c040a476e022aea9e33da6198c">字符串类型</a></li><li><a href="#head-67d62c48439591054d0e823d7a90e612a6f77433">XRangeType 类型</a></li><li><a href="#head-5fa42eff16372c3cf0ef868f557b16a5e4242f4e">缓冲区类型</a></li><li><a href="#head-bd58364f27f4a7bce6d69413e50765f74e3f240a">映射类型</a></li><li><a href="#head-5f69ac311c395f3971b257b8f7d7746914d59972">可调用类型</a><ol><li><a href="#head-7e25b37df05e5f98d480a548f28c69b24c97d4e2">用户定义函数</a></li><li><a

@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第七章 使用基础控件
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-602eb45f8f2611107f814da8602da560a4d6f5a8">使用基本的控件工作</a><ol><li><a href="#head-f26587856def7d45740153073161497015dd643c">显示文本</a></li><li><a href="#head-fce8e2545979a96005dd28a88bb749fdbafebd00">使用按钮工作</a></li><li><a href="#head-3f1d538dfddd8e8754ff057470440427e37cdca8">输入并显示数字</a></li><li><a href="#head-59e5de8af5d2877c5b5715186d90e98cc10e73f9">给用户以选择</a></li><li><a href="#head-ab2b1d5d75346a4955d514e8e6f501f83a261553">本章小结</a></li></ol></li></ol></div> <span id="line-2" class="anchor"/><span id="line-3" class="anchor"/><p class="line867">
 </p><h1 id="head-602eb45f8f2611107f814da8602da560a4d6f5a8">1. 使用基本的控件工作</h1>

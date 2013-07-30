@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: Introduction
+---
 
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-2" class="anchor"/><p class="line867"><strong> <span id="line-3" class="anchor"/><a href="http://wiki.woodpecker.org.cn/moin/StartProgramming" class="http">开始编程之旅</a> <span id="line-4" class="anchor"/>翻译自Lee Harr的<a href="http://staff.easthighschool.net/lee/computers/book/Start_Programming.html" class="http">Start Programming</a> <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/></strong></p><p class="line862"><strong>本文是使用<a href="http://www.nongnu.org/pygsear/" class="http">pygsear</a>+<a href="http://pygame.org" class="http">pygame</a>作为开发环境，以初级用户角度来分步分阶段学习<a href="http://www.python.org"

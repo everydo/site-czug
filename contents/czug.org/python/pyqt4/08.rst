@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 拖放操作
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-4" class="anchor"/><p class="line867"><strong> Drag and Drop in <a href="/moin/PyQt4" class="nonexistent">PyQt4</a> <a href="/moin/PyQt4" class="nonexistent">PyQt4</a>中的拖放操作 </strong> <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/></p><p class="line862">::-- <a href="/moin/zhuyj">zhuyj</a> [2008-07-20 07:27:47] </p><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-edbd2362584145b28c903ae31ff19a183d3d4fba">Drag and Drop in PyQt4</a><ol><li><a href="#head-a2861100e927760a9a3b216bb44c12dea5324874">Simple Drag and Drop</a></li><li><a href="#head-380ac365bc0361eb5666631fcef1003fa9f385f5">Drag & drop a button widget</a></li></ol></li><li><a
 href="#head-6ba9d17052018bf2651034bb55bb399b652408be">交流</a></li></ol></div> <span id="line-7" class="anchor"/><span id="line-8" class="anchor"/><p class="line867">

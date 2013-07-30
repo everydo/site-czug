@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第八章 将构件放入窗体中
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-29181fe167f9f42ea62d68807c358154c99847b8">把窗口部件放入框架中</a><ol><li><a href="#head-d156b1ced33ad19118c25eb94b664191aeec0e30">框架的寿命</a></li><li><a href="#head-501ed2a1ed1140fea40d4253427f9da53ffa7d8f">使用框架</a></li><li><a href="#head-a259990e2d4ddf82bb721774991598e9f92ad7a9">可选的框架类型</a></li><li><a href="#head-04973e178f7fc772164b5d380ccd2f2aa0330541">使用分割窗</a></li><li><a href="#head-7fa8d2f3c2d9a31c4cffd3e882dde018d313aedc">本章小结</a></li></ol></li></ol></div> <span id="line-2" class="anchor"/><span id="line-3" class="anchor"/><p class="line867">
 </p><h1 id="head-29181fe167f9f42ea62d68807c358154c99847b8">1. 把窗口部件放入框架中</h1>

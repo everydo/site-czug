@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第九章 通过对话框让用户选择
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-e436188ae8d4793ee2d5d3888a03392e0cc0fced">使用模式对话框工作</a></li><li><a href="#head-1e19ed85fa45b1bd5e3e69931675e77a69dcc796">使用标准对话框</a></li><li><a href="#head-43ae28adcea0aae7c197d458fc0c46973fd66f7b">创建向导</a></li><li><a href="#head-b148cabf57f2fab24389968b4c1a4b887ef6604d">显示启动提示</a></li><li><a href="#head-e3417018292e6a982b0ff654d947828ba5f4485c">使用验证器（validator）来管理对话框中的数据</a></li><li><a href="#head-d729c362c9abd817c46dbd41c3339b1423e90c98">本章小结</a></li></ol></div> <span id="line-2" class="anchor"/><span id="line-3" class="anchor"/><p class="line867">
 </p><h2 id="head-e436188ae8d4793ee2d5d3888a03392e0cc0fced">1. 使用模式对话框工作</h2>

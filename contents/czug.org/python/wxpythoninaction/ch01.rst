@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第一章 欢迎使用wxPython
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-2809a28553a6623924011264199992bcf631f41c">欢迎使用wxPython</a><ol><li><a href="#head-84e89315caf343219a3e64bb00fc2f7a347bafa5">开始wxPython</a></li><li><a href="#head-af8e927b2ebb31be6ef77872684fa9faa29a4aa5">创建最小的空的wxPython程序</a><ol><li><a href="#head-292abdf719cf123d546e04f055cd1c1ab767c16f">导入wxPython</a></li><li><a href="#head-e126757b9f9109819d1dafb3f572be121fa4b4fb">使用应用程序和框架工作</a></li></ol></li><li><a href="#head-524d44c126e9cfbd969ee09cc2f10ffe6cc8fd23">扩展这个最小的空的wxPython程序</a></li><li><a
 href="#head-99964c90aba72154cc770f127db5a0854e7411b2">创建最终的hello.py程序</a></li></ol></li></ol></div> <span id="line-2" class="anchor"/><span id="line-3" class="anchor"/><p class="line867">

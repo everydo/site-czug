@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第十七章 wxPython的打印构架
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"><strong>第17章 <tt>wxPython</tt>的打印构架</strong> <span id="line-2" class="anchor"/><span id="line-3" class="anchor"/></p><p class="line874">本章内容 <span id="line-4" class="anchor"/><span id="line-5" class="anchor"/></p><ul><li><p class="line862">用<tt>wxPython</tt>打印 <span id="line-6" class="anchor"/></p></li><li>创建和显示打印对话框 <span id="line-7" class="anchor"/></li><li>创建和显示页面设置对话框 <span id="line-8" class="anchor"/></li><li>在你的程序中执行打印 <span id="line-9" class="anchor"/></li><li>执行一个打印预览 <span id="line-10" class="anchor"/><span id="line-11" class="anchor"/><span id="line-12" class="anchor"/></li></ul><p
 class="line862">在第16章中，我们已经关注了<tt>wxPython</tt>的一打印方法：使用<tt>wx.HtmlEasyPrinting</tt>。如果你用该方法打印<tt>HTML</tt>（或某些容易转换为<tt>HTML</tt>的文件）的话，这个方法将会工作的很好，但是要作为一个完善打印办法还是不够的。在<tt>wxPython</tt>中还有一个更为通用的打印构架，你可以用它来打印你想打印的任何东西。基本上，该构架使你能够使用设备上下文和绘制操作来执行打印。你也可以创建打印预览。 <span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></p><p class="line862">本章将讨论该构架中最重要的类：<tt>wx.Printout</tt>，它管理实际的图片部分。打印输出实例可以由一个代表打印机的<tt>wx.Printer</tt>对象或用于打印预览的<tt>wx.PrintPreview</tt>对象来管理。多们也将讨论几个管理与打印相关的数据的类，以及用来显示信息给用户的对话框。 <span id="line-15"

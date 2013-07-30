@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 对话框
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-4" class="anchor"/><p class="line867"><strong> Dialogs in <a href="/moin/PyQt4" class="nonexistent">PyQt4</a> </strong> <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/></p><p class="line862">::-- <a href="/moin/zhuyj">zhuyj</a> [2008-06-16 09:48:48] </p><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-63ae94043930f7754023d393c3e4be623111aca3">Dialogs in PyQt4</a><ol><li><a href="#head-d8eed51ec9d8d3794fd6871720c82a7a81a5d1ba">Predefined Dialogs</a></li><li><a href="#head-65e9b44f6ee153774b7c6712ab8e1bed41175ba2">QColorDialog</a></li><li><a href="#head-4730e3474d2cff2395673b90fb0d74be420de88a">QFontDialog</a></li><li><a
 href="#head-9d74d59b63a8866eec6995ca0f1d6eb4bfe475e1">QFileDialog</a></li></ol></li></ol></div> <span id="line-7" class="anchor"/><span id="line-8" class="anchor"/><p class="line867">

@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 3. 内置数据类型
+---
 <p>出处： <a href="http://www.woodpecker.org.cn/diveintopython/native_data_types/index.html">http://www.woodpecker.org.cn/diveintopython/native_data_types/index.html</a></p>
       <div class="chapter" lang="zh_cn">
          <div class="titlepage">

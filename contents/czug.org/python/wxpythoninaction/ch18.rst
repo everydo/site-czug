@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第十八章 使用wxPython的其他功能
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"><strong>18 使用<tt class="backtick">wxPython</tt>的其它功能</strong> <span id="line-2" class="anchor"/><span id="line-3" class="anchor"/></p><p class="line874">本章内容： <span id="line-4" class="anchor"/><span id="line-5" class="anchor"/></p><ul><li>放置对象到剪贴板上 <span id="line-6" class="anchor"/></li><li>拖放 <span id="line-7" class="anchor"/></li><li>传送和获取自定义对象 <span id="line-8" class="anchor"/></li><li><p class="line862">使用<tt>wx.Timer</tt>设置定时的事件 <span id="line-9" class="anchor"/></p></li><li><p class="line862">编写多线程的<tt>wxPython</tt>应用程序 <span id="line-10" class="anchor"/><span id="line-11" class="anchor"/><span id="line-12" class="anchor"/><span id="line-13"
 class="anchor"/></p></li></ul><p class="line867">

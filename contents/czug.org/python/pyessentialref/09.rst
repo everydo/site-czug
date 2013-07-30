@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第九章 输入输出
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-989a5e5971b402808a358c11d948224b0772f4d0">第九章 输入输出</a><ol><li><a href="#head-bbd07399463b904ed3bb79fb84f8c5228d4b6e4c">读取参数及环境变量</a></li><li><a href="#head-e1172ac867be481d52993a386988d0d22b81a556">文件</a></li><li><a href="#head-a3a3ccdcb402fbcfca940e73e66bd06ac64d0124">标准输入,标准输出和标准错误</a></li><li><a href="#head-4067a3adec1c04be8bd62c5657b0df57d85dea6a">print语句</a></li><li><a href="#head-1cb74ada519c3d4a394d9c273932c69e443a01f3">对象持久化</a></li><li><a href="#head-2738a8523baaecf30323668950fa1c23beb74c7f">Unicode I/O</a><ol><li><a href="#head-61d7029f44fb5b278fefe0d3fdded750594994c9">Unicode
 数据编码</a></li><li><a href="#head-af387604411745eec942be27dfc87d99dfc8ef32">Unicode 字符属性</a></li></ol></li></ol></li></ol></div> <span id="line-2" class="anchor"/>

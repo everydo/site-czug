@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第十二章 操作基本图像
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-87310dff5bd8ab893989521783a7d5fa51ba80eb">处理基本的图像</a><ol><li><a href="#head-f24ac95e6e540c86276dccff1990116a528cfbdb">使用图像工作</a><ol><li><a href="#head-84a7aef9154cc0bea9612e0a92f7ea04f62f52d0">如何载入图像？</a></li><li><a href="#head-be6a292d197c9c0cc260c49fc96d50e479a8d8f8">我们能够对图像作些什么？</a></li></ol></li></ol></li></ol></div> <span id="line-2" class="anchor"/><span id="line-3" class="anchor"/><p class="line867">
 </p><h1 id="head-87310dff5bd8ab893989521783a7d5fa51ba80eb">1. 处理基本的图像</h1>

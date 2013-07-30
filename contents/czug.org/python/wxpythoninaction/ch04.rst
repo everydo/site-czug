@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第四章 用PyCrust使得wxPython更易处理
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-59b00a898ed65b5af05bb6d9e48ca1b6e725999a">用PyCrust使得wxPython更易处理</a><ol><li><a href="#head-b1c89accbc3df6d8068189fba7b5fc388237ae4c">如何与wxPython程序交互？</a></li><li><a href="#head-a257759ea6ed9f33b82a64e6565c31806e38a35e">PyCrust的有用特性是什么？</a><ol><li><a href="#head-17fc721ceb3cbe94da7fdf536e1151ae6a2912aa">自动完成</a></li><li><a href="#head-ca707adf9166721e8e0153994747f36f54aaed12">调用提示和参数默认</a></li><li><a href="#head-0e3d599ce9f478be40a0f8f28e1af3eb805c706a">语法高亮</a></li><li><a href="#head-6b770ace7b792be81bfe8efb34f612b1d7ba7bde">Python</a></li><li><a
 href="#head-06a5d09914ee9c129aae7733bb3d7db607b76bfb">命令重调用</a></li><li><a href="#head-8094ac1b8020a48848d3cca61f239ab48b637282">剪切和粘贴</a></li><li><a href="#head-0049832f51ab8f19efe0967924afd12f6a89136a">标准shell环境</a></li><li><a href="#head-18510320a31e454e26338d374ac0783a8890cab8">动态更新</a></li></ol></li><li><a href="#head-9c0781bac84babdaadf5f216e6d02a60b60446b8">PyCrust</a><ol><li><a href="#head-983099b9ddf4922f9676193235d4a6b66146cbb0">Namespace标签</a></li><li><a href="#head-457820a791a8d3ba4301cc85e292a76cb52b74c4">Display标签</a></li><li><a href="#head-9989877760206dcbd6ae16bc311b7633fc22ebc6">Session标签</a></li><li><a href="#head-c09b3d0e729812919178b8e9559b1a41bf238f03">Dispatcher</a></li></ol></li><li><a

@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 层管理
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-4" class="anchor"/><p class="line867"><strong> 含有章节索引的中文 文章模板 </strong> <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/></p><p class="line862">::-- <a href="/moin/zhuyj">zhuyj</a> [2008-06-06 07:36:43] </p><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-1f4d508e92fd830eaf74eeede8bdb5e249565939">Layout management in PyQt4</a><ol><li><a href="#head-79c125b8d862e4bfbea732daf2f442bdb9a0ec3c">layout classes 布局类化</a></li><li><a href="#head-17e481740415598d0e1592cb7813c7c733449ad2">Box Layout</a></li><li><a href="#head-4b88d9c4cd30b04c09ae4bc3b0c8ca320eba91c6">QGridLayout</a></li></ol></li><li><a href="#head-05e267ea77a1b729f87a475d3283220b85d2fe77">交流</a></li></ol></div> <span
 id="line-7" class="anchor"/><span id="line-8" class="anchor"/><p class="line867">

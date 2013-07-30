@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 10. 脚本和流
+---
 <p>出处： <a href="http://www.woodpecker.org.cn/diveintopython/scripts_and_streams/index.html">http://www.woodpecker.org.cn/diveintopython/scripts_and_streams/index.html</a></p>
       <div class="chapter" lang="zh_cn">
          <div class="titlepage">

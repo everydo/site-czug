@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 8. HTML 处理
+---
 <p>出处： <a href="http://www.woodpecker.org.cn/diveintopython/html_processing/index.html">http://www.woodpecker.org.cn/diveintopython/html_processing/index.html</a></p>
       <div class="chapter" lang="zh_cn">
          <div class="titlepage">

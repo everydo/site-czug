@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第六章 使用wxPython基本构件
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-307610e87b04b271fcb74cd59d83c4a495c1f657">使用基本的建造部件</a><ol><li><a href="#head-9074aa06c2f3751a53b9fa223d8736742e36bd0e">在屏幕上绘画</a><ol><li><a href="#head-97db4e13539ffa3b9455496f2574fff512d3a483">如何在屏幕上绘画</a></li></ol></li><li><a href="#head-e9041aecf0546b14acad3a649b41e08b3a422553">添加窗口装饰</a><ol><li><a href="#head-925ab8656124ddf5757a8e70821b6d0947495243">如何添加和更新一个状态栏</a></li><li><a href="#head-4cb95b0f0378583e52292ed6ffc854beb6a83b70">如何添加菜单？</a></li><li><a href="#head-e60093b2627e5c41a74d9b42440a3a8c727e4d7b">如何添加一个工具栏</a></li></ol></li><li><a
 href="#head-2fd6e8713057e909471ca9a3ab7abde364b35647">得到标准信息</a><ol><li><a href="#head-f3ef70168fc08d5c7cb60a727ee6ba59d5447a33">如何使用标准文件对话框？</a></li><li><a href="#head-ff4ca0e787be7581f9bda3547d63e62f30a525fd">如何使用标准的颜色选择器？</a></li></ol></li><li><a href="#head-b61bae071dfa0a00f0b89a92ba2c31220f128e0a">给应用程序一个好看的外观</a><ol><li><a href="#head-270ac61b4f28930e55c2bc47e5461d8fc043f7bf">如何布局窗口部件？</a></li><li><a href="#head-39a0e8508136cd64b5d4b3229bfcb4084dba4916">如何建造一个关于(about)框？</a></li><li><a href="#head-21ede5b328cae69a3c5586248fb660c43ed400ac">如何建造一个启动画面？</a></li></ol></li><li><a href="#head-7128fdbb7115084ca4c31c13a4b6b2d31f26f09e">本章小结</a></li></ol></li></ol></div> <span id="line-2"

@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 简介
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-4" class="anchor"/><p class="line867"><strong> Introduction to <a href="/moin/PyQt4" class="nonexistent">PyQt4</a> toolkit </strong> <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/></p><p class="line867"><strong> PyQT4工具包介绍 </strong> <span id="line-7" class="anchor"/><span id="line-8" class="anchor"/></p><p class="line862">::-- <a href="/moin/zhuyj">zhuyj</a> [2008-06-06 01:07:27] </p><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-29511335e086bc53fb8046a522ba865148185cc5">About this tutorial</a></li><li><a href="#head-6cb5b54bde41573189da452df2f0e85db4073b52">About PyQt</a></li><li><a href="#head-7fdfeed58da2f192fc619953e76a359e514836e7">Python</a></li><li><a
 href="#head-2bda123b1c3c3aa7d56a973976372bbd181b1a9d">Python toolkits</a></li></ol></div> <span id="line-9" class="anchor"/><span id="line-10" class="anchor"/><p class="line867">

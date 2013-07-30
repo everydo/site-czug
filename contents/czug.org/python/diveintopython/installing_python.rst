@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 1. 安装 Python
+---
 <p>出处： <a href="http://www.woodpecker.org.cn/diveintopython/installing_python/index.html">http://www.woodpecker.org.cn/diveintopython/installing_python/index.html</a></p>
       <div class="chapter" lang="zh_cn">
          <div class="titlepage">

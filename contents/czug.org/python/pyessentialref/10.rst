@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第十章 执行环境
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-ab122a1a45e56130649598a3cf01ec964989ef66">第十章 执行环境</a><ol><li><a href="#head-2b4ef42d4b5486bbce65439088258f6e5c538ea4">解释器选项及运行环境</a></li><li><a href="#head-4f6678c28667837a86d94979a938021b27fd8ee9">交互模式</a></li><li><a href="#head-26c6537c0c14b75e2e6e0609f4bf73f9413f7287">运行Python程序</a></li><li><a href="#head-566e4eb621baa6f212160f20da72e692f43e091a">Site配置文件</a></li><li><a href="#head-b1b04d68fe3e81d7c040e1e2f4b05d06acf88ce9">启用 Future 特性</a></li><li><a href="#head-de9cfcc1ae23f132f4015ef2a5afce22c303b24d">程序终止</a></li></ol></li></ol></div> <span id="line-2" class="anchor"/>
 <h1 id="head-ab122a1a45e56130649598a3cf01ec964989ef66">1. 第十章 执行环境</h1>

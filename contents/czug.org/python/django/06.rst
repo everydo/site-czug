@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第六章：Django管理系统admin
+---
 <p>出处： <a href="http://www.javaeye.com/wiki/Django-book/732-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E5%85%AD%E7%AB%A0%EF%BC%9ADjango%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9Fadmin">http://www.javaeye.com/wiki/Django-book/732-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E5%85%AD%E7%AB%A0%EF%BC%9ADjango%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9Fadmin</a></p>
   
   <h1 style="margin:25px 0 10px 10px">翻译www.djangobook.com之第六章：Django管理系统admin 

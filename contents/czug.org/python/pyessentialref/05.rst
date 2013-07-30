@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第五章 控制流
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-a31bad5127df2d35f5cb81c8e6b297de373af3b5">第五章 控制流</a><ol><li><a href="#head-1fd3b3c14c417d579b3d3e943a9ebc46d1224df6">条件语句</a></li><li><a href="#head-d22eac0f77f630bdb46869450c1a8ede6cac2350">循环</a></li><li><a href="#head-9b6a2b64a85688ccd268b488ae73848fef35521e">异常</a></li><li><a href="#head-05709b9c4a4f384ce4be13565c9a30f2ab12953a">定义新的异常</a></li><li><a href="#head-af4ad81ac8db49759594a75e15395470dfd6d82c">断言和__debug__</a></li></ol></li></ol></div> <span id="line-2" class="anchor"/>
 <h1 id="head-a31bad5127df2d35f5cb81c8e6b297de373af3b5">1. 第五章 控制流</h1>

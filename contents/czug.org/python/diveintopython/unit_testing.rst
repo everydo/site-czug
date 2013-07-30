@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 14. 测试优先编程
+---
 <p>出处： <a href="http://www.woodpecker.org.cn/diveintopython/unit_testing/stage_1.html">http://www.woodpecker.org.cn/diveintopython/unit_testing/stage_1.html</a></p>
       <div class="chapter" lang="zh_cn">
          <div class="titlepage">

@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第六章 函数及函数编程
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-6a3bc4ef1e50a1465e4e096032da7fc06d4c3e42">第六章 函数与函数编程</a><ol><li><a href="#head-e871f54a97ef847e5f5f3b4f7ea4a0c8fde20bb6">函数</a></li><li><a href="#head-f71862e2240c8a9d34d0fb1bbe19355c99003b31">参数传递和返回值</a></li><li><a href="#head-599ac60a1f42fffd3b86a42d7fda7069f1da89af">作用域规则</a></li><li><a href="#head-c9a851987035be23a131469f47c30d6c7bb1a400">递归</a></li><li><a href="#head-5aad4ab22989eb7d3abdc688b600dc96ac1ccf7f">apply()函数</a></li><li><a href="#head-d64f92304529af7b013da3d180e5b4e961312531">lambda操作符</a></li><li><a href="#head-54833ae8c524412616c1963063e210c8c98068b6">map(), zip(), reduce(),
 和filter()</a></li><li><a href="#head-d13f5405707543620fb4fa273048a2547c22a55b">列表内涵</a></li><li><a href="#head-51853bca214776b0ae418d690a25b85ca9a96177">eval(), exec, execfile(),和compile()</a></li></ol></li></ol></div> <span id="line-2" class="anchor"/>

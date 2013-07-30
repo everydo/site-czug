@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 菜单与工具条
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-4" class="anchor"/><p class="line867"><strong> Menus and Toolbars in <a href="/moin/PyQt4" class="nonexistent">PyQt4</a> </strong> <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/></p><p class="line862">::-- <a href="/moin/zhuyj">zhuyj</a> [2008-06-06 02:12:56] </p><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-d0f91af7bc1ff9d119c7ca694c13195b1f662e52">Menus and Toolbars in PyQt4</a><ol><li><a href="#head-f183fe8fdaab4c42ea10e1224b4bab04b493148d">Main Window</a></li><li><a href="#head-82d18d133ccc9f690762a8a633fd942fd6026f43">Statusbar</a></li><li><a href="#head-0c59f9ab4a5f37aeeec355b40f5f3c8d1fa2c3ba">Menubar</a></li><li><a
 href="#head-738e0b9a922f0c7d60dbdcc6bd0514f9955e53b1">Toolbar</a></li><li><a href="#head-ce3a00ee21d87575129cbfbc64128624221f825c">Putting it together</a></li></ol></li></ol></div> <span id="line-7" class="anchor"/><span id="line-8" class="anchor"/><p class="line867">

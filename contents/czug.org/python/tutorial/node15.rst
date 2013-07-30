@@ -1,3 +1,9 @@
+---
+created: 
+creator: panjy
+description: ''
+title: 附录D
+---
 <p>出处： <a href="http://www.woodpecker.org.cn:9081/projects/pythontutorial/py2.5/html/tut/node17.html">http://www.woodpecker.org.cn:9081/projects/pythontutorial/py2.5/html/tut/node17.html</a></p>
 
 <H1><A NAME="SECTION0017000000000000000000"></A><A NAME="glossary"></A>

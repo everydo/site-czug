@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第七章：表单处理
+---
 <p>第7章：表单处理</p>
 <p>客座作者：Simon Willison</p>
 <p>&nbsp;&nbsp;&nbsp; 跟随上一章走到现在，你现在应该有一个拥有完整功能的简单网站了。在本章，我们将处理这个谜题的下一个部分：构建视图来获取读者的输入。</p>

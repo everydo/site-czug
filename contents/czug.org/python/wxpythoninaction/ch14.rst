@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第十四章 网格控件
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"><strong>14</strong>  <span id="line-2" class="anchor"/><strong>网格(<tt>grid)</tt>控件</strong> <span id="line-3" class="anchor"/><span id="line-4" class="anchor"/><span id="line-5" class="anchor"/></p><p class="line867"><strong>本章内容包括:</strong> <span id="line-6" class="anchor"/><span id="line-7" class="anchor"/></p><ul><li><p class="line862">创建网格(<tt>grid)</tt> <span id="line-8" class="anchor"/><span id="line-9" class="anchor"/></p></li><li class="gap"><p class="line862">添加行和单元格(<tt>cell),</tt>并且处理列的首部 <span id="line-10" class="anchor"/><span id="line-11" class="anchor"/></p></li><li class="gap"><p class="line862">使用一个自定义的单元格(<tt>cell)</tt>描绘器(<tt>renderer)</tt> <span id="line-12"
 class="anchor"/><span id="line-13" class="anchor"/></p></li><li class="gap">创建自定义的编辑器 <span id="line-14" class="anchor"/><span id="line-15" class="anchor"/></li><li class="gap">捕获用户事件 <span id="line-16" class="anchor"/><span id="line-17" class="anchor"/><span id="line-18" class="anchor"/></li></ul><p class="line862">网格控件大概是<tt>wxPython</tt>中最复杂和最灵活的一个窗口部件。在这一章，你将有机会接触到这个控件的许多特性。我们将讨论如何输入数据到网格控件以及如何处理该控件的显示属性，并且我们还将讨论自定义编辑器和描绘器。网格控件使你能够在一个类似电子表格格式的网格中显示表格数据。该控件允许你为行和列指定标签，以及通过拖动网格线来改变网格的大小，并且可以为每个单元格单独指定字体和颜色属性。 <span id="line-19" class="anchor"/><span id="line-20"

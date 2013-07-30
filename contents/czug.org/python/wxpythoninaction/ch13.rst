@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第十三章 建造列表控件并管理列表项
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"><strong>13</strong>  <span id="line-2" class="anchor"/><strong>建造列表控件并管理项目</strong> <span id="line-3" class="anchor"/><span id="line-4" class="anchor"/></p><p class="line874">本章内容： <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/></p><ul><li>创建不同样式的列表控件 <span id="line-7" class="anchor"/><span id="line-8" class="anchor"/></li><li class="gap">处理列表中的项目 <span id="line-9" class="anchor"/><span id="line-10" class="anchor"/></li><li class="gap">响应列表中用户的选择 <span id="line-11" class="anchor"/><span id="line-12" class="anchor"/></li><li class="gap">编辑标签和对列表排序 <span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></li><li
 class="gap">创建大的列表控件 <span id="line-15" class="anchor"/><span id="line-16" class="anchor"/><span id="line-17" class="anchor"/></li></ul><p class="line862">在<tt>wxPython</tt>中，有两个控件，你可以用来显示基于列表的信息。较简单的是列表框，它是可滚动的单列列表，类似于使用<tt>HTML</tt>的 <tt>select </tt>标记所得到的。列表框已经在第8章中讨论过了，本章不再作进一步的讨论。 <span id="line-18" class="anchor"/><span id="line-19" class="anchor"/></p><p class="line874">本章讨论较为复杂的列表：列表控件，它是一个完整特性的列表窗口部件。这个列表控件可以每行显示多列信息，并可基于任一行进行排序，还能以不同的样式显示。对于列表控件的每个部分的细节显示，你有很大的灵活性。 <span id="line-20" class="anchor"/><span id="line-21" class="anchor"/><span id="line-22" class="anchor"/></p><p

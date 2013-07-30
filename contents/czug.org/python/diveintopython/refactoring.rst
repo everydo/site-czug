@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 15. 重构
+---
 <p>出处： <a href="http://www.woodpecker.org.cn/diveintopython/refactoring/index.html">http://www.woodpecker.org.cn/diveintopython/refactoring/index.html</a></p>
       <div class="chapter" lang="zh_cn">
          <div class="titlepage">

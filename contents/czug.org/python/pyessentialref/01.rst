@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第一章 Python快速入门
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"><a href="/moin/WeiZhong/2006-01-17">Python 精要参考(第二版)</a> <span id="line-2" class="anchor"/>Python Essential Reference, Second Edition 译文 <span id="line-3" class="anchor"/><span id="line-4" class="anchor"/></p><p class="line874">原著:David M Beazley <span id="line-5" class="anchor"/>出版商: New Riders Publishing <span id="line-6" class="anchor"/><span id="line-7" class="anchor"/></p><p class="line862">初译: Feather <a href="mailto:andelf@gmail.com" class="mailto">andelf@gmail.com</a> <span id="line-8" class="anchor"/>修正补充: <a href="/moin/WeiZhong">WeiZhong</a> <a href="mailto:weizhong2004@gmail.com" class="mailto">weizhong2004@gmail.com</a> <span id="line-9" class="anchor"/></p><div class="table-of-contents"><p
 class="table-of-contents-heading">目录</p><ol><li><a href="#head-ceabdca05e1abc53f7da3c8a801bb8fb2eecb7bf">第一章　Python快速入门</a><ol><li><a href="#head-250b82a8d0868c91a696a1137475044f237d2498">运行Python</a></li><li><a href="#head-995c19e7435dc3cf00b6ea0862dffd8eacce8c99">变量和表达式</a></li><li><a href="#head-844ba9fbdc08bf1ba6bbbe75e7760a9682aad06c">条件语句</a></li><li><a href="#head-dec0d7f95a9d594c71172cd975a77ca09f1509a1">文件输入/输出</a></li><li><a href="#head-0c9f7c60a9ff3d5430ba03db53454184db478318">字符串</a></li><li><a href="#head-eefac951c49a9a3e84c5e0debab1f84264a04ca9">列表和元组(Lists & Tuples)</a></li><li><a href="#head-996603294a2ca3533542608b2d32d9af5624ba64">循环</a></li><li><a href="#head-0b5313cbe2df3883240f31a1c6fd1c1e456f632f">字典</a></li><li><a

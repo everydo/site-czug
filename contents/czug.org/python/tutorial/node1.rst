@@ -1,3 +1,9 @@
+---
+created: 
+creator: panjy
+description: ''
+title: 开胃菜
+---
 <p>出处： <a href="http://www.woodpecker.org.cn:9081/projects/pythontutorial/py2.5/html/tut/node3.html">http://www.woodpecker.org.cn:9081/projects/pythontutorial/py2.5/html/tut/node3.html</a></p>
 
 <H1><A NAME="SECTION003000000000000000000"></A><A NAME="intro"></A>

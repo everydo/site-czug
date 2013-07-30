@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 事件和信号
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-4" class="anchor"/><p class="line867"><strong> 含有章节索引的中文 文章模板 </strong> <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/></p><p class="line862">::-- <a href="/moin/zhuyj">zhuyj</a> [2008-06-11 10:01:23] </p><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-bba776156e0cdaf310da03b4b2733d699c45321e">Events and Signals in PyQt4</a><ol><li><a href="#head-fad130de8ac28e9923e24aeb16ce28e23ba9a942">Events</a></li><li><a href="#head-67ac88a2d507e35cef90a3de0f0d328ffc02b83a">Signals & Slots</a></li><li><a href="#head-a6f77092ec1fcb9b138d581fbfd349a277f1db83">Reimplementing event handler</a></li><li><a href="#head-2a9e5bde88baa066dc6a99bc346003922513b4a2">Emitting
 signals</a></li></ol></li></ol></div> <span id="line-7" class="anchor"/><span id="line-8" class="anchor"/><p class="line867">

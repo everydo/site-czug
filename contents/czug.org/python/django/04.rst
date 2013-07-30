@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第四章：Django模板系统
+---
 <p>出处： <a href="http://www.javaeye.com/wiki/Django-book/734-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E5%9B%9B%E7%AB%A0%EF%BC%9ADjango%E6%A8%A1%E6%9D%BF%E7%B3%BB%E7%BB%9F">http://www.javaeye.com/wiki/Django-book/734-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E5%9B%9B%E7%AB%A0%EF%BC%9ADjango%E6%A8%A1%E6%9D%BF%E7%B3%BB%E7%BB%9F</a></p>
   
   <h1 style="margin:25px 0 10px 10px">翻译www.djangobook.com之第四章：Django模板系统 

@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 前言
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-2" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-9de4aa8723221dd3971b7f82b8fd3a7534583227">前言</a></li></ol></div> <span id="line-3" class="anchor"/>
 <h2 id="head-9de4aa8723221dd3971b7f82b8fd3a7534583227">1. 前言</h2>

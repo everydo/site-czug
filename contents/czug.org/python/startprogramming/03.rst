@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: Modules
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-3" class="anchor"/><p class="line867"><strong> <span id="line-4" class="anchor"/><a href="/moin/StartProgramming"> （首页）开始编程之旅</a> <span id="line-5" class="anchor"/>翻译自Lee Harr的<a href="http://staff.easthighschool.net/lee/computers/book/Start_Programming.html" class="http">Start Programming</a> <span id="line-6" class="anchor"/><span id="line-7" class="anchor"/></strong></p><p class="line862"><strong>本文是使用<a href="http://www.nongnu.org/pygsear/" class="http">pygsear</a>+<a href="http://pygame.org" class="http">pygame</a>作为开发环境，以初级用户角度来分步分阶段学习<a href="http://www.python.org"
 class="http">PYTHON</a>基本概念，并以小游戏开发项目为具体案例，介绍的十分详细。编写风格清新朴实，没有象一般教科书那样枯燥，极其适合初级用户来激发兴趣时使用。 <span id="line-8" class="anchor"/></strong> <span id="line-9" class="anchor"/></p>

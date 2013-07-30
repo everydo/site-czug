@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第一个程序
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-4" class="anchor"/><p class="line867"><strong> First programs in <a href="/moin/PyQt4" class="nonexistent">PyQt4</a> toolkit </strong> <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/></p><p class="line862">::-- <a href="/moin/zhuyj">zhuyj</a> [2008-06-06 01:37:11] </p><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-6df5b2e9275e8b42d9ee8d9cdc453f5d402fa676">First programs in PyQt4 toolkit</a><ol><li><a href="#head-4af88db4f19f94ae126818aafab798beeb01702f">Simple example</a></li><li><a href="#head-763d787d12f81e2d5e303c7996640623d8ba7313">An application icon</a></li><li><a href="#head-f54e283a1464bcc877ddbe312853d536b8d0a261">Showing a tooltip</a></li><li><a
 href="#head-9a80319e8f9c7fd18dfca57999616de79c5808e0">Closing a window</a></li><li><a href="#head-aca7dc0d9921fde8d75a43950682e2f2358d0717">Message Box</a></li><li><a href="#head-69edfe98c2f5fc06af93ed155833262a4e8439f1">Centering window on the screen</a></li></ol></li></ol></div> <span id="line-7" class="anchor"/><span id="line-8" class="anchor"/><p class="line867">

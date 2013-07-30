@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: '第五章：与数据库交互:模型 '
+---
 <p>出处： <a href="http://www.javaeye.com/wiki/Django-book/733-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E4%BA%94%E7%AB%A0%EF%BC%9A%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%A4%E4%BA%92:%E6%A8%A1%E5%9E%8B">http://www.javaeye.com/wiki/Django-book/733-%E7%BF%BB%E8%AF%91www.djangobook.com%E4%B9%8B%E7%AC%AC%E4%BA%94%E7%AB%A0%EF%BC%9A%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%A4%E4%BA%92:%E6%A8%A1%E5%9E%8B</a></p>
   
   <h1 style="margin:25px 0 10px 10px">翻译www.djangobook.com之第五章：与数据库交互:模型 

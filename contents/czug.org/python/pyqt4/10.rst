@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 自定义插件
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-4" class="anchor"/><p class="line867"><strong> <span id="line-5" class="anchor"/>含有章节索引的中文 文章模板 <span id="line-6" class="anchor"/></strong> <span id="line-7" class="anchor"/><span id="line-8" class="anchor"/></p><p class="line862">::-- <a href="/moin/zhuyj">zhuyj</a> [2008-12-22 02:23:50] <span id="line-9" class="anchor"/></p><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-b581eb4be1bdbbb1f9a5240f36b2e81e05e54d79">Custom Widgets in PyQt4</a><ol><li><a href="#head-fddb54f6faf1b5ecf10f976959514aea8dc0ce10">Burning widget</a></li></ol></li><li><a href="#head-5d04df8c2a3e256e53a521a790a7145726ec09de">交流</a></li></ol></div> <span id="line-10" class="anchor"/><span id="line-11" class="anchor"/><p
 class="line867">

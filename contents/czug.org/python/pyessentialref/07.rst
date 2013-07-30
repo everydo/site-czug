@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第七章 类、面向对象编程
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867">
 </p><h1 id="head-3b41b6f9803d96aa40082a44d8ca1be774ddf043">1. 第七章 类及面向对象编程</h1>

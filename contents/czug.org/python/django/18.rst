@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第十八章：自定义Django的admin界面
+---
   
   <h1 style="margin:25px 0 10px 10px">翻译www.djangobook.com之第十八章：自定义Django的admin界面 
     

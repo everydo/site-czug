@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第五章 绘制蓝图
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-476149c3af67c9ad7bc393412ff089d9734859d5">创建你的蓝图</a><ol><li><a href="#head-ccafb1a137076085306a44617cde958f277b1716">重构如何帮我改进我的代码？</a><ol><li><a href="#head-b718302d8b9783805cf877110180e77980931ca3">一个重构的例子</a></li><li><a href="#head-e079ce7b0227a1554c04609a0f21eb0d4978b172">开始重构</a></li><li><a href="#head-6f348cd094a4cf060d7547d791a17ffd7d5613b2">进一步重构</a></li></ol></li><li><a href="#head-04a6951c1b341d13ec7b71bc0dc78fa16b4c4657">如何保持模型(Model)与视图(View)分离？</a><ol><li><a href="#head-3a64788772284f7f47f007ac1de04115b65f31b5">MVC(Model-View-Controller)系统是什么？</a></li><li><a
 href="#head-621ac42f84c3562634ee4248ba91e0a180beba2f">一个wxPython模型：PyGridTableBase</a></li><li><a href="#head-a6da2733890a701b0c0bf336863a86cb9c72c28e">自定义模型</a></li></ol></li><li><a href="#head-594c3400ef2de24c1b92f431d71fec45b2b196a8">如何对一个GUI程序进行单元测试？</a><ol><li><a href="#head-8c0e644016692f5a9c2d62b234f89f44b7d9d66e">unittest模块</a></li><li><a href="#head-9864f0790accbfd523b31c462c230146512f020f">一个unittest范例</a></li><li><a href="#head-23e13dd0eae64e87845ec9c55b10c3a5c2369726">测试用户事件</a></li></ol></li><li><a href="#head-fef54ea4ec3bb8cc7561153dc840d2dcc54e588a">本章小结</a></li></ol></li></ol></div> <span id="line-2" class="anchor"/>

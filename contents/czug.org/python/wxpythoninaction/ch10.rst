@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第十章 创建和使用wxPython菜单
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-7515f270e5a5fd3c400788d2e1f624ac47feff17">创建和使用wxPython菜单</a><ol><li><a href="#head-871a60bc9da57de7d207c4ada290f7cf3d579705">创建菜单</a><ol><li><a href="#head-03970325bb3baddb1d4228237c1ac2f99ba260bd">如何创建一个菜单栏并把它附加到一个框架？</a></li><li><a href="#head-17377c9f487d3c44ae49ff51c6aeb34150e84012">如何创建一个菜单并把它附加到菜单栏？</a></li><li><a href="#head-bf60ae47e5b17ed4c6f37ca783acfa226250802e">如何给下拉菜单填加项目？</a></li><li><a href="#head-e6834dd45322cb033aed6ec179d7a0c34c4779fc">如何响应一个菜单事件？</a></li></ol></li><li><a
 href="#head-a2efa656b0da09f31dd8b1061a319ff369ab2c82">使用菜单项工作</a><ol><li><a href="#head-0f25cbf1a74a2f1e264bba6718dc2f883b98162f">如何在一个菜单中找到一个特定的菜单项？</a></li><li><a href="#head-d7fb005bc718935d5bc4423cfac5f1aa12d39a66">如何使一个菜单项有效或无效？</a></li><li><a href="#head-1def0c1a6866ac7e2dd05af0209c88717e0cb3e9">如何将一个菜单项与一个快捷键关联起来？</a></li><li><a href="#head-5d4d0367238806a9e97f812982209d4801bffc54">如何创建一个复选或单选开关菜单项？</a></li></ol></li><li><a href="#head-b1edf2d4d39dc63e43c296524128f1ceb5ad5eec">进一步构建菜单</a><ol><li><a href="#head-e3da9310675909028b5f0c10c0453c49b8d55e48">如何创建一个子菜单？</a></li><li><a href="#head-7a7b8fe369d8e7cce4fef3231b8fa66ef646f72d">如何创建弹出式菜单？</a></li><li><a

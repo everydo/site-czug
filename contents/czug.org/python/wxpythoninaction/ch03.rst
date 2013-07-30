@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第三章 在事件驱动环境中开发
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"/><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li><a href="#head-078de0c4c629685df13f91ade743baa471462247">在事件驱动环境中工作</a><ol><li><a href="#head-2ba9fc110fde7cfeb2efb0d8a33408a9b20fe773">要理解事件，我们需要知道哪些术语？</a></li><li><a href="#head-997731f89c2e6e8ac813bc3366f0f6bbd3951cf4">什么是事件驱动编程?</a><ol><li><a href="#head-9a2fe4c35a7b1f35224cd2b4ce77bfd5a06eefe3">编写事件处理器</a></li><li><a href="#head-fc3d09123b2425cf47df1478aefba879339edc39">设计事件驱动程序</a></li><li><a href="#head-86fb2ec6110c8aa4388e08046e106261ebea0009">事件触发</a></li></ol></li><li><a href="#head-2fb118752de502b97b26a7ba9fabf6b65585836d">如何将事件绑定到处理器?</a><ol><li><a
 href="#head-a77a7a94031a80b122b50b68510839567f2845bc">使用wx.EvtHandler的方法工作</a></li></ol></li><li><a href="#head-f26296f61c0be2d29a898b962b74c506a4bc22ce">wxPython是如何处理事件的?</a><ol><li><a href="#head-597d9ef3e7f9e8d5030574f0637f800b9ce95ea4">理解事件处理过程</a></li><li><a href="#head-d34c3722bc0c5d807d43ff9729eef2a1a56db511">使用Skip()方法</a></li></ol></li><li><a href="#head-4d84eaa2c4bc84d5730652c890582d76eddae139">在应用程序对象中还包含哪些其它的属性？</a></li><li><a href="#head-fc92511d8672e37c967ac67fa1e4a9df4a6014bc">如何创建自己的事件？</a><ol><li><a href="#head-cc66fb7269df6909ea842c971d023ddd94fdbd74">为一个定制的窗口部件定义一个定制的事件</a></li></ol></li><li><a href="#head-e0d5baa7d0aad03d94711466b87eea31f1aa9bf9">总结</a></li></ol></li></ol></div>

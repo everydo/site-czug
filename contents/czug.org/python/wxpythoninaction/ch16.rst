@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 第十六章 在应用程序中加入HTML
+---
 <div lang="en" id="content" dir="ltr"><span id="top" class="anchor"/>
 <span id="line-1" class="anchor"/><p class="line867"><strong>16 在你的应用程序中加入<tt>HTML</tt></strong> <span id="line-2" class="anchor"/><span id="line-3" class="anchor"/><span id="line-4" class="anchor"/></p><p class="line867"><strong>本章内容：</strong> <span id="line-5" class="anchor"/><span id="line-6" class="anchor"/></p><ul><li><p class="line862">在<tt>wxPython</tt>窗口中显示<tt>HTML</tt> <span id="line-7" class="anchor"/><span id="line-8" class="anchor"/></p></li><li class="gap"><p class="line862">处理和打印<tt>HTML</tt>窗口 <span id="line-9" class="anchor"/><span id="line-10" class="anchor"/></p></li><li class="gap"><p class="line862">使用<tt>HTML</tt>分析器(<tt>parser)</tt> <span id="line-11" class="anchor"/><span id="line-12" class="anchor"/></p></li><li
 class="gap">支持新的标记和其它的文件格式 <span id="line-13" class="anchor"/><span id="line-14" class="anchor"/></li><li class="gap"><p class="line862">在<tt>HTML</tt>中使用控件 <span id="line-15" class="anchor"/><span id="line-16" class="anchor"/><span id="line-17" class="anchor"/></p></li></ul><p
