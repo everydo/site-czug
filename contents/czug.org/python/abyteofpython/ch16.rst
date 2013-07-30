@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 接下来学习什么？
+---
 <p>出处： <a href="http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch16.html">http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch16.html</a></p>
 
 <h1>第16章 接下来学习什么？</h1>

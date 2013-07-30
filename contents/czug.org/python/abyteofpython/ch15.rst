@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 更多Python的内容
+---
 <p>出处： <a href="http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch15.html">http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch15.html</a></p>
 
 <h1>第15章 更多Python的内容</h1>

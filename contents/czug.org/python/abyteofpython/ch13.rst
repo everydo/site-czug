@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 异常
+---
 <p>出处： <a href="http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch13.html">http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch13.html</a></p>
 
 <h1>第13章 异常</h1>

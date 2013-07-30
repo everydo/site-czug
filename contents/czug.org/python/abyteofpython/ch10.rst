@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 解决问题
+---
 <p>出处： <a href="http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch10.html">http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch10.html</a></p>
 
 <h1>第10章 解决问题——编写一个Python脚本</h1>

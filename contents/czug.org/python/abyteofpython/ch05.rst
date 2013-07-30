@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 运算符与表达式
+---
 <p>出处： <a href="http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch05.html">http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch05.html</a></p>
 
 <h1>第5章 运算符与表达式</h1>

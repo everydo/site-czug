@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 介绍
+---
 <p>出处： <a href="http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch01.html">http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch01.html</a></p>
 
 <h1>第1章 介绍</h1>

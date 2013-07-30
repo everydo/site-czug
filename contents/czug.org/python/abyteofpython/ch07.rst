@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: 函数
+---
 <p>出处： <a href="http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch07.html">http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch07.html</a></p>
 
 <h1>第7章 函数</h1>

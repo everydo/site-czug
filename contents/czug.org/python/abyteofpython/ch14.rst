@@ -1,3 +1,9 @@
+---
+created: 
+creator: Benky
+description: ''
+title: Python标准库
+---
 <p>出处： <a href="http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch14.html">http://www.woodpecker.org.cn:9081/doc/abyteofpython_cn/chinese/ch14.html</a></p>
 
 <h1>第14章 Python标准库</h1>
