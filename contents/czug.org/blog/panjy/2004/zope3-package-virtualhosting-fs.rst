@@ -1,3 +1,9 @@
+---
+created: 2004-09-06 14:21:33
+creator: panjy
+description: 继续学习Zope3，包管理、虚拟主机的设置，以及web编辑的代码到文件系统的同步
+title: '学习Zope3: 安装包、虚拟主机和代码文件系统同步'
+---
 <b><a href="http://www.czug.org/docs/zope/zope3book/InstallPackages">安装包(Package)</a></b><br>
 <br>
 包（Package）就是Zope2中的Products, 换了个名字。Zope3没有明确的附加产品的概念。<br>

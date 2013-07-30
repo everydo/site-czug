@@ -1,3 +1,9 @@
+---
+created: 2004-11-10 14:09:29
+creator: panjy
+description: 'Zope 3 Newsletter: Volume 2 Issue 1, Zope3以及相关项目的最新进展'
+title: Zope3 新闻信2-1(Newsletter)
+---
 
  <p>来自<a href="http://mail.zope.org/pipermail/zope3-dev/2004-November/012592.html">Zope 3
  Newsletter: Volume 2 Issue 1</a> 的一些消息，值得一看。</p>

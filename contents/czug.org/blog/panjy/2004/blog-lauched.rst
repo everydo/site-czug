@@ -1,3 +1,9 @@
+---
+created: 2004-07-28 09:53:36
+creator: panjy
+description: 开张小序，我对这个Blog的期望
+title: 我为什么要Blog？
+---
 
  <p>对这个Blog的期望：</p>
 

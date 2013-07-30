@@ -1,3 +1,9 @@
+---
+created: 2004-11-12 01:11:38
+creator: panjy
+description: 对于中文用户，特别需要关注Python的编码技术. 列举一些常用的技巧。
+title: Python的编码处理技术
+---
 
  <ul>
  <li>

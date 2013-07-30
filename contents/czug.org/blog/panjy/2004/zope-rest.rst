@@ -1,3 +1,9 @@
+---
+created: 2004-10-01 07:56:41
+creator: panjy
+description: 做为一个文本书写格式, RestructuredText可以很好的支持中文化，特别是在zope中
+title: 新结构化文本reStructuredText的国际化支持
+---
 
  <p>自Zope2.7起，引入了对<a href="http://docutils.sf.net/">reStructuredText</a>的支持，我把她翻译为“新结构化文本”。reStructuredText是使用
  <a href="http://www.czug.org/docs/plone/plonebook/X_e6_96_b0_e7_bb_93_e6_9e_84_e5_8c_96_e6_96_87_e6_9c_ac">

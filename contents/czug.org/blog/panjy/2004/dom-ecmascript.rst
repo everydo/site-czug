@@ -1,3 +1,9 @@
+---
+created: 2004-08-21 10:24:50
+creator: panjy
+description: 如何实现和各个浏览器都兼容的JavaScript编程，需要掌握的标准是DOM和Ecmascript。
+title: DOM和Ecmascript － 网站的行为标准
+---
 
  <p>（应该说，我还不是一个javascript的guru，由于需要编写一些code，以下是我对这个技术的理解。）<br>
 在一篇<a href="http://www.blueidea.com/tech/site/2004/1931.asp">介绍网站标准的文章</a>中，说到：

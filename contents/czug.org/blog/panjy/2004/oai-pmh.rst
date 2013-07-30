@@ -1,3 +1,9 @@
+---
+created: 2004-10-19 02:05:54
+creator: panjy
+description: OAI-PMH是数字图书管理数据交换的一个标准。最近好几个Zope产品，都开始提供了OAI-PMH的支持。
+title: OAI-PMH：元数据获取标准
+---
 
  <p><a href="http://www.openarchives.org/">OAI-PMH</a>是内容管理和图书馆科学方面的一个十分先进的元数据交换标准。国外很多图书馆都提供了这个接口。其参考结构中，定义了两个软件组件：</p>
  <ul class="square">

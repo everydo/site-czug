@@ -1,3 +1,9 @@
+---
+created: 2004-09-24 03:42:28
+creator: panjy
+description: 接口（Interface）是Zope3的编程基础技术，组件架构(Component Architecture)是Zope的设计模型。
+title: 学习Zope3：接口和组件架构
+---
 
  <h1>接口（Interface）</h1>
  <p><br />

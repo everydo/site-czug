@@ -1,3 +1,9 @@
+---
+created: 2005-01-02 14:33:00
+creator: panjy
+description: 罗列zope配置文件的一些机关
+title: zope.conf的一些小机关
+---
 
  <p>从zope2.7版本开始，zope实例的配置全部集中在实例目录下的etc/zope.conf文件中。<br />
  <br />

@@ -1,3 +1,9 @@
+---
+created: 2004-12-27 02:00:20
+creator: panjy
+description: locale的设置，影响地域相关的输出显示和编码
+title: debian/python/zope的locale设置
+---
 
  <p>locale的设置，会影响操作系统函数的输出，比如错误提示语言、货币符号、日期格式等。</p>
 <br />

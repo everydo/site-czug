@@ -1,3 +1,9 @@
+---
+created: 2004-12-31 02:07:13
+creator: panjy
+description: 发现了Dasher, 很新颖的文字输入方法，适合于身体残疾患者以及触摸电脑等使用
+title: 'Dasher: 新的文字输入方法'
+---
 
  <p>在<a href="http://awkly.org/archive/blog_97103">awkly.org上</a>发现了<a href="http://www.inference.phy.cam.ac.uk/dasher/chinese/">dasher</a>的链接，只需要一个手指、或者脚、或者头、或者眼球就就可以输入的工具。<br />
  <br />

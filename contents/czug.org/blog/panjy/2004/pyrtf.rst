@@ -1,3 +1,9 @@
+---
+created: 2005-04-07 17:18:11
+creator: panjy
+description: 小试了一把PyRTF，动态生成RTF文件
+title: 使用PyRTF的生成RTF文件
+---
 <p><a class="reference" href="pyrtf.sourceforge.net/">PyRTF</a> 是动态生成 <a class="reference" href="http://www.biblioscape.com/rtf15_spec.htm">RTF</a> 文档的一个Python包。如果你需要动态生成使用MS Word查看的一些文档之类的东东，这个产品可能是你的选择。doc格式不公开，而且一般生成起来很慢，而且依赖一些com组件。</p>
 <p>RTF 文件是一个公开的格式, PyRTF则是一个很小的纯Python的包。因此很多情况下，选择PyRTF也是一个不错的选择。</p>
 <div class="section">

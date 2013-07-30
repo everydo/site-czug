@@ -1,3 +1,9 @@
+---
+created: 2004-12-03 12:23:23
+creator: panjy
+description: 正则表达式(Regular Expression)是文字处理的利器, Python对其有良好的支持
+title: Python的正则表达式
+---
 
  <p>python提供了一个<a href="http://docs.python.org/lib/module-re.html">rx包</a>,
  来支持<a href="http://www.zdnet.com.cn/developer/tech/story/0,2000081602,39077620,00.htm">正则表达式</a>.<br />

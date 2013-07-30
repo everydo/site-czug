@@ -1,3 +1,9 @@
+---
+created: 2004-12-24 00:10:17
+creator: panjy
+description: 权威IT杂志之一eWeek在众多产品中，选出Plone作为最佳内容管理产品。
+title: Plone被eWeek评定为2004年度10个最佳产品
+---
 
  <p>实在是大快人心的事情，<a href="http://www.eweek.com/article2/0,1759,1742104,00.asp">Plone当选了eWeek杂志2004最佳10个产品之一</a>。<br />
  <br />

@@ -1,3 +1,10 @@
+---
+created: 2004-12-24 00:17:39
+creator: panjy
+description: '如下：The open-source arena now has its own world-class content-management
+  system: Plone.'
+title: 主流IT杂志InformationWeek评论Plone
+---
 
  <p>看来2004是Plone继续成功的一年。<br />
  <a href="http://www.informationweek.com/story/showArticle.jhtml?articleID=56200152"><br />

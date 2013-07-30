@@ -1,3 +1,9 @@
+---
+created: 2004-08-06 11:29:49
+creator: panjy
+description: 如题
+title: CA是第二次Plone大会的主要资助方
+---
 
  <p>记得第一次Plone大会的主要资助方是大陆航空，而<a href="http://plone.org/events/conferences/2/">这次会议</a>是 <a href="http://www.ca.com.cn">CA公司</a> 抢了头筹.<br>
  <br>

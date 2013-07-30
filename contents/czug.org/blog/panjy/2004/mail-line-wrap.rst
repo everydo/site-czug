@@ -1,3 +1,9 @@
+---
+created: 2004-12-12 11:11:01
+creator: panjy
+description: 实际中经常需要进行文字折行(word-wrap)处理，典型的应用是对邮件文本的自动折行，中文支持颇为不易，这里介绍一个python的实现算法。
+title: 文字折行算法的中文支持
+---
 
  <p>英文是ascii，每个字符占用空间相同，直接使用空格就可以分词。因此英文版本的折行算法在python cookbook上有很经典的高效算法：</p>
  <p><a href="http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/148061">one-liner

@@ -1,3 +1,10 @@
+---
+created: 2006-05-11 16:12:46
+creator: panjy
+description: "本文是为CPUG成立第一会议发言的准备稿。zope产品和社区发展现状，社区zope2/zope3/cmf/plone/ecm项目介绍\r\
+  \n"
+title: Zope和Plone的发展现状
+---
 <div class="contents topic">
 <p class="topic-title first"><a id="id1" name="id1">内容</a></p>
 <ul class="simple">

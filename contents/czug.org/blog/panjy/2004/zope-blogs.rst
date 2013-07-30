@@ -1,3 +1,9 @@
+---
+created: 2004-08-02 01:50:00
+creator: panjy
+description: 辛辛苦苦把这个SimpleBlog改进好，有些Production的架势了，却半路杀出了个Quills新Blog产品。
+title: Zope上的Blog工具
+---
 
  <p><br>
  Zope上的Blog其实比较多的，只是很适合最终用户用的产品不多。<br>

@@ -1,3 +1,9 @@
+---
+created: 2005-09-22 08:36:55
+creator: panjy
+description: 内容管理系统，到底应该选择关系数据库，还是ZODB来存储数据？
+title: ZODB，还是RDBMS?
+---
 <p>首先是Florent提出 <a href="http://blogs.nuxeo.com/sections/blogs/florent_guillaume/2005_08_11_object_relational">支持O/R映射应该是ECM项目的一个重点</a> , 让数据保存在关系数据库中，他的意见是:</p>
 
 <ul>

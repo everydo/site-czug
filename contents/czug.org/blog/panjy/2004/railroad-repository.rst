@@ -1,3 +1,9 @@
+---
+created: 2004-09-17 00:22:14
+creator: panjy
+description: 针对所有CMS系统中大文件存储的命门缺陷，Infrae发布了"铁路"存储服务器(Railroad Repository)，和其他的CMS系统配合工作
+title: “铁路”存储服务器
+---
 
  <p><a href="http://www.infrae.com/products/railroad">Railroad
  Repository</a>是一个基于标准的、用于保存大的二进制文件以及其元数据的存储服务器。Railroad并不是一个Zope产品，而是基于apache+mode_python的，元数据保存在postgresql中。<br />

@@ -1,3 +1,9 @@
+---
+created: 2004-07-30 23:54:46
+creator: panjy
+description: 围绕Zope/Plone滋生了一大批开源公司和个人，他们演绎各自的赚钱之路
+title: 都来用Zope赚钱，从Enfolder Systems说起
+---
 
  <p>
  从前看到Zope/Plone的服务提供商都是中小型公司，甚至很多是个人，这种局面显然对客户是不利的。客户希望看到可靠的、有力的、专业的服务商，而不是一些散兵游勇。<br>

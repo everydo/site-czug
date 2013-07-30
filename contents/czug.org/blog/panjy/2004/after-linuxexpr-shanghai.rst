@@ -1,3 +1,9 @@
+---
+created: 2004-09-11 09:25:30
+creator: panjy
+description: 因为Zope的两个知名产品CPS/EPR5的公司要参加，因此前往参观了。
+title: 上海LinuxExpro展会观后
+---
 
  <p>从论坛里，得知了在上海举办的这个<a href="http://www.czug.org/newsitems/linuxexpo-zope-cps-erp5">LinuxExpro展览会</a>中，有Zope的身影，机会不容错过。<br />
  <br />

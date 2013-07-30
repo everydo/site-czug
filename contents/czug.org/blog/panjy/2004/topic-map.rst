@@ -1,3 +1,9 @@
+---
+created: 2004-10-16 12:04:03
+creator: panjy
+description: 主题地图(Topic Map)，是构成语义网站的重要重要技术。也是Plone未来的特性之一。暂先列举一些资源。
+title: 主题地图Topic-Map相关资源
+---
 
  <p><br />
  Plone中使用关键字管理内容，对中小型的网站，这个不错。但是一旦内容数量很多，关键字则很难去管理了。<br />

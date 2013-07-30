@@ -1,3 +1,9 @@
+---
+created: 2005-02-07 10:46:00
+creator: panjy
+description: 2005 O'Reilly开源大会上，Plone是其中几个主要讨论主题之一。
+title: OSCON和Plone
+---
 <p><a href="http://www.ebcvg.com/press.php?id=768">Explore the State of the Art of Open Source at the 2005 O'Reilly Open Source Convention</a></p>
 <p>O'Reilly开源大会(OSCON)，是把握开源技术最新发展的，最知名的开源盛会:
 <pre>

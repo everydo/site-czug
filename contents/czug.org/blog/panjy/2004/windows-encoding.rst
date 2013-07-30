@@ -1,3 +1,9 @@
+---
+created: 2005-01-21 12:03:13
+creator: panjy
+description: 讨论一下Windows的字符编码
+title: windows的字符
+---
 <p>看到一个讲解<a href="http://blog.csdn.net/yjgx007/archive/2004/06/16/18079.aspx">windows字符编码的文章</a></p>
 <p>解开了我的一些疑惑，总结如下:</p>
 

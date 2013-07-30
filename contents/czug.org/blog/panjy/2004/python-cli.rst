@@ -1,3 +1,9 @@
+---
+created: 2004-12-17 08:21:09
+creator: panjy
+description: Python也能融入到.NET框架：一些IronPython, .NET, Mono和Boo的信息。
+title: Python和.NET的接触
+---
 
  <p><a href="http://www.python.org">Python</a>是一个优秀的动态语言，是否适合<a href="http://www.microsoft.com/net/">.NET</a>这样的平台呢？<br />
  <br />

@@ -1,3 +1,9 @@
+---
+created: 2004-08-17 11:23:13
+creator: panjy
+description: CST，中国标准时间（China Standard Time), 还是美国中部标准时间（Center Standard Time）?
+title: zope的时间bug
+---
 
  <p>
  在Linux上使用zope的人常会被zope和linux的时间搅得胡涂，通常出现Zope显示的时间和实际的时间不匹配。特别是在Redhat的某些版本上。<br>

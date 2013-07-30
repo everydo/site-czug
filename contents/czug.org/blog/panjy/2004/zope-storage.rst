@@ -1,3 +1,9 @@
+---
+created: 2004-11-11 15:15:29
+creator: panjy
+description: Zope支持使用多种方式来数据，而不仅仅使用一个单独的Data.fs文件
+title: Zope的数据存储方式
+---
 
  <p>安装Zope后，会发现数据均保存在一个Data.fs的文件中，而且采用的是一个不开放的存储格式。很多人会产生疑问：</p>
  <ul>

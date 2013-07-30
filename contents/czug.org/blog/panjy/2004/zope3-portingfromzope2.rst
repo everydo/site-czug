@@ -1,3 +1,9 @@
+---
+created: 2004-09-24 04:09:22
+creator: panjy
+description: 如何将Zope2的应用移植到Zope3
+title: 学习Zope3：从Zope2移植到Zope3
+---
 
  <p>原文：<a href="http://www.czug.org/docs/zope/zope3book/PortingApps">Porting
  Applications from Zope 2 to Zope 3</a><br />

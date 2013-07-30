@@ -1,3 +1,9 @@
+---
+created: 2004-11-29 14:30:50
+creator: panjy
+description: Python上的一些图表工具
+title: Python上的图表工具
+---
 
  <p>要动态生成图表？Python上的东东还真不少。<br />
  <br />

@@ -1,3 +1,9 @@
+---
+created: 2005-08-24 16:42:25
+creator: panjy
+description: 通过Python可以很方便的操作Word
+title: 使用Python来操作Word
+---
 <pre class="python">
 <span style="color: #C00000;">import</span> <span style="color: #000000;">win32com</span>
 <span style="color: #C00000;">from</span> <span style="color: #000000;">win32com</span><span style="color: #0000C0;">.</span><span style="color: #000000;">client</span> <span style="color: #C00000;">import</span> <span style="color: #000000;">Dispatch</span><span style="color: #0000C0;">,</span> <span style="color: #000000;">constants</span>

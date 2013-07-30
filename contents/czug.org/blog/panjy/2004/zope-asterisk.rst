@@ -1,3 +1,9 @@
+---
+created: 2004-10-19 03:00:03
+creator: panjy
+description: Zope总是让我们惊奇，发现了Asterisk这个用于PBX的好东东
+title: Zope和Asterisk，管理电话交换机
+---
 
  <p>通过 <a href="http://zope.org/Members/salimfadhley/zTrix">Zope Asterisk
  Objects</a>，发现了<a href="http://www.asterisk.org/"><span><span>Asterisk</span></span></a><span><span>。<br />

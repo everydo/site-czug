@@ -1,3 +1,9 @@
+---
+created: 2004-10-17 16:52:30
+creator: panjy
+description: Zope将全部索引信息保存在ZODB中，这导致系统性能、容量等都成为问题。而Lucence是一个成熟、高效、功能强大的全文索引引擎。使用Lucence将解决彻底摆脱Zope的全文检索功能的潜在瓶颈。
+title: Lucence - Zope3的新全文检索方案
+---
 
  <p>关于Lucence，一句话，最牛的开源全文索引引擎，Jive就是用的他，具体参考:</p>
  <ul>

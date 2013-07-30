@@ -1,3 +1,9 @@
+---
+created: 2004-09-03 16:05:33
+creator: panjy
+description: 开始学习Zope3，先了解了安装和ZMI
+title: 学习Zope3：安装和用户界面
+---
 逐步开始把<a href="http://www.czug.org/docs/zope/zope3book">Zope3宝典</a>放到了CZUG.org上，并开始阅读和实践。刚刚看完下面的几个部分：<br>
 <ul>
   <li><a href="http://www.czug.org/docs/zope/zope3book/Preface" title="" style="">Preface</a>: 绪言<br>

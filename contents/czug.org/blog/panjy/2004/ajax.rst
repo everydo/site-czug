@@ -1,3 +1,9 @@
+---
+created: 2005-06-09 09:09:35
+creator: panjy
+description: 发现了Ajax这个新的名词，也就是：在web上通过javascript，使用异步的xmlhttp请求，实现无刷新的web界面。
+title: 'Ajax: web应用的新方法'
+---
 <p>使用javascript发起异步xmlhttp请求，这个已经不是新鲜的技术了。使用这个的web交互界面，的确是让人眼前一亮。</p>
 <p>google是最好的例子，包括gmail， <a class="reference" href="http://maps.google.com/">google map</a>, <a class="reference" href="http://www.google.com/webhp?complete=1&amp;hl=en">google suggestion</a>, 和新版的google groups.</p>
 <p>Plone2.1 也开始使用这个技术。 <a class="reference" href="http://kupu.oscom.org">kupu</a> 就是大量使用这个技术的典型案例，整个编辑环境让久用单调web界面的人有绚丽的感觉；Plone 2.1的live search，和 <a class="reference" href="http://www.google.com/webhp?complete=1&amp;hl=en">google suggestion</a> 比较类似，一边输入搜索词，你便可同时看到动态搜索结果提示，没有页面刷新的过程。</p>

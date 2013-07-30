@@ -1,3 +1,9 @@
+---
+created: 2005-01-24 23:10:24
+creator: panjy
+description: 谁在用Plone？很有趣的一个清单
+title: Plone在中文地区的发展
+---
 <p>客户朋友很神秘地发来一个中文地区Plone用户清单，发现有很多不曾知道的网站使用Plone搭建的。其中：</p>
 <p><em>政府网站有:</em> <a href="http://www.dayigs.gov.cn/">大邑县国家税务局</a>; </p>
 <p><em>非政府组织有</em>：<a href="http://www.chinarivers.ngo.cn">中国河网</a>，<a href="http://www.learning.ngo.cn/news">中国草根组织</a>，

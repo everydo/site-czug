@@ -1,3 +1,9 @@
+---
+created: 2004-07-28 16:58:53
+creator: panjy
+description: GIMP是Photoshop的开放源代码替代。这里记录一下初始安装过程
+title: GIMP第一步
+---
 
  <p>手头有些图片处理的事情要做，而我不要去用那些盗版的PhotoShop，于是找到了&nbsp; <a href="http://www.gimp.org/">GIMP</a>&nbsp; 。<br>
  <br>

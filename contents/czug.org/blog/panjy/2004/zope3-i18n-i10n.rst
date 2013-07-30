@@ -1,3 +1,9 @@
+---
+created: 2004-09-24 03:01:03
+creator: panjy
+description: Zope3的多语言支持
+title: 学习Zope3：国际化和本地化的支持
+---
 
  <p>原文：<a href="http://www.czug.org/docs/zope/zope3book/I18NOverview">Introduction to Zope’s
  I18n and L10n Support</a><br />

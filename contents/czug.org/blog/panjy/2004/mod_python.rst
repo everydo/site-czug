@@ -1,3 +1,9 @@
+---
+created: 2004-10-09 00:17:16
+creator: panjy
+description: 和其他的web开发不同，mod_python利用了apache，通过python提供了一个多功能、快速、可扩展的web应用开发方法。
+title: 'mod_python: 让Python和Apache集成'
+---
 
  <p>有了webware/php/jsp, 设置zope，为什么还需要<a href="http://www.modpython.org/">mod_python</a>？看了<a href="http://www.onlamp.com/pub/a/python/2003/10/02/mod_python.html">introducing
  mod_python</a>, 才得知她实在是一个不可忽视的利器。<br />

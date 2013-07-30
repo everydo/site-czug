@@ -1,3 +1,9 @@
+---
+created: 2004-10-15 17:48:20
+creator: panjy
+description: 我是Debian的fans，但客户问我们为何不选择Redhat？
+title: Debian, 还是Redhat?
+---
 
  <p>我最早就是使用Redhat的，这个名字不错，logo也不错，能够在市场上很便宜买到cd，也有服务去买，还要认证可以考。<br />
  因此Redhat这个品牌在中国认知度还是比较高的，中国的市场做得不错。<br />

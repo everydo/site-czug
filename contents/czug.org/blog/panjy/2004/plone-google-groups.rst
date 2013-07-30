@@ -1,3 +1,9 @@
+---
+created: 2005-04-16 00:24:35
+creator: panjy
+description: Google Groups的消息提要(feed)采用ATOM的格式. 这里介绍如何在Plone中显示Google Groups的摘要信息。
+title: 在Plone中显示Google Groups的最近消息
+---
 <p>由于czug升级，采用 <a class="reference" href="http://groups-beta.google.com/">Google Groups</a> 来实现邮件列表功能。该服务采用ATOM格式实现消息摘要，而不是我们习惯的RSS格式（ATOM的确比RSS强些，见 <a class="reference" href="http://www.blogchina.com/new/display/32658.html">RSS和ATOM格式说明</a> ）。因此就不能再使用CMFSin来显示Google Groups的摘要信息了。</p>
 <p>于是准备自己写段小程序，来实现这个功能。查了一下，发现python有个 <a class="reference" href="http://feedparser.org/">feedparser</a> 的好东东，支持RSS、ATOM等各种格式的摘要解析。于是准备用他，具体操作如下：</p>
 <ul>

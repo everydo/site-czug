@@ -1,3 +1,9 @@
+---
+created: 2005-01-13 09:50:13
+creator: panjy
+description: ZODB能够存放多少对象，有限制因素吗？看看jim的回答
+title: ZODB的容量有限制吗？
+---
 
  <p>Zope公司CTO Jim的这封邮件，可以解答很多人对ZODB的疑虑：</p>
  <p>Victor Ng wrote:</p>

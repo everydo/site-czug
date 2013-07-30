@@ -1,3 +1,9 @@
+---
+created: 2004-09-23 16:40:18
+creator: panjy
+description: Schema用来描述对象的属性，Widget用来显示属性
+title: 学习Zope3：Schema和Widget
+---
 
  <p><br />
  原文：<a href="http://www.czug.org/docs/zope/zope3book/Schema">Zope Schemas and

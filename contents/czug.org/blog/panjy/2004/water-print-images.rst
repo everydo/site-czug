@@ -1,3 +1,9 @@
+---
+created: 2005-04-16 09:57:19
+creator: panjy
+description: 经常出现图片/文章被盗用的情况，您可考虑给您网站上的图片加加水印。Python在这方面做得很好。
+title: 给你的网站的图片加水印
+---
 <p>（ <a class="reference" href="http://www.livejournal.com/users/gniemeyer/10279.html">原文</a> ）使用 <a class="reference" href="http://www.pythonware.com/products/pil">PIL</a> 可轻松添加水印，效果如下:</p>
 <img alt="http://linux-br.conectiva.com.br/~niemeyer/livejournal/watermark.jpg" src="http://linux-br.conectiva.com.br/~niemeyer/livejournal/watermark.jpg" />
 <p>代码如下:</p>

@@ -1,3 +1,9 @@
+---
+created: 2004-09-22 16:53:55
+creator: panjy
+description: 做为Plone基金的会员之一，有幸参与投票Plone基金第一界董事的投票
+title: Plone基金董事会投票
+---
 
  <p>最近Plone社区好不热闹，先是好几个sprint（Plone的集中开发）:</p>
  <ul>

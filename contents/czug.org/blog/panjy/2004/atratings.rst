@@ -1,3 +1,9 @@
+---
+created: 2005-01-10 22:19:42
+creator: panjy
+description: 由于项目需要，对ATRatings进行了一些改进，借鉴zwiki，给了一个界面
+title: 'ATRatings: 投票和计数器'
+---
 
  <p>知识管理和社区类型的网站中，常需要对文章进行投票和点击计数。ATRatings在底层做了很好的设计，但是缺少界面。<br />
  <br />

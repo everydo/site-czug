@@ -1,3 +1,9 @@
+---
+created: 2005-01-18 14:22:07
+creator: panjy
+description: 介绍常见的字体格式文件和相关的名词
+title: 关于字体
+---
 <p>pdf输出和打印中，中文字体支持是容易出问题的地方。下面是找到的一些资料：</p>
 <dl class="docutils">
 <dt>type1字体</dt>

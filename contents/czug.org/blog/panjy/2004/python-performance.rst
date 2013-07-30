@@ -1,3 +1,9 @@
+---
+created: 2004-12-31 09:14:42
+creator: panjy
+description: 如何提升Python的性能
+title: Python的性能
+---
 
  <p>作为一个动态语言，Python的性能是比不上Java和C的，Python最重要的特性是Productive(生产率、产出率).<br />
  <br />

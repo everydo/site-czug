@@ -1,3 +1,9 @@
+---
+created: 2004-12-27 07:41:44
+creator: panjy
+description: apache认为client传来的webdav请求是utf-8的编码，但对中文来说实际上更多是gb编码。
+title: mod_encoding：让apache的webdav支持中文文件名
+---
 
  <p><a href="http://webdav.todo.gr.jp/download/">mod_encoding</a>是日本人做的一个产品，解决了apache针对webdav的编码支持问题。<br />
  <br />

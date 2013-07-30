@@ -1,3 +1,9 @@
+---
+created: 2004-10-19 02:17:04
+creator: panjy
+description: 对于Zope2的用户来说，Zope 2.8是一个革命性的版本，解决了ZODB的软肋－高负载情况下的conflict问题
+title: Zope 2.8.a发布
+---
 
  <p>高负载情况下，目前的ZODB会出现大量Conflict，这会使得系统的性能大为下降。<br />
  <br />

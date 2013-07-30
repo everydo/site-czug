@@ -1,3 +1,9 @@
+---
+created: 2005-10-22 14:44:37
+creator: panjy
+description: 看到了paul的照片，和想象不同
+title: paul everitt
+---
 <p>paul everitt是zope公司的前CEO，现在是Plone基金会的总裁、欧洲Zope联盟的主席，是Zope社区的精神领袖。</p>
 <p>Paul在社区的价值是不可估量的，目前为止也是不可替换的。</p>
 <p>一直以为Paul会长得跟马克思那个样子，看到照片，没想到是这个样子：</p>

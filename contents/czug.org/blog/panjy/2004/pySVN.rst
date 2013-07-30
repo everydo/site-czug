@@ -1,3 +1,9 @@
+---
+created: 2004-11-11 13:56:47
+creator: panjy
+description: 使用pySVN可以使用Python来使用Subversion
+title: 'pySVN: subversion的Python开发包'
+---
 
  <p><a href="http://subversion.tigris.org/">subversion</a>是一个优秀的版本控制系统，是cvs的替代产品。Zope/Plone均采用她进行源代码版本管理。<br />
  <br />

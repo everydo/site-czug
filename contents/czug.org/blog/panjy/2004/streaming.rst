@@ -1,3 +1,9 @@
+---
+created: 2005-01-27 19:54:51
+creator: panjy
+description: 收集一些流媒体服务器的资源
+title: 流媒体服务器
+---
  <p>http://plus24.com/mp3-howto/mp3-howto-20.html</p>
  <ul>
  <li><a href="http://sourceforge.net/projects/edna/">edna</a><br />

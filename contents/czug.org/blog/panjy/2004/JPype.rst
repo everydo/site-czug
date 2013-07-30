@@ -1,3 +1,9 @@
+---
+created: 2004-12-22 17:21:11
+creator: panjy
+description: Python程序使用JPype，可访问全部的java类库。
+title: JPype - Java和Python的集成
+---
 
  <p>Java有丰富的包。使用<a href="http://jpype.sourceforge.net/">JPype</a>，可直接在CPython中使用Java的包：</p>
  <pre wrap="">

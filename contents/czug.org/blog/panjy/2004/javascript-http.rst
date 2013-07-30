@@ -1,3 +1,9 @@
+---
+created: 2005-01-24 20:31:43
+creator: panjy
+description: IE和mozilla均支持在ECMAScript中发送http请求。这样不必频繁刷新页面，可完成非常动态的页面。
+title: 在ECMAScript中发送http请求
+---
 <p><a href="http://kupu.oscom.org">kupu</a>应该是web编辑器之王了吧，他使用了<a href="http://sarissa.sourceforge.net">sarissa</a> 这个标准的ECMAScript版本的XML处理库。</p>
 <p>其中应该关键类就是XMLHttpRequest，浏览器上的ECMAScript可通过他实现对服务器上脚本的调用，包括同步和异步两种调用。</p>
 <p>另外，Epoz 更是采用一个<a href="www.vcdn.org/Public/XMLRPC">ECMAScript版本的xmlrpc:vcXMLRPC</a>，利用服务器来实现对html的清理的。也可以实现诸如拼写检查等复杂功能。</p>

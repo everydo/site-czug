@@ -1,3 +1,9 @@
+---
+created: 2005-03-09 10:37:24
+creator: panjy
+description: Freemind是一款简单易用、实用的、开放的、可扩展的、开源思维导图(MindMap)软件。
+title: Freemind：思维导图软件
+---
 <p><a href="http://nocache.czug.org/blog/panjunyong/plone-concept-map">从前</a>就听说了<a href="http://freemind.sourceforge.net/wiki/index.php/Main_Page">FreeMap</a>这个东东，最近<a href="http://wiki.woodpecker.org.cn">啄木鸟社区</a> <a href="http://wiki.woodpecker.org.cn/moin.cgi/FreeMind">对MindMap的一些介绍</a>，驱使我更加了解和开始使用这款软件。</p>
 <p>这篇<a href="http://risker.org/tech/FreeMind/">我用FreeMind</a>应该是对FreeMind介绍最全面的中文资料了。</p>
 <p>FreeMind的介绍，FreeMind可以用来：</p>

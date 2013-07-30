@@ -1,3 +1,9 @@
+---
+created: 2004-11-03 21:52:30
+creator: panjy
+description: ctypes是一个Python模块，使用他可以在Python中创建和操作C语言的数据类型，这样可以在动态链接库中传递参数到C的函数中去。
+title: 'ctypes: 使用python调用C编写的动态链接库'
+---
 <p>必须得引用一段Python的创始人van Rossum对<a href="http://starship.python.net/crew/theller/ctypes/index.html">ctypes</a>的评价了：<br />
  <br />
  <i style="color: rgb(51, 102, 102);">&nbsp; ctypes is very cool! Great piece

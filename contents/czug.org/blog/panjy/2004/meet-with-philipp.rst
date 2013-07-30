@@ -1,3 +1,9 @@
+---
+created: 2005-10-11 11:19:57
+creator: panjy
+description: 和zope3的开发人员之一philipp的见面总结，拷贝自czug-org邮件列表
+title: 和phillip的会面总结
+---
 <p>我和马踏飞燕(马剑)一起去的。马踏飞燕兄已经很好的总结了：</p>
 <p><a class="reference" href="http://groups.google.com/group/czug-zope/browse_thread/thread/9fc4c0d">http://groups.google.com/group/czug-zope/browse_thread/thread/9fc4c0d</a>...</p>
 <p>照片我也贴到czug上了：</p>

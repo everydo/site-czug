@@ -1,3 +1,9 @@
+---
+created: 2005-04-22 12:31:00
+creator: panjy
+description: Wiki的可视化，是最近wiki努力的一个方向。
+title: 可视化的wiki
+---
 <p>最近在研究如何将 <a class="reference" href="/blog/panjunyong/freemind">Freemind</a> 和Plone结合起来，提供可视化的知识地图。却发现有人已经在类似的领域做了一些努力：</p>
 <ul class="simple">
 <li><a class="reference" href="http://sourceforge.net/projects/ppqwiki/">Personal Python Qwiki Wiki with MindMap Features (PPQwiki Map)</a> 支持把wiki内容导出为Freemind格式</li>

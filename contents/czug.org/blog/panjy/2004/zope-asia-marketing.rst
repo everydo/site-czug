@@ -1,3 +1,9 @@
+---
+created: 2004-09-12 03:31:26
+creator: panjy
+description: 随着Zope日本公司的建立，包括CPS/ERP5在上海的展示，感觉亚洲的Zope市场开始活跃起来
+title: 亚洲的zope市场
+---
 
  <p>Zope/Plone的市场，首先是在欧美国家的。热闹也首先是他们的，服务商是遍地开花，接受度也比较高。在亚洲，则冷落一些。<br />
  <br />

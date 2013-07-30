@@ -1,3 +1,9 @@
+---
+created: 2004-09-23 08:10:51
+creator: panjy
+description: Zope3的开发过程和编码规范
+title: 学习Zope3：开发过程
+---
 
  <p>继续阅读<a href="http://www.czug.org/docs/zope/zope3book">Zope3Book</a>：
  <b><a href="http://www.czug.org/docs/zope/zope3book/DevProcess">开发过程</a></b><br />

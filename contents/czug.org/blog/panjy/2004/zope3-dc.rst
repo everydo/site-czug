@@ -1,3 +1,9 @@
+---
+created: 2004-09-24 03:35:43
+creator: panjy
+description: 元数据是内容管理系统的一个重要部分，都柏林核心是元数据的一个标准
+title: 学习Zope3：元数据和都柏林核心集
+---
 
  <p><br />
  原文：<a href="http://www.czug.org/docs/zope/zope3book/DublinCore">Meta Data and

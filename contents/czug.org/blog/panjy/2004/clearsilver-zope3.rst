@@ -1,3 +1,9 @@
+---
+created: 2005-04-20 01:05:54
+creator: panjy
+description: Martijn Faassen把ClearSilver集成到zope3了，据说性能是Page Template的数倍（2-5倍）
+title: 把ClearSilver集成到Zope3
+---
 <p>看到一个帖子：</p>
 <p><a class="reference" href="http://faassen.n--tree.net/blog/view/weblog/2005/04/15/0">http://faassen.n--tree.net/blog/view/weblog/2005/04/15/0</a></p>
 <p><a class="reference" href="http://www.clearsilver.net/">ClearSilver</a> 是类似Zope的Page Template的另外一个模板系统，性能很高，语言中立（支持Python, Perl, Java 和 Ruby），相对历史悠久(1999年开始)。</p>

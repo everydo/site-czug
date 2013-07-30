@@ -1,3 +1,9 @@
+---
+created: 2004-11-17 09:04:30
+creator: panjy
+description: WebDAV:"Web-based Distributed Authoring and Versioning". 她是一套HTTP协议的扩展，允许用户在远程协同地编辑和管理文件。
+title: 认识强大的WebDAV
+---
 
  <p><a href="http://www.webdav.org/">WebDAV</a>，从字面上翻译："基于web的分布式的著录和版本管理"，这个可不太容易理解。<br />
  <br />

@@ -1,3 +1,9 @@
+---
+created: 2004-12-30 18:29:01
+creator: panjy
+description: 收集一些UML工具的信息
+title: UML的一些工具
+---
 
  <ul>
  <li><a href="http://argouml.tigris.org/" title="Free UML tool, use cases, uml tutorials">ArgoUML</a><br />

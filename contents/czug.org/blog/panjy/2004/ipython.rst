@@ -1,3 +1,9 @@
+---
+created: 2004-11-04 18:44:04
+creator: panjy
+description: IPython是和缺省Python是兼容的，但是提供了很多bash才有的功能。在操作系统shell、开发、调试上有很多的改进。
+title: 'IPython: 一个高级的、交互的Python Shell'
+---
 
  <p>在linux上用多了shell界面，清净快捷，其中乐趣，自己知晓。<br />
  <br />

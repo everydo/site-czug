@@ -1,3 +1,9 @@
+---
+created: 2004-11-30 08:56:33
+creator: panjy
+description: Linux上设置正确时间，可真不是一件容易的事情 ...
+title: Linux上让人迷惑的时间设置
+---
 
  <p>前面已经讨论过<a href="http://blog.czug.org/panjunyong/zope-datetime-bug">CST时区的含义</a>了。事实上，在debian上使用dpkg-reconfigure
  timezoneconf，选择上海所在的时区，其结果也是CST。<br />

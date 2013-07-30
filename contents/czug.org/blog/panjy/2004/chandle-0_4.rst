@@ -1,3 +1,9 @@
+---
+created: 2004-11-03 21:28:28
+creator: panjy
+description: Chandler是由OSAF基金资助的基于Python的新一代PIM(个人信息管理)。
+title: Chandler 0.4发布
+---
 
  <p>偶然想到了Chandler，便来到<a href="http://www.osafoundation.org/">OSFA的网站</a>，才发现就在10月26号<a href="http://www.osafoundation.org/archives/000773.html">发布了Chandler的0.4版本</a>。<br />
  <br />

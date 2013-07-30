@@ -1,3 +1,9 @@
+---
+created: 2004-10-26 21:06:34
+creator: panjy
+description: Emacs号称是编辑器之王，无所不能。可把他作为一个Python的集成开发环境
+title: 使用Emacs作为Python开发环境
+---
 
  <p>尽管<a href="http://www.gnu.org/software/emacs/emacs.html">Emacs</a>那么的牛，但是从前用的多的还是简单的
  <a href="http://www.vim.org/">vi</a>。受不了吸引，决定开始使用Emacs进行Python的编程。<br />

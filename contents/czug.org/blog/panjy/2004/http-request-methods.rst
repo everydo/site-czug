@@ -1,3 +1,9 @@
+---
+created: 2004-12-29 08:10:47
+creator: panjy
+description: '介绍HTTP请求的方法Mothod. '
+title: HTTP请求的方法
+---
 
  <p>HTML中，我们编写form表单的时候，会设置mothod为post或者get。在HTTP协议中还有哪些方法呢？<br />
  <br />

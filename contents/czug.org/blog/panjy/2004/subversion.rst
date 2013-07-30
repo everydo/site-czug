@@ -1,3 +1,9 @@
+---
+created: 2004-12-11 14:00:23
+creator: panjy
+description: Subversion是超越CVS的、支持事务的、高性能的版本控制系统，和zope/Plone也有一些姻缘
+title: 使用Subversion进行版本管理
+---
 
  <p>目前Zope/Plone的代码均采用<a href="http://subversion.tigris.org/">subversion</a>来管理，而且<font face="Arial" size="2">已经 <a href="http://plone.org/events/conferences/1/archive/PloneSVN2003.pdf">可以和Plone集成</a>，而且已经有了使用svn做为ZODB存储介质的产品。在windows下有方便使用的</font><font face="Arial" size="2"><a href="http://tortoisesvn.tigris.org/">windows客户端工具</a>。<br /></font><br />
  这里记录一下subversion的基本操作，更详细的内容可参加<a href="http://freebsd.sinica.edu.tw/%7Eplasma/svnbook/">Subversion中文手册</a>。</p>
