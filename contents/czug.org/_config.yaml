@@ -6,5 +6,5 @@ exclude: [stuff, sitemap, site_links, include.rst, index_right_col.rst, left_col
   indexcol.rst, signup.rst, forum.rst, maintain.rst]
 order: [index.rst, pyramid, zope, plone, python, projects, blog, about]
 theme: index.html
-theme_base: http://localhost:6543/themes/czug.org/
+theme_base: http://download.zopen.cn/themes/czug.org/
 title: 易度
