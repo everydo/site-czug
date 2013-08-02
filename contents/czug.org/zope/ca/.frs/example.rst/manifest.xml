@@ -1,9 +1,0 @@
-<?xml version="1.0" ?>
-<manifest xmlns="http://zopechina.com/ns/frs"
-          contenttype="Document">
-
-    <entry type="xns" name="" mimetype="text/xml"
-           filename="faq.xml" fullpath="xns.xml" />
-
-</manifest>
-

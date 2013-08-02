@@ -1,9 +1,0 @@
-{
-    "main": {
-        "contenttype": "Document"
-    }, 
-    "dublin": {
-        "description": "zope3的发展历史，主要特性，竞争产品", 
-        "title": "zope3史话"
-    }
-}
