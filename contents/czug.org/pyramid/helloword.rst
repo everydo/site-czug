@@ -1,7 +1,7 @@
 ---
 created: 2011-07-29 21:47:49
 creator:
-description: Pyramid 学习笔记：简单的Hello world
+description: 
 title: Pyramid 学习笔记：简单的Hello world
 ---
 

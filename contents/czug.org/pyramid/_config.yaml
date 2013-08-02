@@ -1,4 +1,4 @@
 description: ''
-exclude: []
+exclude: [imgs]
 order: [test.rst, quicktour.rst]
 title: pyramid
