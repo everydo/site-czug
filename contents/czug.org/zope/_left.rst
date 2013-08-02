@@ -8,5 +8,13 @@
     </dt>
     <dd class="portletItem">
 
+.. navtree::
+    :root_depth: 1
 
-.. include:: left_col.rst
+.. raw:: html
+
+   </dd>
+    <dd class="portletItem portletFooter">
+    </dd>
+    </dl>
+
