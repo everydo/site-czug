@@ -41,10 +41,10 @@ Zope应用服务器
 
 随着技术的进步，Zope愈久弥香，不断发展.  从Zope 2到Zope3，以及Grok，还有轻量级的框架BFG，
  
-国内知名的 `易度在线工作SaaS平台 <http://everydo.com>`__ ，
+国内知名的 `易度在线办公平台 <http://everydo.com>`__ ，
 便是采用Zope开发完成，其中包括了 
 `易度文档管理系统 <http://edodocs.com>`__ ， 
-`易度项目管理系统 <http://pm.everydo.com>`__ 和 `易度开发平台 <http://paas.everydo.com>`__ .
+`易度项目管理系统 <http://pm.everydo.com>`__ 和 `易度开发平台 <http://developer.everydo.com>`__ .
 
 BFG轻量级Web框架
 ===============================

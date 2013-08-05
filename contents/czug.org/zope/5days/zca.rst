@@ -101,14 +101,6 @@ zope组件架构实现了面向接口进行编程，这个也就是j2ee所推崇
 
 当然，可能有其他的方法，也能实现类似的功能，但是zope组件架构定义一个更加漂亮的方法。
 
-最后，有兴趣的人，可具体看看易度的api:
-
-- 订阅：http://everydo.com/paas/applet/subscription.rst
-- 标签组管理： http://everydo.com/paas/applet/tags.rst
-- 评注服务： http://everydo.com/paas/applet/comment.rst
-- 通知发送(utility): http://everydo.com/paas/applet/notification.rst
-- 状态机(utility)： http://everydo.com/paas/applet/state.rst
-
 再次理解适配器
 ===========================
 适配器其实很好理解，我们都见过：
